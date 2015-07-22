@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services;
+package com.uae.tra_smart_services.baseentities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseActivity extends AppCompatActivity implements ProgressDialogManager {
+public abstract class BaseActivity extends AppCompatActivity implements ProgressDialogManager, BaseFragment.ErrorHandler {
 
     private ProgressDialog mProgressDialog;
 

@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services;
+package com.uae.tra_smart_services.baseentities;
 
 import android.app.FragmentManager;
 import android.support.annotation.IdRes;
@@ -13,8 +13,7 @@ public abstract class BaseFragmentActivity extends BaseActivity {
         super.onBackPressed();
     }
 
-    protected abstract @IdRes
-    int getContainerId();
+    protected abstract @IdRes int getContainerId();
 
     protected final void addFragment(final BaseFragment _fragment) {
         getFragmentManager().beginTransaction()
@@ -31,7 +30,7 @@ public abstract class BaseFragmentActivity extends BaseActivity {
                 .commit();
     }
 
-    public final void replaceFragmentWithoutBackStack(final BaseFragment _fragment) {
+    public final void replaceFragmentWithOutBackStack(final BaseFragment _fragment) {
         getFragmentManager().beginTransaction()
                 .replace(getContainerId(), _fragment)
                 .commit();

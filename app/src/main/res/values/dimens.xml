@@ -2,4 +2,14 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--            AuthorizationActivity               -->
+    <dimen name="dp_authorization_fields_separator_height">1dp</dimen>
+    <dimen name="dp_authorization_fields_separator_margin">15dp</dimen>
+    <dimen name="dp_transparent_fields_padding">15dp</dimen>
+    <dimen name="dp_authorization_button_text_size">20sp</dimen>
+    <dimen name="authorization_button_stroke_width">1dp</dimen>
+    <dimen name="dp_button_margin">10dp</dimen>
+    <dimen name="dp_edittext_drawable_padding">7dp</dimen>
+
 </resources>

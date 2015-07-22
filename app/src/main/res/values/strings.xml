@@ -5,4 +5,26 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_authorization">AuthorizationActivity</string>
+
+    <!--            Username field               -->
+    <string name="username_hint">Username</string>
+    <string name="username_default">Username</string>
+    <!--            Password field               -->
+    <string name="gender_hint">gender_hint</string>
+    <string name="gender_default">Gender</string>
+    <!--            Phone field               -->
+    <string name="phone_hint">phone_hint</string>
+    <string name="phone_default">Phone</string>
+    <!--            Password field               -->
+    <string name="password_hint">Password</string>
+    <string name="password_default">Password</string>
+    <!--            Forgot password field               -->
+    <string name="forgot_password">Forgot the password</string>
+    <!--            Sign in button               -->
+    <string name="log_in_btn">Login</string>
+    <!--            Register button               -->
+    <string name="register_btn">Register</string>
+    <!--            Register button               -->
+    <string name="register_now">Register now</string>
+
 </resources>

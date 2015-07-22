@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hex_authorization_fields_color">
+    <LinearLayout
+        android:id="@+id/llSignInFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+        <EditText
+            android:id="@+id/etUserName_FLI"
+            android:inputType="textPersonName"
+            android:hint="@string/username_hint"
+            android:drawableLeft="@drawable/ic_temp_left_field_icon"
+            android:drawablePadding="@dimen/dp_edittext_drawable_padding"
+            style="@style/TransparentGrayField"/>
+        <View style="@style/AuthorizationFieldsSeparator"/>
+        <EditText
+            android:id="@+id/etPassword_FLI"
+            android:inputType="text"
+            android:hint="@string/password_hint"
+            android:drawableLeft="@drawable/ic_temp_left_field_icon"
+            android:drawablePadding="@dimen/dp_edittext_drawable_padding"
+            style="@style/TransparentGrayField"/>
+        <View style="@style/AuthorizationFieldsSeparator"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvRestorePassword_FLI"
+        android:layout_below="@id/llSignInFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_password"
+        android:textColor="@color/hex_authorization_fields_text_color"
+        android:textSize="@dimen/dp_authorization_button_text_size"
+        android:padding="10dp"
+        android:autoLink="all"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/btnLogIn_FLI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvRestorePassword_FLI"
+        android:text="@string/log_in_btn"
+        style="@style/BlurButtonStyle"/>
+
+    <TextView
+        android:id="@+id/tvRegisterNow_FLI"
+        android:layout_below="@id/llSignInFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register_now"
+        android:textColor="@color/hex_primary_orange"
+        android:textSize="@dimen/dp_authorization_button_text_size"
+        android:padding="10dp"
+        android:autoLink="all"
+        android:gravity="center"/>
+</LinearLayout>
