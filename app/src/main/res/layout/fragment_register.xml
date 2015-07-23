@@ -20,11 +20,11 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/etUserName_FLI"
+                android:id="@+id/etEmail_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:drawableLeft="@drawable/ic_temp_left_field_icon"
-                android:hint="@string/username_hint"
-                android:inputType="textPersonName" />
+                android:hint="@string/email_hint"
+                android:inputType="textEmailAddress" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
@@ -70,14 +70,12 @@
                 style="@style/BlurButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/llSignInFields"
                 android:text="@string/register_btn" />
 
             <TextView
                 android:id="@+id/btnLogInNow_FLI"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/llSignInFields"
                 android:autoLink="all"
                 android:gravity="center"
                 android:padding="@dimen/dp_login_now_static_text_padding"

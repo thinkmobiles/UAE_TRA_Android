@@ -60,9 +60,8 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
     @Override
     public void onLogInSuccess() {
-        // Currently unimplemented method
-        // Need clarification
-        // TODO Implement method
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 
     @Override

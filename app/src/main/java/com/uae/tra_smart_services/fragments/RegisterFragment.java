@@ -31,7 +31,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     @Override
     protected final void initViews() {
         // Input fields
-        etUserName = findView(R.id.etUserName_FLI);
+        etUserName = findView(R.id.etEmail_FLI);
         etGender = findView(R.id.etGender_FLI);
         etPhone = findView(R.id.etPhone_FLI);
         etPassword = findView(R.id.etPassword_FLI);

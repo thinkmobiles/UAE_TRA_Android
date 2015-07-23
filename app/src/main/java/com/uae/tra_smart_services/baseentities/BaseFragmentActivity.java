@@ -13,7 +13,6 @@ import android.view.View;
  */
 public abstract class BaseFragmentActivity extends BaseActivity {
 
-
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() == 0) {

@@ -1,9 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    <!-- Has to be implemented -->
-</LinearLayout>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hex_authorization_background_color"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llSignInFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etEmail_FLI"
+            style="@style/UserAuthorizationDataEditTextField"
+            android:drawableLeft="@drawable/ic_temp_left_field_icon"
+            android:hint="@string/email_hint"
+            android:inputType="textPersonName" />
+
+        <View style="@style/AuthorizationFieldsSeparator" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llRegisterActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_register_actions_area_padding"
+        android:paddingTop="@dimen/dp_register_actions_area_padding">
+
+        <Button
+            android:id="@+id/btnLogIn_FLI"
+            style="@style/BlurButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/restore_btn" />
+
+    </LinearLayout>
+
+</LinearLayout><!--
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            -->
+
+    <!-- Has to be implemented
+    <com.uae.tra_smart_services.customviews.MyCustomView
+    xmlns:ads="http://schemas.android.com/apk/lib/com.uae.tra_smart_services"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    ads:custom_attr="true"/>
+     -->

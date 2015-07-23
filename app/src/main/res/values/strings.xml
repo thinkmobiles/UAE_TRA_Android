@@ -12,7 +12,7 @@
     <string name="forgot_password_title">Forgot password</string>
 
     <!--            Username field               -->
-    <string name="username_hint">Username</string>
+    <string name="email_hint">Email</string>
     <!--            Password field               -->
     <string name="gender_hint">Gender</string>
     <!--            Phone field               -->
@@ -25,6 +25,8 @@
     <string name="log_in_btn">Login</string>
     <!--            Register button               -->
     <string name="register_btn">Register</string>
+    <!--            Restore button               -->
+    <string name="restore_btn">Restore</string>
     <!--            Register button               -->
     <string name="register_now">Register now</string>
 
