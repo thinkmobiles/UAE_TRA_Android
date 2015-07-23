@@ -6,30 +6,31 @@
         <item name="colorPrimary">@color/hex_primary_orange</item>
 
         <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/dark_orange</item>
-        <item name="android:textColorPrimary">@color/text_color_white</item>
+        <item name="colorPrimaryDark">@color/hex_dark_orange</item>
+        <item name="android:textColorPrimary">@color/hex_text_color_white</item>
 
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
-        <item name="colorAccent">@color/color_accent</item>
+        <item name="colorAccent">@color/hex_color_accent</item>
     </style>
-
 
     <!--            AuthorizationActivity               -->
     <style name="AuthorizationFieldsSeparator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_authorization_fields_separator_height</item>
         <item name="android:layout_marginLeft">@dimen/dp_authorization_fields_separator_margin</item>
-        <item name="android:background">@color/hex_authorization_fields_separator_color</item>
+        <item name="android:layout_marginRight">@dimen/dp_authorization_fields_separator_margin</item>
+        <item name="android:background">@color/hex_auth_fields_separator_color</item>
     </style>
 
-    <style name="TransparentGrayField">
+    <style name="UserAuthorizationDataEditTextField">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">@dimen/dp_transparent_fields_padding</item>
-        <item name="android:background">@color/hex_authorization_fields_color</item>
-        <item name="android:textColor">@color/hex_authorization_fields_text_color</item>
-        <item name="android:textColorHint">@color/hex_authorization_fields_text_color</item>
+        <item name="android:background">@color/hex_authorization_background_color</item>
+        <item name="android:textColor">@color/hex_auth_fields_text_color</item>
+        <item name="android:textColorHint">@drawable/secector_fields_hint_color</item>
+        <item name="android:drawablePadding">@dimen/dp_edittext_drawable_padding</item>
     </style>
 
     <style name="TransparentWhiteButton">

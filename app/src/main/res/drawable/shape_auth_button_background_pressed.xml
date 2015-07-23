@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke android:color="@color/hex_auth_button_background_pressed_color"
+            android:width="@dimen/authorization_button_stroke_width"/>
+    <solid  android:color="@color/hex_auth_button_background_pressed_color"/>
+    <corners android:radius="@dimen/dp_auth_button_corner"/>
+</shape>
