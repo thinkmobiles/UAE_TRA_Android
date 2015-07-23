@@ -23,6 +23,12 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        toolbarTitleManager.setTitle(R.string.register_title);
+    }
+
+    @Override
     protected final void initViews() {
         // Input fields
         etUserName = findView(R.id.etUserName_FLI);

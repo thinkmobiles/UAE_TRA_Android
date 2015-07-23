@@ -13,6 +13,12 @@ public class RestorePassFragment extends BaseAuthorizationFragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        toolbarTitleManager.setTitle(R.string.forgot_password_title);
+    }
+
+    @Override
     protected int getLayoutResource() {
         return R.layout.fragment_restorepass;
     }

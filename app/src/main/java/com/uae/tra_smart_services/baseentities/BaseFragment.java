@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
 import com.uae.tra_smart_services.interfaces.RetrofitFailureHandler;
+import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 
 import retrofit.RetrofitError;
 
@@ -23,12 +24,14 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     private View rootView;
     protected ProgressDialogManager progressDialogManager;
     protected ErrorHandler errorHandler;
+    protected ToolbarTitleManager toolbarTitleManager;
 
     @Override
     public void onAttach(final Activity _activity) {
         super.onAttach(_activity);
 
         try {
+            toolbarTitleManager = (ToolbarTitleManager) _activity;
             progressDialogManager = (ProgressDialogManager) _activity;
             errorHandler = (ErrorHandler) _activity;
         } catch (ClassCastException e) {

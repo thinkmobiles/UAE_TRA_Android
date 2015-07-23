@@ -2,6 +2,8 @@ package com.uae.tra_smart_services.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseAuthorizationFragment;
@@ -10,12 +12,13 @@ import com.uae.tra_smart_services.fragments.LoginFragment;
 import com.uae.tra_smart_services.fragments.RegisterFragment;
 import com.uae.tra_smart_services.fragments.RestorePassFragment;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
+import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 
 import retrofit.RetrofitError;
 
 
 public class AuthorizationActivity extends BaseFragmentActivity
-                                implements BaseAuthorizationFragment.AuthorizationActionsListener{
+            implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
 
 //    private CallbackManager mCallbackManager;
 //    private LoginManager mLoginManager;
@@ -27,12 +30,27 @@ public class AuthorizationActivity extends BaseFragmentActivity
     }
 
     @Override
-    protected final void onCreate(final Bundle _savedInstanceState) {
+    public final void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_authorization);
+
+        final Toolbar toolbar = findView(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.mipmap.ic_launcher);
+
         if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragment(LoginFragment.newInstance());
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

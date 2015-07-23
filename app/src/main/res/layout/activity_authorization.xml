@@ -5,12 +5,18 @@
     tools:context="com.uae.tra_smart_services.activities.AuthorizationActivity"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:background="@color/hex_primary_orange">
+        android:background="@color/hex_primary_orange"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"/>
 
     </LinearLayout>
 
@@ -18,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="2">
+        android:layout_weight="3">
 
         <FrameLayout
             android:id="@+id/flContainer_AA"

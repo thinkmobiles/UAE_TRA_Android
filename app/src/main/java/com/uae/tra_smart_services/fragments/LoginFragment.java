@@ -22,6 +22,12 @@ public class LoginFragment extends BaseAuthorizationFragment
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        toolbarTitleManager.setTitle(R.string.login_title);
+    }
+
+    @Override
     protected final void initViews() {
         // Input fields
         etUserName = findView(R.id.etUserName_FLI);
