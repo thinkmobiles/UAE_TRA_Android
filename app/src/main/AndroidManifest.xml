@@ -22,6 +22,16 @@
         <activity
             android:name=".activities.AuthorizationActivity"
             android:parentActivityName=".activities.HomeActivity">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:parentActivityName=".activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

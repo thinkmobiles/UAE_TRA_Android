@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="MyCustomView">
-        <attr name="custom_attr" format="boolean"/>
-    </declare-styleable>
-</resources>

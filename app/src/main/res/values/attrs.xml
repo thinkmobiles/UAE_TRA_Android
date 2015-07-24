@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FontSizeSwitcher">
+        <attr name="scaleMin" format="integer"/>
+        <attr name="scaleMax" format="integer"/>
+        <attr name="scaleStep" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="LanguageSwitcher">
+        <attr name="languages" format="string">
+            <flag name="english" value="0" />
+            <flag name="arabic" value="1" />
+            <flag name="german" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

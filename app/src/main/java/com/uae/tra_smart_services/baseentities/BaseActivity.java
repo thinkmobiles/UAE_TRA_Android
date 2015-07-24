@@ -38,10 +38,17 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
 
     @Override
     public final void hideProgressDialog() {
-        if (mProgressDialog != null
-                && mProgressDialog.isShowing()) {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
+    }
+
+    public final void setTextScaleApplicationWide(int scale){
+        // TODO make logic to change text size scale
+    }
+
+    public final void setLanguageApplicationWide(int scale){
+        // TODO make logic to change text size scale
     }
 
     public final <T extends View> T findView(@IdRes int id) {

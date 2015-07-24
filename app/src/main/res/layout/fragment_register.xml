@@ -23,7 +23,7 @@
                 android:id="@+id/etEmail_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:drawableLeft="@drawable/ic_temp_left_field_icon"
-                android:hint="@string/email_hint"
+                android:hint="@string/str_email"
                 android:inputType="textEmailAddress" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -32,7 +32,7 @@
                 android:id="@+id/etGender_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:drawableLeft="@drawable/ic_temp_left_field_icon"
-                android:hint="@string/gender_hint"
+                android:hint="@string/str_gender"
                 android:inputType="text" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -41,7 +41,7 @@
                 android:id="@+id/etPhone_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:drawableLeft="@drawable/ic_temp_left_field_icon"
-                android:hint="@string/phone_hint"
+                android:hint="@string/str_phone"
                 android:inputType="text" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -50,7 +50,7 @@
                 android:id="@+id/etPassword_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:drawableLeft="@drawable/ic_temp_left_field_icon"
-                android:hint="@string/password_hint"
+                android:hint="@string/str_password"
                 android:inputType="text" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -70,7 +70,7 @@
                 style="@style/BlurButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/register_btn" />
+                android:text="@string/str_register" />
 
             <TextView
                 android:id="@+id/btnLogInNow_FLI"
@@ -79,9 +79,9 @@
                 android:autoLink="all"
                 android:gravity="center"
                 android:padding="@dimen/dp_login_now_static_text_padding"
-                android:text="@string/log_in_btn"
+                android:text="@string/str_login"
                 android:textColor="@color/hex_primary_orange"
-                android:textSize="@dimen/dp_authorization_button_text_size" />
+                android:textSize="@dimen/sp_authorization_button_text_size" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

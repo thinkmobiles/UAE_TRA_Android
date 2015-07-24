@@ -2,8 +2,10 @@
 <resources>
     <color name="hex_primary_orange">#fff69023</color>
     <color name="hex_dark_orange">#ffd47624</color>
+    <color name="hex_black_color">#ff000000</color>
     <color name="hex_text_color_white">#ffffff</color>
     <color name="hex_color_accent">#ff8c8c8c</color>
+    <color name="hex_color_light_gray">#ffdddddd</color>
 
     <!--[START]                     AuthorizationActivity                        [START]-->
     <color name="hex_authorization_background_color">#ffffffff</color>

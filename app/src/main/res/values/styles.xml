@@ -14,10 +14,17 @@
         <item name="colorAccent">@color/hex_color_accent</item>
     </style>
 
-    <!--            AuthorizationActivity               -->
     <style name="AuthorizationFieldsSeparator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_authorization_fields_separator_height</item>
+        <item name="android:layout_marginLeft">@dimen/dp_authorization_fields_separator_margin</item>
+        <item name="android:layout_marginRight">@dimen/dp_authorization_fields_separator_margin</item>
+        <item name="android:background">@color/hex_auth_fields_separator_color</item>
+    </style>
+
+    <style name="VerticalFieldsSeparator">
+        <item name="android:layout_width">@dimen/dp_authorization_fields_separator_height</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">@dimen/dp_authorization_fields_separator_margin</item>
         <item name="android:layout_marginRight">@dimen/dp_authorization_fields_separator_margin</item>
         <item name="android:background">@color/hex_auth_fields_separator_color</item>
@@ -28,14 +35,30 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">@dimen/dp_transparent_fields_padding</item>
         <item name="android:background">@color/hex_authorization_background_color</item>
-        <item name="android:textColor">@color/hex_auth_fields_text_color</item>
+        <item name="android:textColor">@drawable/secector_fields_hint_color</item>
         <item name="android:textColorHint">@drawable/secector_fields_hint_color</item>
         <item name="android:drawablePadding">@dimen/dp_edittext_drawable_padding</item>
     </style>
 
+    <style name="UserSettingsStaticText" parent="UserAuthorizationDataEditTextField" >
+        <item name="android:textSize">@dimen/sp_settings_static_text_size</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">left|center</item>
+    </style>
+
+    <style name="UserSettingsEditableText" parent="UserAuthorizationDataEditTextField" >
+        <item name="android:textColor">@color/hex_black_color</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:capitalize">none</item>
+        <item name="android:gravity">center|right</item>
+    </style>
+
     <style name="TransparentWhiteButton">
         <item name="android:background">@drawable/selector_authorization_button</item>
-        <item name="android:textSize">@dimen/dp_authorization_button_text_size</item>
+        <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
         <item name="android:textColor">@color/hex_primary_orange</item>
     </style>
 

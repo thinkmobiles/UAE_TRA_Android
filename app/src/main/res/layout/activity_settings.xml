@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tra="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hex_authorization_background_color"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llRegisterFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/UserSettingsStaticText"
+                android:drawableLeft="@drawable/ic_temp_left_field_icon"
+                android:text="@string/str_username" />
+
+            <EditText
+                android:id="@+id/etUserName_AS"
+                style="@style/UserSettingsEditableText"
+                android:text="asdasdads" />
+        </LinearLayout>
+
+        <View style="@style/AuthorizationFieldsSeparator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/UserSettingsStaticText"
+                android:drawableLeft="@drawable/ic_temp_left_field_icon"
+                android:text="@string/str_email" />
+
+            <EditText
+                android:id="@+id/etEmail_AS"
+                style="@style/UserSettingsEditableText"
+                android:text="asdasdads" />
+
+        </LinearLayout>
+
+        <View style="@style/AuthorizationFieldsSeparator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/UserSettingsStaticText"
+                android:drawableLeft="@drawable/ic_temp_left_field_icon"
+                android:text="@string/str_language" />
+
+            <com.uae.tra_smart_services.customviews.LanguageSwitcher
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="5dp"
+                tra:languages="english|arabic|german"/>
+
+        </LinearLayout>
+
+        <View style="@style/AuthorizationFieldsSeparator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/UserSettingsStaticText"
+                android:drawableLeft="@drawable/ic_temp_left_field_icon"
+                android:hint="@string/str_fontsize" />
+
+            <com.uae.tra_smart_services.customviews.FontSizeSwitcher
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="5dp"
+                tra:scaleMin="6"
+                tra:scaleMax="14"
+                tra:scaleStep="2"/>
+
+        </LinearLayout>
+
+        <View style="@style/AuthorizationFieldsSeparator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/UserSettingsStaticText"
+                android:drawableLeft="@drawable/ic_temp_left_field_icon"
+                android:hint="@string/str_themesoptions"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/etTheme_AS"
+                style="@style/UserSettingsEditableText"
+                android:text="asdasdads" />
+        </LinearLayout>
+
+        <View style="@style/AuthorizationFieldsSeparator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/UserSettingsStaticText"
+                android:drawableLeft="@drawable/ic_temp_left_field_icon"
+                android:hint="@string/str_logout"
+                android:inputType="text" />
+
+            <ImageButton
+                android:id="@+id/etTheme_AS"
+                style="@style/UserSettingsEditableText"
+                android:text="asdasdads" />
+        </LinearLayout>
+
+        <View style="@style/AuthorizationFieldsSeparator" />
+
+    </LinearLayout>
+</ScrollView>

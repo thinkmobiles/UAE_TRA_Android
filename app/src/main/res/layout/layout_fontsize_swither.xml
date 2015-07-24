@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvMakeBigger_SA"
+        style="@style/UserSettingsEditableText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/str_A_plus"
+        android:textColor="@color/hex_black_color"/>
+
+    <View style="@style/VerticalFieldsSeparator" />
+
+    <TextView
+        android:id="@+id/tvMakeSmaller_SA"
+        style="@style/UserSettingsEditableText"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/hex_black_color"
+        android:text="@string/str_A_minus"/>
+</LinearLayout>

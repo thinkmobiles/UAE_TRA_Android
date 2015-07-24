@@ -6,28 +6,43 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_authorization">AuthorizationActivity</string>
 
-    <!--                Authorization screens titles                -->
+    <!--                Authorization screens                -->
     <string name="login_title">Login</string>
     <string name="register_title">Create account</string>
     <string name="forgot_password_title">Forgot password</string>
 
     <!--            Username field               -->
-    <string name="email_hint">Email</string>
-    <!--            Password field               -->
-    <string name="gender_hint">Gender</string>
+    <string name="str_username">Username</string>
+    <!--            Email field               -->
+    <string name="str_email">Email</string>
+    <!--            Language field               -->
+    <string name="str_language">Language</string>
+    <!--            Gender field               -->
+    <string name="str_gender">Gender</string>
+    <!--            Font size field               -->
+    <string name="str_fontsize">Font size</string>
+    <!--            Theme options field               -->
+    <string name="str_themesoptions">Theme options</string>
     <!--            Phone field               -->
-    <string name="phone_hint">Phone</string>
+    <string name="str_phone">Phone</string>
     <!--            Password field               -->
-    <string name="password_hint">Password</string>
+    <string name="str_password">Password</string>
     <!--            Forgot password field               -->
-    <string name="forgot_password">Forgot the password</string>
+    <string name="str_forgot_password">Forgot the password</string>
     <!--            Sign in button               -->
-    <string name="log_in_btn">Login</string>
+    <string name="str_login">Login</string>
     <!--            Register button               -->
-    <string name="register_btn">Register</string>
+    <string name="str_register">Register</string>
     <!--            Restore button               -->
-    <string name="restore_btn">Restore</string>
-    <!--            Register button               -->
-    <string name="register_now">Register now</string>
+    <string name="str_restore">Restore</string>
+    <!--            Register now button               -->
+    <string name="str_register_now">Register now</string>
+    <!--            Logout button               -->
+    <string name="str_logout">Logout</string>
+
+    <!--                Settings screens                -->
+    <!--            Font size switcher               -->
+    <string name="str_A_plus">A+</string>
+    <string name="str_A_minus">"<b>A-</b>"</string>
 
 </resources>

@@ -22,7 +22,7 @@
                 android:id="@+id/etEmail_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:drawableLeft="@drawable/ic_temp_left_field_icon"
-                android:hint="@string/email_hint"
+                android:hint="@string/str_email"
                 android:inputType="textPersonName" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -31,7 +31,7 @@
                 android:id="@+id/etPassword_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:drawableLeft="@drawable/ic_temp_left_field_icon"
-                android:hint="@string/password_hint"
+                android:hint="@string/str_password"
                 android:inputType="text" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -52,9 +52,9 @@
                 android:autoLink="all"
                 android:gravity="center"
                 android:padding="@dimen/dp_forgot_pass_static_text_padding"
-                android:text="@string/forgot_password"
+                android:text="@string/str_forgot_password"
                 android:textColor="@color/hex_auth_static_text_color"
-                android:textSize="@dimen/dp_authorization_button_text_size" />
+                android:textSize="@dimen/sp_authorization_button_text_size" />
 
             <Button
                 android:id="@+id/btnLogIn_FLI"
@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvRestorePassword_FLI"
-                android:text="@string/log_in_btn" />
+                android:text="@string/str_login" />
 
             <TextView
                 android:id="@+id/tvRegisterNow_FLI"
@@ -72,9 +72,9 @@
                 android:autoLink="all"
                 android:gravity="center"
                 android:padding="@dimen/dp_register_now_static_text_padding"
-                android:text="@string/register_now"
+                android:text="@string/str_register_now"
                 android:textColor="@color/hex_primary_orange"
-                android:textSize="@dimen/dp_authorization_button_text_size" />
+                android:textSize="@dimen/sp_authorization_button_text_size" />
         </LinearLayout>
 
     </LinearLayout>
