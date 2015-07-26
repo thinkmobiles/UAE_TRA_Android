@@ -8,5 +8,4 @@ import retrofit.RetrofitError;
 public interface RetrofitFailureHandler {
 
     void failure(final RetrofitError _error);
-
 }

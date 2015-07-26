@@ -37,8 +37,7 @@ public abstract class BaseCustomSwitcher extends LinearLayout implements View.On
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    protected void initConfigs() {
-    }
+    protected void initConfigs() {}
 
     protected abstract int getLayoutId();
 
@@ -53,7 +52,6 @@ public abstract class BaseCustomSwitcher extends LinearLayout implements View.On
     protected int getIntPref(String _prefName, int _def){
         return prefs.getInt(_prefName, _def);
     }
-
 
     protected void updateIntPref(String _prefName, int _value){
         prefs.edit().putInt(_prefName, _value).commit();

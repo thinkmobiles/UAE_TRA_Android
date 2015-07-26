@@ -3,8 +3,6 @@ package com.uae.tra_smart_services.customviews;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.InflateException;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -13,6 +11,11 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activities.SettingsActivity;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
+import com.uae.tra_smart_services.entities.LanguageSelector;
+import com.uae.tra_smart_services.entities.Separator;
+import com.uae.tra_smart_services.entities.SeparatorFactory;
+import com.uae.tra_smart_services.entities.TextViewFactory;
+import com.uae.tra_smart_services.interfaces.I_ViewFactory;
 
 /**
  * Created by ak-buffalo on 24.07.15.
@@ -34,28 +37,45 @@ public class LanguageSwitcher extends BaseCustomSwitcher {
         super(context, attrs);
     }
 
+    final I_ViewFactory textViewFactoryFactory = new TextViewFactory(getContext()) {
+        @Override
+        public void prepareData(TextView textView, LanguageSelector entity) {
+            textView.setText(entity.getText());
+            textView.setTag(entity.getTag());
+            textView.setTextAppearance(getContext(), entity.getStyle());
+            textView.setTextColor(getResources().getColor(entity.getTextColor()));
+            textView.setOnClickListener(entity.getHadler());
+        }
+    };
+
+    final I_ViewFactory separatorFactory = new SeparatorFactory(getContext()) {
+        @Override
+        public void prepareData(View separator, Separator entity) {
+            ViewGroup.LayoutParams param1 = new ViewGroup.LayoutParams(entity.getWidth(), entity.getHeight());
+            separator.setBackgroundColor(entity.getColor());
+            separator.setLayoutParams(param1);
+        }
+    };
+
     @Override
     protected void initViews() {
         super.initViews();
         rootView = (LinearLayout) findViewById(R.id.root_view_language_switcher);
+
         for (int i = 0; i < LANGUAGES.length; i++){
             if (i != 0){
-                View separator = new View(getContext());
-                ViewGroup.LayoutParams param1 = new ViewGroup.LayoutParams(rootView.getHeight(), ViewGroup.LayoutParams.MATCH_PARENT);
-                ViewGroup.LayoutParams param2 = new ViewGroup.LayoutParams(3, ViewGroup.LayoutParams.MATCH_PARENT);
-                separator.setBackgroundColor(getResources().getColor(R.color.hex_auth_fields_separator_color));
-                separator.setLayoutParams(param1);
-                separator.setLayoutParams(param2);
-                rootView.addView(separator);
+                Separator separator = new Separator(
+                        getContext(),
+                        R.dimen.dp_separator_width,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        R.color.hex_auth_fields_separator_color
+                );
+                rootView.addView(separatorFactory.createView(separator));
             }
-
-            TextView textView = new TextView(getContext());
-            textView.setText(LANGUAGES[i]);
-            textView.setTag(LANGUAGES[i]);
-            textView.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
-            textView.setTextColor(getResources().getColor(R.color.hex_black_color));
-            textView.setOnClickListener(this);
-            rootView.addView(textView);
+            LanguageSelector languageSelector = new LanguageSelector(
+                    LANGUAGES[i],LANGUAGES[i], android.R.style.TextAppearance_Medium, R.color.hex_black_color, this
+            );
+            rootView.addView(textViewFactoryFactory.createView(languageSelector));
         }
     }
 

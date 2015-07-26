@@ -1,12 +1,7 @@
 package com.uae.tra_smart_services.baseentities;
 
 import android.app.FragmentManager;
-import android.content.Context;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.IdRes;
-import android.util.AttributeSet;
-import android.view.View;
 
 /**
  * Created by Vitaliy on 22/07/2015.
@@ -20,7 +15,6 @@ public abstract class BaseFragmentActivity extends BaseActivity {
         } else {
             getFragmentManager().popBackStack();
         }
-
     }
 
     protected abstract @IdRes int getContainerId();

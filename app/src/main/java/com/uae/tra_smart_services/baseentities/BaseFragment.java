@@ -30,7 +30,6 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     @Override
     public void onAttach(final Activity _activity) {
         super.onAttach(_activity);
-
         try {
             toolbarTitleManager = (ToolbarTitleManager) _activity;
             progressDialogManager = (ProgressDialogManager) _activity;
@@ -60,16 +59,12 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         errorHandler.handleError(_error, _listener);
     }
 
-    protected void initViews() {
-    }
+    protected void initViews() {}
 
-    protected void initListeners() {
-    }
+    protected void initListeners() {}
 
     @Override
-    public void reloadData() {
-
-    }
+    public void reloadData() {}
 
     protected abstract @LayoutRes int getLayoutResource();
 
