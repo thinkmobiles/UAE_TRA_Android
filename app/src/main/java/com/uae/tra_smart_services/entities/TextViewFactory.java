@@ -1,14 +1,15 @@
 package com.uae.tra_smart_services.entities;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
  * Created by andrey on 7/26/15.
  */
-public abstract class TextViewFactory extends AbstractViewFactory<TextView, LanguageSelector>{
+public class TextViewFactory extends AbstractViewFactory<TextView, LanguageSelector>{
 
-	protected TextViewFactory(Context context) {
+	public TextViewFactory(Context context) {
 		super(context);
 	}
 
@@ -17,5 +18,21 @@ public abstract class TextViewFactory extends AbstractViewFactory<TextView, Lang
 		TextView textView = new TextView(context);
 		prepareData(textView, entity);
 		return textView;
+	}
+
+	@Override
+	public void prepareData(TextView textView, LanguageSelector entity) {
+		textView.setText(entity.getText());
+		textView.setTag(entity.getTag());
+		textView.setPadding(2, 2, 2, 2);
+		textView.setTextAppearance(context, entity.getStyle());
+		textView.setTextColor(context.getResources().getColor(entity.getTextColor()));
+		textView.setOnClickListener(entity.getHadler());
+		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+				ViewGroup.LayoutParams.WRAP_CONTENT,
+				ViewGroup.LayoutParams.MATCH_PARENT
+		);
+		textView.setGravity(TextView.TEXT_ALIGNMENT_GRAVITY);
+		textView.setLayoutParams(params);
 	}
 }
