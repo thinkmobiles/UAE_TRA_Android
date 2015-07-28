@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.uae.tra_smart_services.R;
+
 /**
  * Created by andrey on 7/26/15.
  */

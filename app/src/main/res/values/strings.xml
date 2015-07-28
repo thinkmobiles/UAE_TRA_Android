@@ -53,6 +53,10 @@
     <string name="str_settings">Settings</string>
     <!--               Home screens                -->
 
-
+    <string-array name="languages">
+        <item>english</item>
+        <item>arabic</item>
+        <item>spanish</item>
+    </string-array>
 
 </resources>

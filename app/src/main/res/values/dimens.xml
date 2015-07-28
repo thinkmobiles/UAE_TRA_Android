@@ -13,7 +13,7 @@
     <dimen name="dp_edittext_drawable_padding">7dp</dimen>
     <dimen name="dp_forgot_pass_static_text_padding">10dp</dimen>
     <dimen name="dp_register_now_static_text_padding">30dp</dimen>
-    <dimen name="sp_settings_static_text_size">20dp</dimen>
+    <dimen name="sp_settings_static_text_size">18dp</dimen>
     <dimen name="dp_register_actions_area_padding">20dp</dimen>
     <dimen name="dp_login_now_static_text_padding">15dp</dimen>
     <dimen name="dp_auth_button_corner">2dp</dimen>

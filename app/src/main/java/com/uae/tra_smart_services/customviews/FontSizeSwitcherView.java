@@ -13,7 +13,7 @@ import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 /**
  * Created by ak-buffalo on 23.07.15.
  */
-public class FontSizeSwitcherView extends BaseCustomSwitcher{
+public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
 
     protected int scaleMin, scaleMax, scaleStep, fontScale, fontScaleNew;
 
@@ -55,26 +55,21 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher{
     @Override
     protected void initConfigs() {
         if (fontScale < scaleMax){
-            bindButton(makeBigger);
+            bindView(makeBigger);
         } else {
-            unBindButton(makeBigger);
+            unBindView(makeBigger);
         }
 
         if (fontScale > scaleMin){
-            bindButton(makeSmaller);
+            bindView(makeSmaller);
         } else {
-            unBindButton(makeSmaller);
+            unBindView(makeSmaller);
         }
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.layout_fontsize_swither;
-    }
-
-    @Override
-    protected int getRootViewId() {
-        return 0;
     }
 
     @Override
@@ -98,28 +93,28 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher{
 
     private void makeTextBigger(View view){
         if ((fontScaleNew = fontScale + scaleStep) >= scaleMax) {
-            unBindButton(view);
+            unBindView(view);
         } else if((fontScaleNew = fontScale + scaleStep) == scaleMin + scaleStep){
-            bindButton(makeSmaller);
+            bindView(makeSmaller);
         }
     }
 
     private void makeTextSmaller(View view){
         if ((fontScaleNew = fontScale - scaleStep) <= scaleMin) {
-            unBindButton(view);
+            unBindView(view);
         } else if((fontScaleNew = fontScale - scaleStep) == scaleMax - scaleStep){
-            bindButton(makeBigger);
+            bindView(makeBigger);
         }
     }
 
     @Override
-    protected void bindButton(View view){
+    protected void bindView(View view){
         ((TextView)view).setOnClickListener(this);
         ((TextView)view).setTextColor(getResources().getColor(R.color.hex_black_color));
     }
 
     @Override
-    protected void unBindButton(View view){
+    protected void unBindView(View view){
         ((TextView)view).setOnClickListener(null);
         ((TextView)view).setTextColor(getResources().getColor(R.color.hex_color_light_gray));
     }

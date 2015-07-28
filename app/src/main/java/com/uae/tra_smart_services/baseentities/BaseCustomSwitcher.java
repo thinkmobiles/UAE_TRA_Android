@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.baseentities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -15,17 +16,13 @@ import com.uae.tra_smart_services.interfaces.I_SettingsChanged;
 /**
  * Created by ak-buffalo on 24.07.15.
  */
-public abstract class BaseCustomSwitcher extends LinearLayout implements View.OnClickListener {
+public abstract class BaseCustomSwitcher extends LinearLayout{
 
     protected I_SettingsChanged mSettingsChangeListener;
 
     public enum Type {
         FONT, LANGUAGE, THEME
     }
-
-    protected ViewGroup rootView;
-
-    protected SharedPreferences prefs;
 
     public BaseCustomSwitcher(Context context) {
         super(context);
@@ -34,6 +31,7 @@ public abstract class BaseCustomSwitcher extends LinearLayout implements View.On
     public BaseCustomSwitcher(Context context, AttributeSet _attrs) {
         super(context, _attrs);
         initData(getContext(), _attrs);
+        setWillNotDraw(false);
     }
 
     public <T> void globalInit(T prefs){
@@ -56,8 +54,14 @@ public abstract class BaseCustomSwitcher extends LinearLayout implements View.On
     protected void initData(Context context, AttributeSet attrs){}
 
     protected void initViews() {
-        inflate(getContext(), getLayoutId(), this);
-        rootView = findView(getRootViewId());
+        if (getLayoutId() != -1){
+            inflate(getContext(), getLayoutId(), this);
+        }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
     }
 
     protected void initConfigs() {}
@@ -66,33 +70,11 @@ public abstract class BaseCustomSwitcher extends LinearLayout implements View.On
         mSettingsChangeListener = _listener;
     }
 
-    protected void unRegisterObserver(){
-        mSettingsChangeListener = null;
-    }
+    protected abstract void bindView(View view);
 
-    protected String getStrPref(String _prefName, String _def){
-        return prefs.getString(_prefName, _def);
-    }
-
-    protected void updateStrPref(String _prefName, String _value){
-        prefs.edit().putString(_prefName, _value).commit();
-    }
-
-    protected int getIntPref(String _prefName, int _def){
-        return prefs.getInt(_prefName, _def);
-    }
-
-    protected void updateIntPref(String _prefName, int _value){
-        prefs.edit().putInt(_prefName, _value).commit();
-    }
-
-    protected abstract void bindButton(View view);
-
-    protected abstract void unBindButton(View view);
+    protected abstract void unBindView(View view);
 
     protected abstract @LayoutRes int getLayoutId();
-
-    protected abstract @IdRes int getRootViewId();
 
     public abstract Type getType();
 

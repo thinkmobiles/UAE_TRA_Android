@@ -9,6 +9,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 import com.uae.tra_smart_services.customviews.FontSizeSwitcherView;
 import com.uae.tra_smart_services.customviews.LanguageSwitcherView;
+import com.uae.tra_smart_services.customviews.ThemeSwitcherView;
 import com.uae.tra_smart_services.interfaces.I_SettingsChanged;
 
 import static com.uae.tra_smart_services.entities.H.coalesce;
@@ -21,17 +22,42 @@ public class SettingsActivity extends Activity
 
     private SharedPreferences prefs;
 
+    private FontSizeSwitcherView fontSwitch;
+    private LanguageSwitcherView langSwitch;
+    private ThemeSwitcherView themeSwitch;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        FontSizeSwitcherView fontSwitch = (FontSizeSwitcherView) findViewById(R.id.cvFontSwitch);
+        setContentView(R.layout.activity_settings);
+
+        globalInitViews();
+    }
+
+    private void globalInitViews(){
+        fontSwitch = (FontSizeSwitcherView) findViewById(R.id.cvFontSwitch);
         fontSwitch.globalInit(coalesce(prefs.getInt(BaseCustomSwitcher.Type.FONT.toString(), 10), 10));
 
-        LanguageSwitcherView langSwitch = (LanguageSwitcherView) findViewById(R.id.cvLangSwitch);
-        langSwitch.globalInit(coalesce(prefs.getString(BaseCustomSwitcher.Type.LANGUAGE.toString(), "eng"), "eng"));
+        langSwitch = (LanguageSwitcherView) findViewById(R.id.cvLangSwitch);
+        langSwitch.globalInit(
+                prefs.getString(
+                        BaseCustomSwitcher.Type.LANGUAGE.toString(),
+                        getResources().getStringArray(R.array.languages)[0]
+                )
+        );
+
+        themeSwitch = (ThemeSwitcherView) findViewById(R.id.cvThemeSwitch);
+        themeSwitch.globalInit(
+                prefs.getString(
+                        BaseCustomSwitcher.Type.THEME.toString(),
+                        getResources().getStringArray(R.array.colors)[0]
+                )
+        );
+        themeSwitch.invalidate();
     }
 
     @Override

@@ -64,11 +64,11 @@
 
             <com.uae.tra_smart_services.customviews.LanguageSwitcherView
                 android:id="@+id/cvLangSwitch"
+                tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:padding="5dp"
-                tools:contex=".SettingsActivity"
-                tra:languages="english|arabic|german|spanish" />
+                android:entries="@array/languages"/>
 
         </LinearLayout>
 
@@ -86,6 +86,7 @@
 
             <com.uae.tra_smart_services.customviews.FontSizeSwitcherView
                 android:id="@+id/cvFontSwitch"
+                tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:padding="5dp"
@@ -110,9 +111,11 @@
 
             <com.uae.tra_smart_services.customviews.ThemeSwitcherView
                 android:id="@+id/cvThemeSwitch"
+                tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
-                android:padding="5dp" />
+                android:padding="5dp"
+                android:entries="@array/colors"/>
         </LinearLayout>
 
         <View style="@style/AuthorizationFieldsSeparator" />

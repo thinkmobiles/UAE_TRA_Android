@@ -20,19 +20,13 @@ import java.util.Map;
 /**
  * Created by ak-buffalo on 24.07.15.
  */
-public class LanguageSwitcherView extends BaseCustomSwitcher {
+public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
 
     private String language;
 
     private TextView acitveLang;
 
-    private static final Map<String, TextView> stateMap = new HashMap<String, TextView>(){
-        {
-            put("eng", null);
-            put("arab", null);
-            put("span", null);
-        }
-    };
+    private static final Map<String, TextView> stateMap = new HashMap<>();
 
     private TextViewFactory textViewFactoryFactory;
 
@@ -69,7 +63,7 @@ public class LanguageSwitcherView extends BaseCustomSwitcher {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         R.color.hex_auth_fields_separator_color
                 );
-                rootView.addView(separatorFactory.createView(separator));
+                addView(separatorFactory.createView(separator));
             }
             LanguageSelector languageSelector = new LanguageSelector(
                     entry.getKey(), entry.getKey(), android.R.style.TextAppearance_Large, R.color.hex_black_color, this
@@ -79,10 +73,10 @@ public class LanguageSwitcherView extends BaseCustomSwitcher {
 
             if(language.equals(entry.getKey())){
                 acitveLang = view;
-                unBindButton(view);
+                unBindView(view);
             }
             entry.setValue(view);
-            rootView.addView(view);
+            addView(view);
             index++;
         }
     }
@@ -90,9 +84,11 @@ public class LanguageSwitcherView extends BaseCustomSwitcher {
     @Override
     protected void initData(Context context, AttributeSet attrs){
         TypedArray typedArrayData =
-                context.getTheme().obtainStyledAttributes(attrs, R.styleable.FontSizeSwitcherView, 0, 0);
+                context.getTheme().obtainStyledAttributes(attrs, R.styleable.LanguageSwitcherView, 0, 0);
         try {
-            // TODO Change data obtaining logic to have ability declare required languages in XMl
+            for(CharSequence lang : typedArrayData.getTextArray(R.styleable.LanguageSwitcherView_android_entries)){
+                stateMap.put(lang.toString(), null);
+            }
         } finally {
             typedArrayData.recycle();
         }
@@ -104,32 +100,27 @@ public class LanguageSwitcherView extends BaseCustomSwitcher {
     }
 
     @Override
-    protected int getRootViewId() {
-        return R.id.container_switcher_view;
-    }
-
-    @Override
     public Type getType() {
         return Type.LANGUAGE;
     }
 
     @Override
-    protected void bindButton(View view){
+    protected void bindView(View view){
         acitveLang.setOnClickListener(this);
         acitveLang.setTextColor(getResources().getColor(R.color.hex_black_color));
         acitveLang = (TextView) view;
     }
 
     @Override
-    protected void unBindButton(View view){
+    protected void unBindView(View view){
         ((TextView) view).setOnClickListener(null);
         ((TextView) view).setTextColor(getResources().getColor(R.color.hex_color_light_gray));
     }
 
     @Override
     public void onClick(View view) {
-        unBindButton(view);
-        bindButton(view);
+        unBindView(view);
+        bindView(view);
         mSettingsChangeListener.onSettingsChanged(this, view.getTag());
     }
 }
