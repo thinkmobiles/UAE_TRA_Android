@@ -5,14 +5,15 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.ShapeDrawable;
+import android.os.SystemClock;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
+import com.uae.tra_smart_services.entities.CirclePoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
 
     private Integer currentTheme;
 
-    private ShapeDrawable mDrawable;
+    private ArrayList<CirclePoint> points;
 
     public ThemeSwitcherView(Context context) {
         super(context);
@@ -37,14 +38,14 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
     }
 
     protected void onDraw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setColor(getResources().getColor(R.color.hex_black_color));
-        canvas.drawLine(0, 0, getWidth(), getHeight(), paint);
+        for (CirclePoint p : points) {
+            canvas.drawCircle(p.dX, getHeight() / 2, getHeight() / 4, p.paint);
+        }
     }
 
     @Override
     public <T> void initPreferences(T prefs) {
-        currentTheme = Color.parseColor(prefs.toString());
+        currentTheme = Integer.valueOf(prefs.toString());
     }
 
     @Override
@@ -58,21 +59,40 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         }
     }
 
+    private CirclePoint getCirclePoint(float circleDX, Paint.Style style, int color){
+        CirclePoint p = new CirclePoint();
+        p.dX = Math.round(circleDX);
+        p.paint = new Paint();
+        p.paint.setStyle(style);
+        p.paint.setStrokeWidth(5f);
+        p.paint.setColor(color);
+        return p;
+    }
+
     @Override
     protected void initViews() {
-//        for(Integer color : themes){
-//            // Instantiate an ImageView and define its properties
-//            ImageView i = new ImageView(getContext());
-//            i.setImageResource(R.drawable.ic_temp_left_field_icon);
-//            i.setAdjustViewBounds(true); // set the ImageView bounds to match the Drawable's dimensions
-//            i.setLayoutParams(
-//                    new Gallery.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-//            );
-//            // Add the ImageView to the layout and set the layout as the content view
-//            rootView.addView(i);
-//        }
-//
-//        bindView(rootView);
+        points = new ArrayList<>();
+        int containerWidth = getLayoutParams().width;
+        int themesSize = themes.size();
+        for (int i = 0; i < themesSize; i++){
+            int color;
+            Paint.Style style;
+            if ((color = themes.get(i)) == currentTheme){
+                style = Paint.Style.STROKE;
+            } else {
+                style = Paint.Style.FILL_AND_STROKE;
+            }
+            points.add(getCirclePoint(getCircleDX(containerWidth, themesSize, i), style, color));
+            postInvalidate();
+        }
+        setOnTouchListener(this);
+    }
+
+    private float getCircleDX(float width, int count, int position){
+        float first = Float.valueOf(position) / Float.valueOf(count);
+        float second = Float.valueOf((position + 1)) / Float.valueOf(count);
+        float dX = width * (first + second) / 2f;
+        return dX;
     }
 
     @Override
@@ -81,36 +101,55 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
     }
 
     @Override
-    protected void bindView(View view) {
-        view.setOnTouchListener(this);
-    }
+    protected void bindView(View view) {/*Unimplemented method*/}
 
     @Override
-    protected void unBindView(View view) {
-        // TODO Implements logic
-    }
+    protected void unBindView(View view) {/*Unimplemented method*/}
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
+    long touchDownTime;
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        switch(event.getAction()){
+        boolean handled = false;
+        switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                Log.v("onTouch", "ACTION_DOWN");
+                touchDownTime = SystemClock.elapsedRealtime();
+                handled = true;
                 break;
             case MotionEvent.ACTION_MOVE:
-                Log.v("onTouch", "ACTION_MOVE");
+                handled = false;
                 break;
+
             case MotionEvent.ACTION_UP:
-                Log.v("onTouch", "ACTION_UP");
+                if (SystemClock.elapsedRealtime() - touchDownTime <= 250){
+                    return handleClick(event.getX(), event.getY());
+                }
                 break;
         }
+        return handled;
+    }
+
+    private boolean handleClick(float dX, float dY ){
+        for(CirclePoint point : points) {
+            if (isInArea(point, dX, dY)) {
+                point.paint.setStyle(Paint.Style.STROKE);
+                mSettingsChangeListener.onSettingsChanged(this, point.paint.getColor());
+            } else {
+                point.paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            }
+        }
         invalidate();
-        mSettingsChangeListener.onSettingsChanged(this, "#ffff0a00");
-        return false;
+        return true;
+    }
+
+    private boolean isInArea(CirclePoint point, float x, float y){
+        float halfSector = Float.valueOf(getWidth()) / points.size() / 2;
+        return x >= point.dX - halfSector && x <= point.dX + halfSector;
     }
 
     @Override

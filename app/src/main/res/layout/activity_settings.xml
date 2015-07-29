@@ -66,7 +66,8 @@
                 android:id="@+id/cvLangSwitch"
                 tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
                 android:padding="5dp"
                 android:entries="@array/languages"/>
 
@@ -88,11 +89,14 @@
                 android:id="@+id/cvFontSwitch"
                 tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:padding="5dp"
                 tra:scaleMin="6"
                 tra:scaleMax="14"
-                tra:scaleStep="2" />
+                tra:scaleStep="2"
+                android:layout_gravity="right"
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -113,7 +117,7 @@
                 android:id="@+id/cvThemeSwitch"
                 tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
-                android:layout_width="wrap_content"
+                android:layout_width="156dp"
                 android:padding="5dp"
                 android:entries="@array/colors"/>
         </LinearLayout>

@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.activities;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
@@ -52,12 +53,11 @@ public class SettingsActivity extends Activity
 
         themeSwitch = (ThemeSwitcherView) findViewById(R.id.cvThemeSwitch);
         themeSwitch.globalInit(
-                prefs.getString(
+                prefs.getInt(
                         BaseCustomSwitcher.Type.THEME.toString(),
-                        getResources().getStringArray(R.array.colors)[0]
+                        Color.parseColor(getResources().getStringArray(R.array.colors)[0])
                 )
         );
-        themeSwitch.invalidate();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class SettingsActivity extends Activity
                 break;
             case THEME:
                 prefs.edit()
-                        .putString(BaseCustomSwitcher.Type.THEME.toString(), (String) data)
+                        .putInt(BaseCustomSwitcher.Type.THEME.toString(), (int) data)
                         .commit();
                 break;
         }
