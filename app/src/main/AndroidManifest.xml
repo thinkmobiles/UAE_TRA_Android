@@ -27,6 +27,7 @@
 
         <activity
             android:name=".activities.SettingsActivity"
+            android:configChanges="locale"
             android:parentActivityName=".activities.HomeActivity"><intent-filter>
             <action android:name="android.intent.action.MAIN" />
 

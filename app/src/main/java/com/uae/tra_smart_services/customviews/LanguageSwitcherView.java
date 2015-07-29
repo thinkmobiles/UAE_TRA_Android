@@ -52,12 +52,28 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
     }
 
     @Override
+    protected void initData(Context context, AttributeSet attrs){
+        TypedArray typedArrayData =
+                context.getTheme().obtainStyledAttributes(attrs, R.styleable.LanguageSwitcherView, 0, 0);
+
+        CharSequence[] str = typedArrayData.getTextArray(R.styleable.LanguageSwitcherView_android_entries);
+
+        try {
+            for(CharSequence lang : typedArrayData.getTextArray(R.styleable.LanguageSwitcherView_android_entries)){
+                stateMap.put(lang.toString(), null);
+            }
+        } finally {
+            typedArrayData.recycle();
+        }
+    }
+
+    @Override
     protected void initViews() {
         super.initViews();
         int index = 0;
         for (Map.Entry<String,TextView> entry : stateMap.entrySet()){
             LanguageSelector languageSelector = new LanguageSelector(
-                    entry.getKey(), entry.getKey(), android.R.style.TextAppearance_Large, R.color.hex_black_color, this
+                    entry.getKey(), entry.getKey(), android.R.style.TextAppearance_Medium, R.color.hex_black_color, this
             );
             TextView view = textViewFactoryFactory.createView(languageSelector);
 
@@ -78,19 +94,6 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
             entry.setValue(view);
             addView(view);
             index++;
-        }
-    }
-
-    @Override
-    protected void initData(Context context, AttributeSet attrs){
-        TypedArray typedArrayData =
-                context.getTheme().obtainStyledAttributes(attrs, R.styleable.LanguageSwitcherView, 0, 0);
-        try {
-            for(CharSequence lang : typedArrayData.getTextArray(R.styleable.LanguageSwitcherView_android_entries)){
-                stateMap.put(lang.toString(), null);
-            }
-        } finally {
-            typedArrayData.recycle();
         }
     }
 

@@ -25,7 +25,7 @@ public class H {
     /**
      * Returns parsed resource xml
      * */
-    public static Map<String, String> parseXml(XmlResourceParser parser){
+    public static Map<String, String> parseXmlToMap(XmlResourceParser parser){
         Map<String,String> map = null;
         String key = null, value = null;
         try {

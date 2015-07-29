@@ -12,33 +12,33 @@
     <string name="forgot_password_title">Forgot password</string>
 
     <!--            Username field               -->
-    <string name="str_username">Username</string>
+    <string name="str_username">Nombre de usuario</string>
     <!--            Email field               -->
-    <string name="str_email">Email</string>
+    <string name="str_email">email</string>
     <!--            Language field               -->
-    <string name="str_language">Language</string>
+    <string name="str_language">idioma</string>
     <!--            Gender field               -->
-    <string name="str_gender">Gender</string>
+    <string name="str_gender">género</string>
     <!--            Font size field               -->
-    <string name="str_fontsize">Font size</string>
+    <string name="str_fontsize">tamaño de fuente</string>
     <!--            Theme options field               -->
-    <string name="str_themesoptions">Theme options</string>
+    <string name="str_themesoptions">opciones de tema</string>
     <!--            Phone field               -->
-    <string name="str_phone">Phone</string>
+    <string name="str_phone">teléfono</string>
     <!--            Password field               -->
-    <string name="str_password">Password</string>
+    <string name="str_password">contraseña</string>
     <!--            Forgot password field               -->
-    <string name="str_forgot_password">Forgot the password</string>
+    <string name="str_forgot_password">¿Ha olvidado la contraseña</string>
     <!--            Sign in button               -->
-    <string name="str_login">Login</string>
+    <string name="str_login">login</string>
     <!--            Register button               -->
-    <string name="str_register">Register</string>
+    <string name="str_register">Registro</string>
     <!--            Restore button               -->
-    <string name="str_restore">Restore</string>
+    <string name="str_restore">restaurar</string>
     <!--            Register now button               -->
-    <string name="str_register_now">Register now</string>
+    <string name="str_register_now">Regístrate ahora</string>
     <!--            Logout button               -->
-    <string name="str_logout">Logout</string>
+    <string name="str_logout">Cerrar Sesión</string>
 
     <!--                Settings screens                -->
     <!--            Font size switcher               -->
@@ -52,11 +52,5 @@
     <string name="str_crm">CRM</string>
     <string name="str_settings">Settings</string>
     <!--               Home screens                -->
-
-    <string-array name="languages">
-        <item>English</item>
-        <item>العربية</item>
-        <item>Español</item>
-    </string-array>
 
 </resources>
