@@ -66,10 +66,9 @@
                 android:id="@+id/cvLangSwitch"
                 tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1.2"
-                android:padding="5dp"
-                android:entries="@array/languages"/>
+                android:layout_width="match_parent"
+                android:entries="@array/languages"
+                android:gravity="center|right" />
 
         </LinearLayout>
 
@@ -89,14 +88,12 @@
                 android:id="@+id/cvFontSwitch"
                 tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:padding="5dp"
                 tra:scaleMin="6"
                 tra:scaleMax="14"
                 tra:scaleStep="2"
-                android:layout_gravity="right"
-                android:gravity="center" />
+                android:gravity="center|right" />
 
         </LinearLayout>
 
@@ -117,9 +114,10 @@
                 android:id="@+id/cvThemeSwitch"
                 tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
-                android:layout_width="156dp"
+                android:layout_width="match_parent"
                 android:padding="5dp"
-                android:entries="@array/colors"/>
+                android:entries="@array/colors"
+                android:gravity="center|right" />
         </LinearLayout>
 
         <View style="@style/AuthorizationFieldsSeparator" />

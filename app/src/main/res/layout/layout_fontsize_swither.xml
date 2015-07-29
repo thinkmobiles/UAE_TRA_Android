@@ -3,9 +3,7 @@
 
     <TextView
         android:id="@+id/tvMakeBigger_SA"
-        style="@style/UserSettingsEditableText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/UserSettingsSwitchers"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/str_A_plus"
         android:textColor="@color/hex_black_color"/>
@@ -14,9 +12,7 @@
 
     <TextView
         android:id="@+id/tvMakeSmaller_SA"
-        style="@style/UserSettingsEditableText"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        style="@style/UserSettingsSwitchers"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/hex_black_color"
         android:text="@string/str_A_minus"/>

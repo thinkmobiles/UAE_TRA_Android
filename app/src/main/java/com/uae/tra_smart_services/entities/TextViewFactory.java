@@ -1,6 +1,8 @@
 package com.uae.tra_smart_services.entities;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -25,8 +27,10 @@ public class TextViewFactory extends AbstractViewFactory<TextView, LanguageSelec
 	@Override
 	public void prepareData(TextView textView, LanguageSelector entity) {
 		textView.setText(entity.getText());
+		textView.setGravity(Gravity.CENTER_VERTICAL);
 		textView.setTag(entity.getTag());
-		textView.setPadding(2, 2, 2, 2);
+		int paddingSide = context.getResources().getDimensionPixelSize(R.dimen.dp_divider_padding_side);
+		textView.setPadding(paddingSide, textView.getPaddingTop(), paddingSide, textView.getPaddingBottom());
 		textView.setTextAppearance(context, entity.getStyle());
 		textView.setTextColor(context.getResources().getColor(entity.getTextColor()));
 		textView.setOnClickListener(entity.getHadler());
@@ -34,7 +38,6 @@ public class TextViewFactory extends AbstractViewFactory<TextView, LanguageSelec
 				ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.MATCH_PARENT
 		);
-		textView.setGravity(TextView.TEXT_ALIGNMENT_GRAVITY);
 		textView.setLayoutParams(params);
 	}
 }

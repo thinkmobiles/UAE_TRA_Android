@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">UAE TRA</string>
+    <string name="title_activity_splash">SplashActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_authorization">AuthorizationActivity</string>
+
+    <!--                Authorization screens                -->
+    <string name="login_title">Login</string>
+    <string name="register_title">Create account</string>
+    <string name="forgot_password_title">Forgot password</string>
+
+    <!--            Username field               -->
+    <string name="str_username">اسم المستخدم</string>
+    <!--            Email field               -->
+    <string name="str_email">البريد الإلكتروني</string>
+    <!--            Language field               -->
+    <string name="str_language">لغة</string>
+    <!--            Gender field               -->
+    <string name="str_gender">جنس</string>
+    <!--            Font size field               -->
+    <string name="str_fontsize">حجم الخط</string>
+    <!--            Theme options field               -->
+    <string name="str_themesoptions">خيارات الموضوع</string>
+    <!--            Phone field               -->
+    <string name="str_phone">هاتف</string>
+    <!--            Password field               -->
+    <string name="str_password">كلمة السر</string>
+    <!--            Forgot password field               -->
+    <string name="str_forgot_password">نسيت كلمة المرور</string>
+    <!--            Sign in button               -->
+    <string name="str_login">تسجيل الدخول</string>
+    <!--            Register button               -->
+    <string name="str_register">تسجيل</string>
+    <!--            Restore button               -->
+    <string name="str_restore">استعادة</string>
+    <!--            Register now button               -->
+    <string name="str_register_now">سجل الان</string>
+    <!--            Logout button               -->
+    <string name="str_logout">خروج</string>
+
+    <!--                Settings screens                -->
+    <!--            Font size switcher               -->
+    <string name="str_A_plus">A+</string>
+    <string name="str_A_minus">"<b>A-</b>"</string>
+
+
+    <!--               Home screens                -->
+    <string name="str_home">Home</string>
+    <string name="str_index">Index</string>
+    <string name="str_crm">CRM</string>
+    <string name="str_settings">Settings</string>
+    <!--               Home screens                -->
+
+    <string-array name="languages">
+        <item>english</item>
+        <item>arabic</item>
+        <item>spanish</item>
+    </string-array>
+
+</resources>

@@ -9,7 +9,6 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
@@ -28,6 +27,8 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
     private Integer currentTheme;
 
     private ArrayList<CirclePoint> points;
+
+    int containerWidth;
 
     public ThemeSwitcherView(Context context) {
         super(context);
@@ -71,20 +72,6 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
 
     @Override
     protected void initViews() {
-        points = new ArrayList<>();
-        int containerWidth = getLayoutParams().width;
-        int themesSize = themes.size();
-        for (int i = 0; i < themesSize; i++){
-            int color;
-            Paint.Style style;
-            if ((color = themes.get(i)) == currentTheme){
-                style = Paint.Style.STROKE;
-            } else {
-                style = Paint.Style.FILL_AND_STROKE;
-            }
-            points.add(getCirclePoint(getCircleDX(containerWidth, themesSize, i), style, color));
-            postInvalidate();
-        }
         setOnTouchListener(this);
     }
 
@@ -109,6 +96,19 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        containerWidth = w;
+        points = new ArrayList<>();
+        int themesSize = themes.size();
+        for (int i = 0; i < themesSize; i++){
+            int color;
+            Paint.Style style;
+            if ((color = themes.get(i)) == currentTheme){
+                style = Paint.Style.STROKE;
+            } else {
+                style = Paint.Style.FILL_AND_STROKE;
+            }
+            points.add(getCirclePoint(getCircleDX(containerWidth, themesSize, i), style, color));
+        }
     }
 
     long touchDownTime;

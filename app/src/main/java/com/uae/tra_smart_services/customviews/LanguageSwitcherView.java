@@ -56,20 +56,20 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
         super.initViews();
         int index = 0;
         for (Map.Entry<String,TextView> entry : stateMap.entrySet()){
+            LanguageSelector languageSelector = new LanguageSelector(
+                    entry.getKey(), entry.getKey(), android.R.style.TextAppearance_Large, R.color.hex_black_color, this
+            );
+            TextView view = textViewFactoryFactory.createView(languageSelector);
+
             if (index != 0){
                 Separator separator = new Separator(
                         getContext(),
-                        getResources().getInteger(R.integer.int_separator_width),
-                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        getResources().getDimensionPixelSize(R.dimen.dp_authorization_fields_separator_height),
+                        view.getLineHeight() * 4 / 3,
                         R.color.hex_auth_fields_separator_color
                 );
                 addView(separatorFactory.createView(separator));
             }
-            LanguageSelector languageSelector = new LanguageSelector(
-                    entry.getKey(), entry.getKey(), android.R.style.TextAppearance_Large, R.color.hex_black_color, this
-            );
-
-            TextView view = textViewFactoryFactory.createView(languageSelector);
 
             if(language.equals(entry.getKey())){
                 acitveLang = view;
@@ -113,7 +113,7 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
 
     @Override
     protected void unBindView(View view){
-        ((TextView) view).setOnClickListener(null);
+        view.setOnClickListener(null);
         ((TextView) view).setTextColor(getResources().getColor(R.color.hex_color_light_gray));
     }
 

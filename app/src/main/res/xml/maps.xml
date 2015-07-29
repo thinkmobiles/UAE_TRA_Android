@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <map linked="true">
+        <entry key="eng">english</entry>
+        <entry key="ar">arabic</entry>
+        <entry key="es">spanish</entry>
+    </map>
+</resources>

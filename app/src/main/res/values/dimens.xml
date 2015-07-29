@@ -19,4 +19,5 @@
     <dimen name="dp_auth_button_corner">2dp</dimen>
     <dimen name="dp_dashboard_tab_padding">3dp</dimen>
     <dimen name="dp_dashboard_tab_drawable_padding">3dp</dimen>
+    <dimen name="dp_divider_padding_side">3dp</dimen>
 </resources>
