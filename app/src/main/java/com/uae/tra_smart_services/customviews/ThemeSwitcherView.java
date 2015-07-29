@@ -45,7 +45,7 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
 
     @Override
     public <T> void initPreferences(T prefs) {
-        currentTheme = Integer.valueOf(prefs.toString());
+        currentTheme = (Integer) prefs;
     }
 
     @Override
