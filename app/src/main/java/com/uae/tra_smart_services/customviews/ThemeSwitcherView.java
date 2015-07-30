@@ -22,14 +22,6 @@ import java.util.List;
  */
 public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouchListener {
 
-    private List<Integer> themes;
-
-    private Integer currentTheme;
-
-    private ArrayList<CirclePoint> points;
-
-    int containerWidth;
-
     public ThemeSwitcherView(Context context) {
         super(context);
     }
@@ -38,17 +30,13 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         super(context, attrs);
     }
 
-    protected void onDraw(Canvas canvas) {
-        for (CirclePoint p : points) {
-            canvas.drawCircle(p.dX, getHeight() / 2, getHeight() / 4, p.paint);
-        }
-    }
-
+    private Integer currentTheme;
     @Override
     public <T> void initPreferences(T prefs) {
         currentTheme = (Integer) prefs;
     }
 
+    private List<Integer> themes;
     @Override
     protected void initData(Context context, AttributeSet attrs){
         TypedArray typedArrayData =
@@ -71,7 +59,7 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
     }
 
     @Override
-    protected void initViews() {
+    protected void initListeners() {
         setOnTouchListener(this);
     }
 
@@ -93,6 +81,8 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
     @Override
     protected void unBindView(View view) {/*Unimplemented method*/}
 
+    private int containerWidth;
+    private ArrayList<CirclePoint> points;
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -111,8 +101,13 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         }
     }
 
-    long touchDownTime;
+    protected void onDraw(Canvas canvas) {
+        for (CirclePoint p : points) {
+            canvas.drawCircle(p.dX, getHeight() / 2, getHeight() / 4, p.paint);
+        }
+    }
 
+    long touchDownTime;
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         boolean handled = false;

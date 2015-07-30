@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="hex_primary_orange">#fff69023</color>
     <color name="hex_dark_orange">#ffd47624</color>
+
+    <color name="hex_primary_green">#ff00f62a</color>
+    <color name="hex_dark_green">#ff129900</color>
+
     <color name="hex_black_color">#ff000000</color>
     <color name="hex_text_color_white">#ffffff</color>
     <color name="hex_color_accent">#ff8c8c8c</color>
@@ -21,6 +26,7 @@
     <color name="hex_auth_button_background_pressed_color">#ffaeaeae</color>
     <!--[END]                       AuthorizationActivity                         [END]-->
 
+    <!--[START]                     SettingsActivity                        [START]-->
     <color name="hex_red_color">#ffff0a00</color>
     <color name="hex_green_color">#ff0bff54</color>
     <color name="hex_blue_color">#ff0f61ff</color>
@@ -30,4 +36,5 @@
         <item>#ff0bff54</item>
         <item>#ff0f61ff</item>
     </string-array>
+    <!--[END]                       SettingsActivity                         [END]-->
 </resources>

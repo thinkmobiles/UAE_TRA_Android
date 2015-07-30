@@ -2,9 +2,10 @@ package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.content.res.XmlResourceParser;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
@@ -14,19 +15,22 @@ import com.uae.tra_smart_services.entities.Separator;
 import com.uae.tra_smart_services.entities.SeparatorFactory;
 import com.uae.tra_smart_services.entities.TextViewFactory;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+
+import static com.uae.tra_smart_services.entities.H.parseXmlToMap;
 
 /**
  * Created by ak-buffalo on 24.07.15.
  */
 public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
 
-    private String language;
-
     private TextView acitveLang;
 
-    private static final Map<String, TextView> stateMap = new HashMap<>();
+    private Map<String, String> langsMap;
 
     private TextViewFactory textViewFactoryFactory;
 
@@ -47,23 +51,15 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
     }
 
     @Override
-    public <T> void initPreferences(T prefs){
-        language = (String) prefs;
-    }
+    public <T> void initPreferences(T prefs){}
 
     @Override
     protected void initData(Context context, AttributeSet attrs){
-        TypedArray typedArrayData =
-                context.getTheme().obtainStyledAttributes(attrs, R.styleable.LanguageSwitcherView, 0, 0);
-
-        CharSequence[] str = typedArrayData.getTextArray(R.styleable.LanguageSwitcherView_android_entries);
-
         try {
-            for(CharSequence lang : typedArrayData.getTextArray(R.styleable.LanguageSwitcherView_android_entries)){
-                stateMap.put(lang.toString(), null);
-            }
-        } finally {
-            typedArrayData.recycle();
+            XmlResourceParser parser = context.getResources().getXml(R.xml.languages);
+            langsMap = parseXmlToMap(parser);
+        } catch(Exception ex) {
+            Log.e(this.getClass().getSimpleName().toString(), ex.toString());
         }
     }
 
@@ -71,28 +67,27 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
     protected void initViews() {
         super.initViews();
         int index = 0;
-        for (Map.Entry<String,TextView> entry : stateMap.entrySet()){
+        for (Map.Entry<String,String> entry : langsMap.entrySet()){
             LanguageSelector languageSelector = new LanguageSelector(
-                    entry.getKey(), entry.getKey(), android.R.style.TextAppearance_Medium, R.color.hex_black_color, this
+                    entry.getValue(), entry.getKey(), android.R.style.TextAppearance_Medium, R.color.hex_black_color, this
             );
-            TextView view = textViewFactoryFactory.createView(languageSelector);
+            TextView langSelector = textViewFactoryFactory.createView(languageSelector);
 
             if (index != 0){
                 Separator separator = new Separator(
                         getContext(),
                         getResources().getDimensionPixelSize(R.dimen.dp_authorization_fields_separator_height),
-                        view.getLineHeight() * 4 / 3,
+                        langSelector.getLineHeight() * 4 / 3,
                         R.color.hex_auth_fields_separator_color
                 );
                 addView(separatorFactory.createView(separator));
             }
 
-            if(language.equals(entry.getKey())){
-                acitveLang = view;
-                unBindView(view);
+            if(Locale.getDefault().getLanguage().equals(entry.getKey())){
+                acitveLang = langSelector;
+                unBindView(langSelector);
             }
-            entry.setValue(view);
-            addView(view);
+            addView(langSelector);
             index++;
         }
     }

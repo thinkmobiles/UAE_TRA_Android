@@ -18,7 +18,7 @@ public abstract class BaseAuthorizationFragment extends BaseFragment{
             actionsListener = (AuthorizationActionsListener) _activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(_activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement AuthorizationActionsListener");
         }
     }
 

@@ -6,10 +6,6 @@
         <attr name="scaleStep" format="integer"/>
     </declare-styleable>
 
-    <declare-styleable name="LanguageSwitcherView">
-        <attr name="android:entries" />
-    </declare-styleable>
-
     <declare-styleable name="ThemeSwitcherView">
         <attr name="android:entries" />
     </declare-styleable>

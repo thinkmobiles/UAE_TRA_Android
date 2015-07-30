@@ -3,6 +3,7 @@ package com.uae.tra_smart_services.baseentities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -36,22 +37,21 @@ public abstract class BaseCustomSwitcher extends LinearLayout{
 
     public <T> void globalInit(T prefs){
         initPreferences(prefs);
+        globalInit();
+    }
+
+    public void globalInit(){
         initFactories();
         initViews();
+        initListeners();
         initConfigs();
-        try {
-            registerObserver((I_SettingsChanged) getContext());
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getContext().toString()
-                    + " activity must implement SettingsChangeListener interface");
-        }
     }
 
     public abstract <T> void initPreferences(T prefs);
 
-    protected void initFactories(){};
+    protected void initFactories() {}
 
-    protected void initData(Context context, AttributeSet attrs){}
+    protected void initData(Context context, AttributeSet attrs) {}
 
     protected void initViews() {
         if (getLayoutId() != -1){
@@ -59,15 +59,23 @@ public abstract class BaseCustomSwitcher extends LinearLayout{
         }
     }
 
+    protected void initListeners() {}
+
+    protected void initConfigs() {}
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
     }
 
-    protected void initConfigs() {}
 
-    protected void registerObserver(I_SettingsChanged _listener){
-        mSettingsChangeListener = _listener;
+    public void registerObserver(I_SettingsChanged _listener){
+        try {
+            mSettingsChangeListener = (I_SettingsChanged) _listener;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(this.toString()
+                    + " must implement I_SettingsChanged interface");
+        }
     }
 
     protected abstract void bindView(View view);
