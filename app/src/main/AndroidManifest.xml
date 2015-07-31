@@ -14,7 +14,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppThemeOrange" >
+        android:theme="@style/AppThemeGreen" >
         <activity android:name=".activities.SplashActivity"/>
 
         <activity
@@ -27,12 +27,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activities.SettingsActivity"
-            android:configChanges="locale"
-            android:parentActivityName=".activities.HomeActivity">
+        <activity android:name=".activities.HomeActivity">
         </activity>
-
-        <activity android:name=".activities.HomeActivity"/>
     </application>
 </manifest>

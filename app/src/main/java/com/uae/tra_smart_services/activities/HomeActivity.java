@@ -1,29 +1,16 @@
 package com.uae.tra_smart_services.activities;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.baseentities.BaseActivity;
-import com.uae.tra_smart_services.baseentities.BaseAuthorizationFragment;
-import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 import com.uae.tra_smart_services.baseentities.BaseFragmentActivity;
-import com.uae.tra_smart_services.fragments.LoginFragment;
-import com.uae.tra_smart_services.fragments.RegisterFragment;
-import com.uae.tra_smart_services.fragments.RestorePassFragment;
+import com.uae.tra_smart_services.baseentities.BaseHomePageFragment;
 import com.uae.tra_smart_services.fragments.SettingsFragment;
-import com.uae.tra_smart_services.interfaces.I_SettingsChanged;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
-
-import java.util.Locale;
 
 import retrofit.RetrofitError;
 
@@ -31,7 +18,7 @@ import retrofit.RetrofitError;
  * Created by ak-buffalo on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
-        implements ToolbarTitleManager {
+        implements ToolbarTitleManager, BaseHomePageFragment.ThemaDefiner {
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -41,6 +28,9 @@ public class HomeActivity extends BaseFragmentActivity
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
+
+        setApplicationTheme();
+
         setContentView(R.layout.activity_home);
 
         final Toolbar toolbar = findView(R.id.toolbar);
@@ -73,12 +63,8 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void handleError(RetrofitError _error) {
-
-    }
+    public void handleError(RetrofitError _error) { }
 
     @Override
-    public void handleError(RetrofitError _error, OnReloadData _listener) {
-
-    }
+    public void handleError(RetrofitError _error, OnReloadData _listener) { }
 }

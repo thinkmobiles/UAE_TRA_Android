@@ -71,7 +71,7 @@ public abstract class BaseCustomSwitcher extends LinearLayout{
 
     public void registerObserver(I_SettingsChanged _listener){
         try {
-            mSettingsChangeListener = (I_SettingsChanged) _listener;
+            mSettingsChangeListener = _listener;
         } catch (ClassCastException e) {
             throw new ClassCastException(this.toString()
                     + " must implement I_SettingsChanged interface");

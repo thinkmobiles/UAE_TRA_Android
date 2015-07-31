@@ -1,7 +1,6 @@
 package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,7 +14,9 @@ import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 import com.uae.tra_smart_services.entities.CirclePoint;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+
+import static com.uae.tra_smart_services.entities.H.parseXmlToMap;
 
 /**
  * Created by ak-buffalo on 27.07.15.
@@ -30,27 +31,22 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         super(context, attrs);
     }
 
-    private Integer currentTheme;
+    private String currentTheme;
     @Override
     public <T> void initPreferences(T prefs) {
-        currentTheme = (Integer) prefs;
+        currentTheme = prefs.toString();
     }
 
-    private List<Integer> themes;
+    private Map<String, String> colosrMap;
     @Override
     protected void initData(Context context, AttributeSet attrs){
-        TypedArray typedArrayData =
-                context.getTheme().obtainStyledAttributes(attrs, R.styleable.ThemeSwitcherView, 0, 0);
-        try {
-            themes = parseThemes(typedArrayData.getTextArray(R.styleable.ThemeSwitcherView_android_entries));
-        } finally {
-            typedArrayData.recycle();
-        }
+         colosrMap = parseXmlToMap(getContext(), R.xml.themes);
     }
 
-    private CirclePoint getCirclePoint(float circleDX, Paint.Style style, int color){
+    private CirclePoint getCirclePoint(float circleDX, Paint.Style style, int color, String colorThema){
         CirclePoint p = new CirclePoint();
         p.dX = Math.round(circleDX);
+        p.colorThema = colorThema;
         p.paint = new Paint();
         p.paint.setStyle(style);
         p.paint.setStrokeWidth(5f);
@@ -88,16 +84,16 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         super.onSizeChanged(w, h, oldw, oldh);
         containerWidth = w;
         points = new ArrayList<>();
-        int themesSize = themes.size();
-        for (int i = 0; i < themesSize; i++){
-            int color;
+        int iter = 0;
+        for (Map.Entry<String,String> entry : colosrMap.entrySet()){
             Paint.Style style;
-            if ((color = themes.get(i)) == currentTheme){
+            if (entry.getValue().equals(currentTheme)){
                 style = Paint.Style.STROKE;
             } else {
                 style = Paint.Style.FILL_AND_STROKE;
             }
-            points.add(getCirclePoint(getCircleDX(containerWidth, themesSize, i), style, color));
+            points.add(getCirclePoint(getCircleDX(containerWidth, colosrMap.size(), iter), style, Color.parseColor(entry.getKey()), entry.getValue()));
+            iter++;
         }
     }
 
@@ -133,7 +129,7 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         for(CirclePoint point : points) {
             if (isInArea(point, dX, dY)) {
                 point.paint.setStyle(Paint.Style.STROKE);
-                mSettingsChangeListener.onSettingsChanged(this, point.paint.getColor());
+                mSettingsChangeListener.onSettingsChanged(this, point.colorThema);
             } else {
                 point.paint.setStyle(Paint.Style.FILL_AND_STROKE);
             }
@@ -150,15 +146,5 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
     @Override
     protected int getLayoutId() {
         return -1;
-    }
-
-    private static List<Integer> parseThemes(final CharSequence[] strShemas){
-        return new ArrayList<Integer>(){
-            {
-                for (CharSequence strShema : strShemas){
-                    add(Color.parseColor(strShema.toString()));
-                }
-            }
-        };
     }
 }

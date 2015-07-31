@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:background="@color/hex_primary_orange"
+        android:background="?attr/homePageHeaderBackground"
         android:gravity="center">
         <ImageView
             android:layout_width="wrap_content"

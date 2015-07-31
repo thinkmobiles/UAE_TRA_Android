@@ -3,7 +3,6 @@ package com.uae.tra_smart_services.fragments;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
 
 import com.uae.tra_smart_services.R;
@@ -47,28 +46,23 @@ public class SettingsFragment extends BaseHomePageFragment implements I_Settings
     private ThemeSwitcherView themeSwitch;
     private void globalInitViews(){
         langSwitch = findView(R.id.cvLangSwitch);
-        langSwitch.registerObserver(this);
         langSwitch.globalInit();
+        langSwitch.registerObserver(this);
 
         fontSwitch = findView(R.id.cvFontSwitch);
-        fontSwitch.registerObserver(this);
         fontSwitch.globalInit(coalesce(prefs.getInt(BaseCustomSwitcher.Type.FONT.toString(), 10), 10));
+        fontSwitch.registerObserver(this);
 
         themeSwitch = findView(R.id.cvThemeSwitch);
+        themeSwitch.globalInit(mSettingsListener.getStringThemeValue());
         themeSwitch.registerObserver(this);
-        themeSwitch.globalInit(
-                prefs.getInt(
-                        BaseCustomSwitcher.Type.THEME.toString(),
-                        Color.parseColor(getResources().getStringArray(R.array.colors)[0])
-                )
-        );
     }
 
     @Override
     public void onSettingsChanged(BaseCustomSwitcher caller, Object data) {
         switch (caller.getType()){
             case LANGUAGE:
-                updateLocaleAtRuntime((String) data);
+                updateLocaleAndRestart((String) data);
                 break;
             case FONT:
                 prefs.edit()
@@ -76,19 +70,28 @@ public class SettingsFragment extends BaseHomePageFragment implements I_Settings
                         .commit();
                 break;
             case THEME:
-                prefs.edit()
-                        .putInt(BaseCustomSwitcher.Type.THEME.toString(), (int) data)
-                        .commit();
+                updateThemeAndRestart((String) data);
                 break;
         }
     }
 
-    private void updateLocaleAtRuntime(String lang){
+    private void updateLocaleAndRestart(String lang){
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         getActivity().getResources().updateConfiguration(config, null);
+        Intent refresh = new Intent(getActivity(), HomeActivity.class);
+        refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(refresh);
+    }
+
+    private void updateThemeAndRestart(String strThemaColor){
+        prefs.edit()
+            .putString(
+                    BaseCustomSwitcher.Type.THEME.toString(),
+                    strThemaColor
+            ).commit();
         Intent refresh = new Intent(getActivity(), HomeActivity.class);
         refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(refresh);

@@ -88,7 +88,6 @@
                 tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:padding="5dp"
                 tra:scaleMin="6"
                 tra:scaleMax="14"
                 tra:scaleStep="2"
@@ -115,7 +114,6 @@
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:padding="5dp"
-                android:entries="@array/colors"
                 android:gravity="center|right" />
         </LinearLayout>
 

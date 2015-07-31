@@ -20,18 +20,16 @@ import retrofit.RetrofitError;
 public class AuthorizationActivity extends BaseFragmentActivity
             implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
 
-//    private CallbackManager mCallbackManager;
-//    private LoginManager mLoginManager;
-
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
+        setApplicationTheme();
+
         setContentView(R.layout.activity_authorization);
 
         final Toolbar toolbar = findView(R.id.toolbar);
@@ -96,12 +94,8 @@ public class AuthorizationActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void handleError(RetrofitError _error) {
-
-    }
+    public void handleError(RetrofitError _error) {}
 
     @Override
-    public void handleError(RetrofitError _error, OnReloadData _listener) {
-
-    }
+    public void handleError(RetrofitError _error, OnReloadData _listener) {}
 }

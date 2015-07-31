@@ -73,7 +73,7 @@
                 android:gravity="center"
                 android:padding="@dimen/dp_register_now_static_text_padding"
                 android:text="@string/str_register_now"
-                android:textColor="@color/hex_primary_orange"
+                android:textColor="?attr/globalButtonTextColor"
                 android:textSize="@dimen/sp_authorization_button_text_size" />
         </LinearLayout>
 

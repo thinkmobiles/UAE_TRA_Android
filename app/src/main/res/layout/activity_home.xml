@@ -7,10 +7,10 @@
     <include layout="@layout/toolbar"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:background="@color/hex_primary_orange"
+        android:background="?attr/homePageHeaderBackground"
         android:gravity="center">
         <ImageView
             android:layout_width="wrap_content"
@@ -35,9 +35,8 @@
 
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
-        android:layout_height="0dip"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:gravity="bottom">
         <RadioGroup
             android:id="@+id/bottomNavRadio"

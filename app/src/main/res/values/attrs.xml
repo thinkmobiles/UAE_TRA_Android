@@ -6,7 +6,6 @@
         <attr name="scaleStep" format="integer"/>
     </declare-styleable>
 
-    <declare-styleable name="ThemeSwitcherView">
-        <attr name="android:entries" />
-    </declare-styleable>
+    <attr name="homePageHeaderBackground" format="reference" />
+    <attr name="globalButtonTextColor" format="reference" />
 </resources>

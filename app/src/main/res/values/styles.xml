@@ -4,10 +4,42 @@
     <style name="AppThemeOrange" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/hex_primary_orange</item>
-
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_orange</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
+
+        <item name="homePageHeaderBackground">@color/hex_primary_orange</item>
+        <item name="globalButtonTextColor">@color/hex_primary_orange</item>
+
+        <!-- colorAccent is used as the default value for colorControlActivated,
+             which is used to tint widgets -->
+        <item name="colorAccent">@color/hex_color_accent</item>
+    </style>
+
+    <style name="AppThemeGreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/hex_primary_green</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/hex_dark_green</item>
+        <item name="android:textColorPrimary">@color/hex_text_color_white</item>
+
+        <item name="homePageHeaderBackground">@color/hex_primary_green</item>
+        <item name="globalButtonTextColor">@color/hex_primary_green</item>
+
+        <!-- colorAccent is used as the default value for colorControlActivated,
+             which is used to tint widgets -->
+        <item name="colorAccent">@color/hex_color_accent</item>
+    </style>
+
+    <style name="AppThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/hex_primary_blue</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/hex_dark_blue</item>
+        <item name="android:textColorPrimary">@color/hex_text_color_white</item>
+
+        <item name="homePageHeaderBackground">@color/hex_primary_blue</item>
+        <item name="globalButtonTextColor">@color/hex_primary_blue</item>
 
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
@@ -15,13 +47,15 @@
     </style>
 
 
-    <style name="AppThemeGreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeRed" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/hex_primary_orange</item>
-
+        <item name="colorPrimary">@color/hex_primary_red</item>
         <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/hex_dark_orange</item>
+        <item name="colorPrimaryDark">@color/hex_dark_red</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
+
+        <item name="homePageHeaderBackground">@color/hex_primary_red</item>
+        <item name="globalButtonTextColor">@color/hex_primary_red</item>
 
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
@@ -38,9 +72,7 @@
 
     <style name="VerticalFieldsSeparator">
         <item name="android:layout_width">@dimen/dp_authorization_fields_separator_height</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginLeft">@dimen/dp_authorization_fields_separator_margin</item>
-        <item name="android:layout_marginRight">@dimen/dp_authorization_fields_separator_margin</item>
+        <item name="android:layout_height">30dp</item>
         <item name="android:background">@color/hex_auth_fields_separator_color</item>
     </style>
 
@@ -74,13 +106,14 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:capitalize">none</item>
-        <item name="android:gravity">center|right</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">20dp</item>
     </style>
 
     <style name="TransparentWhiteButton">
         <item name="android:background">@drawable/sel_auth_button_background</item>
         <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
-        <item name="android:textColor">@color/hex_primary_orange</item>
+        <item name="android:textColor">?attr/globalButtonTextColor</item>
     </style>
 
     <style name="BlurButtonStyle" parent="TransparentWhiteButton">
@@ -100,11 +133,6 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/hex_black_color</item>
     </style>
-
-
-
-
-
 
 
     <!-- the theme applied to the application or activity -->

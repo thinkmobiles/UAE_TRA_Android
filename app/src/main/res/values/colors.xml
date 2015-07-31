@@ -2,15 +2,25 @@
 <resources>
 
     <color name="hex_primary_orange">#fff69023</color>
-    <color name="hex_dark_orange">#ffd47624</color>
+    <color name="hex_dark_orange">#ff996300</color>
 
-    <color name="hex_primary_green">#ff00f62a</color>
-    <color name="hex_dark_green">#ff129900</color>
+    <color name="hex_primary_green">#ff00f612</color>
+    <color name="hex_dark_green">#ff128200</color>
+
+    <color name="hex_primary_blue">#ff06edff</color>
+    <color name="hex_dark_blue">#ff058797</color>
+
+    <color name="hex_primary_red">#ffff0000</color>
+    <color name="hex_dark_red">#ff8d0000</color>
+
 
     <color name="hex_black_color">#ff000000</color>
     <color name="hex_text_color_white">#ffffff</color>
     <color name="hex_color_accent">#ff8c8c8c</color>
     <color name="hex_color_light_gray">#ffdddddd</color>
+
+    <color name="hex_color_yellow">#fffffa00</color>
+    <color name="hex_color_purple">#ffce00ff</color>
 
     <!--[START]                     AuthorizationActivity                        [START]-->
     <color name="hex_authorization_background_color">#ffffffff</color>
@@ -34,7 +44,7 @@
     <string-array name="colors">
         <item>#ffff0a00</item>
         <item>#ff0bff54</item>
-        <item>#ff0f61ff</item>
+        <item>#ff06edff</item>
     </string-array>
     <!--[END]                       SettingsActivity                         [END]-->
 </resources>

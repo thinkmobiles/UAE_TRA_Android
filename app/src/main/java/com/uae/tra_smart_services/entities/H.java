@@ -1,10 +1,15 @@
 package com.uae.tra_smart_services.entities;
 
+import android.content.Context;
 import android.content.res.XmlResourceParser;
+import android.support.annotation.XmlRes;
 import android.util.Log;
+
+import com.uae.tra_smart_services.R;
 
 import org.xmlpull.v1.XmlPullParser;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,9 +30,11 @@ public class H {
     /**
      * Returns parsed resource xml
      * */
-    public static Map<String, String> parseXmlToMap(XmlResourceParser parser){
+    public static Map<String, String> parseXmlToMap(Context context, @XmlRes int xmlRes){
         Map<String,String> map = null;
         String key = null, value = null;
+        XmlResourceParser parser = context.getResources().getXml(xmlRes);
+
         try {
             int eventType = parser.getEventType();
 
@@ -66,5 +73,19 @@ public class H {
         }
 
         return map;
+    }
+
+    public static int getResIdFromString(String resName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static String parseColorToString(int color){
+        return String.valueOf(color).replaceFirst("^0x", "");
     }
 }

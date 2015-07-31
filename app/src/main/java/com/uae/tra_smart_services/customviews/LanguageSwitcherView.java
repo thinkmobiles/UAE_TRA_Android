@@ -1,7 +1,6 @@
 package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,9 +14,6 @@ import com.uae.tra_smart_services.entities.Separator;
 import com.uae.tra_smart_services.entities.SeparatorFactory;
 import com.uae.tra_smart_services.entities.TextViewFactory;
 
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -56,8 +52,7 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
     @Override
     protected void initData(Context context, AttributeSet attrs){
         try {
-            XmlResourceParser parser = context.getResources().getXml(R.xml.languages);
-            langsMap = parseXmlToMap(parser);
+            langsMap = parseXmlToMap(context, R.xml.languages);
         } catch(Exception ex) {
             Log.e(this.getClass().getSimpleName().toString(), ex.toString());
         }

@@ -27,5 +27,4 @@ public class SeparatorFactory extends AbstractViewFactory<View, Separator> {
 		separator.setBackgroundColor(entity.getColor());
 		separator.setLayoutParams(param1);
 	}
-
 }

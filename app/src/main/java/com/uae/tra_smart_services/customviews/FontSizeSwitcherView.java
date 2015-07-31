@@ -115,7 +115,7 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
 
     @Override
     protected void unBindView(View view){
-        ((TextView)view).setOnClickListener(null);
+        view.setOnClickListener(null);
         ((TextView)view).setTextColor(getResources().getColor(R.color.hex_color_light_gray));
     }
 }
