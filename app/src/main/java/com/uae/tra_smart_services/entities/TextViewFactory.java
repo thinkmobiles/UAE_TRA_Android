@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 
 /**
- * Created by andrey on 7/26/15.
+ * Created by Andrey Korneychuk on 7/26/15.
  */
 public class TextViewFactory extends AbstractViewFactory<TextView, LanguageSelector>{
 

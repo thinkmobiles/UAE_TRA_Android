@@ -20,7 +20,7 @@ import java.util.Map;
 import static com.uae.tra_smart_services.entities.H.parseXmlToMap;
 
 /**
- * Created by ak-buffalo on 24.07.15.
+ * Created by Andrey Korneychuk on 24.07.15.
  */
 public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
 

@@ -19,7 +19,7 @@ import java.util.Map;
 import static com.uae.tra_smart_services.entities.H.parseXmlToMap;
 
 /**
- * Created by ak-buffalo on 27.07.15.
+ * Created by Andrey Korneychuk on 27.07.15.
  */
 public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouchListener {
 

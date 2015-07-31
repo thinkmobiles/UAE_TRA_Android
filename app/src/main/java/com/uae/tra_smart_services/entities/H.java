@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by ak-buffalo on 28.07.15.
+ * Created by Andrey Korneychuk on 28.07.15.
  *
  * Helper class collect all necessary methods
  */

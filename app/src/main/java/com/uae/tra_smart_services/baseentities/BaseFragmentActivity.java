@@ -27,8 +27,6 @@ public abstract class BaseFragmentActivity extends BaseActivity {
 
     public final void replaceFragmentWithBackStack(final BaseFragment _fragment) {
         getFragmentManager().beginTransaction()
-//                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
-//                        R.anim.slide_in_right, R.anim.slide_out_right)
                 .addToBackStack(null)
                 .replace(getContainerId(), _fragment)
                 .commit();

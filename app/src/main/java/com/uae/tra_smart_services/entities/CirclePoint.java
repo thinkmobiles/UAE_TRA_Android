@@ -5,10 +5,9 @@ import android.graphics.Point;
 import android.support.annotation.ColorInt;
 
 /**
- * Created by ak-buffalo on 29.07.15.
+ * Created by Andrey Korneychuk on 29.07.15.
  */
 public class CirclePoint {
-
     public int dX;
     public String colorThema;
     public Paint paint;

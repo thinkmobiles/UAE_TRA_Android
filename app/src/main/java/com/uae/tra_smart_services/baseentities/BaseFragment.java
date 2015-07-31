@@ -84,5 +84,4 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     public interface ThemaDefiner {
         String getStringThemeValue();
     }
-
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.IdRes;
 
 /**
- * Created by andrey on 7/26/15.
+ * Created by Andrey Korneychuk on 7/26/15.
  */
 public class Separator {
 

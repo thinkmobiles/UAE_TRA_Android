@@ -15,7 +15,7 @@ import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import retrofit.RetrofitError;
 
 /**
- * Created by ak-buffalo on 23.07.15.
+ * Created by Andrey Korneychuk on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
         implements ToolbarTitleManager, BaseHomePageFragment.ThemaDefiner {

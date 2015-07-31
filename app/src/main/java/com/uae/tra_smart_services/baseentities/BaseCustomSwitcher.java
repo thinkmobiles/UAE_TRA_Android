@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import com.uae.tra_smart_services.interfaces.I_SettingsChanged;
 
 /**
- * Created by ak-buffalo on 24.07.15.
+ * Created by Andrey Korneychuk on 24.07.15.
  */
 public abstract class BaseCustomSwitcher extends LinearLayout{
 
@@ -54,7 +54,7 @@ public abstract class BaseCustomSwitcher extends LinearLayout{
     protected void initData(Context context, AttributeSet attrs) {}
 
     protected void initViews() {
-        if (getLayoutId() != -1){
+        if (getLayoutId() > 0){
             inflate(getContext(), getLayoutId(), this);
         }
     }
@@ -67,7 +67,6 @@ public abstract class BaseCustomSwitcher extends LinearLayout{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
     }
-
 
     public void registerObserver(I_SettingsChanged _listener){
         try {

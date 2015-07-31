@@ -16,7 +16,9 @@ import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 
 import retrofit.RetrofitError;
 
-
+/**
+ * Created by Andrey Korneychuk on 22.07.15.
+ */
 public class AuthorizationActivity extends BaseFragmentActivity
             implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
 

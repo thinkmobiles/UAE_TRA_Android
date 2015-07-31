@@ -19,7 +19,7 @@ import java.util.Locale;
 import static com.uae.tra_smart_services.entities.H.coalesce;
 
 /**
- * Created by ak-buffalo on 30.07.15.
+ * Created by Andrey Korneychuk on 30.07.15.
  */
 public class SettingsFragment extends BaseHomePageFragment implements I_SettingsChanged {
 

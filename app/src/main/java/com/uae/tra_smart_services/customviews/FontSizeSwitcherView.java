@@ -11,7 +11,7 @@ import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 
 
 /**
- * Created by ak-buffalo on 23.07.15.
+ * Created by Andrey Korneychuk on 23.07.15.
  */
 public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
 

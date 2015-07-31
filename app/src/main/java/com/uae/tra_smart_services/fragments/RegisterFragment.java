@@ -10,7 +10,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseAuthorizationFragment;
 
 /**
- * Created by ak-buffalo on 22.07.15.
+ * Created by Andrey Korneychuk on 22.07.15.
  */
 public class RegisterFragment extends BaseAuthorizationFragment implements View.OnClickListener {
 

@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.widget.ImageButton;
 
 /**
- * Created by ak-buffalo on 22.07.15.
+ * Created by Andrey Korneychuk on 22.07.15.
  */
 public abstract class BaseAuthorizationFragment extends BaseFragment{
     protected AuthorizationActionsListener actionsListener;
-    protected ImageButton btnBack;
 
     @Override
     public void onAttach(final Activity _activity) {
