@@ -74,18 +74,20 @@ public class H {
 
         return map;
     }
-
-    public static int getResIdFromString(String resName, Class<?> c) {
+    /**
+     * Get resource id from string by type
+     *
+     * @param resName resource id in string representation
+     * @param className resource type
+     * @return resource id integer representation
+     * */
+    public static int getResIdFromString(String resName, Class<?> className) {
         try {
-            Field idField = c.getDeclaredField(resName);
+            Field idField = className.getDeclaredField(resName);
             return idField.getInt(idField);
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
         }
-    }
-
-    public static String parseColorToString(int color){
-        return String.valueOf(color).replaceFirst("^0x", "");
     }
 }

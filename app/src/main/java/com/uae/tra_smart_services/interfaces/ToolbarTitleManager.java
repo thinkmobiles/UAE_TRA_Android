@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.interfaces;
 
-import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 
 /**
