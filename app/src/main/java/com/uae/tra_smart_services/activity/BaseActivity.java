@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services;
+package com.uae.tra_smart_services.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

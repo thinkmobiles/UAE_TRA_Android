@@ -1,9 +1,11 @@
-package com.uae.tra_smart_services;
+package com.uae.tra_smart_services.activity;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.uae.tra_smart_services.R;
 
 
 public class AuthorizationActivity extends ActionBarActivity {

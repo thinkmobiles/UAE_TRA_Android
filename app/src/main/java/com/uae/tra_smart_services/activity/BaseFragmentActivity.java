@@ -1,7 +1,9 @@
-package com.uae.tra_smart_services;
+package com.uae.tra_smart_services.activity;
 
 import android.app.FragmentManager;
 import android.support.annotation.IdRes;
+
+import com.uae.tra_smart_services.fragment.BaseFragment;
 
 /**
  * Created by Vitaliy on 22/07/2015.
