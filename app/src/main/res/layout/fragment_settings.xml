@@ -88,9 +88,9 @@
                 tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                tra:scaleMin="6"
-                tra:scaleMax="14"
-                tra:scaleStep="2"
+                tra:scaleMin="0.5"
+                tra:scaleMax="1.5"
+                tra:scaleStep="0.1"
                 android:gravity="center|right" />
 
         </LinearLayout>

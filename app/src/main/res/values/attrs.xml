@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="FontSizeSwitcherView">
-        <attr name="scaleMin" format="integer"/>
-        <attr name="scaleMax" format="integer"/>
-        <attr name="scaleStep" format="integer"/>
+        <attr name="scaleMin" format="float"/>
+        <attr name="scaleMax" format="float"/>
+        <attr name="scaleStep" format="float"/>
     </declare-styleable>
 
     <attr name="homePageHeaderBackground" format="reference" />

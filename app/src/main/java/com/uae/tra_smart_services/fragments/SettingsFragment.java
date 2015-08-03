@@ -50,7 +50,6 @@ public class SettingsFragment extends BaseHomePageFragment implements I_Settings
         langSwitch.registerObserver(this);
 
         fontSwitch = findView(R.id.cvFontSwitch);
-        fontSwitch.globalInit(coalesce(prefs.getInt(BaseCustomSwitcher.Type.FONT.toString(), 10), 10));
         fontSwitch.registerObserver(this);
 
         themeSwitch = findView(R.id.cvThemeSwitch);
@@ -65,9 +64,10 @@ public class SettingsFragment extends BaseHomePageFragment implements I_Settings
                 updateLocaleAndRestart((String) data);
                 break;
             case FONT:
-                prefs.edit()
-                        .putInt(BaseCustomSwitcher.Type.FONT.toString(), (int) data)
-                        .commit();
+//                prefs.edit()
+//                        .putInt(BaseCustomSwitcher.Type.FONT.toString(), (int) data)
+//                        .commit();
+                updateFontAndRestart((float) data);
                 break;
             case THEME:
                 updateThemeAndRestart((String) data);
@@ -78,8 +78,17 @@ public class SettingsFragment extends BaseHomePageFragment implements I_Settings
     private void updateLocaleAndRestart(String lang){
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
-        Configuration config = new Configuration();
+        Configuration config = getActivity().getResources().getConfiguration();
         config.locale = locale;
+        getActivity().getResources().updateConfiguration(config, null);
+        Intent refresh = new Intent(getActivity(), HomeActivity.class);
+        refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(refresh);
+    }
+
+    private void updateFontAndRestart(final float _scale) {
+        Configuration config = getActivity().getResources().getConfiguration();
+        config.fontScale = _scale;
         getActivity().getResources().updateConfiguration(config, null);
         Intent refresh = new Intent(getActivity(), HomeActivity.class);
         refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

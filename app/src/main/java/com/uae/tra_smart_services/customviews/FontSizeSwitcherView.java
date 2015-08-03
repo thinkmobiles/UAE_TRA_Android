@@ -15,16 +15,19 @@ import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
  */
 public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
 
-    protected int scaleMin, scaleMax, scaleStep, fontScale, fontScaleNew;
+    protected float scaleMin, scaleMax, scaleStep, fontScale, fontScaleNew;
 
     TextView makeBigger, makeSmaller;
 
     public FontSizeSwitcherView(Context context) {
         super(context);
+
     }
 
     public FontSizeSwitcherView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initData(context, attrs);
+        globalInit();
     }
 
     @Override
@@ -36,10 +39,11 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
     protected void initData(Context context, AttributeSet attrs){
         TypedArray typedArrayData =
                 context.getTheme().obtainStyledAttributes(attrs, R.styleable.FontSizeSwitcherView, 0, 0);
+        fontScale = getResources().getConfiguration().fontScale;
         try {
-            scaleMin = typedArrayData.getInt(R.styleable.FontSizeSwitcherView_scaleMin, 5);
-            scaleMax = typedArrayData.getInt(R.styleable.FontSizeSwitcherView_scaleMax, 15);
-            scaleStep = typedArrayData.getInt(R.styleable.FontSizeSwitcherView_scaleStep, 1);
+            scaleMin = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleMin, 0.5f);
+            scaleMax = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleMax, 1.5f);
+            scaleStep = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleStep, 0.1f);
         } finally {
             typedArrayData.recycle();
         }
