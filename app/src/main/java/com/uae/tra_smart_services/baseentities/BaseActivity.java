@@ -2,6 +2,8 @@ package com.uae.tra_smart_services.baseentities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,8 @@ import android.view.View;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
+
+import java.util.Locale;
 
 import static com.uae.tra_smart_services.entities.H.getResIdFromString;
 
@@ -18,7 +22,17 @@ import static com.uae.tra_smart_services.entities.H.getResIdFromString;
 public abstract class BaseActivity extends AppCompatActivity implements ProgressDialogManager, BaseFragment.ErrorHandler, BaseFragment.ThemaDefiner {
 
     private ProgressDialog mProgressDialog;
-    private String stringThemaValue;
+    private String mThemaStringValue;
+    private Float mFontSize;
+    private String mLanguage;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setApplicationTheme();
+        setApplicationFontSize();
+        setApplicationLanguage();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -53,12 +67,34 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
     }
 
     @Override
-    public String getStringThemeValue() {
-        return stringThemaValue;
+    public String getThemeStringValue() {
+        return mThemaStringValue;
     }
 
     public void setApplicationTheme(){
-        stringThemaValue = PreferenceManager.getDefaultSharedPreferences(this).getString(BaseCustomSwitcher.Type.THEME.toString(), "AppThemeOrange");
-        setTheme(getResIdFromString(stringThemaValue, R.style.class));
+        mThemaStringValue = PreferenceManager
+                .getDefaultSharedPreferences(this)
+                .getString(BaseCustomSwitcher.Type.THEME.toString(), "AppThemeOrange");
+        setTheme(getResIdFromString(mThemaStringValue, R.style.class));
+    }
+
+    public void setApplicationFontSize(){
+        mFontSize = PreferenceManager
+                .getDefaultSharedPreferences(this)
+                .getFloat(BaseCustomSwitcher.Type.FONT.toString(), 1f);
+        Configuration config = getResources().getConfiguration();
+        config.fontScale = mFontSize;
+        getResources().updateConfiguration(config, null);
+    }
+
+    public final void setApplicationLanguage(){
+        mLanguage = PreferenceManager
+                .getDefaultSharedPreferences(this)
+                .getString(BaseCustomSwitcher.Type.LANGUAGE.toString(), "en");
+        Locale locale = new Locale(mLanguage);
+        Locale.setDefault(locale);
+        Configuration config = getResources().getConfiguration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, null);
     }
 }

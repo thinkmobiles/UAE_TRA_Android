@@ -26,7 +26,7 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     protected ProgressDialogManager progressDialogManager;
     protected ErrorHandler errorHandler;
     protected ToolbarTitleManager toolbarTitleManager;
-    protected ThemaDefiner mSettingsListener;
+    protected ThemaDefiner mThemaDefiner;
 
     @Override
     public void onAttach(final Activity _activity) {
@@ -35,7 +35,7 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
             toolbarTitleManager = (ToolbarTitleManager) _activity;
             progressDialogManager = (ProgressDialogManager) _activity;
             errorHandler = (ErrorHandler) _activity;
-            mSettingsListener = (ThemaDefiner) _activity;
+            mThemaDefiner = (ThemaDefiner) _activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(_activity.toString()
                     + " must implement ProgressDialogManager and ErrorHandler and ThemaDefiner");
@@ -82,6 +82,6 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     }
 
     public interface ThemaDefiner {
-        String getStringThemeValue();
+        String getThemeStringValue();
     }
 }

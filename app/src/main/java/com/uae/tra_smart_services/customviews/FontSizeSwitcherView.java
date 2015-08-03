@@ -9,41 +9,38 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 
-
 /**
  * Created by Andrey Korneychuk on 23.07.15.
  */
 public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
 
-    protected float scaleMin, scaleMax, scaleStep, fontScale, fontScaleNew;
+
+    protected float mScaleMin, mScaleMax, mScaleStep, mFontScale, mFontScaleNew;
 
     TextView makeBigger, makeSmaller;
 
-    public FontSizeSwitcherView(Context context) {
-        super(context);
-
+    public FontSizeSwitcherView(Context _context) {
+        super(_context);
     }
 
-    public FontSizeSwitcherView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initData(context, attrs);
-        globalInit();
+    public FontSizeSwitcherView(Context _context, AttributeSet _attrs) {
+        super(_context, _attrs);
     }
 
     @Override
-    public <T> void initPreferences(T prefs) {
-        fontScale = (Integer) prefs;
+    public <T> void initPreferences(T _prefs) {
+        mFontScale = (Float) _prefs;
     }
 
     @Override
     protected void initData(Context context, AttributeSet attrs){
         TypedArray typedArrayData =
                 context.getTheme().obtainStyledAttributes(attrs, R.styleable.FontSizeSwitcherView, 0, 0);
-        fontScale = getResources().getConfiguration().fontScale;
+        mFontScale = getResources().getConfiguration().fontScale;
         try {
-            scaleMin = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleMin, 0.5f);
-            scaleMax = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleMax, 1.5f);
-            scaleStep = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleStep, 0.1f);
+            mScaleMin = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleMin, 0.5f);
+            mScaleMax = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleMax, 1.5f);
+            mScaleStep = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleStep, 0.1f);
         } finally {
             typedArrayData.recycle();
         }
@@ -57,14 +54,14 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
     }
 
     @Override
-    protected void initConfigs() {
-        if (fontScale < scaleMax){
+    protected final void initConfigs() {
+        if (mFontScale < mScaleMax){
             bindView(makeBigger);
         } else {
             unBindView(makeBigger);
         }
 
-        if (fontScale > scaleMin){
+        if (mFontScale > mScaleMin){
             bindView(makeSmaller);
         } else {
             unBindView(makeSmaller);
@@ -72,7 +69,7 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
     }
 
     @Override
-    protected int getLayoutId() {
+    protected final int getLayoutId() {
         return R.layout.layout_fontsize_swither;
     }
 
@@ -82,44 +79,44 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
     }
 
     @Override
-    public void onClick(View view) {
-        fontScale = fontScaleNew == 0 ? fontScale : fontScaleNew;
-        switch (view.getId()){
+    public final void onClick(final View _view) {
+        mFontScale = mFontScaleNew == 0 ? mFontScale : mFontScaleNew;
+        switch (_view.getId()){
             case R.id.tvMakeBigger_SA:
-                makeTextBigger(view);
+                makeTextBigger(_view);
                 break;
             case R.id.tvMakeSmaller_SA:
-                makeTextSmaller(view);
+                makeTextSmaller(_view);
                 break;
         }
-        mSettingsChangeListener.onSettingsChanged(this, fontScaleNew);
+        mSettingsChangeListener.onSettingsChanged(this, mFontScaleNew);
     }
 
-    private void makeTextBigger(View view){
-        if ((fontScaleNew = fontScale + scaleStep) >= scaleMax) {
-            unBindView(view);
-        } else if((fontScaleNew = fontScale + scaleStep) == scaleMin + scaleStep){
+    private final void makeTextBigger(final View _view){
+        if ((mFontScaleNew = mFontScale + mScaleStep) >= mScaleMax) {
+            unBindView(_view);
+        } else if((mFontScaleNew = mFontScale + mScaleStep) == mScaleMin + mScaleStep){
             bindView(makeSmaller);
         }
     }
 
-    private void makeTextSmaller(View view){
-        if ((fontScaleNew = fontScale - scaleStep) <= scaleMin) {
-            unBindView(view);
-        } else if((fontScaleNew = fontScale - scaleStep) == scaleMax - scaleStep){
+    private final void makeTextSmaller(final View _view){
+        if ((mFontScaleNew = mFontScale - mScaleStep) <= mScaleMin) {
+            unBindView(_view);
+        } else if((mFontScaleNew = mFontScale - mScaleStep) == mScaleMax - mScaleStep){
             bindView(makeBigger);
         }
     }
 
     @Override
-    protected void bindView(View view){
-        view.setOnClickListener(this);
-        ((TextView)view).setTextColor(getResources().getColor(R.color.hex_black_color));
+    protected final void bindView(final View _view){
+        _view.setOnClickListener(this);
+        ((TextView)_view).setTextColor(getResources().getColor(R.color.hex_black_color));
     }
 
     @Override
-    protected void unBindView(View view){
-        view.setOnClickListener(null);
-        ((TextView)view).setTextColor(getResources().getColor(R.color.hex_color_light_gray));
+    protected final void unBindView(final View _view){
+        _view.setOnClickListener(null);
+        ((TextView)_view).setTextColor(getResources().getColor(R.color.hex_color_light_gray));
     }
 }

@@ -29,8 +29,6 @@ public class HomeActivity extends BaseFragmentActivity
     public final void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
 
-        setApplicationTheme();
-
         setContentView(R.layout.activity_home);
 
         final Toolbar toolbar = findView(R.id.toolbar);

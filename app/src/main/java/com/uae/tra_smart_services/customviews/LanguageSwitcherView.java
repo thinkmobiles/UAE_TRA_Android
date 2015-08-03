@@ -1,7 +1,6 @@
 package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
-import android.content.res.XmlResourceParser;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -24,14 +23,6 @@ import static com.uae.tra_smart_services.entities.H.parseXmlToMap;
  */
 public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
 
-    private TextView acitveLang;
-
-    private Map<String, String> langsMap;
-
-    private TextViewFactory textViewFactoryFactory;
-
-    private SeparatorFactory separatorFactory;
-
     public LanguageSwitcherView(Context context) {
         super(context);
     }
@@ -40,33 +31,40 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
         super(context, attrs);
     }
 
+    private TextViewFactory mTextViewFactoryFactory;
+    private SeparatorFactory mSeparatorFactory;
+
     @Override
     protected void initFactories(){
-        textViewFactoryFactory = new TextViewFactory(getContext());
-        separatorFactory = new SeparatorFactory(getContext());
+        mTextViewFactoryFactory = new TextViewFactory(getContext());
+        mSeparatorFactory = new SeparatorFactory(getContext());
     }
 
     @Override
     public <T> void initPreferences(T prefs){}
 
+    private Map<String, String> mLangsMap;
+
     @Override
     protected void initData(Context context, AttributeSet attrs){
         try {
-            langsMap = parseXmlToMap(context, R.xml.languages);
+            mLangsMap = parseXmlToMap(context, R.xml.languages);
         } catch(Exception ex) {
             Log.e(this.getClass().getSimpleName().toString(), ex.toString());
         }
     }
 
+    private TextView mAcitveLang;
+
     @Override
     protected void initViews() {
         super.initViews();
         int index = 0;
-        for (Map.Entry<String,String> entry : langsMap.entrySet()){
+        for (Map.Entry<String,String> entry : mLangsMap.entrySet()){
             LanguageSelector languageSelector = new LanguageSelector(
                     entry.getValue(), entry.getKey(), android.R.style.TextAppearance_Medium, R.color.hex_black_color, this
             );
-            TextView langSelector = textViewFactoryFactory.createView(languageSelector);
+            TextView langSelector = mTextViewFactoryFactory.createView(languageSelector);
 
             if (index != 0){
                 Separator separator = new Separator(
@@ -75,11 +73,11 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
                         langSelector.getLineHeight() * 4 / 3,
                         R.color.hex_auth_fields_separator_color
                 );
-                addView(separatorFactory.createView(separator));
+                addView(mSeparatorFactory.createView(separator));
             }
 
             if(Locale.getDefault().getLanguage().equals(entry.getKey())){
-                acitveLang = langSelector;
+                mAcitveLang = langSelector;
                 unBindView(langSelector);
             }
             addView(langSelector);
@@ -99,9 +97,9 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
 
     @Override
     protected void bindView(View view){
-        acitveLang.setOnClickListener(this);
-        acitveLang.setTextColor(getResources().getColor(R.color.hex_black_color));
-        acitveLang = (TextView) view;
+        mAcitveLang.setOnClickListener(this);
+        mAcitveLang.setTextColor(getResources().getColor(R.color.hex_black_color));
+        mAcitveLang = (TextView) view;
     }
 
     @Override

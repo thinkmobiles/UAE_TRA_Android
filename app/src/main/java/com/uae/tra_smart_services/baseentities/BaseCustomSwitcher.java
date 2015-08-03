@@ -1,15 +1,11 @@
 package com.uae.tra_smart_services.baseentities;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.uae.tra_smart_services.interfaces.I_SettingsChanged;

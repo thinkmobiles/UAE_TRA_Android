@@ -1,8 +1,6 @@
 package com.uae.tra_smart_services.entities;
 
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.support.annotation.ColorInt;
 
 /**
  * Created by Andrey Korneychuk on 29.07.15.

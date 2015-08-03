@@ -31,16 +31,16 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         super(context, attrs);
     }
 
-    private String currentTheme;
+    private String mCurrentTheme;
     @Override
     public <T> void initPreferences(T prefs) {
-        currentTheme = prefs.toString();
+        mCurrentTheme = prefs.toString();
     }
 
-    private Map<String, String> colosrMap;
+    private Map<String, String> mColorsMap;
     @Override
     protected void initData(Context context, AttributeSet attrs){
-         colosrMap = parseXmlToMap(getContext(), R.xml.themes);
+         mColorsMap = parseXmlToMap(getContext(), R.xml.themes);
     }
 
     private CirclePoint getCirclePoint(float circleDX, Paint.Style style, int color, String colorThema){
@@ -77,22 +77,22 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
     @Override
     protected void unBindView(View view) {/*Unimplemented method*/}
 
-    private int containerWidth;
+    private int mContainerWidth;
     private ArrayList<CirclePoint> points;
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        containerWidth = w;
+        mContainerWidth = w;
         points = new ArrayList<>();
         int iter = 0;
-        for (Map.Entry<String,String> entry : colosrMap.entrySet()){
+        for (Map.Entry<String,String> entry : mColorsMap.entrySet()){
             Paint.Style style;
-            if (entry.getValue().equals(currentTheme)){
+            if (entry.getValue().equals(mCurrentTheme)){
                 style = Paint.Style.STROKE;
             } else {
                 style = Paint.Style.FILL_AND_STROKE;
             }
-            points.add(getCirclePoint(getCircleDX(containerWidth, colosrMap.size(), iter), style, Color.parseColor(entry.getKey()), entry.getValue()));
+            points.add(getCirclePoint(getCircleDX(mContainerWidth, mColorsMap.size(), iter), style, Color.parseColor(entry.getKey()), entry.getValue()));
             iter++;
         }
     }
@@ -103,13 +103,14 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         }
     }
 
-    long touchDownTime;
+    private long mTouchDownTime;
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         boolean handled = false;
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                touchDownTime = SystemClock.elapsedRealtime();
+                mTouchDownTime = SystemClock.elapsedRealtime();
                 handled = true;
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -117,7 +118,7 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
                 break;
 
             case MotionEvent.ACTION_UP:
-                if (SystemClock.elapsedRealtime() - touchDownTime <= 250){
+                if (SystemClock.elapsedRealtime() - mTouchDownTime <= 250){
                     return handleClick(event.getX(), event.getY());
                 }
                 break;

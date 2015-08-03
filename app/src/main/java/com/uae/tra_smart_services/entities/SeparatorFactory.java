@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.uae.tra_smart_services.R;
-
 /**
  * Created by Andrey Korneychuk on 7/26/15.
  */
@@ -16,7 +14,7 @@ public class SeparatorFactory extends AbstractViewFactory<View, Separator> {
 
 	@Override
 	public View createView(Separator entity) {
-		View textView = new View(context);
+		View textView = new View(mContext);
 		prepareData(textView, entity);
 		return textView;
 	}

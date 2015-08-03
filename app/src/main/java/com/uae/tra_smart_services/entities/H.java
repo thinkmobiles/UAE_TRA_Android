@@ -5,8 +5,6 @@ import android.content.res.XmlResourceParser;
 import android.support.annotation.XmlRes;
 import android.util.Log;
 
-import com.uae.tra_smart_services.R;
-
 import org.xmlpull.v1.XmlPullParser;
 
 import java.lang.reflect.Field;
@@ -22,6 +20,10 @@ import java.util.Map;
 public class H {
     /**
      * Returns the last non NULL variable
+     *
+     * @param items items to be set
+     *
+     * @return Last non NULL value
      * */
     public static <T> T coalesce(T ...items) {
         for(T i : items) if(i != null) return i;
@@ -29,6 +31,11 @@ public class H {
     }
     /**
      * Returns parsed resource xml
+     *
+     * @param context Application context
+     * @param xmlRes id of xml resource
+     *
+     * @return Map
      * */
     public static Map<String, String> parseXmlToMap(Context context, @XmlRes int xmlRes){
         Map<String,String> map = null;

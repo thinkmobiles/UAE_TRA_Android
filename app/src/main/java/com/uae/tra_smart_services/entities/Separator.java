@@ -1,7 +1,6 @@
 package com.uae.tra_smart_services.entities;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
 
 /**
  * Created by Andrey Korneychuk on 7/26/15.
