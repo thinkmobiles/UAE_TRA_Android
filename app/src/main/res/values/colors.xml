@@ -36,15 +36,4 @@
     <color name="hex_auth_button_background_pressed_color">#ffaeaeae</color>
     <!--[END]                       AuthorizationActivity                         [END]-->
 
-    <!--[START]                     SettingsActivity                        [START]-->
-    <color name="hex_red_color">#ffff0a00</color>
-    <color name="hex_green_color">#ff0bff54</color>
-    <color name="hex_blue_color">#ff0f61ff</color>
-
-    <string-array name="colors">
-        <item>#ffff0a00</item>
-        <item>#ff0bff54</item>
-        <item>#ff06edff</item>
-    </string-array>
-    <!--[END]                       SettingsActivity                         [END]-->
 </resources>
