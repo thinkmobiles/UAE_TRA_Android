@@ -51,6 +51,7 @@
     <string name="str_index">Index</string>
     <string name="str_crm">CRM</string>
     <string name="str_settings">Settings</string>
+    <string name="fragment_service_list_title">TRA Services</string>
     <!--               Home screens                -->
 
     <string-array name="languages">

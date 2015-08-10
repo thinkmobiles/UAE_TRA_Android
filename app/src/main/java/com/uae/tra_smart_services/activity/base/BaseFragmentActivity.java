@@ -10,7 +10,6 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
  */
 public abstract class BaseFragmentActivity extends BaseActivity {
 
-
     @IdRes
     protected abstract  int getContainerId();
 

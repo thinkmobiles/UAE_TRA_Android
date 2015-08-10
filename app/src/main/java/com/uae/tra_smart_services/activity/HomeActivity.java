@@ -1,14 +1,15 @@
 package com.uae.tra_smart_services.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
-import com.uae.tra_smart_services.fragment.SettingsFragment;
-import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
+import com.uae.tra_smart_services.fragment.ServiceListFragment;
+import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 
@@ -18,17 +19,12 @@ import retrofit.RetrofitError;
  * Created by Andrey Korneychuk on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
-        implements ToolbarTitleManager, BaseHomePageFragment.ThemaDefiner {
+        implements ToolbarTitleManager, OnServiceSelectListener {
 
-    @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
-
         setContentView(R.layout.activity_home);
 
         final Toolbar toolbar = findView(R.id.toolbar);
@@ -36,7 +32,7 @@ public class HomeActivity extends BaseFragmentActivity
         toolbar.setNavigationIcon(R.mipmap.ic_launcher);
 
         if (getFragmentManager().findFragmentById(getContainerId()) == null) {
-            addFragment(SettingsFragment.newInstance());
+            addFragment(ServiceListFragment.newInstance());
         }
     }
 
@@ -51,8 +47,30 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public void onServiceSelect(Service _service) {
+        Toast.makeText(this, _service.toString(), Toast.LENGTH_SHORT).show();
+        switch (_service) {
+            case DOMAIN_CHECK:
+                break;
+            case COMPLAIN_ABOUT_PROVIDER:
+                break;
+            case COMPLAINT_ABOUT_TRA:
+                break;
+            case ENQUIRIES:
+                break;
+            case SUGGESTION:
+                break;
+            case SMS_SPAM:
+                break;
+            case POOR_COVERAGE:
+                break;
+            case HELP_SALIM:
+                break;
+            case MOBILE_VERIFICATION:
+                break;
+            case APPROVED_DEVICES:
+                break;
+        }
     }
 
     @Override
@@ -61,8 +79,10 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void handleError(RetrofitError _error) { }
+    public void handleError(RetrofitError _error) {
+    }
 
     @Override
-    public void handleError(RetrofitError _error, OnReloadData _listener) { }
+    public void handleError(RetrofitError _error, OnReloadData _listener) {
+    }
 }

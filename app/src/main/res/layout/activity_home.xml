@@ -1,75 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <include layout="@layout/toolbar"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:background="?attr/homePageHeaderBackground"
-        android:gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher"/>
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="3">
+        android:layout_weight="3"
+        android:orientation="vertical">
 
         <FrameLayout
             android:id="@+id/flContainer_HA"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </LinearLayout>
-
-    <RelativeLayout
-
-        android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:gravity="bottom">
-        <RadioGroup
-            android:id="@+id/bottomNavRadio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/dp_dashboard_tab_padding">
-
-            <RadioButton
-                android:id="@+id/rbPriorities_AD"
-                style="@style/DashboardRadioButton"
-                android:checked="true"
-                android:drawableTop="@drawable/ic_temp_left_field_icon"
-                android:text="@string/str_home"/>
-
-            <RadioButton
-                android:id="@+id/rbWaitingOn_AD"
-                style="@style/DashboardRadioButton"
-                android:drawableTop="@drawable/ic_temp_left_field_icon"
-                android:text="@string/str_index"/>
-
-            <RadioButton
-                android:id="@+id/rbMail_AD"
-                style="@style/DashboardRadioButton"
-                android:drawableTop="@drawable/ic_temp_left_field_icon"
-                android:text="@string/str_crm"/>
-
-            <RadioButton
-                android:id="@+id/rbCalendar_AD"
-                style="@style/DashboardRadioButton"
-                android:drawableTop="@drawable/ic_temp_left_field_icon"
-                android:text="@string/str_settings"/>
-        </RadioGroup>
-    </RelativeLayout>
 
 </LinearLayout>
