@@ -1,16 +1,16 @@
-package com.uae.tra_smart_services.fragments;
+package com.uae.tra_smart_services.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.activities.HomeActivity;
+import com.uae.tra_smart_services.activity.HomeActivity;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
-import com.uae.tra_smart_services.baseentities.BaseHomePageFragment;
 import com.uae.tra_smart_services.customviews.FontSizeSwitcherView;
 import com.uae.tra_smart_services.customviews.LanguageSwitcherView;
 import com.uae.tra_smart_services.customviews.ThemeSwitcherView;
+import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
 import com.uae.tra_smart_services.interfaces.I_SettingsChanged;
 
 /**

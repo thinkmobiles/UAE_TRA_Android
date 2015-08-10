@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.fragments;
+package com.uae.tra_smart_services.fragment;
 
 import android.os.Handler;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.baseentities.BaseAuthorizationFragment;
+import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 
 /**
  * Created by Andrey Korneychuk on 22.07.15.

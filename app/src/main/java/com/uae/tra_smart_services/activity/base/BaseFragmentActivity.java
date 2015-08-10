@@ -1,23 +1,18 @@
-package com.uae.tra_smart_services.baseentities;
+package com.uae.tra_smart_services.activity.base;
 
 import android.app.FragmentManager;
 import android.support.annotation.IdRes;
+
+import com.uae.tra_smart_services.fragment.base.BaseFragment;
 
 /**
  * Created by Vitaliy on 22/07/2015.
  */
 public abstract class BaseFragmentActivity extends BaseActivity {
 
-    @Override
-    public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() == 0) {
-            finish();
-        } else {
-            getFragmentManager().popBackStack();
-        }
-    }
 
-    protected abstract @IdRes int getContainerId();
+    @IdRes
+    protected abstract  int getContainerId();
 
     protected final void addFragment(final BaseFragment _fragment) {
         getFragmentManager().beginTransaction()
@@ -44,5 +39,14 @@ public abstract class BaseFragmentActivity extends BaseActivity {
 
     public final void popBackStack() {
         getFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+            finish();
+        } else {
+            getFragmentManager().popBackStack();
+        }
     }
 }

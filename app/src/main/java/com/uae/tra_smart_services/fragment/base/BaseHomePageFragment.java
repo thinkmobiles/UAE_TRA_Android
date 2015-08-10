@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.baseentities;
+package com.uae.tra_smart_services.fragment.base;
 
 /**
  * Created by Andrey Korneychuk on 30.07.15.

@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.activities;
+package com.uae.tra_smart_services.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.baseentities.BaseFragmentActivity;
-import com.uae.tra_smart_services.baseentities.BaseHomePageFragment;
-import com.uae.tra_smart_services.fragments.SettingsFragment;
+import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
+import com.uae.tra_smart_services.fragment.SettingsFragment;
+import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 

@@ -1,7 +1,7 @@
-package com.uae.tra_smart_services.fragments;
+package com.uae.tra_smart_services.fragment;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.baseentities.BaseAuthorizationFragment;
+import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 
 /**
  * Created by Andrey Korneychuk on 22.07.15.

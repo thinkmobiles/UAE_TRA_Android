@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.baseentities;
+package com.uae.tra_smart_services.fragment.base;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -11,18 +11,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.octo.android.robospice.SpiceManager;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
 import com.uae.tra_smart_services.interfaces.RetrofitFailureHandler;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
+import com.uae.tra_smart_services.rest.RestService;
 
 import retrofit.RetrofitError;
 
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragment extends Fragment implements RetrofitFailureHandler, OnReloadData{
+public abstract class BaseFragment extends Fragment implements RetrofitFailureHandler, OnReloadData {
+
     private View rootView;
+    private SpiceManager spiceManager = new SpiceManager(RestService.class);
+
     protected ProgressDialogManager progressDialogManager;
     protected ErrorHandler errorHandler;
     protected ToolbarTitleManager toolbarTitleManager;
@@ -61,14 +66,36 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         errorHandler.handleError(_error, _listener);
     }
 
-    protected void initViews() {}
+    protected void initViews() {
+    }
 
-    protected void initListeners() {}
+    protected void initListeners() {
+    }
 
     @Override
-    public void reloadData() {}
+    public void reloadData() {
+    }
 
-    protected abstract @LayoutRes int getLayoutResource();
+    @Override
+    public void onStart() {
+        super.onStart();
+        spiceManager.start(getActivity());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (spiceManager.isStarted()) {
+            spiceManager.shouldStop();
+        }
+    }
+
+    protected SpiceManager getSpiceManager() {
+        return spiceManager;
+    }
+
+    @LayoutRes
+    protected abstract int getLayoutResource();
 
     protected final <T extends View> T findView(@IdRes int _id) {
         return (T) rootView.findViewById(_id);

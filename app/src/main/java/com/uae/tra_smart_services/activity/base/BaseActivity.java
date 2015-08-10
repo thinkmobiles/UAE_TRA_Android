@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.baseentities;
+package com.uae.tra_smart_services.activity.base;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
+import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
 
 import java.util.Locale;

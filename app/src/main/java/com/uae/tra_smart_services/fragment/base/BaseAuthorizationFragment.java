@@ -1,7 +1,6 @@
-package com.uae.tra_smart_services.baseentities;
+package com.uae.tra_smart_services.fragment.base;
 
 import android.app.Activity;
-import android.widget.ImageButton;
 
 /**
  * Created by Andrey Korneychuk on 22.07.15.

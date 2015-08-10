@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.uae.tra_smart_services.activities.AuthorizationActivity"
+    tools:context="com.uae.tra_smart_services.activity.AuthorizationActivity"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar"/>

@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.activities;
+package com.uae.tra_smart_services.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
