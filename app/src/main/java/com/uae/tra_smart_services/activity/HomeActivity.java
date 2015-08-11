@@ -98,8 +98,10 @@ public class HomeActivity extends BaseFragmentActivity
     public void onServiceSelect(SmsService _service) {
         switch (_service) {
             case REPORT:
+                // TODO implement logic of Report Number Service fragment loading
                 break;
             case BLOCK:
+                // TODO implement logic of Block Number Service fragment loading
                 break;
         }
     }
