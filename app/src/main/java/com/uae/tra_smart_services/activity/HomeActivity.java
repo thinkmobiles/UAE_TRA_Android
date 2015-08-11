@@ -9,6 +9,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
+import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SmsSpamFragment;
@@ -70,6 +71,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(SmsSpamFragment.newInstance());
                 break;
             case POOR_COVERAGE:
+                replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
                 break;
             case HELP_SALIM:
                 break;

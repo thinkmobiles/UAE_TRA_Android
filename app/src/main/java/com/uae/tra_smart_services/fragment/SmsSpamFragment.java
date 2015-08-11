@@ -13,13 +13,11 @@ import com.uae.tra_smart_services.global.SmsService;
  */
 public class SmsSpamFragment extends BaseFragment implements TextView.OnClickListener{
 
-    private TextView tvReportNum_FSS, tvBlockNum_FSS;
-    private OnSmsServiceSelectListener mServiceSelectListener;
-
     public static SmsSpamFragment newInstance() {
         return new SmsSpamFragment();
     }
 
+    private OnSmsServiceSelectListener mServiceSelectListener;
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
@@ -31,6 +29,7 @@ public class SmsSpamFragment extends BaseFragment implements TextView.OnClickLis
         return R.layout.fragment_sms_spam;
     }
 
+    private TextView tvReportNum_FSS, tvBlockNum_FSS;
     @Override
     protected void initViews() {
         super.initViews();
