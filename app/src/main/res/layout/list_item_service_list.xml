@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <TextView
     android:id="@+id/tvServiceName_LISL"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -7,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/listPreferredItemHeightSmall"
     android:layout_gravity="center_vertical"
+    android:background="?attr/selectableItemBackground"
     android:drawablePadding="12dp"
     android:drawableStart="@drawable/background_service_item_icon"
-    android:gravity="center_vertical"
+    android:gravity="center_vertical|start"
     android:paddingEnd="?attr/listPreferredItemPaddingRight"
     android:paddingStart="?attr/listPreferredItemPaddingLeft"
     android:singleLine="true"
-    android:background="?attr/selectableItemBackground"
     android:textColor="@android:color/black"
     android:textSize="16sp"
     tools:background="#fff"
