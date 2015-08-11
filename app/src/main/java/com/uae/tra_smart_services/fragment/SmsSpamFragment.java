@@ -50,15 +50,15 @@ public class SmsSpamFragment extends BaseFragment implements TextView.OnClickLis
     public final void onClick(View _view) {
         switch (_view.getId()){
             case R.id.itmReportNum_FSS:
-                mServiceSelectListener.onServiceSelect(SmsService.REPORT);
+                mServiceSelectListener.onSmsServiceChildSelect(SmsService.REPORT);
                 break;
             case R.id.itmBlockNum_FSS:
-                mServiceSelectListener.onServiceSelect(SmsService.BLOCK);
+                mServiceSelectListener.onSmsServiceChildSelect(SmsService.BLOCK);
                 break;
         }
     }
 
     public interface OnSmsServiceSelectListener{
-        void onServiceSelect(SmsService _service);
+        void onSmsServiceChildSelect(SmsService _service);
     }
 }

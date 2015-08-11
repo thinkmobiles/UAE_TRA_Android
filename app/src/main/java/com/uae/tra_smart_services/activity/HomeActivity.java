@@ -98,7 +98,7 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onServiceSelect(SmsService _service) {
+    public void onSmsServiceChildSelect(SmsService _service) {
         switch (_service) {
             case REPORT:
                 // TODO implement logic of Report Number Service fragment loading
