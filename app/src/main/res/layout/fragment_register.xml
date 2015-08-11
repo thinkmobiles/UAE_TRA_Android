@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tra="http://schemas.android.com/apk/lib/com.uae.tra_smart_services.baseentities"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/hex_authorization_background_color"
@@ -22,7 +21,6 @@
             <EditText
                 android:id="@+id/etEmail_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
-                android:drawableLeft="@drawable/ic_temp_left_field_icon"
                 android:hint="@string/str_email"
                 android:inputType="textEmailAddress" />
 
@@ -31,7 +29,6 @@
             <EditText
                 android:id="@+id/etGender_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
-                android:drawableLeft="@drawable/ic_temp_left_field_icon"
                 android:hint="@string/str_gender"
                 android:inputType="text" />
 
@@ -40,7 +37,6 @@
             <EditText
                 android:id="@+id/etPhone_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
-                android:drawableLeft="@drawable/ic_temp_left_field_icon"
                 android:hint="@string/str_phone"
                 android:inputType="text" />
 
@@ -49,7 +45,6 @@
             <EditText
                 android:id="@+id/etPassword_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
-                android:drawableLeft="@drawable/ic_temp_left_field_icon"
                 android:hint="@string/str_password"
                 android:inputType="text" />
 

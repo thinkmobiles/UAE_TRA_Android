@@ -31,6 +31,8 @@
     <string name="str_forgot_password">Forgot the password</string>
     <!--            Sign in button               -->
     <string name="str_login">Login</string>
+    <!--            Sign in button               -->
+    <string name="str_skip">Skip</string>
     <!--            Register button               -->
     <string name="str_register">Register</string>
     <!--            Restore button               -->
@@ -59,5 +61,10 @@
         <item>العربية</item>
         <item>Español</item>
     </string-array>
+
+
+    <!--            Availability in button               -->
+    <string name="str_availabilty">Availability</string>
+    <string name="str_who_is">Who is?</string>
 
 </resources>

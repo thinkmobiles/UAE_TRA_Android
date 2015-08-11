@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/hex_authorization_background_color"
+    android:orientation="vertical">
+    <include
+        layout="@layout/list_item_service_list"
+        android:id="@+id/itmReportNum_FSS"/>
+    <include
+        layout="@layout/list_item_service_list"
+        android:id="@+id/itmBlockNum_FSS"/>
+</LinearLayout>

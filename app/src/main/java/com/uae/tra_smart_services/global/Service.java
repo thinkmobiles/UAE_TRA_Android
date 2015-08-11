@@ -63,6 +63,5 @@ public enum Service {
         public String toString() {
             return "Approved devices";
         }
-    };
-
+    }
 }

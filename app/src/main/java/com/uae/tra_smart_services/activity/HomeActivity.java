@@ -7,9 +7,13 @@ import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
+import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
+import com.uae.tra_smart_services.fragment.SmsSpamFragment;
+import com.uae.tra_smart_services.fragment.SmsSpamFragment.OnSmsServiceSelectListener;
 import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 
@@ -19,8 +23,7 @@ import retrofit.RetrofitError;
  * Created by Andrey Korneychuk on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
-        implements ToolbarTitleManager, OnServiceSelectListener {
-
+        implements ToolbarTitleManager, OnServiceSelectListener, OnSmsServiceSelectListener {
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
@@ -51,6 +54,7 @@ public class HomeActivity extends BaseFragmentActivity
         Toast.makeText(this, _service.toString(), Toast.LENGTH_SHORT).show();
         switch (_service) {
             case DOMAIN_CHECK:
+                replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
                 break;
             case COMPLAIN_ABOUT_PROVIDER:
                 break;
@@ -61,6 +65,7 @@ public class HomeActivity extends BaseFragmentActivity
             case SUGGESTION:
                 break;
             case SMS_SPAM:
+                replaceFragmentWithBackStack(SmsSpamFragment.newInstance());
                 break;
             case POOR_COVERAGE:
                 break;
@@ -80,9 +85,20 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void handleError(RetrofitError _error) {
+
     }
 
     @Override
     public void handleError(RetrofitError _error, OnReloadData _listener) {
+    }
+
+    @Override
+    public void onServiceSelect(SmsService _service) {
+        switch (_service) {
+            case REPORT:
+                break;
+            case BLOCK:
+                break;
+        }
     }
 }
