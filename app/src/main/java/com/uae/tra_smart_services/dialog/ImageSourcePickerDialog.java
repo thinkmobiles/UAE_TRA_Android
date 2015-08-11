@@ -29,8 +29,6 @@ public class ImageSourcePickerDialog extends DialogFragment implements OnClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-
         final Fragment targetFragment = getTargetFragment();
         if (targetFragment instanceof OnImageSourceSelectListener) {
             mSelectListener = (OnImageSourceSelectListener) targetFragment;
@@ -54,14 +52,6 @@ public class ImageSourcePickerDialog extends DialogFragment implements OnClickLi
         if (mSelectListener != null) {
             mSelectListener.onImageSourceSelect(ImageSource.values()[which]);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (getDialog() != null && getRetainInstance()) {
-            getDialog().setDismissMessage(null);
-        }
-        super.onDestroyView();
     }
 
     @Override

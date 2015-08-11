@@ -29,8 +29,6 @@ public final class ServicePickerDialog extends DialogFragment implements OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-
         final Fragment targetFragment = getTargetFragment();
         if (targetFragment instanceof OnServiceProviderSelectListener) {
             mSelectListener = (OnServiceProviderSelectListener) targetFragment;
@@ -54,14 +52,6 @@ public final class ServicePickerDialog extends DialogFragment implements OnClick
         if (mSelectListener != null) {
             mSelectListener.onServiceProviderSelect(ServiceProvider.values()[which]);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (getDialog() != null && getRetainInstance()) {
-            getDialog().setDismissMessage(null);
-        }
-        super.onDestroyView();
     }
 
     @Override
