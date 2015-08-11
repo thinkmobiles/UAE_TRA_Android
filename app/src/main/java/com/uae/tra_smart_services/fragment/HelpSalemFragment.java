@@ -5,7 +5,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.SeekBar;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
@@ -13,16 +12,12 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class PoorCoverageFragment extends BaseFragment {
-
-    public static PoorCoverageFragment newInstance() {
-        return new PoorCoverageFragment();
+public class HelpSalemFragment extends BaseFragment {
+    public static HelpSalemFragment newInstance() {
+        return new HelpSalemFragment();
     }
-
     @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_poor_coverage;
-    }
+    protected int getLayoutResource() {return R.layout.fragment_help_salem;}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,20 +25,19 @@ public class PoorCoverageFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
     }
 
-    private EditText etLocation;
-    private SeekBar sbPoorCoverage;
+    private EditText eturl, etDescription;
     @Override
     protected void initViews() {
         super.initViews();
-        etLocation = findView(R.id.etLocation_FPC);
-        sbPoorCoverage = findView(R.id.sbPoorCoverage_FPC);
+        eturl = findView(R.id.eturl_FHS);
+        etDescription = findView(R.id.etDescription_FHS);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_send, menu);
-        toolbarTitleManager.setTitle(R.string.str_signal_coverage);
+        toolbarTitleManager.setTitle(R.string.str_report_url);
     }
 
     @Override

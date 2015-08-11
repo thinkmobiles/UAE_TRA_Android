@@ -9,6 +9,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
+import com.uae.tra_smart_services.fragment.HelpSalemFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
@@ -74,6 +75,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
                 break;
             case HELP_SALIM:
+                replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
                 break;
             case MOBILE_VERIFICATION:
                 break;
@@ -89,7 +91,6 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void handleError(RetrofitError _error) {
-
     }
 
     @Override
