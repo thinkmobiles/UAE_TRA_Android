@@ -1,7 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,17 +32,19 @@ public class SmsSpamFragment extends BaseFragment implements TextView.OnClickLis
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    protected void initViews() {
+        super.initViews();
         tvReportNum_FSS = findView(R.id.itmReportNum_FSS);
+        tvReportNum_FSS.setText(SmsService.REPORT.toString());
         tvBlockNum_FSS = findView(R.id.itmBlockNum_FSS);
+        tvBlockNum_FSS.setText(SmsService.BLOCK.toString());
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
         tvReportNum_FSS.setOnClickListener(this);
+        tvBlockNum_FSS.setOnClickListener(this);
     }
 
     @Override

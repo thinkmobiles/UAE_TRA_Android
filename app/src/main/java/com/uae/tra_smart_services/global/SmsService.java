@@ -7,13 +7,13 @@ public enum SmsService {
     REPORT {
         @Override
         public String toString() {
-            return "Report Number";
+            return "Report SMS Number";
         }
     },
     BLOCK {
         @Override
         public String toString() {
-            return "Block Number";
+            return "Block SMS Number";
         }
     }
 }
