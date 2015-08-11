@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
+import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SmsSpamFragment;
@@ -57,6 +58,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
                 break;
             case COMPLAIN_ABOUT_PROVIDER:
+                replaceFragmentWithBackStack(ComplainAboutServiceFragment.newInstance());
                 break;
             case COMPLAINT_ABOUT_TRA:
                 break;
