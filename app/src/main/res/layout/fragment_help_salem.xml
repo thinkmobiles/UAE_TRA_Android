@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
     <EditText
         android:id="@+id/eturl_FHS"
+        style="@style/UserAuthorizationDataEditTextField"
         android:hint="@string/str_enter_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,6 +14,7 @@
 
     <EditText
         android:id="@+id/etDescription_FHS"
+        style="@style/UserAuthorizationDataEditTextField"
         android:hint="@string/str_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

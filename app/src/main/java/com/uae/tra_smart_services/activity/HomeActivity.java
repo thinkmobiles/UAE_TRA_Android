@@ -13,6 +13,7 @@ import com.uae.tra_smart_services.fragment.HelpSalemFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
+import com.uae.tra_smart_services.fragment.SmsReportFragment;
 import com.uae.tra_smart_services.fragment.SmsSpamFragment;
 import com.uae.tra_smart_services.fragment.SmsSpamFragment.OnSmsServiceSelectListener;
 import com.uae.tra_smart_services.global.Service;
@@ -101,7 +102,7 @@ public class HomeActivity extends BaseFragmentActivity
     public void onSmsServiceChildSelect(SmsService _service) {
         switch (_service) {
             case REPORT:
-                // TODO implement logic of Report Number Service fragment loading
+                replaceFragmentWithBackStack(SmsReportFragment.newInstance());
                 break;
             case BLOCK:
                 // TODO implement logic of Block Number Service fragment loading

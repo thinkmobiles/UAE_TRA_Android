@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
     <EditText
         android:id="@+id/etLocation_FPC"
+        style="@style/UserAuthorizationDataEditTextField"
         android:hint="@string/str_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,6 +19,7 @@
         android:layout_gravity="center|center_vertical"
         android:paddingTop="15dp"/>
     <SeekBar
+        style="@style/UserAuthorizationDataEditTextField"
         android:id="@+id/sbPoorCoverage_FPC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
