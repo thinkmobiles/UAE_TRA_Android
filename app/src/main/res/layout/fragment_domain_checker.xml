@@ -11,19 +11,19 @@
         android:layout_height="wrap_content"
         android:background="@color/hex_authorization_background_color"
         android:orientation="vertical">
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_vertical"
+            android:layout_margin="@dimen/abc_action_bar_content_inset_material"
+            android:src="@drawable/tra_logo"
+            android:adjustViewBounds="true"/>
         <LinearLayout
             android:id="@+id/llSignInFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/etEmail_FLI"
-                style="@style/UserAuthorizationDataEditTextField"
-                android:hint="@string/str_email"
-                android:inputType="textPersonName" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
@@ -43,45 +43,18 @@
             android:layout_centerVertical="true"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/btnRestorePassword_FLI"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/llSignInFields"
-                android:autoLink="all"
-                android:gravity="center"
-                android:padding="@dimen/dp_forgot_pass_static_text_padding"
-                android:text="@string/str_forgot_password"
-                android:textColor="@color/hex_auth_static_text_color"
-                android:textSize="@dimen/sp_authorization_button_text_size" />
-
             <Button
-                android:id="@+id/btnLogIn_FLI"
-                style="@style/BlurButtonStyle"
+                android:id="@+id/btnAvail_FDCH"
+                style="@style/BlurButtonStyleSimple"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/str_login" />
-            <LinearLayout
+                android:text="@string/str_availabilty" />
+            <Button
+                android:id="@+id/btnWhoIs_FDCH"
+                style="@style/BlurButtonStyleSimple"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <Button
-                    android:id="@+id/btnSkip_FLI"
-                    style="@style/BlurButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/str_skip" />
-                <Button
-                    android:id="@+id/btnRegisterNow_FLI"
-                    style="@style/BlurButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/str_register" />
-            </LinearLayout>
-
+                android:text="@string/str_who_is" />
         </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

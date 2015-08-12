@@ -31,6 +31,8 @@
     <string name="str_forgot_password">Forgot the password</string>
     <!--            Sign in button               -->
     <string name="str_login">Login</string>
+    <!--            Sign in button               -->
+    <string name="str_skip">Skip</string>
     <!--            Register button               -->
     <string name="str_register">Register</string>
     <!--            Restore button               -->
@@ -44,7 +46,6 @@
     <!--            Font size switcher               -->
     <string name="str_A_plus">A+</string>
     <string name="str_A_minus">"<b>A-</b>"</string>
-
 
     <!--               Home screens                -->
     <string name="str_home">Home</string>
@@ -62,5 +63,17 @@
         <item>العربية</item>
         <item>Español</item>
     </string-array>
+
+    <!--            Availability in button               -->
+    <string name="str_availabilty">Availability</string>
+    <string name="str_who_is">Who is?</string>
+    <string name="str_location">Location</string>
+    <string name="str_signal_level">Signal level</string>
+    <string name="str_signal_coverage">Signal coverage</string>
+    <string name="str_enter_url">Enter URL</string>
+    <string name="str_report_url">Report URL</string>
+    <string name="str_description">Description</string>
+    <string name="str_number_of_spammer">Number of spammer</string>
+    <string name="str_report_number">Report number</string>
 
 </resources>

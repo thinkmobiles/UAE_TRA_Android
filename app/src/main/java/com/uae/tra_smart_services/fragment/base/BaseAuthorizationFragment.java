@@ -38,5 +38,7 @@ public abstract class BaseAuthorizationFragment extends BaseFragment{
         void onRestorePassSuccess();
 
         void onBackPressed();
+
+        void onHomeScreenOpenWithoutAuth();
     }
 }

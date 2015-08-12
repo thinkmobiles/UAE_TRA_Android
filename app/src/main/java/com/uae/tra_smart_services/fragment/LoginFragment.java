@@ -15,8 +15,8 @@ import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 public class LoginFragment extends BaseAuthorizationFragment
                         implements Button.OnClickListener{
     private EditText etUserName, etPassword;
-    private Button btnLogIn;
-    private TextView tvRestorePassword, tvRegisterNow;
+    private Button btnLogIn, btnRegisterNow, btnSkip;
+    private TextView tvRestorePassword;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -34,16 +34,18 @@ public class LoginFragment extends BaseAuthorizationFragment
         etUserName = findView(R.id.etEmail_FLI);
         etPassword = findView(R.id.etPassword_FLI);
         // Actions
-        tvRestorePassword = findView(R.id.tvRestorePassword_FLI);
+        tvRestorePassword = findView(R.id.btnRestorePassword_FLI);
         btnLogIn = findView(R.id.btnLogIn_FLI);
-        tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
+        btnRegisterNow = findView(R.id.btnRegisterNow_FLI);
+        btnSkip = findView(R.id.btnSkip_FLI);
     }
 
     @Override
     protected final void initListeners() {
         tvRestorePassword.setOnClickListener(this);
         btnLogIn.setOnClickListener(this);
-        tvRegisterNow.setOnClickListener(this);
+        btnRegisterNow.setOnClickListener(this);
+        btnSkip.setOnClickListener(this);
     }
 
     @Override
@@ -54,14 +56,17 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     public final void onClick(final View _v) {
         switch (_v.getId()) {
-            case R.id.tvRestorePassword_FLI:
+            case R.id.btnRestorePassword_FLI:
                 actionsListener.onOpenRestorePassScreen();
                 break;
             case R.id.btnLogIn_FLI:
                 doLogIn();
                 break;
-            case R.id.tvRegisterNow_FLI:
+            case R.id.btnRegisterNow_FLI:
                 actionsListener.onOpenRegisterScreen();
+                break;
+            case R.id.btnSkip_FLI:
+                actionsListener.onHomeScreenOpenWithoutAuth();
                 break;
         }
     }

@@ -87,7 +87,7 @@ public class H {
      * @param resName resource id in string representation
      * @param className resource type
      * @return resource id integer representation
-     * */
+     **/
     public static int getResIdFromString(String resName, Class<?> className) {
         try {
             Field idField = className.getDeclaredField(resName);

@@ -89,6 +89,12 @@ public class AuthorizationActivity extends BaseFragmentActivity
     }
 
     @Override
+    public void onHomeScreenOpenWithoutAuth() {
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
+    }
+
+    @Override
     protected int getContainerId() {
         return R.id.flContainer_AA;
     }
