@@ -12,6 +12,8 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.ServiceListAdapter;
@@ -25,24 +27,22 @@ import java.util.List;
 /**
  * Created by mobimaks on 10.08.2015.
  */
-public class ServiceListFragment extends BaseFragment implements OnClickListener, OnQueryTextListener, OnItemClickListener {
-
-    private SearchView svSearchService;
-    private ListView lvServiceList;
-
-    private ServiceListAdapter mAdapter;
-    private OnServiceSelectListener mServiceSelectListener;
+public class ServiceListFragment extends BaseFragment
+                            implements OnClickListener, OnQueryTextListener,
+                                    OnItemClickListener, RadioGroup.OnCheckedChangeListener {
 
     public static ServiceListFragment newInstance() {
         return new ServiceListFragment();
     }
 
+    private OnServiceSelectListener mServiceSelectListener;
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
         if (_activity instanceof OnServiceSelectListener) {
             mServiceSelectListener = (OnServiceSelectListener) _activity;
         }
+        if (_activity instanceof )
     }
 
     @Override
@@ -51,16 +51,20 @@ public class ServiceListFragment extends BaseFragment implements OnClickListener
         setHasOptionsMenu(true);
     }
 
+    private ListView lvServiceList;
+    private RadioGroup bottomNavRadios;
     @Override
     protected void initViews() {
         super.initViews();
         lvServiceList = findView(R.id.lvServiceList_FSL);
+        bottomNavRadios = findView(R.id.rgBottomNavRadio_AH);
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
         lvServiceList.setOnItemClickListener(this);
+        bottomNavRadios.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -69,12 +73,15 @@ public class ServiceListFragment extends BaseFragment implements OnClickListener
         initServiceList();
     }
 
+    private ServiceListAdapter mAdapter;
+
     private void initServiceList() {
         List<Service> serviceList = new ArrayList<>(Arrays.asList(Service.values()));
         mAdapter = new ServiceListAdapter(getActivity(), serviceList);
         lvServiceList.setAdapter(mAdapter);
     }
 
+    private SearchView svSearchService;
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -130,4 +137,27 @@ public class ServiceListFragment extends BaseFragment implements OnClickListener
     public interface OnServiceSelectListener {
         void onServiceSelect(final Service _service);
     }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        // find which radio button is selected
+        switch (checkedId){
+            case R.id.rbHome_BNRG:
+                Toast.makeText(getActivity(), "choice: Home",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rbIndex_BNRG:
+                Toast.makeText(getActivity(), "choice: Index",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rbCRM_BNRG:
+                Toast.makeText(getActivity(), "choice: CRM",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rbSettings_BNRG:
+//                replaceFragmentWithBackStack(SettingsFragment.newInstance());
+                break;
+        }
+    }
+
 }

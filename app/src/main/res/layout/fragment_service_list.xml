@@ -23,4 +23,6 @@
         android:layout_height="match_parent"
         android:background="#fff"
         tools:listitem="@layout/list_item_service_list" />
+
+    <include layout="@layout/layout_bottom_nav_menu"/>
 </LinearLayout>

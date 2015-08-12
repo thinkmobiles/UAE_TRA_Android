@@ -8,14 +8,14 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.uae.tra_smart_services.interfaces.I_SettingsChanged;
+import com.uae.tra_smart_services.interfaces.SettingsChanged;
 
 /**
  * Created by Andrey Korneychuk on 24.07.15.
  */
 public abstract class BaseCustomSwitcher extends LinearLayout{
 
-    protected I_SettingsChanged mSettingsChangeListener;
+    protected SettingsChanged mSettingsChangeListener;
 
     public enum Type {
         FONT, LANGUAGE, THEME
@@ -64,12 +64,12 @@ public abstract class BaseCustomSwitcher extends LinearLayout{
         super.onDraw(canvas);
     }
 
-    public void registerObserver(I_SettingsChanged _listener){
+    public void registerObserver(SettingsChanged _listener){
         try {
             mSettingsChangeListener = _listener;
         } catch (ClassCastException e) {
             throw new ClassCastException(this.toString()
-                    + " must implement I_SettingsChanged interface");
+                    + " must implement SettingsChanged interface");
         }
     }
 

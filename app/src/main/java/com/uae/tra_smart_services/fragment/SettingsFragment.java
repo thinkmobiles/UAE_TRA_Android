@@ -14,12 +14,12 @@ import com.uae.tra_smart_services.customviews.FontSizeSwitcherView;
 import com.uae.tra_smart_services.customviews.LanguageSwitcherView;
 import com.uae.tra_smart_services.customviews.ThemeSwitcherView;
 import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
-import com.uae.tra_smart_services.interfaces.I_SettingsChanged;
+import com.uae.tra_smart_services.interfaces.SettingsChanged;
 
 /**
  * Created by Andrey Korneychuk on 30.07.15.
  */
-public class SettingsFragment extends BaseHomePageFragment implements I_SettingsChanged {
+public class SettingsFragment extends BaseHomePageFragment implements SettingsChanged {
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();

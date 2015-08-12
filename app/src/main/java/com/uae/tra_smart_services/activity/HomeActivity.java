@@ -37,11 +37,10 @@ import retrofit.RetrofitError;
 public class HomeActivity extends BaseFragmentActivity
                         implements ToolbarTitleManager, OnServiceSelectListener,
                     OnDeviceSelectListener, OnBackStackChangedListener,
-                    OnSmsServiceSelectListener, RadioGroup.OnCheckedChangeListener{
+                    OnSmsServiceSelectListener{
 
     private Toolbar mToolbar;
 
-    private RadioGroup bottomNavRadios;
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
         getFragmentManager().addOnBackStackChangedListener(this);
@@ -55,8 +54,7 @@ public class HomeActivity extends BaseFragmentActivity
         if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragment(ServiceListFragment.newInstance());
         }
-        bottomNavRadios = findView(R.id.rgBottomNavRadio_AH);
-        bottomNavRadios.setOnCheckedChangeListener(this);
+
         onBackStackChanged();
     }
 
@@ -145,28 +143,6 @@ public class HomeActivity extends BaseFragmentActivity
                 break;
             case BLOCK:
                 // TODO implement logic of Block Number Service fragment loading
-                break;
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        // find which radio button is selected
-        switch (checkedId){
-            case R.id.rbHome_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: Home",
-                        Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.rbIndex_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: Index",
-                        Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.rbCRM_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: CRM",
-                        Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.rbSettings_BNRG:
-                replaceFragmentWithBackStack(SettingsFragment.newInstance());
                 break;
         }
     }
