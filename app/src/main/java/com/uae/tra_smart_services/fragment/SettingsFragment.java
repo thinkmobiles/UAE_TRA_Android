@@ -21,6 +21,7 @@ import com.uae.tra_smart_services.interfaces.SettingsChanged;
  */
 public class SettingsFragment extends BaseHomePageFragment implements SettingsChanged {
 
+    public static final String CHANGED = "changed";
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
     }
@@ -85,6 +86,7 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
                 break;
         }
         Intent refresh = new Intent(getActivity(), HomeActivity.class);
+        refresh.putExtra(CHANGED, true);
         refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(refresh);
     }

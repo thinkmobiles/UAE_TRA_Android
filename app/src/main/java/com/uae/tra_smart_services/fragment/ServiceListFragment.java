@@ -18,7 +18,9 @@ import android.widget.Toast;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.ServiceListAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.BottomNavActionItems;
 import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.interfaces.BottomNavActionListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,21 +30,20 @@ import java.util.List;
  * Created by mobimaks on 10.08.2015.
  */
 public class ServiceListFragment extends BaseFragment
-                            implements OnClickListener, OnQueryTextListener,
-                                    OnItemClickListener, RadioGroup.OnCheckedChangeListener {
+                                implements OnClickListener, OnQueryTextListener, OnItemClickListener{
 
     public static ServiceListFragment newInstance() {
         return new ServiceListFragment();
     }
 
     private OnServiceSelectListener mServiceSelectListener;
+
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
         if (_activity instanceof OnServiceSelectListener) {
             mServiceSelectListener = (OnServiceSelectListener) _activity;
         }
-        if (_activity instanceof )
     }
 
     @Override
@@ -52,19 +53,17 @@ public class ServiceListFragment extends BaseFragment
     }
 
     private ListView lvServiceList;
-    private RadioGroup bottomNavRadios;
+
     @Override
     protected void initViews() {
         super.initViews();
         lvServiceList = findView(R.id.lvServiceList_FSL);
-        bottomNavRadios = findView(R.id.rgBottomNavRadio_AH);
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
         lvServiceList.setOnItemClickListener(this);
-        bottomNavRadios.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -137,27 +136,4 @@ public class ServiceListFragment extends BaseFragment
     public interface OnServiceSelectListener {
         void onServiceSelect(final Service _service);
     }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        // find which radio button is selected
-        switch (checkedId){
-            case R.id.rbHome_BNRG:
-                Toast.makeText(getActivity(), "choice: Home",
-                        Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.rbIndex_BNRG:
-                Toast.makeText(getActivity(), "choice: Index",
-                        Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.rbCRM_BNRG:
-                Toast.makeText(getActivity(), "choice: CRM",
-                        Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.rbSettings_BNRG:
-//                replaceFragmentWithBackStack(SettingsFragment.newInstance());
-                break;
-        }
-    }
-
 }

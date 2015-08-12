@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.activity;
 
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -36,10 +37,12 @@ import retrofit.RetrofitError;
  */
 public class HomeActivity extends BaseFragmentActivity
                         implements ToolbarTitleManager, OnServiceSelectListener,
-                    OnDeviceSelectListener, OnBackStackChangedListener,
-                    OnSmsServiceSelectListener{
+                        OnDeviceSelectListener, OnBackStackChangedListener,
+                        OnSmsServiceSelectListener, /*BottomNavActionListener,*/
+                        RadioGroup.OnCheckedChangeListener {
 
     private Toolbar mToolbar;
+    private RadioGroup bottomNavRadios;
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
@@ -51,12 +54,34 @@ public class HomeActivity extends BaseFragmentActivity
         mToolbar = findView(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        if (getFragmentManager().findFragmentById(getContainerId()) == null) {
+        bottomNavRadios = findView(R.id.rgBottomNavRadio_FSL);
+        bottomNavRadios.setOnCheckedChangeListener(this);
+
+
+        if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)){
+            replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
+            bottomNavRadios.check(R.id.rbSettings_BNRG);
+
+        } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragment(ServiceListFragment.newInstance());
         }
 
         onBackStackChanged();
     }
+
+    /*@Override
+    protected void onResume() {
+        bottomNavRadios = findView(R.id.rgBottomNavRadio_FSL);
+        bottomNavRadios.setOnCheckedChangeListener(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        bottomNavRadios = findView(R.id.rgBottomNavRadio_FSL);
+        bottomNavRadios.setOnCheckedChangeListener(this);
+        super.onRestart();
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -73,7 +98,6 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onServiceSelect(Service _service) {
-        //TODO: check if need login
         Toast.makeText(this, _service.toString(), Toast.LENGTH_SHORT).show();
         switch (_service) {
             case DOMAIN_CHECK:
@@ -143,6 +167,26 @@ public class HomeActivity extends BaseFragmentActivity
                 break;
             case BLOCK:
                 // TODO implement logic of Block Number Service fragment loading
+                break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.rbHome_BNRG:
+                replaceFragmentWithOutBackStack(ServiceListFragment.newInstance());
+                break;
+            case R.id.rbIndex_BNRG:
+                Toast.makeText(getApplicationContext(), "choice: Index",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rbCRM_BNRG:
+                Toast.makeText(getApplicationContext(), "choice: CRM",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rbSettings_BNRG:
+                replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
                 break;
         }
     }
