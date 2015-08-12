@@ -1,13 +1,19 @@
 package com.uae.tra_smart_services.activity;
 
+import android.app.FragmentManager.OnBackStackChangedListener;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
+import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
+import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
+import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
+import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.global.Service;
@@ -19,36 +25,43 @@ import retrofit.RetrofitError;
 /**
  * Created by Andrey Korneychuk on 23.07.15.
  */
-public class HomeActivity extends BaseFragmentActivity
-        implements ToolbarTitleManager, OnServiceSelectListener {
+public final class HomeActivity extends BaseFragmentActivity
+        implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener, OnBackStackChangedListener {
 
+    private Toolbar mToolbar;
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
+        getFragmentManager().addOnBackStackChangedListener(this);
+
         super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        final Toolbar toolbar = findView(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        mToolbar = findView(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragment(ServiceListFragment.newInstance());
         }
+        onBackStackChanged();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
-                break;
+                final boolean isBackStackEmpty = getFragmentManager().getBackStackEntryCount() == 0;
+                if (!isBackStackEmpty) {
+                    onBackPressed();
+                }
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onServiceSelect(Service _service) {
+        //TODO: check if need login
         Toast.makeText(this, _service.toString(), Toast.LENGTH_SHORT).show();
         switch (_service) {
             case DOMAIN_CHECK:
@@ -57,10 +70,9 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(ComplainAboutServiceFragment.newInstance());
                 break;
             case COMPLAINT_ABOUT_TRA:
-                break;
             case ENQUIRIES:
-                break;
             case SUGGESTION:
+                replaceFragmentWithBackStack(ComplainAboutTraFragment.newInstance());
                 break;
             case SMS_SPAM:
                 break;
@@ -71,7 +83,26 @@ public class HomeActivity extends BaseFragmentActivity
             case MOBILE_VERIFICATION:
                 break;
             case APPROVED_DEVICES:
+                replaceFragmentWithBackStack(ApprovedDevicesFragment.newInstance());
                 break;
+        }
+    }
+
+    @Override
+    public void onDeviceSelect(final String _device) {
+        replaceFragmentWithBackStack(DeviceApprovalFragment.newInstance(_device));
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        final boolean isBackStackEmpty = getFragmentManager().getBackStackEntryCount() == 0;
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(!isBackStackEmpty);
+            actionBar.setHomeButtonEnabled(isBackStackEmpty);
+            if (isBackStackEmpty) {
+                mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
+            }
         }
     }
 
