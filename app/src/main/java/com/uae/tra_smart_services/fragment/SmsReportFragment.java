@@ -20,6 +20,7 @@ public class SmsReportFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResource() { return R.layout.fragment_sms_report; }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -37,7 +38,11 @@ public class SmsReportFragment extends BaseFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_send, menu);
-        toolbarTitleManager.setTitle(R.string.str_report_number);
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.str_report_number;
     }
 
     @Override

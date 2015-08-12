@@ -102,6 +102,11 @@ public final class ComplainAboutServiceFragment extends BaseFragment
     }
 
     @Override
+    protected int getTitle() {
+        return 0;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_send) {
             hideKeyboard(getView());

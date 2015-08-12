@@ -43,7 +43,11 @@ public class PoorCoverageFragment extends BaseFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_send, menu);
-        toolbarTitleManager.setTitle(R.string.str_signal_coverage);
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.str_signal_coverage;
     }
 
     @Override

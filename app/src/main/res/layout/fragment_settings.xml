@@ -22,7 +22,6 @@
 
             <TextView
                 style="@style/UserSettingsStaticText"
-                android:drawableLeft="@drawable/ic_temp_left_field_icon"
                 android:text="@string/str_username" />
 
             <EditText
@@ -40,7 +39,6 @@
 
             <TextView
                 style="@style/UserSettingsStaticText"
-                android:drawableLeft="@drawable/ic_temp_left_field_icon"
                 android:text="@string/str_email" />
 
             <EditText
@@ -59,7 +57,6 @@
 
             <TextView
                 style="@style/UserSettingsStaticText"
-                android:drawableLeft="@drawable/ic_temp_left_field_icon"
                 android:text="@string/str_language" />
 
             <com.uae.tra_smart_services.customviews.LanguageSwitcherView
@@ -80,7 +77,6 @@
 
             <TextView
                 style="@style/UserSettingsStaticText"
-                android:drawableLeft="@drawable/ic_temp_left_field_icon"
                 android:hint="@string/str_fontsize" />
 
             <com.uae.tra_smart_services.customviews.FontSizeSwitcherView
@@ -104,7 +100,6 @@
 
             <TextView
                 style="@style/UserSettingsStaticText"
-                android:drawableLeft="@drawable/ic_temp_left_field_icon"
                 android:hint="@string/str_themesoptions"
                 android:inputType="text" />
 
@@ -126,7 +121,6 @@
 
             <TextView
                 style="@style/UserSettingsStaticText"
-                android:drawableLeft="@drawable/ic_temp_left_field_icon"
                 android:hint="@string/str_logout"
                 android:inputType="text" />
 

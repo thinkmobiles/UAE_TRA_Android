@@ -3,6 +3,7 @@ package com.uae.tra_smart_services.activity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
@@ -13,6 +14,7 @@ import com.uae.tra_smart_services.fragment.HelpSalemFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
+import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
 import com.uae.tra_smart_services.fragment.SmsSpamFragment;
 import com.uae.tra_smart_services.fragment.SmsSpamFragment.OnSmsServiceSelectListener;
@@ -27,8 +29,10 @@ import retrofit.RetrofitError;
  * Created by Andrey Korneychuk on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
-        implements ToolbarTitleManager, OnServiceSelectListener, OnSmsServiceSelectListener {
+                        implements ToolbarTitleManager, OnServiceSelectListener,
+                                    OnSmsServiceSelectListener, RadioGroup.OnCheckedChangeListener {
 
+    private RadioGroup bottomNavRadios;
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
@@ -41,6 +45,9 @@ public class HomeActivity extends BaseFragmentActivity
         if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragment(ServiceListFragment.newInstance());
         }
+
+        bottomNavRadios = findView(R.id.rgBottomNavRadio_AH);
+        bottomNavRadios.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -106,6 +113,28 @@ public class HomeActivity extends BaseFragmentActivity
                 break;
             case BLOCK:
                 // TODO implement logic of Block Number Service fragment loading
+                break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        // find which radio button is selected
+        switch (checkedId){
+            case R.id.rbHome_BNRG:
+                Toast.makeText(getApplicationContext(), "choice: Home",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rbIndex_BNRG:
+                Toast.makeText(getApplicationContext(), "choice: Index",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rbCRM_BNRG:
+                Toast.makeText(getApplicationContext(), "choice: CRM",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.rbSettings_BNRG:
+                replaceFragmentWithBackStack(SettingsFragment.newInstance());
                 break;
         }
     }

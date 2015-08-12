@@ -23,9 +23,8 @@ public class LoginFragment extends BaseAuthorizationFragment
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        toolbarTitleManager.setTitle(R.string.login_title);
+    protected int getTitle() {
+        return R.string.str_login;
     }
 
     @Override

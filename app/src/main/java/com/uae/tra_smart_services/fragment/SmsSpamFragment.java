@@ -25,6 +25,11 @@ public class SmsSpamFragment extends BaseFragment implements TextView.OnClickLis
     }
 
     @Override
+    protected int getTitle() {
+        return R.string.str_block_number;
+    }
+
+    @Override
     protected int getLayoutResource() {
         return R.layout.fragment_sms_spam;
     }

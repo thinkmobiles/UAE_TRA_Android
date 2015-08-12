@@ -37,6 +37,7 @@
     <string name="str_register">Register</string>
     <!--            Restore button               -->
     <string name="str_restore">Restore</string>
+    <string name="str_restore_password">Restore password</string>
     <!--            Register now button               -->
     <string name="str_register_now">Register now</string>
     <!--            Logout button               -->
@@ -62,6 +63,7 @@
     </string-array>
 
     <!--            Availability in button               -->
+    <string name="str_domain_check">Domain check</string>
     <string name="str_availabilty">Availability</string>
     <string name="str_who_is">Who is?</string>
     <string name="str_location">Location</string>
@@ -72,5 +74,6 @@
     <string name="str_description">Description</string>
     <string name="str_number_of_spammer">Number of spammer</string>
     <string name="str_report_number">Report number</string>
+    <string name="str_block_number">Report number</string>
 
 </resources>

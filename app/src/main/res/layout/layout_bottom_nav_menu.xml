@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_gravity="bottom"
+    android:layout_alignParentBottom="true"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RadioGroup
+        android:id="@+id/rgBottomNavRadio_AH"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/dp_dashboard_tab_padding">
+
+        <RadioButton
+            android:id="@+id/rbHome_BNRG"
+            style="@style/DashboardRadioButton"
+            android:checked="true"
+            android:drawableTop="@drawable/ic_temp_left_field_icon"
+            android:text="@string/str_home"/>
+
+        <RadioButton
+            android:id="@+id/rbIndex_BNRG"
+            style="@style/DashboardRadioButton"
+            android:drawableTop="@drawable/ic_temp_left_field_icon"
+            android:text="@string/str_index"/>
+
+        <RadioButton
+            android:id="@+id/rbCRM_BNRG"
+            style="@style/DashboardRadioButton"
+            android:drawableTop="@drawable/ic_temp_left_field_icon"
+            android:text="@string/str_crm"/>
+
+        <RadioButton
+            android:id="@+id/rbSettings_BNRG"
+            style="@style/DashboardRadioButton"
+            android:drawableTop="@drawable/ic_temp_left_field_icon"
+            android:text="@string/str_settings"/>
+    </RadioGroup>
+</RelativeLayout>

@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.octo.android.robospice.SpiceManager;
+import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
 import com.uae.tra_smart_services.interfaces.RetrofitFailureHandler;
@@ -56,6 +60,15 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         return rootView;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (getTitle() != 0)
+            toolbarTitleManager.setTitle(getTitle());
+    }
+
+    protected abstract @StringRes int getTitle();
 
     @Override
     public void failure(final RetrofitError _error) {

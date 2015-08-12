@@ -2,7 +2,10 @@ package com.uae.tra_smart_services.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.HomeActivity;
@@ -18,9 +21,24 @@ import com.uae.tra_smart_services.interfaces.I_SettingsChanged;
  */
 public class SettingsFragment extends BaseHomePageFragment implements I_SettingsChanged {
 
-
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.str_settings;
     }
 
     @Override

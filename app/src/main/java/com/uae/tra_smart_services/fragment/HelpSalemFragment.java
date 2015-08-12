@@ -37,7 +37,11 @@ public class HelpSalemFragment extends BaseFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_send, menu);
-        toolbarTitleManager.setTitle(R.string.str_report_url);
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.str_report_url;
     }
 
     @Override

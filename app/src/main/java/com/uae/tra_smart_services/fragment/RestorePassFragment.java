@@ -13,9 +13,8 @@ public class RestorePassFragment extends BaseAuthorizationFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        toolbarTitleManager.setTitle(R.string.forgot_password_title);
+    protected int getTitle() {
+        return R.string.forgot_password_title;
     }
 
     @Override

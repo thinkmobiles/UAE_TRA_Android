@@ -89,9 +89,8 @@ public class ServiceListFragment extends BaseFragment implements OnClickListener
     }
 
     @Override
-    public void onStart() {
-        mToolbarTitleManager.setTitle(R.string.fragment_service_list_title);
-        super.onStart();
+    protected int getTitle() {
+        return R.string.fragment_service_list_title;
     }
 
     @Override
