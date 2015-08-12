@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/abc_action_bar_progress_bar_size"
     android:background="@color/hex_authorization_background_color"
     android:orientation="vertical">
 

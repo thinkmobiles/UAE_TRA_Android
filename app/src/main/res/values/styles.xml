@@ -84,8 +84,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">@dimen/dp_transparent_fields_padding</item>
         <item name="android:background">@color/hex_authorization_background_color</item>
-        <item name="android:textColor">@drawable/secector_fields_hint_color</item>
-        <item name="android:textColorHint">@drawable/secector_fields_hint_color</item>
+        <item name="android:textColor">@android:color/black</item>
+        <!--<item name="android:textColor">@drawable/secector_fields_hint_color</item>-->
+        <!--<item name="android:textColorHint">@drawable/secector_fields_hint_color</item>-->
         <item name="android:drawablePadding">@dimen/dp_edittext_drawable_padding</item>
     </style>
 
