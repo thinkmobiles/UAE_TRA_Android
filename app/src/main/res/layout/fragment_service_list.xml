@@ -24,4 +24,3 @@
         android:background="#fff"
         tools:listitem="@layout/list_item_service_list" />
 </LinearLayout>
-

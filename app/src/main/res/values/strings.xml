@@ -54,6 +54,9 @@
     <string name="str_crm">CRM</string>
     <string name="str_settings">Settings</string>
     <string name="fragment_service_list_title">TRA Services</string>
+    <string name="complain">Complain</string>
+    <string name="approved_devices">Approved devices</string>
+    <string name="device_approval">Device approval</string>
     <!--               Home screens                -->
 
     <string-array name="languages">

@@ -6,17 +6,11 @@
 
     <include layout="@layout/toolbar"/>
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/flContainer_HA"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:id="@+id/flContainer_HA"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:background="@android:color/white"/>
 
     <include layout="@layout/layout_bottom_nav_menu"/>
 

@@ -2,7 +2,9 @@ package com.uae.tra_smart_services.fragment.base;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.octo.android.robospice.SpiceManager;
 import com.uae.tra_smart_services.R;
@@ -31,6 +34,7 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
 
     private View rootView;
     private SpiceManager spiceManager = new SpiceManager(RestService.class);
+    private InputMethodManager mInputMethodManager;
 
     protected ProgressDialogManager progressDialogManager;
     protected ErrorHandler errorHandler;
@@ -85,8 +89,19 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     protected void initListeners() {
     }
 
+    @CallSuper
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mInputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+    }
+
     @Override
     public void reloadData() {
+    }
+
+    protected final ToolbarTitleManager getToolbarTitleManager() {
+        return toolbarTitleManager;
     }
 
     @Override
@@ -103,8 +118,12 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         }
     }
 
-    protected SpiceManager getSpiceManager() {
+    protected final SpiceManager getSpiceManager() {
         return spiceManager;
+    }
+
+    protected final void hideKeyboard(View view) {
+        mInputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @LayoutRes
