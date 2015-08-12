@@ -1,7 +1,10 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppThemeOrange" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:layoutDirection">locale</item>
+    </style>
+
+    <style name="AppThemeOrange" parent="BaseAppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/hex_primary_orange</item>
         <!-- colorPrimaryDark is used for the status bar -->
@@ -10,13 +13,13 @@
 
         <item name="homePageHeaderBackground">@color/hex_primary_orange</item>
         <item name="globalButtonTextColor">@color/hex_primary_orange</item>
-
+        <item name="android:layoutDirection">locale</item>
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
         <item name="colorAccent">@color/hex_color_accent</item>
     </style>
 
-    <style name="AppThemeGreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeGreen" parent="BaseAppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/hex_primary_green</item>
         <!-- colorPrimaryDark is used for the status bar -->
@@ -31,7 +34,7 @@
         <item name="colorAccent">@color/hex_color_accent</item>
     </style>
 
-    <style name="AppThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeBlue" parent="BaseAppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/hex_primary_blue</item>
         <!-- colorPrimaryDark is used for the status bar -->
@@ -47,7 +50,7 @@
     </style>
 
 
-    <style name="AppThemeRed" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeRed" parent="BaseAppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/hex_primary_red</item>
         <!-- colorPrimaryDark is used for the status bar -->
@@ -94,9 +97,8 @@
 
     <style name="UserSettingsEditableText" parent="UserAuthorizationDataEditTextField" >
         <item name="android:textColor">@color/hex_black_color</item>
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
         <item name="android:capitalize">none</item>
         <item name="android:gravity">center|end</item>
     </style>

@@ -27,7 +27,9 @@
             <EditText
                 android:id="@+id/etUserName_AS"
                 style="@style/UserSettingsEditableText"
-                android:text="asdasdads" />
+                android:layout_width="match_parent"
+                android:text="@string/str_user_name"
+                android:gravity="center|end"/>
         </LinearLayout>
 
         <View style="@style/AuthorizationFieldsSeparator" />
@@ -44,7 +46,9 @@
             <EditText
                 android:id="@+id/etEmail_AS"
                 style="@style/UserSettingsEditableText"
-                android:text="asdasdads" />
+                android:layout_width="match_parent"
+                android:text="test@mail.com"
+                android:gravity="center|end" />
 
         </LinearLayout>
 
@@ -64,7 +68,7 @@
                 tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:gravity="center|right" />
+                android:gravity="center|end" />
 
         </LinearLayout>
 
@@ -87,7 +91,7 @@
                 tra:scaleMin="0.5"
                 tra:scaleMax="1.5"
                 tra:scaleStep="0.1"
-                android:gravity="center|right" />
+                android:gravity="center|end" />
 
         </LinearLayout>
 
@@ -109,7 +113,7 @@
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:padding="5dp"
-                android:gravity="center|right" />
+                android:gravity="center|end" />
         </LinearLayout>
 
         <View style="@style/AuthorizationFieldsSeparator" />

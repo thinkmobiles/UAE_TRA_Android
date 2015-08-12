@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:paddingRight="@dimen/dp_dashboard_tab_padding"
+    android:layoutDirection="locale"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RadioButton
