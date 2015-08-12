@@ -69,20 +69,6 @@ public class HomeActivity extends BaseFragmentActivity
         onBackStackChanged();
     }
 
-    /*@Override
-    protected void onResume() {
-        bottomNavRadios = findView(R.id.rgBottomNavRadio_FSL);
-        bottomNavRadios.setOnCheckedChangeListener(this);
-        super.onResume();
-    }
-
-    @Override
-    protected void onRestart() {
-        bottomNavRadios = findView(R.id.rgBottomNavRadio_FSL);
-        bottomNavRadios.setOnCheckedChangeListener(this);
-        super.onRestart();
-    }*/
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

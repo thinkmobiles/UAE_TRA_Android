@@ -65,8 +65,8 @@
     <style name="AuthorizationFieldsSeparator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_authorization_fields_separator_height</item>
-        <item name="android:layout_marginLeft">@dimen/dp_authorization_fields_separator_margin</item>
-        <item name="android:layout_marginRight">@dimen/dp_authorization_fields_separator_margin</item>
+        <item name="android:layout_marginStart">@dimen/dp_authorization_fields_separator_margin</item>
+        <item name="android:layout_marginEnd">@dimen/dp_authorization_fields_separator_margin</item>
         <item name="android:background">@color/hex_auth_fields_separator_color</item>
     </style>
 
@@ -89,7 +89,7 @@
     <style name="UserSettingsStaticText" parent="UserAuthorizationDataEditTextField" >
         <item name="android:textSize">@dimen/sp_settings_static_text_size</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:gravity">left|center</item>
+        <item name="android:gravity">start|center</item>
     </style>
 
     <style name="UserSettingsEditableText" parent="UserAuthorizationDataEditTextField" >
@@ -98,7 +98,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:capitalize">none</item>
-        <item name="android:gravity">center|right</item>
+        <item name="android:gravity">center|end</item>
     </style>
 
     <style name="UserSettingsSwitchers" parent="UserAuthorizationDataEditTextField" >
@@ -116,16 +116,16 @@
     </style>
 
     <style name="BlurButtonStyle" parent="TransparentWhiteButton">
-        <item name="android:layout_marginLeft">@dimen/dp_button_margin</item>
-        <item name="android:layout_marginRight">@dimen/dp_button_margin</item>
+        <item name="android:layout_marginStart">@dimen/dp_button_margin</item>
+        <item name="android:layout_marginEnd">@dimen/dp_button_margin</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_margin">10dp</item>
     </style>
 
     <style name="BlurButtonStyleSimple" parent="BlurButtonStyle">
-        <item name="android:layout_marginLeft">150dp</item>
-        <item name="android:layout_marginRight">150dp</item>
+        <item name="android:layout_marginStart">150dp</item>
+        <item name="android:layout_marginEnd">150dp</item>
     </style>
 
     <style name="DashboardRadioButton">
