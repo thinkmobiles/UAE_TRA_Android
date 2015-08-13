@@ -2,6 +2,8 @@ package com.uae.tra_smart_services.fragment;
 
 import android.app.Activity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;

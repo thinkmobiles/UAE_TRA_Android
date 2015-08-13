@@ -35,8 +35,8 @@ public class PoorCoverageFragment extends BaseFragment {
     @Override
     protected void initViews() {
         super.initViews();
-        etLocation = findView(R.id.etLocation_FPC);
-        sbPoorCoverage = findView(R.id.sbPoorCoverage_FPC);
+//        etLocation = findView(R.id.etLocation_FPC);
+//        sbPoorCoverage = findView(R.id.sbPoorCoverage_FPC);
     }
 
     @Override

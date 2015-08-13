@@ -57,11 +57,9 @@ public class HomeActivity extends BaseFragmentActivity
         bottomNavRadios = findView(R.id.rgBottomNavRadio_FSL);
         bottomNavRadios.setOnCheckedChangeListener(this);
 
-
         if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)){
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
-
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragment(ServiceListFragment.newInstance());
         }
