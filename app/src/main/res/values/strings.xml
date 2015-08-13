@@ -81,5 +81,6 @@
 
 
     <string name="str_user_name">Jhon</string>
+    <string name="str_empty"> </string>
 
 </resources>
