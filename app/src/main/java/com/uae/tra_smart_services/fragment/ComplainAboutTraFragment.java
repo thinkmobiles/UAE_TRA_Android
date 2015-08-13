@@ -60,5 +60,4 @@ public final class ComplainAboutTraFragment extends BaseComplainFragment impleme
     protected int getLayoutResource() {
         return R.layout.fragment_complain_about_tra;
     }
-
 }

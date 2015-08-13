@@ -33,4 +33,5 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.octo.android.robospice:robospice:1.4.14'
     compile 'com.octo.android.robospice:robospice-retrofit:1.4.14'
+    compile 'com.afollestad:material-dialogs:0.7.8.1'
 }
