@@ -58,4 +58,8 @@ public final class ServerConstants {
     public static final String PARAMETER_DEVICE_BRAND = "brand";
     public static final String PARAMETER_START_OFFSET = "start";
     public static final String PARAMETER_END_LIMIT = "end";
+
+    //!!!!!!!!!!!! SERVER RESPONSES !!!!!!!!!!!!!!!!!
+    public static final String AVAILABLE = "Available";
+    public static final String NOT_AVAILABLE = "Not Available";
 }

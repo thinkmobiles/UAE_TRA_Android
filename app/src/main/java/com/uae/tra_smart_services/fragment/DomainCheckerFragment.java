@@ -12,6 +12,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.rest.new_request.CheckDomainAvailabilityRequest;
 
 import java.util.ArrayList;
@@ -87,17 +88,22 @@ public class DomainCheckerFragment extends BaseFragment
             getSpiceManager().execute(new CheckDomainAvailabilityRequest(_domain), new RequestListener<String>() {
                 @Override
                 public void onRequestFailure(SpiceException spiceException) {
-                    AlertDialogFragment.newInstance(DomainCheckerFragment.this)
-                        .setDialogTitle(getString(R.string.str_error))
-                        .setDialogBody(
-                            String.format(getString(R.string.str_invalid_url), _domain)
-                        )
-                        .show(getFragmentManager());
+                    Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onRequestSuccess(String _str) {
-                    Toast.makeText(getActivity(), _str, Toast.LENGTH_LONG).show();
+                    if (_str.equals(ServerConstants.AVAILABLE)){
+                        btnAvail.setText(getString(R.string.str_domain_available));
+                        btnAvail.setVisibility(View.INVISIBLE);
+                    } else if(_str.equals(ServerConstants.NOT_AVAILABLE)){
+                        AlertDialogFragment.newInstance(DomainCheckerFragment.this)
+                            .setDialogTitle(getString(R.string.str_error))
+                            .setDialogBody(
+                                    String.format(getString(R.string.str_url_not_avail), _domain)
+                            )
+                            .show(getFragmentManager());
+                    }
                 }
             });
         } else {
