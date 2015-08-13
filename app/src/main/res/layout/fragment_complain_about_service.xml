@@ -9,7 +9,7 @@
         android:id="@+id/ivAddAttachment_FCAS"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@drawable/background_item_selectable"
+        android:background="?attr/selectableItemBackground"
         android:layout_alignParentEnd="true"
         android:contentDescription="Add attachment"
         android:scaleType="centerInside"
