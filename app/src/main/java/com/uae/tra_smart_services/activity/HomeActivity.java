@@ -2,7 +2,6 @@ package com.uae.tra_smart_services.activity;
 
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -11,14 +10,15 @@ import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
-import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
+import com.uae.tra_smart_services.fragment.BlockSmsNumberFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
-import com.uae.tra_smart_services.fragment.HelpSalemFragment;
-import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
+import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
+import com.uae.tra_smart_services.fragment.HelpSalemFragment;
+import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
@@ -82,7 +82,6 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onServiceSelect(Service _service) {
-        Toast.makeText(this, _service.toString(), Toast.LENGTH_SHORT).show();
         switch (_service) {
             case DOMAIN_CHECK:
                 replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
@@ -150,7 +149,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(SmsReportFragment.newInstance());
                 break;
             case BLOCK:
-                // TODO implement logic of Block Number Service fragment loading
+                replaceFragmentWithBackStack(BlockSmsNumberFragment.newInstance());
                 break;
         }
     }

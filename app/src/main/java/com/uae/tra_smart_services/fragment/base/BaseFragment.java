@@ -18,7 +18,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.octo.android.robospice.SpiceManager;
-import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
 import com.uae.tra_smart_services.interfaces.RetrofitFailureHandler;
@@ -72,7 +71,8 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
             toolbarTitleManager.setTitle(getTitle());
     }
 
-    protected abstract @StringRes int getTitle();
+    @StringRes
+    protected abstract int getTitle();
 
     @Override
     public void failure(final RetrofitError _error) {

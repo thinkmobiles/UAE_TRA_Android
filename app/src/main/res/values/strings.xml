@@ -81,6 +81,7 @@
 
 
     <string name="str_user_name">Jhon</string>
+<<<<<<< HEAD
     <string name="str_insert_domain_name_here">Insert domain name here</string>
 
 
@@ -90,5 +91,8 @@
     <string name="str_invalid_url">The format of inputted URL is not correct</string>
     <string name="str_ok">Ok</string>
     <string name="str_cancel">Cancel</string>
+=======
+    <string name="str_empty"> </string>
+>>>>>>> e7f8571dd500958b3a8241b0d6480651dd2408d0
 
 </resources>
