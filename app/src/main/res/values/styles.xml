@@ -68,8 +68,6 @@
     <style name="AuthorizationFieldsSeparator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_authorization_fields_separator_height</item>
-        <item name="android:layout_marginStart">@dimen/dp_authorization_fields_separator_margin</item>
-        <item name="android:layout_marginEnd">@dimen/dp_authorization_fields_separator_margin</item>
         <item name="android:background">@color/hex_auth_fields_separator_color</item>
     </style>
 

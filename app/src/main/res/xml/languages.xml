@@ -2,5 +2,5 @@
 <map linked="true">
     <entry key="en">English</entry>
     <entry key="ar">العربية</entry>
-    <entry key="es">Español</entry>
+    <!--<entry key="es">Español</entry>-->
 </map>
