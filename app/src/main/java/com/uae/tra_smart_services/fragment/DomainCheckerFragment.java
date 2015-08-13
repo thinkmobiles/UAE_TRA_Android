@@ -1,33 +1,20 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Patterns;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
-import com.uae.tra_smart_services.entities.C;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.rest.new_request.CheckDomainAvailabilityRequest;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 /**
  * Created by ak-buffalo on 10.08.15.
@@ -128,6 +115,12 @@ public class DomainCheckerFragment extends BaseFragment
         // TODO Unimplemented method
     }
 
+    /**
+     * Class DomainFilterPool is verifying of compliance of the domain name
+     * More then one filter can be added to check domain
+     *
+     * @implements Filter
+     * */
     class DomainFilterPool implements Filter{
         private ArrayList<Filter> filters = new ArrayList<>();
 
@@ -143,7 +136,9 @@ public class DomainCheckerFragment extends BaseFragment
             return true;
         }
     }
-
+    /**
+     * Filter define rule to check of compliance of the domain name
+     * */
     interface Filter{
         boolean check(String _domain);
     }
