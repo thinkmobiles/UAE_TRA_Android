@@ -20,4 +20,5 @@
     <dimen name="dp_dashboard_tab_padding">3dp</dimen>
     <dimen name="dp_dashboard_tab_drawable_padding">3dp</dimen>
     <dimen name="dp_divider_padding_side">3dp</dimen>
+    <dimen name="dp_service_container_padding">10dp</dimen>
 </resources>

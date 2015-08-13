@@ -2,11 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="@dimen/abc_action_bar_progress_bar_size"
     android:layout_height="match_parent">
     <EditText
         android:id="@+id/eturl_FHS"
-        style="@style/UserAuthorizationDataEditTextField"
         android:hint="@string/str_enter_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +12,6 @@
 
     <EditText
         android:id="@+id/etDescription_FHS"
-        style="@style/UserAuthorizationDataEditTextField"
         android:hint="@string/str_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

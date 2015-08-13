@@ -53,7 +53,6 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_send, menu);
     }
 
     @Override
