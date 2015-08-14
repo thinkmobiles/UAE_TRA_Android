@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:gravity="center_horizontal"
+    android:id="@+id/llContainer"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvHexagonView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:hexagonSideSize="40dp"
+        app:hexagonBorderSize="1dp"
+        app:hexagonBorderColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:text="Element"/>
+</LinearLayout>

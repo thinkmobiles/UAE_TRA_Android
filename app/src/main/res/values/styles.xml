@@ -138,7 +138,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@drawable/selector_bottom_nav_radio_text</item>
-        <item name="android:background">@drawable/selector_bottom_nav_radio</item>
+        <!--<item name="android:background">@drawable/selector_bottom_nav_radio</item>-->
     </style>
 
 </resources>

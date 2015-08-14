@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/res_bg_2"
+        android:scaleType="centerCrop"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.uae.tra_smart_services.customviews.HexagonalHeader
+            android:id="@+id/hhHeader_FHH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:buttonColor="@color/hex_primary_orange"
+            app:hexColor="#ffffff"
+            app:hexPerRow="8"
+            app:hexagonRowCount="2"
+            app:hexagonStrokeWidth="2dp"
+            app:pressedColor="#ff5b61ff"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvServices_FHH"
+            android:layout_below="@+id/hblHexagonalButtons_FHH"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layoutDirection="locale"
+            android:overScrollMode="never"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"/>
+
+        <com.uae.tra_smart_services.customviews.HexagonalButtonsLayout
+            android:id="@+id/hblHexagonalButtons_FHH"
+            android:layout_below="@id/hhHeader_FHH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:separatorStrokeWidth="2dp"
+            app:hexagonGapWidth="10dp"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

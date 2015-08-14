@@ -27,6 +27,7 @@ public abstract class BaseFragmentActivity extends BaseActivity {
     }
 
     public final void replaceFragmentWithOutBackStack(final BaseFragment _fragment) {
+        clearBackStack();
         getFragmentManager().beginTransaction()
                 .replace(getContainerId(), _fragment)
                 .commit();

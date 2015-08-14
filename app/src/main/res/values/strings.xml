@@ -50,8 +50,8 @@
 
     <!--               Home screens                -->
     <string name="str_home">Home</string>
-    <string name="str_index">Index</string>
-    <string name="str_crm">CRM</string>
+    <string name="str_favorites">Favorites</string>
+    <string name="str_inquiries">Inquiries</string>
     <string name="str_settings">Settings</string>
     <string name="fragment_service_list_title">TRA Services</string>
     <string name="complain">Complain</string>
@@ -81,5 +81,6 @@
 
 
     <string name="str_user_name">Jhon</string>
+    <string name="str_info_hub">Info Hub</string>
 
 </resources>

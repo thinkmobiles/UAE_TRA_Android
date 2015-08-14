@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HexagonView">
+        <attr name="hexagonBorderColor" format="color"/>
+        <attr name="hexagonBackground" format="reference"/>
+        <attr name="hexagonSideSize" format="dimension"/>
+        <attr name="hexagonBorderSize" format="dimension"/>
+    </declare-styleable>
+</resources>

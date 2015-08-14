@@ -1,5 +1,8 @@
 package com.uae.tra_smart_services.rest.new_request;
 
+import com.octo.android.robospice.request.listener.RequestCancellationListener;
+import com.octo.android.robospice.request.listener.RequestProgress;
+import com.octo.android.robospice.request.listener.RequestProgressListener;
 import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest;
 import com.uae.tra_smart_services.rest.TRAServicesAPI;
 import com.uae.tra_smart_services.rest.model.new_request.ComplainTRAServiceModel;
