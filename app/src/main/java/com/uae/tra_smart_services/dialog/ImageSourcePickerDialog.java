@@ -63,5 +63,4 @@ public class ImageSourcePickerDialog extends DialogFragment implements OnClickLi
     public interface OnImageSourceSelectListener {
         void onImageSourceSelect(final ImageSource _source);
     }
-
 }
