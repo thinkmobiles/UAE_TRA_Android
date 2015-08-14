@@ -89,6 +89,7 @@ public class HelpSalemFragment extends BaseFragment implements AlertDialogFragme
 
     private final void collectAndSendToServer(){
         if(filters.check(eturl.getText().toString())){
+            progressDialogManager.showProgressDialog(getString(R.string.str_checking));
             getSpiceManager().execute(
                     new HelpSalimRequest(
                             new HelpSalimModel(
@@ -112,11 +113,13 @@ public class HelpSalemFragment extends BaseFragment implements AlertDialogFragme
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
+            progressDialogManager.hideProgressDialog();
             Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onRequestSuccess(Response smsSpamReportResponse) {
+            progressDialogManager.hideProgressDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
         }
     }

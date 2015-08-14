@@ -14,8 +14,8 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
-import com.uae.tra_smart_services.dialog.ServicePickerDialog;
-import com.uae.tra_smart_services.dialog.ServicePickerDialog.OnServiceProviderSelectListener;
+import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
+import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
@@ -28,7 +28,7 @@ import com.uae.tra_smart_services.rest.new_request.SmsSpamRequest;
  * Created by mobimaks on 13.08.2015.
  */
 public final class SmsBlockNumberFragment extends BaseFragment
-    implements OnClickListener, OnServiceProviderSelectListener, AlertDialogFragment.OnOkListener {
+    implements OnClickListener, OnItemPickListener, AlertDialogFragment.OnOkListener {
 
     private EditText etOperatorNumber, etReferenceNumber, etDescription;
     private TextView tvServiceProvider;
@@ -93,6 +93,7 @@ public final class SmsBlockNumberFragment extends BaseFragment
 
     private final void collectAndSendToServer(){
         if(filters.check(etOperatorNumber.getText().toString())){
+            progressDialogManager.showProgressDialog(getString(R.string.str_checking));
             getSpiceManager().execute(
                     new SmsSpamRequest(
                             new SmsSpamRequestModel(
@@ -116,12 +117,16 @@ public final class SmsBlockNumberFragment extends BaseFragment
     }
 
     private final void openServiceProviderPicker() {
-        ServicePickerDialog.newInstance(this).show(getFragmentManager());
+        CustomSingleChoiceDialog
+                .newInstance(this)
+                .setTitle("Select service provider")
+                .setBodyItems(ServiceProvider.toStringArray())
+                .show(getFragmentManager());
     }
 
     @Override
-    public final void onServiceProviderSelect(final ServiceProvider _provider) {
-        tvServiceProvider.setText(_provider.toString());
+    public void onItemPicked(int _dialogItem) {
+        tvServiceProvider.setText(ServiceProvider.toStringArray()[_dialogItem].toString());
     }
 
     @Override
@@ -143,11 +148,13 @@ public final class SmsBlockNumberFragment extends BaseFragment
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
+            progressDialogManager.hideProgressDialog();
             Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
+            progressDialogManager.hideProgressDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
         }
     }

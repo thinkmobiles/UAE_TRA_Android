@@ -50,8 +50,7 @@ public class SmsReportFragment extends BaseFragment {
                 addFilter(new Filter<String>() {
                     @Override
                     public boolean check(String _data) {
-                        // TODO Implement phone validation rule here, will return true by default
-                        return true;
+                        return !_data.isEmpty();
                     }
                 });
             }
@@ -81,6 +80,7 @@ public class SmsReportFragment extends BaseFragment {
 
     private final void collectAndSendToServer(){
         if(filters.check(etNumberOfSpammer.getText().toString())){
+            progressDialogManager.showProgressDialog(getString(R.string.str_checking));
             getSpiceManager().execute(
                     new SmsSpamRequest(
                             new SmsSpamRequestModel(
@@ -101,11 +101,13 @@ public class SmsReportFragment extends BaseFragment {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
+            progressDialogManager.hideProgressDialog();
             Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
+            progressDialogManager.hideProgressDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
         }
     }

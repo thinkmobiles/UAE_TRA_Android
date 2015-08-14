@@ -14,8 +14,8 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.dialog.ServicePickerDialog;
-import com.uae.tra_smart_services.dialog.ServicePickerDialog.OnServiceProviderSelectListener;
+import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
+import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.global.ServiceProvider;
 import com.uae.tra_smart_services.rest.model.new_request.ComplainServiceProviderModel;
@@ -27,7 +27,7 @@ import retrofit.client.Response;
  * Created by mobimaks on 10.08.2015.
  */
 public final class ComplainAboutServiceFragment extends BaseComplainFragment
-        implements OnClickListener, OnServiceProviderSelectListener {
+        implements OnClickListener, OnItemPickListener {
 
     protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_REQUEST";
 
@@ -141,12 +141,16 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     }
 
     private void openServiceProviderPicker() {
-        ServicePickerDialog.newInstance(this).show(getFragmentManager());
+        CustomSingleChoiceDialog
+                .newInstance(this)
+                .setTitle("Select service provider")
+                .setBodyItems(ServiceProvider.toStringArray())
+                .show(getFragmentManager());
     }
 
     @Override
-    public void onServiceProviderSelect(final ServiceProvider _provider) {
-        tvServiceProvider.setText(_provider.toString());
+    public void onItemPicked(int _dialogItem) {
+        tvServiceProvider.setText(ServiceProvider.values()[_dialogItem].toString());
     }
 
     private class RequestResponseListener implements PendingRequestListener<Response> {

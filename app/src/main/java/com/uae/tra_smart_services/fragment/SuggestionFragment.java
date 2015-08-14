@@ -22,5 +22,4 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
         showProgressDialog();
         getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
     }
-
 }

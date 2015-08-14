@@ -58,6 +58,7 @@ public class PoorCoverageFragment extends BaseFragment implements AlertDialogFra
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        progressDialogManager.showProgressDialog(getString(R.string.str_checking));
         switch (item.getItemId()){
             case R.id.action_send:
                 // TODO implement sending logic

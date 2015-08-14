@@ -72,6 +72,12 @@ public class DomainCheckerFragment extends BaseFragment
                 addFilter(new Filter<String>() {
                     @Override
                     public boolean check(String _data) {
+                        return !_data.isEmpty();
+                    }
+                });
+                addFilter(new Filter<String>() {
+                    @Override
+                    public boolean check(String _data) {
                         return Patterns.DOMAIN_NAME.matcher(_data).matches();
                     }
                 });
@@ -83,6 +89,7 @@ public class DomainCheckerFragment extends BaseFragment
     public final void onClick(View _view) {
         final String domain = etDomainAvail.getText().toString();
         if(filters.check(domain)){
+            progressDialogManager.showProgressDialog(getString(R.string.str_checking));
             switch(_view.getId()){
                 case R.id.btnAvail_FDCH:
                     checkAvailability(domain);
