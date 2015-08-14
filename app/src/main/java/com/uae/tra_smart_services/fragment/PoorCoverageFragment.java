@@ -8,12 +8,13 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class PoorCoverageFragment extends BaseFragment {
+public class PoorCoverageFragment extends BaseFragment implements AlertDialogFragment.OnOkListener{
 
     public static PoorCoverageFragment newInstance() {
         return new PoorCoverageFragment();
@@ -42,24 +43,6 @@ public class PoorCoverageFragment extends BaseFragment {
     @Override
     protected void initListeners() {
         super.initListeners();
-        if (etLocation != null) {
-            /*etLocation.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String _text) {
-                    Address address = getAddress(_text);
-                    if (address != null){
-                        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                        intent.putExtra(C.FIELD_CITY, address);
-                        startActivity(intent);
-                    }
-                    return true;
-                }
-                @Override
-                public boolean onQueryTextChange(String s) {
-                    return false;
-                }
-            });*/
-        }
     }
 
     @Override
@@ -76,10 +59,15 @@ public class PoorCoverageFragment extends BaseFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.menu.menu_send:
+            case R.id.action_send:
                 // TODO implement sending logic
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onOkPressed() {
+        // Unimplemented method
     }
 }

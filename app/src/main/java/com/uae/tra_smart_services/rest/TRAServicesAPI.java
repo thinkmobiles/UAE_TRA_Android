@@ -1,8 +1,10 @@
 package com.uae.tra_smart_services.rest;
 
+import com.squareup.picasso.Downloader;
 import com.uae.tra_smart_services.rest.model.new_request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.model.new_request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.model.new_request.HelpSalimModel;
+import com.uae.tra_smart_services.rest.model.new_request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.model.new_request.RatingServiceModel;
 import com.uae.tra_smart_services.rest.model.new_request.SmsSpamRequestModel;
 import com.uae.tra_smart_services.rest.model.new_response.DomainAvailabilityCheckResponseModel;
@@ -42,6 +44,9 @@ public interface TRAServicesAPI {
 
     @POST(SMS_SPAM_REPORT_URL)
     SmsSpamResponseModel reportSmsSpam(@Body SmsSpamRequestModel _smsSpamModel);
+
+    @POST(SMS_SPAM_REPORT_URL)
+    Response poorCoverage(@Body PoorCoverageRequestModel _smsSpamModel);
 
     @POST(HELP_SALIM_URL)
     Response sendHelpSalim(@Body HelpSalimModel _helpSalimModel);
