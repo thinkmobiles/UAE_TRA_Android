@@ -20,6 +20,6 @@ public class RestService extends RetrofitGsonSpiceService {
 
     @Override
     protected String getServerUrl() {
-        return ServerConstants.BASE_URL;
+        return ServerConstants.BASE_URL1;
     }
 }

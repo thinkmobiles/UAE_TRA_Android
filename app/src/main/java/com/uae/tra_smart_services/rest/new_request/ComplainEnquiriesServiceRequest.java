@@ -15,15 +15,15 @@ import retrofit.client.Response;
 /**
  * Created by Vitaliy on 13/08/2015.
  */
-public class ComplainAboutTRAServiceRequest extends BaseRequest<Response, TRAServicesAPI> {
+public class ComplainEnquiriesServiceRequest extends BaseRequest<Response, TRAServicesAPI> {
 
     private final ComplainTRAServiceModel mComplainTRAServiceModel;
     private final ContentResolver mContentResolver;
     private final Uri mImageUri;
 
-    public ComplainAboutTRAServiceRequest(final ComplainTRAServiceModel _complainTRAServiceModel,
-                                          final Context _context,
-                                          final Uri _imageUri) {
+    public ComplainEnquiriesServiceRequest(final ComplainTRAServiceModel _complainTRAServiceModel,
+                                           final Context _context,
+                                           final Uri _imageUri) {
 
         super(Response.class, TRAServicesAPI.class);
         mComplainTRAServiceModel = _complainTRAServiceModel;
@@ -35,7 +35,7 @@ public class ComplainAboutTRAServiceRequest extends BaseRequest<Response, TRASer
     public Response loadDataFromNetwork() throws Exception {
         try {
             mComplainTRAServiceModel.attachment = BitmapUtils.imageToBase64(mContentResolver, mImageUri);
-            return getService().complainTraServiceProvider(mComplainTRAServiceModel);
+            return getService().complainEnquiries(mComplainTRAServiceModel);
         } catch (IOException e) {
             throw new Exception("Can't load image from device");
         }

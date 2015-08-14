@@ -12,5 +12,7 @@ public class ComplainServiceProviderModel {
     public String description;
     @Expose
     public String referenceNumber;
+    @Expose
+    public String attachment;
 
 }
