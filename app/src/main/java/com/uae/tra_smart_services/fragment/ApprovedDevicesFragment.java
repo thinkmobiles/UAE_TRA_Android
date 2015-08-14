@@ -5,16 +5,23 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.octo.android.robospice.persistence.DurationInMillis;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.DevicesListAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.rest.new_request.SearchByBrandRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +29,16 @@ import java.util.List;
 /**
  * Created by mobimaks on 11.08.2015.
  */
-public final class ApprovedDevicesFragment
-            extends BaseFragment
-            implements OnItemClickListener, OnQueryTextListener {
+public final class ApprovedDevicesFragment extends BaseFragment implements OnItemClickListener, OnQueryTextListener {
+
+    private static final String KEY_SEARCH_DEVICE_BY_BRAND_REQUEST = "SEARCH_DEVICE_BY_BRAND_REQUEST";
 
     private ListView lvDevices;
     private SearchView svSearchView;
 
     private DevicesListAdapter mAdapter;
     private OnDeviceSelectListener mSelectListener;
+    private RequestResponseListener mRequestListener;
 
     public static ApprovedDevicesFragment newInstance() {
         return new ApprovedDevicesFragment();
@@ -59,6 +67,7 @@ public final class ApprovedDevicesFragment
     @Override
     protected void initListeners() {
         super.initListeners();
+        mRequestListener = new RequestResponseListener();
         lvDevices.setOnItemClickListener(this);
     }
 
@@ -95,6 +104,13 @@ public final class ApprovedDevicesFragment
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        getSpiceManager().getFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
+        getSpiceManager().addListenerIfPending(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, mRequestListener);
+    }
+
+    @Override
     public boolean onQueryTextSubmit(String query) {
         mAdapter.getFilter().filter(query);
         return true;
@@ -109,7 +125,10 @@ public final class ApprovedDevicesFragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (mSelectListener != null) {
-            mSelectListener.onDeviceSelect(mAdapter.getItem(position));
+            String selectedBrand = mAdapter.getItem(position);
+            SearchByBrandRequest request = new SearchByBrandRequest(selectedBrand, 0, 100);
+            showProgressDialog();
+            getSpiceManager().execute(request, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
         }
     }
 
@@ -119,12 +138,42 @@ public final class ApprovedDevicesFragment
         super.onDetach();
     }
 
+    private class RequestResponseListener implements PendingRequestListener<SearchDeviceResponseModel.List> {
+
+        @Override
+        public void onRequestNotFound() {
+            Log.d(getClass().getSimpleName(), "Request Not Found. isAdded: " + isAdded());
+        }
+
+        @Override
+        public void onRequestSuccess(SearchDeviceResponseModel.List result) {
+            Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
+            if (isAdded()) {
+                hideProgressDialog();
+                if (result != null && mSelectListener!=null) {
+                    mSelectListener.onDeviceSelect(result);
+                }
+            }
+            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST);
+        }
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Log.d(getClass().getSimpleName(), "Failure. isAdded: " + isAdded());
+            if (isAdded()) {
+                hideProgressDialog();
+                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+            }
+            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST);
+        }
+    }
+
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_approved_devices;
     }
 
     public interface OnDeviceSelectListener {
-        void onDeviceSelect(final String _device);
+        void onDeviceSelect(final SearchDeviceResponseModel.List _device);
     }
 }

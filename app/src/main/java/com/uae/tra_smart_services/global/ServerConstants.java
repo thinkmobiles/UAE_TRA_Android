@@ -8,7 +8,9 @@ public final class ServerConstants {
     private ServerConstants() {
     }
 
-    public static final String BASE_URL = "http://134.249.164.53:7791";
+    public static final String BASE_URL1 = "http://134.249.164.53:7791";
+    public static final String BASE_URL2 = "http://185.54.19.249:80";
+    public static final String BASE_URL3 = "http://192.168.120.40:80";
     public static final String AUTH_URL = "/auth";
     public static final String ACCESS_TOKEN = "access_token";
     //Domain check service

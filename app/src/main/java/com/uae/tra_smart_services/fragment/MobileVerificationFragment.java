@@ -24,8 +24,6 @@ import com.uae.tra_smart_services.global.Constants;
 import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.new_request.SearchByImeiRequest;
 
-import retrofit.client.Response;
-
 /**
  * Created by mobimaks on 13.08.2015.
  */
@@ -137,7 +135,7 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
                     Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
                 }
             }
-            getSpiceManager().removeDataFromCache(Response.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);
+            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);
         }
 
         @Override
@@ -147,7 +145,7 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
                 hideProgressDialog();
                 Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
             }
-            getSpiceManager().removeDataFromCache(Response.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);
+            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);
         }
     }
 

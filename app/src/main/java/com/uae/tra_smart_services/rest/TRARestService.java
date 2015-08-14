@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.rest;
 
 import com.octo.android.robospice.retrofit.RetrofitGsonSpiceService;
+import com.uae.tra_smart_services.global.ServerConstants;
 
 import retrofit.RestAdapter;
 
@@ -18,6 +19,6 @@ public class TRARestService extends RetrofitGsonSpiceService {
 
     @Override
     protected String getServerUrl() {
-        return "http://134.249.164.53:7791";
+        return ServerConstants.BASE_URL1;
     }
 }

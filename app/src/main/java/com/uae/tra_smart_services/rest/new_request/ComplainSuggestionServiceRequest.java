@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 
-import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest;
 import com.uae.tra_smart_services.rest.TRAServicesAPI;
 import com.uae.tra_smart_services.rest.model.new_request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.util.BitmapUtils;
@@ -16,7 +15,7 @@ import retrofit.client.Response;
 /**
  * Created by Vitaliy on 13/08/2015.
  */
-public class ComplainSuggestionServiceRequest extends RetrofitSpiceRequest<Response, TRAServicesAPI> {
+public class ComplainSuggestionServiceRequest extends BaseRequest<Response, TRAServicesAPI> {
 
     private final ComplainTRAServiceModel mComplainTRAServiceModel;
     private final ContentResolver mContentResolver;

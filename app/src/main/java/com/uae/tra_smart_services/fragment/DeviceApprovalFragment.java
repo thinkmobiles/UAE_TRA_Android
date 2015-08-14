@@ -5,6 +5,9 @@ import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
+
+import java.util.ArrayList;
 
 /**
  * Created by mobimaks on 11.08.2015.
@@ -15,12 +18,12 @@ public class DeviceApprovalFragment extends BaseFragment {
 
     private TextView tvApprovedDevice;
 
-    private String mSelectedDevice;
+    private ArrayList<SearchDeviceResponseModel> mApprovedDevices;
 
-    public static DeviceApprovalFragment newInstance(final String _device) {
+    public static DeviceApprovalFragment newInstance(final SearchDeviceResponseModel.List _device) {
         DeviceApprovalFragment fragment = new DeviceApprovalFragment();
         Bundle args = new Bundle();
-        args.putString(SELECTED_DEVICE_KEY, _device);
+        args.putParcelableArrayList(SELECTED_DEVICE_KEY, _device);
         fragment.setArguments(args);
         return fragment;
     }
@@ -28,7 +31,7 @@ public class DeviceApprovalFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSelectedDevice = getArguments().getString(SELECTED_DEVICE_KEY);
+        mApprovedDevices = getArguments().getParcelableArrayList(SELECTED_DEVICE_KEY);
     }
 
     @Override
@@ -45,7 +48,11 @@ public class DeviceApprovalFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        tvApprovedDevice.setText(mSelectedDevice);
+        StringBuilder builder = new StringBuilder();
+        for (SearchDeviceResponseModel approvedDevice : mApprovedDevices) {
+            builder.append(approvedDevice.marketingName).append(" ").append(approvedDevice.allocationDate).append('\n');
+        }
+        tvApprovedDevice.setText(builder);
     }
 
     @Override

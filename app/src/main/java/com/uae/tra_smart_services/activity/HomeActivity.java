@@ -12,7 +12,6 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
-import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
@@ -24,16 +23,16 @@ import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
+import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
-import com.uae.tra_smart_services.fragment.SmsSpamFragment;
-import com.uae.tra_smart_services.fragment.SmsSpamFragment.OnSmsServiceSelectListener;
-import com.uae.tra_smart_services.fragment.SuggestionFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
+import com.uae.tra_smart_services.fragment.SuggestionFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
+import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
 
 import retrofit.RetrofitError;
 
@@ -122,7 +121,7 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onDeviceSelect(final String _device) {
+    public void onDeviceSelect(final SearchDeviceResponseModel.List _device) {
         replaceFragmentWithBackStack(DeviceApprovalFragment.newInstance(_device));
     }
 

@@ -54,6 +54,13 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
+        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestListener);
+    }
+
+    @Override
     public void onClick(View v) {
         hideKeyboard(v);
         switch (v.getId()) {
