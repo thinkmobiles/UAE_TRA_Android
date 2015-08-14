@@ -13,7 +13,10 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
-import com.uae.tra_smart_services.rest.new_request.CheckDomainAvailabilityRequest;
+import com.uae.tra_smart_services.rest.model.new_response.DomainAvailabilityCheckResponse;
+import com.uae.tra_smart_services.rest.model.new_response.DomainInfoCheckResponse;
+import com.uae.tra_smart_services.rest.new_request.DomainAvailabilityCheckRequest;
+import com.uae.tra_smart_services.rest.new_request.DomainInfoCheckRequest;
 
 import java.util.ArrayList;
 
@@ -52,7 +55,7 @@ public class DomainCheckerFragment extends BaseFragment
                 addFilter(new Filter(){
                     @Override
                     public boolean check(String _domain) {
-                        return Patterns.DOMAIN_NAME.matcher(_domain).matches();
+                    return Patterns.DOMAIN_NAME.matcher(_domain).matches();
                     }
                 });
             }
@@ -73,47 +76,53 @@ public class DomainCheckerFragment extends BaseFragment
 
     @Override
     public final void onClick(View _view) {
-        switch(_view.getId()){
-            case R.id.btnAvail_FDCH:
-                checkAvailability();
-                break;
-            case R.id.btnWhoIs_FDCH:
-                break;
+        final String domain = etDomainAvail.getText().toString();
+        if(filters.check(domain)){
+            switch(_view.getId()){
+                case R.id.btnAvail_FDCH:
+                    checkAvailability(domain);
+                    break;
+                case R.id.btnWhoIs_FDCH:
+                    checkWhoIs(domain);
+                    break;
+            }
+        } else {
+            showInvalidUrlMessage();
         }
     }
 
-    private void checkAvailability(){
-        final String _domain = etDomainAvail.getText().toString();
-        if(filters.check(_domain)){
-            getSpiceManager().execute(new CheckDomainAvailabilityRequest(_domain), new RequestListener<String>() {
-                @Override
-                public void onRequestFailure(SpiceException spiceException) {
-                    Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
-                }
+    private void checkAvailability(String _domain){
+        getSpiceManager()
+            .execute(
+                new DomainAvailabilityCheckRequest(_domain),
+                new DomainAvailabilityCheckRequestListener(_domain)
+            );
+    }
 
-                @Override
-                public void onRequestSuccess(String _str) {
-                    if (_str.equals(ServerConstants.AVAILABLE)){
-                        btnAvail.setText(getString(R.string.str_domain_available));
-                        btnAvail.setVisibility(View.INVISIBLE);
-                    } else if(_str.equals(ServerConstants.NOT_AVAILABLE)){
-                        AlertDialogFragment.newInstance(DomainCheckerFragment.this)
-                            .setDialogTitle(getString(R.string.str_error))
-                            .setDialogBody(
-                                    String.format(getString(R.string.str_url_not_avail), _domain)
-                            )
-                            .show(getFragmentManager());
-                    }
-                }
-            });
-        } else {
-            AlertDialogFragment.newInstance(this)
-                .setDialogTitle(getString(R.string.str_error))
-                .setDialogBody(
+    private void checkWhoIs(String _domain){
+        getSpiceManager()
+            .execute(
+                new DomainInfoCheckRequest(_domain),
+                new DomainInfoCheckRequestListener(_domain)
+            );
+    }
+
+    private void showInvalidUrlMessage(){
+        AlertDialogFragment.newInstance(this)
+            .setDialogTitle(getString(R.string.str_error))
+            .setDialogBody(
                     getString(R.string.str_invalid_url)
-                )
-                .show(getFragmentManager());
-        }
+            )
+            .show(getFragmentManager());
+    }
+
+    private void showWrongUrlMessage(String _message, String _domain){
+        AlertDialogFragment.newInstance(DomainCheckerFragment.this)
+            .setDialogTitle(getString(R.string.str_error))
+            .setDialogBody(
+                    String.format(_message, _domain)
+            )
+            .show(getFragmentManager());
     }
 
     @Override
@@ -147,6 +156,74 @@ public class DomainCheckerFragment extends BaseFragment
      * */
     interface Filter{
         boolean check(String _domain);
+    }
+
+    private abstract class DomainCheckRequestListener {
+        protected String mDomain;
+        DomainCheckRequestListener(String _domain){
+            mDomain = _domain;
+        }
+        public void onRequestFailure(SpiceException spiceException) {
+            progressDialogManager.hideProgressDialog();
+            Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class DomainAvailabilityCheckRequestListener
+                            extends DomainCheckRequestListener
+                                implements RequestListener<DomainAvailabilityCheckResponse>{
+
+        DomainAvailabilityCheckRequestListener(String _domain) {
+            super(_domain);
+        }
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            super.onRequestFailure(spiceException);
+        }
+
+        @Override
+        public void onRequestSuccess(DomainAvailabilityCheckResponse _str) {
+            progressDialogManager.hideProgressDialog();
+            if (_str.availableStatus.equals(ServerConstants.AVAILABLE)){
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flContainer_HA, DomainIsAvailableFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+            } else if(_str.availableStatus.equals(ServerConstants.NOT_AVAILABLE)){
+                showWrongUrlMessage(getString(R.string.str_url_not_avail), mDomain);
+            }
+        }
+    }
+
+    private class DomainInfoCheckRequestListener
+                            extends DomainCheckRequestListener
+                                    implements RequestListener<DomainInfoCheckResponse>{
+
+        DomainInfoCheckRequestListener(String _domain) {
+            super(_domain);
+        }
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            super.onRequestFailure(spiceException);
+        }
+
+        @Override
+        public void onRequestSuccess(DomainInfoCheckResponse domainInfoCheckResponse) {
+            if (!domainInfoCheckResponse.urlData.equals("No Data Found\r\n")){
+                getFragmentManager()
+                    .beginTransaction()
+                    .replace(
+                            R.id.flContainer_HA,
+                            DomainInfoFragment.newInstance(domainInfoCheckResponse.urlData))
+                    .addToBackStack(null)
+                    .commit();
+            } else {
+                showWrongUrlMessage(getString(R.string.str_url_doesnot_exist), mDomain);
+            }
+        }
     }
 }
 

@@ -87,11 +87,15 @@
     <!--               Errors                -->
     <string name="str_error">Error</string>
     <string name="str_url_not_avail">The domain %s is not available</string>
+    <string name="str_url_doesnot_exist">The %s does not exist</string>
     <string name="str_invalid_url">The format of inputted URL is not correct</string>
     <string name="str_ok">Ok</string>
     <string name="str_cancel">Cancel</string>
     <string name="str_empty"> </string>
     <string name="str_domain_available">Domain is available</string>
+    <string name="str_domain_availability">Domain availability</string>
+    <string name="str_domain_info">Domain info</string>
     <string name="str_request_failed">Request failed</string>
+    <string name="str_checking">Checking..</string>
 
 </resources>
