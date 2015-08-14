@@ -11,14 +11,14 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
+import com.uae.tra_smart_services.entities.CustomFilterPool;
+import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
-import com.uae.tra_smart_services.rest.model.new_response.DomainAvailabilityCheckResponse;
-import com.uae.tra_smart_services.rest.model.new_response.DomainInfoCheckResponse;
+import com.uae.tra_smart_services.rest.model.new_response.DomainAvailabilityCheckResponseModel;
+import com.uae.tra_smart_services.rest.model.new_response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.new_request.DomainAvailabilityCheckRequest;
 import com.uae.tra_smart_services.rest.new_request.DomainInfoCheckRequest;
-
-import java.util.ArrayList;
 
 /**
  * Created by ak-buffalo on 10.08.15.
@@ -37,41 +37,46 @@ public class DomainCheckerFragment extends BaseFragment
     }
 
     @Override
-    protected int getLayoutResource() {
+    protected final int getLayoutResource() {
         return R.layout.fragment_domain_checker;
+    }
+
+    @Override
+    protected final int getTitle() {
+        return R.string.str_domain_check;
     }
 
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
-    private DomainFilterPool filters;
     @Override
-    protected void initViews() {
+    protected final void initViews() {
         super.initViews();
         btnAvail = findView(R.id.btnAvail_FDCH);
         btnWhoIS = findView(R.id.btnWhoIs_FDCH);
         etDomainAvail = findView(R.id.etDomainAvail_FDCH);
-        filters = new DomainFilterPool(){
-            {
-                addFilter(new Filter(){
-                    @Override
-                    public boolean check(String _domain) {
-                    return Patterns.DOMAIN_NAME.matcher(_domain).matches();
-                    }
-                });
-            }
-        };
     }
 
     @Override
-    protected void initListeners() {
+    protected final void initListeners() {
         super.initListeners();
         btnAvail.setOnClickListener(this);
         btnWhoIS.setOnClickListener(this);
     }
 
+    private CustomFilterPool filters;
     @Override
-    protected int getTitle() {
-        return R.string.str_domain_check;
+    protected final void initCustomEntities() {
+        super.initCustomEntities();
+        filters = new CustomFilterPool<String>(){
+            {
+                addFilter(new Filter<String>() {
+                    @Override
+                    public boolean check(String _data) {
+                        return Patterns.DOMAIN_NAME.matcher(_data).matches();
+                    }
+                });
+            }
+        };
     }
 
     @Override
@@ -87,75 +92,29 @@ public class DomainCheckerFragment extends BaseFragment
                     break;
             }
         } else {
-            showInvalidUrlMessage();
+            showMessage(R.string.str_error, R.string.str_invalid_url);
         }
     }
 
-    private void checkAvailability(String _domain){
+    private final void checkAvailability(String _domain){
         getSpiceManager()
             .execute(
-                new DomainAvailabilityCheckRequest(_domain),
-                new DomainAvailabilityCheckRequestListener(_domain)
+                    new DomainAvailabilityCheckRequest(_domain),
+                    new DomainAvailabilityCheckRequestListener(_domain)
             );
     }
 
-    private void checkWhoIs(String _domain){
+    private final void checkWhoIs(String _domain){
         getSpiceManager()
             .execute(
-                new DomainInfoCheckRequest(_domain),
-                new DomainInfoCheckRequestListener(_domain)
+                    new DomainInfoCheckRequest(_domain),
+                    new DomainInfoCheckRequestListener(_domain)
             );
-    }
-
-    private void showInvalidUrlMessage(){
-        AlertDialogFragment.newInstance(this)
-            .setDialogTitle(getString(R.string.str_error))
-            .setDialogBody(
-                    getString(R.string.str_invalid_url)
-            )
-            .show(getFragmentManager());
-    }
-
-    private void showWrongUrlMessage(String _message, String _domain){
-        AlertDialogFragment.newInstance(DomainCheckerFragment.this)
-            .setDialogTitle(getString(R.string.str_error))
-            .setDialogBody(
-                    String.format(_message, _domain)
-            )
-            .show(getFragmentManager());
     }
 
     @Override
     public void onOkPressed() {
-        // TODO Unimplemented method
-    }
-
-    /**
-     * Class DomainFilterPool is verifying of compliance of the domain name
-     * More then one filter can be added to check domain
-     *
-     * @implements Filter
-     * */
-    class DomainFilterPool implements Filter{
-        private ArrayList<Filter> filters = new ArrayList<>();
-
-        public void addFilter(Filter _filter){
-            filters.add(_filter);
-        }
-
-        @Override
-        public boolean check(String _domain) {
-            for (Filter filter : filters){
-                return filter.check(_domain);
-            }
-            return true;
-        }
-    }
-    /**
-     * Filter define rule to check of compliance of the domain name
-     * */
-    interface Filter{
-        boolean check(String _domain);
+        // Unimplemented method
     }
 
     private abstract class DomainCheckRequestListener {
@@ -169,9 +128,9 @@ public class DomainCheckerFragment extends BaseFragment
         }
     }
 
-    private class DomainAvailabilityCheckRequestListener
+    private final class DomainAvailabilityCheckRequestListener
                             extends DomainCheckRequestListener
-                                implements RequestListener<DomainAvailabilityCheckResponse>{
+                                implements RequestListener<DomainAvailabilityCheckResponseModel>{
 
         DomainAvailabilityCheckRequestListener(String _domain) {
             super(_domain);
@@ -183,7 +142,7 @@ public class DomainCheckerFragment extends BaseFragment
         }
 
         @Override
-        public void onRequestSuccess(DomainAvailabilityCheckResponse _str) {
+        public void onRequestSuccess(DomainAvailabilityCheckResponseModel _str) {
             progressDialogManager.hideProgressDialog();
             if (_str.availableStatus.equals(ServerConstants.AVAILABLE)){
                 getFragmentManager()
@@ -192,14 +151,14 @@ public class DomainCheckerFragment extends BaseFragment
                         .addToBackStack(null)
                         .commit();
             } else if(_str.availableStatus.equals(ServerConstants.NOT_AVAILABLE)){
-                showWrongUrlMessage(getString(R.string.str_url_not_avail), mDomain);
+                showFormattedMessage(R.string.str_error, R.string.str_url_not_avail, mDomain);
             }
         }
     }
 
-    private class DomainInfoCheckRequestListener
+    private final class DomainInfoCheckRequestListener
                             extends DomainCheckRequestListener
-                                    implements RequestListener<DomainInfoCheckResponse>{
+                                    implements RequestListener<DomainInfoCheckResponseModel>{
 
         DomainInfoCheckRequestListener(String _domain) {
             super(_domain);
@@ -211,7 +170,7 @@ public class DomainCheckerFragment extends BaseFragment
         }
 
         @Override
-        public void onRequestSuccess(DomainInfoCheckResponse domainInfoCheckResponse) {
+        public void onRequestSuccess(DomainInfoCheckResponseModel domainInfoCheckResponse) {
             if (!domainInfoCheckResponse.urlData.equals("No Data Found\r\n")){
                 getFragmentManager()
                     .beginTransaction()
@@ -221,7 +180,7 @@ public class DomainCheckerFragment extends BaseFragment
                     .addToBackStack(null)
                     .commit();
             } else {
-                showWrongUrlMessage(getString(R.string.str_url_doesnot_exist), mDomain);
+                showFormattedMessage(R.string.str_error, R.string.str_url_doesnot_exist, mDomain);
             }
         }
     }

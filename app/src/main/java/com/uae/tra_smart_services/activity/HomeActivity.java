@@ -12,7 +12,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
-import com.uae.tra_smart_services.fragment.BlockSmsNumberFragment;
+import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
@@ -24,8 +24,8 @@ import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
-import com.uae.tra_smart_services.fragment.SmsSpamFragment;
-import com.uae.tra_smart_services.fragment.SmsSpamFragment.OnSmsServiceSelectListener;
+import com.uae.tra_smart_services.fragment.SmsServiceListFragment;
+import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
@@ -96,7 +96,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(ComplainAboutTraFragment.newInstance());
                 break;
             case SMS_SPAM:
-                replaceFragmentWithBackStack(SmsSpamFragment.newInstance());
+                replaceFragmentWithBackStack(SmsServiceListFragment.newInstance());
                 break;
             case POOR_COVERAGE:
                 replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
@@ -151,7 +151,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(SmsReportFragment.newInstance());
                 break;
             case BLOCK:
-                replaceFragmentWithBackStack(BlockSmsNumberFragment.newInstance());
+                replaceFragmentWithBackStack(SmsBlockNumberFragment.newInstance());
                 break;
         }
     }

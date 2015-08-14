@@ -35,8 +35,31 @@ public class PoorCoverageFragment extends BaseFragment {
     @Override
     protected void initViews() {
         super.initViews();
-//        etLocation = findView(R.id.etLocation_FPC);
-//        sbPoorCoverage = findView(R.id.sbPoorCoverage_FPC);
+        etLocation = findView(R.id.etLocation_FPC);
+        sbPoorCoverage = findView(R.id.sbPoorCoverage_FPC);
+    }
+
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+        if (etLocation != null) {
+            /*etLocation.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String _text) {
+                    Address address = getAddress(_text);
+                    if (address != null){
+                        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                        intent.putExtra(C.FIELD_CITY, address);
+                        startActivity(intent);
+                    }
+                    return true;
+                }
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    return false;
+                }
+            });*/
+        }
     }
 
     @Override

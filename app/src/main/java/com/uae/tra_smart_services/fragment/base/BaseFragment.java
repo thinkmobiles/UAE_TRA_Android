@@ -18,6 +18,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.octo.android.robospice.SpiceManager;
+import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
 import com.uae.tra_smart_services.interfaces.RetrofitFailureHandler;
@@ -60,6 +62,7 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         rootView = _inflater.inflate(getLayoutResource(), _container, false);
         initViews();
         initListeners();
+        initCustomEntities();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         return rootView;
     }
@@ -87,6 +90,9 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     }
 
     protected void initListeners() {
+    }
+
+    protected void initCustomEntities() {
     }
 
     @CallSuper
@@ -142,5 +148,23 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
 
     public interface ThemaDefiner {
         String getThemeStringValue();
+    }
+
+    protected final void showMessage(@StringRes int _titleRes, @StringRes int _bodyRes){
+        AlertDialogFragment.newInstance(this)
+                .setDialogTitle(getString(_titleRes))
+                .setDialogBody(
+                        getString(_bodyRes)
+                )
+                .show(getFragmentManager());
+    }
+
+    protected final void showFormattedMessage(@StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
+        AlertDialogFragment.newInstance(this)
+                .setDialogTitle(getString(_titleRes))
+                .setDialogBody(
+                        String.format(getString(_bodyRes), _replace)
+                )
+                .show(getFragmentManager());
     }
 }
