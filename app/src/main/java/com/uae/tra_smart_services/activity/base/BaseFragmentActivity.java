@@ -8,10 +8,10 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragmentActivity extends BaseActivity {
+public abstract class BaseFragmentActivity extends BaseActivity implements BaseFragment.ErrorHandler {
 
     @IdRes
-    protected abstract  int getContainerId();
+    protected abstract int getContainerId();
 
     protected final void addFragment(final BaseFragment _fragment) {
         getFragmentManager().beginTransaction()
@@ -32,7 +32,7 @@ public abstract class BaseFragmentActivity extends BaseActivity {
                 .commit();
     }
 
-    public final void clearBackStack(){
+    public final void clearBackStack() {
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 

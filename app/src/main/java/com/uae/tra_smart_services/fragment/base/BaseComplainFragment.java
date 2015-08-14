@@ -71,7 +71,7 @@ public abstract class BaseComplainFragment extends BaseFragment implements OnIma
         return super.onOptionsItemSelected(item);
     }
 
-    protected  abstract void sendComplain();
+    protected abstract void sendComplain();
 
     protected void openImagePicker() {
         final boolean isGalleryAvailable = isGalleryPickAvailable();

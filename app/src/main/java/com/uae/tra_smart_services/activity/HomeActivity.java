@@ -18,6 +18,7 @@ import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.HelpSalemFragment;
+import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
@@ -104,6 +105,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
                 break;
             case MOBILE_VERIFICATION:
+                replaceFragmentWithBackStack(MobileVerificationFragment.newInstance());
                 break;
             case APPROVED_DEVICES:
                 replaceFragmentWithBackStack(ApprovedDevicesFragment.newInstance());

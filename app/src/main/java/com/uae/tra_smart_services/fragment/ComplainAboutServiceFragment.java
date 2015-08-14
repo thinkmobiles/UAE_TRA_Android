@@ -35,11 +35,11 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         ivAddAttachment = findView(R.id.ivAddAttachment_FCAS);
         ivNextItem = findView(R.id.ivNextItem_FCAS);
 
-        tvServiceProvider = findView(R.id.tvServiceProvider_FBSN);
+        tvServiceProvider = findView(R.id.tvServiceProvider_FCAS);
 
         etComplainTitle = findView(R.id.etComplainTitle_FCAS);
-        etReferenceNumber = findView(R.id.etReferenceNumber_FBSN);
-        etDescription = findView(R.id.etDescription_FBSN);
+        etReferenceNumber = findView(R.id.etReferenceNumber_FCAS);
+        etDescription = findView(R.id.etDescription_FCAS);
     }
 
     @Override
