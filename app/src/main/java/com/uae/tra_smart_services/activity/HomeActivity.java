@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
-import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
@@ -19,16 +18,24 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
+import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
+import com.uae.tra_smart_services.fragment.EnquiriesFragment;
+import com.uae.tra_smart_services.fragment.HelpSalemFragment;
+import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
+import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment;
 import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
+import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
-import com.uae.tra_smart_services.fragment.SmsSpamFragment;
-import com.uae.tra_smart_services.fragment.SmsSpamFragment.OnSmsServiceSelectListener;
+import com.uae.tra_smart_services.fragment.SmsServiceListFragment;
+import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
+import com.uae.tra_smart_services.fragment.SuggestionFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
+import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
 
 import retrofit.RetrofitError;
 
@@ -36,10 +43,10 @@ import retrofit.RetrofitError;
  * Created by Andrey Korneychuk on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
-                        implements ToolbarTitleManager, OnServiceSelectListener,
-                        OnDeviceSelectListener, OnBackStackChangedListener,
-                        OnSmsServiceSelectListener, /*BottomNavActionListener,*/
-                        RadioGroup.OnCheckedChangeListener {
+        implements ToolbarTitleManager, OnServiceSelectListener,
+        OnDeviceSelectListener, OnBackStackChangedListener,
+        OnSmsServiceSelectListener, /*BottomNavActionListener,*/
+        RadioGroup.OnCheckedChangeListener {
 
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
@@ -82,7 +89,6 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onServiceSelect(Service _service) {
-        Toast.makeText(this, _service.toString(), Toast.LENGTH_SHORT).show();
         switch (_service) {
             case DOMAIN_CHECK:
                 replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
@@ -90,13 +96,17 @@ public class HomeActivity extends BaseFragmentActivity
             case COMPLAIN_ABOUT_PROVIDER:
                 replaceFragmentWithBackStack(ComplainAboutServiceFragment.newInstance());
                 break;
-            case COMPLAINT_ABOUT_TRA:
             case ENQUIRIES:
-            case SUGGESTION:
+                replaceFragmentWithBackStack(EnquiriesFragment.newInstance());
+                break;
+            case COMPLAINT_ABOUT_TRA:
                 replaceFragmentWithBackStack(ComplainAboutTraFragment.newInstance());
                 break;
+            case SUGGESTION:
+                replaceFragmentWithBackStack(SuggestionFragment.newInstance());
+                break;
             case SMS_SPAM:
-                replaceFragmentWithBackStack(SmsSpamFragment.newInstance());
+                replaceFragmentWithBackStack(SmsServiceListFragment.newInstance());
                 break;
             case POOR_COVERAGE:
                 replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
@@ -105,6 +115,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
                 break;
             case MOBILE_VERIFICATION:
+                replaceFragmentWithBackStack(MobileVerificationFragment.newInstance());
                 break;
             case APPROVED_DEVICES:
                 replaceFragmentWithBackStack(ApprovedDevicesFragment.newInstance());
@@ -113,7 +124,7 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onDeviceSelect(final String _device) {
+    public void onDeviceSelect(final SearchDeviceResponseModel.List _device) {
         replaceFragmentWithBackStack(DeviceApprovalFragment.newInstance(_device));
     }
 
@@ -150,7 +161,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(SmsReportFragment.newInstance());
                 break;
             case BLOCK:
-                // TODO implement logic of Block Number Service fragment loading
+                replaceFragmentWithBackStack(SmsBlockNumberFragment.newInstance());
                 break;
         }
     }

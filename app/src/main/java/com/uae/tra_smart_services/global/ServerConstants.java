@@ -8,7 +8,9 @@ public final class ServerConstants {
     private ServerConstants() {
     }
 
-    public static final String BASE_URL = "http://tma.tra.gov.ae/tra_api/service";
+    public static final String BASE_URL1 = "http://134.249.164.53:7791";
+    public static final String BASE_URL2 = "http://185.54.19.249:80";
+    public static final String BASE_URL3 = "http://192.168.120.40:80";
     public static final String AUTH_URL = "/auth";
     public static final String ACCESS_TOKEN = "access_token";
     //Domain check service
@@ -51,6 +53,8 @@ public final class ServerConstants {
     public static final String HELP_SALIM_URL = "/sendHelpSalim";
     public static final String COMPLAIN_ABOUT_SERVICE_PROVIDER_URL = "/complainServiceProvider";
     public static final String COMPLAIN_ABOUT_TRA_SERVICE_URL = "/complainTRAService";
+    public static final String COMPLAIN_ENQUIRIES_SERVICE_URL = "/complainEnquiries";
+    public static final String SEND_SUGGESTION_URL = "/sendSuggestion";
 
     //!!!!!!!!!!!! API PARAMETERS !!!!!!!!!!!!!!!!!!
     public static final String PARAMETER_CHECK_URL = "checkUrl";
@@ -58,4 +62,8 @@ public final class ServerConstants {
     public static final String PARAMETER_DEVICE_BRAND = "brand";
     public static final String PARAMETER_START_OFFSET = "start";
     public static final String PARAMETER_END_LIMIT = "end";
+
+    //!!!!!!!!!!!! SERVER RESPONSES !!!!!!!!!!!!!!!!!
+    public static final String AVAILABLE = "Available";
+    public static final String NOT_AVAILABLE = "Not Available";
 }

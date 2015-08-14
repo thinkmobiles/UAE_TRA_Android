@@ -76,11 +76,29 @@
     <string name="str_report_url">Report URL</string>
     <string name="str_description">Description</string>
     <string name="str_number_of_spammer">Number of spammer</string>
-    <string name="str_report_number">Report number</string>
-    <string name="str_block_number">Report number</string>
-
+    <string name="str_sms_report_number">Report number</string>
+    <string name="str_sms_block_number">Block number</string>
+    <string name="str_sms_service_list">Sms service list</string>
 
     <string name="str_user_name">Jhon</string>
+    <string name="str_insert_domain_name_here">Insert domain name here</string>
+
+    <!--               Status codes and messages                -->
+    <string name="str_success">Success</string>
+    <string name="str_error">Error</string>
+    <string name="str_url_not_avail">The domain %s is not available</string>
+    <string name="str_url_doesnot_exist">The %s does not exist</string>
+    <string name="str_invalid_url">The format of inputted URL is not correct</string>
+    <string name="str_invalid_number">The format of inputted number is not correct</string>
+    <string name="str_ok">Ok</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_empty"> </string>
+    <string name="str_domain_available">Domain is available</string>
+    <string name="str_domain_availability">Domain availability</string>
+    <string name="str_domain_info">Domain info</string>
+    <string name="str_request_failed">Request failed</string>
+    <string name="str_checking">Checking..</string>
+    <string name="str_report_has_been_sent">Report has been successfully sent</string>
     <string name="str_info_hub">Info Hub</string>
 
 </resources>

@@ -1,14 +1,14 @@
 package com.uae.tra_smart_services.rest.request;
 
-import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest;
 import com.uae.tra_smart_services.rest.ServicesAPI;
 import com.uae.tra_smart_services.rest.model.request.ImeiCode;
 import com.uae.tra_smart_services.rest.model.responce.AccessToken;
+import com.uae.tra_smart_services.rest.new_request.BaseRequest;
 
 /**
  * Created by mobimaks on 31.07.2015.
  */
-public class AuthenticationRequest extends RetrofitSpiceRequest<AccessToken, ServicesAPI> {
+public class AuthenticationRequest extends BaseRequest<AccessToken, ServicesAPI> {
 
     private final ImeiCode mImeiCode;
 

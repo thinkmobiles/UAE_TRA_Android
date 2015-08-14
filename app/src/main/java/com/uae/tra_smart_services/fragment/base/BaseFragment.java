@@ -18,12 +18,14 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.octo.android.robospice.SpiceManager;
+import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
 import com.uae.tra_smart_services.interfaces.RetrofitFailureHandler;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
-import com.uae.tra_smart_services.rest.RestService;
+import com.uae.tra_smart_services.rest.TRARestService;
 
 import retrofit.RetrofitError;
 
@@ -33,7 +35,7 @@ import retrofit.RetrofitError;
 public abstract class BaseFragment extends Fragment implements RetrofitFailureHandler, OnReloadData {
 
     private View rootView;
-    private SpiceManager spiceManager = new SpiceManager(RestService.class);
+    private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
     private InputMethodManager mInputMethodManager;
 
     protected ProgressDialogManager progressDialogManager;
@@ -61,6 +63,7 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         rootView = _inflater.inflate(getLayoutResource(), _container, false);
         initViews();
         initListeners();
+        initCustomEntities();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         return rootView;
     }
@@ -72,7 +75,8 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
             toolbarTitleManager.setTitle(getTitle());
     }
 
-    protected abstract @StringRes int getTitle();
+    @StringRes
+    protected abstract int getTitle();
 
     @Override
     public void failure(final RetrofitError _error) {
@@ -87,6 +91,9 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     }
 
     protected void initListeners() {
+    }
+
+    protected void initCustomEntities() {
     }
 
     @CallSuper
@@ -118,6 +125,17 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         }
     }
 
+    protected final void showProgressDialog(){
+        ProgressDialog.newInstance().show(getFragmentManager());
+    }
+
+    protected final void hideProgressDialog(){
+        ProgressDialog dialog = findFragmentByTag(ProgressDialog.TAG);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+    }
+
     protected final SpiceManager getSpiceManager() {
         return spiceManager;
     }
@@ -128,6 +146,14 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
 
     @LayoutRes
     protected abstract int getLayoutResource();
+
+    protected final <F extends Fragment> F findFragmentById(final @IdRes int _id){
+        return (F) getFragmentManager().findFragmentById(_id);
+    }
+
+    protected final <F extends Fragment> F findFragmentByTag(final String _tag){
+        return (F) getFragmentManager().findFragmentByTag(_tag);
+    }
 
     protected final <T extends View> T findView(@IdRes int _id) {
         return (T) rootView.findViewById(_id);
@@ -142,5 +168,23 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
 
     public interface ThemaDefiner {
         String getThemeStringValue();
+    }
+
+    protected final void showMessage(@StringRes int _titleRes, @StringRes int _bodyRes){
+        AlertDialogFragment.newInstance(this)
+                .setDialogTitle(getString(_titleRes))
+                .setDialogBody(
+                        getString(_bodyRes)
+                )
+                .show(getFragmentManager());
+    }
+
+    protected final void showFormattedMessage(@StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
+        AlertDialogFragment.newInstance(this)
+                .setDialogTitle(getString(_titleRes))
+                .setDialogBody(
+                        String.format(getString(_bodyRes), _replace)
+                )
+                .show(getFragmentManager());
     }
 }

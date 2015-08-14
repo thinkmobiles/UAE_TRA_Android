@@ -29,9 +29,9 @@
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
-                android:id="@+id/etPassword_FLI"
+                android:id="@+id/etDomainAvail_FDCH"
                 style="@style/UserAuthorizationDataEditTextField"
-                android:hint="@string/str_password"
+                android:hint="@string/str_insert_domain_name_here"
                 android:inputType="text" />
 
             <View style="@style/AuthorizationFieldsSeparator" />

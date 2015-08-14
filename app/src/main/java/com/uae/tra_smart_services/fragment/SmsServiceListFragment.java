@@ -1,9 +1,8 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
@@ -13,10 +12,10 @@ import com.uae.tra_smart_services.global.SmsService;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class SmsSpamFragment extends BaseFragment implements TextView.OnClickListener{
+public class SmsServiceListFragment extends BaseFragment implements TextView.OnClickListener{
 
-    public static SmsSpamFragment newInstance() {
-        return new SmsSpamFragment();
+    public static SmsServiceListFragment newInstance() {
+        return new SmsServiceListFragment();
     }
 
     private OnSmsServiceSelectListener mServiceSelectListener;
@@ -27,8 +26,14 @@ public class SmsSpamFragment extends BaseFragment implements TextView.OnClickLis
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     protected int getTitle() {
-        return R.string.str_block_number;
+        return R.string.str_sms_service_list;
     }
 
     @Override
