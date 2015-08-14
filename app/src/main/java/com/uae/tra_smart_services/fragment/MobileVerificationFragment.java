@@ -21,7 +21,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.ScannerActivity;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.Constants;
-import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponse;
+import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.new_request.SearchByImeiRequest;
 
 import retrofit.client.Response;
@@ -71,8 +71,8 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
     @Override
     public void onStart() {
         super.onStart();
-        getSpiceManager().getFromCache(SearchDeviceResponse.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
-        getSpiceManager().addListenerIfPending(SearchDeviceResponse.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, mRequestListener);
+        getSpiceManager().getFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
+        getSpiceManager().addListenerIfPending(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, mRequestListener);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
         }
     }
 
-    private class RequestResponseListener implements PendingRequestListener<SearchDeviceResponse.List> {
+    private class RequestResponseListener implements PendingRequestListener<SearchDeviceResponseModel.List> {
 
         @Override
         public void onRequestNotFound() {
@@ -129,7 +129,7 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
         }
 
         @Override
-        public void onRequestSuccess(SearchDeviceResponse.List result) {
+        public void onRequestSuccess(SearchDeviceResponseModel.List result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
                 hideProgressDialog();
