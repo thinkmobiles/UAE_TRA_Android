@@ -12,7 +12,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
-import com.uae.tra_smart_services.fragment.BlockSmsNumberFragment;
+import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
@@ -28,6 +28,8 @@ import com.uae.tra_smart_services.fragment.SmsReportFragment;
 import com.uae.tra_smart_services.fragment.SmsSpamFragment;
 import com.uae.tra_smart_services.fragment.SmsSpamFragment.OnSmsServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
+import com.uae.tra_smart_services.fragment.SmsServiceListFragment;
+import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
@@ -60,7 +62,7 @@ public class HomeActivity extends BaseFragmentActivity
         bottomNavRadios = findView(R.id.rgBottomNavRadio_FSL);
         bottomNavRadios.setOnCheckedChangeListener(this);
 
-        if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)) {
+        if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)){
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
@@ -102,7 +104,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(SuggestionFragment.newInstance());
                 break;
             case SMS_SPAM:
-                replaceFragmentWithBackStack(SmsSpamFragment.newInstance());
+                replaceFragmentWithBackStack(SmsServiceListFragment.newInstance());
                 break;
             case POOR_COVERAGE:
                 replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
@@ -157,7 +159,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(SmsReportFragment.newInstance());
                 break;
             case BLOCK:
-                replaceFragmentWithBackStack(BlockSmsNumberFragment.newInstance());
+                replaceFragmentWithBackStack(SmsBlockNumberFragment.newInstance());
                 break;
         }
     }

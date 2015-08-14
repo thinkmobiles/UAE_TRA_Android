@@ -19,6 +19,8 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.octo.android.robospice.SpiceManager;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
+import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
 import com.uae.tra_smart_services.interfaces.RetrofitFailureHandler;
@@ -49,7 +51,6 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
             progressDialogManager = (ProgressDialogManager) _activity;
             errorHandler = (ErrorHandler) _activity;
             mThemaDefiner = (ThemaDefiner) _activity;
-//            spiceManager = new SpiceManager(TRARestService.class);
         } catch (ClassCastException e) {
             throw new ClassCastException(_activity.toString()
                     + " must implement ProgressDialogManager and ErrorHandler and ThemaDefiner");
@@ -62,6 +63,7 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         rootView = _inflater.inflate(getLayoutResource(), _container, false);
         initViews();
         initListeners();
+        initCustomEntities();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         return rootView;
     }
@@ -89,6 +91,9 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     }
 
     protected void initListeners() {
+    }
+
+    protected void initCustomEntities() {
     }
 
     @CallSuper
@@ -120,12 +125,6 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         }
     }
 
-    @Override
-    public void onDetach() {
-       // spiceManager = null;
-        super.onDetach();
-    }
-
     protected final void showProgressDialog(){
         ProgressDialog.newInstance().show(getFragmentManager());
     }
@@ -136,8 +135,6 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
             dialog.dismiss();
         }
     }
-
-
 
     protected final SpiceManager getSpiceManager() {
         return spiceManager;
@@ -171,5 +168,23 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
 
     public interface ThemaDefiner {
         String getThemeStringValue();
+    }
+
+    protected final void showMessage(@StringRes int _titleRes, @StringRes int _bodyRes){
+        AlertDialogFragment.newInstance(this)
+                .setDialogTitle(getString(_titleRes))
+                .setDialogBody(
+                        getString(_bodyRes)
+                )
+                .show(getFragmentManager());
+    }
+
+    protected final void showFormattedMessage(@StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
+        AlertDialogFragment.newInstance(this)
+                .setDialogTitle(getString(_titleRes))
+                .setDialogBody(
+                        String.format(getString(_bodyRes), _replace)
+                )
+                .show(getFragmentManager());
     }
 }

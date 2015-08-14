@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Vitaliy on 13/08/2015.
  */
-public class SearchDeviceResponse {
+public class SearchDeviceResponseModel {
     @Expose
     public String tac;
     @Expose
@@ -38,6 +38,6 @@ public class SearchDeviceResponse {
     public Long totalNumberofRecords;
 
     @SuppressWarnings("serial")
-    public static class List extends ArrayList<SearchDeviceResponse> {
+    public static class List extends ArrayList<SearchDeviceResponseModel> {
     }
 }

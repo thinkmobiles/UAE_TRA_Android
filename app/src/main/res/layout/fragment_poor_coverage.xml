@@ -21,5 +21,6 @@
         style="@style/UserAuthorizationDataEditTextField"
         android:id="@+id/sbPoorCoverage_FPC"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:max="5"/>
 </LinearLayout>
