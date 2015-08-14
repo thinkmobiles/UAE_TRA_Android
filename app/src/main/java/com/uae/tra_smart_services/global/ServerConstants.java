@@ -8,7 +8,7 @@ public final class ServerConstants {
     private ServerConstants() {
     }
 
-    public static final String BASE_URL = "http://tma.tra.gov.ae/tra_api/service";
+    public static final String BASE_URL = "http://134.249.164.53:7791";
     public static final String AUTH_URL = "/auth";
     public static final String ACCESS_TOKEN = "access_token";
     //Domain check service

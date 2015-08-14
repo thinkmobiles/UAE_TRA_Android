@@ -5,4 +5,5 @@ package com.uae.tra_smart_services.entities;
  */
 public class C {
     public static final String DOMAIN_PATTERN = "^(http|ftp|https)://|^[a-zA-Z0-9]+\\.[a-zA-Z][a-zA-Z]";
+    public static final String DOMAIN_INFO = "domain";
 }

@@ -5,6 +5,8 @@ import com.uae.tra_smart_services.rest.model.new_request.ComplainTRAServiceModel
 import com.uae.tra_smart_services.rest.model.new_request.HelpSalimModel;
 import com.uae.tra_smart_services.rest.model.new_request.RatingServiceModel;
 import com.uae.tra_smart_services.rest.model.new_request.SmsSpamModel;
+import com.uae.tra_smart_services.rest.model.new_response.DomainAvailabilityCheckResponse;
+import com.uae.tra_smart_services.rest.model.new_response.DomainInfoCheckResponse;
 import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponse;
 
 import retrofit.client.Response;
@@ -36,10 +38,10 @@ import static com.uae.tra_smart_services.global.ServerConstants.SMS_SPAM_REPORT_
 public interface TRAServicesAPI {
 
     @GET(CHECK_WHO_IS_URL)
-    String getDomainData(@Query(PARAMETER_CHECK_URL) String _checkUrl);
+    DomainInfoCheckResponse getDomainData(@Query(PARAMETER_CHECK_URL) String _checkUrl);
 
     @GET(CHECK_WHO_IS_AVAILABLE_URL)
-    String checkDomainAvailability(@Query(PARAMETER_CHECK_URL) String _checkUrl);
+    DomainAvailabilityCheckResponse checkDomainAvailability(@Query(PARAMETER_CHECK_URL) String _checkUrl);
 
     @GET(SEARCH_DEVICE_BY_IMEI_URL)
     SearchDeviceResponse.List searchDeviceByImei(@Query(PARAMETER_IMEI) String _imei);
