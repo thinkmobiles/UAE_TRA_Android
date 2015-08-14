@@ -32,10 +32,13 @@ public abstract class BaseComplainFragment extends BaseFragment implements OnIma
 
     private static final int REQUEST_GALLERY_IMAGE_CODE = 1;
     private static final int REQUEST_CAMERA_PHOTO_CODE = 2;
+
     private static final String CAMERA_PHOTO_FILE_PATH_KEY = "CAMERA_PHOTO_FILE_PATH_KEY";
+    private static final String SELECTED_IMAGE_URI_KEY = "SELECTED_IMAGE_URI_KEY";
     private static final String PHOTO_FILE_EXTENSION = ".jpg";
 
     private String mPhotoFilePath;
+    private Uri mImageUri;
 
     @CallSuper
     @Override
@@ -50,6 +53,10 @@ public abstract class BaseComplainFragment extends BaseFragment implements OnIma
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             mPhotoFilePath = savedInstanceState.getString(CAMERA_PHOTO_FILE_PATH_KEY);
+            mImageUri = savedInstanceState.getParcelable(SELECTED_IMAGE_URI_KEY);
+            if (mImageUri != null) {
+                onImageGet(mImageUri);
+            }
         }
     }
 
@@ -135,19 +142,30 @@ public abstract class BaseComplainFragment extends BaseFragment implements OnIma
             if (!TextUtils.isEmpty(mPhotoFilePath)) {
                 final File photoFile = new File(mPhotoFilePath);
                 if (resultCode == Activity.RESULT_OK) {
+                    mImageUri = Uri.fromFile(photoFile);
+                    onImageGet(mImageUri);
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     photoFile.delete();
                 }
             }
         } else if (requestCode == REQUEST_GALLERY_IMAGE_CODE && resultCode == Activity.RESULT_OK) {
+            mImageUri = data.getData();
+            onImageGet(mImageUri);
         }
     }
+
+    protected abstract void onImageGet(Uri _uri);
 
     @CallSuper
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(SELECTED_IMAGE_URI_KEY, mImageUri);
         outState.putString(CAMERA_PHOTO_FILE_PATH_KEY, mPhotoFilePath);
         super.onSaveInstanceState(outState);
+    }
+
+    protected final Uri getImageUri() {
+        return mImageUri;
     }
 
     protected final boolean isGalleryPickAvailable() {

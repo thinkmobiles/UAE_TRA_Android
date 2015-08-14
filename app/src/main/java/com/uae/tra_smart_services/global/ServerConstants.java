@@ -51,6 +51,8 @@ public final class ServerConstants {
     public static final String HELP_SALIM_URL = "/sendHelpSalim";
     public static final String COMPLAIN_ABOUT_SERVICE_PROVIDER_URL = "/complainServiceProvider";
     public static final String COMPLAIN_ABOUT_TRA_SERVICE_URL = "/complainTRAService";
+    public static final String COMPLAIN_ENQUIRIES_SERVICE_URL = "/complainEnquiries";
+    public static final String SEND_SUGGESTION_URL = "/sendSuggestion";
 
     //!!!!!!!!!!!! API PARAMETERS !!!!!!!!!!!!!!!!!!
     public static final String PARAMETER_CHECK_URL = "checkUrl";

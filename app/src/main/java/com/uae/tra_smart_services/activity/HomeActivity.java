@@ -17,6 +17,7 @@ import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
+import com.uae.tra_smart_services.fragment.EnquiriesFragment;
 import com.uae.tra_smart_services.fragment.HelpSalemFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
@@ -26,6 +27,7 @@ import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
 import com.uae.tra_smart_services.fragment.SmsSpamFragment;
 import com.uae.tra_smart_services.fragment.SmsSpamFragment.OnSmsServiceSelectListener;
+import com.uae.tra_smart_services.fragment.SuggestionFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
@@ -37,10 +39,10 @@ import retrofit.RetrofitError;
  * Created by Andrey Korneychuk on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
-                        implements ToolbarTitleManager, OnServiceSelectListener,
-                        OnDeviceSelectListener, OnBackStackChangedListener,
-                        OnSmsServiceSelectListener, /*BottomNavActionListener,*/
-                        RadioGroup.OnCheckedChangeListener {
+        implements ToolbarTitleManager, OnServiceSelectListener,
+        OnDeviceSelectListener, OnBackStackChangedListener,
+        OnSmsServiceSelectListener, /*BottomNavActionListener,*/
+        RadioGroup.OnCheckedChangeListener {
 
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
@@ -58,7 +60,7 @@ public class HomeActivity extends BaseFragmentActivity
         bottomNavRadios = findView(R.id.rgBottomNavRadio_FSL);
         bottomNavRadios.setOnCheckedChangeListener(this);
 
-        if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)){
+        if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)) {
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
@@ -90,10 +92,14 @@ public class HomeActivity extends BaseFragmentActivity
             case COMPLAIN_ABOUT_PROVIDER:
                 replaceFragmentWithBackStack(ComplainAboutServiceFragment.newInstance());
                 break;
-            case COMPLAINT_ABOUT_TRA:
             case ENQUIRIES:
-            case SUGGESTION:
+                replaceFragmentWithBackStack(EnquiriesFragment.newInstance());
+                break;
+            case COMPLAINT_ABOUT_TRA:
                 replaceFragmentWithBackStack(ComplainAboutTraFragment.newInstance());
+                break;
+            case SUGGESTION:
+                replaceFragmentWithBackStack(SuggestionFragment.newInstance());
                 break;
             case SMS_SPAM:
                 replaceFragmentWithBackStack(SmsSpamFragment.newInstance());
