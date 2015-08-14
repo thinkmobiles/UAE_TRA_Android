@@ -27,7 +27,6 @@ public abstract class BaseFragmentActivity extends BaseActivity implements BaseF
     }
 
     public final void replaceFragmentWithOutBackStack(final BaseFragment _fragment) {
-        clearBackStack();
         getFragmentManager().beginTransaction()
                 .replace(getContainerId(), _fragment)
                 .commit();

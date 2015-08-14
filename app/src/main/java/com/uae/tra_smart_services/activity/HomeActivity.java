@@ -170,9 +170,11 @@ public class HomeActivity extends BaseFragmentActivity
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rbHome_BNRG:
+                clearBackStack();
                 replaceFragmentWithOutBackStack(ServiceListFragment.newInstance());
                 break;
             case R.id.rbFavorites_BNRG:
+                clearBackStack();
                 Toast.makeText(getApplicationContext(), "choice: Favorites",
                         Toast.LENGTH_SHORT).show();
 
@@ -187,6 +189,7 @@ public class HomeActivity extends BaseFragmentActivity
                         Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rbSettings_BNRG:
+                clearBackStack();
                 replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
                 break;
         }
