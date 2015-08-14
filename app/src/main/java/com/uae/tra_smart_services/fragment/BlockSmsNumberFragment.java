@@ -1,10 +1,14 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.ServicePickerDialog;
@@ -46,7 +50,24 @@ public final class BlockSmsNumberFragment extends BaseFragment implements OnClic
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_send, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_send) {
+            Toast.makeText(getActivity(), "Send", Toast.LENGTH_SHORT).show();
+            hideKeyboard(getView());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(final View _view) {
+        hideKeyboard(_view);
         openServiceProviderPicker();
     }
 

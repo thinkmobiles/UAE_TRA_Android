@@ -21,7 +21,7 @@ import static com.uae.tra_smart_services.entities.H.getResIdFromString;
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseActivity extends AppCompatActivity implements ProgressDialogManager, BaseFragment.ErrorHandler, BaseFragment.ThemaDefiner {
+public abstract class BaseActivity extends AppCompatActivity implements ProgressDialogManager, BaseFragment.ThemaDefiner {
 
     private ProgressDialog mProgressDialog;
     private String mThemaStringValue;
@@ -73,14 +73,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
         return mThemaStringValue;
     }
 
-    public void setApplicationTheme(){
+    public void setApplicationTheme() {
         mThemaStringValue = PreferenceManager
                 .getDefaultSharedPreferences(this)
                 .getString(BaseCustomSwitcher.Type.THEME.toString(), "AppThemeOrange");
         setTheme(getResIdFromString(mThemaStringValue, R.style.class));
     }
 
-    public void setApplicationFontSize(){
+    public void setApplicationFontSize() {
         mFontSize = PreferenceManager
                 .getDefaultSharedPreferences(this)
                 .getFloat(BaseCustomSwitcher.Type.FONT.toString(), 1f);
@@ -89,7 +89,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
         getResources().updateConfiguration(config, null);
     }
 
-    public final void setApplicationLanguage(){
+    public final void setApplicationLanguage() {
         mLanguage = PreferenceManager
                 .getDefaultSharedPreferences(this)
                 .getString(BaseCustomSwitcher.Type.LANGUAGE.toString(), "en");
