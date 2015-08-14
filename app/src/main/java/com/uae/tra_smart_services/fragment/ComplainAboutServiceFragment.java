@@ -89,7 +89,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         complainModel.description = etDescription.getText().toString();
         ComplainAboutServiceRequest request = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
 
-        showProgressDialog(getFragmentManager());
+        showProgressDialog();
         getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestResponseListener);
     }
 
@@ -174,8 +174,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
             Log.d(getClass().getSimpleName(), "Failure. isAdded: " + isAdded());
             if (isAdded()) {
                 hideProgressDialog();
-                Throwable cause = spiceException.getCause();
-                Toast.makeText(getActivity(), cause!=null?cause.getMessage():"Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
             }
             getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }

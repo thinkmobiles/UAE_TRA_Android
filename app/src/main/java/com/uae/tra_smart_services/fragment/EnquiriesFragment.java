@@ -19,7 +19,7 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         ComplainEnquiriesServiceRequest request = new ComplainEnquiriesServiceRequest(traServiceModel, getActivity(), getImageUri());
-        showProgressDialog(getFragmentManager());
+        showProgressDialog();
         getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
     }
 }

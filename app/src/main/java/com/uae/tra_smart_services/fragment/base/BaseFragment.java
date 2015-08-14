@@ -2,7 +2,6 @@ package com.uae.tra_smart_services.fragment.base;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
@@ -127,8 +126,8 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         super.onDetach();
     }
 
-    protected final void showProgressDialog(FragmentManager _manager){
-        ProgressDialog.newInstance().show(_manager);
+    protected final void showProgressDialog(){
+        ProgressDialog.newInstance().show(getFragmentManager());
     }
 
     protected final void hideProgressDialog(){
