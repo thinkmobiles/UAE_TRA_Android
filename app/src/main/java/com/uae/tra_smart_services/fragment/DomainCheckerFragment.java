@@ -74,7 +74,7 @@ public class DomainCheckerFragment extends BaseFragment
                 addFilter(new Filter<String>() {
                     @Override
                     public boolean check(String _data) {
-                        return _data.isEmpty();
+                        return !_data.isEmpty();
                     }
                 });
                 addFilter(new Filter<String>() {

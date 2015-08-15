@@ -22,6 +22,8 @@ public class CustomFilterPool<T> implements Filter<T> {
         for (Filter<T> filter : filters){
             if(filter.check(_data)){
                 continue;
+            } else {
+                return false;
             }
         }
         return true;
