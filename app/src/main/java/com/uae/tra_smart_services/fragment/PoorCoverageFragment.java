@@ -197,25 +197,25 @@ public class PoorCoverageFragment extends BaseFragment
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
+        int i = 0;
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-
+        int k = 0;
     }
 
     private class PoorCoverageRequestListener implements RequestListener<Response> {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            hideProgressDialog();
+            progressDialogManager.hideProgressDialog();
             showMessage(R.string.str_error, R.string.str_request_failed);
         }
 
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
-            hideProgressDialog();
+            progressDialogManager.hideProgressDialog();
             switch (poorCoverageRequestModel.getStatus()){
                 case 200:
                     showMessage(R.string.str_success, R.string.str_data_has_been_sent);

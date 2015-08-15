@@ -74,6 +74,12 @@ public class DomainCheckerFragment extends BaseFragment
                 addFilter(new Filter<String>() {
                     @Override
                     public boolean check(String _data) {
+                        return _data.isEmpty();
+                    }
+                });
+                addFilter(new Filter<String>() {
+                    @Override
+                    public boolean check(String _data) {
                         return Patterns.DOMAIN_NAME.matcher(_data).matches();
                     }
                 });
@@ -164,6 +170,7 @@ public class DomainCheckerFragment extends BaseFragment
 
         @Override
         public void onRequestSuccess(DomainInfoCheckResponseModel domainInfoCheckResponse) {
+            progressDialogManager.hideProgressDialog();
             if (!domainInfoCheckResponse.urlData.equals("No Data Found\r\n")) {
                 getFragmentManager()
                         .beginTransaction()
@@ -175,7 +182,6 @@ public class DomainCheckerFragment extends BaseFragment
             } else {
                 showFormattedMessage(R.string.str_error, R.string.str_url_doesnot_exist, mDomain);
             }
-            progressDialogManager.hideProgressDialog();
         }
     }
 }

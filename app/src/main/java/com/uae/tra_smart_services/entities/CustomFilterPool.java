@@ -20,7 +20,9 @@ public class CustomFilterPool<T> implements Filter<T> {
     @Override
     public boolean check(T _data) {
         for (Filter<T> filter : filters){
-            return filter.check(_data);
+            if(filter.check(_data)){
+                continue;
+            }
         }
         return true;
     }
