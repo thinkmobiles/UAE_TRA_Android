@@ -100,7 +100,7 @@ public class HelpSalemFragment extends BaseFragment implements AlertDialogFragme
                     new HelpSalimRequestListener()
             );
         } else {
-            showMessage(R.string.str_error, R.string.str_invalid_number);
+            showMessage(R.string.str_error, R.string.str_invalid_url);
         }
     }
 
