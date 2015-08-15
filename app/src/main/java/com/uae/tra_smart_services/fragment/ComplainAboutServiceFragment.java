@@ -66,7 +66,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     @Override
     public void onStart() {
         super.onStart();
-        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestResponseListener);
+        //getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestResponseListener);
         getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestResponseListener);
     }
 
@@ -166,7 +166,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
             if (isAdded()) {
                 hideProgressDialog();
                 if (result != null) {
-                    Toast.makeText(getActivity(), "Complain successfully send", Toast.LENGTH_SHORT).show();
+                    showMessage(R.string.str_success, R.string.str_complain_has_been_sent);
                     getFragmentManager().popBackStackImmediate();
                 }
             }
