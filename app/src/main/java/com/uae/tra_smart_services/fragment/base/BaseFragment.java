@@ -64,6 +64,7 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         initViews();
         initListeners();
         initCustomEntities();
+        setToolbarVisibility();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         return rootView;
     }
@@ -94,6 +95,10 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     }
 
     protected void initCustomEntities() {
+    }
+
+    protected void setToolbarVisibility() {
+        toolbarTitleManager.setToolbarVisibility(true);
     }
 
     @CallSuper

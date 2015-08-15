@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
+import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
@@ -43,9 +44,9 @@ import retrofit.RetrofitError;
  * Created by Andrey Korneychuk on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
-        implements ToolbarTitleManager, OnServiceSelectListener,
+        implements ToolbarTitleManager, HexagonHomeFragment.OnServiceSelectListener,
         OnDeviceSelectListener, OnBackStackChangedListener,
-        OnSmsServiceSelectListener, /*BottomNavActionListener,*/
+        OnSmsServiceSelectListener, HexagonHomeFragment.OnStaticServiceSelectListener,
         RadioGroup.OnCheckedChangeListener {
 
     private Toolbar mToolbar;
@@ -68,7 +69,7 @@ public class HomeActivity extends BaseFragmentActivity
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
-            addFragment(ServiceListFragment.newInstance());
+            addFragment(HexagonHomeFragment.newInstance());
         }
 
         onBackStackChanged();
@@ -105,20 +106,30 @@ public class HomeActivity extends BaseFragmentActivity
             case SUGGESTION:
                 replaceFragmentWithBackStack(SuggestionFragment.newInstance());
                 break;
-            case SMS_SPAM:
-                replaceFragmentWithBackStack(SmsServiceListFragment.newInstance());
-                break;
-            case POOR_COVERAGE:
-                replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
-                break;
             case HELP_SALIM:
                 replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
                 break;
-            case MOBILE_VERIFICATION:
-                replaceFragmentWithBackStack(MobileVerificationFragment.newInstance());
-                break;
             case APPROVED_DEVICES:
                 replaceFragmentWithBackStack(ApprovedDevicesFragment.newInstance());
+                break;
+        }
+    }
+
+    @Override
+    public void onStaticServiceSelect(HexagonalButtonsLayout.StaticService _service) {
+        switch (_service) {
+            case VERIFICATION_SERVICE:
+                replaceFragmentWithBackStack(MobileVerificationFragment.newInstance());
+                break;
+            case SMS_SPAM_SERVICE:
+                replaceFragmentWithBackStack(SmsServiceListFragment.newInstance());
+                break;
+            case POOR_COVERAGE_SERVICE:
+                replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
+                break;
+            case INTERNET_SPEED_TEST:
+                Toast.makeText(getApplicationContext(), "Not implemented yet.",
+                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -171,14 +182,11 @@ public class HomeActivity extends BaseFragmentActivity
         switch (checkedId) {
             case R.id.rbHome_BNRG:
                 clearBackStack();
-                replaceFragmentWithOutBackStack(ServiceListFragment.newInstance());
+                replaceFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
                 break;
             case R.id.rbFavorites_BNRG:
-                clearBackStack();
                 Toast.makeText(getApplicationContext(), "choice: Favorites",
                         Toast.LENGTH_SHORT).show();
-
-                replaceFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
                 break;
             case R.id.rbInfoHub_BNRG:
                 Toast.makeText(getApplicationContext(), "choice: Info Hub",
@@ -192,6 +200,15 @@ public class HomeActivity extends BaseFragmentActivity
                 clearBackStack();
                 replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
                 break;
+        }
+    }
+
+    @Override
+    public void setToolbarVisibility(boolean _isVisible) {
+        if (_isVisible) {
+            getSupportActionBar().show();
+        } else {
+            getSupportActionBar().hide();
         }
     }
 }

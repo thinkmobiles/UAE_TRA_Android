@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.util.HexagonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +50,7 @@ public class HexagonalHeader extends View {
     private float mTriangleHeight;
     private float mRadius;
 
+    private Drawable mAvatarPlaceholder;
     private HashMap<Integer, Drawable> mDrawables;
     private HashMap<Integer, PointF[]> mHexagons;
     private List<Integer> mInvisibleHexagons;
@@ -56,7 +58,7 @@ public class HexagonalHeader extends View {
 
     private boolean isDown = false;
 
-    private final float mAvatarRadiusCoefficient = 1.4f;
+    private final float mAvatarRadiusCoefficient = 1.6f;
 
     public HexagonalHeader(final Context _context, final AttributeSet _attrs) {
         super(_context, _attrs);
@@ -77,7 +79,7 @@ public class HexagonalHeader extends View {
             mHexagonPerRow = typedArrayData.getInt(R.styleable.HexagonalHeader_hexPerRow, 8);
             mRowCount = typedArrayData.getInt(R.styleable.HexagonalHeader_hexagonRowCount, 2);
             mHexagonStrokeWidth = typedArrayData.getDimension(R.styleable.HexagonalHeader_hexagonStrokeWidth, 3);
-            mAvatarPlaceholderBackground = typedArrayData.getColor(R.styleable.HexagonalHeader_avatarPlaceholderBackground, Color.GRAY);
+            mAvatarPlaceholderBackground = typedArrayData.getColor(R.styleable.HexagonalHeader_avatarPlaceholderBackground, 0xFF455560);
 
             mHexagonAvatarBorderWidth = mHexagonStrokeWidth * 1.5f;
         } finally {
@@ -128,6 +130,8 @@ public class HexagonalHeader extends View {
         mDrawables.put(7, ContextCompat.getDrawable(getContext(), R.drawable.ic_lamp));
         mDrawables.put(8, ContextCompat.getDrawable(getContext(), R.drawable.ic_search));
         mDrawables.put(15, ContextCompat.getDrawable(getContext(), R.drawable.ic_not));
+
+        mAvatarPlaceholder = ContextCompat.getDrawable(getContext(), R.drawable.ic_user);
     }
 
     @Override
@@ -192,22 +196,7 @@ public class HexagonalHeader extends View {
     protected final void onDraw(final Canvas _canvas) {
         drawHexagons(_canvas);
         drawDrawables(_canvas);
-
-        final float avatarTriangleHeight = mTriangleHeight * mAvatarRadiusCoefficient;
-        final float radius = mRadius * mAvatarRadiusCoefficient;
-        final float centerY = getPaddingTop() + radius + mHexagonAvatarBorderWidth / 2;
-        final float centerX = getPaddingLeft() + mHexagonStrokeWidth / 2 + 2.5f * mTriangleHeight;
-        Path avatarPath = new Path();
-        avatarPath.moveTo(centerX, centerY + radius);
-        avatarPath.lineTo(centerX - avatarTriangleHeight, centerY + radius / 2);
-        avatarPath.lineTo(centerX - avatarTriangleHeight, centerY - radius / 2);
-        avatarPath.lineTo(centerX, centerY - radius);
-        avatarPath.lineTo(centerX + avatarTriangleHeight, centerY - radius / 2);
-        avatarPath.lineTo(centerX + avatarTriangleHeight, centerY + radius / 2);
-        avatarPath.close();
-
-        _canvas.drawPath(avatarPath, mDefaultAvatarBackgroundPaint);
-        _canvas.drawPath(avatarPath, mDefaultAvatarBorderPaint);
+        drawAvatarHexagon(_canvas);
     }
 
     private void calculateVariables(final int _w) {
@@ -310,32 +299,39 @@ public class HexagonalHeader extends View {
         return points;
     }
 
-    public boolean pointInPolygon(final PointF p, final PointF[] poly ) {
-        PointF p1, p2;
-        boolean inside = false;
+    private void drawAvatarHexagon(final Canvas _canvas) {
+        final float avatarTriangleHeight = mTriangleHeight * mAvatarRadiusCoefficient;
+        final float radius = mRadius * mAvatarRadiusCoefficient;
+        final float centerY = getPaddingTop() + radius + mHexagonAvatarBorderWidth / 2;
+        final float centerX = getPaddingLeft() + mHexagonStrokeWidth / 2 + 2.5f * mTriangleHeight;
+        Path avatarPath = new Path();
+        avatarPath.moveTo(centerX, centerY + radius);
+        avatarPath.lineTo(centerX - avatarTriangleHeight, centerY + radius / 2);
+        avatarPath.lineTo(centerX - avatarTriangleHeight, centerY - radius / 2);
+        avatarPath.lineTo(centerX, centerY - radius);
+        avatarPath.lineTo(centerX + avatarTriangleHeight, centerY - radius / 2);
+        avatarPath.lineTo(centerX + avatarTriangleHeight, centerY + radius / 2);
+        avatarPath.close();
 
-        PointF oldPoint = new PointF(poly[poly.length - 1].x, poly[poly.length - 1].y);
+        _canvas.drawPath(avatarPath, mDefaultAvatarBackgroundPaint);
+        _canvas.drawPath(avatarPath, mDefaultAvatarBorderPaint);
 
-        for (PointF point : poly) {
-            PointF newPoint = new PointF(point.x, point.y);
+        float drawableWidth = mAvatarPlaceholder.getMinimumWidth();
+        float drawableHeight = mAvatarPlaceholder.getMinimumHeight();
 
-            if (newPoint.x > oldPoint.x) {
-                p1 = oldPoint;
-                p2 = newPoint;
-            } else {
-                p1 = newPoint;
-                p2 = oldPoint;
-            }
+        if (drawableWidth < avatarTriangleHeight && drawableHeight < radius) {
+            mAvatarPlaceholder.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
+                    (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
+        } else {
+            final float widthCoef = avatarTriangleHeight / drawableHeight;
 
-            if ((newPoint.x < p.x) == (p.x <= oldPoint.x) && (p.y - p1.y) * (p2.x - p1.x)
-                    < (p2.y - p1.y) * (p.x - p1.x)) {
-                inside = !inside;
-            }
+            drawableWidth *= widthCoef;
+            drawableHeight *= widthCoef;
 
-            oldPoint = newPoint;
+            mAvatarPlaceholder.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
+                    (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
         }
-
-        return inside;
+        mAvatarPlaceholder.draw(_canvas);
     }
 
     @Override
@@ -364,7 +360,7 @@ public class HexagonalHeader extends View {
     private void capturePress(final MotionEvent _event) {
         final PointF clickPoint = new PointF(_event.getX(), _event.getY());
         for (final Integer key : mHexagons.keySet()) {
-            if (mHexagons.get(key) != null && pointInPolygon(clickPoint, mHexagons.get(key))) {
+            if (mHexagons.get(key) != null && HexagonUtils.pointInPolygon(clickPoint, mHexagons.get(key))) {
                 isDown = true;
                 mPressedButton = key;
                 invalidate();
@@ -377,7 +373,7 @@ public class HexagonalHeader extends View {
         isDown = false;
         final PointF clickPoint = new PointF(_event.getX(), _event.getY());
         if (mPressedButton == null) return;
-        if (pointInPolygon(clickPoint, mHexagons.get(mPressedButton))) {
+        if (HexagonUtils.pointInPolygon(clickPoint, mHexagons.get(mPressedButton))) {
             Toast.makeText(getContext(), "Clicked hexagon " + mPressedButton, Toast.LENGTH_SHORT).show();
         }
         mPressedButton = null;
@@ -386,7 +382,7 @@ public class HexagonalHeader extends View {
 
     private void captureMove(final MotionEvent _event) {
         final PointF clickPoint = new PointF(_event.getX(), _event.getY());
-        if (mPressedButton != null && !pointInPolygon(clickPoint, mHexagons.get(mPressedButton))) {
+        if (mPressedButton != null && !HexagonUtils.pointInPolygon(clickPoint, mHexagons.get(mPressedButton))) {
             mPressedButton = null;
             invalidate();
         }

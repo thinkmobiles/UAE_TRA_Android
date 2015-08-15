@@ -15,6 +15,8 @@ import com.uae.tra_smart_services.rest.model.new_response.SmsSpamResponseModel;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Header;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Query;
 
@@ -39,6 +41,8 @@ import static com.uae.tra_smart_services.global.ServerConstants.SMS_SPAM_REPORT_
  * Created by Vitaliy on 13/08/2015.
  */
 public interface TRAServicesAPI {
+
+    String JSON_TYPE = "Content-Type: application/json";
 
     @GET(CHECK_WHO_IS_URL)
     DomainInfoCheckResponseModel getDomainData(@Query(PARAMETER_CHECK_URL) String _checkUrl);
@@ -72,6 +76,7 @@ public interface TRAServicesAPI {
     @POST(COMPLAIN_ABOUT_TRA_SERVICE_URL)
     Response complainTraServiceProvider(@Body ComplainTRAServiceModel _complainTRAServiceModel);
 
+    @Headers(JSON_TYPE)
     @POST(COMPLAIN_ENQUIRIES_SERVICE_URL)
     Response complainEnquiries(@Body ComplainTRAServiceModel _complainTRAServiceModel);
 

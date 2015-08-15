@@ -29,6 +29,9 @@ import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.global.Service;
 
 import java.util.List;
@@ -37,9 +40,11 @@ import java.util.List;
  * Provide views to RecyclerView with data from mDataSet.
  */
 public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRecyclerViewAdapter.ViewHolder> {
+
     private List<Service> mDataSet;
     private Context mContext;
     private float mMarginOffset = 0;
+    private OnServiceSelectListener mServiceSelectListener;
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -48,6 +53,7 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
         private final TextView textView;
         private final HexagonView hvHexagonView;
         private final LinearLayout container;
+        private final View rootView;
 
         public ViewHolder(View v) {
             super(v);
@@ -55,16 +61,16 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "Clicked " + getPosition(), Toast.LENGTH_SHORT).show();
+                    if (mServiceSelectListener != null) {
+                        mServiceSelectListener.onServiceSelect((Service) rootView.getTag());
+                    }
                 }
             });
+
+            rootView = v;
             textView = (TextView) v.findViewById(R.id.textView);
             hvHexagonView = (HexagonView) v.findViewById(R.id.hvHexagonView);
             container = (LinearLayout) v.findViewById(R.id.llContainer);
-        }
-
-        public TextView getTextView() {
-            return textView;
         }
 
         public View getContainer() {
@@ -74,6 +80,7 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
         public void setData(final Service _service) {
             hvHexagonView.setBackgroundDrawable(_service.getDrawableRes());
             textView.setText(_service.toString());
+            rootView.setTag(_service);
         }
     }
 
@@ -87,6 +94,10 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
         mDataSet = _dataSet;
         mContext = _context;
         mMarginOffset = _marginOffset;
+    }
+
+    public final void setServiceSelectListener(final OnServiceSelectListener _serviceSelectListener) {
+        mServiceSelectListener = _serviceSelectListener;
     }
 
     @Override

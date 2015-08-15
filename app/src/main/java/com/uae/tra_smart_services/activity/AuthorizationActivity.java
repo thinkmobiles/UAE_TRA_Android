@@ -104,4 +104,12 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
     @Override
     public void handleError(RetrofitError _error, OnReloadData _listener) {}
+
+    @Override
+    public void setToolbarVisibility(boolean _isVisible) {
+        if (_isVisible)
+            getSupportActionBar().show();
+        else
+            getSupportActionBar().hide();
+    }
 }

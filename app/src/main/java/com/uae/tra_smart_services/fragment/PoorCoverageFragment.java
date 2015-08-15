@@ -53,14 +53,16 @@ public class PoorCoverageFragment extends BaseFragment
     @Override
     protected void initListeners() {
         super.initListeners();
-        etLocation.setOnClickListener(new View.OnClickListener() {
+        etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                CustomSingleChoiceDialog
-                        .newInstance(PoorCoverageFragment.this)
-                        .setTitle("Please select location type")
-                        .setBodyItems(LocationType.toStringArray())
-                        .show(getFragmentManager());
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    CustomSingleChoiceDialog
+                            .newInstance(PoorCoverageFragment.this)
+                            .setTitle("Please select location type")
+                            .setBodyItems(LocationType.toStringArray())
+                            .show(getFragmentManager());
+                }
             }
         });
     }

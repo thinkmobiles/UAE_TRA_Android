@@ -6,12 +6,19 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PointF;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.util.HexagonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +28,15 @@ import java.util.List;
  */
 public class HexagonalButtonsLayout extends View {
 
+    private OnServiceSelected mServiceSelectedListener;
+
     private Paint mSeparatorPaint;
     private Paint mButtonPaint;
     private Paint mShadowPaint;
     private Paint mButtonSecondColorPaint;
     private Paint mPressedButtonPaint;
+    private Paint mOrangeTextPaint;
+    private Paint mWhiteTextPain;
     private int mSeparatorColor;
     private int mPressedButtonColor;
     private int mButtonsCount;
@@ -35,8 +46,13 @@ public class HexagonalButtonsLayout extends View {
     private float mRadius;
     private float mSeparatorTriangleHeight;
     private float mSeparatorRadius;
+    private float mTextSize;
 
     private List<Drawable> mDrawables;
+    private List<PointF[]> mPolygons;
+
+    private boolean isDown = false;
+    private Integer mPressedButton;
 
     public HexagonalButtonsLayout(final Context _context, final AttributeSet _attrs) {
         super(_context, _attrs);
@@ -50,6 +66,10 @@ public class HexagonalButtonsLayout extends View {
         return mSeparatorRadius / 2 + mHexagonGapWidth;
     }
 
+    public final void setServiceSelectedListener(final OnServiceSelected _serviceSelectedListener) {
+        mServiceSelectedListener = _serviceSelectedListener;
+    }
+
     private void initProperties(final AttributeSet _attrs) {
         TypedArray typedArrayData = getContext().getTheme().
                 obtainStyledAttributes(_attrs, R.styleable.HexagonalButtonsLayoutAttrs, 0, 0);
@@ -58,9 +78,12 @@ public class HexagonalButtonsLayout extends View {
             mButtonsCount = typedArrayData.getInt(R.styleable.HexagonalButtonsLayoutAttrs_hexagonCount, 4);
             mSeparatorStrokeWidth = typedArrayData.getDimension(R.styleable.HexagonalButtonsLayoutAttrs_separatorStrokeWidth, 3);
             mHexagonGapWidth = typedArrayData.getDimension(R.styleable.HexagonalButtonsLayoutAttrs_hexagonGapWidth, 3);
+            mTextSize = typedArrayData.getDimension(R.styleable.HexagonalButtonsLayoutAttrs_hexTextSize, 14);
         } finally {
             typedArrayData.recycle();
         }
+
+        mPolygons = new ArrayList<>();
     }
 
     private void initPaint() {
@@ -80,6 +103,16 @@ public class HexagonalButtonsLayout extends View {
         mButtonSecondColorPaint = new Paint();
         mButtonSecondColorPaint.setColor(0xFF44545F);
         mButtonSecondColorPaint.setStyle(Paint.Style.FILL);
+
+        mOrangeTextPaint = new Paint();
+        mOrangeTextPaint.setTextAlign(Paint.Align.CENTER);
+        mOrangeTextPaint.setTextSize(mTextSize);
+        mOrangeTextPaint.setColor(0xFFF68F1E);
+
+        mWhiteTextPain = new Paint();
+        mWhiteTextPain.setTextAlign(Paint.Align.CENTER);
+        mWhiteTextPain.setTextSize(mTextSize);
+        mWhiteTextPain.setColor(Color.WHITE);
     }
 
     private void initDrawables() {
@@ -126,6 +159,7 @@ public class HexagonalButtonsLayout extends View {
 
         calculateVariables(_w);
         measureDrawablesBounds();
+
     }
 
     private void calculateVariables(final int _w) {
@@ -169,6 +203,18 @@ public class HexagonalButtonsLayout extends View {
         drawHexagons(_canvas);
         drawBottomSeparator(_canvas);
         drawDrawables(_canvas);
+
+        _canvas.drawText("Verification", getPaddingLeft() + mHexagonGapWidth + mTriangleHeight,
+                getPaddingTop() + mRadius + mRadius / 2, mOrangeTextPaint);
+
+        _canvas.drawText("Spam", getPaddingLeft() + mHexagonGapWidth * 2 + mTriangleHeight * 3,
+                getPaddingTop() + mRadius + mRadius / 2, mOrangeTextPaint);
+
+        _canvas.drawText("Coverage", getPaddingLeft() + mHexagonGapWidth * 3 + mTriangleHeight * 5,
+                getPaddingTop() + mRadius + mRadius / 2, mWhiteTextPain);
+
+        _canvas.drawText("Internet", getPaddingLeft() + mHexagonGapWidth * 4 + mTriangleHeight * 7,
+                getPaddingTop() + mRadius + mRadius / 2, mWhiteTextPain);
     }
 
     private void drawHexagons(final Canvas _canvas) {
@@ -194,6 +240,8 @@ public class HexagonalButtonsLayout extends View {
     }
 
     private Path calculatePath(Path _path, final float _centerX, final float _centerY) {
+        mPolygons.add(createPoints(_centerX, _centerY));
+
         _path.moveTo(_centerX, _centerY + mRadius);
         _path.lineTo(_centerX - mTriangleHeight, _centerY + mRadius / 2);
         _path.lineTo(_centerX - mTriangleHeight, _centerY - mRadius / 2);
@@ -203,6 +251,19 @@ public class HexagonalButtonsLayout extends View {
         _path.close();
 
         return _path;
+    }
+
+    private PointF[] createPoints(final float _centerX, final float _centerY) {
+        final PointF[] points = new PointF[6];
+
+        points[0] = new PointF(_centerX, _centerY + mRadius);
+        points[1] = new PointF(_centerX - mTriangleHeight, _centerY + mRadius / 2);
+        points[2] = new PointF(_centerX - mTriangleHeight, _centerY - mRadius / 2);
+        points[3] = new PointF(_centerX, _centerY - mRadius);
+        points[4] = new PointF(_centerX + mTriangleHeight, _centerY - mRadius / 2);
+        points[5] = new PointF(_centerX + mTriangleHeight, _centerY + mRadius / 2);
+
+        return points;
     }
 
     private void drawBottomSeparator(final Canvas _canvas) {
@@ -229,6 +290,82 @@ public class HexagonalButtonsLayout extends View {
     private void drawDrawables(final Canvas _canvas) {
         for (final Drawable drawable : mDrawables) {
             drawable.draw(_canvas);
+        }
+    }
+
+    @Override
+    public final boolean onTouchEvent(@NonNull final MotionEvent _event) {
+        final int action = MotionEventCompat.getActionMasked(_event);
+
+        switch(action) {
+            case (MotionEvent.ACTION_DOWN) :
+                capturePress(_event);
+                return true;
+            case (MotionEvent.ACTION_UP) :
+                if (isDown) {
+                    captureClick(_event);
+                }
+                return true;
+            case (MotionEvent.ACTION_MOVE) :
+                if (isDown) {
+                    captureMove(_event);
+                }
+                return true;
+            default :
+                return super.onTouchEvent(_event);
+        }
+    }
+
+    private void capturePress(final MotionEvent _event) {
+        final PointF clickPoint = new PointF(_event.getX(), _event.getY());
+        for (int i = 0; i < mPolygons.size(); i++) {
+            if (mPolygons.get(i) != null && HexagonUtils.pointInPolygon(clickPoint, mPolygons.get(i))) {
+                isDown = true;
+                mPressedButton = i;
+                return;
+            }
+        }
+    }
+
+    private void captureClick(final MotionEvent _event) {
+        isDown = false;
+        final PointF clickPoint = new PointF(_event.getX(), _event.getY());
+        if (mPressedButton == null) return;
+        if (HexagonUtils.pointInPolygon(clickPoint, mPolygons.get(mPressedButton))) {
+            if (mServiceSelectedListener != null) {
+                mServiceSelectedListener.serviceSelected(mPressedButton);
+            }
+        }
+        mPressedButton = null;
+    }
+
+    private void captureMove(final MotionEvent _event) {
+        final PointF clickPoint = new PointF(_event.getX(), _event.getY());
+        if (mPressedButton != null && !HexagonUtils.pointInPolygon(clickPoint, mPolygons.get(mPressedButton))) {
+            mPressedButton = null;
+        }
+    }
+
+    public interface OnServiceSelected {
+        void serviceSelected(final int _id);
+    }
+
+    public enum StaticService {
+        VERIFICATION_SERVICE(0),
+        SMS_SPAM_SERVICE(1),
+        POOR_COVERAGE_SERVICE(2),
+        INTERNET_SPEED_TEST(3);
+
+        private final Integer value;
+
+        StaticService(final Integer newValue) {
+            value = newValue;
+        }
+
+        public Integer getValue() { return value; }
+
+        public boolean isEquals(final int _value) {
+            return value.equals(_value);
         }
     }
 }
