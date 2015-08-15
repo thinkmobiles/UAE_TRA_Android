@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -58,8 +59,7 @@ public class HelpSalemFragment extends BaseFragment implements AlertDialogFragme
                 addFilter(new Filter<String>() {
                     @Override
                     public boolean check(String _data) {
-                        // TODO Implement phone validation rule here, will return true by default
-                        return true;
+                        return Patterns.DOMAIN_NAME.matcher(_data).matches();
                     }
                 });
             }
