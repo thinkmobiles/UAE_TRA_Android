@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HexagonalButtonsLayoutAttrs">
+        <attr name="hexagonCount" format="integer"/>
+        <attr name="hexagonGapWidth" format="dimension"/>
+        <attr name="separatorStrokeWidth" format="dimension"/>
+        <attr name="separatorColor" format="color"/>
+    </declare-styleable>
+</resources>

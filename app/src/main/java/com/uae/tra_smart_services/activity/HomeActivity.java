@@ -13,6 +13,9 @@ import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
+import com.uae.tra_smart_services.fragment.HelpSalemFragment;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
+import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
@@ -167,17 +170,26 @@ public class HomeActivity extends BaseFragmentActivity
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rbHome_BNRG:
+                clearBackStack();
                 replaceFragmentWithOutBackStack(ServiceListFragment.newInstance());
                 break;
-            case R.id.rbIndex_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: Index",
+            case R.id.rbFavorites_BNRG:
+                clearBackStack();
+                Toast.makeText(getApplicationContext(), "choice: Favorites",
+                        Toast.LENGTH_SHORT).show();
+
+                replaceFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
+                break;
+            case R.id.rbInfoHub_BNRG:
+                Toast.makeText(getApplicationContext(), "choice: Info Hub",
                         Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.rbCRM_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: CRM",
+            case R.id.rbInquiries_BNRG:
+                Toast.makeText(getApplicationContext(), "choice: Inquiries",
                         Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rbSettings_BNRG:
+                clearBackStack();
                 replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
                 break;
         }

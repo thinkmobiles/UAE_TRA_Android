@@ -10,25 +10,31 @@
     <RadioButton
         style="@style/DashboardRadioButton"
         android:checked="true"
-        android:drawableTop="@drawable/ic_temp_left_field_icon"
+        android:drawableTop="@drawable/ic_home"
         android:id="@+id/rbHome_BNRG"
         android:text="@string/str_home" />
 
     <RadioButton
         style="@style/DashboardRadioButton"
-        android:drawableTop="@drawable/ic_temp_left_field_icon"
-        android:id="@+id/rbIndex_BNRG"
-        android:text="@string/str_index" />
+        android:drawableTop="@drawable/ic_favorites"
+        android:id="@+id/rbFavorites_BNRG"
+        android:text="@string/str_favorites" />
 
     <RadioButton
         style="@style/DashboardRadioButton"
-        android:drawableTop="@drawable/ic_temp_left_field_icon"
-        android:id="@+id/rbCRM_BNRG"
-        android:text="@string/str_crm" />
+        android:drawableTop="@drawable/ic_info"
+        android:id="@+id/rbInfoHub_BNRG"
+        android:text="@string/str_info_hub" />
 
     <RadioButton
         style="@style/DashboardRadioButton"
-        android:drawableTop="@drawable/ic_temp_left_field_icon"
+        android:drawableTop="@drawable/ic_info"
+        android:id="@+id/rbInquiries_BNRG"
+        android:text="@string/str_inquiries" />
+
+    <RadioButton
+        style="@style/DashboardRadioButton"
+        android:drawableTop="@drawable/ic_settings"
         android:id="@+id/rbSettings_BNRG"
         android:text="@string/str_settings" />
 </RadioGroup>
