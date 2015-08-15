@@ -1,9 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.content.Context;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,18 +10,31 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
+import com.squareup.picasso.Downloader;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.LocationType;
+import com.uae.tra_smart_services.rest.model.new_request.PoorCoverageRequestModel;
+import com.uae.tra_smart_services.rest.model.new_request.SmsSpamRequestModel;
+import com.uae.tra_smart_services.rest.new_request.PoorCoverageRequest;
+import com.uae.tra_smart_services.rest.new_request.SmsSpamRequest;
+
+import retrofit.client.Response;
 
 /**
  * Created by ak-buffalo on 11.08.15.
  */
 public class PoorCoverageFragment extends BaseFragment
-                                implements AlertDialogFragment.OnOkListener, CustomSingleChoiceDialog.OnItemPickListener
-{
+        implements AlertDialogFragment.OnOkListener, CustomSingleChoiceDialog.OnItemPickListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        SeekBar.OnSeekBarChangeListener, View.OnClickListener{
 
     public static PoorCoverageFragment newInstance() {
         return new PoorCoverageFragment();
@@ -47,22 +57,27 @@ public class PoorCoverageFragment extends BaseFragment
     protected void initViews() {
         super.initViews();
         etLocation = findView(R.id.etLocation_FPC);
+        etLocation.clearFocus();
         sbPoorCoverage = findView(R.id.sbPoorCoverage_FPC);
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
-        etLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomSingleChoiceDialog
-                        .newInstance(PoorCoverageFragment.this)
-                        .setTitle("Please select location type")
-                        .setBodyItems(LocationType.toStringArray())
-                        .show(getFragmentManager());
-            }
-        });
+        etLocation.setOnClickListener(this);
+        sbPoorCoverage.setOnSeekBarChangeListener(this);
+    }
+
+    GoogleApiClient mGoogleApiClient;
+    PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
+    @Override
+    protected void initCustomEntities() {
+        super.initCustomEntities();
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
     }
 
     @Override
@@ -79,12 +94,22 @@ public class PoorCoverageFragment extends BaseFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         progressDialogManager.showProgressDialog(getString(R.string.str_checking));
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_send:
-                // TODO implement sending logic
+                collectDataAdnSendToServer();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void collectDataAdnSendToServer(){
+        progressDialogManager.showProgressDialog(getString(R.string.str_checking));
+        getSpiceManager().execute(
+                new PoorCoverageRequest(
+                        mLocationModel
+                ),
+                new PoorCoverageRequestListener()
+        );
     }
 
     @Override
@@ -96,22 +121,98 @@ public class PoorCoverageFragment extends BaseFragment
     @Override
     public void onItemPicked(int _dialogItem) {
         Toast.makeText(getActivity(), LocationType.toStringArray()[_dialogItem].toString(), Toast.LENGTH_LONG).show();
-        if(LocationType.values()[_dialogItem] == LocationType.AUTO){
-            showLocationSettings();
+        switch (LocationType.values()[_dialogItem]) {
+            case AUTO:
+                showLocationSettings();
+                break;
+            case MANUAL:
+                etLocation.requestFocus();
+                break;
         }
     }
 
+    Location mLastLocation;
     private void showLocationSettings() {
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            String latitude = String.valueOf(mLastLocation.getLatitude());
+            String longitude = String.valueOf(mLastLocation.getLongitude());
+            mLocationModel.setLocation(latitude, longitude);
+            etLocation.setText(
+                    "lat:"+latitude+", "+
+                    "lon:"+longitude
+            );
+        } else {
+            showMessage(R.string.str_error, R.string.str_location_is_not_defined);
+        }
+    }
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
-            public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-                Toast.makeText(getActivity(), location.getLatitude() + "" + location.getLongitude(), Toast.LENGTH_LONG).show();
+    @Override
+    public void onConnected(Bundle bundle) {
+        int i = 0;
+        i++;
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        int k = 0;
+        k++;
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        int i = 0;
+        i++;
+    }
+
+    @Override
+    public void onClick(View _view) {
+        switch (_view.getId()){
+            case R.id.etLocation_FPC:
+                CustomSingleChoiceDialog
+                        .newInstance(PoorCoverageFragment.this)
+                        .setTitle("Please select location type")
+                        .setBodyItems(LocationType.toStringArray())
+                        .show(getFragmentManager());
+                break;
+        }
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        mLocationModel.setSignalLevel(progress);
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    private class PoorCoverageRequestListener implements RequestListener<Response> {
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            hideProgressDialog();
+            showMessage(R.string.str_error, R.string.str_request_failed);
+        }
+
+        @Override
+        public void onRequestSuccess(Response poorCoverageRequestModel) {
+            hideProgressDialog();
+            switch (poorCoverageRequestModel.getStatus()){
+                case 200:
+                    showMessage(R.string.str_success, R.string.str_data_has_been_sent);
+                    break;
+                case 500:
+                    showMessage(R.string.str_error, R.string.str_request_failed);
+                    break;
             }
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-            public void onProviderEnabled(String provider) {}
-            public void onProviderDisabled(String provider) {}
-        });
+
+        }
     }
 }
