@@ -115,6 +115,7 @@ public class PoorCoverageFragment extends BaseFragment
     }
 
     private void collectDataAdnSendToServer(){
+        mLocationModel.setAddress(etLocation.getText().toString());
         progressDialogManager.showProgressDialog(getString(R.string.str_sending));
         getSpiceManager().execute(
                 new PoorCoverageRequest(
