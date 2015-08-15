@@ -90,6 +90,7 @@ public class PoorCoverageFragment extends BaseFragment
     @Override
     public void onOkPressed() {
         // Unimplemented method
+        // Used exceptionally to specify buttons in dialog
     }
 
     @Override
