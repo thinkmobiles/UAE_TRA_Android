@@ -9,14 +9,16 @@ public class PoorCoverageRequestModel {
     private Location location;
     private String address;
 
-    public PoorCoverageRequestModel(int signalLevel, String latitude, String longitude) {
+    public void setSignalLevel(int signalLevel) {
         this.signalLevel = signalLevel;
+    }
+
+    public void setLocation(String latitude, String longitude){
         this.location = new Location(latitude, longitude);
     }
 
-    public PoorCoverageRequestModel(int _signalLevel, String _address) {
-        this.signalLevel = _signalLevel;
-        this.address = _address;
+    public void setAddress(String address){
+        this.address = address;
     }
 
     private class Location{
@@ -31,12 +33,13 @@ public class PoorCoverageRequestModel {
 
     @Override
     public String toString() {
-        return "{"
-                    +"signalLevel: " + signalLevel
-                    +"location: {"
-                            +"latitude: " + location.latitude + ","
-                            +"longitude: " + location.longitude
-                    +"},"
-                +"}";
+        return "{"+
+                    "signalLevel:" + signalLevel + ","+
+                    "location:{"+
+                            "latitude:" + location.latitude + ","+
+                            "longitude:" + location.longitude +
+                    "},"+
+                    "address:" + address+
+                "}";
     }
 }
