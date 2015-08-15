@@ -105,7 +105,7 @@ public class PoorCoverageFragment extends BaseFragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        progressDialogManager.showProgressDialog(getString(R.string.str_checking));
+        progressDialogManager.showProgressDialog(getString(R.string.str_sending));
         switch (item.getItemId()) {
             case R.id.action_send:
                 collectDataAdnSendToServer();
