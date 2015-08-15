@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.rest.new_request;
 
-import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest;
 import com.uae.tra_smart_services.rest.TRAServicesAPI;
 import com.uae.tra_smart_services.rest.model.new_request.PoorCoverageRequestModel;
 
@@ -9,7 +8,7 @@ import retrofit.client.Response;
 /**
  * Created by ak-buffalo on 14.08.15.
  */
-public class PoorCoverageRequest extends RetrofitSpiceRequest<Response, TRAServicesAPI> {
+public class PoorCoverageRequest extends BaseRequest<Response, TRAServicesAPI> {
 
     private PoorCoverageRequestModel mRateServiceModel;
 

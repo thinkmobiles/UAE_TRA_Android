@@ -57,6 +57,9 @@ public final class ServerConstants {
     public static final String COMPLAIN_ABOUT_TRA_SERVICE_URL = "/complainTRAService";
     public static final String COMPLAIN_ENQUIRIES_SERVICE_URL = "/complainEnquiries";
     public static final String SEND_SUGGESTION_URL = "/sendSuggestion";
+    public static final String POOR_COVERAGE_URL = "/sendPoorCoverage";
+    public static final String REGISTER_URL = "/user/register";
+    public static final String LOGIN_URL = "/user/signIn";
 
     //!!!!!!!!!!!! API PARAMETERS !!!!!!!!!!!!!!!!!!
     public static final String PARAMETER_CHECK_URL = "checkUrl";
