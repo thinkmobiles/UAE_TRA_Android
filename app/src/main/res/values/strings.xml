@@ -10,6 +10,7 @@
     <string name="login_title">Login</string>
     <string name="register_title">Create account</string>
     <string name="forgot_password_title">Forgot password</string>
+    <string name="error_fill_all_fields">Please fill all fields</string>
 
     <!--            Username field               -->
     <string name="str_username">Username</string>

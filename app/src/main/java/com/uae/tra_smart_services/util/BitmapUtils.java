@@ -15,22 +15,31 @@ import java.io.IOException;
  */
 public final class BitmapUtils {
 
-    private static final String BASE64_PNG_HEADER = "data:image/png;base64,";
+    private static final String BASE64_PNG_HEADER = "data:image/jpeg;base64,";
 
     private BitmapUtils() {
     }
 
     @Nullable
-    public static String imageToBase64(final ContentResolver _resolver, final Uri _uri) throws IOException {
+    public static String imageToBase64(final ContentResolver _resolver, final Uri _uri) throws Exception {
         if (_resolver == null || _uri == null) {
             return null;
         }
+
         Bitmap bitmap = MediaStore.Images.Media.getBitmap(_resolver, _uri);
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        boolean isCompressed = bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteStream);
-        if (isCompressed) {
-            byte[] ba = byteStream.toByteArray();
-            return BASE64_PNG_HEADER + Base64.encodeToString(ba, Base64.DEFAULT);
+
+        try {
+            boolean isCompressed = bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteStream);
+            if (isCompressed) {
+                byte[] ba = byteStream.toByteArray();
+                return BASE64_PNG_HEADER + Base64.encodeToString(ba, Base64.DEFAULT);
+            }
+        } catch (Throwable exc){
+           throw new Exception("gavno");
+        } finally {
+            bitmap.recycle();
+            byteStream.close();
         }
         return null;
     }

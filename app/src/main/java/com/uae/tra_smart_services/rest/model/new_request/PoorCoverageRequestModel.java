@@ -7,10 +7,16 @@ public class PoorCoverageRequestModel {
 
     private int signalLevel;
     private Location location;
+    private String address;
 
     public PoorCoverageRequestModel(int signalLevel, String latitude, String longitude) {
         this.signalLevel = signalLevel;
         this.location = new Location(latitude, longitude);
+    }
+
+    public PoorCoverageRequestModel(int _signalLevel, String _address) {
+        this.signalLevel = _signalLevel;
+        this.address = _address;
     }
 
     private class Location{
