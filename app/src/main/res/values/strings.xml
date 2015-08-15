@@ -100,7 +100,11 @@
     <string name="str_something_went_wrong">Something went wrong</string>
     <string name="str_checking">Checking..</string>
     <string name="str_report_has_been_sent">Report has been successfully sent</string>
+<<<<<<< HEAD
     <string name="str_data_has_been_sent">Signal level has been successfully sent</string>
+=======
+    <string name="str_complain_has_been_sent">Complain has been successfully sent</string>
+>>>>>>> 9fee01fb98d59b1a57bd85603ea635dc5e4a08fe
     <string name="str_info_hub">Info Hub</string>
     <string name="str_location_is_not_defined">Unfortunately, location is not defined n\r\ Please put your location manually</string>
 

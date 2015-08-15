@@ -8,9 +8,11 @@ public final class ServerConstants {
     private ServerConstants() {
     }
 
+
     public static final String BASE_URL1 = "http://134.249.164.53:7791";
     public static final String BASE_URL2 = "http://185.54.19.249:80";
     public static final String BASE_URL3 = "http://192.168.120.40:80";
+    public static String BASE_URL = null;
     public static final String AUTH_URL = "/auth";
     public static final String ACCESS_TOKEN = "access_token";
     //Domain check service
@@ -55,6 +57,9 @@ public final class ServerConstants {
     public static final String COMPLAIN_ABOUT_TRA_SERVICE_URL = "/complainTRAService";
     public static final String COMPLAIN_ENQUIRIES_SERVICE_URL = "/complainEnquiries";
     public static final String SEND_SUGGESTION_URL = "/sendSuggestion";
+    public static final String POOR_COVERAGE_URL = "/sendPoorCoverage";
+    public static final String REGISTER_URL = "/user/register";
+    public static final String LOGIN_URL = "/user/signIn";
 
     //!!!!!!!!!!!! API PARAMETERS !!!!!!!!!!!!!!!!!!
     public static final String PARAMETER_CHECK_URL = "checkUrl";

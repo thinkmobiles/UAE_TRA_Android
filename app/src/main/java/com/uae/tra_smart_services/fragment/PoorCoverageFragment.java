@@ -78,6 +78,18 @@ public class PoorCoverageFragment extends BaseFragment
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+        etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    CustomSingleChoiceDialog
+                            .newInstance(PoorCoverageFragment.this)
+                            .setTitle("Please select location type")
+                            .setBodyItems(LocationType.toStringArray())
+                            .show(getFragmentManager());
+                }
+            }
+        });
     }
 
     @Override

@@ -31,7 +31,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
     private EditText etComplainTitle, etDescription;
 
     private Uri mImageUri;
-    private RequestListener<Response> mRequestListener;
+    private RequestResponseListener mRequestListener;
 
     public static ComplainAboutTraFragment newInstance() {
         return new ComplainAboutTraFragment();
@@ -56,7 +56,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
     @Override
     public void onStart() {
         super.onStart();
-        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
+//        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
         getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestListener);
     }
 
@@ -98,11 +98,13 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
             if (isAdded()) {
                 hideProgressDialog();
                 if (result != null) {
-                    Toast.makeText(getActivity(), "Complain successfully send", Toast.LENGTH_SHORT).show();
+                    showMessage(R.string.str_success, R.string.str_complain_has_been_sent);
                     getFragmentManager().popBackStackImmediate();
                 }
             }
-            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
+
+            getSpiceManager().removeAllDataFromCache();
+//            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
 
         @Override
@@ -112,7 +114,8 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
                 hideProgressDialog();
                 Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
             }
-            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
+            getSpiceManager().removeAllDataFromCache();
+//            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
     }
 

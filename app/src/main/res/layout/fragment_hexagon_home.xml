@@ -25,7 +25,8 @@
             app:hexPerRow="8"
             app:hexagonRowCount="2"
             app:hexagonStrokeWidth="2dp"
-            app:pressedColor="#ff5b61ff"/>
+            app:pressedColor="#ff5b61ff"
+            android:layout_marginBottom="15dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvServices_FHH"
@@ -43,7 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:separatorStrokeWidth="2dp"
-            app:hexagonGapWidth="10dp"/>
+            app:hexagonGapWidth="10dp"
+            app:hexTextSize="12sp"/>
 
     </RelativeLayout>
 

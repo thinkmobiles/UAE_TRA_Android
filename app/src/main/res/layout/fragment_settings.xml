@@ -135,5 +135,25 @@
 
         <View style="@style/AuthorizationFieldsSeparator" />
 
+        <EditText
+            style="@style/UserSettingsStaticText"
+            android:id="@+id/etServer_FS"
+            android:inputType="textUri"
+            android:textDirection="locale"
+            android:layout_width="match_parent"
+            android:gravity="start"
+            android:hint="Set server url"
+            android:layout_height="wrap_content"/>
+
+        <View style="@style/AuthorizationFieldsSeparator" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_gravity="end"
+            android:id="@+id/btnChangeServer_FS"
+            android:textColor="@android:color/black"
+            android:text="Change server"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 </ScrollView>

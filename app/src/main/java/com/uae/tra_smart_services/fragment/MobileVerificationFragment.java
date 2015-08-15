@@ -35,9 +35,17 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
     private ImageView ivCameraBtn;
     private EditText etImeiNumber;
     private RequestResponseListener mRequestListener;
+    private ApprovedDevicesFragment.OnDeviceSelectListener mSelectListener;
 
     public static MobileVerificationFragment newInstance() {
         return new MobileVerificationFragment();
+    }
+
+    @Override
+    public void onAttach(Activity _activity) {
+        super.onAttach(_activity);
+
+        mSelectListener = (ApprovedDevicesFragment.OnDeviceSelectListener) _activity;
     }
 
     @Override
@@ -69,7 +77,7 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
     @Override
     public void onStart() {
         super.onStart();
-        getSpiceManager().getFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
+//        getSpiceManager().getFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
         getSpiceManager().addListenerIfPending(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, mRequestListener);
     }
 
@@ -132,7 +140,7 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
             if (isAdded()) {
                 hideProgressDialog();
                 if (result != null) {
-                    Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                    mSelectListener.onDeviceSelect(result);
                 }
             }
             getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);

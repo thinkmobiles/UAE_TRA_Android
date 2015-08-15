@@ -2,20 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
+    android:layout_height="90dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
     android:gravity="center_horizontal"
     android:id="@+id/llContainer"
     android:orientation="vertical"
-    android:paddingTop="10dp">
+    android:paddingTop="5dp">
 
     <com.uae.tra_smart_services.customviews.HexagonView
         android:id="@+id/hvHexagonView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        app:hexagonSideSize="40dp"
+        app:hexagonSideSize="45dp"
         app:hexagonBorderSize="1dp"
         app:hexagonBorderColor="#ffffff"/>
 
@@ -25,5 +25,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="12sp"
+        android:maxLines="3"
         android:text="Element"/>
 </LinearLayout>
