@@ -22,6 +22,9 @@ public final class BitmapUtils {
 
     @Nullable
     public static String imageToBase64(final ContentResolver _resolver, final Uri _uri) throws IOException {
+        if (_resolver == null || _uri == null) {
+            return null;
+        }
         Bitmap bitmap = MediaStore.Images.Media.getBitmap(_resolver, _uri);
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         boolean isCompressed = bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteStream);

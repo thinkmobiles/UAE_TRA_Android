@@ -166,7 +166,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
             if (isAdded()) {
                 hideProgressDialog();
                 if (result != null) {
-                    Toast.makeText(getActivity(), "Complain successfully send", Toast.LENGTH_SHORT).show();
+                    showMessage(R.string.str_success, R.string.str_complain_has_been_sent);
                     getFragmentManager().popBackStackImmediate();
                 }
             }

@@ -132,7 +132,7 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
             if (isAdded()) {
                 hideProgressDialog();
                 if (result != null) {
-                    Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                    showMessage(R.string.str_success, R.string.str_request_failed);
                 }
             }
             getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);

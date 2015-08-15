@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.HomeActivity;
@@ -14,14 +19,20 @@ import com.uae.tra_smart_services.customviews.FontSizeSwitcherView;
 import com.uae.tra_smart_services.customviews.LanguageSwitcherView;
 import com.uae.tra_smart_services.customviews.ThemeSwitcherView;
 import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
+import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.interfaces.SettingsChanged;
 
 /**
  * Created by Andrey Korneychuk on 30.07.15.
  */
-public class SettingsFragment extends BaseHomePageFragment implements SettingsChanged {
+public class SettingsFragment extends BaseHomePageFragment implements SettingsChanged, OnClickListener {
 
     public static final String CHANGED = "changed";
+
+    private EditText etServer;
+    private Button btnChangeServer;
+
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
     }
@@ -30,6 +41,19 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+        etServer = findView(R.id.etServer_FS);
+        btnChangeServer = findView(R.id.btnChangeServer_FS);
+    }
+
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+        btnChangeServer.setOnClickListener(this);
     }
 
     @Override
@@ -48,6 +72,7 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
     }
 
     private SharedPreferences prefs;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -58,7 +83,8 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
     private FontSizeSwitcherView fontSwitch;
     private LanguageSwitcherView langSwitch;
     private ThemeSwitcherView themeSwitch;
-    private void globalInitViews(){
+
+    private void globalInitViews() {
         langSwitch = findView(R.id.cvLangSwitch);
         langSwitch.globalInit();
         langSwitch.registerObserver(this);
@@ -74,7 +100,7 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
 
     @Override
     public void onSettingsChanged(BaseCustomSwitcher caller, Object data) {
-        switch (caller.getType()){
+        switch (caller.getType()) {
             case LANGUAGE:
                 updateLocale((String) data);
                 break;
@@ -91,7 +117,7 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
         startActivity(refresh);
     }
 
-    private void updateLocale(String _lang){
+    private void updateLocale(String _lang) {
         prefs.edit()
                 .putString(
                         BaseCustomSwitcher.Type.LANGUAGE.toString(),
@@ -107,11 +133,24 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
                 .commit();
     }
 
-    private void updateTheme(String _themaStrValue){
+    private void updateTheme(String _themaStrValue) {
         prefs.edit()
-            .putString(
-                    BaseCustomSwitcher.Type.THEME.toString(),
-                    _themaStrValue
-            ).commit();
+                .putString(
+                        BaseCustomSwitcher.Type.THEME.toString(),
+                        _themaStrValue
+                ).commit();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnChangeServer_FS) {
+            setBaseUrl(etServer.getText().toString());
+        }
+    }
+
+    private void setBaseUrl(String _url) {
+        ServerConstants.BASE_URL = _url;
+        prefs.edit().putString(Constants.KEY_BASE_URL, _url).commit();
+        Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
     }
 }
