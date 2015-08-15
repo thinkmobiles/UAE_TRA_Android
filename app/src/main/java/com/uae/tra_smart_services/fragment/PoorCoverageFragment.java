@@ -208,6 +208,9 @@ public class PoorCoverageFragment extends BaseFragment
                 case 200:
                     showMessage(R.string.str_success, R.string.str_data_has_been_sent);
                     break;
+                case 400:
+                    showMessage(R.string.str_error, R.string.str_something_went_wrong);
+                    break;
                 case 500:
                     showMessage(R.string.str_error, R.string.str_request_failed);
                     break;
