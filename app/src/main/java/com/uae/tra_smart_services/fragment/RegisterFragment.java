@@ -70,7 +70,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     @Override
     public void onStart() {
         super.onStart();
-        getSpiceManager().getFromCache(Response.class, KEY_REGISTER_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
+//        getSpiceManager().getFromCache(Response.class, KEY_REGISTER_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
         getSpiceManager().addListenerIfPending(Response.class, KEY_REGISTER_REQUEST, mRequestListener);
     }
 

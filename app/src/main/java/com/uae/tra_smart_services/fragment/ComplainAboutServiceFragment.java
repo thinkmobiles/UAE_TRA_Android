@@ -66,7 +66,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     @Override
     public void onStart() {
         super.onStart();
-        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestResponseListener);
+        //getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestResponseListener);
         getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestResponseListener);
     }
 

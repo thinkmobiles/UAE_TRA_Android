@@ -30,7 +30,7 @@
                 android:id="@+id/etPassword_FLI"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:hint="@string/str_password"
-                android:inputType="text" />
+                android:inputType="textPassword" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
         </LinearLayout>

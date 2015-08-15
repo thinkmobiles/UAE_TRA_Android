@@ -91,7 +91,7 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     public void onStart() {
         super.onStart();
-        getSpiceManager().getFromCache(Response.class, KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestLoginListener);
+//        getSpiceManager().getFromCache(Response.class, KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestLoginListener);
         getSpiceManager().addListenerIfPending(Response.class, KEY_LOGIN_REQUEST, mRequestLoginListener);
     }
 
