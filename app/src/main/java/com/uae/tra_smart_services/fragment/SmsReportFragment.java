@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
@@ -20,7 +21,7 @@ import com.uae.tra_smart_services.rest.new_request.SmsSpamRequest;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class SmsReportFragment extends BaseFragment {
+public class SmsReportFragment extends BaseFragment implements AlertDialogFragment.OnOkListener{
     public static SmsReportFragment newInstance() {
         return new SmsReportFragment();
     }
@@ -95,6 +96,12 @@ public class SmsReportFragment extends BaseFragment {
         } else {
             showMessage(R.string.str_error, R.string.str_invalid_number);
         }
+    }
+
+    @Override
+    public void onOkPressed() {
+        // Unimplemented method
+        // Used exceptionally to specify buttons in dialog
     }
 
     private final class SmsSpamReportResponseListener implements RequestListener<SmsSpamResponseModel> {
