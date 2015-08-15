@@ -178,6 +178,7 @@ public class DomainCheckerFragment extends BaseFragment
 
         @Override
         public void onRequestSuccess(DomainInfoCheckResponseModel domainInfoCheckResponse) {
+            progressDialogManager.hideProgressDialog();
             if (!domainInfoCheckResponse.urlData.equals("No Data Found\r\n")){
                 getFragmentManager()
                     .beginTransaction()
