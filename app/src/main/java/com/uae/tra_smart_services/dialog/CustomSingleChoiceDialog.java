@@ -69,6 +69,10 @@ public class CustomSingleChoiceDialog extends DialogFragment implements Dialog.O
         super.onDestroy();
     }
 
+    public void unregisterListener(){
+        mSelectListener = null;
+    }
+
     public interface OnItemPickListener {
         void onItemPicked(final int _dialogItem);
     }

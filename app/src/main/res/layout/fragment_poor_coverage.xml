@@ -3,13 +3,29 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/etLocation_FPC"
-        style="@style/UserAuthorizationDataEditTextField"
-        android:hint="@string/str_location"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="15dp"/>
+        android:weightSum="1">
+        <EditText
+            android:id="@+id/etLocation_FPC"
+            style="@style/UserAuthorizationDataEditTextField"
+            android:hint="@string/str_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"/>
+        <ProgressBar
+            android:id="@+id/pbFindLoc_FPC"
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_alignTop="@+id/etLocation_FPC"
+            android:layout_alignBottom="@+id/etLocation_FPC"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
     <TextView
         android:text="@string/str_signal_level"
         android:textSize="20dp"

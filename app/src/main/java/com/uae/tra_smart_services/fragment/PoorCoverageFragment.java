@@ -1,5 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -22,12 +25,18 @@ import com.squareup.picasso.Downloader;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
+import com.uae.tra_smart_services.dialog.ProgressDialog;
+import com.uae.tra_smart_services.entities.C;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.new_request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.model.new_request.SmsSpamRequestModel;
 import com.uae.tra_smart_services.rest.new_request.PoorCoverageRequest;
 import com.uae.tra_smart_services.rest.new_request.SmsSpamRequest;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import retrofit.client.Response;
 
@@ -58,12 +67,15 @@ public class PoorCoverageFragment extends BaseFragment
 
     private EditText etLocation;
     private SeekBar sbPoorCoverage;
+    private ProgressBar sbProgressBar;
     @Override
     protected void initViews() {
         super.initViews();
         etLocation = findView(R.id.etLocation_FPC);
         etLocation.clearFocus();
         sbPoorCoverage = findView(R.id.sbPoorCoverage_FPC);
+        sbProgressBar = findView(R.id.pbFindLoc_FPC);
+        sbProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -73,9 +85,9 @@ public class PoorCoverageFragment extends BaseFragment
         sbPoorCoverage.setOnSeekBarChangeListener(this);
     }
 
-    GoogleApiClient mGoogleApiClient;
-    PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
-
+    private GoogleApiClient mGoogleApiClient;
+    private PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
+    CustomSingleChoiceDialog locationTypeChooser;
     @Override
     protected void initCustomEntities() {
         super.initCustomEntities();
@@ -89,8 +101,8 @@ public class PoorCoverageFragment extends BaseFragment
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    CustomSingleChoiceDialog
-                            .newInstance(PoorCoverageFragment.this)
+                    (locationTypeChooser = CustomSingleChoiceDialog
+                            .newInstance(PoorCoverageFragment.this))
                             .setTitle("Please select location type")
                             .setBodyItems(LocationType.toStringArray())
                             .show(getFragmentManager());
@@ -122,7 +134,6 @@ public class PoorCoverageFragment extends BaseFragment
 
     private void collectDataAdnSendToServer(){
         mLocationModel.setAddress(etLocation.getText().toString());
-
         if (TextUtils.isEmpty(mLocationModel.getAddress()) &&
                 mLocationModel.getLocation() == null) {
             showMessage(R.string.str_location_error, R.string.str_location_error_message);
@@ -165,23 +176,37 @@ public class PoorCoverageFragment extends BaseFragment
     }
 
     private void showLocationSettings() {
-//        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        if (mLastLocation != null) {
-//            String latitude = String.valueOf(mLastLocation.getLatitude());
-//            String longitude = String.valueOf(mLastLocation.getLongitude());
-//            mLocationModel.setLocation(latitude, longitude);
-//        } else {
-//            showMessage(R.string.str_error, R.string.str_location_is_not_defined);
+        sbProgressBar.setVisibility(View.VISIBLE);
+        etLocation.setOnClickListener(null);
         final LocationRequest locationRequest = new LocationRequest();
         locationRequest.setNumUpdates(1);
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, new LocationListener() {
             @Override
             public void onLocationChanged(Location _location) {
-                mLocationModel.setLocation(String.valueOf(_location.getLatitude()),
-                        String.valueOf(_location.getLongitude()));
+                sbProgressBar.setVisibility(View.INVISIBLE);
+                mLocationModel.setLocation(
+                        String.valueOf(_location.getLatitude()),
+                        String.valueOf(_location.getLongitude())
+                );
+                Address address = getAddress(_location);
+                etLocation.setOnClickListener(PoorCoverageFragment.this);
+                etLocation.setText(address.toString());
+                LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             }
         });
-//        }
+    }
+
+    private Address getAddress(Location _location){
+        List<Address> addresses = null;
+        try {
+            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+            addresses = geocoder.getFromLocation(_location.getLatitude(), _location.getLongitude(), 1);
+        } catch (IOException e) {
+            // currently this exeption won't be handled
+        } finally {
+            Toast.makeText(getActivity(), getString(R.string.str_something_went_wrong), Toast.LENGTH_LONG);
+        }
+        return (addresses != null && addresses.size() != 0) ? addresses.get(0) : null;
     }
 
     @Override
@@ -204,8 +229,7 @@ public class PoorCoverageFragment extends BaseFragment
     public void onClick(View _view) {
         switch (_view.getId()){
             case R.id.etLocation_FPC:
-                CustomSingleChoiceDialog
-                        .newInstance(PoorCoverageFragment.this)
+                locationTypeChooser
                         .setTitle("Please select location type")
                         .setBodyItems(LocationType.toStringArray())
                         .show(getFragmentManager());
@@ -250,7 +274,6 @@ public class PoorCoverageFragment extends BaseFragment
                     showMessage(R.string.str_error, R.string.str_request_failed);
                     break;
             }
-
         }
     }
 }
