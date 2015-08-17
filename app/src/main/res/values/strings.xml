@@ -102,7 +102,7 @@
     <string name="str_sending">Sending..</string>
     <string name="str_report_has_been_sent">Report has been successfully sent</string>
     <string name="str_data_has_been_sent">Signal level has been successfully sent</string>
-    <string name="str_complain_has_been_sent">Complainhas been successfully sent</string>
+    <string name="str_complain_has_been_sent">Complain has been successfully sent</string>
     <string name="str_info_hub">Info Hub</string>
     <string name="str_location_is_not_defined">Unfortunately, location is not defined.\n\rPlease put your location manually</string>
 

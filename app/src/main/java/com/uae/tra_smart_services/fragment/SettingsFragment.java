@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -18,6 +19,9 @@ import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 import com.uae.tra_smart_services.customviews.FontSizeSwitcherView;
 import com.uae.tra_smart_services.customviews.LanguageSwitcherView;
 import com.uae.tra_smart_services.customviews.ThemeSwitcherView;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment;
+import com.uae.tra_smart_services.entities.CustomFilterPool;
+import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
 import com.uae.tra_smart_services.global.Constants;
 import com.uae.tra_smart_services.global.ServerConstants;
@@ -26,7 +30,7 @@ import com.uae.tra_smart_services.interfaces.SettingsChanged;
 /**
  * Created by Andrey Korneychuk on 30.07.15.
  */
-public class SettingsFragment extends BaseHomePageFragment implements SettingsChanged, OnClickListener {
+public class SettingsFragment extends BaseHomePageFragment implements SettingsChanged, OnClickListener, AlertDialogFragment.OnOkListener {
 
     public static final String CHANGED = "changed";
 
@@ -56,10 +60,16 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
         btnChangeServer.setOnClickListener(this);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+    private static CustomFilterPool<String> filters = new CustomFilterPool<String>(){
+        {
+            addFilter(new Filter<String>() {
+                @Override
+                public boolean check(String _data) {
+                    return Patterns.DOMAIN_NAME.matcher(_data).matches();
+                }
+            });
+        }
+    };
 
     @Override
     protected int getTitle() {
@@ -143,8 +153,11 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btnChangeServer_FS) {
-            setBaseUrl(etServer.getText().toString());
+        String baseUrl = etServer.getText().toString();
+        if (v.getId() == R.id.btnChangeServer_FS && filters.check(baseUrl)) {
+            setBaseUrl(baseUrl);
+        } else {
+            showMessage(R.string.str_error, R.string.str_invalid_url);
         }
     }
 
@@ -152,5 +165,11 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
         ServerConstants.BASE_URL = _url;
         prefs.edit().putString(Constants.KEY_BASE_URL, _url).commit();
         Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onOkPressed() {
+        // Unimplemented method
+        // Used exceptionally to specify OK button in dialog
     }
 }

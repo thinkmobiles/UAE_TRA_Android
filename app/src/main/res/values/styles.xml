@@ -13,6 +13,7 @@
 
         <item name="homePageHeaderBackground">@color/hex_primary_orange</item>
         <item name="globalButtonTextColor">@color/hex_primary_orange</item>
+        <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_orange</item>
         <item name="android:layoutDirection">locale</item>
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
@@ -28,6 +29,7 @@
 
         <item name="homePageHeaderBackground">@color/hex_primary_green</item>
         <item name="globalButtonTextColor">@color/hex_primary_green</item>
+        <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_green</item>
 
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
@@ -43,12 +45,12 @@
 
         <item name="homePageHeaderBackground">@color/hex_primary_blue</item>
         <item name="globalButtonTextColor">@color/hex_primary_blue</item>
+        <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_blue</item>
 
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
         <item name="colorAccent">@color/hex_color_accent</item>
     </style>
-
 
     <style name="AppThemeRed" parent="BaseAppTheme">
         <!-- Customize your theme here. -->
@@ -59,6 +61,7 @@
 
         <item name="homePageHeaderBackground">@color/hex_primary_red</item>
         <item name="globalButtonTextColor">@color/hex_primary_red</item>
+        <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_red</item>
 
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
@@ -137,7 +140,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">?attr/globalButtonTextColor</item>
+        <item name="android:textColor">?attr/globalButtonSelector</item>
+        <!--<item name="android:background">@drawable/selector_bottom_nav_radio</item>-->
     </style>
 
 </resources>

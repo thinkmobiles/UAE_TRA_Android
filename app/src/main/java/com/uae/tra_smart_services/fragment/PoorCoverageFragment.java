@@ -109,7 +109,7 @@ public class PoorCoverageFragment extends BaseFragment
         switch (item.getItemId()) {
             case R.id.action_send:
                 collectDataAdnSendToServer();
-                break;
+            break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -128,7 +128,7 @@ public class PoorCoverageFragment extends BaseFragment
     @Override
     public void onOkPressed() {
         // Unimplemented method
-        // Used exceptionally to specify buttons in dialog
+        // Used exceptionally to specify OK button in dialog
     }
 
     @Override
