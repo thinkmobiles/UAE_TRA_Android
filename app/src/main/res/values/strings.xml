@@ -93,7 +93,8 @@
     <string name="str_invalid_number">The format of inputted number is not correct</string>
     <string name="str_ok">Ok</string>
     <string name="str_cancel">Cancel</string>
-    <string name="str_empty"> </string>
+    <string name="str_one_empty_space"> </string>
+    <string name="str_empty"></string>
     <string name="str_domain_available">Domain is available</string>
     <string name="str_domain_availability">Domain availability</string>
     <string name="str_domain_info">Domain info</string>

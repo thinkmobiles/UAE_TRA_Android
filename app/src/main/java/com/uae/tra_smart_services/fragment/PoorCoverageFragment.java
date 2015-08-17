@@ -21,18 +21,13 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-import com.squareup.picasso.Downloader;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
-import com.uae.tra_smart_services.dialog.ProgressDialog;
-import com.uae.tra_smart_services.entities.C;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.new_request.PoorCoverageRequestModel;
-import com.uae.tra_smart_services.rest.model.new_request.SmsSpamRequestModel;
 import com.uae.tra_smart_services.rest.new_request.PoorCoverageRequest;
-import com.uae.tra_smart_services.rest.new_request.SmsSpamRequest;
 
 import java.io.IOException;
 import java.util.List;
@@ -144,7 +139,7 @@ public class PoorCoverageFragment extends BaseFragment
             return;
         }
 
-        progressDialogManager.showProgressDialog(getString(R.string.str_checking));
+        progressDialogManager.showProgressDialog(getString(R.string.str_sending));
         getSpiceManager().execute(
                 new PoorCoverageRequest(
                         mLocationModel
@@ -171,6 +166,7 @@ public class PoorCoverageFragment extends BaseFragment
                 break;
             case MANUAL:
                 etLocation.requestFocus();
+                etLocation.setText(getString(R.string.str_empty));
                 break;
         }
     }
@@ -190,7 +186,15 @@ public class PoorCoverageFragment extends BaseFragment
                 );
                 Address address = getAddress(_location);
                 etLocation.setOnClickListener(PoorCoverageFragment.this);
-                etLocation.setText(address.toString());
+                String userFriendlyAddress = new StringBuilder()
+                        .append(address.getLocality()).append(", ")
+                        .append(address.getThoroughfare()).append(", ")
+                        .append(address.getSubThoroughfare()).append(", ")
+                        .append(address.getAdminArea()).append(", ")
+                        .append(address.getCountryName()).append(", ")
+                        .append(address.getCountryCode())
+                        .toString();
+                etLocation.setText(userFriendlyAddress);
                 LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             }
         });
