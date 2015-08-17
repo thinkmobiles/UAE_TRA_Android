@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.fragment;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -35,6 +38,8 @@ public class PoorCoverageFragment extends BaseFragment
         implements AlertDialogFragment.OnOkListener, CustomSingleChoiceDialog.OnItemPickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         SeekBar.OnSeekBarChangeListener, View.OnClickListener{
+
+    private LocationType mLocationType;
 
     public static PoorCoverageFragment newInstance() {
         return new PoorCoverageFragment();
@@ -70,6 +75,7 @@ public class PoorCoverageFragment extends BaseFragment
 
     GoogleApiClient mGoogleApiClient;
     PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
+
     @Override
     protected void initCustomEntities() {
         super.initCustomEntities();
@@ -78,6 +84,7 @@ public class PoorCoverageFragment extends BaseFragment
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+        mGoogleApiClient.connect();
         etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -105,7 +112,6 @@ public class PoorCoverageFragment extends BaseFragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        progressDialogManager.showProgressDialog(getString(R.string.str_checking));
         switch (item.getItemId()) {
             case R.id.action_send:
                 collectDataAdnSendToServer();
@@ -115,6 +121,18 @@ public class PoorCoverageFragment extends BaseFragment
     }
 
     private void collectDataAdnSendToServer(){
+        mLocationModel.setAddress(etLocation.getText().toString());
+
+        if (TextUtils.isEmpty(mLocationModel.getAddress()) &&
+                mLocationModel.getLocation() == null) {
+            showMessage(R.string.str_location_error, R.string.str_location_error_message);
+            return;
+        }
+        if (mLocationModel.getSignalLevel() == 0) {
+            showMessage(R.string.str_signal_level, R.string.signal_level_error);
+            return;
+        }
+
         progressDialogManager.showProgressDialog(getString(R.string.str_checking));
         getSpiceManager().execute(
                 new PoorCoverageRequest(
@@ -133,9 +151,12 @@ public class PoorCoverageFragment extends BaseFragment
     @Override
     public void onItemPicked(int _dialogItem) {
         Toast.makeText(getActivity(), LocationType.toStringArray()[_dialogItem].toString(), Toast.LENGTH_LONG).show();
+        mLocationType = LocationType.values()[_dialogItem];
         switch (LocationType.values()[_dialogItem]) {
             case AUTO:
-                showLocationSettings();
+                if (mGoogleApiClient.isConnected()) {
+                    showLocationSettings();
+                }
                 break;
             case MANUAL:
                 etLocation.requestFocus();
@@ -143,38 +164,40 @@ public class PoorCoverageFragment extends BaseFragment
         }
     }
 
-    Location mLastLocation;
     private void showLocationSettings() {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            String latitude = String.valueOf(mLastLocation.getLatitude());
-            String longitude = String.valueOf(mLastLocation.getLongitude());
-            mLocationModel.setLocation(latitude, longitude);
-            etLocation.setText(
-                    "lat:"+latitude+", "+
-                    "lon:"+longitude
-            );
-        } else {
-            showMessage(R.string.str_error, R.string.str_location_is_not_defined);
-        }
+//        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+//        if (mLastLocation != null) {
+//            String latitude = String.valueOf(mLastLocation.getLatitude());
+//            String longitude = String.valueOf(mLastLocation.getLongitude());
+//            mLocationModel.setLocation(latitude, longitude);
+//        } else {
+//            showMessage(R.string.str_error, R.string.str_location_is_not_defined);
+        final LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setNumUpdates(1);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location _location) {
+                mLocationModel.setLocation(String.valueOf(_location.getLatitude()),
+                        String.valueOf(_location.getLongitude()));
+            }
+        });
+//        }
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        int i = 0;
-        i++;
+        if (LocationType.AUTO.equals(mLocationType)) {
+            showLocationSettings();
+        }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        int k = 0;
-        k++;
+
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        int i = 0;
-        i++;
     }
 
     @Override
@@ -209,13 +232,13 @@ public class PoorCoverageFragment extends BaseFragment
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            hideProgressDialog();
+            progressDialogManager.hideProgressDialog();
             showMessage(R.string.str_error, R.string.str_request_failed);
         }
 
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
-            hideProgressDialog();
+            progressDialogManager.hideProgressDialog();
             switch (poorCoverageRequestModel.getStatus()){
                 case 200:
                     showMessage(R.string.str_success, R.string.str_data_has_been_sent);

@@ -99,11 +99,14 @@
     <string name="str_domain_info">Domain info</string>
     <string name="str_request_failed">Request failed</string>
     <string name="str_something_went_wrong">Something went wrong</string>
-    <string name="str_checking">Checking..</string>
+    <string name="str_checking">Loading…</string>
     <string name="str_report_has_been_sent">Report has been successfully sent</string>
     <string name="str_data_has_been_sent">Signal level has been successfully sent</string>
     <string name="str_complain_has_been_sent">Complainhas been successfully sent</string>
     <string name="str_info_hub">Info Hub</string>
     <string name="str_location_is_not_defined">Unfortunately, location is not defined n\r\ Please put your location manually</string>
+    <string name="str_location_error">Enter location</string>
+    <string name="str_location_error_message">Please enter address manually or wait untill location will be found</string>
+    <string name="signal_level_error">Please set signal level</string>
 
 </resources>

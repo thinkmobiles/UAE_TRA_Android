@@ -54,5 +54,8 @@
 
     <string name="str_user_name">إسماعيل</string>
     <string name="str_info_hub">Info Hub</string>
+    <string name="str_location_error">Enter location</string>
+    <string name="str_location_error_message">Please enter address manually or wait untill location will be found</string>
+    <string name="signal_level_error">Please set signal level</string>
 
 </resources>

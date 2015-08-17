@@ -33,7 +33,7 @@ public final class BitmapUtils {
             boolean isCompressed = bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteStream);
             if (isCompressed) {
                 byte[] ba = byteStream.toByteArray();
-                return BASE64_PNG_HEADER + Base64.encodeToString(ba, Base64.DEFAULT);
+                return BASE64_PNG_HEADER + Base64.encodeToString(ba, Base64.NO_WRAP);
             }
         } catch (Throwable exc){
            throw new Exception("gavno");

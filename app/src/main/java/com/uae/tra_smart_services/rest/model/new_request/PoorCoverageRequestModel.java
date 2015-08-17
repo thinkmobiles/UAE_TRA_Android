@@ -9,12 +9,24 @@ public class PoorCoverageRequestModel {
     private Location location;
     private String address;
 
+    public String getAddress() {
+        return address;
+    }
+
+    public int getSignalLevel() {
+        return signalLevel;
+    }
+
     public void setSignalLevel(int signalLevel) {
         this.signalLevel = signalLevel;
     }
 
     public void setLocation(String latitude, String longitude){
         this.location = new Location(latitude, longitude);
+    }
+
+    public Location getLocation() {
+        return location;
     }
 
     public void setAddress(String address){
