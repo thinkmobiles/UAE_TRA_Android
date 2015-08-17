@@ -28,7 +28,7 @@
 
     <RadioButton
         style="@style/DashboardRadioButton"
-        android:drawableTop="@drawable/ic_info"
+        android:drawableTop="@drawable/ic_inq"
         android:id="@+id/rbInquiries_BNRG"
         android:text="@string/str_inquiries" />
 

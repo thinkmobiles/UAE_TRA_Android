@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -96,10 +97,16 @@ public class LoginFragment extends BaseAuthorizationFragment
     }
 
     private void doLogIn() {
-        progressDialogManager.showProgressDialog("Authenticating..");
         LoginModel model = new LoginModel();
         model.login = etUserName.getText().toString();
         model.pass = etPassword.getText().toString();
+
+        if (TextUtils.isEmpty(model.login) || TextUtils.isEmpty(model.pass)) {
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        progressDialogManager.showProgressDialog("Authenticating..");
         LoginRequest request = new LoginRequest(model);
         getSpiceManager().execute(request, KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
     }

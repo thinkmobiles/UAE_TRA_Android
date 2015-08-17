@@ -120,7 +120,7 @@ public class HexagonalButtonsLayout extends View {
 
         mDrawables.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_verif));
         mDrawables.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_spam));
-        mDrawables.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_internet));
+        mDrawables.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_coverage));
         mDrawables.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_internet));
     }
 

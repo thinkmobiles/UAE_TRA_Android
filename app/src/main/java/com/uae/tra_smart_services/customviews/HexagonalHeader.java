@@ -34,6 +34,10 @@ import java.util.List;
  */
 public class HexagonalHeader extends View {
 
+
+    private Path mHexagonPath;
+    private Path mButtonsPath;
+
     private Paint mHexagonPaint;
     private Paint mButtonPaint;
     private Paint mPressedButtonPaint;
@@ -168,6 +172,7 @@ public class HexagonalHeader extends View {
 
         calculateVariables(_w);
         measureDrawableBounds();
+        calculateHexagonPaths();
     }
 
     private void measureDrawableBounds() {
@@ -192,22 +197,9 @@ public class HexagonalHeader extends View {
         }
     }
 
-    @Override
-    protected final void onDraw(final Canvas _canvas) {
-        drawHexagons(_canvas);
-        drawDrawables(_canvas);
-        drawAvatarHexagon(_canvas);
-    }
-
-    private void calculateVariables(final int _w) {
-        mTriangleHeight = ((_w - getPaddingLeft() - getPaddingRight())/ mHexagonPerRow) / 2;
-        mRadius = (float) (mTriangleHeight * 2 / Math.sqrt(3));
-    }
-
-    private void drawHexagons(final Canvas _canvas) {
-        Path hexagonPath = new Path();
-        Path buttonsPath = new Path();
-        Path pressedButtonPath = null;
+    private void calculateHexagonPaths() {
+        mButtonsPath = new Path();
+        mHexagonPath = new Path();
 
         float centerY = getPaddingTop() + mAvatarRadiusCoefficient * mRadius + mHexagonAvatarBorderWidth / 2;
 
@@ -227,25 +219,53 @@ public class HexagonalHeader extends View {
 
                 if (mInvisibleHexagons.contains(number)) continue;
 
-                if (mPressedButton != null && mPressedButton.equals(number)) {
-                    pressedButtonPath = new Path();
-                    pressedButtonPath = calculateButtonFill(pressedButtonPath, centerX, centerY);
-                    hexagonPath = calculatePath(hexagonPath, centerX, centerY);
-                } else if (mHexagons.containsKey(number)) {
-                    hexagonPath = calculatePathAndSave(hexagonPath, number, centerX, centerY);
-                    buttonsPath = calculateButtonFill(buttonsPath, centerX, centerY);
+                if (mHexagons.containsKey(number)) {
+                    mHexagonPath = calculatePathAndSave(mHexagonPath, number, centerX, centerY);
+                    mButtonsPath = calculateButtonFill(mButtonsPath, centerX, centerY);
                 } else {
-                    hexagonPath = calculatePath(hexagonPath, centerX, centerY);
+                    mHexagonPath = calculatePath(mHexagonPath, centerX, centerY);
                 }
             }
         }
+    }
 
-        _canvas.drawPath(buttonsPath, mButtonPaint);
+    @Override
+    protected final void onDraw(final Canvas _canvas) {
+        drawHexagons(_canvas);
+        drawDrawables(_canvas);
+        drawAvatarHexagon(_canvas);
+    }
+
+    private void calculateVariables(final int _w) {
+        mTriangleHeight = ((_w - getPaddingLeft() - getPaddingRight())/ mHexagonPerRow) / 2;
+        mRadius = (float) (mTriangleHeight * 2 / Math.sqrt(3));
+    }
+
+    private void drawHexagons(final Canvas _canvas) {
+        Path pressedButtonPath = null;
+
+        if (mPressedButton != null) {
+            float centerY = getPaddingTop() + mAvatarRadiusCoefficient * mRadius + mHexagonAvatarBorderWidth / 2;
+            float centerX = getPaddingLeft() + mHexagonStrokeWidth / 2;
+            final int currentRow = (int) Math.floor((mPressedButton - 1) / mHexagonPerRow);
+            final int hexagonInRow = (mPressedButton % mHexagonPerRow) == 0 ? mHexagonPerRow : (mPressedButton % mHexagonPerRow);
+            float currentY = centerY + currentRow * mRadius * 1.5f;
+            float currentX = centerX + (hexagonInRow - 1) * 2 * mTriangleHeight;
+            if (currentRow % 2 == 0) {
+                currentX += mTriangleHeight / 2;
+            } else {
+                currentX += mTriangleHeight * 1.5;
+            }
+
+            pressedButtonPath = calculateButtonFill(new Path(), currentX, currentY);
+        }
+
+        _canvas.drawPath(mButtonsPath, mButtonPaint);
 
         if (pressedButtonPath != null) {
             _canvas.drawPath(pressedButtonPath, mPressedButtonPaint);
         }
-        _canvas.drawPath(hexagonPath, mHexagonPaint);
+        _canvas.drawPath(mHexagonPath, mHexagonPaint);
     }
 
     private void drawDrawables(final Canvas _canvas) {
@@ -264,6 +284,7 @@ public class HexagonalHeader extends View {
         _path.lineTo((_centerX + mTriangleHeight) - halfStroke, _centerY - mRadius / 2 + 0);
         _path.lineTo((_centerX + mTriangleHeight) - halfStroke, _centerY + mRadius / 2 - 0);
         _path.close();
+
         return _path;
     }
 

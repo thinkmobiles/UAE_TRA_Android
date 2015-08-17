@@ -63,16 +63,18 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
         mHexagonalButtonsLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mRecyclerView.getLayoutParams();
-                lp.setMargins(lp.leftMargin, (int) -mHexagonalButtonsLayout.getHalfOuterRadius(), lp.rightMargin, lp.bottomMargin);
-                mRecyclerView.setLayoutParams(lp);
+                if (isAdded()) {
+                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mRecyclerView.getLayoutParams();
+                    lp.setMargins(lp.leftMargin, (int) -mHexagonalButtonsLayout.getHalfOuterRadius(), lp.rightMargin, lp.bottomMargin);
+                    mRecyclerView.setLayoutParams(lp);
 
-                mAdapter = new ServicesRecyclerViewAdapter(getActivity().getApplicationContext(), mDataSet,
-                        mHexagonalButtonsLayout.getHalfOuterRadius());
-                mAdapter.setServiceSelectListener(mServiceSelectListener);
-                mRecyclerView.setAdapter(mAdapter);
+                    mAdapter = new ServicesRecyclerViewAdapter(getActivity().getApplicationContext(), mDataSet,
+                            mHexagonalButtonsLayout.getHalfOuterRadius());
+                    mAdapter.setServiceSelectListener(mServiceSelectListener);
+                    mRecyclerView.setAdapter(mAdapter);
 
-                mHexagonalButtonsLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    mHexagonalButtonsLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
             }
         });
     }
