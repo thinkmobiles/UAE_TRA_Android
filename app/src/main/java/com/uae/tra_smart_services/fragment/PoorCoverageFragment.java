@@ -27,6 +27,7 @@ import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.new_request.PoorCoverageRequestModel;
+import com.uae.tra_smart_services.rest.new_request.GeoLocationRequest;
 import com.uae.tra_smart_services.rest.new_request.PoorCoverageRequest;
 
 import java.io.IOException;
@@ -184,33 +185,18 @@ public class PoorCoverageFragment extends BaseFragment
                         String.valueOf(_location.getLatitude()),
                         String.valueOf(_location.getLongitude())
                 );
-                Address address = getAddress(_location);
-                etLocation.setOnClickListener(PoorCoverageFragment.this);
-                String userFriendlyAddress = new StringBuilder()
-                        .append(address.getLocality()).append(", ")
-                        .append(address.getThoroughfare()).append(", ")
-                        .append(address.getSubThoroughfare()).append(", ")
-                        .append(address.getAdminArea()).append(", ")
-                        .append(address.getCountryName()).append(", ")
-                        .append(address.getCountryCode())
-                        .toString();
-                etLocation.setText(userFriendlyAddress);
                 LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+                defineUserFriendlyAddress(_location);
             }
         });
     }
 
-    private Address getAddress(Location _location){
-        List<Address> addresses = null;
-        try {
-            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-            addresses = geocoder.getFromLocation(_location.getLatitude(), _location.getLongitude(), 1);
-        } catch (IOException e) {
-            // currently this exeption won't be handled
-        } finally {
-            Toast.makeText(getActivity(), getString(R.string.str_something_went_wrong), Toast.LENGTH_LONG);
-        }
-        return (addresses != null && addresses.size() != 0) ? addresses.get(0) : null;
+    private void defineUserFriendlyAddress(Location _location){
+        final Geocoder geocoder = new Geocoder(getActivity().getBaseContext(), Locale.getDefault());
+        getSpiceManager().execute(
+                new GeoLocationRequest(geocoder, _location),
+                new GeoLocationRequestListener()
+        );
     }
 
     @Override
@@ -222,7 +208,6 @@ public class PoorCoverageFragment extends BaseFragment
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -278,6 +263,28 @@ public class PoorCoverageFragment extends BaseFragment
                     showMessage(R.string.str_error, R.string.str_request_failed);
                     break;
             }
+        }
+    }
+
+    private class GeoLocationRequestListener implements RequestListener<Address> {
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Toast.makeText(getActivity(), getString(R.string.str_something_went_wrong), Toast.LENGTH_LONG);
+        }
+
+        @Override
+        public void onRequestSuccess(Address address) {
+            String userFriendlyAddress = new StringBuilder()
+                    .append(address.getLocality()).append(", ")
+                    .append(address.getThoroughfare()).append(", ")
+                    .append(address.getSubThoroughfare()).append(", ")
+                    .append(address.getAdminArea()).append(", ")
+                    .append(address.getCountryName()).append(", ")
+                    .append(address.getCountryCode())
+                    .toString();
+            etLocation.setOnClickListener(PoorCoverageFragment.this);
+            etLocation.setText(userFriendlyAddress);
         }
     }
 }
