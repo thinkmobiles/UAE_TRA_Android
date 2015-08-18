@@ -110,5 +110,6 @@
     <string name="str_location_error">Enter location</string>
     <string name="str_location_error_message">Please enter address manually or wait untill location will be found</string>
     <string name="signal_level_error">Please set signal level</string>
+    <string name="str_info_hub_announcements">Info Hub Announcements</string>
 
 </resources>

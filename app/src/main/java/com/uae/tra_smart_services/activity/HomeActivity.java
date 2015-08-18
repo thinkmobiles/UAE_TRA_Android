@@ -16,6 +16,7 @@ import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelec
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
 import com.uae.tra_smart_services.fragment.HelpSalemFragment;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
+import com.uae.tra_smart_services.fragment.InfoHubFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
@@ -189,8 +190,8 @@ public class HomeActivity extends BaseFragmentActivity
                         Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rbInfoHub_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: Info Hub",
-                        Toast.LENGTH_SHORT).show();
+                clearBackStack();
+                replaceFragmentWithOutBackStack(InfoHubFragment.newInstance());
                 break;
             case R.id.rbInquiries_BNRG:
                 Toast.makeText(getApplicationContext(), "choice: Inquiries",

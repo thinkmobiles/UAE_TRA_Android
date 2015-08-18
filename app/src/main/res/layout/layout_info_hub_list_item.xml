@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlInfoHubListItemContainer_FIHLI"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dip">
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvIcon_LIHLI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:hexagonSideSize="45dp"
+        app:hexagonBackground="@android:color/holo_green_dark"
+        app:hexagonBorderSize="2dp"
+        app:hexagonBorderColor="#000000"/>
+
+    <TextView
+        android:id="@+id/hvDescr_LIHLI"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Description"
+        android:textSize="16sp"
+        android:paddingStart="10dp"
+        android:layout_alignBottom="@+id/hvIcon_LIHLI"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/hvIcon_LIHLI"
+        android:layout_below="@+id/hvDate_LIHLI" />
+
+    <TextView
+        android:id="@+id/hvDate_LIHLI"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toRightOf="@id/hvIcon_LIHLI"
+        android:gravity="right"
+        android:text="date"
+        android:textSize="10sp" />
+
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/hvIcon_LIHLI"
+        style="@style/AuthorizationFieldsSeparator" />
+
+</RelativeLayout> 

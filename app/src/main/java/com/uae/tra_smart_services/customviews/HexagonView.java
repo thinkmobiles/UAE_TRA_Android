@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -40,7 +41,9 @@ public class HexagonView extends View {
 
     public HexagonView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2){
+            setLayerType(LAYER_TYPE_SOFTWARE, null);
+        }
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HexagonView);
         try {
             mHexagonSide = a.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS);
@@ -214,12 +217,12 @@ public class HexagonView extends View {
 //                mBackgroundDrawable.setBounds(bounds);
 //                mBackgroundDrawable.draw(canvas);
 //                canvas.setMatrix(null);
-//            } else {
-//                mBackgroundDrawable.setBounds(drawableRect);
-                mBackgroundDrawable.draw(canvas);
-//            }
-                canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
+            } else {
+                mBackgroundDrawable.setBounds(bounds);
             }
+            mBackgroundDrawable.draw(canvas);
+            canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
+//            }
             canvas.drawPath(mPath, mPaint);
 //        Path path = new Path(mPath);
 //        path.setFillType(Path.FillType.INVERSE_WINDING);
