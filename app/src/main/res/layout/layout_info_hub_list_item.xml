@@ -9,7 +9,7 @@
         android:id="@+id/hvIcon_LIHLI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="start"
         app:hexagonSideSize="45dp"
         app:hexagonBackground="@android:color/holo_green_dark"
         app:hexagonBorderSize="2dp"
@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/hvDescr_LIHLI"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="26dip"
         android:ellipsize="marquee"
         android:singleLine="true"
@@ -26,20 +26,20 @@
         android:paddingStart="10dp"
         android:layout_alignBottom="@+id/hvIcon_LIHLI"
         android:layout_alignParentEnd="true"
+        android:gravity="start"
         android:layout_toEndOf="@+id/hvIcon_LIHLI"
         android:layout_below="@+id/hvDate_LIHLI" />
 
     <TextView
         android:id="@+id/hvDate_LIHLI"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/hvIcon_LIHLI"
         android:gravity="right"
         android:text="date"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/hvDescr_LIHLI" />
 
     <View
         android:layout_marginTop="5dp"

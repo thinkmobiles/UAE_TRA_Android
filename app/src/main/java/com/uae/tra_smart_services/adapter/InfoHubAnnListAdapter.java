@@ -83,15 +83,14 @@ public class InfoHubAnnListAdapter extends RecyclerView.Adapter<InfoHubAnnListAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.setData(mDataSet.get(position));
-
         if (position % 2 == 0) {
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.getContainer().getLayoutParams();
             final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, mContext.getResources().getDisplayMetrics());
-            layoutParams.setMargins((int) mMarginOffset + margin, layoutParams.topMargin, layoutParams.getMarginEnd(), layoutParams.bottomMargin);
+            layoutParams.setMarginStart((int) mMarginOffset + margin);
             holder.getContainer().setLayoutParams(layoutParams);
         } else {
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.getContainer().getLayoutParams();
-            layoutParams.setMargins((int) mMarginOffset,  layoutParams.topMargin, layoutParams.getMarginEnd(), layoutParams.bottomMargin);
+            layoutParams.setMarginStart((int) mMarginOffset);
             holder.getContainer().setLayoutParams(layoutParams);
         }
     }
