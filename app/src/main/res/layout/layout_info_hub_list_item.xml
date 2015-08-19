@@ -20,7 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="26dip"
         android:ellipsize="marquee"
-        android:singleLine="true"
+        android:minLines = "1"
+        android:maxLines = "100"
+        android:singleLine = "false"
         android:text="Description"
         android:textSize="16sp"
         android:paddingStart="10dp"
@@ -44,6 +46,6 @@
     <View
         android:layout_marginTop="5dp"
         android:layout_below="@id/hvIcon_LIHLI"
-        style="@style/AuthorizationFieldsSeparator" />
+        style="@style/ListViewItemSeparator" />
 
 </RelativeLayout> 

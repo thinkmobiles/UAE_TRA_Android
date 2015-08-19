@@ -74,6 +74,12 @@
         <item name="android:background">@color/hex_auth_fields_separator_color</item>
     </style>
 
+    <style name="ListViewItemSeparator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_authorization_fields_separator_height</item>
+        <item name="android:background">@color/hex_auth_fields_separator_color</item>
+    </style>
+
     <style name="VerticalFieldsSeparator">
         <item name="android:layout_width">@dimen/dp_authorization_fields_separator_height</item>
         <item name="android:layout_height">30dp</item>
