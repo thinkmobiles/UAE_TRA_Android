@@ -3,12 +3,13 @@
     android:id="@+id/rlInfoHubListItemContainer_FIHLI"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dip">
+    android:padding="3dp">
 
     <com.uae.tra_smart_services.customviews.HexagonView
         android:id="@+id/hvIcon_LIHLI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_gravity="start"
         app:hexagonSideSize="45dp"
         app:hexagonBackground="@android:color/holo_green_dark"
@@ -21,7 +22,7 @@
         android:layout_height="26dip"
         android:ellipsize="marquee"
         android:minLines = "1"
-        android:maxLines = "100"
+        android:maxLines = "5"
         android:singleLine = "false"
         android:text="Description"
         android:textSize="16sp"
@@ -44,8 +45,10 @@
         android:layout_alignEnd="@+id/hvDescr_LIHLI" />
 
     <View
+        style="@style/ListViewItemSeparator"
+        android:layout_below="@+id/hvDescr_LIHLI"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/hvIcon_LIHLI"
-        style="@style/ListViewItemSeparator" />
+        android:layout_alignStart="@+id/hvDescr_LIHLI" />
 
 </RelativeLayout> 
