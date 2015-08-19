@@ -11,12 +11,7 @@
         android:src="@drawable/res_bg_2" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvInfoHubAnnListPrev_FIH"
+        android:id="@+id/rvInfoHubAnnList_FIHA"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTransactionsList_FIH"
-        android:layout_width="match_parent"
-        android:layout_height="358dp" />
+        android:layout_height="match_parent" />
 </FrameLayout>

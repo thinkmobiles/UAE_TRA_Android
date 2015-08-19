@@ -20,19 +20,11 @@ import com.uae.tra_smart_services.rest.model.new_response.InfoHubAnnouncementsLi
 import java.util.ArrayList;
 
 /**
- * Created by ak-buffalo on 19.08.15.
+ * Created by ak-buffalo on 18.08.15.
  */
-public class InfoHubFragment extends BaseFragment
-                            implements InfoHubAnnListAdapter.OnInfoHubItemClickListener{
-    @Override
-    protected int getTitle() {
-        return R.string.str_info_hub;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_info_hub;
-    }
+public class InfoHubFragmentAnnouncements extends BaseFragment
+        implements InfoHubAnnListAdapter.OnInfoHubItemClickListener{
+    private ArrayList<InfoHubAnnouncementsListItemModel> DUMMY_LIST;
 
     @Override
     public void onAttach(Activity _activity) {
@@ -84,13 +76,13 @@ public class InfoHubFragment extends BaseFragment
         super.onCreate(savedInstanceState);
     }
 
-    private ArrayList<InfoHubAnnouncementsListItemModel> DUMMY_LIST;
     private RecyclerView infoHubList;
     private RecyclerView.LayoutManager mLayoutManager;
     private InfoHubAnnListAdapter mAdapter;
     @Override
     protected void initViews() {
         super.initViews();
+
         DUMMY_LIST = new ArrayList<InfoHubAnnouncementsListItemModel>(){
             {
                 add(new InfoHubAnnouncementsListItemModel()
@@ -162,6 +154,16 @@ public class InfoHubFragment extends BaseFragment
         mAdapter = new InfoHubAnnListAdapter(getActivity(), DUMMY_LIST);
         mAdapter.setOnItemClickListener(this);
         infoHubList.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.str_info_hub_announcements;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_info_hub_announcements;
     }
 
     @Override

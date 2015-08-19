@@ -35,4 +35,9 @@ public class InfoHubAnnouncementsListItemModel {
     public String getDate() {
         return mDate;
     }
+
+    @Override
+    public String toString() {
+        return getDescription();
+    }
 }

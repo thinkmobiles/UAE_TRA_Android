@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.global.ListItemFilter;
 import com.uae.tra_smart_services.rest.model.new_response.InfoHubAnnouncementsListItemModel;
 
 import java.util.ArrayList;
@@ -110,58 +111,25 @@ public class InfoHubAnnListAdapter extends RecyclerView.Adapter<InfoHubAnnListAd
 
     @Override
     public Filter getFilter() {
-        return ListItemFilter.getInstance(this, mDataSet);
+        return AnnouncementsFilter.getInstance(this, mDataSet);
     }
 
-    private static class ListItemFilter extends Filter {
-        private static ListItemFilter mInstance;
-
+    public static class AnnouncementsFilter extends ListItemFilter<InfoHubAnnListAdapter, InfoHubAnnouncementsListItemModel> {
+        private AnnouncementsFilter(InfoHubAnnListAdapter adapter, List<InfoHubAnnouncementsListItemModel> originalList) {
+            super(adapter, originalList);
+        }
         public static ListItemFilter getInstance(InfoHubAnnListAdapter adapter, List<InfoHubAnnouncementsListItemModel> originalList){
             if(mInstance == null){
-                mInstance = new ListItemFilter(adapter, originalList);
+                mInstance = new AnnouncementsFilter(adapter, originalList);
             }
             return mInstance;
         }
 
-        private final InfoHubAnnListAdapter adapter;
-
-        private final List<InfoHubAnnouncementsListItemModel> originalList;
-
-        private final List<InfoHubAnnouncementsListItemModel> filteredList;
-
-        private ListItemFilter(InfoHubAnnListAdapter adapter, List<InfoHubAnnouncementsListItemModel> originalList) {
-            super();
-            this.adapter = adapter;
-            this.originalList = new LinkedList<>(originalList);
-            this.filteredList = new ArrayList<>();
-        }
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            filteredList.clear();
-            final FilterResults results = new FilterResults();
-
-            if (constraint.length() == 0) {
-                filteredList.addAll(originalList);
-            } else {
-                final String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (final InfoHubAnnouncementsListItemModel listItem : originalList) {
-                    if (listItem.getDescription().toLowerCase().trim().contains(filterPattern)) {
-                        filteredList.add(listItem);
-                    }
-                }
-            }
-            results.values = filteredList;
-            results.count = filteredList.size();
-            return results;
-        }
-
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            adapter.mDataSet.clear();
-            adapter.mDataSet.addAll((ArrayList<InfoHubAnnouncementsListItemModel>) results.values);
-            adapter.notifyDataSetChanged();
+            mAdapter.mDataSet.clear();
+            mAdapter.mDataSet.addAll((ArrayList<InfoHubAnnouncementsListItemModel>) results.values);
+            mAdapter.notifyDataSetChanged();
         }
     }
 }

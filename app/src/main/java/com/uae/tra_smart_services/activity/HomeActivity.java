@@ -16,17 +16,13 @@ import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelec
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
 import com.uae.tra_smart_services.fragment.HelpSalemFragment;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
-import com.uae.tra_smart_services.fragment.InfoHubFragment;
+import com.uae.tra_smart_services.fragment.InfoHubFragmentAnnouncements;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.EnquiriesFragment;
-import com.uae.tra_smart_services.fragment.HelpSalemFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
-import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
-import com.uae.tra_smart_services.fragment.ServiceListFragment;
-import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
@@ -191,7 +187,7 @@ public class HomeActivity extends BaseFragmentActivity
                 break;
             case R.id.rbInfoHub_BNRG:
                 clearBackStack();
-                replaceFragmentWithOutBackStack(InfoHubFragment.newInstance());
+                replaceFragmentWithOutBackStack(InfoHubFragmentAnnouncements.newInstance());
                 break;
             case R.id.rbInquiries_BNRG:
                 Toast.makeText(getApplicationContext(), "choice: Inquiries",
