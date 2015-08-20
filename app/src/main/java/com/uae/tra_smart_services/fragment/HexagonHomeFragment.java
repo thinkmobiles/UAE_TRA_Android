@@ -51,6 +51,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
 
     private boolean isCollapsed = false;
     private boolean isAnimating = false;
+    private boolean isScrollUp = false;
 
     private float mAnimationProgress = 0f;
 
@@ -78,7 +79,14 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                mHexagonalButtonsLayout.invalidate();
+//                mHexagonalButtonsLayout.invalidate();
+//                final String state = newState == RecyclerView.SCROLL_STATE_SETTLING ? "settling" :
+//                        newState == RecyclerView.SCROLL_STATE_IDLE ? "idle" : "dragging";
+//                final String isCollapsedState = isCollapsed ? "collapsed" : "expanded";
+//                final String isScrollUpState = isScrollUp ? "up" : "down";
+//
+//                Log.d(RECYCLER_TAG, "Scroll state changed to !-" + state + "-! animation progress = " +
+//                        String.valueOf(mAnimationProgress) + " state : " + isCollapsedState + " scroll : " + isScrollUpState);
 
                 if (RecyclerView.SCROLL_STATE_SETTLING == newState ||
                             RecyclerView.SCROLL_STATE_IDLE == newState
@@ -92,6 +100,8 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+                isScrollUp = dy > 0;
 
                 if (!mHexagonalHeaderAnimator.isRunning() && !mHexagonHeaderReverseAnimator.isRunning()
                         && ((mAnimationProgress < 1f && dy > 0) || (mAnimationProgress > 0f && dy < 0))) {
@@ -134,12 +144,12 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
     }
 
     private void endAnimation() {
-        if (isCollapsed) {
+        if ((isCollapsed && !isScrollUp) || (!isCollapsed && !isScrollUp && mAnimationProgress != 1f)) {
             mHexagonHeaderReverseAnimator.setFloatValues(mAnimationProgress, 0f);
             mHexagonHeaderReverseAnimator.setDuration((int) (600 / 2 * mAnimationProgress));
             mHexagonHeaderReverseAnimator.start();
             isCollapsed = false;
-        } else {
+        } else if ((!isCollapsed && isScrollUp) || (isCollapsed && isScrollUp && mAnimationProgress != 0f)) {
             mHexagonalHeaderAnimator.setFloatValues(mAnimationProgress, 1f);
             mHexagonalHeaderAnimator.setDuration((int) (600 / 2 * (1 - mAnimationProgress)));
             mHexagonalHeaderAnimator.start();
@@ -149,10 +159,8 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
 
     @Override
     protected void initCustomEntities() {
-        mAnimatorSet = new AnimatorSet();
         mHexagonalHeaderAnimator = ValueAnimator.ofFloat(0f, 1f);
         mHexagonalHeaderAnimator.setDuration(600);
-//        mHexagonalHeaderAnimator.setInterpolator(new LinearInterpolator());
         mHexagonalHeaderAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -162,43 +170,16 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
             }
         });
 
-        mHexagonButtonsAnimator = ValueAnimator.ofFloat(0f, 1f);
-        mHexagonButtonsAnimator.setDuration(150);
-
-        mHexagonButtonsAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mHexagonalButtonsLayout.setAnimationProgress((float) animation.getAnimatedValue());
-            }
-        });
-
-        mAnimatorSet.play(mHexagonalHeaderAnimator).with(mHexagonButtonsAnimator);
-
-
-        mReverseAnimator = new AnimatorSet();
         mHexagonHeaderReverseAnimator = ValueAnimator.ofFloat(1f, 0f);
         mHexagonHeaderReverseAnimator.setDuration(600);
-//        mHexagonalHeaderAnimator.setInterpolator(new LinearInterpolator());
         mHexagonHeaderReverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mAnimationProgress = (float) animation.getAnimatedValue();
-                mHexagonalHeader.setAnimationProgress( (float) animation.getAnimatedValue());
-                mHexagonalButtonsLayout.setAnimationProgress( (float) animation.getAnimatedValue());
+                mHexagonalHeader.setAnimationProgress((float) animation.getAnimatedValue());
+                mHexagonalButtonsLayout.setAnimationProgress((float) animation.getAnimatedValue());
             }
         });
-
-        mHexagonButtonsReverseAnimator = ValueAnimator.ofFloat(1f, 0f);
-        mHexagonButtonsReverseAnimator.setDuration(150);
-
-        mHexagonButtonsReverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mHexagonalButtonsLayout.setAnimationProgress( (float) animation.getAnimatedValue());
-            }
-        });
-
-        mReverseAnimator.play(mHexagonHeaderReverseAnimator).with(mHexagonButtonsReverseAnimator);
     }
 
     @Override
@@ -213,10 +194,6 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
 
     private void initServiceList() {
         mDataSet = new ArrayList<>(Arrays.asList(Service.values()));
-        mDataSet.addAll(Arrays.asList(Service.values()));
-        mDataSet.addAll(Arrays.asList(Service.values()));
-        mDataSet.addAll(Arrays.asList(Service.values()));
-        mDataSet.addAll(Arrays.asList(Service.values()));
         mDataSet.addAll(Arrays.asList(Service.values()));
     }
 
@@ -239,16 +216,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
         } else if (POOR_COVERAGE_SERVICE.isEquals(_id)) {
             mStaticServiceSelectListener.onStaticServiceSelect(POOR_COVERAGE_SERVICE);
         } else if (INTERNET_SPEED_TEST.isEquals(_id)) {
-//            mAnimatorSet.start();
-            if (isCollapsed) {
-                if (mAnimatorSet.isRunning()) mAnimatorSet.cancel();
-                mReverseAnimator.start();
-                isCollapsed = !isCollapsed;
-            } else {
-                if (mReverseAnimator.isRunning()) mReverseAnimator.cancel();
-                mAnimatorSet.start();
-                isCollapsed = true;
-            }
+
         }
     }
 

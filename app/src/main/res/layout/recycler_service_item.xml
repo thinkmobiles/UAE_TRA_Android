@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
     android:gravity="center_horizontal"
     android:id="@+id/llContainer"
     android:orientation="vertical"
-    android:paddingTop="5dp">
+    android:paddingTop="10dp">
 
     <com.uae.tra_smart_services.customviews.HexagonView
         android:id="@+id/hvHexagonView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        app:hexagonSideSize="45dp"
+        app:hexagonSideSize="40dp"
         app:hexagonBorderSize="1dp"
         app:hexagonBorderColor="#ffffff"/>
 
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:gravity="top|center"
         android:textSize="12sp"
-        android:maxLines="3"
-        android:minLines="3"
+        android:maxLines="4"
+        android:minLines="4"
         android:text="Element"/>
 </LinearLayout>

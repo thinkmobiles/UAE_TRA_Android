@@ -35,4 +35,9 @@
     <color name="hex_auth_button_background_pressed_color">#ffaeaeae</color>
     <!--[END]                       AuthorizationActivity                         [END]-->
 
+    <color name="activity_home_tab_bar_start_color">#dfdfdf</color>
+    <color name="activity_home_tab_bar_middle_color">#e2e2e2</color>
+    <color name="activity_home_tab_bar_end_color">#f1f1f1</color>
+    <color name="activity_home_tab_bar_top_border">#cfcfcf</color>
+
 </resources>

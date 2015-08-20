@@ -152,7 +152,7 @@ public class DomainCheckerFragment extends BaseFragment
             if (_str.availableStatus.equals(ServerConstants.AVAILABLE)) {
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.flContainer_HA, DomainIsAvailableFragment.newInstance())
+                        .replace(R.id.flContainer_AH, DomainIsAvailableFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
             } else if (_str.availableStatus.equals(ServerConstants.NOT_AVAILABLE)) {
@@ -175,7 +175,7 @@ public class DomainCheckerFragment extends BaseFragment
                 getFragmentManager()
                         .beginTransaction()
                         .replace(
-                                R.id.flContainer_HA,
+                                R.id.flContainer_AH,
                                 DomainInfoFragment.newInstance(domainInfoCheckResponse.urlData))
                         .addToBackStack(null)
                         .commit();
