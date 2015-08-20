@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:text="tra.gov.ae"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingStart="20dp" />
+    <TextView
+        android:text="Federal Authority"
+        android:textColor="?attr/globalButtonTextColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_weight="1"
+        android:paddingEnd="20dp" />
 </LinearLayout>

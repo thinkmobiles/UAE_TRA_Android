@@ -105,7 +105,8 @@
     <string name="str_report_has_been_sent">Report has been successfully sent</string>
     <string name="str_data_has_been_sent">Signal level has been successfully sent</string>
     <string name="str_complain_has_been_sent">Complain has been successfully sent</string>
-    <string name="str_info_hub">INFO HUB</string>
+    <string name="str_info_hub">Info hub</string>
+    <string name="str_info_hub_title">INFO HUB</string>
     <string name="str_info_hub_announcements">INFO HUB ANNOUNCEMENTS</string>
     <string name="str_info_hub_announcement_details">INFO HUB DETAILS</string>
     <string name="str_location_is_not_defined">Unfortunately, location is not defined n\r\ Please put your location manually</string>
