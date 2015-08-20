@@ -50,8 +50,6 @@ public class InfoHubFragment extends BaseFragment
         super.initData();
         DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<InfoHubAnnouncementsListItemModel>(){
             {
-                add(new InfoHubAnnouncementsListItemModel());
-
                 add(new InfoHubAnnouncementsListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
