@@ -14,18 +14,15 @@ import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
-import com.uae.tra_smart_services.fragment.HelpSalemFragment;
-import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
-import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.EnquiriesFragment;
+import com.uae.tra_smart_services.fragment.FavoritesFragment;
 import com.uae.tra_smart_services.fragment.HelpSalemFragment;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
-import com.uae.tra_smart_services.fragment.ServiceListFragment;
-import com.uae.tra_smart_services.fragment.ServiceListFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
@@ -185,8 +182,8 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
                 break;
             case R.id.rbFavorites_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: Favorites",
-                        Toast.LENGTH_SHORT).show();
+                clearBackStack();
+                replaceFragmentWithOutBackStack(FavoritesFragment.newInstance());
                 break;
             case R.id.rbInfoHub_BNRG:
                 Toast.makeText(getApplicationContext(), "choice: Info Hub",
