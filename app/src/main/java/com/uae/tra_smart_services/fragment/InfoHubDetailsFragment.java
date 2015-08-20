@@ -49,7 +49,6 @@ public class InfoHubDetailsFragment extends BaseFragment{
     private TextView bodyFullDescription;
     @Override
     protected void initViews() {
-        super.initViews();
         headerImage = findView(R.id.tvHeaderImage_FIHD);
         Picasso.with(getActivity()).load(infoHubAnnModel.getHeaderImageUrl()).into(headerImage);
         headerDate = findView(R.id.tvHeaderDate_FIHD);

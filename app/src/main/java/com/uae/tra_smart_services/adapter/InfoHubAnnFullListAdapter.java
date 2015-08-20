@@ -15,7 +15,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.global.ListItemFilter;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
-import com.uae.tra_smart_services.rest.model.new_response.InfoHubListItemModel;
+import com.uae.tra_smart_services.rest.model.new_response.InfoHubAnnouncementsListItemModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +26,17 @@ import java.util.List;
 public class InfoHubAnnFullListAdapter extends RecyclerView.Adapter<InfoHubAnnFullListAdapter.ViewHolder>
                                     implements Filterable {
 
-    private ArrayList<InfoHubListItemModel> mDataSet;
+    private ArrayList<InfoHubAnnouncementsListItemModel> mDataSet;
     private Context mContext;
     private OnInfoHubItemClickListener onItemClickListener;
     private float mMarginOffset = 0;
 
-    public InfoHubAnnFullListAdapter(Context _context, ArrayList<InfoHubListItemModel> _dataSet){
+    public InfoHubAnnFullListAdapter(Context _context, ArrayList<InfoHubAnnouncementsListItemModel> _dataSet){
         mContext = _context;
         mDataSet = _dataSet;
     }
 
-    public void add(int position, InfoHubListItemModel item) {
+    public void add(int position, InfoHubAnnouncementsListItemModel item) {
         mDataSet.add(position, item);
         notifyItemInserted(position);
     }
@@ -55,7 +55,7 @@ public class InfoHubAnnFullListAdapter extends RecyclerView.Adapter<InfoHubAnnFu
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onItemSelected((InfoHubListItemModel) container.getTag());
+                        onItemClickListener.onItemSelected((InfoHubAnnouncementsListItemModel) container.getTag());
                     }
                 }
             });
@@ -65,7 +65,7 @@ public class InfoHubAnnFullListAdapter extends RecyclerView.Adapter<InfoHubAnnFu
             date = (TextView) itemView.findViewById(R.id.hvDate_LIHLI);
         }
 
-        public void setData(InfoHubListItemModel _model){
+        public void setData(InfoHubAnnouncementsListItemModel _model){
 //            Picasso.with(InfoHubAnnFullListAdapter.this.mContext).load(_model.getIconUrl()).into(hexagonView);
             title.setText(_model.getTitle());
             description.setText(_model.getDescription());
@@ -113,11 +113,11 @@ public class InfoHubAnnFullListAdapter extends RecyclerView.Adapter<InfoHubAnnFu
         return AnnouncementsFilter.getInstance(this, mDataSet);
     }
 
-    public static class AnnouncementsFilter extends ListItemFilter<InfoHubAnnFullListAdapter, InfoHubListItemModel> {
-        private AnnouncementsFilter(InfoHubAnnFullListAdapter adapter, List<InfoHubListItemModel> originalList) {
+    public static class AnnouncementsFilter extends ListItemFilter<InfoHubAnnFullListAdapter, InfoHubAnnouncementsListItemModel> {
+        private AnnouncementsFilter(InfoHubAnnFullListAdapter adapter, List<InfoHubAnnouncementsListItemModel> originalList) {
             super(adapter, originalList);
         }
-        public static ListItemFilter getInstance(InfoHubAnnFullListAdapter adapter, List<InfoHubListItemModel> originalList){
+        public static ListItemFilter getInstance(InfoHubAnnFullListAdapter adapter, List<InfoHubAnnouncementsListItemModel> originalList){
             if(mInstance == null){
                 mInstance = new AnnouncementsFilter(adapter, originalList);
             }
@@ -127,7 +127,7 @@ public class InfoHubAnnFullListAdapter extends RecyclerView.Adapter<InfoHubAnnFu
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             mAdapter.mDataSet.clear();
-            mAdapter.mDataSet.addAll((ArrayList<InfoHubListItemModel>) results.values);
+            mAdapter.mDataSet.addAll((ArrayList<InfoHubAnnouncementsListItemModel>) results.values);
             mAdapter.notifyDataSetChanged();
         }
     }

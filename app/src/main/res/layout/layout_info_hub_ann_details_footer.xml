@@ -15,5 +15,6 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:layout_weight="1"
+        android:paddingBottom="20dp"
         android:paddingEnd="20dp" />
 </LinearLayout>
