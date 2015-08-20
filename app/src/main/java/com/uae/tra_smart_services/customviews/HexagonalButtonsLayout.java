@@ -45,8 +45,10 @@ public class HexagonalButtonsLayout extends View {
     private float mRadius;
     private float mSeparatorTriangleHeight;
     private float mSeparatorRadius;
-    private float mTextSize;
+    private float mTextSize, mTextSizeDifference;
+    private Integer mOldWidth;
 
+    private List<PointF> mCenters;
     private List<Drawable> mDrawables;
     private List<PointF[]> mPolygons;
 
@@ -61,7 +63,7 @@ public class HexagonalButtonsLayout extends View {
         initProperties(_attrs);
         initPaint();
         initDrawables();
-//        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
     public final float getHalfOuterRadius() {
@@ -71,24 +73,6 @@ public class HexagonalButtonsLayout extends View {
     public final void setServiceSelectedListener(final OnServiceSelected _serviceSelectedListener) {
         mServiceSelectedListener = _serviceSelectedListener;
     }
-
-//    public final void incrementGapWidth() {
-//        if (mHexagonGapWidth < mMaxGapWidth) {
-//            mHexagonGapWidth += mGapWidthStep;
-////            calculateVariables(getWidth());
-////            invalidate();
-//            requestLayout();
-//        }
-//    }
-//
-//    public final void decrementGapWidth() {
-//        if (mHexagonGapWidth > mMinGapWidth) {
-//            mHexagonGapWidth -= mGapWidthStep;
-////            calculateVariables(getWidth());
-////            invalidate();
-//            requestLayout();
-//        }
-//    }
 
     public final void setAnimationProgress(final float _animationProgress) {
         mAnimationProgress = _animationProgress;
@@ -113,7 +97,8 @@ public class HexagonalButtonsLayout extends View {
 
         mPolygons = new ArrayList<>();
 
-        mGapWidthDifference = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+        mGapWidthDifference = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+        mTextSizeDifference = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
         mStartGapWidth = mHexagonGapWidth;
     }
 
@@ -187,10 +172,17 @@ public class HexagonalButtonsLayout extends View {
     protected final void onSizeChanged(final int _w, final int _h,
                                        final int _oldw, final int _oldh) {
         super.onSizeChanged(_w, _h, _oldw, _oldh);
-
         calculateVariables(_w);
+
+        if (mOldWidth == null || mOldWidth != _w || mCenters == null || mCenters.isEmpty()) {
+            mOldWidth = _w;
+            calculateCenters();
+        }
+
         measureDrawablesBounds();
 
+        mWhiteTextPain.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress);
+        mOrangeTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress);
     }
 
     private void calculateVariables(final int _w) {
@@ -202,16 +194,28 @@ public class HexagonalButtonsLayout extends View {
         mSeparatorRadius = (float) (mSeparatorTriangleHeight * 2 / Math.sqrt(3));
     }
 
-    private void measureDrawablesBounds() {
-        float centerY = getPaddingTop() + mRadius / 2 + getMaxDrawableHeight(mDrawables);
+    private void calculateCenters() {
+        mCenters = new ArrayList<>();
+        float centerY = getPaddingTop() + mRadius;
         float centerX = getPaddingLeft() + mHexagonGapWidth + mTriangleHeight;
 
         for (int hexagon = 0; hexagon < mButtonsCount;
              hexagon++, centerX += mHexagonGapWidth + mTriangleHeight * 2) {
+            mCenters.add(new PointF(centerX, centerY));
+        }
+    }
+
+    private void measureDrawablesBounds() {
+        float centerY = getPaddingTop() + mRadius / 2 + getMaxDrawableHeight(mDrawables);
+
+        for (int hexagon = 0; hexagon < mButtonsCount; hexagon++) {
             final float drawableWidth = mDrawables.get(hexagon).getMinimumWidth();
             final float drawableHeight = mDrawables.get(hexagon).getMinimumHeight();
-            mDrawables.get(hexagon).setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight),
-                    (int) (centerX + drawableWidth / 2), (int) centerY);
+
+            final PointF point = mCenters.get(hexagon);
+
+            mDrawables.get(hexagon).setBounds((int) (point.x - drawableWidth / 2), (int) (centerY - drawableHeight),
+                    (int) (point.x + drawableWidth / 2), (int) centerY);
         }
     }
 
@@ -235,38 +239,37 @@ public class HexagonalButtonsLayout extends View {
         drawBottomSeparator(_canvas);
         drawDrawables(_canvas);
 
-        _canvas.drawText("Verification", getPaddingLeft() + mHexagonGapWidth + mTriangleHeight,
-                getPaddingTop() + mRadius + mRadius / 2, mOrangeTextPaint);
+        _canvas.drawText("Verification", mCenters.get(0).x,
+                mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
 
-        _canvas.drawText("Spam", getPaddingLeft() + mHexagonGapWidth * 2 + mTriangleHeight * 3,
-                getPaddingTop() + mRadius + mRadius / 2, mOrangeTextPaint);
+        _canvas.drawText("Spam", mCenters.get(1).x,
+                mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
 
-        _canvas.drawText("Coverage", getPaddingLeft() + mHexagonGapWidth * 3 + mTriangleHeight * 5,
-                getPaddingTop() + mRadius + mRadius / 2, mWhiteTextPain);
+        _canvas.drawText("Coverage", mCenters.get(2).x,
+                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
 
-        _canvas.drawText("Internet", getPaddingLeft() + mHexagonGapWidth * 4 + mTriangleHeight * 7,
-                getPaddingTop() + mRadius + mRadius / 2, mWhiteTextPain);
+        _canvas.drawText("Internet", mCenters.get(3).x,
+                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
     }
 
     private void drawHexagons(final Canvas _canvas) {
         Path buttonsPath = new Path();
         Path buttonsSecondPath = new Path();
 
-        float centerY = getPaddingTop() + mRadius;
-        float centerX = getPaddingLeft() + mHexagonGapWidth + mTriangleHeight;
+        for (int hexagon = 0; hexagon < mButtonsCount; hexagon++) {
 
-        for (int hexagon = 0; hexagon < mButtonsCount;
-             hexagon++, centerX += mHexagonGapWidth + mTriangleHeight * 2) {
+            final PointF point = mCenters.get(hexagon);
+
             if (hexagon < (mButtonsCount / 2)) {
-                buttonsPath = calculatePath(buttonsPath, centerX, centerY);
+                buttonsPath = calculatePath(buttonsPath, point.x, point.y);
             } else {
-                buttonsSecondPath = calculatePath(buttonsSecondPath, centerX, centerY);
+                buttonsSecondPath = calculatePath(buttonsSecondPath, point.x, point.y);
             }
         }
 
-//        _canvas.drawPath(buttonsSecondPath, mShadowPaint);
+        _canvas.drawPath(buttonsSecondPath, mShadowPaint);
         _canvas.drawPath(buttonsSecondPath, mButtonSecondColorPaint);
-//        _canvas.drawPath(buttonsPath, mShadowPaint);
+        _canvas.drawPath(buttonsPath, mShadowPaint);
         _canvas.drawPath(buttonsPath, mButtonPaint);
     }
 
@@ -301,19 +304,17 @@ public class HexagonalButtonsLayout extends View {
         Path separatorPath = new Path();
 
         float centerY = getPaddingTop() + mRadius + mHexagonGapWidth / 2;
-        float centerX = getPaddingLeft() + mHexagonGapWidth + mTriangleHeight;
 
-        separatorPath.moveTo(centerX - 2 * mSeparatorTriangleHeight, centerY + mSeparatorRadius);
-        separatorPath.lineTo(centerX - mSeparatorTriangleHeight, centerY + mSeparatorRadius / 2);
+        separatorPath.moveTo(mCenters.get(0).x - 2 * mSeparatorTriangleHeight, centerY + mSeparatorRadius);
+        separatorPath.lineTo(mCenters.get(0).x - mSeparatorTriangleHeight, centerY + mSeparatorRadius / 2);
 
-        for (int hexagon = 0; hexagon < mButtonsCount;
-             hexagon++, centerX += mSeparatorTriangleHeight * 2) {
+        for (int hexagon = 0; hexagon < mButtonsCount; hexagon++) {
 
-            separatorPath.lineTo(centerX, centerY + mSeparatorRadius);
-            separatorPath.lineTo(centerX + mSeparatorTriangleHeight, centerY + mSeparatorRadius / 2);
+            separatorPath.lineTo(mCenters.get(hexagon).x, centerY + mSeparatorRadius);
+            separatorPath.lineTo(mCenters.get(hexagon).x + mSeparatorTriangleHeight, centerY + mSeparatorRadius / 2);
         }
 
-        separatorPath.lineTo(centerX, centerY + mSeparatorRadius);
+        separatorPath.lineTo(mCenters.get(mButtonsCount - 1).x + mSeparatorTriangleHeight * 2, centerY + mSeparatorRadius);
 
         _canvas.drawPath(separatorPath, mSeparatorPaint);
     }

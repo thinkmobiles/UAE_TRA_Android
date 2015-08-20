@@ -10,7 +10,6 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.InfoHubAnnFullListAdapter;
@@ -208,7 +207,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
         getFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
-                .replace(R.id.flContainer_HA, InfoHubDetailsFragment.newInstance(args))
+                .replace(R.id.flContainer_AH, InfoHubDetailsFragment.newInstance(args))
                 .commit();
     }
 }

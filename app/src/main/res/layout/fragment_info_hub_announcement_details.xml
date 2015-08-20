@@ -23,7 +23,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.8"
                 android:background="@drawable/shape_info_hub_details_header_image_gradient"
                 android:layout_alignParentEnd="true">
 

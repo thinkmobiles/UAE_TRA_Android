@@ -51,7 +51,7 @@
                 app:layout_behavior="com.uae.tra_smart_services.customviews.ScrollingBehaviorTest"
                 app:separatorStrokeWidth="2dp"
                 app:hexagonGapWidth="10dp"
-                app:hexTextSize="12sp"/>
+                app:hexTextSize="12dp"/>
 
         </RelativeLayout>
 

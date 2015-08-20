@@ -23,7 +23,10 @@ import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.EnquiriesFragment;
+import com.uae.tra_smart_services.fragment.HelpSalemFragment;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
+import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
@@ -61,7 +64,7 @@ public class HomeActivity extends BaseFragmentActivity
         mToolbar = findView(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        bottomNavRadios = findView(R.id.rgBottomNavRadio_FSL);
+        bottomNavRadios = findView(R.id.rgBottomNavRadio_AH);
         bottomNavRadios.setOnCheckedChangeListener(this);
 
         if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)){
@@ -153,7 +156,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     protected int getContainerId() {
-        return R.id.flContainer_HA;
+        return R.id.flContainer_AH;
     }
 
     @Override
