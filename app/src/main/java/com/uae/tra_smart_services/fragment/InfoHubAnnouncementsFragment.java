@@ -13,26 +13,27 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.adapter.InfoHubAnnListAdapter;
+import com.uae.tra_smart_services.adapter.InfoHubAnnFullListAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.rest.model.new_response.InfoHubAnnouncementsListItemModel;
+import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
+import com.uae.tra_smart_services.rest.model.new_response.InfoHubListItemModel;
 
 import java.util.ArrayList;
 
 /**
  * Created by ak-buffalo on 18.08.15.
  */
-public class InfoHubFragmentAnnouncements extends BaseFragment
-        implements InfoHubAnnListAdapter.OnInfoHubItemClickListener{
-    private ArrayList<InfoHubAnnouncementsListItemModel> DUMMY_LIST;
+public class InfoHubAnnouncementsFragment extends BaseFragment
+        implements OnInfoHubItemClickListener {
+    private ArrayList<InfoHubListItemModel> DUMMY_LIST;
 
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
     }
 
-    public static InfoHubFragmentAnnouncements newInstance() {
-        return new InfoHubFragmentAnnouncements();
+    public static InfoHubAnnouncementsFragment newInstance() {
+        return new InfoHubAnnouncementsFragment();
     }
 
     @Override
@@ -76,84 +77,84 @@ public class InfoHubFragmentAnnouncements extends BaseFragment
         super.onCreate(savedInstanceState);
     }
 
-    private RecyclerView infoHubList;
+    private RecyclerView mList;
     private RecyclerView.LayoutManager mLayoutManager;
-    private InfoHubAnnListAdapter mAdapter;
+    private InfoHubAnnFullListAdapter mAdapter;
     @Override
     protected void initViews() {
         super.initViews();
 
-        DUMMY_LIST = new ArrayList<InfoHubAnnouncementsListItemModel>(){
+        DUMMY_LIST = new ArrayList<InfoHubListItemModel>(){
             {
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
+                add(new InfoHubListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
             }
         };
-        infoHubList = findView(R.id.rvInfoHubAnnList_FIHA);
-        infoHubList.setHasFixedSize(true);
+        mList = findView(R.id.rvInfoHubAnnList_FIHA);
+        mList.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        infoHubList.setLayoutManager(mLayoutManager);
-        mAdapter = new InfoHubAnnListAdapter(getActivity(), DUMMY_LIST);
+        mList.setLayoutManager(mLayoutManager);
+        mAdapter = new InfoHubAnnFullListAdapter(getActivity(), DUMMY_LIST);
         mAdapter.setOnItemClickListener(this);
-        infoHubList.setAdapter(mAdapter);
+        mList.setAdapter(mAdapter);
     }
 
     @Override
@@ -167,7 +168,7 @@ public class InfoHubFragmentAnnouncements extends BaseFragment
     }
 
     @Override
-    public void onItemSelected(InfoHubAnnouncementsListItemModel item) {
+    public void onItemSelected(InfoHubListItemModel item) {
         // TODO need to be implemented
         Toast.makeText(getActivity(), item.getDescription(), Toast.LENGTH_LONG).show();
     }

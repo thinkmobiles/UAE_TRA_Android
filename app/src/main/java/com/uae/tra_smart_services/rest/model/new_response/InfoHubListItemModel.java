@@ -3,29 +3,37 @@ package com.uae.tra_smart_services.rest.model.new_response;
 /**
  * Created by ak-buffalo on 18.08.15.
  */
-public class InfoHubAnnouncementsListItemModel {
+public class InfoHubListItemModel {
     private String mIconUrl;
+    private String mTitle = "";
     private String mDescription;
     private String mDate;
 
-    public InfoHubAnnouncementsListItemModel setDate(String mDate) {
+    public InfoHubListItemModel setDate(String mDate) {
         this.mDate = mDate;
         return this;
     }
 
-    public InfoHubAnnouncementsListItemModel setIconUrl(String mIconUrl) {
+    public InfoHubListItemModel setIconUrl(String mIconUrl) {
         this.mIconUrl = mIconUrl;
         return this;
     }
+    public InfoHubListItemModel setTitle(String title) {
+        mTitle = title;
+        return this;
+    }
 
-    public InfoHubAnnouncementsListItemModel setDescription(String mDescription) {
+    public InfoHubListItemModel setDescription(String mDescription) {
         this.mDescription = mDescription;
         return this;
     }
 
-
     public String getIconUrl() {
         return mIconUrl;
+    }
+
+    public String getTitle() {
+        return mTitle;
     }
 
     public String getDescription() {

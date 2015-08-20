@@ -58,9 +58,16 @@
     <string name="str_location_error_message">Please enter address manually or wait untill location will be found</string>
     <string name="signal_level_error">Please set signal level</string>
 
+    <string name="str_announcements">الإعلانات</string>
+    <string name="str_transactions">المعاملات</string>
+    <string name="str_see_more">شاهد المزيد</string>
+
+
     <string name="str_dummy_info_hub_list_item_descr">
         هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم لأنها تعطي توزيعاَ طبيعياَ -إلى حد ما- للأحرف عوضاً عن استخدام "هنا يوجد محتوى نصي، هنا يوجد محتوى نصي" فتجعلها تبدو (أي الأحرف) وكأنها نص مقروء. العديد من برامح النشر المكتبي وبرامح تحرير صفحات الويب تستخدم لوريم إيبسوم بشكل إفتراضي كنموذج عن النص، وإذا قمت بإدخال "lorem ipsum" في أي محرك بحث ستظهر العديد من المواقع الحديثة العهد في نتائج البحث. على مدى السنين ظهرت نسخ جديدة ومختلفة من نص لوريم إيبسوم، أحياناً عن طريق الصدفة، وأحياناً عن عمد كإدخال بعض العبارات الفكاهية إليها.
     </string>
     <string name="str_dummy_info_hub_list_item_date">هزار و یک شب</string>
+    <string name="str_dummy_info_hub_list_item_title">هزار و یک شب</string>
+
 
 </resources>

@@ -14,35 +14,35 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.global.ListItemFilter;
-import com.uae.tra_smart_services.rest.model.new_response.InfoHubAnnouncementsListItemModel;
+import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
+import com.uae.tra_smart_services.rest.model.new_response.InfoHubListItemModel;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by ak-buffalo on 18.08.15.
  */
-public class InfoHubAnnListAdapter extends RecyclerView.Adapter<InfoHubAnnListAdapter.ViewHolder>
-                                    implements Filterable {
+public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHubTransactionsListAdapter.ViewHolder> {
 
-    private ArrayList<InfoHubAnnouncementsListItemModel> mDataSet;
+    private ArrayList<InfoHubListItemModel> mDataSet;
     private Context mContext;
-    private InfoHubAnnListAdapter.OnInfoHubItemClickListener onItemClickListener;
+    private OnInfoHubItemClickListener onItemClickListener;
     private float mMarginOffset = 0;
 
-    public InfoHubAnnListAdapter(Context _context, ArrayList<InfoHubAnnouncementsListItemModel> _dataSet){
+    public InfoHubTransactionsListAdapter(Context _context, ArrayList<InfoHubListItemModel> _dataSet){
         mContext = _context;
         mDataSet = _dataSet;
     }
 
-    public void add(int position, InfoHubAnnouncementsListItemModel item) {
+    public void add(int position, InfoHubListItemModel item) {
         mDataSet.add(position, item);
         notifyItemInserted(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private final HexagonView hexagonView;
+        private final TextView title;
         private final TextView description;
         private final TextView date;
         private final RelativeLayout container;
@@ -54,17 +54,20 @@ public class InfoHubAnnListAdapter extends RecyclerView.Adapter<InfoHubAnnListAd
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onItemSelected((InfoHubAnnouncementsListItemModel) container.getTag());
+                        onItemClickListener.onItemSelected((InfoHubListItemModel) container.getTag());
                     }
                 }
             });
+
             hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIHLI);
+            title = (TextView) itemView.findViewById(R.id.hvTitle_LIHLI);
             description = (TextView) itemView.findViewById(R.id.hvDescr_LIHLI);
             date = (TextView) itemView.findViewById(R.id.hvDate_LIHLI);
         }
 
-        public void setData(InfoHubAnnouncementsListItemModel _model){
-//            Picasso.with(InfoHubAnnListAdapter.this.mContext).load(_model.getIconUrl()).into(hexagonView);
+        public void setData(InfoHubListItemModel _model){
+//            Picasso.with(InfoHubAnnFullListAdapter.this.mContext).load(_model.getIconUrl()).into(hexagonView);
+            title.setText(_model.getTitle());
             description.setText(_model.getDescription());
             date.setText(_model.getDate());
             container.setTag(_model);
@@ -101,35 +104,7 @@ public class InfoHubAnnListAdapter extends RecyclerView.Adapter<InfoHubAnnListAd
         return mDataSet.size();
     }
 
-    public final void setOnItemClickListener(final InfoHubAnnListAdapter.OnInfoHubItemClickListener _onItemClickListener) {
+    public final void setOnItemClickListener(final OnInfoHubItemClickListener _onItemClickListener) {
         onItemClickListener = _onItemClickListener;
-    }
-
-    public interface OnInfoHubItemClickListener {
-        void onItemSelected(InfoHubAnnouncementsListItemModel item);
-    }
-
-    @Override
-    public Filter getFilter() {
-        return AnnouncementsFilter.getInstance(this, mDataSet);
-    }
-
-    public static class AnnouncementsFilter extends ListItemFilter<InfoHubAnnListAdapter, InfoHubAnnouncementsListItemModel> {
-        private AnnouncementsFilter(InfoHubAnnListAdapter adapter, List<InfoHubAnnouncementsListItemModel> originalList) {
-            super(adapter, originalList);
-        }
-        public static ListItemFilter getInstance(InfoHubAnnListAdapter adapter, List<InfoHubAnnouncementsListItemModel> originalList){
-            if(mInstance == null){
-                mInstance = new AnnouncementsFilter(adapter, originalList);
-            }
-            return mInstance;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            mAdapter.mDataSet.clear();
-            mAdapter.mDataSet.addAll((ArrayList<InfoHubAnnouncementsListItemModel>) results.values);
-            mAdapter.notifyDataSetChanged();
-        }
     }
 }

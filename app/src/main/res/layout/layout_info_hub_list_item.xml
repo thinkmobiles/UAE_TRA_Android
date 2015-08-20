@@ -17,12 +17,31 @@
         app:hexagonBorderColor="#000000"/>
 
     <TextView
+        android:id="@+id/hvTitle_LIHLI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:minLines = "1"
+        android:maxLines = "1"
+        android:maxEms="10"
+        android:singleLine = "false"
+        android:textColor="?attr/globalButtonTextColor"
+        android:textSize="16sp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:gravity="start"
+        android:text="asdasd"
+        android:layout_toEndOf="@+id/hvIcon_LIHLI"
+        android:layout_alignTop="@+id/hvIcon_LIHLI" />
+
+    <TextView
         android:id="@+id/hvDescr_LIHLI"
         android:layout_width="wrap_content"
         android:layout_height="26dip"
         android:ellipsize="marquee"
         android:minLines = "1"
-        android:maxLines = "4"
+        android:maxLines = "3"
+        android:maxEms="13"
         android:singleLine = "false"
         android:text="Description"
         android:textSize="16sp"
@@ -32,24 +51,28 @@
         android:layout_alignParentEnd="true"
         android:gravity="start"
         android:layout_toEndOf="@+id/hvIcon_LIHLI"
-        android:layout_below="@+id/hvDate_LIHLI" />
+        android:layout_below="@+id/hvTitle_LIHLI" />
 
     <TextView
         android:id="@+id/hvDate_LIHLI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
-        android:gravity="right"
+        android:gravity="center"
+        android:padding="2dp"
         android:text="date"
         android:textSize="10sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/hvDescr_LIHLI" />
+        android:textColor="@color/hex_color_accent"
+        android:layout_above="@+id/hvDescr_LIHLI"
+        android:layout_alignEnd="@+id/hvDescr_LIHLI"
+        android:layout_alignTop="@+id/hvIcon_LIHLI" />
 
     <View
         style="@style/ListViewItemSeparator"
-        android:layout_below="@+id/hvDescr_LIHLI"
+        android:id="@+id/vListViewItemSeparator"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_alignStart="@+id/hvDescr_LIHLI" />
+        android:layout_alignStart="@+id/hvDescr_LIHLI"
+        android:layout_below="@+id/hvIcon_LIHLI"
+        android:layout_alignEnd="@+id/hvDescr_LIHLI" />
 
 </RelativeLayout> 

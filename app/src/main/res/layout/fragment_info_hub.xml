@@ -10,13 +10,70 @@
         android:scaleType="centerCrop"
         android:src="@drawable/res_bg_2" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvInfoHubAnnListPrev_FIH"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTransactionsList_FIH"
-        android:layout_width="match_parent"
-        android:layout_height="358dp" />
+        <RelativeLayout
+            android:id="@+id/rlContainerAnnList_FIH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvAnnText_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:text="@string/str_announcements" />
+
+            <TextView
+                android:id="@+id/tvSeeMorebAnn_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:padding="5dp"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:textColor="@drawable/selector_simple_triggerable_textview"
+                android:text="@string/str_see_more" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvInfoHubListPrev_FIH"
+                android:layout_width="match_parent"
+                android:scrollbars="horizontal"
+                android:layout_height="125dp"
+                android:layout_below="@+id/tvAnnText_FIH"
+                android:layout_marginTop="10dp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/ListViewItemSeparator"
+            android:layout_alignEnd="@+id/textView2"
+            android:layout_alignStart="@+id/tvSeeMoreInfoHubAnn_FIH"
+            android:layout_below="@+id/hvIcon_LIHLI"
+            android:layout_marginStart="5dp" />
+
+        <RelativeLayout
+            android:id="@+id/rlContainerTransactionsList_FIH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvTransText_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:text="@string/str_transactions" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvTransactionsList_FIH"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tvTransText_FIH" />
+        </RelativeLayout>
+    </LinearLayout>
+
 </FrameLayout>

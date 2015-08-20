@@ -61,9 +61,9 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     @Override
     public View onCreateView(final LayoutInflater _inflater, final ViewGroup _container, final Bundle _savedInstanceState) {
         rootView = _inflater.inflate(getLayoutResource(), _container, false);
+        initCustomEntities();
         initViews();
         initListeners();
-        initCustomEntities();
         setToolbarVisibility();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         return rootView;
