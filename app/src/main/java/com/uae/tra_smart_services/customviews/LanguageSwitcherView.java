@@ -105,7 +105,7 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
     @Override
     protected void unBindView(View view){
         view.setOnClickListener(null);
-        ((TextView) view).setTextColor(getResources().getColor(R.color.hex_color_light_gray));
+        ((TextView) view).setTextColor(getResources().getColor(R.color.hex_color_middle_gray));
     }
 
     @Override
