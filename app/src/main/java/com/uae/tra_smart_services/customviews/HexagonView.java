@@ -28,7 +28,7 @@ public class HexagonView extends View {
     private final double mHexagonSide, mHexagonInnerRadius;
     private final Path mPath;
     private final Paint mPaint, mPaint2, mPaint3;
-//    private List<Line> lines;
+    //    private List<Line> lines;
 //    private List<Point> points;
     private int mBorderWidth;
     private Drawable mBackgroundDrawable;

@@ -15,7 +15,6 @@
         <EditText
             android:id="@+id/etEmail_FLI"
             style="@style/UserAuthorizationDataEditTextField"
-            android:drawableLeft="@drawable/ic_temp_left_field_icon"
             android:hint="@string/str_email"
             android:inputType="textPersonName" />
 

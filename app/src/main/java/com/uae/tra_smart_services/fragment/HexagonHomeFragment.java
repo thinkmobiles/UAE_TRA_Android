@@ -158,7 +158,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
     }
 
     @Override
-    protected void initCustomEntities() {
+    protected void initData() {
         mHexagonalHeaderAnimator = ValueAnimator.ofFloat(0f, 1f);
         mHexagonalHeaderAnimator.setDuration(600);
         mHexagonalHeaderAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
