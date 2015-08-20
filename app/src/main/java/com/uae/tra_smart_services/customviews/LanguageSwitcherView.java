@@ -55,7 +55,6 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
     }
 
     private TextView mAcitveLang;
-
     @Override
     protected void initViews() {
         super.initViews();
