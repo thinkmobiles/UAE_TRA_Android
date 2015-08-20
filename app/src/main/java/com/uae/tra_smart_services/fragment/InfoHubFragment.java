@@ -245,7 +245,7 @@ public class InfoHubFragment extends BaseFragment
                 getFragmentManager()
                         .beginTransaction()
                         .addToBackStack(null)
-                        .replace(R.id.flContainer_HA, InfoHubAnnouncementsFragment.newInstance())
+                        .replace(R.id.flContainer_AH, InfoHubAnnouncementsFragment.newInstance())
                         .commit();
                 break;
         }
