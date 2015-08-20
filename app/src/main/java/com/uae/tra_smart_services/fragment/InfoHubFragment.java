@@ -3,8 +3,6 @@ package com.uae.tra_smart_services.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,8 +45,8 @@ public class InfoHubFragment extends BaseFragment
     private ArrayList<InfoHubListItemModel> DUMMY_ANNOUNCEMENTS_LIST;
     private ArrayList<InfoHubListItemModel> DUMMY_TRANSACTIONS_LIST;
     @Override
-    protected void initCustomEntities() {
-        super.initCustomEntities();
+    protected void initData() {
+        super.initData();
         DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<InfoHubListItemModel>(){
             {
                 add(new InfoHubListItemModel()

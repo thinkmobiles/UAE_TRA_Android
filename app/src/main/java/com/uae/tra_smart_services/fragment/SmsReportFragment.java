@@ -44,8 +44,8 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
 
     private CustomFilterPool filters;
     @Override
-    protected void initCustomEntities() {
-        super.initCustomEntities();
+    protected void initData() {
+        super.initData();
         filters = new CustomFilterPool<String>(){
             {
                 addFilter(new Filter<String>() {

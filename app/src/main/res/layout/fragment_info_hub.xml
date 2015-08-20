@@ -24,7 +24,8 @@
                 android:id="@+id/tvAnnText_FIH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:padding="10dp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:text="@string/str_announcements" />
 
@@ -33,7 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:padding="5dp"
+                android:padding="10dp"
+                android:textSize="14sp"
                 android:layout_alignParentTop="true"
                 android:clickable="true"
                 android:textColor="@drawable/selector_simple_triggerable_textview"
@@ -45,7 +47,7 @@
                 android:scrollbars="horizontal"
                 android:layout_height="125dp"
                 android:layout_below="@+id/tvAnnText_FIH"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="5dp" />
         </RelativeLayout>
 
         <View
@@ -64,7 +66,8 @@
                 android:id="@+id/tvTransText_FIH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:textSize="16sp"
+                android:padding="10dp"
                 android:textStyle="bold"
                 android:text="@string/str_transactions" />
 

@@ -60,8 +60,8 @@ public final class SmsBlockNumberFragment extends BaseFragment
 
     private CustomFilterPool filters;
     @Override
-    protected final void initCustomEntities() {
-        super.initCustomEntities();
+    protected final void initData() {
+        super.initData();
         filters = new CustomFilterPool<String>(){
             {
                 addFilter(new Filter<String>() {
