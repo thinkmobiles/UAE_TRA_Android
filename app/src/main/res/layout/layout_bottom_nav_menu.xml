@@ -5,6 +5,7 @@
     android:orientation="horizontal"
     android:paddingRight="@dimen/dp_dashboard_tab_padding"
     android:layoutDirection="locale"
+    android:background="@android:color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RadioButton
