@@ -7,15 +7,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.util.HexagonUtils;
@@ -54,12 +53,15 @@ public class HexagonalButtonsLayout extends View {
     private boolean isDown = false;
     private Integer mPressedButton;
 
+    private float mStartGapWidth, mGapWidthDifference;
+    private float mAnimationProgress = 0.0f;
+
     public HexagonalButtonsLayout(final Context _context, final AttributeSet _attrs) {
         super(_context, _attrs);
         initProperties(_attrs);
         initPaint();
         initDrawables();
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
     public final float getHalfOuterRadius() {
@@ -68,6 +70,32 @@ public class HexagonalButtonsLayout extends View {
 
     public final void setServiceSelectedListener(final OnServiceSelected _serviceSelectedListener) {
         mServiceSelectedListener = _serviceSelectedListener;
+    }
+
+//    public final void incrementGapWidth() {
+//        if (mHexagonGapWidth < mMaxGapWidth) {
+//            mHexagonGapWidth += mGapWidthStep;
+////            calculateVariables(getWidth());
+////            invalidate();
+//            requestLayout();
+//        }
+//    }
+//
+//    public final void decrementGapWidth() {
+//        if (mHexagonGapWidth > mMinGapWidth) {
+//            mHexagonGapWidth -= mGapWidthStep;
+////            calculateVariables(getWidth());
+////            invalidate();
+//            requestLayout();
+//        }
+//    }
+
+    public final void setAnimationProgress(final float _animationProgress) {
+        mAnimationProgress = _animationProgress;
+
+        mHexagonGapWidth = mStartGapWidth + mGapWidthDifference * _animationProgress;
+        requestLayout();
+        invalidate();
     }
 
     private void initProperties(final AttributeSet _attrs) {
@@ -84,6 +112,9 @@ public class HexagonalButtonsLayout extends View {
         }
 
         mPolygons = new ArrayList<>();
+
+        mGapWidthDifference = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+        mStartGapWidth = mHexagonGapWidth;
     }
 
     private void initPaint() {
@@ -233,9 +264,9 @@ public class HexagonalButtonsLayout extends View {
             }
         }
 
-        _canvas.drawPath(buttonsSecondPath, mShadowPaint);
+//        _canvas.drawPath(buttonsSecondPath, mShadowPaint);
         _canvas.drawPath(buttonsSecondPath, mButtonSecondColorPaint);
-        _canvas.drawPath(buttonsPath, mShadowPaint);
+//        _canvas.drawPath(buttonsPath, mShadowPaint);
         _canvas.drawPath(buttonsPath, mButtonPaint);
     }
 
@@ -282,7 +313,7 @@ public class HexagonalButtonsLayout extends View {
             separatorPath.lineTo(centerX + mSeparatorTriangleHeight, centerY + mSeparatorRadius / 2);
         }
 
-        separatorPath.lineTo(centerX + 2 * mSeparatorTriangleHeight, centerY + mSeparatorRadius);
+        separatorPath.lineTo(centerX, centerY + mSeparatorRadius);
 
         _canvas.drawPath(separatorPath, mSeparatorPaint);
     }
