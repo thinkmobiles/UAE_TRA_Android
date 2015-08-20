@@ -8,4 +8,5 @@
 
     <attr name="homePageHeaderBackground" format="reference" />
     <attr name="globalButtonTextColor" format="reference" />
+    <attr name="globalButtonSelector" format="reference" />
 </resources>

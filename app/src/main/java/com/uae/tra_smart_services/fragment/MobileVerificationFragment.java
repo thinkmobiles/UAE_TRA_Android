@@ -163,7 +163,7 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
 
     @Override
     protected int getTitle() {
-        return R.string.str_empty;
+        return R.string.str_one_empty_space;
     }
 
     @Override

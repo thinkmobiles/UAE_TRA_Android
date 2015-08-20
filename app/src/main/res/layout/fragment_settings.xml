@@ -151,7 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_gravity="end"
             android:id="@+id/btnChangeServer_FS"
-            android:textColor="@android:color/black"
+            android:textColor="?attr/homePageHeaderBackground"
             android:text="Change server"
             android:layout_height="wrap_content"/>
 

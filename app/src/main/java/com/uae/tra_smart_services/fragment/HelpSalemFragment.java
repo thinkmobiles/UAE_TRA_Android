@@ -107,7 +107,7 @@ public class HelpSalemFragment extends BaseFragment implements AlertDialogFragme
     @Override
     public void onOkPressed() {
         // Unimplemented method
-        // Used exceptionally to specify buttons in dialog
+        // Used exceptionally to specify OK button in dialog
     }
 
     private final class HelpSalimRequestListener implements RequestListener<Response> {
