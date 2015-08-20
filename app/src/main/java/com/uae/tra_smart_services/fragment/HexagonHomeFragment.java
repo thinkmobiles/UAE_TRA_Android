@@ -1,15 +1,19 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.ServicesRecyclerViewAdapter;
 import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
+import com.uae.tra_smart_services.customviews.HexagonalHeader;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.Service;
 
@@ -17,22 +21,38 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.*;
+import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.INTERNET_SPEED_TEST;
+import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.POOR_COVERAGE_SERVICE;
+import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.SMS_SPAM_SERVICE;
+import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.VERIFICATION_SERVICE;
 
 /**
  * Created by Vitaliy on 13/08/2015.
  */
 public class HexagonHomeFragment extends BaseFragment implements HexagonalButtonsLayout.OnServiceSelected {
 
-    protected RecyclerView mRecyclerView;
-    protected ServicesRecyclerViewAdapter mAdapter;
+
+    public final String RECYCLER_TAG = "RecyclerView_test";
+
     private HexagonalButtonsLayout mHexagonalButtonsLayout;
-    protected RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView mRecyclerView;
+    private HexagonalHeader mHexagonalHeader;
+
+    private ServicesRecyclerViewAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private List<Service> mDataSet;
 
     private OnServiceSelectListener mServiceSelectListener;
     private OnStaticServiceSelectListener mStaticServiceSelectListener;
+
+    private ValueAnimator mHexagonalHeaderAnimator, mHexagonButtonsAnimator, mHexagonHeaderReverseAnimator,
+                            mHexagonButtonsReverseAnimator;
+    private AnimatorSet mAnimatorSet, mReverseAnimator;
+
+    private boolean isCollapsed = false;
+    private boolean isAnimating = false;
+
+    private float mAnimationProgress = 0f;
 
     public static HexagonHomeFragment newInstance() {
         return new HexagonHomeFragment();
@@ -49,16 +69,50 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
     protected void initViews() {
         mRecyclerView = findView(R.id.rvServices_FHH);
         mHexagonalButtonsLayout = findView(R.id.hblHexagonalButtons_FHH);
+        mHexagonalHeader = findView(R.id.hhHeader_FHH);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void initListeners() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                mHexagonalButtonsLayout.invalidate();
 
-        initServiceList();
+                if (RecyclerView.SCROLL_STATE_SETTLING == newState ||
+                            RecyclerView.SCROLL_STATE_IDLE == newState
+                            && mAnimationProgress != 0f && mAnimationProgress != 1f) {
 
-        mLayoutManager = new StaggeredGridLayoutManager(4, 1);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+                    endAnimation();
+                }
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (!mHexagonalHeaderAnimator.isRunning() && !mHexagonHeaderReverseAnimator.isRunning()
+                        && ((mAnimationProgress < 1f && dy > 0) || (mAnimationProgress > 0f && dy < 0))) {
+                    mAnimationProgress += dy * 0.001f;
+
+                    if (mAnimationProgress >= 1f) {
+                        mAnimationProgress = 1f;
+                        isCollapsed = true;
+                    } else if (mAnimationProgress <= 0f) {
+                        mAnimationProgress = 0f;
+                        isCollapsed = false;
+                    }
+
+                    mHexagonalHeader.setAnimationProgress(mAnimationProgress);
+                    mHexagonalButtonsLayout.setAnimationProgress(mAnimationProgress);
+                }
+
+
+                Log.d(RECYCLER_TAG, "Scrolled - " + String.valueOf(dy));
+            }
+        });
         mHexagonalButtonsLayout.setServiceSelectedListener(this);
         mHexagonalButtonsLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -79,8 +133,91 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
         });
     }
 
+    private void endAnimation() {
+        if (isCollapsed) {
+            mHexagonHeaderReverseAnimator.setFloatValues(mAnimationProgress, 0f);
+            mHexagonHeaderReverseAnimator.setDuration((int) (600 / 2 * mAnimationProgress));
+            mHexagonHeaderReverseAnimator.start();
+            isCollapsed = false;
+        } else {
+            mHexagonalHeaderAnimator.setFloatValues(mAnimationProgress, 1f);
+            mHexagonalHeaderAnimator.setDuration((int) (600 / 2 * (1 - mAnimationProgress)));
+            mHexagonalHeaderAnimator.start();
+            isCollapsed = true;
+        }
+    }
+
+    @Override
+    protected void initCustomEntities() {
+        mAnimatorSet = new AnimatorSet();
+        mHexagonalHeaderAnimator = ValueAnimator.ofFloat(0f, 1f);
+        mHexagonalHeaderAnimator.setDuration(600);
+//        mHexagonalHeaderAnimator.setInterpolator(new LinearInterpolator());
+        mHexagonalHeaderAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAnimationProgress = (float) animation.getAnimatedValue();
+                mHexagonalHeader.setAnimationProgress( (float) animation.getAnimatedValue());
+                mHexagonalButtonsLayout.setAnimationProgress((float) animation.getAnimatedValue());
+            }
+        });
+
+        mHexagonButtonsAnimator = ValueAnimator.ofFloat(0f, 1f);
+        mHexagonButtonsAnimator.setDuration(150);
+
+        mHexagonButtonsAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mHexagonalButtonsLayout.setAnimationProgress((float) animation.getAnimatedValue());
+            }
+        });
+
+        mAnimatorSet.play(mHexagonalHeaderAnimator).with(mHexagonButtonsAnimator);
+
+
+        mReverseAnimator = new AnimatorSet();
+        mHexagonHeaderReverseAnimator = ValueAnimator.ofFloat(1f, 0f);
+        mHexagonHeaderReverseAnimator.setDuration(600);
+//        mHexagonalHeaderAnimator.setInterpolator(new LinearInterpolator());
+        mHexagonHeaderReverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAnimationProgress = (float) animation.getAnimatedValue();
+                mHexagonalHeader.setAnimationProgress( (float) animation.getAnimatedValue());
+                mHexagonalButtonsLayout.setAnimationProgress( (float) animation.getAnimatedValue());
+            }
+        });
+
+        mHexagonButtonsReverseAnimator = ValueAnimator.ofFloat(1f, 0f);
+        mHexagonButtonsReverseAnimator.setDuration(150);
+
+        mHexagonButtonsReverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mHexagonalButtonsLayout.setAnimationProgress( (float) animation.getAnimatedValue());
+            }
+        });
+
+        mReverseAnimator.play(mHexagonHeaderReverseAnimator).with(mHexagonButtonsReverseAnimator);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        initServiceList();
+
+        mLayoutManager = new StaggeredGridLayoutManager(4, 1);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+    }
+
     private void initServiceList() {
         mDataSet = new ArrayList<>(Arrays.asList(Service.values()));
+        mDataSet.addAll(Arrays.asList(Service.values()));
+        mDataSet.addAll(Arrays.asList(Service.values()));
+        mDataSet.addAll(Arrays.asList(Service.values()));
+        mDataSet.addAll(Arrays.asList(Service.values()));
+        mDataSet.addAll(Arrays.asList(Service.values()));
     }
 
     @Override
@@ -102,7 +239,16 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
         } else if (POOR_COVERAGE_SERVICE.isEquals(_id)) {
             mStaticServiceSelectListener.onStaticServiceSelect(POOR_COVERAGE_SERVICE);
         } else if (INTERNET_SPEED_TEST.isEquals(_id)) {
-            mStaticServiceSelectListener.onStaticServiceSelect(INTERNET_SPEED_TEST);
+//            mAnimatorSet.start();
+            if (isCollapsed) {
+                if (mAnimatorSet.isRunning()) mAnimatorSet.cancel();
+                mReverseAnimator.start();
+                isCollapsed = !isCollapsed;
+            } else {
+                if (mReverseAnimator.isRunning()) mReverseAnimator.cancel();
+                mAnimatorSet.start();
+                isCollapsed = true;
+            }
         }
     }
 

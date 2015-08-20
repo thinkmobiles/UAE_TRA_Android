@@ -25,12 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
-import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
-import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.global.Service;
 
@@ -112,17 +109,15 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.setData(mDataSet.get(position));
 
+        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) viewHolder.getContainer().getLayoutParams();
         if (position == 1 || position == 3) {
-            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) viewHolder.getContainer().getLayoutParams();
             final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, mContext.getResources().getDisplayMetrics());
             layoutParams.setMargins(layoutParams.getMarginStart(), (int) mMarginOffset + margin, layoutParams.getMarginEnd(), layoutParams.bottomMargin);
             viewHolder.getContainer().setLayoutParams(layoutParams);
         } else if (position == 0 || position == 2){
-            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) viewHolder.getContainer().getLayoutParams();
             layoutParams.setMargins(layoutParams.getMarginStart(), (int) mMarginOffset, layoutParams.getMarginEnd(), layoutParams.bottomMargin);
             viewHolder.getContainer().setLayoutParams(layoutParams);
         } else {
-            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) viewHolder.getContainer().getLayoutParams();
             layoutParams.setMargins(layoutParams.getMarginStart(), 0, layoutParams.getMarginEnd(), layoutParams.bottomMargin);
             viewHolder.getContainer().setLayoutParams(layoutParams);
         }

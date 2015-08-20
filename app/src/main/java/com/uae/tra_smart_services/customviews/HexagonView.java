@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -41,6 +40,7 @@ public class HexagonView extends View {
     public HexagonView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HexagonView);
         try {
             mHexagonSide = a.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS);
@@ -101,51 +101,7 @@ public class HexagonView extends View {
                     (float) (h / 2 + mHexagonSide * Math.cos(section * i)));
         }
         mPath.close();
-
-//        lines = new ArrayList<>();
-//        points = new ArrayList<>();
-//
-//        int[] colors = new int[]{
-//                Color.BLACK,
-//                Color.BLUE,
-//                Color.RED,
-//                Color.GREEN,
-//                Color.MAGENTA,
-//                Color.YELLOW,
-//                Color.BLACK,
-//                Color.BLUE,
-//                Color.RED,
-//                Color.GREEN,
-//                Color.MAGENTA,
-//                Color.YELLOW
-//        };
-//
-//
-//        points.add(new Point(
-//                (w / 2 + mHexagonSide * Math.sin(0)),
-//                (h / 2 + mHexagonSide * Math.cos(0)),
-//                mPaint,
-//                colors[0]));
-//
-//        for (int i = 0; i < HEXAGON_BORDER_COUNT; i++) {
-//            lines.add(new Line(
-//                    (w / 2 + mHexagonSide * Math.sin(section * i)),
-//                    (w / 2 + mHexagonSide * Math.sin(section * (i + 1))),
-//                    (h / 2 + mHexagonSide * Math.cos(section * i)),
-//                    (h / 2 + mHexagonSide * Math.cos(section * (i + 1))),
-//                    mPaint,
-//                    colors[i]));
-//
-//            points.add(new Point(
-//                    (w / 2 + mHexagonSide * Math.sin(section * (i + 1))),
-//                    (h / 2 + mHexagonSide * Math.cos(section * (i + 1))),
-//                    mPaint,
-//                    colors[i]));
-//        }
-
     }
-
-    private Rect bounds = new Rect(), drawableRect = new Rect();
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -153,7 +109,6 @@ public class HexagonView extends View {
         mPaint.setAntiAlias(true);
         if (mBackgroundDrawable != null) {
             canvas.clipPath(mPath);
-            canvas.getClipBounds(bounds);
             if (mBackgroundDrawable instanceof BitmapDrawable) {
 
                 float centerY = (float) (mHexagonSide + getBorderWidth() / 2f);
@@ -164,114 +119,13 @@ public class HexagonView extends View {
 
                 mBackgroundDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
                         (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
-//                }
 
-//                if (mBackgroundDrawable.getIntrinsicWidth() < bounds.width()) {
-//                    drawableRect.left = (bounds.width() - mBackgroundDrawable.getIntrinsicWidth()) / 2;
-//                    drawableRect.right = drawableRect.left + mBackgroundDrawable.getIntrinsicWidth();
-//                } else {
-//                    drawableRect.left = bounds.left;
-//                    drawableRect.right = bounds.right;
-//                }
-//
-//                if (mBackgroundDrawable.getIntrinsicHeight() < bounds.height()) {
-//                    drawableRect.top = (bounds.height() - mBackgroundDrawable.getIntrinsicHeight()) / 2;
-//                    drawableRect.bottom = drawableRect.top + mBackgroundDrawable.getIntrinsicHeight();
-//                } else {
-//                    drawableRect.top = bounds.top;
-//                    drawableRect.bottom = bounds.bottom;
-//                }
-//            } else {
-//                drawableRect = bounds;
-//            }
-//
-//
-//            if (mBackgroundDrawable instanceof BitmapDrawable) {
-//                ScaleDrawable scaleDrawable = new ScaleDrawable(mBackgroundDrawable, Gravity.FILL_VERTICAL|Gravity.CENTER_HORIZONTAL, 0f, 0.8f);
-//                scaleDrawable.setLevel(1);
-//                scaleDrawable.setBounds(bounds);
-//                scaleDrawable.draw(canvas);
-//                canvas
-//                float dwidth = mBackgroundDrawable.getIntrinsicWidth(), dheight = mBackgroundDrawable.getIntrinsicHeight();
-//                float vwidth = bounds.width(), vheight = bounds.height();
-//                Matrix mDrawMatrix = new Matrix();
-//                float scale;
-//                float dx;
-//                float dy;
-//
-//                if (dwidth <= vwidth && dheight <= vheight) {
-//                    scale = 1.0f;
-//                } else {
-//                    scale = Math.min(vwidth / dwidth, vheight / dheight);
-//                }
-//
-//                dx = (int) ((vwidth - dwidth * scale) * 0.5f + 0.5f);
-//                dy = (int) ((vheight - dheight * scale) * 0.5f + 0.5f);
-//
-//                mDrawMatrix.setScale(scale, scale);
-//                mDrawMatrix.postTranslate(dx, dy);
-//                canvas.concat(mDrawMatrix);
-//                mBackgroundDrawable.setBounds(bounds);
-//                mBackgroundDrawable.draw(canvas);
-//                canvas.setMatrix(null);
-//            } else {
-//                mBackgroundDrawable.setBounds(drawableRect);
                 mBackgroundDrawable.draw(canvas);
-//            }
                 canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
             }
-            canvas.drawPath(mPath, mPaint);
-//        Path path = new Path(mPath);
-//        path.setFillType(Path.FillType.INVERSE_WINDING);
-//        canvas.drawPath(path, mPaint2);
-
-//        Paint paint2 = new Paint(mPaint);
-//        paint2.setStrokeWidth(0);
-//        paint2.setColor(Color.RED);
-//        canvas.drawPath(mPath, paint2);
-
-//        Paint paint3 = new Paint(paint2);
-//        paint3.setColor(Color.GREEN);
-//        canvas.drawLine(canvas.getWidth() / 2, canvas.getHeight() / 2, canvas.getWidth() / 2 + mHexagonInnerRadius, canvas.getHeight() / 2, paint3);
-//        paint3.setColor(Color.BLUE);
-//        canvas.drawLine(canvas.getWidth() / 2, canvas.getHeight() / 2, canvas.getWidth() / 2, canvas.getHeight() / 2 - mHexagonSide - mBorderWidth / 2, paint3);
-//        for (Line line : lines) {
-//            canvas.drawLine(line.startX, line.startY, line.stopX, line.stopY, line.paint);
-//        }
-//
-//        for (Point point : points) {
-//            canvas.drawPoint(point.x, point.y, point.paint);
-//        }
+            if (getY() > 0) {
+                canvas.drawPath(mPath, mPaint);
+            }
         }
     }
-
-//    private static class Line {
-//
-//        float startX, stopX;
-//        float startY, stopY;
-//        Paint paint;
-//
-//        public Line(double startX, double stopX, double startY, double stopY, Paint paint, int color) {
-//            this.startX = (float) startX;
-//            this.stopX = (float) stopX;
-//            this.startY = (float) startY;
-//            this.stopY = (float) stopY;
-//            this.paint = new Paint(paint);
-//            this.paint.setColor(color);
-//        }
-//    }
-//
-//    private static class Point {
-//
-//        float x, y;
-//        Paint paint;
-//
-//        public Point(double x, double y, Paint paint, int color) {
-//            this.x = (float) x;
-//            this.y = (float) y;
-//            this.paint = new Paint(paint);
-//            this.paint.setColor(color);
-//        }
-//    }
-
 }
