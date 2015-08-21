@@ -4,9 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by ak-buffalo on 18.08.15.
+ * Created by ak-buffalo on 20.08.15.
  */
-public class InfoHubListItemModel implements Parcelable{
+public class InfoHubListItemModel<T> {
     private String mIconUrl;
     private String mHeaderImageUrl;
     private String mTitle = "";
@@ -14,40 +14,40 @@ public class InfoHubListItemModel implements Parcelable{
     private String mFullDescription;
     private String mDate;
 
-    public InfoHubListItemModel(){}
+    protected InfoHubListItemModel(){}
 
-    public InfoHubListItemModel setDate(String mDate) {
+    public T setDate(String mDate) {
         this.mDate = mDate;
-        return this;
+        return (T) this;
     }
 
-    public InfoHubListItemModel setIconUrl(String mIconUrl) {
+    public T setIconUrl(String mIconUrl) {
         this.mIconUrl = mIconUrl;
-        return this;
+        return (T) this;
     }
 
     public String getHeaderImageUrl() {
         return mHeaderImageUrl;
     }
 
-    public InfoHubListItemModel setHeaderImageUrl(String _headerImageUrl) {
+    public T setHeaderImageUrl(String _headerImageUrl) {
         this.mHeaderImageUrl = _headerImageUrl;
-        return this;
+        return (T) this;
     }
 
-    public InfoHubListItemModel setTitle(String title) {
+    public T setTitle(String title) {
         mTitle = title;
-        return this;
+        return (T) this;
     }
 
-    public InfoHubListItemModel setDescription(String mDescription) {
+    public T setDescription(String mDescription) {
         this.mDescription = mDescription;
-        return this;
+        return (T) this;
     }
 
-    public InfoHubListItemModel setFullDescription(String _fullDescription) {
+    public T setFullDescription(String _fullDescription) {
         this.mFullDescription = _fullDescription;
-        return this;
+        return (T) this;
     }
 
     public String getIconUrl() {
@@ -75,29 +75,17 @@ public class InfoHubListItemModel implements Parcelable{
         return getDescription();
     }
 
-
-
     public int describeContents() {
         return 0;
     }
 
-    private int mData;
+    public int mData;
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(mData);
     }
 
-    public static final Parcelable.Creator<InfoHubListItemModel> CREATOR
-            = new Parcelable.Creator<InfoHubListItemModel>() {
-        public InfoHubListItemModel createFromParcel(Parcel in) {
-            return new InfoHubListItemModel(in);
-        }
 
-        public InfoHubListItemModel[] newArray(int size) {
-            return new InfoHubListItemModel[size];
-        }
-    };
-
-    private InfoHubListItemModel(Parcel in) {
+    public InfoHubListItemModel(Parcel in) {
         mData = in.readInt();
     }
 }

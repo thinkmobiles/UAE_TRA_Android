@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
-import com.uae.tra_smart_services.rest.model.new_response.InfoHubListItemModel;
+import com.uae.tra_smart_services.rest.model.new_response.InfoHubAnnouncementsListItemModel;
 
 import java.util.ArrayList;
 
@@ -20,16 +20,16 @@ import java.util.ArrayList;
  */
 public class InfoHubAnnPreviewListAdapter extends RecyclerView.Adapter<InfoHubAnnPreviewListAdapter.ViewHolder> {
 
-    private ArrayList<InfoHubListItemModel> mDataSet;
+    private ArrayList<InfoHubAnnouncementsListItemModel> mDataSet;
     private Context mContext;
     private OnInfoHubItemClickListener onItemClickListener;
 
-    public InfoHubAnnPreviewListAdapter(Context _context, ArrayList<InfoHubListItemModel> _dataSet){
+    public InfoHubAnnPreviewListAdapter(Context _context, ArrayList<InfoHubAnnouncementsListItemModel> _dataSet){
         mContext = _context;
         mDataSet = _dataSet;
     }
 
-    public void add(int position, InfoHubListItemModel item) {
+    public void add(int position, InfoHubAnnouncementsListItemModel item) {
         mDataSet.add(position, item);
         notifyItemInserted(position);
     }
@@ -48,7 +48,7 @@ public class InfoHubAnnPreviewListAdapter extends RecyclerView.Adapter<InfoHubAn
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onItemSelected((InfoHubListItemModel) container.getTag());
+                        onItemClickListener.onItemSelected((InfoHubAnnouncementsListItemModel) container.getTag());
                     }
                 }
             });
@@ -58,7 +58,7 @@ public class InfoHubAnnPreviewListAdapter extends RecyclerView.Adapter<InfoHubAn
             date = (TextView) itemView.findViewById(R.id.hvDate_LIHLI);
         }
 
-        public void setData(InfoHubListItemModel _model){
+        public void setData(InfoHubAnnouncementsListItemModel _model){
 //            Picasso.with(InfoHubAnnFullListAdapter.this.mContext).load(_model.getIconUrl()).into(hexagonView);
             title.setText(_model.getTitle());
             description.setText(_model.getDescription());

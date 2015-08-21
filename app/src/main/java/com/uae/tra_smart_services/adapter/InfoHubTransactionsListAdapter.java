@@ -6,36 +6,33 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
-import com.uae.tra_smart_services.global.ListItemFilter;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
-import com.uae.tra_smart_services.rest.model.new_response.InfoHubListItemModel;
+import com.uae.tra_smart_services.rest.model.new_response.InfoHubAnnouncementsListItemModel;
+import com.uae.tra_smart_services.rest.model.new_response.InfoHubTransActionsListItemModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ak-buffalo on 18.08.15.
  */
 public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHubTransactionsListAdapter.ViewHolder> {
 
-    private ArrayList<InfoHubListItemModel> mDataSet;
+    private ArrayList<InfoHubTransActionsListItemModel> mDataSet;
     private Context mContext;
     private OnInfoHubItemClickListener onItemClickListener;
     private float mMarginOffset = 0;
 
-    public InfoHubTransactionsListAdapter(Context _context, ArrayList<InfoHubListItemModel> _dataSet){
+    public InfoHubTransactionsListAdapter(Context _context, ArrayList<InfoHubTransActionsListItemModel> _dataSet){
         mContext = _context;
         mDataSet = _dataSet;
     }
 
-    public void add(int position, InfoHubListItemModel item) {
+    public void add(int position, InfoHubTransActionsListItemModel item) {
         mDataSet.add(position, item);
         notifyItemInserted(position);
     }
@@ -54,7 +51,7 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onItemSelected((InfoHubListItemModel) container.getTag());
+                        onItemClickListener.onItemSelected((InfoHubTransActionsListItemModel) container.getTag());
                     }
                 }
             });
@@ -65,7 +62,7 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
             date = (TextView) itemView.findViewById(R.id.hvDate_LIHLI);
         }
 
-        public void setData(InfoHubListItemModel _model){
+        public void setData(InfoHubTransActionsListItemModel _model){
 //            Picasso.with(InfoHubAnnFullListAdapter.this.mContext).load(_model.getIconUrl()).into(hexagonView);
             title.setText(_model.getTitle());
             description.setText(_model.getDescription());
