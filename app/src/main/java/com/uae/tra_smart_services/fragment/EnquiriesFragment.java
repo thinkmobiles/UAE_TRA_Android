@@ -1,8 +1,8 @@
 package com.uae.tra_smart_services.fragment;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
-import com.uae.tra_smart_services.rest.model.new_request.ComplainTRAServiceModel;
-import com.uae.tra_smart_services.rest.new_request.ComplainEnquiriesServiceRequest;
+import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
+import com.uae.tra_smart_services.rest.robo_requests.ComplainEnquiriesServiceRequest;
 
 /**
  * Created by mobimaks on 14.08.2015.

@@ -20,8 +20,8 @@ import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.DevicesListAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
-import com.uae.tra_smart_services.rest.new_request.SearchByBrandRequest;
+import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.rest.robo_requests.SearchByBrandRequest;
 
 import java.util.ArrayList;
 import java.util.List;

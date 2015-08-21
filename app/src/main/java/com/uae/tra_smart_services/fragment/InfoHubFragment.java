@@ -12,8 +12,8 @@ import com.uae.tra_smart_services.adapter.InfoHubTransactionsListAdapter;
 import com.uae.tra_smart_services.entities.C;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
-import com.uae.tra_smart_services.rest.model.new_response.InfoHubAnnouncementsListItemModel;
-import com.uae.tra_smart_services.rest.model.new_response.InfoHubTransActionsListItemModel;
+import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
+import com.uae.tra_smart_services.rest.model.response.InfoHubTransActionsListItemModel;
 
 import java.util.ArrayList;
 

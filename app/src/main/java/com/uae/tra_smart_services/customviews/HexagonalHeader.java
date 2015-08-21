@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
+import android.util.LayoutDirection;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -87,6 +88,36 @@ public class HexagonalHeader extends View {
         measureDrawableBounds();
         requestLayout();
         invalidate();
+    }
+
+    public final float getStartPoint() {
+        final int direction = getLayoutDirection();
+        switch (direction) {
+            default:
+            case LayoutDirection.LTR:
+                return 0;
+            case LayoutDirection.RTL:
+                return getWidth();
+        }
+    }
+
+    public final float getDirectionCoeff() {
+        final int direction = getLayoutDirection();
+        switch (direction) {
+            default:
+            case LayoutDirection.LTR:
+                return 1;
+            case LayoutDirection.RTL:
+                return -1;
+        }
+    }
+
+    public final float calculateWithCoefficient(final float _number) {
+        return getDirectionCoeff() * _number;
+    }
+
+    public final float calculateDependsOnDirection(final float _number) {
+        return getStartPoint() + getDirectionCoeff() * _number;
     }
 
     private void initProperties(final AttributeSet _attrs) {
@@ -209,23 +240,25 @@ public class HexagonalHeader extends View {
 
     private void measureDrawableBounds() {
         float centerY = getPaddingTop() + mRadius * mAvatarRadiusCoefficient + mHexagonAvatarBorderWidth / 2;
-        float centerX = getPaddingLeft() + mHexagonStrokeWidth / 2;
+        float centerX = calculateDependsOnDirection(getPaddingLeft() + mHexagonStrokeWidth / 2);
 
         for (final Integer number : mHexagons.keySet()) {
             final int currentRow = (int) Math.floor((number - 1) / mHexagonPerRow);
             final int hexagonInRow = (number % mHexagonPerRow) == 0 ? mHexagonPerRow : (number % mHexagonPerRow);
+
             float currentY = centerY + currentRow * mRadius * 1.5f;
-            float currentX = centerX + (hexagonInRow - 1) * 2 * mTriangleHeight;
+            float currentX = centerX + calculateWithCoefficient((hexagonInRow - 1) * 2 * mTriangleHeight);
+
             if (currentRow % 2 == 0) {
-                currentX += mTriangleHeight / 2;
+                currentX += calculateWithCoefficient(mTriangleHeight / 2);
             } else {
-                currentX += mTriangleHeight * 1.5;
+                currentX += calculateWithCoefficient(mTriangleHeight * 1.5f);
             }
 
             if (number == 7) {
-                currentX -= mTriangleHeight * 2 * mAnimationProgress;
+                currentX -= calculateWithCoefficient(mTriangleHeight * 2 * mAnimationProgress);
             } else if (number == 15) {
-                currentX -= mTriangleHeight * mAnimationProgress;
+                currentX -= calculateWithCoefficient(mTriangleHeight * mAnimationProgress);
                 currentY -= mRadius * 1.5f * mAnimationProgress;
             }
 
@@ -241,10 +274,10 @@ public class HexagonalHeader extends View {
         mHexagonPath = new Path();
 
         float centerY = getPaddingTop() + mAvatarRadiusCoefficient * mRadius + mHexagonAvatarBorderWidth / 2;
-        float centerX = getPaddingLeft() + mHexagonStrokeWidth / 2 + mTriangleHeight / 2;
+        float centerX = calculateDependsOnDirection(getPaddingStart() + mHexagonStrokeWidth / 2 + mTriangleHeight / 2);
 
         for (int hexagon = 0; hexagon < mHexagonPerRow;
-             hexagon++, centerX += mTriangleHeight * 2) {
+             hexagon++, centerX += calculateWithCoefficient(mTriangleHeight * 2)) {
 
             if (!mHexagons.containsKey(hexagon + 1)) {
                 mHexagonPath = calculatePath(mHexagonPath, centerX, centerY);
@@ -259,17 +292,20 @@ public class HexagonalHeader extends View {
         mLastHexagonPath = new Path();
 
         float centerY = getPaddingTop() + mAvatarRadiusCoefficient * mRadius + mRadius * 1.5f + mHexagonAvatarBorderWidth / 2;
-        float centerX = getPaddingLeft() + mHexagonStrokeWidth / 2 + mTriangleHeight * 1.5f;
+        float centerX = calculateDependsOnDirection(getPaddingLeft() + mHexagonStrokeWidth / 2 + mTriangleHeight * 1.5f);
 
         for (int hexagon = 0; hexagon < mHexagonPerRow;
-             hexagon++, centerX += mTriangleHeight * 2) {
+             hexagon++, centerX += calculateWithCoefficient(mTriangleHeight * 2)) {
+
             if (hexagon == 2) continue;
+
             float currentY = centerY - 1.5f * mRadius * mAnimationProgress;
             float currentX;
+
             if (hexagon == 0) {
-                currentX = centerX - mTriangleHeight * mAnimationProgress;
+                currentX = centerX - calculateWithCoefficient(mTriangleHeight * mAnimationProgress);
             } else {
-                currentX = centerX + mTriangleHeight * mAnimationProgress;
+                currentX = centerX + calculateWithCoefficient(mTriangleHeight * mAnimationProgress);
             }
 
             if (!mHexagons.containsKey(mHexagonPerRow + hexagon + 1)) {
@@ -289,23 +325,25 @@ public class HexagonalHeader extends View {
         mSecondRowButtonsBorderPath = new Path();
 
         float centerY = getPaddingTop() + mRadius * mAvatarRadiusCoefficient + mHexagonAvatarBorderWidth / 2;
-        float centerX = getPaddingLeft() + mHexagonStrokeWidth / 2;
+        float centerX = calculateDependsOnDirection(getPaddingLeft() + mHexagonStrokeWidth / 2);
 
         for (final Integer number : mHexagons.keySet()) {
             final int currentRow = getRowNumber(number);
             final int hexagonInRow = (number % mHexagonPerRow) == 0 ? mHexagonPerRow : (number % mHexagonPerRow);
+
             float currentY = centerY + currentRow * mRadius * 1.5f;
-            float currentX = centerX + (hexagonInRow - 1) * 2 * mTriangleHeight;
+            float currentX = centerX + calculateWithCoefficient((hexagonInRow - 1) * 2 * mTriangleHeight);
+
             if (currentRow % 2 == 0) {
-                currentX += mTriangleHeight / 2;
+                currentX += calculateWithCoefficient(mTriangleHeight / 2);
             } else {
-                currentX += mTriangleHeight * 1.5;
+                currentX += calculateWithCoefficient(mTriangleHeight * 1.5f);
             }
 
             if (number == 7) {
-                currentX -= mTriangleHeight * 2 * mAnimationProgress;
+                currentX -= calculateWithCoefficient(mTriangleHeight * 2 * mAnimationProgress);
             } else if (number == 15) {
-                currentX -= mTriangleHeight * mAnimationProgress;
+                currentX -= calculateWithCoefficient(mTriangleHeight * mAnimationProgress);
                 currentY -= mRadius * 1.5f * mAnimationProgress;
             }
 
@@ -327,7 +365,7 @@ public class HexagonalHeader extends View {
     }
 
     private void calculateVariables(final int _w) {
-        mTriangleHeight = ((_w - getPaddingLeft() - getPaddingRight())/ mHexagonPerRow) / 2;
+        mTriangleHeight = ((_w - getPaddingStart() - getPaddingEnd())/ mHexagonPerRow) / 2;
         mRadius = (float) (mTriangleHeight * 2 / Math.sqrt(3));
     }
 
@@ -336,22 +374,25 @@ public class HexagonalHeader extends View {
 
         if (mPressedButton != null) {
             float centerY = getPaddingTop() + mAvatarRadiusCoefficient * mRadius + mHexagonAvatarBorderWidth / 2;
-            float centerX = getPaddingLeft() + mHexagonStrokeWidth / 2;
+            float centerX = calculateDependsOnDirection(getPaddingStart() + mHexagonStrokeWidth / 2);
+
             final int currentRow = getRowNumber(mPressedButton);
             final int hexagonInRow = (mPressedButton % mHexagonPerRow) == 0 ? mHexagonPerRow : (mPressedButton % mHexagonPerRow);
+
             float currentY = centerY + currentRow * mRadius * 1.5f;
-            float currentX = centerX + (hexagonInRow - 1) * 2 * mTriangleHeight;
+            float currentX = centerX + calculateWithCoefficient((hexagonInRow - 1) * 2 * mTriangleHeight);
+
             if (currentRow % 2 == 0) {
-                currentX += mTriangleHeight / 2;
+                currentX += calculateWithCoefficient(mTriangleHeight / 2);
             } else {
-                currentX += mTriangleHeight * 1.5;
+                currentX += calculateWithCoefficient(mTriangleHeight * 1.5f);
             }
 
             if (mPressedButton == 7) {
-                currentX -= mTriangleHeight * 2 * mAnimationProgress;
+                currentX -= calculateWithCoefficient(mTriangleHeight * 2 * mAnimationProgress);
             } else if (mPressedButton == 15) {
-                currentX -= mTriangleHeight * mAnimationProgress;
-                currentY -= mRadius * 1.5f * mAnimationProgress;
+                currentX -= calculateWithCoefficient(mTriangleHeight * mAnimationProgress);
+                currentY -= calculateWithCoefficient(mRadius * 1.5f * mAnimationProgress);
             }
 
             pressedButtonPath = calculateButtonFill(new Path(), currentX, currentY);
@@ -427,8 +468,10 @@ public class HexagonalHeader extends View {
     private void drawAvatarHexagon(final Canvas _canvas) {
         final float avatarTriangleHeight = mTriangleHeight * mAvatarRadiusCoefficient;
         final float radius = mRadius * mAvatarRadiusCoefficient;
+
         final float centerY = getPaddingTop() + radius + mHexagonAvatarBorderWidth / 2;
-        final float centerX = getPaddingLeft() + mHexagonStrokeWidth / 2 + 2.5f * mTriangleHeight;
+        final float centerX = calculateDependsOnDirection(getPaddingStart() + mHexagonStrokeWidth / 2 + 2.5f * mTriangleHeight);
+
         Path avatarPath = new Path();
         avatarPath.moveTo(centerX, centerY + radius);
         avatarPath.lineTo(centerX - avatarTriangleHeight, centerY + radius / 2);

@@ -33,7 +33,7 @@ import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
-import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 
 import retrofit.RetrofitError;
 

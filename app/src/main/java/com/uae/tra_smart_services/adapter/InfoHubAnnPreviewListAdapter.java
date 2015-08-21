@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
-import com.uae.tra_smart_services.rest.model.new_response.InfoHubAnnouncementsListItemModel;
+import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
 
 import java.util.ArrayList;
 
