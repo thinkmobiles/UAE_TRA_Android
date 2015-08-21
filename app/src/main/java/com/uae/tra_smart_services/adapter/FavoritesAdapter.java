@@ -27,6 +27,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> {
     private final LayoutInflater mInflater;
     private final List<String> mData;
     private OnFavoriteClickListener mFavoriteClickListener;
+    private boolean mIsOddOpaque;
 
     public FavoritesAdapter(final Context _context) {
         this(_context, new ArrayList<String>());
@@ -35,6 +36,12 @@ public class FavoritesAdapter extends Adapter<ViewHolder> {
     public FavoritesAdapter(final Context _context, final @NonNull List<String> _data) {
         mInflater = LayoutInflater.from(_context);
         mData = _data;
+    }
+
+    public final void removeItem(int _position) {
+        mData.remove(_position);
+        mIsOddOpaque = !mIsOddOpaque;
+        notifyItemRemoved(_position);
     }
 
     @Override
@@ -58,12 +65,14 @@ public class FavoritesAdapter extends Adapter<ViewHolder> {
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {
 
-        private View rlItemContainer;
-        private HexagonView hvIcon;
-        private TextView tvTitle, tvServiceInfo, tvRemove;
+        private final View rootView;
+        private final View rlItemContainer;
+        private final HexagonView hvIcon;
+        private final TextView tvTitle, tvServiceInfo, tvRemove;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            rootView = itemView;
             rlItemContainer = itemView.findViewById(R.id.rlItemContainer_LIF);
             hvIcon = (HexagonView) rlItemContainer.findViewById(R.id.hvIcon_LIF);
             tvTitle = (TextView) rlItemContainer.findViewById(R.id.tvTitle_LIF);
@@ -76,7 +85,12 @@ public class FavoritesAdapter extends Adapter<ViewHolder> {
         }
 
         public final void setData(final String _title, final int _position) {
-            rlItemContainer.setBackgroundColor(_position%2==0?Color.TRANSPARENT:Color.parseColor("#fff5ea"));
+            rootView.setVisibility(View.VISIBLE);
+            if (mIsOddOpaque) {
+                rlItemContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : Color.parseColor("#fff5ea"));
+            } else {
+                rlItemContainer.setBackgroundColor(_position % 2 == 0 ? Color.parseColor("#fff5ea") : Color.TRANSPARENT);
+            }
             tvTitle.setText(_title);
         }
 

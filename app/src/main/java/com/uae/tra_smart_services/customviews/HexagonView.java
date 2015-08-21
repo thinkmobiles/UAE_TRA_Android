@@ -3,9 +3,9 @@ package com.uae.tra_smart_services.customviews;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -25,11 +25,9 @@ public class HexagonView extends View {
     private final int DEFAULT_HEXAGON_RADIUS = (int) (30 * getResources().getDisplayMetrics().density);
     private final int HEXAGON_BORDER_COUNT = 6;
 
-    private final double mHexagonSide, mHexagonInnerRadius;
+    private double mHexagonSide, mHexagonInnerRadius;
     private final Path mPath;
-    private final Paint mPaint, mPaint2, mPaint3;
-//    private List<Line> lines;
-//    private List<Point> points;
+    private final Paint mPaint, mShadowPaint;
     private int mBorderWidth;
     private Drawable mBackgroundDrawable;
 
@@ -39,12 +37,11 @@ public class HexagonView extends View {
 
     public HexagonView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HexagonView);
         try {
-            mHexagonSide = a.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS);
-            mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
+            setHexagonSide(a.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS));
             mBorderWidth = a.getDimensionPixelSize(R.styleable.HexagonView_hexagonBorderSize, 0);
             mBackgroundDrawable = a.getDrawable(R.styleable.HexagonView_hexagonBackground);
         } finally {
@@ -56,14 +53,19 @@ public class HexagonView extends View {
         mPaint.setStrokeWidth(mBorderWidth);
         mPaint.setStyle(Paint.Style.STROKE);
 
-        mPaint3 = new Paint();
-
-
-        mPaint2 = new Paint(mPaint);
-        mPaint2.setStyle(Paint.Style.FILL);
-        mPaint2.setColor(Color.argb(255, 255, 255, 255));
+        mShadowPaint = new Paint();
+        mShadowPaint.setStyle(Paint.Style.FILL);
 
         mPath = new Path();
+    }
+
+    public final void setHexagonSide(final int _hexagonSideSize) {
+        mHexagonSide = _hexagonSideSize;
+        mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
+    }
+
+    public final void setHexagonShadow(final float _radius, final int _color) {
+        mShadowPaint.setShadowLayer(_radius, 0, 0, _color);
     }
 
     public final void setBackgroundDrawable(@DrawableRes final int _drawableRes) {
@@ -103,12 +105,21 @@ public class HexagonView extends View {
         mPath.close();
     }
 
+    private Rect bounds = new Rect();
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mPaint.setAntiAlias(true);
+        //region Draw shadow
+        canvas.save();
+        canvas.clipPath(mPath, Region.Op.DIFFERENCE);
+        canvas.drawPath(mPath, mShadowPaint);
+        canvas.restore();
+        //endregion
+
         if (mBackgroundDrawable != null) {
             canvas.clipPath(mPath);
+            canvas.getClipBounds(bounds);
             if (mBackgroundDrawable instanceof BitmapDrawable) {
 
                 float centerY = (float) (mHexagonSide + getBorderWidth() / 2f);
@@ -119,13 +130,12 @@ public class HexagonView extends View {
 
                 mBackgroundDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
                         (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
-
-                mBackgroundDrawable.draw(canvas);
-                canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
+            } else {
+                mBackgroundDrawable.setBounds(bounds);
             }
-            if (getY() > 0) {
-                canvas.drawPath(mPath, mPaint);
-            }
+            mBackgroundDrawable.draw(canvas);
+            canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
         }
+        canvas.drawPath(mPath, mPaint);
     }
 }

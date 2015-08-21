@@ -10,11 +10,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
@@ -22,124 +20,130 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.uae.tra_smart_services.R;
+
 /**
  * Created by mobimaks on 18.08.2015.
  */
 public class DragFrameLayout extends FrameLayout implements OnDragListener {
 
-    private final int mStartDeleteArcAngle = 180, mDeleteArcSweepAngle = 180;
-
-    private final int OVERLAY_ITEM_COLOR = Color.parseColor("#f1f1f1");
+    //region Constants
     private final float SHADOW_RADIUS = 5 * getResources().getDisplayMetrics().density;
+    private final float DELETE_ARC_VISIBLE_HEIGHT = 150 * getResources().getDisplayMetrics().density;
+    private final float DELETE_ARC_HEIGHT = 400 * getResources().getDisplayMetrics().density;
+    private final float SHADOW_SCALE = 0.95F; // [0.0..1.0]
+    private final int DELETE_ARC_ALPHA = 64; // [0..255]
+    private final int TRASH_BUTTON_SIZE = Math.round(30 * getResources().getDisplayMetrics().density);
+    private final int TRASH_BUTTON_TOP_OFFSET = Math.round(30 * getResources().getDisplayMetrics().density);
+    private final int OVERLAY_ITEM_COLOR = 0xfff1f1f1;
+    private final int SHADOW_BACKGROUND_COLOR = 0xfffff5ea;
+    private final int START_DELETE_ARC_ANGLE = 180, DELETE_ARC_SWEEP_ANGLE = 180;
+    private final int ANIMATION_LENGTH = 280, BUTTON_ANIMATION_DELAY = 20;
 
+    private final RectF mShadowRect = new RectF();
+    private final RectF mItemOverlayRect = new RectF();
+    private final RectF mDeleteArcRect = new RectF();
+
+    private final HexagonView mTrashBtn;
+    private ValueAnimator mAreaAnimator, mTrashBtnAnimator;
+    private Paint mItemOverlayPaint, mShadowPaint, mShadowShadowPaint;
+    private Paint mDeleteArcPaint;
+    //endregion
 
     private View mDragTarget;
-    private PointF mPoint = new PointF();
-    private final float deleteArcVisibleHeight = 150 * getResources().getDisplayMetrics().density;
-    private Float deleteArcVisibleAnimHeight = 0f;
-    private ValueAnimator mAnimator;
+    private ColorStateList mDefaultTextColor;
+    private PointF mDragPoint;
+    private float mDeleteArcTop, mTrashBtnTop;
+    private boolean mNeedRedraw, mIsAnimated, mIsDragging;
+    private OnItemDeleteListener mItemDeleteListener;
 
-    public DragFrameLayout(Context context) {
-        this(context, null);
+    public DragFrameLayout(final Context _context) {
+        this(_context, null);
     }
 
-    public DragFrameLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public DragFrameLayout(final Context _context, final AttributeSet _attrs) {
+        super(_context, _attrs);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
-        setOnDragListener(this);
         initPaints();
+        setOnDragListener(this);
+
+        mTrashBtn = new HexagonView(getContext());
+        mTrashBtn.setHexagonSide(TRASH_BUTTON_SIZE);
+        mTrashBtn.setBackgroundDrawable(R.drawable.trash_btn_background);
+        mTrashBtn.setHexagonShadow(SHADOW_RADIUS * 2, Color.GRAY);
+        mTrashBtn.setVisibility(GONE);
+        addView(mTrashBtn);
+        initAnimations();
     }
 
     private void initPaints() {
+        mItemOverlayPaint = new Paint();
         mItemOverlayPaint.setStyle(Paint.Style.FILL);
         mItemOverlayPaint.setColor(OVERLAY_ITEM_COLOR);
 
+        mShadowPaint = new Paint();
         mShadowPaint.setStyle(Paint.Style.FILL);
-        mShadowPaint.setColor(Color.parseColor("#fff5ea"));
+        mShadowPaint.setColor(SHADOW_BACKGROUND_COLOR);
         mShadowPaint.setShadowLayer(SHADOW_RADIUS, 0, 0, Color.GRAY);
 
+        mShadowShadowPaint = new Paint();
         mShadowShadowPaint.setStyle(Paint.Style.FILL);
-        mShadowShadowPaint.setColor(Color.GREEN);
+        mShadowShadowPaint.setColor(Color.GRAY);
 
-        deletePaint.setAntiAlias(true);
-        deletePaint.setStyle(Paint.Style.FILL);
-        deletePaint.setColor(Color.RED);
-        deletePaint.setAlpha(Math.round(255 * 0.25f));
+        mDeleteArcPaint = new Paint();
+        mDeleteArcPaint.setAntiAlias(true);
+        mDeleteArcPaint.setStyle(Paint.Style.FILL);
+        mDeleteArcPaint.setColor(Color.RED);
+        mDeleteArcPaint.setAlpha(DELETE_ARC_ALPHA);
     }
 
-    private boolean draw;
-    private boolean isAnimated;
-
-
-    @Override
-    public boolean onDrag(View v, DragEvent event) {
-        logState(event);
-
-        switch (event.getAction()) {
-            case DragEvent.ACTION_DRAG_ENTERED:
-                isDragging = true;
-                mPoint.x = event.getX();
-                mPoint.y = event.getY();
-                startAnimation();
-                break;
-            case DragEvent.ACTION_DRAG_LOCATION:
-                mPoint.x = event.getX();
-                mPoint.y = event.getY();
-                if (!isAnimated) {
-                    draw = true;
-                    invalidate();
-                }
-                break;
-            case DragEvent.ACTION_DRAG_ENDED:
-                TextView textView = (TextView) mDragTarget.getTag();
-                if (textView != null) {
-                    textView.setTextColor(mDefaultTextColor);
-                }
-                isFinishing = true;
-                isDragging = false;
-                mAnimator.reverse();
-                break;
-        }
-
-        return true;
-    }
-
-    boolean isDragging; //  need draw shadow and overlay indicator
-    boolean isFinishing;
-
-
-    private void startAnimation() {
-        mAnimator = ValueAnimator.ofFloat(0, deleteArcVisibleHeight);
-        mAnimator.setInterpolator(new OvershootInterpolator());
-        mAnimator.setDuration(200);
-        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+    private void initAnimations() {
+        mAreaAnimator = ValueAnimator.ofFloat(0, DELETE_ARC_VISIBLE_HEIGHT);
+        mAreaAnimator.setInterpolator(new OvershootInterpolator());
+        mAreaAnimator.setDuration(ANIMATION_LENGTH);
+        mAreaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                deleteArcVisibleAnimHeight = (Float) animation.getAnimatedValue();
-                draw = true;
+                mDeleteArcTop = (Float) animation.getAnimatedValue();
+//                mNeedRedraw = true;
                 invalidateDeleteArea(getWidth(), getHeight());
+                //invalidate();
+            }
+        });
+
+        mTrashBtnAnimator = ValueAnimator.ofFloat(0, DELETE_ARC_VISIBLE_HEIGHT);
+        mTrashBtnAnimator.setInterpolator(new OvershootInterpolator());
+        mTrashBtnAnimator.setDuration(ANIMATION_LENGTH + BUTTON_ANIMATION_DELAY);
+        mTrashBtnAnimator.setStartDelay(BUTTON_ANIMATION_DELAY);
+        mTrashBtnAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mTrashBtnTop = (Float) animation.getAnimatedValue();
+                mNeedRedraw = true;
                 invalidate();
             }
         });
 
-        mAnimator.addListener(new Animator.AnimatorListener() {
+        mTrashBtnAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                isAnimated = true;
+                mTrashBtn.setVisibility(VISIBLE);
+                mIsAnimated = true;
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                isAnimated = false;
-                if (isFinishing) {
+                mIsAnimated = false;
+                mTrashBtn.setVisibility(GONE);
+                if (!mIsDragging) {
                     mDragTarget = null;
-                    isFinishing = false;
                 }
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                isAnimated = false;
+                mTrashBtn.setVisibility(GONE);
+                mIsAnimated = false;
             }
 
             @Override
@@ -147,129 +151,157 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
 
             }
         });
-        mAnimator.start();
     }
 
-    //region LOG Drag&Drop state
-    int previousState = Integer.MIN_VALUE;
+    public final void starDragChild(final View _view, final ClipData _data) throws IllegalArgumentException {
+        if (findViewById(_view.getId()) != null) {//check if drag target inside this container
+            mDragTarget = _view;
 
-    private void logState(DragEvent event) {
-        if (previousState != event.getAction()) {
-            previousState = event.getAction();
-            switch (previousState) {
-                case DragEvent.ACTION_DRAG_LOCATION:
-                    Log.d(getClass().getSimpleName(), "DragEvent: ACTION_DRAG_LOCATION");
-                    break;
-                case DragEvent.ACTION_DRAG_ENDED:
-                    Log.d(getClass().getSimpleName(), "DragEvent: ACTION_DRAG_ENDED");
-                    break;
-                case DragEvent.ACTION_DRAG_ENTERED:
-                    Log.d(getClass().getSimpleName(), "DragEvent: ACTION_DRAG_ENTERED");
-                    break;
-                case DragEvent.ACTION_DRAG_EXITED:
-                    Log.d(getClass().getSimpleName(), "DragEvent: ACTION_DRAG_EXITED");
-                    break;
-                case DragEvent.ACTION_DRAG_STARTED:
-                    Log.d(getClass().getSimpleName(), "DragEvent: ACTION_DRAG_STARTED");
-                    break;
-                case DragEvent.ACTION_DROP:
-                    Log.d(getClass().getSimpleName(), "DragEvent: ACTION_DROP");
-                    break;
+            TextView textView = (TextView) _view.getTag();
+            if (textView != null) {
+                mDefaultTextColor = textView.getTextColors();
+                textView.setTextColor(Color.RED);
             }
+
+            mDragPoint = new PointF();
+
+            int x = 0, y = 0;
+            View view = _view;
+            do {
+                x += view.getX();
+                y += view.getY();
+            } while ((view = (View) view.getParent()) != this);
+
+            mItemOverlayRect.set(x, y, x + mDragTarget.getWidth(), y + mDragTarget.getHeight());
+            _view.startDrag(_data, new EmptyDragShadowBuilder(_view), null, 0);
+        } else {
+            throw new IllegalArgumentException("Put view inside DragFrameLayout and/or set id");
         }
     }
-    //endregion
-
-    private ColorStateList mDefaultTextColor;
-
-    public void starDragChild(final View _view, final ClipData _data) {
-        mDragTarget = _view;
-
-        TextView textView = (TextView) _view.getTag();
-        if (textView != null) {
-            mDefaultTextColor = textView.getTextColors();
-            textView.setTextColor(Color.RED);
-        }
-
-        origRect.set(mDragTarget.getX(), mDragTarget.getY(), mDragTarget.getX() + mDragTarget.getWidth(), mDragTarget.getY() + mDragTarget.getHeight());
-        mRect.set(0, 0, mDragTarget.getWidth(), mDragTarget.getHeight());
-
-        _view.startDrag(_data, new EmptyDragShadowBuilder(_view), null, 0);
-    }
-
-    Rect mRect = new Rect();
-    RectF origRect = new RectF();
-    Paint mItemOverlayPaint = new Paint(), mShadowPaint = new Paint(), mShadowShadowPaint = new Paint();
-    final float scale = 0.95F;
 
     @Override
-    protected void dispatchDraw(@NonNull Canvas canvas) {
-        super.dispatchDraw(canvas);
-        if (mDragTarget != null && draw) {
-
-            if (isDragging) {
-                canvas.drawRect(origRect, mItemOverlayPaint);//draw overlay for original item background
-            }
-
-            canvas.drawArc(deleteArcRect, mStartDeleteArcAngle, mDeleteArcSweepAngle, true, deletePaint);// draw delete area background
-
-            if (isDragging) {
-                canvas.save();
-                //region Calc shadow position
-                int translateX = Math.round(mPoint.x - mDragTarget.getWidth() / 2);
-                if (translateX < 0) {
-                    translateX = 0;
-                } else if (translateX > (canvas.getWidth() - mDragTarget.getWidth() * scale)) {
-                    translateX = Math.round(canvas.getWidth() - mDragTarget.getWidth() * scale);
+    public boolean onDrag(View v, DragEvent event) {
+        switch (event.getAction()) {
+            case DragEvent.ACTION_DRAG_ENTERED:
+                mIsDragging = true;
+                mDragPoint.x = event.getX();
+                mDragPoint.y = event.getY();
+                invalidateShadowOffset();
+                mAreaAnimator.start();
+                mTrashBtnAnimator.start();
+                break;
+            case DragEvent.ACTION_DRAG_LOCATION:
+                mDragPoint.x = event.getX();
+                mDragPoint.y = event.getY();
+                invalidateShadowOffset();
+                if (!mIsAnimated) {
+                    mNeedRedraw = true;
+                    invalidate();
                 }
-
-                int translateY = Math.round(mPoint.y - mDragTarget.getHeight() / 2);
-                if (translateY < 0) {
-                    translateY = 0;
-                } else if (translateY > canvas.getHeight() - mDragTarget.getHeight() * scale) {
-                    translateY = Math.round(canvas.getHeight() - mDragTarget.getHeight() * scale);
+                break;
+            case DragEvent.ACTION_DROP:
+                if (mItemDeleteListener != null && RectF.intersects(mDeleteArcRect, mShadowRect)) {
+                    mDragTarget.setVisibility(INVISIBLE);
+                    ClipData.Item item = event.getClipData().getItemAt(0);
+                    mItemDeleteListener.onDeleteItem(Integer.valueOf(item.getText().toString()));
                 }
-                //endregion
-                canvas.translate(translateX, translateY);
-                canvas.scale(scale, scale);
-
-                canvas.drawRect(mRect, mShadowPaint);//draw shadow background
-                mDragTarget.draw(canvas);//draw shadow view
-                canvas.restore();
-            }
+                break;
+            case DragEvent.ACTION_DRAG_ENDED:
+                TextView textView = (TextView) mDragTarget.getTag();
+                if (textView != null) {
+                    textView.setTextColor(mDefaultTextColor);
+                }
+                mIsDragging = false;
+                mAreaAnimator.reverse();
+                mTrashBtnAnimator.reverse();
+                break;
         }
-        draw = false;
+
+        return true;
     }
 
-    final float deleteArcHeight = 400 * getResources().getDisplayMetrics().density;
-    final Paint deletePaint = new Paint();
-    final RectF deleteArcRect = new RectF();
+    public void setItemDeleteListener(OnItemDeleteListener _itemDeleteListener) {
+        mItemDeleteListener = _itemDeleteListener;
+    }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        invalidateDeleteArea(w, h);
+    private void invalidateShadowOffset() {
+        //region Calc shadow position
+        int translateX = Math.round(mDragPoint.x - mDragTarget.getWidth() * SHADOW_SCALE / 2);
+        if (translateX < 0) {
+            translateX = 0;
+        } else if (translateX > (getWidth() - mDragTarget.getWidth() * SHADOW_SCALE)) {
+            translateX = Math.round(getWidth() - mDragTarget.getWidth() * SHADOW_SCALE);
+        }
+
+        int translateY = Math.round(mDragPoint.y - mDragTarget.getHeight() * SHADOW_SCALE / 2);
+        if (translateY < 0) {
+            translateY = 0;
+        } else if (translateY > getHeight() - mDragTarget.getHeight() * SHADOW_SCALE) {
+            translateY = Math.round(getHeight() - mDragTarget.getHeight() * SHADOW_SCALE);
+        }
+        mShadowRect.set(translateX, translateY, translateX + mDragTarget.getWidth() * SHADOW_SCALE, translateY + mDragTarget.getHeight() * SHADOW_SCALE);
     }
 
     private void invalidateDeleteArea(final int _width, final int _height) {
         float canvasOffset = _width * 0.3f;
-        deleteArcRect.set(-canvasOffset, _height - deleteArcVisibleAnimHeight, _width + canvasOffset, _height + deleteArcHeight - deleteArcVisibleAnimHeight);
+        mDeleteArcRect.left = -canvasOffset;
+        mDeleteArcRect.top = _height - mDeleteArcTop;
+        mDeleteArcRect.right = _width + canvasOffset;
+        mDeleteArcRect.bottom = _height + DELETE_ARC_HEIGHT - mDeleteArcTop;
     }
 
-    private static class EmptyDragShadowBuilder extends DragShadowBuilder {
+    @Override
+    protected void dispatchDraw(@NonNull Canvas canvas) {
+        super.dispatchDraw(canvas);
+        if (mDragTarget != null && mNeedRedraw) {
+
+            if (mIsDragging) {
+                canvas.drawRect(mItemOverlayRect, mItemOverlayPaint);//draw overlay for original item background
+            }
+            drawDeleteArea(canvas);
+
+            if (mIsDragging) {
+                canvas.drawRect(mShadowRect, mShadowPaint);//draw shadow background
+                canvas.save();
+                canvas.scale(SHADOW_SCALE, SHADOW_SCALE);
+                canvas.translate(mShadowRect.left, mShadowRect.top / SHADOW_SCALE);
+                mDragTarget.draw(canvas);//draw shadow view
+                canvas.restore();
+            }
+            mNeedRedraw = false;
+        }
+    }
+
+    private void drawDeleteArea(@NonNull Canvas canvas) {
+        canvas.drawArc(mDeleteArcRect, START_DELETE_ARC_ANGLE, DELETE_ARC_SWEEP_ANGLE, true, mDeleteArcPaint);// draw delete area background
+
+        canvas.save();
+        float translateX = (canvas.getWidth() - mTrashBtn.getWidth()) / 2; //center horizontal
+        float translateY = canvas.getHeight() + TRASH_BUTTON_TOP_OFFSET - mTrashBtnTop;
+        canvas.translate(translateX, translateY);
+        mTrashBtn.draw(canvas);
+        canvas.restore();
+    }
+
+    public interface OnItemDeleteListener {
+        void onDeleteItem(final int _position);
+    }
+
+    private static final class EmptyDragShadowBuilder extends DragShadowBuilder {
 
         public EmptyDragShadowBuilder(View _view) {
             super(_view);
         }
 
         @Override
-        public void onProvideShadowMetrics(@NonNull Point _shadowSize, @NonNull Point _shadowTouchPoint) {
+        public final void onProvideShadowMetrics(@NonNull Point _shadowSize, @NonNull Point _shadowTouchPoint) {
             super.onProvideShadowMetrics(_shadowSize, _shadowTouchPoint);
         }
 
         @Override
-        public void onDrawShadow(@NonNull Canvas canvas) {
+        public final void onDrawShadow(@NonNull Canvas canvas) {
         }
 
     }
+
 }

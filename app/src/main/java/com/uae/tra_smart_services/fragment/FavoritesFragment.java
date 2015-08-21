@@ -11,6 +11,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.FavoritesAdapter;
 import com.uae.tra_smart_services.adapter.FavoritesAdapter.OnFavoriteClickListener;
 import com.uae.tra_smart_services.customviews.DragFrameLayout;
+import com.uae.tra_smart_services.customviews.DragFrameLayout.OnItemDeleteListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * Created by mobimaks on 18.08.2015.
  */
-public class FavoritesFragment extends BaseFragment implements OnFavoriteClickListener {
+public class FavoritesFragment extends BaseFragment implements OnFavoriteClickListener, OnItemDeleteListener {
 
     private DragFrameLayout dflContainer;
     private RecyclerView rvFavoritesList;
@@ -38,6 +39,11 @@ public class FavoritesFragment extends BaseFragment implements OnFavoriteClickLi
         rvFavoritesList = findView(R.id.rvFavoritesList_FF);
     }
 
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+        dflContainer.setItemDeleteListener(this);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -77,6 +83,11 @@ public class FavoritesFragment extends BaseFragment implements OnFavoriteClickLi
         View itemView = mLinearLayoutManager.findViewByPosition(_position);
         itemView.setTag(_view);
         dflContainer.starDragChild(itemView, data);
+    }
+
+    @Override
+    public void onDeleteItem(int _position) {
+        mFavoritesAdapter.removeItem(_position);
     }
 
     @Override
