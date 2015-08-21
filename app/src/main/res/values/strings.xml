@@ -128,4 +128,13 @@
     </string>
     <string name="str_dummy_info_hub_list_item_date">08/09/2015</string>
     <string name="str_dummy_info_hub_list_item_title">Title</string>
+
+    <!--                ServiceInfoFragment             -->
+    <string name="fragment_service_info_service_info">Service Info</string>
+    <string name="fragment_service_info_required_documents">Required Documents</string>
+    <string name="fragment_service_info_terms_and_conditions">Terms &amp; Conditions </string>
+    <string name="fragment_service_info_service_package">Service Package</string>
+    <string name="fragment_service_info_processing_time">Processing Time</string>
+    <string name="fragment_service_info_service_fees">Service Fees</string>
+    <string name="fragment_service_info_contact_in_charge">Contact In-charge</string>
 </resources>
