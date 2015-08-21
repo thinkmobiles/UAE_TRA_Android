@@ -77,6 +77,18 @@ public class PoorCoverageFragment extends BaseFragment
         super.initListeners();
         etLocation.setOnClickListener(this);
         sbPoorCoverage.setOnSeekBarChangeListener(this);
+        etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    (locationTypeChooser = CustomSingleChoiceDialog
+                            .newInstance(PoorCoverageFragment.this))
+                            .setTitle("Please select location type")
+                            .setBodyItems(LocationType.toStringArray())
+                            .show(getFragmentManager());
+                }
+            }
+        });
     }
 
     private GoogleApiClient mGoogleApiClient;
@@ -91,18 +103,6 @@ public class PoorCoverageFragment extends BaseFragment
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
-        etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    (locationTypeChooser = CustomSingleChoiceDialog
-                            .newInstance(PoorCoverageFragment.this))
-                            .setTitle("Please select location type")
-                            .setBodyItems(LocationType.toStringArray())
-                            .show(getFragmentManager());
-                }
-            }
-        });
     }
 
     @Override
