@@ -38,7 +38,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
     private final int OVERLAY_ITEM_COLOR = 0xfff1f1f1;
     private final int SHADOW_BACKGROUND_COLOR = 0xfffff5ea;
     private final int START_DELETE_ARC_ANGLE = 180, DELETE_ARC_SWEEP_ANGLE = 180;
-    private final int ANIMATION_LENGTH = 280, BUTTON_ANIMATION_DELAY = 20;
+    private final int ANIMATION_LENGTH = 240, BUTTON_ANIMATION_DELAY = 20;
 
     private final RectF mShadowRect = new RectF();
     private final RectF mItemOverlayRect = new RectF();
