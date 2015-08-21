@@ -12,8 +12,8 @@ import com.uae.tra_smart_services.adapter.InfoHubTransactionsListAdapter;
 import com.uae.tra_smart_services.entities.C;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
-import com.uae.tra_smart_services.rest.model.new_response.InfoHubAnnouncementsListItemModel;
-import com.uae.tra_smart_services.rest.model.new_response.InfoHubTransActionsListItemModel;
+import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
+import com.uae.tra_smart_services.rest.model.response.InfoHubTransActionsListItemModel;
 
 import java.util.ArrayList;
 
@@ -22,15 +22,15 @@ import java.util.ArrayList;
  */
 public class InfoHubFragment extends BaseFragment
                             implements TextView.OnClickListener {
+
     public static InfoHubFragment newInstance() {
         return new InfoHubFragment();
     }
 
     @Override
     protected int getTitle() {
-        return R.string.str_info_hub;
+        return R.string.str_info_hub_title;
     }
-
 
     @Override
     protected int getLayoutResource() {
@@ -53,61 +53,16 @@ public class InfoHubFragment extends BaseFragment
                 add(new InfoHubAnnouncementsListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
                 add(new InfoHubAnnouncementsListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
                 add(new InfoHubAnnouncementsListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
             }
@@ -118,6 +73,66 @@ public class InfoHubFragment extends BaseFragment
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                add(new InfoHubTransActionsListItemModel()
+                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
+                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                add(new InfoHubTransActionsListItemModel()
+                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
+                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                add(new InfoHubTransActionsListItemModel()
+                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
+                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                add(new InfoHubTransActionsListItemModel()
+                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
+                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                add(new InfoHubTransActionsListItemModel()
+                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
+                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                add(new InfoHubTransActionsListItemModel()
+                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
+                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                add(new InfoHubTransActionsListItemModel()
+                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
+                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                add(new InfoHubTransActionsListItemModel()
+                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
+                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                add(new InfoHubTransActionsListItemModel()
+                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
+                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                add(new InfoHubTransActionsListItemModel()
+                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
+                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
+                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
                 add(new InfoHubTransActionsListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
@@ -133,65 +148,18 @@ public class InfoHubFragment extends BaseFragment
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
                 add(new InfoHubTransActionsListItemModel()
                         .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
                         .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl("http://www.socialsciencespace.com/wp-content/uploads/Speak-Dummy.jpg")
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
             }
         };
     }
+
     private TextView seeMoreAnnouncements;
     @Override
     protected void initViews() {
@@ -241,7 +209,7 @@ public class InfoHubFragment extends BaseFragment
                         .commit();
             }
         });
-        mTransactionsListAdapter.setOnItemClickListener(new OnInfoHubItemClickListener<InfoHubTransActionsListItemModel>() {
+        /*mTransactionsListAdapter.setOnItemClickListener(new OnInfoHubItemClickListener<InfoHubTransActionsListItemModel>() {
             @Override
             public void onItemSelected(InfoHubTransActionsListItemModel item) {
                 Bundle args = new Bundle();
@@ -252,7 +220,7 @@ public class InfoHubFragment extends BaseFragment
                         .replace(R.id.flContainer_AH, InfoHubDetailsFragment.newInstance(args))
                         .commit();
             }
-        });
+        });*/
     }
 
     @Override

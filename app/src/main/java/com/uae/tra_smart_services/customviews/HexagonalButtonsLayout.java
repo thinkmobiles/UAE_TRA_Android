@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
+import android.util.LayoutDirection;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -64,6 +65,36 @@ public class HexagonalButtonsLayout extends View {
         initPaint();
         initDrawables();
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+    }
+
+    public final float getStartPoint() {
+        final int direction = getLayoutDirection();
+        switch (direction) {
+            default:
+            case LayoutDirection.LTR:
+                return 0;
+            case LayoutDirection.RTL:
+                return getWidth();
+        }
+    }
+
+    public final float getDirectionCoeff() {
+        final int direction = getLayoutDirection();
+        switch (direction) {
+            default:
+            case LayoutDirection.LTR:
+                return 1;
+            case LayoutDirection.RTL:
+                return -1;
+        }
+    }
+
+    public final float calculateWithCoefficient(final float _number) {
+        return getDirectionCoeff() * _number;
+    }
+
+    public final float calculateDependsOnDirection(final float _number) {
+        return getStartPoint() + getDirectionCoeff() * _number;
     }
 
     public final float getHalfOuterRadius() {
@@ -152,7 +183,7 @@ public class HexagonalButtonsLayout extends View {
 
         width = widthSize;
 
-        final float triangleHeight = ((width - getPaddingLeft() - getPaddingRight() -
+        final float triangleHeight = ((width - getPaddingStart() - getPaddingEnd() -
                 mHexagonGapWidth * mButtonsCount - mHexagonGapWidth) / mButtonsCount) / 2;
         final float radius = (float) (triangleHeight * 2 / Math.sqrt(3));
 
@@ -197,10 +228,10 @@ public class HexagonalButtonsLayout extends View {
     private void calculateCenters() {
         mCenters = new ArrayList<>();
         float centerY = getPaddingTop() + mRadius;
-        float centerX = getPaddingLeft() + mHexagonGapWidth + mTriangleHeight;
+        float centerX = calculateDependsOnDirection(getPaddingStart() + mHexagonGapWidth + mTriangleHeight);
 
         for (int hexagon = 0; hexagon < mButtonsCount;
-             hexagon++, centerX += mHexagonGapWidth + mTriangleHeight * 2) {
+             hexagon++, centerX += getDirectionCoeff() * (mHexagonGapWidth + mTriangleHeight * 2)) {
             mCenters.add(new PointF(centerX, centerY));
         }
     }
@@ -305,16 +336,16 @@ public class HexagonalButtonsLayout extends View {
 
         float centerY = getPaddingTop() + mRadius + mHexagonGapWidth / 2;
 
-        separatorPath.moveTo(mCenters.get(0).x - 2 * mSeparatorTriangleHeight, centerY + mSeparatorRadius);
-        separatorPath.lineTo(mCenters.get(0).x - mSeparatorTriangleHeight, centerY + mSeparatorRadius / 2);
+        separatorPath.moveTo(mCenters.get(0).x - calculateWithCoefficient(2 * mSeparatorTriangleHeight), centerY + mSeparatorRadius);
+        separatorPath.lineTo(mCenters.get(0).x - calculateWithCoefficient(mSeparatorTriangleHeight), centerY + mSeparatorRadius / 2);
 
         for (int hexagon = 0; hexagon < mButtonsCount; hexagon++) {
 
             separatorPath.lineTo(mCenters.get(hexagon).x, centerY + mSeparatorRadius);
-            separatorPath.lineTo(mCenters.get(hexagon).x + mSeparatorTriangleHeight, centerY + mSeparatorRadius / 2);
+            separatorPath.lineTo(mCenters.get(hexagon).x + calculateWithCoefficient(mSeparatorTriangleHeight), centerY + mSeparatorRadius / 2);
         }
 
-        separatorPath.lineTo(mCenters.get(mButtonsCount - 1).x + mSeparatorTriangleHeight * 2, centerY + mSeparatorRadius);
+        separatorPath.lineTo(mCenters.get(mButtonsCount - 1).x + calculateWithCoefficient(mSeparatorTriangleHeight * 2), centerY + mSeparatorRadius);
 
         _canvas.drawPath(separatorPath, mSeparatorPaint);
     }

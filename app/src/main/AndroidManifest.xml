@@ -52,10 +52,6 @@
                   android:screenOrientation="portrait"/>
 
         <service
-            android:name=".rest.RestService"
-            android:exported="false"/>
-
-        <service
             android:name=".rest.TRARestService"
             android:exported="false"/>
 

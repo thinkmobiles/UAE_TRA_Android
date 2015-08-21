@@ -20,9 +20,9 @@ import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.ServiceProvider;
-import com.uae.tra_smart_services.rest.model.new_request.SmsSpamRequestModel;
-import com.uae.tra_smart_services.rest.model.new_response.SmsSpamResponseModel;
-import com.uae.tra_smart_services.rest.new_request.SmsSpamRequest;
+import com.uae.tra_smart_services.rest.model.request.SmsSpamRequestModel;
+import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
+import com.uae.tra_smart_services.rest.robo_requests.SmsSpamRequest;
 
 /**
  * Created by mobimaks on 13.08.2015.

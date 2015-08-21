@@ -21,8 +21,8 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.ScannerActivity;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.Constants;
-import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
-import com.uae.tra_smart_services.rest.new_request.SearchByImeiRequest;
+import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.rest.robo_requests.SearchByImeiRequest;
 
 /**
  * Created by mobimaks on 13.08.2015.
