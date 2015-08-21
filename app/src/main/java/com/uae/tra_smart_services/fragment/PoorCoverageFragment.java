@@ -26,9 +26,9 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.LocationType;
-import com.uae.tra_smart_services.rest.model.new_request.PoorCoverageRequestModel;
-import com.uae.tra_smart_services.rest.new_request.GeoLocationRequest;
-import com.uae.tra_smart_services.rest.new_request.PoorCoverageRequest;
+import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
+import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
+import com.uae.tra_smart_services.rest.robo_requests.PoorCoverageRequest;
 
 import java.util.Locale;
 

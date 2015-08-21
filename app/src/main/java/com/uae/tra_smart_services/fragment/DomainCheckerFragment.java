@@ -15,10 +15,10 @@ import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
-import com.uae.tra_smart_services.rest.model.new_response.DomainAvailabilityCheckResponseModel;
-import com.uae.tra_smart_services.rest.model.new_response.DomainInfoCheckResponseModel;
-import com.uae.tra_smart_services.rest.new_request.DomainAvailabilityCheckRequest;
-import com.uae.tra_smart_services.rest.new_request.DomainInfoCheckRequest;
+import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
+import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
+import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
+import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
 
 /**
  * Created by ak-buffalo on 10.08.15.

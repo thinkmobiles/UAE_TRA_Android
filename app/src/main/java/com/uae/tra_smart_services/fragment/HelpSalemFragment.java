@@ -15,8 +15,8 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.rest.model.new_request.HelpSalimModel;
-import com.uae.tra_smart_services.rest.new_request.HelpSalimRequest;
+import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
+import com.uae.tra_smart_services.rest.robo_requests.HelpSalimRequest;
 
 import retrofit.client.Response;
 

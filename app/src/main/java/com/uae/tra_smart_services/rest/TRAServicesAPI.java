@@ -1,22 +1,21 @@
 package com.uae.tra_smart_services.rest;
 
-import com.uae.tra_smart_services.rest.model.new_request.ComplainServiceProviderModel;
-import com.uae.tra_smart_services.rest.model.new_request.ComplainTRAServiceModel;
-import com.uae.tra_smart_services.rest.model.new_request.HelpSalimModel;
-import com.uae.tra_smart_services.rest.model.new_request.LoginModel;
-import com.uae.tra_smart_services.rest.model.new_request.PoorCoverageRequestModel;
-import com.uae.tra_smart_services.rest.model.new_request.RatingServiceModel;
-import com.uae.tra_smart_services.rest.model.new_request.RegisterModel;
-import com.uae.tra_smart_services.rest.model.new_request.SmsSpamRequestModel;
-import com.uae.tra_smart_services.rest.model.new_response.DomainAvailabilityCheckResponseModel;
-import com.uae.tra_smart_services.rest.model.new_response.DomainInfoCheckResponseModel;
-import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
-import com.uae.tra_smart_services.rest.model.new_response.SmsSpamResponseModel;
+import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
+import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
+import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
+import com.uae.tra_smart_services.rest.model.request.LoginModel;
+import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
+import com.uae.tra_smart_services.rest.model.request.RatingServiceModel;
+import com.uae.tra_smart_services.rest.model.request.RegisterModel;
+import com.uae.tra_smart_services.rest.model.request.SmsSpamRequestModel;
+import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
+import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
+import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
-import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Query;
