@@ -19,7 +19,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.octo.android.robospice.SpiceManager;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
-import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
@@ -61,9 +60,9 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     @Override
     public View onCreateView(final LayoutInflater _inflater, final ViewGroup _container, final Bundle _savedInstanceState) {
         rootView = _inflater.inflate(getLayoutResource(), _container, false);
+        initData();
         initViews();
         initListeners();
-        initCustomEntities();
         setToolbarVisibility();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         return rootView;
@@ -94,7 +93,7 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     protected void initListeners() {
     }
 
-    protected void initCustomEntities() {
+    protected void initData() {
     }
 
     protected void setToolbarVisibility() {

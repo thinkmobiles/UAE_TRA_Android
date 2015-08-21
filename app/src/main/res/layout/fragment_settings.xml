@@ -22,7 +22,7 @@
 
             <TextView
                 style="@style/UserSettingsStaticText"
-                android:text="@string/str_username" />
+                android:hint="@string/str_username" />
 
             <EditText
                 android:id="@+id/etUserName_AS"
@@ -41,7 +41,7 @@
 
             <TextView
                 style="@style/UserSettingsStaticText"
-                android:text="@string/str_email" />
+                android:hint="@string/str_email" />
 
             <EditText
                 android:id="@+id/etEmail_AS"
@@ -61,7 +61,7 @@
 
             <TextView
                 style="@style/UserSettingsStaticText"
-                android:text="@string/str_language" />
+                android:hint="@string/str_language" />
 
             <com.uae.tra_smart_services.customviews.LanguageSwitcherView
                 android:id="@+id/cvLangSwitch"

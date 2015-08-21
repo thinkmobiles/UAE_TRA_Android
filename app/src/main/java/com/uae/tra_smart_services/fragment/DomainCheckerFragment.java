@@ -15,10 +15,10 @@ import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
-import com.uae.tra_smart_services.rest.model.new_response.DomainAvailabilityCheckResponseModel;
-import com.uae.tra_smart_services.rest.model.new_response.DomainInfoCheckResponseModel;
-import com.uae.tra_smart_services.rest.new_request.DomainAvailabilityCheckRequest;
-import com.uae.tra_smart_services.rest.new_request.DomainInfoCheckRequest;
+import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
+import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
+import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
+import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
 
 /**
  * Created by ak-buffalo on 10.08.15.
@@ -67,8 +67,8 @@ public class DomainCheckerFragment extends BaseFragment
     private CustomFilterPool filters;
 
     @Override
-    protected final void initCustomEntities() {
-        super.initCustomEntities();
+    protected final void initData() {
+        super.initData();
         filters = new CustomFilterPool<String>() {
             {
                 addFilter(new Filter<String>() {
@@ -152,7 +152,7 @@ public class DomainCheckerFragment extends BaseFragment
             if (_str.availableStatus.equals(ServerConstants.AVAILABLE)) {
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.flContainer_HA, DomainIsAvailableFragment.newInstance())
+                        .replace(R.id.flContainer_AH, DomainIsAvailableFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
             } else if (_str.availableStatus.equals(ServerConstants.NOT_AVAILABLE)) {
@@ -175,7 +175,7 @@ public class DomainCheckerFragment extends BaseFragment
                 getFragmentManager()
                         .beginTransaction()
                         .replace(
-                                R.id.flContainer_HA,
+                                R.id.flContainer_AH,
                                 DomainInfoFragment.newInstance(domainInfoCheckResponse.urlData))
                         .addToBackStack(null)
                         .commit();

@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 
 import java.util.ArrayList;
 

@@ -30,6 +30,7 @@ public class HexagonView extends View {
     private final Paint mPaint, mShadowPaint;
     private int mBorderWidth;
     private Drawable mBackgroundDrawable;
+    private Rect mHexagonRect = new Rect();
 
     public HexagonView(Context context) {
         this(context, null);
@@ -105,8 +106,6 @@ public class HexagonView extends View {
         mPath.close();
     }
 
-    private Rect bounds = new Rect();
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -119,7 +118,7 @@ public class HexagonView extends View {
 
         if (mBackgroundDrawable != null) {
             canvas.clipPath(mPath);
-            canvas.getClipBounds(bounds);
+            canvas.getClipBounds(mHexagonRect);
             if (mBackgroundDrawable instanceof BitmapDrawable) {
 
                 float centerY = (float) (mHexagonSide + getBorderWidth() / 2f);
@@ -131,7 +130,7 @@ public class HexagonView extends View {
                 mBackgroundDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
                         (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
             } else {
-                mBackgroundDrawable.setBounds(bounds);
+                mBackgroundDrawable.setBounds(mHexagonRect);
             }
             mBackgroundDrawable.draw(canvas);
             canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);

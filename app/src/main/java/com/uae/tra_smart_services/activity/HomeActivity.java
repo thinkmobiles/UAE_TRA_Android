@@ -14,6 +14,10 @@ import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
+import com.uae.tra_smart_services.fragment.HelpSalemFragment;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
+import com.uae.tra_smart_services.fragment.InfoHubFragment;
+import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
@@ -33,7 +37,7 @@ import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
-import com.uae.tra_smart_services.rest.model.new_response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 
 import retrofit.RetrofitError;
 
@@ -59,7 +63,7 @@ public class HomeActivity extends BaseFragmentActivity
         mToolbar = findView(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        bottomNavRadios = findView(R.id.rgBottomNavRadio_FSL);
+        bottomNavRadios = findView(R.id.rgBottomNavRadio_AH);
         bottomNavRadios.setOnCheckedChangeListener(this);
 
         if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)){
@@ -151,7 +155,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     protected int getContainerId() {
-        return R.id.flContainer_HA;
+        return R.id.flContainer_AH;
     }
 
     @Override
@@ -186,8 +190,8 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithOutBackStack(FavoritesFragment.newInstance());
                 break;
             case R.id.rbInfoHub_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: Info Hub",
-                        Toast.LENGTH_SHORT).show();
+                clearBackStack();
+                replaceFragmentWithOutBackStack(InfoHubFragment.newInstance());
                 break;
             case R.id.rbInquiries_BNRG:
                 Toast.makeText(getApplicationContext(), "choice: Inquiries",

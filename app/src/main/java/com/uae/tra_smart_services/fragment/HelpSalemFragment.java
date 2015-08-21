@@ -10,19 +10,13 @@ import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-import com.squareup.picasso.Downloader;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.rest.model.new_request.HelpSalimModel;
-import com.uae.tra_smart_services.rest.model.new_request.SmsSpamRequestModel;
-import com.uae.tra_smart_services.rest.model.new_response.DomainInfoCheckResponseModel;
-import com.uae.tra_smart_services.rest.model.new_response.SmsSpamResponseModel;
-import com.uae.tra_smart_services.rest.model.responce.Status;
-import com.uae.tra_smart_services.rest.new_request.HelpSalimRequest;
-import com.uae.tra_smart_services.rest.new_request.SmsSpamRequest;
+import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
+import com.uae.tra_smart_services.rest.robo_requests.HelpSalimRequest;
 
 import retrofit.client.Response;
 
@@ -52,8 +46,8 @@ public class HelpSalemFragment extends BaseFragment implements AlertDialogFragme
 
     private CustomFilterPool filters;
     @Override
-    protected final void initCustomEntities() {
-        super.initCustomEntities();
+    protected final void initData() {
+        super.initData();
         filters = new CustomFilterPool<String>(){
             {
                 addFilter(new Filter<String>() {

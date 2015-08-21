@@ -15,9 +15,9 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
-import com.uae.tra_smart_services.rest.model.new_request.LoginModel;
-import com.uae.tra_smart_services.rest.model.new_response.ErrorResponseModel;
-import com.uae.tra_smart_services.rest.new_request.LoginRequest;
+import com.uae.tra_smart_services.rest.model.request.LoginModel;
+import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
+import com.uae.tra_smart_services.rest.robo_requests.LoginRequest;
 
 import retrofit.RetrofitError;
 import retrofit.client.Response;

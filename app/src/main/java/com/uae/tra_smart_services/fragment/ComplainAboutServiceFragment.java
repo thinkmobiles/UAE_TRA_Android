@@ -18,8 +18,8 @@ import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.global.ServiceProvider;
-import com.uae.tra_smart_services.rest.model.new_request.ComplainServiceProviderModel;
-import com.uae.tra_smart_services.rest.new_request.ComplainAboutServiceRequest;
+import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
+import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutServiceRequest;
 
 import retrofit.client.Response;
 

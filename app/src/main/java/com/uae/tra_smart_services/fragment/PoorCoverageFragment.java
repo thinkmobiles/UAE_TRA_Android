@@ -26,12 +26,10 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.LocationType;
-import com.uae.tra_smart_services.rest.model.new_request.PoorCoverageRequestModel;
-import com.uae.tra_smart_services.rest.new_request.GeoLocationRequest;
-import com.uae.tra_smart_services.rest.new_request.PoorCoverageRequest;
+import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
+import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
+import com.uae.tra_smart_services.rest.robo_requests.PoorCoverageRequest;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Locale;
 
 import retrofit.client.Response;
@@ -85,8 +83,8 @@ public class PoorCoverageFragment extends BaseFragment
     private PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
     CustomSingleChoiceDialog locationTypeChooser;
     @Override
-    protected void initCustomEntities() {
-        super.initCustomEntities();
+    protected void initData() {
+        super.initData();
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)

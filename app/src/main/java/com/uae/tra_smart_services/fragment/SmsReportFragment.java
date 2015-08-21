@@ -14,9 +14,9 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.rest.model.new_request.SmsSpamRequestModel;
-import com.uae.tra_smart_services.rest.model.new_response.SmsSpamResponseModel;
-import com.uae.tra_smart_services.rest.new_request.SmsSpamRequest;
+import com.uae.tra_smart_services.rest.model.request.SmsSpamRequestModel;
+import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
+import com.uae.tra_smart_services.rest.robo_requests.SmsSpamRequest;
 
 /**
  * Created by ak-buffalo on 11.08.15.
@@ -44,8 +44,8 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
 
     private CustomFilterPool filters;
     @Override
-    protected void initCustomEntities() {
-        super.initCustomEntities();
+    protected void initData() {
+        super.initData();
         filters = new CustomFilterPool<String>(){
             {
                 addFilter(new Filter<String>() {
