@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llFragmentContainer_FSID"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_service_info_background"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/ivCloseInfo_FSID"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="end"
+        android:src="@drawable/ic_play"/>
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvServiceInfoIcon_FSID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hexagonBackground="@drawable/ic_edit"
+        app:hexagonBorderColor="#ffffff"
+        app:hexagonBorderSize="1dp"
+        app:hexagonSideSize="60dp"/>
+
+    <TextView
+        android:id="@+id/tvServiceInfoContent_FSID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:scrollbars="none"
+        android:text="@string/str_dummy_info_hub_list_item_full_descr"
+        android:textColor="@android:color/white"/>
+
+</LinearLayout>

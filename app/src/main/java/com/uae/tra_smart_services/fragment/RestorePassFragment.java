@@ -8,6 +8,7 @@ import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
  */
 public class RestorePassFragment extends BaseAuthorizationFragment {
 
+
     public static RestorePassFragment newInstance() {
         return new RestorePassFragment();
     }

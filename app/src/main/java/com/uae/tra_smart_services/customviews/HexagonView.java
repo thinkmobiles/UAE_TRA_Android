@@ -85,7 +85,21 @@ public class HexagonView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension((int) Math.round(2 * mHexagonInnerRadius + mBorderWidth), (int) Math.round(2 * mHexagonSide + mBorderWidth));
+
+        final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        final float widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        final float myWidth = Math.round(2 * mHexagonInnerRadius + mBorderWidth);
+        final float width;
+
+        if (widthMode == MeasureSpec.EXACTLY) {
+            width = widthSize;
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            width = Math.min(myWidth, widthSize);
+        } else {
+            width = myWidth;
+        }
+
+        setMeasuredDimension((int) width, (int) Math.round(2 * mHexagonSide + mBorderWidth));
     }
 
     @Override
@@ -122,7 +136,7 @@ public class HexagonView extends View {
             if (mBackgroundDrawable instanceof BitmapDrawable) {
 
                 float centerY = (float) (mHexagonSide + getBorderWidth() / 2f);
-                float centerX = (float) mHexagonInnerRadius;
+                float centerX = (float) getWidth() / 2;
 
                 final int drawableWidth = mBackgroundDrawable.getMinimumWidth();
                 final int drawableHeight = mBackgroundDrawable.getMinimumHeight();
