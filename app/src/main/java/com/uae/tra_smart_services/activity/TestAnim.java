@@ -93,6 +93,7 @@ public class TestAnim extends Activity/* implements ListView.OnItemLongClickList
                         &&  y >= view.getY() && y <= view.getY() + view.getHeight();
             }
         });
+
     }
 
     public void move(View view, MotionEvent event, float dX, float dY) {
@@ -124,8 +125,11 @@ public class TestAnim extends Activity/* implements ListView.OnItemLongClickList
                 return true;
             }
         });
+        imageView.start
+        return true;
+    }*/
 
-        *//*rootView.setOnTouchListener(new View.OnTouchListener() {
+        /*rootView.setOnTouchListener(new View.OnTouchListener() {
             private float dX;
             private float dY;
 
@@ -158,6 +162,7 @@ public class TestAnim extends Activity/* implements ListView.OnItemLongClickList
         v.draw(c);
         ImageView imageView = new ImageView(getBaseContext());
         imageView.setTag("I am the ImageView");
+        imageView.setTranslationY(imageView.getY() + 250);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         imageView.setImageBitmap(b);
         return imageView;
