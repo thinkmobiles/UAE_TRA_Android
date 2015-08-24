@@ -161,6 +161,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
             if (textView != null) {
                 mDefaultTextColor = textView.getTextColors();
                 textView.setTextColor(Color.RED);
+                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_trash_red, 0, 0, 0);
             }
 
             mDragPoint = new PointF();
@@ -210,6 +211,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
                 TextView textView = (TextView) mDragTarget.getTag();
                 if (textView != null) {
                     textView.setTextColor(mDefaultTextColor);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_trash_gray, 0, 0, 0);
                 }
                 mIsDragging = false;
                 mAreaAnimator.reverse();

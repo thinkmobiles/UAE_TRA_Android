@@ -137,4 +137,9 @@
     <string name="fragment_service_info_processing_time">Processing Time</string>
     <string name="fragment_service_info_service_fees">Service Fees</string>
     <string name="fragment_service_info_contact_in_charge">Contact In-charge</string>
+    
+    <!--                FavoritesFragment               -->
+    <string name="fragment_favorites_empty_favorites">You have not selected a TRA\nservice as part of your\nFavorites list yet.</string>
+    <string name="fragment_favorites_add_service">ADD A SERVICE</string>
+
 </resources>

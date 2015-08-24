@@ -28,7 +28,7 @@ public class HexagonView extends View {
     private double mHexagonSide, mHexagonInnerRadius;
     private final Path mPath;
     private final Paint mPaint, mShadowPaint;
-    private int mBorderWidth;
+    private int mBorderColor, mBorderWidth;
     private Drawable mBackgroundDrawable;
     private Rect mHexagonRect = new Rect();
 
@@ -44,13 +44,14 @@ public class HexagonView extends View {
         try {
             setHexagonSide(a.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS));
             mBorderWidth = a.getDimensionPixelSize(R.styleable.HexagonView_hexagonBorderSize, 0);
+            mBorderColor = a.getColor(R.styleable.HexagonView_hexagonBorderColor, 0xFFC8C7C6);
             mBackgroundDrawable = a.getDrawable(R.styleable.HexagonView_hexagonBackground);
         } finally {
             a.recycle();
         }
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(0xFFC8C7C6);
+        mPaint.setColor(mBorderColor);
         mPaint.setStrokeWidth(mBorderWidth);
         mPaint.setStyle(Paint.Style.STROKE);
 

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.FavoritesAdapter.ViewHolder;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.entities.FavoriteItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,20 +26,35 @@ import java.util.List;
 public class FavoritesAdapter extends Adapter<ViewHolder> {
 
     private final LayoutInflater mInflater;
-    private final List<String> mData;
+    private final List<FavoriteItem> mData;
     private OnFavoriteClickListener mFavoriteClickListener;
     private boolean mIsOddOpaque;
 
     public FavoritesAdapter(final Context _context) {
-        this(_context, new ArrayList<String>());
+        this(_context, new ArrayList<FavoriteItem>());
     }
 
-    public FavoritesAdapter(final Context _context, final @NonNull List<String> _data) {
+    public FavoritesAdapter(final Context _context, final @NonNull List<FavoriteItem> _data) {
         mInflater = LayoutInflater.from(_context);
         mData = _data;
     }
 
-    public final void removeItem(int _position) {
+    public final void setData(List<FavoriteItem> _data) {
+        mData.clear();
+        mData.addAll(_data);
+        notifyDataSetChanged();
+    }
+
+    public final boolean isEmpty(){
+        return mData.isEmpty();
+    }
+
+    public final void addData(final List<FavoriteItem> _items) {
+        mData.addAll(_items);
+        notifyDataSetChanged();
+    }
+
+    public final void removeItem(final int _position) {
         mData.remove(_position);
         mIsOddOpaque = !mIsOddOpaque;
         notifyItemRemoved(_position);
@@ -63,6 +79,10 @@ public class FavoritesAdapter extends Adapter<ViewHolder> {
         mFavoriteClickListener = _favoriteClickListener;
     }
 
+    public FavoriteItem getItem(int _position) {
+        return mData.get(_position);
+    }
+
     protected class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {
 
         private final View rootView;
@@ -84,14 +104,15 @@ public class FavoritesAdapter extends Adapter<ViewHolder> {
             tvRemove.setOnLongClickListener(this);
         }
 
-        public final void setData(final String _title, final int _position) {
+        public final void setData(final FavoriteItem _item, final int _position) {
             rootView.setVisibility(View.VISIBLE);
             if (mIsOddOpaque) {
-                rlItemContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : Color.parseColor("#fff5ea"));
-            } else {
                 rlItemContainer.setBackgroundColor(_position % 2 == 0 ? Color.parseColor("#fff5ea") : Color.TRANSPARENT);
+            } else {
+                rlItemContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : Color.parseColor("#fff5ea"));
             }
-            tvTitle.setText(_title);
+            tvTitle.setText(_item.name);
+            hvIcon.setBackgroundDrawable(_item.backgroundDrawableRes);
         }
 
         @Override

@@ -17,7 +17,7 @@
         android:layout_gravity="center_horizontal"
         app:hexagonSideSize="40dp"
         app:hexagonBorderSize="1dp"
-        app:hexagonBorderColor="#ffffff"/>
+        app:hexagonBorderColor="#c8c7c6"/>
 
     <TextView
         android:id="@+id/textView"
