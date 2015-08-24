@@ -11,7 +11,7 @@
         android:paddingEnd="20dp"
         android:paddingStart="20dp" />
     <TextView
-        android:text="Federal Authority"
+        android:text="@string/federal_authority"
         android:textColor="?attr/globalButtonTextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

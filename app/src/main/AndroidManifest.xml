@@ -20,6 +20,7 @@
 
 
     <application
+        android:name=".TRAApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -51,5 +52,8 @@
             android:name=".rest.TRARestService"
             android:exported="false"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="8f2fec49c70c4b9ae542be587d9897f637adce08" />
     </application>
 </manifest>

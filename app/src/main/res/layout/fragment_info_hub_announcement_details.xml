@@ -46,7 +46,7 @@
                     android:paddingBottom="10dp"
                     android:paddingEnd="20dp"
                     android:paddingStart="20dp"
-                    android:text="Announcements title describes a whole information about selected item asdasd  "
+                    android:text="Announcements title describes a whole information about selected item"
                     android:textColor="@color/hex_text_color_white"
                     android:textStyle="bold" />
             </RelativeLayout>
