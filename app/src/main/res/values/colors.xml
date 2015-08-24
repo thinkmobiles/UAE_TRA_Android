@@ -10,7 +10,7 @@
     <color name="hex_primary_blue">#ff06edff</color>
     <color name="hex_dark_blue">#ff058797</color>
 
-    <color name="hex_primary_red">#f5ff0000</color>
+    <color name="hex_primary_red">#ff0000</color>
     <color name="hex_dark_red">#ff8d0000</color>
 
     <color name="hex_black_color">#ff000000</color>

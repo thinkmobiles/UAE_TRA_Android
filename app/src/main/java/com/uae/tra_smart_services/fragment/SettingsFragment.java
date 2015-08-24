@@ -4,15 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Patterns;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,7 +20,7 @@ import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 import com.uae.tra_smart_services.customviews.FontSizeSwitcherView;
 import com.uae.tra_smart_services.customviews.LanguageSwitcherView;
 import com.uae.tra_smart_services.customviews.ThemeSwitcherView;
-import com.uae.tra_smart_services.dialog.AlertDialogFragment;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
@@ -33,12 +31,14 @@ import com.uae.tra_smart_services.interfaces.SettingsChanged;
 /**
  * Created by Andrey Korneychuk on 30.07.15.
  */
-public class SettingsFragment extends BaseHomePageFragment implements SettingsChanged, OnClickListener, AlertDialogFragment.OnOkListener {
+public class SettingsFragment extends BaseHomePageFragment
+        implements SettingsChanged, OnClickListener, OnOkListener, OnCheckedChangeListener {
 
     public static final String CHANGED = "changed";
 
     private EditText etServer;
     private Button btnChangeServer;
+    private SwitchCompat swBlackAndWhiteMode;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -55,12 +55,14 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
         super.initViews();
         etServer = findView(R.id.etServer_FS);
         btnChangeServer = findView(R.id.btnChangeServer_FS);
+        swBlackAndWhiteMode = findView(R.id.swBlackAndWhiteMode_FS);
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
         btnChangeServer.setOnClickListener(this);
+        swBlackAndWhiteMode.setOnCheckedChangeListener(this);
     }
 
     private static CustomFilterPool<String> filters = new CustomFilterPool<String>(){
@@ -151,6 +153,15 @@ public class SettingsFragment extends BaseHomePageFragment implements SettingsCh
                         BaseCustomSwitcher.Type.THEME.toString(),
                         _themaStrValue
                 ).commit();
+    }
+
+    @Override
+    public final void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        updateTheme("AppThemeBlackAndWhite");
+        Intent refresh = new Intent(getActivity(), HomeActivity.class);
+        refresh.putExtra(CHANGED, true);
+        refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(refresh);
     }
 
     @Override

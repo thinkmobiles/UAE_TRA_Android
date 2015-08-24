@@ -24,6 +24,8 @@
     <string name="str_fontsize">Font Size</string>
     <!--            Theme options field               -->
     <string name="str_themesoptions">Theme Options</string>
+    <!--            Black and White mode              -->
+    <string name="str_black_and_white_mode">Black&amp;White Mode</string>
     <!--            Phone field               -->
     <string name="str_phone">Phone</string>
     <!--            Password field               -->

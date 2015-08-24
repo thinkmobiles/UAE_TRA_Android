@@ -5,11 +5,14 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
@@ -23,11 +26,12 @@ import java.util.List;
 /**
  * Created by mobimaks on 18.08.2015.
  */
-public class FavoritesAdapter extends Adapter<ViewHolder> {
+public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable {
 
     private final LayoutInflater mInflater;
     private final List<FavoriteItem> mData;
     private OnFavoriteClickListener mFavoriteClickListener;
+    private Filter mServiceFilter;
     private boolean mIsOddOpaque;
 
     public FavoritesAdapter(final Context _context) {
@@ -45,7 +49,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public final boolean isEmpty(){
+    public final boolean isEmpty() {
         return mData.isEmpty();
     }
 
@@ -58,6 +62,14 @@ public class FavoritesAdapter extends Adapter<ViewHolder> {
         mData.remove(_position);
         mIsOddOpaque = !mIsOddOpaque;
         notifyItemRemoved(_position);
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (mServiceFilter == null) {
+            mServiceFilter = new SearchFilter(mData);
+        }
+        return mServiceFilter;
     }
 
     @Override
@@ -81,6 +93,46 @@ public class FavoritesAdapter extends Adapter<ViewHolder> {
 
     public FavoriteItem getItem(int _position) {
         return mData.get(_position);
+    }
+
+    private class SearchFilter extends Filter {
+
+        private final List<FavoriteItem> listData;
+
+        public SearchFilter(List<FavoriteItem> _listData) {
+            listData = new ArrayList<>(_listData);
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            final FilterResults results = new FilterResults();
+            if (TextUtils.isEmpty(constraint)) {
+                results.count = listData.size();
+                results.values = listData;
+            } else {
+                List<FavoriteItem> filteredList = getFilteredList(constraint);
+                results.count = filteredList.size();
+                results.values = filteredList;
+            }
+            return results;
+        }
+
+        private List<FavoriteItem> getFilteredList(CharSequence _constraint) {
+            List<FavoriteItem> serviceList = new ArrayList<>();
+            for (int i = 0; i < listData.size(); i++) {
+                FavoriteItem favoriteItem = listData.get(i);
+                if (favoriteItem.name.toLowerCase().contains(_constraint.toString().toLowerCase())) {
+                    serviceList.add(favoriteItem);
+                }
+            }
+            return serviceList;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            List<FavoriteItem> filteredData = (List<FavoriteItem>) results.values;
+            setData(filteredData);
+        }
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {

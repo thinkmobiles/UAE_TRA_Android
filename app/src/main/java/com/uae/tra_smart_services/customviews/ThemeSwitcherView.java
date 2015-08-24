@@ -60,8 +60,8 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
     }
 
     private float getCircleDX(float width, int count, int position){
-        float first = Float.valueOf(position) / Float.valueOf(count);
-        float second = Float.valueOf((position + 1)) / Float.valueOf(count);
+        float first =  position / (float) count;
+        float second = (position + 1) / (float) count;
         float dX = width * (first + second) / 2f;
         return dX;
     }
