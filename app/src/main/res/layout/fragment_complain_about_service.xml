@@ -24,7 +24,7 @@
         android:textColor="@android:color/black"
         android:background="@null"
         android:gravity="center_vertical"
-        android:hint="Complain title"
+        android:hint="@string/complain_title"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
         android:singleLine="true"
@@ -59,7 +59,7 @@
         android:gravity="center_vertical"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
-        android:hint="Service provider"
+        android:hint="@string/service_provider"
         android:textSize="16sp"/>
 
     <View
@@ -77,7 +77,7 @@
         android:layout_below="@id/vServiceProviderDivider_FCAS"
         android:background="@null"
         android:gravity="center_vertical"
-        android:hint="Reference number"
+        android:hint="@string/reference_number"
         android:inputType="number"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
@@ -99,7 +99,7 @@
         android:layout_below="@id/vReferenceNumberDivider_FCAS"
         android:background="@null"
         android:gravity="start|top"
-        android:hint="Description"
+        android:hint="@string/description"
         android:inputType="textAutoCorrect|textMultiLine"
         android:padding="8dp"
         android:textSize="16sp"/>

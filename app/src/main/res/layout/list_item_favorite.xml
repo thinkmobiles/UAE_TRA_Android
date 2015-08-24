@@ -46,7 +46,7 @@
         android:layout_marginTop="8dp"
         android:drawablePadding="8dp"
         android:paddingEnd="16dp"
-        android:text="Service Info"
+        android:text="@string/favourite_service_info"
         android:drawableStart="@drawable/ic_info"/>
 
     <TextView
@@ -57,7 +57,7 @@
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@id/tvServiceInfo_LIF"
         android:drawablePadding="8dp"
-        android:text="Remove"
+        android:text="@string/favourite_remove"
         android:drawableStart="@drawable/ic_trash_gray"/>
 
 

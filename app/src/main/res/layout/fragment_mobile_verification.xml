@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
     android:paddingTop="8dp"
-    android:background="?android:windowBackground"
-    tools:ignore="HardcodedText">
+    android:background="?android:windowBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,7 +31,7 @@
             android:layout_toStartOf="@id/ivCameraBtn_FMV"
             android:background="@android:color/white"
             android:gravity="center_vertical"
-            android:hint="Insert IMEI Manually"
+            android:hint="@string/insert_imei_hint"
             android:inputType="number"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"

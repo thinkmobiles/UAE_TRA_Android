@@ -8,8 +8,8 @@
 
     <!--                Authorization screens                -->
     <string name="login_title">Login</string>
-    <string name="register_title">Create account</string>
-    <string name="forgot_password_title">Forgot password</string>
+    <string name="register_title">Create Account</string>
+    <string name="forgot_password_title">Forgot Password</string>
     <string name="error_fill_all_fields">Please fill all fields</string>
 
     <!--            Username field               -->
@@ -21,9 +21,9 @@
     <!--            Gender field               -->
     <string name="str_gender">Gender</string>
     <!--            Font size field               -->
-    <string name="str_fontsize">Font size</string>
+    <string name="str_fontsize">Font Size</string>
     <!--            Theme options field               -->
-    <string name="str_themesoptions">Theme options</string>
+    <string name="str_themesoptions">Theme Options</string>
     <!--            Black and White mode              -->
     <string name="str_black_and_white_mode">Black&amp;White Mode</string>
     <!--            Phone field               -->
@@ -31,7 +31,7 @@
     <!--            Password field               -->
     <string name="str_password">Password</string>
     <!--            Forgot password field               -->
-    <string name="str_forgot_password">Forgot the password</string>
+    <string name="str_forgot_password">Forgot Password</string>
     <!--            Sign in button               -->
     <string name="str_login">Login</string>
     <!--            Sign in button               -->
@@ -40,9 +40,9 @@
     <string name="str_register">Register</string>
     <!--            Restore button               -->
     <string name="str_restore">Restore</string>
-    <string name="str_restore_password">Restore password</string>
+    <string name="str_restore_password">Restore Password</string>
     <!--            Register now button               -->
-    <string name="str_register_now">Register now</string>
+    <string name="str_register_now">Register Now</string>
     <!--            Logout button               -->
     <string name="str_logout">Logout</string>
 
@@ -57,9 +57,9 @@
     <string name="str_inquiries">Inquiries</string>
     <string name="str_settings">Settings</string>
     <string name="fragment_service_list_title">TRA Services</string>
-    <string name="complain">Complain</string>
-    <string name="approved_devices">Approved devices</string>
-    <string name="device_approval">Device approval</string>
+    <string name="complain">Complaint</string>
+    <string name="approved_devices">Approved Devices</string>
+    <string name="device_approval">Device Approval</string>
     <!--               Home screens                -->
 
     <string-array name="languages">
@@ -69,22 +69,22 @@
     </string-array>
 
     <!--            Availability in button               -->
-    <string name="str_domain_check">Domain check</string>
+    <string name="str_domain_check">Domain Check</string>
     <string name="str_availabilty">Availability</string>
-    <string name="str_who_is">Who is?</string>
+    <string name="str_who_is">Who Is?</string>
     <string name="str_location">Location</string>
-    <string name="str_signal_level">Signal level</string>
-    <string name="str_signal_coverage">Signal coverage</string>
+    <string name="str_signal_level">Signal Level</string>
+    <string name="str_signal_coverage">Signal Coverage</string>
     <string name="str_enter_url">Enter URL</string>
     <string name="str_report_url">Report URL</string>
     <string name="str_description">Description</string>
-    <string name="str_number_of_spammer">Number of spammer</string>
-    <string name="str_sms_report_number">Report number</string>
-    <string name="str_sms_block_number">Block number</string>
-    <string name="str_sms_service_list">Sms service list</string>
+    <string name="str_number_of_spammer">Number Of Spammer</string>
+    <string name="str_sms_report_number">Report SMS Number</string>
+    <string name="str_sms_block_number">Block Number</string>
+    <string name="str_sms_service_list">SMS Service List</string>
 
     <string name="str_user_name">Jhon</string>
-    <string name="str_insert_domain_name_here">Insert domain name here</string>
+    <string name="str_insert_domain_name_here">Domain Name (i.e. tra.gov.ae)</string>
 
     <!--               Status codes and messages                -->
     <string name="str_success">Success</string>
@@ -97,28 +97,28 @@
     <string name="str_cancel">Cancel</string>
     <string name="str_one_empty_space"> </string>
     <string name="str_empty"></string>
-    <string name="str_domain_available">Domain is available</string>
-    <string name="str_domain_availability">Domain availability</string>
-    <string name="str_domain_info">Domain info</string>
-    <string name="str_request_failed">Request failed</string>
+    <string name="str_domain_available">Domain Is Available</string>
+    <string name="str_domain_availability">Domain Availability</string>
+    <string name="str_domain_info">Domain Info</string>
+    <string name="str_request_failed">Request Failed</string>
     <string name="str_something_went_wrong">Something went wrong</string>
     <string name="str_checking">Checking..</string>
     <string name="str_sending">Sending..</string>
     <string name="str_report_has_been_sent">Report has been successfully sent</string>
     <string name="str_data_has_been_sent">Signal level has been successfully sent</string>
     <string name="str_complain_has_been_sent">Complain has been successfully sent</string>
-    <string name="str_info_hub">Info hub</string>
-    <string name="str_info_hub_title">INFO HUB</string>
-    <string name="str_info_hub_announcements">INFO HUB ANNOUNCEMENTS</string>
-    <string name="str_info_hub_announcement_details">INFO HUB DETAILS</string>
+    <string name="str_info_hub">Info Hub</string>
+    <string name="str_info_hub_title">Info Hub</string>
+    <string name="str_info_hub_announcements">Info Hub Announcements</string>
+    <string name="str_info_hub_announcement_details">Info Hub Details</string>
     <string name="str_location_is_not_defined">Unfortunately, location is not defined n\r\ Please put your location manually</string>
-    <string name="str_location_error">Enter location</string>
+    <string name="str_location_error">Enter Location</string>
     <string name="str_location_error_message">Please enter address manually or wait untill location will be found</string>
     <string name="signal_level_error">Please set signal level</string>
 
     <string name="str_announcements">Announcements</string>
     <string name="str_transactions">Transactions</string>
-    <string name="str_see_more">See more</string>
+    <string name="str_see_more">See More</string>
 
     <string name="str_dummy_info_hub_list_item_descr">
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and...
@@ -132,17 +132,38 @@
     <string name="str_dummy_info_hub_list_item_title">Title</string>
 
     <!--                ServiceInfoFragment             -->
-    <string name="fragment_service_info_service_info">Service Info</string>
+    <string name="fragment_service_info_service_info">About the Service</string>
     <string name="fragment_service_info_required_documents">Required Documents</string>
     <string name="fragment_service_info_terms_and_conditions">Terms &amp; Conditions </string>
     <string name="fragment_service_info_service_package">Service Package</string>
-    <string name="fragment_service_info_processing_time">Processing Time</string>
+    <string name="fragment_service_info_processing_time">Expected Time</string>
     <string name="fragment_service_info_service_fees">Service Fees</string>
-    <string name="fragment_service_info_contact_in_charge">Contact In-charge</string>
+    <string name="fragment_service_info_contact_in_charge">Officer in Charge of this Service</string>
     
     <!--                FavoritesFragment               -->
     <string name="fragment_favorites_empty_favorites">You have not selected a TRA\nservice as part of your\nFavorites list yet.</string>
     <string name="fragment_favorites_add_service">ADD A SERVICE</string>
+
+    <!--                Services                    -->
+    <string name="operator_number">Operator Number</string>
+    <string name="service_provider">Service Provider</string>
+    <string name="number_of_spammer">Spammer Number</string>
+    <string name="description">Description</string>
+    <string name="complain_title">Complaint Title</string>
+    <string name="reference_number">Reference Number</string>
+    <string name="content_description_add_attachment">Add Attachment</string>
+    <string name="approved_device_information">Approved Device Information</string>
+    <string name="insert_imei_hint">Insert IMEI Manually</string>
+    <string name="hint_set_server_url">Set server url</string>
+    <string name="button_change_server">Change server</string>
+    <string name="favourite_service_info">Service Info</string>
+    <string name="favourite_remove">Remove</string>
+    <string name="federal_authority">Federal Authority</string>
+    <string name="hexagon_button_verification">Verification</string>
+    <string name="hexagon_button_spam">Spam</string>
+    <string name="hexagon_button_coverage">Coverage</string>
+    <string name="hexagon_button_internet">Internet</string>
+
 
     <!--                PoorCoverageFragment            -->
     <string-array name="fragment_poor_coverage_signal_levels">
