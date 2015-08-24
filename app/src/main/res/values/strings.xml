@@ -144,4 +144,13 @@
     <string name="fragment_favorites_empty_favorites">You have not selected a TRA\nservice as part of your\nFavorites list yet.</string>
     <string name="fragment_favorites_add_service">ADD A SERVICE</string>
 
+    <!--                PoorCoverageFragment            -->
+    <string-array name="fragment_poor_coverage_signal_levels">
+        <item>Very Weak</item>
+        <item>Weak</item>
+        <item>Good</item>
+        <item>Strong</item>
+        <item>Very Strong</item>
+    </string-array>
+
 </resources>

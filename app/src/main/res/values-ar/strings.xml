@@ -70,4 +70,14 @@
     <string name="str_dummy_info_hub_list_item_title">هزار و یک شب</string>
 
 
+    <!--                PoorCoverageFragment            -->
+    <string-array name="fragment_poor_coverage_signal_levels">
+        <item>ضعيفة جدا</item>
+        <item>ضعيفة</item>
+        <item>جيدة</item>
+        <item>قوية</item>
+        <item>قوية جدا</item>
+    </string-array>
+
+
 </resources>
