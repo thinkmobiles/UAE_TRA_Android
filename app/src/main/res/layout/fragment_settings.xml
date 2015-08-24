@@ -12,7 +12,6 @@
         android:id="@+id/llRegisterFields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -120,6 +119,33 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/UserSettingsStaticText"
+                android:hint="@string/str_black_and_white_mode"/>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/swBlackAndWhiteMode_FS"
+                android:layout_width="wrap_content"
+                android:minWidth="48dp"
+                android:padding="12dp"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <View style="@style/AuthorizationFieldsSeparator"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -156,4 +182,5 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
 </ScrollView>

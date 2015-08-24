@@ -6,9 +6,9 @@
         <attr name="scaleStep" format="float"/>
     </declare-styleable>
 
-    <attr name="homePageHeaderBackground" format="reference" />
-    <attr name="globalButtonTextColor" format="reference" />
-    <attr name="globalButtonSelector" format="reference" />
+    <attr name="homePageHeaderBackground" format="reference|color" />
+    <attr name="globalButtonTextColor" format="reference|color" />
+    <attr name="globalButtonSelector" format="reference|color" />
 
     <declare-styleable name="CollapsingTitleLayout">
         <attr name="expandedMargin" format="reference|dimension" />
