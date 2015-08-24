@@ -3,9 +3,15 @@ package com.uae.tra_smart_services.fragment;
 import android.app.Activity;
 import android.content.ClipData;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
@@ -25,12 +31,13 @@ import java.util.List;
  * Created by mobimaks on 18.08.2015.
  */
 public class FavoritesFragment extends BaseFragment
-        implements OnFavoriteClickListener, OnItemDeleteListener, OnClickListener {
+        implements OnFavoriteClickListener, OnItemDeleteListener, OnClickListener, OnQueryTextListener {
 
     private DragFrameLayout dflContainer;
     private RecyclerView rvFavoritesList;
     private RelativeLayout rlEmptyContainer;
     private HexagonView hvAddService;
+    private SearchView svSearchFavorites;
 
     private FavoritesAdapter mFavoritesAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -47,6 +54,12 @@ public class FavoritesFragment extends BaseFragment
         if (_activity instanceof OnFavoritesEventListener) {
             mFavoritesEventListener = (OnFavoritesEventListener) _activity;
         }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -81,9 +94,37 @@ public class FavoritesFragment extends BaseFragment
         rvFavoritesList.setLayoutManager(mLinearLayoutManager);
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.setVisible(!mFavoritesAdapter.isEmpty());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_search, menu);
+        svSearchFavorites = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        svSearchFavorites.setOnQueryTextListener(this);
+    }
+
     public final void addServicesToFavorites(final List<FavoriteItem> _items){
         mFavoritesAdapter.addData(_items);
+        getActivity().invalidateOptionsMenu();
         setEmptyPlaceholderVisibility(mFavoritesAdapter.isEmpty());
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        mFavoritesAdapter.getFilter().filter(newText);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        mFavoritesAdapter.getFilter().filter(query);
+        return true;
     }
 
     @Override
@@ -117,6 +158,7 @@ public class FavoritesFragment extends BaseFragment
     @Override
     public void onDeleteItem(int _position) {
         mFavoritesAdapter.removeItem(_position);
+        getActivity().invalidateOptionsMenu();
         setEmptyPlaceholderVisibility(mFavoritesAdapter.isEmpty());
     }
 
