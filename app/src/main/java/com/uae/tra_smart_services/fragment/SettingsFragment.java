@@ -40,14 +40,21 @@ public class SettingsFragment extends BaseHomePageFragment
     private Button btnChangeServer;
     private SwitchCompat swBlackAndWhiteMode;
 
+    private FontSizeSwitcherView fontSwitch;
+    private LanguageSwitcherView langSwitch;
+    private ThemeSwitcherView themeSwitch;
+
+    private SharedPreferences mPrefs;
+
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 
     @Override
@@ -56,6 +63,7 @@ public class SettingsFragment extends BaseHomePageFragment
         etServer = findView(R.id.etServer_FS);
         btnChangeServer = findView(R.id.btnChangeServer_FS);
         swBlackAndWhiteMode = findView(R.id.swBlackAndWhiteMode_FS);
+        swBlackAndWhiteMode.setChecked(mPrefs.getBoolean(Constants.KEY_BLACK_AND_WHITE_MODE, false));
     }
 
     @Override
@@ -65,7 +73,7 @@ public class SettingsFragment extends BaseHomePageFragment
         swBlackAndWhiteMode.setOnCheckedChangeListener(this);
     }
 
-    private static CustomFilterPool<String> filters = new CustomFilterPool<String>(){
+    private static CustomFilterPool<String> filters = new CustomFilterPool<String>() {
         {
             addFilter(new Filter<String>() {
                 @Override
@@ -77,26 +85,10 @@ public class SettingsFragment extends BaseHomePageFragment
     };
 
     @Override
-    protected int getTitle() {
-        return R.string.str_settings;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_settings;
-    }
-
-    private SharedPreferences prefs;
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         globalInitViews();
     }
-
-    private FontSizeSwitcherView fontSwitch;
-    private LanguageSwitcherView langSwitch;
-    private ThemeSwitcherView themeSwitch;
 
     private void globalInitViews() {
         langSwitch = findView(R.id.cvLangSwitch);
@@ -104,7 +96,7 @@ public class SettingsFragment extends BaseHomePageFragment
         langSwitch.registerObserver(this);
 
         fontSwitch = findView(R.id.cvFontSwitch);
-        fontSwitch.globalInit(prefs.getFloat(BaseCustomSwitcher.Type.FONT.toString(), 1f));
+        fontSwitch.globalInit(mPrefs.getFloat(BaseCustomSwitcher.Type.FONT.toString(), 1f));
         fontSwitch.registerObserver(this);
 
         themeSwitch = findView(R.id.cvThemeSwitch);
@@ -125,14 +117,11 @@ public class SettingsFragment extends BaseHomePageFragment
                 updateTheme((String) data);
                 break;
         }
-        Intent refresh = new Intent(getActivity(), HomeActivity.class);
-        refresh.putExtra(CHANGED, true);
-        refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(refresh);
+        restartActivity();
     }
 
     private void updateLocale(String _lang) {
-        prefs.edit()
+        mPrefs.edit()
                 .putString(
                         BaseCustomSwitcher.Type.LANGUAGE.toString(),
                         _lang)
@@ -140,28 +129,33 @@ public class SettingsFragment extends BaseHomePageFragment
     }
 
     private void updateFont(final float _scale) {
-        prefs.edit()
+        mPrefs.edit()
                 .putFloat(
                         BaseCustomSwitcher.Type.FONT.toString(),
                         _scale)
                 .commit();
     }
 
-    private void updateTheme(String _themaStrValue) {
-        prefs.edit()
-                .putString(
-                        BaseCustomSwitcher.Type.THEME.toString(),
-                        _themaStrValue
-                ).commit();
+    private void updateTheme(String _themeStrValue) {
+        mPrefs.edit()
+                .putString(BaseCustomSwitcher.Type.THEME.toString(), _themeStrValue)
+                .putBoolean(Constants.KEY_BLACK_AND_WHITE_MODE, false)
+                .commit();
     }
 
-    @Override
-    public final void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        updateTheme("AppThemeBlackAndWhite");
+    private void restartActivity() {
         Intent refresh = new Intent(getActivity(), HomeActivity.class);
         refresh.putExtra(CHANGED, true);
         refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(refresh);
+    }
+
+    @Override
+    public final void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        mPrefs.edit()
+                .putBoolean(Constants.KEY_BLACK_AND_WHITE_MODE, isChecked)
+                .commit();
+        restartActivity();
     }
 
     @Override
@@ -176,7 +170,7 @@ public class SettingsFragment extends BaseHomePageFragment
 
     private void setBaseUrl(String _url) {
         ServerConstants.BASE_URL = _url;
-        prefs.edit().putString(Constants.KEY_BASE_URL, _url).commit();
+        mPrefs.edit().putString(Constants.KEY_BASE_URL, _url).commit();
         Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
     }
 
@@ -185,4 +179,15 @@ public class SettingsFragment extends BaseHomePageFragment
         // Unimplemented method
         // Used exceptionally to specify OK button in dialog
     }
+
+    @Override
+    protected int getTitle() {
+        return R.string.str_settings;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_settings;
+    }
+
 }
