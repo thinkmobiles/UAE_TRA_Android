@@ -1,29 +1,23 @@
 package com.uae.tra_smart_services.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.view.DragEvent;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.CustomTestLayout;
-import com.uae.tra_smart_services.entities.CirclePoint;
 
 import java.util.ArrayList;
 
@@ -54,59 +48,85 @@ public class TestAnim extends Activity/* implements ListView.OnItemLongClickList
         }));
 
 
-        rootView.setOnTouchListener(new View.OnTouchListener() {
-            protected final ArrayList<View> viewArray = new ArrayList<View>(){
-                {
-                    add(testListView);
-                }
-            };
+        testListView.setOnTouchListener(new View.OnTouchListener() {
             long mTouchDownTime = 0;
+            float dX;
+            float dY;
+            int position = 0;
+            ListView list;
+            TextView item;
+            ImageView imageView;
+            boolean isNewItem = true;
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View listView, MotionEvent event) {
                 boolean handled = false;
+
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
+                        dX = event.getX();
+                        dY = event.getY();
+                        list = (ListView) listView;
+                        position = list.pointToPosition((int) event.getX(), (int) event.getY());
+                        item = (TextView) list.getChildAt(position);
+                        imageView = loadBitmapFromView(item, (ListView) listView);
+                        float imageViewX = imageView.getX();
+                        float imageViewY = imageView.getY();
+                        item.setBackgroundColor(Color.GRAY);
                         mTouchDownTime = SystemClock.elapsedRealtime();
                         handled = true;
+                        isNewItem = false;
                         break;
                     case MotionEvent.ACTION_MOVE:
+                        float dX = event.getX();
+                        float dY = event.getY();
+
                         if (SystemClock.elapsedRealtime() - mTouchDownTime >= 250){
-                            return handleClick(event.getX(), event.getY(), viewArray);
+                            return move(imageView, event, dX, dY);
                         }
-                        handled = false;
+                        handled = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        isNewItem = true;
                         break;
                 }
                 return handled;
             }
 
-            boolean handleClick(float dX, float dY, ArrayList<View> viewArray){
-                for(View view : viewArray) {
-                    if (isInArea(view, dX, dY)) {
-                        ((ListView) view).performLongClick();
-                    }
-                }
-                return true;
-            }
+//            boolean handleMove(float dX, float dY, TextView listItem){
+//                for(View view : viewArray) {
+//                    if (isInArea(view, dX, dY)) {
+//                        ((ListView) view).performLongClick();
+//                    }
+//                }
+//                return true;
+//            }
 
-            private boolean isInArea(View view, float x, float y){
-                return x >= view.getX() && x <= view.getX() + view.getWidth()
-                        &&  y >= view.getY() && y <= view.getY() + view.getHeight();
-            }
+//            private boolean isInArea(View view, float x, float y){
+//                return x >= view.getX() && x <= view.getX() + view.getWidth()
+//                        &&  y >= view.getY() && y <= view.getY() + view.getHeight();
+//            }
         });
-
     }
 
-    public void move(View view, MotionEvent event, float dX, float dY) {
-        testText.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-        testText.setTranslationX(testText.getX() - dX + event.getX());
-        testText.setTranslationY(testText.getY() - dY + event.getY());
+    public boolean move(ImageView view, MotionEvent event, float dX, float dY) {
+        view.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        float imageViewX = view.getX();
+        float imageViewY = view.getY();
+        float eventX = event.getX();
+        float eventY = event.getY();
+        float transitionX = imageViewX + eventX;
+        float transitionY = imageViewY + eventY;
+        view.setTranslationX(eventX);
+        view.setTranslationY(eventY);
+
+        Log.e("TESTANIM", view.hashCode()+" should move: X = "+eventX+", Y = "+eventY);
+        return true;
     }
 
     /*View lastAdded;
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        final ImageView imageView = loadBitmapFromView(view, parent);
-        ((TextView)view).setBackgroundColor(Color.GRAY);
+
         imageView.setOnTouchListener(new View.OnTouchListener() {
             float dX;
             float dY;
@@ -153,7 +173,7 @@ public class TestAnim extends Activity/* implements ListView.OnItemLongClickList
         return false;
     }*/
 
-    public ImageView loadBitmapFromView(View v, AdapterView<?> parent) {
+    public ImageView loadBitmapFromView(View v, ListView parent) {
         int width = v.getWidth();
         int height = v.getHeight();
         Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -162,8 +182,7 @@ public class TestAnim extends Activity/* implements ListView.OnItemLongClickList
         v.draw(c);
         ImageView imageView = new ImageView(getBaseContext());
         imageView.setTag("I am the ImageView");
-        imageView.setTranslationY(imageView.getY() + 250);
-        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        imageView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT));
         imageView.setImageBitmap(b);
         return imageView;
     }
