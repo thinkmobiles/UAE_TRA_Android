@@ -1,11 +1,13 @@
 package com.uae.tra_smart_services.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.util.SparseBooleanArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +31,7 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> {
     private final LayoutInflater mInflater;
     private final List<FavoriteItem> mData;
     private final SparseBooleanArray mSelectedItems;
+    private final int mBackgroundColor;
 
     private OnItemClickListener mItemClickListener;
 
@@ -40,6 +43,11 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> {
         mInflater = LayoutInflater.from(_context);
         mData = _data;
         mSelectedItems = new SparseBooleanArray();
+
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = _context.getTheme();
+        theme.resolveAttribute(R.attr.shadowBackgroundColor, typedValue, true);
+        mBackgroundColor = typedValue.data;
     }
 
     public final SparseBooleanArray getSelectedItems() {
@@ -82,10 +90,10 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> {
         }
 
         public final void setData(final FavoriteItem _item, final int _position) {
-            vContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : Color.parseColor("#fff5ea"));
+            vContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : mBackgroundColor);
             cbSelection.setChecked(mSelectedItems.get(_position));
             tvTitle.setText(_item.name);
-            hvIcon.setBackgroundDrawable(_item.backgroundDrawableRes);
+            hvIcon.setHexagonBackgroundDrawable(_item.backgroundDrawableRes);
         }
 
         @Override

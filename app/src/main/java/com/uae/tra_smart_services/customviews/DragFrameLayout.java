@@ -5,13 +5,17 @@ import android.animation.ValueAnimator;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.View;
@@ -21,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
  * Created by mobimaks on 18.08.2015.
@@ -36,7 +41,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
     private final int TRASH_BUTTON_SIZE = Math.round(30 * getResources().getDisplayMetrics().density);
     private final int TRASH_BUTTON_TOP_OFFSET = Math.round(30 * getResources().getDisplayMetrics().density);
     private final int OVERLAY_ITEM_COLOR = 0xfff1f1f1;
-    private final int SHADOW_BACKGROUND_COLOR = 0xfffff5ea;
+    private final int DEFAULT_SHADOW_BACKGROUND_COLOR = 0xfffff5ea;
     private final int START_DELETE_ARC_ANGLE = 180, DELETE_ARC_SWEEP_ANGLE = 180;
     private final int ANIMATION_LENGTH = 240, BUTTON_ANIMATION_DELAY = 20;
 
@@ -56,6 +61,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
     private float mDeleteArcTop, mTrashBtnTop;
     private boolean mNeedRedraw, mIsAnimated, mIsDragging;
     private OnItemDeleteListener mItemDeleteListener;
+    private int mShadowBackgroundColor, mDeleteColor;
 
     public DragFrameLayout(final Context _context) {
         this(_context, null);
@@ -64,16 +70,27 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
     public DragFrameLayout(final Context _context, final AttributeSet _attrs) {
         super(_context, _attrs);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
+        initAttributes(_context, _attrs);
         initPaints();
         setOnDragListener(this);
 
         mTrashBtn = new HexagonView(getContext());
         mTrashBtn.setHexagonSide(TRASH_BUTTON_SIZE);
-        mTrashBtn.setBackgroundDrawable(R.drawable.trash_btn_background);
+        mTrashBtn.setHexagonBackgroundDrawable(R.drawable.trash_btn_background);
         mTrashBtn.setHexagonShadow(SHADOW_RADIUS * 2, Color.GRAY);
         mTrashBtn.setVisibility(GONE);
         addView(mTrashBtn);
         initAnimations();
+    }
+
+    private void initAttributes(final Context _context, final AttributeSet _attrs) {
+        TypedArray a = _context.obtainStyledAttributes(_attrs, R.styleable.DragFrameLayout);
+        try {
+            mShadowBackgroundColor = a.getColor(R.styleable.DragFrameLayout_shadowBackground, DEFAULT_SHADOW_BACKGROUND_COLOR);
+            mDeleteColor = a.getColor(R.styleable.DragFrameLayout_deleteColor, Color.RED);
+        } finally {
+            a.recycle();
+        }
     }
 
     private void initPaints() {
@@ -83,7 +100,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
 
         mShadowPaint = new Paint();
         mShadowPaint.setStyle(Paint.Style.FILL);
-        mShadowPaint.setColor(SHADOW_BACKGROUND_COLOR);
+        mShadowPaint.setColor(mShadowBackgroundColor);
         mShadowPaint.setShadowLayer(SHADOW_RADIUS, 0, 0, Color.GRAY);
 
         mShadowShadowPaint = new Paint();
@@ -93,7 +110,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
         mDeleteArcPaint = new Paint();
         mDeleteArcPaint.setAntiAlias(true);
         mDeleteArcPaint.setStyle(Paint.Style.FILL);
-        mDeleteArcPaint.setColor(Color.RED);
+        mDeleteArcPaint.setColor(mDeleteColor);
         mDeleteArcPaint.setAlpha(DELETE_ARC_ALPHA);
     }
 
@@ -160,8 +177,14 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
             TextView textView = (TextView) _view.getTag();
             if (textView != null) {
                 mDefaultTextColor = textView.getTextColors();
-                textView.setTextColor(Color.RED);
-                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_trash_red, 0, 0, 0);
+                textView.setTextColor(mDeleteColor);
+                if (ImageUtils.isBlackAndWhiteMode(getContext())) {
+                    Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_trash_red);
+                    DrawableCompat.setTint(drawable, mDeleteColor);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                } else {
+                    textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_trash_red, 0, 0, 0);
+                }
             }
 
             mDragPoint = new PointF();

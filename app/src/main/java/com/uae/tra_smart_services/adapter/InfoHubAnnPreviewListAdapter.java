@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.LayerDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +62,7 @@ public class InfoHubAnnPreviewListAdapter extends RecyclerView.Adapter<InfoHubAn
         }
 
         public void setData(InfoHubAnnouncementsListItemModel _model){
-            hexagonView.setBackgroundDrawable(R.drawable.layerlist_infohub_icon);
+            hexagonView.setHexagonBackgroundDrawable(R.drawable.layerlist_infohub_icon);
             Picasso.with(mContext).load(_model.getIconUrl()).into(hexagonView);
             title.setText(_model.getTitle());
             description.setText(_model.getDescription());

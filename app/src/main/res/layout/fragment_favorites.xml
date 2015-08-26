@@ -5,13 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    app:shadowBackground="?attr/shadowBackgroundColor"
+    app:deleteColor="?attr/dragDeleteColor"
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/ivBackground_FF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/res_bg_2"/>
+        tools:src="@drawable/res_bg_2"/>
 
     <RelativeLayout
         android:id="@+id/rlEmptyContainer_FF"
@@ -48,9 +51,9 @@
             android:layout_below="@id/tvNoFavorites"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            app:hexagonBackground="@drawable/ic_plus"
-            app:hexagonBorderColor="#f68f1e"
-            app:hexagonBorderSize="1dp"/>
+            app:hexagonBorderColor="?attr/addServiceColor"
+            app:hexagonBorderSize="1dp"
+            tools:hexagonBackground="@drawable/ic_plus"/>
 
         <TextView
             android:id="@+id/tvAddService"
@@ -61,7 +64,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/fragment_favorites_add_service"
-            android:textColor="#f68f1e"
+            android:textColor="?attr/addServiceColor"
             android:textSize="12sp"/>
     </RelativeLayout>
 

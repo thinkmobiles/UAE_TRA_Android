@@ -27,9 +27,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeGreen">
 
-        <activity android:name=".activity.TestAnim"
-        android:supportsRtl="true"/>
-
         <activity android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.uae.tra_smart_services.R;
@@ -24,6 +25,7 @@ import com.uae.tra_smart_services.customviews.DragFrameLayout.OnItemDeleteListen
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.entities.FavoriteItem;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.List;
 
@@ -38,6 +40,7 @@ public class FavoritesFragment extends BaseFragment
     private RelativeLayout rlEmptyContainer;
     private HexagonView hvAddService;
     private SearchView svSearchFavorites;
+    private ImageView ivBackground;
 
     private FavoritesAdapter mFavoritesAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -65,8 +68,11 @@ public class FavoritesFragment extends BaseFragment
     @Override
     protected void initViews() {
         super.initViews();
+        ivBackground = findView(R.id.ivBackground_FF);
+        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         rlEmptyContainer = findView(R.id.rlEmptyContainer_FF);
         hvAddService = findView(R.id.hvPlusBtn);
+        hvAddService.setHexagonBackgroundDrawable(ImageUtils.getFilteredDrawable(getActivity(), R.drawable.ic_plus));
         dflContainer = findView(R.id.dflContainer_FF);
         rvFavoritesList = findView(R.id.rvFavoritesList_FF);
         setEmptyPlaceholderVisibility(true);
@@ -109,8 +115,10 @@ public class FavoritesFragment extends BaseFragment
         svSearchFavorites.setOnQueryTextListener(this);
     }
 
-    public final void addServicesToFavorites(final List<FavoriteItem> _items){
+    public final void addServicesToFavorites(final List<FavoriteItem> _items) {
+        Log.d("Favorites", "Items before new added: " + mFavoritesAdapter.getItemCount());
         mFavoritesAdapter.addData(_items);
+        Log.d("Favorites", "Items after new added: " + mFavoritesAdapter.getItemCount());
         getActivity().invalidateOptionsMenu();
         setEmptyPlaceholderVisibility(mFavoritesAdapter.isEmpty());
     }
@@ -158,6 +166,7 @@ public class FavoritesFragment extends BaseFragment
     @Override
     public void onDeleteItem(int _position) {
         mFavoritesAdapter.removeItem(_position);
+        Log.d("Favorites", "Items after delete operation: " + mFavoritesAdapter.getItemCount());
         getActivity().invalidateOptionsMenu();
         setEmptyPlaceholderVisibility(mFavoritesAdapter.isEmpty());
     }

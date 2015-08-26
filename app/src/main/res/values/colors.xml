@@ -44,5 +44,6 @@
 
     <!--                Service info                -->
     <color name="fragment_service_info_background">#f7f5ab5d</color>
+    <color name="fragment_service_info_background_black">#c000</color>
 
 </resources>

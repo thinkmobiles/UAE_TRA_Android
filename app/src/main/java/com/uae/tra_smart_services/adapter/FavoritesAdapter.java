@@ -1,11 +1,13 @@
 package com.uae.tra_smart_services.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +32,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
 
     private final LayoutInflater mInflater;
     private final List<FavoriteItem> mData;
+    private final int mBackgroundColor;
     private OnFavoriteClickListener mFavoriteClickListener;
     private Filter mServiceFilter;
     private boolean mIsOddOpaque;
@@ -41,6 +44,11 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
     public FavoritesAdapter(final Context _context, final @NonNull List<FavoriteItem> _data) {
         mInflater = LayoutInflater.from(_context);
         mData = _data;
+
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = _context.getTheme();
+        theme.resolveAttribute(R.attr.shadowBackgroundColor, typedValue, true);
+        mBackgroundColor = typedValue.data;
     }
 
     public final void setData(List<FavoriteItem> _data) {
@@ -159,12 +167,12 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
         public final void setData(final FavoriteItem _item, final int _position) {
             rootView.setVisibility(View.VISIBLE);
             if (mIsOddOpaque) {
-                rlItemContainer.setBackgroundColor(_position % 2 == 0 ? Color.parseColor("#fff5ea") : Color.TRANSPARENT);
+                rlItemContainer.setBackgroundColor(_position % 2 == 0 ? mBackgroundColor : Color.TRANSPARENT);
             } else {
-                rlItemContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : Color.parseColor("#fff5ea"));
+                rlItemContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : mBackgroundColor);
             }
             tvTitle.setText(_item.name);
-            hvIcon.setBackgroundDrawable(_item.backgroundDrawableRes);
+            hvIcon.setHexagonBackgroundDrawable(_item.backgroundDrawableRes);
         }
 
         @Override

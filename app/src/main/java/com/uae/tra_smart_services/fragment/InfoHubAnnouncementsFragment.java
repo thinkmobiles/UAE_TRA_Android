@@ -10,6 +10,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.InfoHubAnnFullListAdapter;
@@ -17,6 +18,7 @@ import com.uae.tra_smart_services.entities.C;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -24,15 +26,27 @@ import java.util.ArrayList;
  * Created by ak-buffalo on 18.08.15.
  */
 public class InfoHubAnnouncementsFragment extends BaseFragment
-                                        implements OnInfoHubItemClickListener<InfoHubAnnouncementsListItemModel> {
+        implements OnInfoHubItemClickListener<InfoHubAnnouncementsListItemModel> {
+
+    private ImageView ivBackground;
+    private RecyclerView mList;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    private InfoHubAnnFullListAdapter mAdapter;
+
+    public static InfoHubAnnouncementsFragment newInstance() {
+        return new InfoHubAnnouncementsFragment();
+    }
 
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
     }
 
-    public static InfoHubAnnouncementsFragment newInstance() {
-        return new InfoHubAnnouncementsFragment();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -70,19 +84,13 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
         super.onActivityCreated(savedInstanceState);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-
     private ArrayList<InfoHubAnnouncementsListItemModel> DUMMY_ANNOUNCEMENTS_LIST;
     public static transient final String ICON_URL = "https://pbs.twimg.com/profile_images/552335001539207168/ToYKIO0y_bigger.jpeg";
 
     @Override
     protected void initData() {
         super.initData();
-        DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<InfoHubAnnouncementsListItemModel>(){
+        DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<InfoHubAnnouncementsListItemModel>() {
             {
                 add(new InfoHubAnnouncementsListItemModel()
                         .setIconUrl(ICON_URL)
@@ -177,12 +185,11 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
         };
     }
 
-    private RecyclerView mList;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private InfoHubAnnFullListAdapter mAdapter;
     @Override
     protected void initViews() {
         super.initViews();
+        ivBackground = findView(R.id.ivBackground_FIHA);
+        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         mList = findView(R.id.rvInfoHubAnnList_FIHA);
         mList.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -190,16 +197,6 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
         mAdapter = new InfoHubAnnFullListAdapter(getActivity(), DUMMY_ANNOUNCEMENTS_LIST);
         mAdapter.setOnItemClickListener(this);
         mList.setAdapter(mAdapter);
-    }
-
-    @Override
-    protected int getTitle() {
-        return R.string.str_info_hub_announcements;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_info_hub_announcements;
     }
 
     @Override
@@ -211,5 +208,15 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
                 .addToBackStack(null)
                 .replace(R.id.flContainer_AH, InfoHubDetailsFragment.newInstance(args))
                 .commit();
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.str_info_hub_announcements;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_info_hub_announcements;
     }
 }

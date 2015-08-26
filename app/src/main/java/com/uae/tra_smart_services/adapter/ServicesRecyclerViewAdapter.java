@@ -75,7 +75,7 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
         }
 
         public void setData(final Service _service) {
-            hvHexagonView.setBackgroundDrawable(_service.getDrawableRes());
+            hvHexagonView.setHexagonBackgroundDrawable(_service.getDrawableRes());
             textView.setText(_service.toString());
             rootView.setTag(_service);
         }
