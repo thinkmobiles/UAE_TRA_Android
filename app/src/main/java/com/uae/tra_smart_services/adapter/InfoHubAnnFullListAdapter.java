@@ -11,6 +11,7 @@ import android.widget.Filterable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.global.ListItemFilter;
@@ -66,7 +67,8 @@ public class InfoHubAnnFullListAdapter extends RecyclerView.Adapter<InfoHubAnnFu
         }
 
         public void setData(InfoHubAnnouncementsListItemModel _model){
-//            Picasso.with(InfoHubAnnFullListAdapter.this.mContext).load(_model.getIconUrl()).into(hexagonView);
+            hexagonView.setBackgroundDrawable(R.drawable.layerlist_infohub_icon);
+            Picasso.with(mContext).load(_model.getIconUrl()).into(hexagonView);
             title.setText(_model.getTitle());
             description.setText(_model.getDescription());
             date.setText(_model.getDate());
