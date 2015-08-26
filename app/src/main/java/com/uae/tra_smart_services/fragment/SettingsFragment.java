@@ -27,6 +27,7 @@ import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
 import com.uae.tra_smart_services.global.Constants;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.interfaces.SettingsChanged;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
  * Created by Andrey Korneychuk on 30.07.15.
@@ -141,6 +142,7 @@ public class SettingsFragment extends BaseHomePageFragment
                 .putString(BaseCustomSwitcher.Type.THEME.toString(), _themeStrValue)
                 .putBoolean(Constants.KEY_BLACK_AND_WHITE_MODE, false)
                 .commit();
+        ImageUtils.setBlackAndWhiteMode(false);
     }
 
     private void restartActivity() {
@@ -155,6 +157,7 @@ public class SettingsFragment extends BaseHomePageFragment
         mPrefs.edit()
                 .putBoolean(Constants.KEY_BLACK_AND_WHITE_MODE, isChecked)
                 .commit();
+        ImageUtils.setBlackAndWhiteMode(isChecked);
         restartActivity();
     }
 

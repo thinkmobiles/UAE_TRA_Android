@@ -22,6 +22,7 @@ import android.view.View;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.util.HexagonUtils;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,7 +158,7 @@ public class HexagonalButtonsLayout extends View {
         mOrangeTextPaint = new Paint();
         mOrangeTextPaint.setTextAlign(Paint.Align.CENTER);
         mOrangeTextPaint.setTextSize(mTextSize);
-        mOrangeTextPaint.setColor(0xFFF68F1E);
+        mOrangeTextPaint.setColor(ImageUtils.isBlackAndWhiteMode(getContext()) ? Color.BLACK : 0xFFF68F1E);
 
         mWhiteTextPain = new Paint();
         mWhiteTextPain.setTextAlign(Paint.Align.CENTER);
@@ -168,17 +169,17 @@ public class HexagonalButtonsLayout extends View {
     private void initDrawables() {
         mDrawables = new ArrayList<>();
 
-        mDrawables.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_verif));
-        mDrawables.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_spam));
-        mDrawables.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_coverage));
-        mDrawables.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_internet));
+        mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_verif)));
+        mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_spam)));
+        mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_coverage)));
+        mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_internet)));
     }
 
     @Override
     protected final void onMeasure(final int _widthMeasureSpec, final int _heightMeasureSpec) {
-        int myHeight;
-        int width;
-        int height;
+        final int myHeight;
+        final int width;
+        final int height;
 
         final int heightMode = MeasureSpec.getMode(_heightMeasureSpec);
         final int widthSize = MeasureSpec.getSize(_widthMeasureSpec);
@@ -379,21 +380,21 @@ public class HexagonalButtonsLayout extends View {
     public final boolean onTouchEvent(@NonNull final MotionEvent _event) {
         final int action = MotionEventCompat.getActionMasked(_event);
 
-        switch(action) {
-            case (MotionEvent.ACTION_DOWN) :
+        switch (action) {
+            case (MotionEvent.ACTION_DOWN):
                 capturePress(_event);
                 return true;
-            case (MotionEvent.ACTION_UP) :
+            case (MotionEvent.ACTION_UP):
                 if (isDown) {
                     captureClick(_event);
                 }
                 return true;
-            case (MotionEvent.ACTION_MOVE) :
+            case (MotionEvent.ACTION_MOVE):
                 if (isDown) {
                     captureMove(_event);
                 }
                 return true;
-            default :
+            default:
                 return super.onTouchEvent(_event);
         }
     }
@@ -444,7 +445,9 @@ public class HexagonalButtonsLayout extends View {
             value = newValue;
         }
 
-        public Integer getValue() { return value; }
+        public Integer getValue() {
+            return value;
+        }
 
         public boolean isEquals(final int _value) {
             return value.equals(_value);

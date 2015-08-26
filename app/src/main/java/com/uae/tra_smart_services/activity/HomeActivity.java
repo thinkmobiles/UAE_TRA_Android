@@ -4,6 +4,7 @@ import android.app.FragmentManager.OnBackStackChangedListener;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -218,8 +219,9 @@ public class HomeActivity extends BaseFragmentActivity
     @Override
     public void onFavoriteServicesSelected(final List<FavoriteItem> _items) {
         getFragmentManager().popBackStackImmediate();
-        FavoritesFragment fragment = (FavoritesFragment) getFragmentManager().findFragmentById(getContainerId());
-        fragment.addServicesToFavorites(_items);
+        final FavoritesFragment favoritesFragment = (FavoritesFragment) getFragmentManager().findFragmentById(getContainerId());
+        Log.d("Favorites", "Selected items count: " + _items.size());
+        favoritesFragment.addServicesToFavorites(_items);
     }
 
     @Override
@@ -232,10 +234,14 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void setToolbarVisibility(boolean _isVisible) {
-        if (_isVisible) {
-            getSupportActionBar().show();
-        } else {
-            getSupportActionBar().hide();
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            if (_isVisible) {
+                actionBar.show();
+            } else {
+                actionBar.hide();
+            }
         }
+
     }
 }

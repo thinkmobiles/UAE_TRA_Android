@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -16,15 +17,16 @@
 
             <ImageView
                 android:id="@+id/tvHeaderImage_FIHD"
-                android:src="@drawable/logo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:scaleType="centerInside"
+                android:layout_height="match_parent"
+                tools:src="@drawable/logo"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/shape_info_hub_details_header_image_gradient"
-                android:layout_alignParentEnd="true">
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/shape_info_hub_details_header_image_gradient">
 
                 <TextView
                     android:id="@+id/tvHeaderDate_FIHD"
@@ -35,7 +37,7 @@
                     android:paddingEnd="20dp"
                     android:paddingStart="20dp"
                     android:text="02/08/2015"
-                    android:textColor="@color/hex_text_color_white" />
+                    android:textColor="@color/hex_text_color_white"/>
 
                 <TextView
                     android:id="@+id/tvHeaderTitle_FIHD"
@@ -48,7 +50,7 @@
                     android:paddingStart="20dp"
                     android:text="Announcements title describes a whole information about selected item"
                     android:textColor="@color/hex_text_color_white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
             </RelativeLayout>
 
         </RelativeLayout>
@@ -58,12 +60,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."/>
 
         <include layout="@layout/layout_info_hub_ann_details_footer"/>
 
     </LinearLayout>
-
 
 
 </ScrollView>

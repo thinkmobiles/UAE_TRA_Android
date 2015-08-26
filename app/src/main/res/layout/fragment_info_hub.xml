@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
+        android:id="@+id/ivBackground_FIH"
         android:src="@drawable/res_bg_2" />
 
     <LinearLayout

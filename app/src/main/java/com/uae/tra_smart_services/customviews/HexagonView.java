@@ -70,8 +70,12 @@ public class HexagonView extends View {
         mShadowPaint.setShadowLayer(_radius, 0, 0, _color);
     }
 
-    public final void setBackgroundDrawable(@DrawableRes final int _drawableRes) {
-        mBackgroundDrawable = ContextCompat.getDrawable(getContext(), _drawableRes);
+    public final void setHexagonBackgroundDrawable(@DrawableRes final int _drawableRes) {
+        setHexagonBackgroundDrawable(ContextCompat.getDrawable(getContext(), _drawableRes));
+    }
+
+    public final void setHexagonBackgroundDrawable(final Drawable _backgroundDrawable) {
+        mBackgroundDrawable = _backgroundDrawable;
         invalidate();
     }
 

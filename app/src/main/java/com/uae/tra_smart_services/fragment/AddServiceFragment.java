@@ -4,16 +4,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AddFavoritesAdapter;
 import com.uae.tra_smart_services.adapter.AddFavoritesAdapter.OnItemClickListener;
 import com.uae.tra_smart_services.entities.FavoriteItem;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +29,8 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
         return new AddServiceFragment();
     }
 
-    private FrameLayout flContainer;
     private RecyclerView rvFavoritesList;
+    private ImageView ivBackground;
 
     private AddFavoritesAdapter mFavoritesAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -60,6 +62,7 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_done && mServicesSelectedListener != null) {
+            Log.d("Favorites", "Size: " + mFavoritesAdapter.getItemCount() + ", selected: " + mSelectedItems.size());
             mServicesSelectedListener.onFavoriteServicesSelected(mSelectedItems);
             return true;
         }
@@ -69,7 +72,8 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     @Override
     protected void initViews() {
         super.initViews();
-        flContainer = findView(R.id.flContainer_FAS);
+        ivBackground = findView(R.id.ivBackground_FAS);
+        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getContext()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         rvFavoritesList = findView(R.id.rvFavoritesList_FAS);
     }
 

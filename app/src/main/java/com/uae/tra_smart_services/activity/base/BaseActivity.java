@@ -14,6 +14,7 @@ import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.Constants;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.Locale;
 
@@ -73,10 +74,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
     }
 
     public void setApplicationTheme() {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (prefs.getBoolean(Constants.KEY_BLACK_AND_WHITE_MODE, false)) {
+        if (ImageUtils.isBlackAndWhiteMode(this)) {
             mThemaStringValue = Constants.BLACK_AND_WHITE_THEME;
         } else {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             mThemaStringValue = prefs.getString(BaseCustomSwitcher.Type.THEME.toString(), Constants.ORANGE_THEME);
         }
         setTheme(getResources().getIdentifier(mThemaStringValue, "style", getPackageName()));
