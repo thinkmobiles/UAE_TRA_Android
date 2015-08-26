@@ -9,24 +9,24 @@
     <!--                Authorization screens                -->
     <string name="login_title">Login</string>
     <string name="register_title">Create account</string>
-    <string name="forgot_password_title">Forgot password</string>
+    <string name="forgot_password_title">نسيت كلمة المرور</string>
 
     <!--            Username field               -->
     <string name="str_username">اسم المستخدم</string>
     <!--            Email field               -->
-    <string name="str_email">البريد الإلكتروني</string>
+    <string name="str_email">البريد الالكتروني</string>
     <!--            Language field               -->
-    <string name="str_language">لغة</string>
+    <string name="str_language">اللغة</string>
     <!--            Gender field               -->
-    <string name="str_gender">جنس</string>
+    <string name="str_gender">النوع</string>
     <!--            Font size field               -->
-    <string name="str_fontsize">حجم الخط</string>
+    <string name="str_fontsize">حجم الخط </string>
     <!--            Theme options field               -->
-    <string name="str_themesoptions">خيارات الموضوع</string>
+    <string name="str_themesoptions">خيارات الألوان</string>
     <!--            Phone field               -->
-    <string name="str_phone">هاتف</string>
+    <string name="str_phone">الهاتف</string>
     <!--            Password field               -->
-    <string name="str_password">كلمة السر</string>
+    <string name="str_password">كلمة المرور</string>
     <!--            Forgot password field               -->
     <string name="str_forgot_password">نسيت كلمة المرور</string>
     <!--            Sign in button               -->
@@ -38,7 +38,7 @@
     <!--            Register now button               -->
     <string name="str_register_now">سجل الان</string>
     <!--            Logout button               -->
-    <string name="str_logout">خروج</string>
+    <string name="str_logout">تسجيل الخروج</string>
 
     <!--                Settings screens                -->
     <!--            Font size switcher               -->
@@ -46,20 +46,20 @@
     <string name="str_A_minus">"<b>A-</b>"</string>
 
     <!--               Home screens                -->
-    <string name="str_home">Home</string>
-    <string name="str_favorites">Favorites</string>
-    <string name="str_inquiries">Inquiries</string>
-    <string name="str_settings">Settings</string>
+    <string name="str_home">الرئيسية</string>
+    <string name="str_favorites">المفضلة</string>
+    <string name="str_inquiries">استفسارات</string>
+    <string name="str_settings">إعدادات</string>
     <!--               Home screens                -->
 
     <string name="str_user_name">إسماعيل</string>
-    <string name="str_info_hub">Info Hub</string>
+    <string name="str_info_hub">معلومات</string>
     <string name="str_location_error">Enter location</string>
     <string name="str_location_error_message">Please enter address manually or wait untill location will be found</string>
     <string name="signal_level_error">Please set signal level</string>
 
-    <string name="str_announcements">الإعلانات</string>
-    <string name="str_transactions">المعاملات</string>
+    <string name="str_announcements">اعلانات</string>
+    <string name="str_transactions">معاملات</string>
     <string name="str_see_more">شاهد المزيد</string>
 
 
@@ -68,6 +68,55 @@
     </string>
     <string name="str_dummy_info_hub_list_item_date">هزار و یک شب</string>
     <string name="str_dummy_info_hub_list_item_title">هزار و یک شب</string>
+    <string name="operator_number">رقم مشغل الخدمة</string>
+    <string name="service_provider">مقدم الخدمة</string>
+    <string name="number_of_spammer">رقم المرسل غير المرغوب</string>
+    <string name="description">شرح</string>
+    <string name="complain_title">عنوان الشكوى</string>
+    <string name="approved_device_information">Approved Device Information</string>
+    <string name="insert_imei_hint">Insert IMEI Manually</string>
+    <string name="hint_set_server_url">Set server url</string>
+    <string name="button_change_server">Change server</string>
+    <string name="str_location">الموقع</string>
+    <string name="str_skip">تجاوز</string>
+    <string name="fragment_favorites_empty_favorites">لم تقم باختيار خدمة ضمن\nقائمة الخدمات المفضلة.</string>
+    <string name="fragment_favorites_add_service">إضافة خدمة</string>
+    <string name="fragment_service_info_service_info">عن الخدمة</string>
+    <string name="favourite_remove">حذف</string>
+    <string name="favourite_service_info">معلومات الخدمة</string>
+    <string name="fragment_service_info_service_package">باقة الخدمة</string>
+    <string name="fragment_service_info_processing_time">زمن تقديم الخدمة</string>
+    <string name="fragment_service_info_contact_in_charge">المسؤول المباشر عن الخدمة</string>
+    <string name="fragment_service_info_required_documents">الوثائق المطلوبة</string>
+    <string name="fragment_service_info_service_fees">رسوم الخدمة</string>
+    <string name="fragment_service_info_terms_and_conditions">شروط و متطلبات الحصول على الخدمة</string>
+    <string name="str_info_hub_announcement_details">معلومات</string>
+    <string name="federal_authority">هيئة اتحادية</string>
+    <string name="str_sms_block_number">حجب رقم</string>
+    <string name="reference_number"></string>
+    <string name="str_sms_service_list">قائمة خدمات الرسائل القصيرة</string>
+    <string name="str_sms_report_number">شكوى على رقم مرسل رسالة قصيرة</string>
+    <string name="complain">شكوى</string>
+    <string name="str_signal_coverage">تغطية الاشارة</string>
+    <string name="str_signal_level">قوة الاشارة</string>
+    <string name="str_domain_check">التحقق من نطاق</string>
+    <string name="str_insert_domain_name_here">اسم النطاق (i.e. tra.gov.ae)</string>
+    <string name="hexagon_button_verification">تحقق</string>
+    <string name="hexagon_button_internet">انترنت</string>
+    <string name="hexagon_button_spam">رسائل غير مرغوبة</string>
+    <string name="hexagon_button_coverage">التغطية</string>
+    <string name="str_who_is">تفاصيل النطاق</string>
+    <string name="str_availabilty">تحقق من توفر النطاق</string>
+
+
+    <!--                PoorCoverageFragment            -->
+    <string-array name="fragment_poor_coverage_signal_levels">
+        <item>ضعيفة جدا</item>
+        <item>ضعيفة</item>
+        <item>جيدة</item>
+        <item>قوية</item>
+        <item>قوية جدا</item>
+    </string-array>
 
 
 </resources>

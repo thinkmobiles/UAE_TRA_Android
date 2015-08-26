@@ -11,7 +11,7 @@
         android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:layout_alignParentEnd="true"
-        android:contentDescription="Add attachment"
+        android:contentDescription="@string/content_description_add_attachment"
         android:scaleType="centerInside"
         android:src="@drawable/ic_action_attachment"/>
 
@@ -24,7 +24,7 @@
         android:textColor="@android:color/black"
         android:background="@null"
         android:gravity="center_vertical"
-        android:hint="Complain title"
+        android:hint="@string/complain_title"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
         android:singleLine="true"
@@ -45,7 +45,7 @@
         android:layout_below="@id/vComplainTitleDivider_FCAT"
         android:background="@null"
         android:gravity="start|top"
-        android:hint="Description"
+        android:hint="@string/description"
         android:inputType="textAutoCorrect|textMultiLine"
         android:padding="8dp"
         android:textSize="16sp"/>

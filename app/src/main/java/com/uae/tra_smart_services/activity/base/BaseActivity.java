@@ -30,10 +30,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setApplicationTheme();
         setApplicationFontSize();
         setApplicationLanguage();
+        super.onCreate(savedInstanceState);
     }
 
     @Override

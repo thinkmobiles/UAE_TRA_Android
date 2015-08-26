@@ -1,42 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <RelativeLayout
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:weightSum="1">
+
         <EditText
             android:id="@+id/etLocation_FPC"
             style="@style/UserAuthorizationDataEditTextField"
-            android:hint="@string/str_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/str_location"
             android:padding="15dp"/>
+
         <ProgressBar
             android:id="@+id/pbFindLoc_FPC"
             style="@android:style/Widget.ProgressBar.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_alignTop="@+id/etLocation_FPC"
-            android:layout_alignBottom="@+id/etLocation_FPC"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignBottom="@id/etLocation_FPC"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/etLocation_FPC"
+            android:layout_margin="10dp"/>
     </RelativeLayout>
 
     <TextView
-        android:text="@string/str_signal_level"
-        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_vertical"
-        android:paddingTop="15dp"/>
+        android:paddingTop="15dp"
+        android:text="@string/str_signal_level"
+        android:textSize="20dp"/>
+
     <SeekBar
-        style="@style/UserAuthorizationDataEditTextField"
         android:id="@+id/sbPoorCoverage_FPC"
+        style="@style/UserAuthorizationDataEditTextField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="5"/>
+        android:max="4"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/tvSignalLevel_FPC"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_vertical"
+        android:textSize="20dp"
+        tools:text="@string/str_signal_level"/>
+
 </LinearLayout>

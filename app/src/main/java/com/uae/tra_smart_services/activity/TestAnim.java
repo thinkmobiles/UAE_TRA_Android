@@ -47,7 +47,6 @@ public class TestAnim extends Activity/* implements ListView.OnItemLongClickList
             }
         }));
 
-
         testListView.setOnTouchListener(new View.OnTouchListener() {
             long mTouchDownTime = 0;
             float dX;

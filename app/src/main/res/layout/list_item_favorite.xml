@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rlItemContainer_LIF"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingEnd="24dp"
+    android:paddingStart="16dp"
+    android:paddingTop="8dp"
+    tools:background="@android:color/darker_gray">
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvIcon_LIF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        app:hexagonBackground="@drawable/background_speed"
+        app:hexagonSideSize="40dp"/>
+
+    <TextView
+        android:id="@+id/tvTitle_LIF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@id/hvIcon_LIF"
+        android:layout_toStartOf="@id/hvIcon_LIF"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="3"
+        android:minLines="3"
+        android:paddingEnd="36dp"
+        android:text="Hello world!"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tvServiceInfo_LIF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tvTitle_LIF"
+        android:layout_below="@id/tvTitle_LIF"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="8dp"
+        android:paddingEnd="16dp"
+        android:text="@string/favourite_service_info"
+        android:drawableStart="@drawable/ic_info"/>
+
+    <TextView
+        android:id="@+id/tvRemove_LIF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle_LIF"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/tvServiceInfo_LIF"
+        android:drawablePadding="8dp"
+        android:text="@string/favourite_remove"
+        android:drawableStart="@drawable/ic_trash_gray"/>
+
+
+</RelativeLayout>

@@ -6,23 +6,32 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
+import com.uae.tra_smart_services.entities.FavoriteItem;
+import com.uae.tra_smart_services.fragment.AddServiceFragment;
+import com.uae.tra_smart_services.fragment.AddServiceFragment.OnFavoriteServicesSelectedListener;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
-import com.uae.tra_smart_services.fragment.HelpSalemFragment;
-import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
-import com.uae.tra_smart_services.fragment.InfoHubFragment;
-import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.EnquiriesFragment;
+import com.uae.tra_smart_services.fragment.FavoritesFragment;
+import com.uae.tra_smart_services.fragment.FavoritesFragment.OnFavoritesEventListener;
+import com.uae.tra_smart_services.fragment.HelpSalemFragment;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
+import com.uae.tra_smart_services.fragment.InfoHubFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
+import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
+import com.uae.tra_smart_services.fragment.ServiceInfoFragment;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
@@ -35,16 +44,17 @@ import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 
+import java.util.List;
+
 import retrofit.RetrofitError;
 
 /**
  * Created by Andrey Korneychuk on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
-        implements ToolbarTitleManager, HexagonHomeFragment.OnServiceSelectListener,
-        OnDeviceSelectListener, OnBackStackChangedListener,
-        OnSmsServiceSelectListener, HexagonHomeFragment.OnStaticServiceSelectListener,
-        RadioGroup.OnCheckedChangeListener {
+        implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
+        OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
+        OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener {
 
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
@@ -62,7 +72,7 @@ public class HomeActivity extends BaseFragmentActivity
         bottomNavRadios = findView(R.id.rgBottomNavRadio_AH);
         bottomNavRadios.setOnCheckedChangeListener(this);
 
-        if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)){
+        if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)) {
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
@@ -182,8 +192,8 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
                 break;
             case R.id.rbFavorites_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: Favorites",
-                        Toast.LENGTH_SHORT).show();
+                clearBackStack();
+                replaceFragmentWithOutBackStack(FavoritesFragment.newInstance());
                 break;
             case R.id.rbInfoHub_BNRG:
                 clearBackStack();
@@ -198,6 +208,26 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
                 break;
         }
+    }
+
+    @Override
+    public void onAddFavoritesClick() {
+        replaceFragmentWithBackStack(AddServiceFragment.newInstance());
+    }
+
+    @Override
+    public void onFavoriteServicesSelected(final List<FavoriteItem> _items) {
+        getFragmentManager().popBackStackImmediate();
+        FavoritesFragment fragment = (FavoritesFragment) getFragmentManager().findFragmentById(getContainerId());
+        fragment.addServicesToFavorites(_items);
+    }
+
+    @Override
+    public void onOpenServiceInfo(int _position, FavoriteItem _item) {
+        getFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance())
+                .commit();
     }
 
     @Override

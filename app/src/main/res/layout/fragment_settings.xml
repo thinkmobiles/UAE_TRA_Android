@@ -12,7 +12,6 @@
         android:id="@+id/llRegisterFields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -29,7 +28,7 @@
                 style="@style/UserSettingsEditableText"
                 android:layout_width="match_parent"
                 android:text="@string/str_user_name"
-                android:gravity="center|end"/>
+                android:gravity="center_vertical|end"/>
         </LinearLayout>
 
         <View style="@style/AuthorizationFieldsSeparator" />
@@ -48,7 +47,7 @@
                 style="@style/UserSettingsEditableText"
                 android:layout_width="match_parent"
                 android:text="test@mail.com"
-                android:gravity="center|end" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
 
@@ -68,7 +67,7 @@
                 tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:gravity="center|end" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
 
@@ -91,7 +90,7 @@
                 tra:scaleMin="0.5"
                 tra:scaleMax="1.5"
                 tra:scaleStep="0.1"
-                android:gravity="center|end" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
 
@@ -120,6 +119,33 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/UserSettingsStaticText"
+                android:hint="@string/str_black_and_white_mode"/>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/swBlackAndWhiteMode_FS"
+                android:layout_width="wrap_content"
+                android:minWidth="48dp"
+                android:padding="12dp"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <View style="@style/AuthorizationFieldsSeparator"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -142,7 +168,7 @@
             android:textDirection="locale"
             android:layout_width="match_parent"
             android:gravity="start"
-            android:hint="Set server url"
+            android:hint="@string/hint_set_server_url"
             android:layout_height="wrap_content"/>
 
         <View style="@style/AuthorizationFieldsSeparator" />
@@ -152,8 +178,9 @@
             android:layout_gravity="end"
             android:id="@+id/btnChangeServer_FS"
             android:textColor="?attr/homePageHeaderBackground"
-            android:text="Change server"
+            android:text="@string/button_change_server"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
 </ScrollView>

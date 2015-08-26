@@ -9,21 +9,27 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.dialog.AlertDialogFragment;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
+import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
@@ -38,11 +44,12 @@ import retrofit.client.Response;
  * Created by ak-buffalo on 11.08.15.
  */
 public class PoorCoverageFragment extends BaseFragment
-        implements AlertDialogFragment.OnOkListener, CustomSingleChoiceDialog.OnItemPickListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        SeekBar.OnSeekBarChangeListener, View.OnClickListener{
+        implements OnOkListener, OnItemPickListener,
+        ConnectionCallbacks, OnConnectionFailedListener,
+        OnSeekBarChangeListener, OnClickListener {
 
     private LocationType mLocationType;
+    private TextView tvSignalLevel;
 
     public static PoorCoverageFragment newInstance() {
         return new PoorCoverageFragment();
@@ -55,13 +62,14 @@ public class PoorCoverageFragment extends BaseFragment
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     private EditText etLocation;
     private SeekBar sbPoorCoverage;
     private ProgressBar sbProgressBar;
+
     @Override
     protected void initViews() {
         super.initViews();
@@ -70,6 +78,8 @@ public class PoorCoverageFragment extends BaseFragment
         sbPoorCoverage = findView(R.id.sbPoorCoverage_FPC);
         sbProgressBar = findView(R.id.pbFindLoc_FPC);
         sbProgressBar.setVisibility(View.INVISIBLE);
+        tvSignalLevel = findView(R.id.tvSignalLevel_FPC);
+        tvSignalLevel.setText(getResources().getStringArray(R.array.fragment_poor_coverage_signal_levels)[0]);
     }
 
     @Override
@@ -77,20 +87,6 @@ public class PoorCoverageFragment extends BaseFragment
         super.initListeners();
         etLocation.setOnClickListener(this);
         sbPoorCoverage.setOnSeekBarChangeListener(this);
-    }
-
-    private GoogleApiClient mGoogleApiClient;
-    private PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
-    CustomSingleChoiceDialog locationTypeChooser;
-    @Override
-    protected void initData() {
-        super.initData();
-        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
         etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -103,6 +99,21 @@ public class PoorCoverageFragment extends BaseFragment
                 }
             }
         });
+    }
+
+    private GoogleApiClient mGoogleApiClient;
+    private PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
+    CustomSingleChoiceDialog locationTypeChooser;
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -120,21 +131,18 @@ public class PoorCoverageFragment extends BaseFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_send:
+                hideKeyboard(tvSignalLevel);
                 collectDataAdnSendToServer();
-            break;
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void collectDataAdnSendToServer(){
+    private void collectDataAdnSendToServer() {
         mLocationModel.setAddress(etLocation.getText().toString());
         if (TextUtils.isEmpty(mLocationModel.getAddress()) &&
                 mLocationModel.getLocation() == null) {
             showMessage(R.string.str_location_error, R.string.str_location_error_message);
-            return;
-        }
-        if (mLocationModel.getSignalLevel() == 0) {
-            showMessage(R.string.str_signal_level, R.string.signal_level_error);
             return;
         }
 
@@ -189,7 +197,7 @@ public class PoorCoverageFragment extends BaseFragment
         });
     }
 
-    private void defineUserFriendlyAddress(Location _location){
+    private void defineUserFriendlyAddress(Location _location) {
         final Geocoder geocoder = new Geocoder(getActivity().getBaseContext(), Locale.getDefault());
         getSpiceManager().execute(
                 new GeoLocationRequest(geocoder, _location),
@@ -214,7 +222,7 @@ public class PoorCoverageFragment extends BaseFragment
 
     @Override
     public void onClick(View _view) {
-        switch (_view.getId()){
+        switch (_view.getId()) {
             case R.id.etLocation_FPC:
                 locationTypeChooser
                         .setTitle("Please select location type")
@@ -226,6 +234,7 @@ public class PoorCoverageFragment extends BaseFragment
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        tvSignalLevel.setText(getResources().getStringArray(R.array.fragment_poor_coverage_signal_levels)[progress]);
         mLocationModel.setSignalLevel(progress);
     }
 
@@ -250,7 +259,7 @@ public class PoorCoverageFragment extends BaseFragment
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
             progressDialogManager.hideProgressDialog();
-            switch (poorCoverageRequestModel.getStatus()){
+            switch (poorCoverageRequestModel.getStatus()) {
                 case 200:
                     showMessage(R.string.str_success, R.string.str_data_has_been_sent);
                     break;
@@ -268,7 +277,7 @@ public class PoorCoverageFragment extends BaseFragment
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            Toast.makeText(getActivity(), getString(R.string.str_something_went_wrong), Toast.LENGTH_LONG);
+            Toast.makeText(getActivity(), getString(R.string.str_something_went_wrong), Toast.LENGTH_LONG).show();
         }
 
         @Override

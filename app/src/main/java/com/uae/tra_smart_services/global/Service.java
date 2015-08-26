@@ -23,7 +23,7 @@ public enum Service {
     COMPLAINT_ABOUT_TRA {
         @Override
         public String toString() {
-            return "Complain about TRA";
+            return "Complain About TRA";
         }
 
         @Override
@@ -47,7 +47,7 @@ public enum Service {
     DOMAIN_CHECK {
         @Override
         public String toString() {
-            return "Domain Check service";
+            return "Domain Check Service";
         }
 
         @Override
@@ -119,7 +119,7 @@ public enum Service {
     APPROVED_DEVICES {
         @Override
         public String toString() {
-            return "Approved devices";
+            return "Approved Devices";
         }
 
         @Override

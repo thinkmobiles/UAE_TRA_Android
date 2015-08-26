@@ -11,6 +11,9 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.LayoutDirection;
 import android.util.TypedValue;
@@ -71,9 +74,9 @@ public class HexagonalButtonsLayout extends View {
         final int direction = getLayoutDirection();
         switch (direction) {
             default:
-            case LayoutDirection.LTR:
+            case View.LAYOUT_DIRECTION_LTR:
                 return 0;
-            case LayoutDirection.RTL:
+            case View.LAYOUT_DIRECTION_RTL:
                 return getWidth();
         }
     }
@@ -269,18 +272,7 @@ public class HexagonalButtonsLayout extends View {
         drawHexagons(_canvas);
         drawBottomSeparator(_canvas);
         drawDrawables(_canvas);
-
-        _canvas.drawText("Verification", mCenters.get(0).x,
-                mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
-
-        _canvas.drawText("Spam", mCenters.get(1).x,
-                mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
-
-        _canvas.drawText("Coverage", mCenters.get(2).x,
-                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
-
-        _canvas.drawText("Internet", mCenters.get(3).x,
-                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
+        drawText(_canvas);
     }
 
     private void drawHexagons(final Canvas _canvas) {
@@ -354,6 +346,33 @@ public class HexagonalButtonsLayout extends View {
         for (final Drawable drawable : mDrawables) {
             drawable.draw(_canvas);
         }
+    }
+
+    private void drawText(final Canvas _canvas) {
+        _canvas.drawText(getResources().getString(R.string.hexagon_button_verification), mCenters.get(0).x,
+                mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
+
+        if (getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            TextPaint mTextPaint = new TextPaint();
+            mTextPaint.setTextSize(mTextSize);
+            mTextPaint.setColor(0xFFF68F1E);
+            StaticLayout mTextLayout = new StaticLayout(getResources().getString(R.string.hexagon_button_spam), mTextPaint,
+                    (int) (mTriangleHeight * 1.5), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+
+            _canvas.save();
+
+            _canvas.translate(mCenters.get(1).x + calculateWithCoefficient(mTextLayout.getWidth() / 2), mCenters.get(0).y + mRadius / 2 - mTextLayout.getHeight() / 2);
+            mTextLayout.draw(_canvas);
+            _canvas.restore();
+        } else {
+            _canvas.drawText(getResources().getString(R.string.hexagon_button_spam), mCenters.get(1).x,
+                    mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
+        }
+        _canvas.drawText(getResources().getString(R.string.hexagon_button_coverage), mCenters.get(2).x,
+                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
+
+        _canvas.drawText(getResources().getString(R.string.hexagon_button_internet), mCenters.get(3).x,
+                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
     }
 
     @Override

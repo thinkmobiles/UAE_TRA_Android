@@ -12,15 +12,11 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.ServiceListAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.global.BottomNavActionItems;
 import com.uae.tra_smart_services.global.Service;
-import com.uae.tra_smart_services.interfaces.BottomNavActionListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,11 +26,15 @@ import java.util.List;
  * Created by mobimaks on 10.08.2015.
  */
 public class ServiceListFragment extends BaseFragment
-                                implements OnClickListener, OnQueryTextListener, OnItemClickListener{
+        implements OnClickListener, OnQueryTextListener, OnItemClickListener {
 
     public static ServiceListFragment newInstance() {
         return new ServiceListFragment();
     }
+
+    private SearchView svSearchService;
+    private ListView lvServiceList;
+    private ServiceListAdapter mAdapter;
 
     private OnServiceSelectListener mServiceSelectListener;
 
@@ -51,8 +51,6 @@ public class ServiceListFragment extends BaseFragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-    private ListView lvServiceList;
 
     @Override
     protected void initViews() {
@@ -72,15 +70,12 @@ public class ServiceListFragment extends BaseFragment
         initServiceList();
     }
 
-    private ServiceListAdapter mAdapter;
-
     private void initServiceList() {
         List<Service> serviceList = new ArrayList<>(Arrays.asList(Service.values()));
         mAdapter = new ServiceListAdapter(getActivity(), serviceList);
         lvServiceList.setAdapter(mAdapter);
     }
 
-    private SearchView svSearchService;
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
