@@ -12,30 +12,78 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/llRegisterFields"
+            android:id="@+id/llRegisterFields_FR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/etEmail_FLI"
+                android:id="@+id/etFirstName_FR"
                 style="@style/UserAuthorizationDataEditTextField"
-                android:hint="@string/str_email"
+                android:hint="@string/hint_first_name"
                 android:inputType="textEmailAddress" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
-                android:id="@+id/etGender_FLI"
+                android:id="@+id/etLastName_FR"
                 style="@style/UserAuthorizationDataEditTextField"
-                android:hint="@string/str_gender"
-                android:inputType="text" />
+                android:hint="@string/hint_last_name"
+                android:inputType="textEmailAddress" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
-                android:id="@+id/etPhone_FLI"
+                android:id="@+id/etEmiratesID_FR"
+                style="@style/UserAuthorizationDataEditTextField"
+                android:hint="@string/hint_emirates_id"
+                android:inputType="textEmailAddress" />
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <EditText
+                android:id="@+id/etUsername_FR"
+                style="@style/UserAuthorizationDataEditTextField"
+                android:hint="@string/hint_username"
+                android:inputType="textEmailAddress" />
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <EditText
+                android:id="@+id/etAddress_FR"
+                style="@style/UserAuthorizationDataEditTextField"
+                android:hint="@string/hint_address"
+                android:inputType="textEmailAddress" />
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <Spinner
+                android:id="@+id/spState_FR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Spinner"/>
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <!--<Spinner-->
+                <!--android:id="@+id/spCountry_FR"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--style="@style/Widget.AppCompat.Spinner"/>-->
+
+            <!--<View style="@style/AuthorizationFieldsSeparator" />-->
+
+            <EditText
+                android:id="@+id/etLandline_FR"
+                style="@style/UserAuthorizationDataEditTextField"
+                android:hint="@string/hint_landline"
+                android:inputType="textEmailAddress" />
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <EditText
+                android:id="@+id/etPhone_FR"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:hint="@string/str_phone"
                 android:inputType="text" />
@@ -43,9 +91,26 @@
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
-                android:id="@+id/etPassword_FLI"
+            android:id="@+id/etEmail_FR"
+            style="@style/UserAuthorizationDataEditTextField"
+            android:hint="@string/str_email"
+            android:inputType="textEmailAddress" />
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+
+            <EditText
+                android:id="@+id/etPassword_FR"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:hint="@string/str_password"
+                android:inputType="textPassword" />
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <EditText
+                android:id="@+id/etConfirmPassword_FR"
+                style="@style/UserAuthorizationDataEditTextField"
+                android:hint="@string/hint_confirm_password"
                 android:inputType="textPassword" />
 
             <View style="@style/AuthorizationFieldsSeparator" />

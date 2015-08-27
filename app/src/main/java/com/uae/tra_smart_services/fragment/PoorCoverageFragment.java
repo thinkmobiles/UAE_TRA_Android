@@ -140,12 +140,12 @@ public class PoorCoverageFragment extends BaseFragment
 
     private void collectDataAdnSendToServer() {
         mLocationModel.setAddress(etLocation.getText().toString());
+        mLocationModel.setSignalLevel(sbProgressBar.getProgress() + 1);
         if (TextUtils.isEmpty(mLocationModel.getAddress()) &&
                 mLocationModel.getLocation() == null) {
             showMessage(R.string.str_location_error, R.string.str_location_error_message);
             return;
         }
-
         progressDialogManager.showProgressDialog(getString(R.string.str_sending));
         getSpiceManager().execute(
                 new PoorCoverageRequest(
@@ -235,7 +235,7 @@ public class PoorCoverageFragment extends BaseFragment
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         tvSignalLevel.setText(getResources().getStringArray(R.array.fragment_poor_coverage_signal_levels)[progress]);
-        mLocationModel.setSignalLevel(progress);
+        mLocationModel.setSignalLevel(progress + 1);
     }
 
     @Override
@@ -252,8 +252,7 @@ public class PoorCoverageFragment extends BaseFragment
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            progressDialogManager.hideProgressDialog();
-            showMessage(R.string.str_error, R.string.str_request_failed);
+            processError(spiceException);
         }
 
         @Override
@@ -277,7 +276,7 @@ public class PoorCoverageFragment extends BaseFragment
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            Toast.makeText(getActivity(), getString(R.string.str_something_went_wrong), Toast.LENGTH_LONG).show();
+            processError(spiceException);
         }
 
         @Override

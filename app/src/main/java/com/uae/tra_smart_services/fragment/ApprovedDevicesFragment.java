@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -159,11 +158,7 @@ public final class ApprovedDevicesFragment extends BaseFragment implements OnIte
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            Log.d(getClass().getSimpleName(), "Failure. isAdded: " + isAdded());
-            if (isAdded()) {
-                hideProgressDialog();
-                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-            }
+            processError(spiceException);
             getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST);
         }
     }

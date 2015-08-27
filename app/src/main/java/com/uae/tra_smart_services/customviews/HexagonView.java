@@ -27,10 +27,12 @@ public class HexagonView extends View {
 
     private double mHexagonSide, mHexagonInnerRadius;
     private final Path mPath;
-    private final Paint mPaint, mShadowPaint;
+    private Paint mPaint, mShadowPaint;
     private int mBorderColor, mBorderWidth;
     private Drawable mBackgroundDrawable;
     private Rect mHexagonRect = new Rect();
+
+    private float[] mLines;
 
     public HexagonView(Context context) {
         this(context, null);
@@ -55,9 +57,6 @@ public class HexagonView extends View {
         mPaint.setStrokeWidth(mBorderWidth);
         mPaint.setStyle(Paint.Style.STROKE);
 
-        mShadowPaint = new Paint();
-        mShadowPaint.setStyle(Paint.Style.FILL);
-
         mPath = new Path();
     }
 
@@ -67,6 +66,8 @@ public class HexagonView extends View {
     }
 
     public final void setHexagonShadow(final float _radius, final int _color) {
+        mShadowPaint = new Paint();
+        mShadowPaint.setStyle(Paint.Style.FILL);
         mShadowPaint.setShadowLayer(_radius, 0, 0, _color);
     }
 
@@ -107,6 +108,7 @@ public class HexagonView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         double section = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
+        mLines = new float[8];
 
         mPath.reset();
         mPath.moveTo(
@@ -125,12 +127,14 @@ public class HexagonView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //region Draw shadow
-        canvas.save();
-        canvas.clipPath(mPath, Region.Op.DIFFERENCE);
-        canvas.drawPath(mPath, mShadowPaint);
-        canvas.restore();
+//        canvas.save();
+//        canvas.clipPath(mPath, Region.Op.DIFFERENCE);
+        if (mShadowPaint != null) {
+            canvas.drawPath(mPath, mShadowPaint);
+        }
+//        canvas.restore();
         //endregion
-
+//
         if (mBackgroundDrawable != null) {
             canvas.clipPath(mPath);
             canvas.getClipBounds(mHexagonRect);
@@ -150,6 +154,7 @@ public class HexagonView extends View {
             mBackgroundDrawable.draw(canvas);
             canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
         }
+
         canvas.drawPath(mPath, mPaint);
     }
 }

@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -16,10 +15,8 @@ import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
-import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.LoginRequest;
 
-import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
@@ -48,13 +45,16 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     protected final void initViews() {
         // Input fields
-        etUserName = findView(R.id.etEmail_FLI);
-        etPassword = findView(R.id.etPassword_FLI);
+        etUserName = findView(R.id.etEmail_FR);
+        etPassword = findView(R.id.etPassword_FR);
         // Actions
         tvRestorePassword = findView(R.id.btnRestorePassword_FLI);
         btnLogIn = findView(R.id.btnLogIn_FLI);
         btnRegisterNow = findView(R.id.btnRegisterNow_FLI);
         btnSkip = findView(R.id.btnSkip_FLI);
+
+        etUserName.setText("vitaliy.shuba.trash@gmail.com");
+        etPassword.setText("12345678");
     }
 
     @Override
@@ -92,7 +92,6 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     public void onStart() {
         super.onStart();
-//        getSpiceManager().getFromCache(Response.class, KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestLoginListener);
         getSpiceManager().addListenerIfPending(Response.class, KEY_LOGIN_REQUEST, mRequestLoginListener);
     }
 
@@ -109,24 +108,6 @@ public class LoginFragment extends BaseAuthorizationFragment
         progressDialogManager.showProgressDialog("Authenticating..");
         LoginRequest request = new LoginRequest(model);
         getSpiceManager().execute(request, KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
-    }
-
-    /**
-     * Mock method should be refactored OR deleted
-     */
-    private void postLoginDelay() {
-        // Run post delayed activity start
-        new Handler().postDelayed(new Runnable() {
-
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             */
-            @Override
-            public void run() {
-                progressDialogManager.hideProgressDialog();
-                actionsListener.onLogInSuccess();
-            }
-        }, 2000);
     }
 
     private class RequestResponseListener implements PendingRequestListener<Response> {
@@ -150,21 +131,7 @@ public class LoginFragment extends BaseAuthorizationFragment
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            Log.d(getClass().getSimpleName(), "Failure. isAdded: " + isAdded());
-            if (isAdded()) {
-                progressDialogManager.hideProgressDialog();
-                String errorMessage;
-                Throwable cause = spiceException.getCause();
-                if (cause != null && cause instanceof RetrofitError) {
-                    RetrofitError error = (RetrofitError) cause;
-                    ErrorResponseModel errorResponse = (ErrorResponseModel) error.getBodyAs(ErrorResponseModel.class);
-                    errorMessage = errorResponse.error;
-                } else {
-                    errorMessage = "Error";
-                }
-
-                Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
-            }
+            processError(spiceException);
             getSpiceManager().removeDataFromCache(Response.class, KEY_LOGIN_REQUEST);
         }
     }

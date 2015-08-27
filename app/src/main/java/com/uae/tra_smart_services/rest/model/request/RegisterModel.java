@@ -8,10 +8,20 @@ import com.google.gson.annotations.Expose;
 public class RegisterModel extends LoginModel {
 
     @Expose
-    public String gender;
+    public String first;
 
     @Expose
-    public String phone;
+    public String last;
 
+    @Expose
+    public String emiratesId;
 
+    @Expose
+    public Integer state;
+
+    @Expose
+    public String mobile;
+
+    @Expose
+    public String email;
 }

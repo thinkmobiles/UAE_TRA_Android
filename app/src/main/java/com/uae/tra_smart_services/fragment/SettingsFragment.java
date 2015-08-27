@@ -70,7 +70,7 @@ public class SettingsFragment extends BaseHomePageFragment
             addFilter(new Filter<String>() {
                 @Override
                 public boolean check(String _data) {
-                    return Patterns.DOMAIN_NAME.matcher(_data).matches();
+                    return Patterns.WEB_URL.matcher(_data).matches();
                 }
             });
         }

@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -108,8 +107,7 @@ public class HelpSalemFragment extends BaseFragment implements AlertDialogFragme
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            progressDialogManager.hideProgressDialog();
-            Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
+            processError(spiceException);
         }
 
         @Override

@@ -148,11 +148,7 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            Log.d(getClass().getSimpleName(), "Failure. isAdded: " + isAdded());
-            if (isAdded()) {
-                hideProgressDialog();
-                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-            }
+            processError(spiceException);
             getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);
         }
     }

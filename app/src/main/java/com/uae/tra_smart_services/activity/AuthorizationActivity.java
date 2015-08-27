@@ -6,13 +6,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.LoginFragment;
 import com.uae.tra_smart_services.fragment.RegisterFragment;
 import com.uae.tra_smart_services.fragment.RestorePassFragment;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
+import com.uae.tra_smart_services.global.Constants;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
+
+import java.net.CookieHandler;
+import java.net.CookieManager;
 
 import retrofit.RetrofitError;
 
@@ -21,6 +26,8 @@ import retrofit.RetrofitError;
  */
 public class AuthorizationActivity extends BaseFragmentActivity
             implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
+
+    private String mAction;
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -31,6 +38,8 @@ public class AuthorizationActivity extends BaseFragmentActivity
     public final void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_authorization);
+        CookieHandler.setDefault(new CookieManager());
+        mAction = getIntent().getAction();
 
         final Toolbar toolbar = findView(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,8 +67,15 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
     @Override
     public void onLogInSuccess() {
-        startActivity(new Intent(this, HomeActivity.class));
-        finish();
+        TRAApplication.setIsLoggedIn(true);
+
+        if (mAction != null && mAction.equals(Constants.ACTION_LOGIN)) {
+            setResult(Constants.LOGIN_SUCCESS);
+            finish();
+        } else {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+        }
     }
 
     @Override
@@ -90,8 +106,13 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
     @Override
     public void onHomeScreenOpenWithoutAuth() {
-        startActivity(new Intent(this, HomeActivity.class));
-        finish();
+        if (mAction != null && mAction.equals(Constants.ACTION_LOGIN)) {
+            setResult(Constants.LOGIN_SKIP);
+            finish();
+        } else {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+        }
     }
 
     @Override

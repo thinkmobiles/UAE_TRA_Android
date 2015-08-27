@@ -16,15 +16,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
-import com.uae.tra_smart_services.dialog.ProgressDialog;
+import com.octo.android.robospice.exception.NoNetworkException;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
+import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
 import com.uae.tra_smart_services.interfaces.RetrofitFailureHandler;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;
+import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
 
 import retrofit.RetrofitError;
 
@@ -139,6 +144,46 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
             dialog.dismiss();
         }
     }
+
+    protected final void processError(final SpiceException _exception) {
+        if (isAdded()) {
+            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
+            String errorMessage;
+            Throwable cause = _exception.getCause();
+            if (cause != null && cause instanceof RetrofitError) {
+                errorMessage = processRetrofitError(((RetrofitError) cause));
+            } else if (_exception instanceof NoNetworkException) {
+                errorMessage = getString(R.string.error_no_network);
+            } else {
+                errorMessage = _exception.getMessage();
+            }
+
+            Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String processRetrofitError(final RetrofitError _error) {
+        switch (_error.getKind()) {
+            case NETWORK:
+                return getString(R.string.error_no_network);
+            case CONVERSION:
+                //TODO: change this on production, added just to see when developing
+                return getString(R.string.error_conversion_error);
+            case HTTP:
+                try {
+                    ErrorResponseModel errorResponse = (ErrorResponseModel) _error.getBodyAs(ErrorResponseModel.class);
+                    return errorResponse.error;
+                } catch (RuntimeException _exc) {
+                    _exc.printStackTrace();
+                    return getString(R.string.error_server);
+                }
+            default:
+            case UNEXPECTED:
+                return getString(R.string.str_something_went_wrong);
+        }
+    }
+
 
     protected final SpiceManager getSpiceManager() {
         return spiceManager;

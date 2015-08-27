@@ -55,6 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
             return;
         mProgressDialog.setMessage(_text == null ? "" : _text);
         mProgressDialog.show();
+
     }
 
     @Override

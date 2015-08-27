@@ -79,14 +79,6 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-//                mHexagonalButtonsLayout.invalidate();
-//                final String state = newState == RecyclerView.SCROLL_STATE_SETTLING ? "settling" :
-//                        newState == RecyclerView.SCROLL_STATE_IDLE ? "idle" : "dragging";
-//                final String isCollapsedState = isCollapsed ? "collapsed" : "expanded";
-//                final String isScrollUpState = isScrollUp ? "up" : "down";
-//
-//                Log.d(RECYCLER_TAG, "Scroll state changed to !-" + state + "-! animation progress = " +
-//                        String.valueOf(mAnimationProgress) + " state : " + isCollapsedState + " scroll : " + isScrollUpState);
 
                 if (RecyclerView.SCROLL_STATE_SETTLING == newState ||
                             RecyclerView.SCROLL_STATE_IDLE == newState
@@ -94,7 +86,6 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
 
                     endAnimation();
                 }
-
             }
 
             @Override

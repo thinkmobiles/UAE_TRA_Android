@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,12 +9,12 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
@@ -39,6 +40,14 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
 
     public static ComplainAboutServiceFragment newInstance() {
         return new ComplainAboutServiceFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!TRAApplication.isLoggedIn()) {
+            getFragmentManager().popBackStack();
+        }
     }
 
     @Override
@@ -176,10 +185,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             Log.d(getClass().getSimpleName(), "Failure. isAdded: " + isAdded());
-            if (isAdded()) {
-                hideProgressDialog();
-                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-            }
+            processError(spiceException);
             getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
     }

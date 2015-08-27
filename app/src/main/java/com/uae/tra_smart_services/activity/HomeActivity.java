@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.activity;
 
 import android.app.FragmentManager.OnBackStackChangedListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
 import com.uae.tra_smart_services.entities.FavoriteItem;
@@ -38,6 +40,8 @@ import com.uae.tra_smart_services.fragment.SmsReportFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
+import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.Constants;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
@@ -58,6 +62,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
+    private BaseFragment mFragmentForReplacing;
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
@@ -102,16 +107,16 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
                 break;
             case COMPLAIN_ABOUT_PROVIDER:
-                replaceFragmentWithBackStack(ComplainAboutServiceFragment.newInstance());
+                openFragmentIfAuthorized(ComplainAboutServiceFragment.newInstance());
                 break;
             case ENQUIRIES:
-                replaceFragmentWithBackStack(EnquiriesFragment.newInstance());
+                openFragmentIfAuthorized(EnquiriesFragment.newInstance());
                 break;
             case COMPLAINT_ABOUT_TRA:
-                replaceFragmentWithBackStack(ComplainAboutTraFragment.newInstance());
+                openFragmentIfAuthorized(ComplainAboutTraFragment.newInstance());
                 break;
             case SUGGESTION:
-                replaceFragmentWithBackStack(SuggestionFragment.newInstance());
+                openFragmentIfAuthorized(SuggestionFragment.newInstance());
                 break;
             case HELP_SALIM:
                 replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
@@ -119,6 +124,28 @@ public class HomeActivity extends BaseFragmentActivity
             case APPROVED_DEVICES:
                 replaceFragmentWithBackStack(ApprovedDevicesFragment.newInstance());
                 break;
+        }
+    }
+
+    private void openFragmentIfAuthorized(final BaseFragment _fragment) {
+        mFragmentForReplacing = _fragment;
+        if (TRAApplication.isLoggedIn()) {
+            replaceFragmentWithBackStack(mFragmentForReplacing);
+        } else {
+            Intent intent = new Intent(this, AuthorizationActivity.class);
+            intent.setAction(Constants.ACTION_LOGIN);
+            startActivityForResult(intent, Constants.REQUEST_CODE_LOGIN);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.REQUEST_CODE_LOGIN) {
+            if (resultCode == Constants.LOGIN_SUCCESS && mFragmentForReplacing != null) {
+                replaceFragmentWithBackStack(mFragmentForReplacing);
+            }
         }
     }
 

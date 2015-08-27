@@ -5,7 +5,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -134,8 +133,7 @@ public class DomainCheckerFragment extends BaseFragment
         }
 
         public void onRequestFailure(SpiceException spiceException) {
-            progressDialogManager.hideProgressDialog();
-            Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
+            processError(spiceException);
         }
     }
 
