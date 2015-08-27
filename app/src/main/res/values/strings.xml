@@ -163,6 +163,9 @@
     <string name="hexagon_button_spam">Spam</string>
     <string name="hexagon_button_coverage">Coverage</string>
     <string name="hexagon_button_internet">Internet</string>
+    <string name="fragment_favorites_add_service_done">Done</string>
+    <string name="fragment_favorites_add_service_search">Search</string>
+    <string name="fragment_favorites_menu_add">Add service</string>
 
 
     <!--                PoorCoverageFragment            -->

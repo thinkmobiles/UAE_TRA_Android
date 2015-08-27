@@ -17,4 +17,8 @@ public final class Constants {
     public static final String BLACK_AND_WHITE_THEME = "AppThemeBlackAndWhite";
 
     public static final String ORANGE_THEME = "AppThemeOrange";
+
+    public static final String KEY_FAVORITE_SERVICES = "FAVORITE_SERVICES";
+
+    public static final String FAVORITE_SERVICES_DELIMITER = ",";
 }

@@ -4,6 +4,10 @@ import android.support.annotation.DrawableRes;
 
 import com.uae.tra_smart_services.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by mobimaks on 10.08.2015.
  */
@@ -56,6 +60,30 @@ public enum Service {
             return R.drawable.ic_glb;
         }
     },
+    DOMAIN_AVAILABILITY_CHECK {
+        @Override
+        public String toString() {
+            return "Check Domain Availability";
+        }
+
+        @Override
+        @DrawableRes
+        public final int getDrawableRes() {
+            return R.drawable.ic_glb;
+        }
+    },
+    DOMAIN_DATA_CHECK {
+        @Override
+        public String toString() {
+            return "Get Domain Data";
+        }
+
+        @Override
+        @DrawableRes
+        public final int getDrawableRes() {
+            return R.drawable.ic_glb;
+        }
+    },
     ENQUIRIES {
         @Override
         public String toString() {
@@ -68,30 +96,41 @@ public enum Service {
             return R.drawable.ic_play;
         }
     },
-//    SMS_SPAM {
-//        @Override
-//        public String toString() {
-//            return "SMS Spam";
-//        }
-//
-//        @Override
-//        @DrawableRes
-//        public final int getDrawableRes() {
-//            return R.drawable.ic_glb;
-//        }
-//    },
-//    POOR_COVERAGE {
-//        @Override
-//        public String toString() {
-//            return "Poor coverage";
-//        }
-//
-//        @Override
-//        @DrawableRes
-//        public final int getDrawableRes() {
-//            return R.drawable.ic_glb;
-//        }
-//    },
+    SMS_SPAM_BLOCK {
+        @Override
+        public String toString() {
+            return "SMS Spam Block";
+        }
+
+        @Override
+        @DrawableRes
+        public final int getDrawableRes() {
+            return R.drawable.ic_glb;
+        }
+    },
+    SMS_SPAM_REPORT {
+        @Override
+        public String toString() {
+            return "SMS Spam Report";
+        }
+
+        @Override
+        public int getDrawableRes() {
+            return R.drawable.ic_glb;
+        }
+    },
+    POOR_COVERAGE {
+        @Override
+        public String toString() {
+            return "Poor coverage";
+        }
+
+        @Override
+        @DrawableRes
+        public final int getDrawableRes() {
+            return R.drawable.ic_glb;
+        }
+    },
     HELP_SALIM {
         @Override
         public String toString() {
@@ -104,18 +143,18 @@ public enum Service {
             return R.drawable.ic_edit;
         }
     },
-//    MOBILE_VERIFICATION {
-//        @Override
-//        public String toString() {
-//            return "Mobile verification";
-//        }
-//
-//        @Override
-//        @DrawableRes
-//        public final int getDrawableRes() {
-//            return R.drawable.ic_glb;
-//        }
-//    },
+    MOBILE_VERIFICATION {
+        @Override
+        public String toString() {
+            return "Mobile verification";
+        }
+
+        @Override
+        @DrawableRes
+        public final int getDrawableRes() {
+            return R.drawable.ic_glb;
+        }
+    },
     APPROVED_DEVICES {
         @Override
         public String toString() {
@@ -131,4 +170,35 @@ public enum Service {
 
     @DrawableRes
     public abstract int getDrawableRes();
+
+    private static List<Service> ALL_SERVICES;
+
+    public static List<Service> getAllServices() {
+        initAllServicesList();
+        return new ArrayList<>(ALL_SERVICES);
+    }
+
+    private static void initAllServicesList() {
+        if (ALL_SERVICES == null) {
+            ALL_SERVICES = new ArrayList<>(Arrays.asList(Service.values()));
+            ALL_SERVICES.remove(DOMAIN_CHECK);
+        }
+    }
+
+    public static int getAllServicesCount() {
+        initAllServicesList();
+        return ALL_SERVICES.size();
+    }
+
+    public static List<Service> getSecondaryServices() {
+        List<Service> services = new ArrayList<>();
+        services.add(COMPLAIN_ABOUT_PROVIDER);
+        services.add(COMPLAINT_ABOUT_TRA);
+        services.add(SUGGESTION);
+        services.add(DOMAIN_CHECK);
+        services.add(ENQUIRIES);
+        services.add(HELP_SALIM);
+        services.add(APPROVED_DEVICES);
+        return services;
+    }
 }

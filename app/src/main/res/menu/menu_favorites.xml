@@ -9,4 +9,10 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="collapseActionView|always"/>
 
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_action_new"
+        android:title="@string/fragment_favorites_menu_add"
+        app:showAsAction="always"/>
+
 </menu>
