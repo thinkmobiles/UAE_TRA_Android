@@ -122,13 +122,11 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         registerModel.emiratesId = etEmiratesId.getText().toString();
 
         if (mFilterPool.check(registerModel)) {
-            progressDialogManager.showProgressDialog("Registration..");
+            showProgressDialog("Registration..", null);
             getSpiceManager().execute(new RegisterRequest(registerModel),
                     KEY_REGISTER_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
         }
     }
-
-
 
     private class RequestListener implements PendingRequestListener<Response> {
 
@@ -141,7 +139,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                progressDialogManager.hideProgressDialog();
+                hideProgressDialog();
                 if (result != null && actionsListener != null) {
                     actionsListener.onRegisterSuccess();
                 }

@@ -20,14 +20,15 @@ import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.ScannerActivity;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByImeiRequest;
 
 /**
  * Created by mobimaks on 13.08.2015.
  */
-public class MobileVerificationFragment extends BaseFragment implements OnClickListener {
+public class MobileVerificationFragment extends BaseServiceFragment implements OnClickListener {
 
     private static final String KEY_SEARCH_DEVICE_BY_IMEI_REQUEST = "SEARCH_DEVICE_BY_IMEI_REQUEST";
     private static final int CODE_SCANNER_REQUEST = 1;
@@ -122,9 +123,19 @@ public class MobileVerificationFragment extends BaseFragment implements OnClickL
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CODE_SCANNER_REQUEST && resultCode == Activity.RESULT_OK) {
-            String text = data.getStringExtra(Constants.KEY_SCANNER_RESULT_TEXT);
+            String text = data.getStringExtra(C.KEY_SCANNER_RESULT_TEXT);
             etImeiNumber.setText(text);
         }
+    }
+
+    @Override
+    public void cancel() {
+
+    }
+
+    @Override
+    public void dismiss() {
+
     }
 
     private class RequestResponseListener implements PendingRequestListener<SearchDeviceResponseModel.List> {

@@ -15,10 +15,12 @@ import android.widget.ListView;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.DevicesListAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByBrandRequest;
 
@@ -28,7 +30,7 @@ import java.util.List;
 /**
  * Created by mobimaks on 11.08.2015.
  */
-public final class ApprovedDevicesFragment extends BaseFragment implements OnItemClickListener, OnQueryTextListener {
+public final class ApprovedDevicesFragment extends BaseServiceFragment implements OnItemClickListener, OnQueryTextListener {
 
     private static final String KEY_SEARCH_DEVICE_BY_BRAND_REQUEST = "SEARCH_DEVICE_BY_BRAND_REQUEST";
 
@@ -120,12 +122,12 @@ public final class ApprovedDevicesFragment extends BaseFragment implements OnIte
         mAdapter.getFilter().filter(newText);
         return true;
     }
-
+    SearchByBrandRequest request;
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (mSelectListener != null) {
             String selectedBrand = mAdapter.getItem(position);
-            SearchByBrandRequest request = new SearchByBrandRequest(selectedBrand, 0, 100);
+            request = new SearchByBrandRequest(selectedBrand, 0, 100);
             showProgressDialog();
             getSpiceManager().execute(request, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
         }
@@ -135,6 +137,16 @@ public final class ApprovedDevicesFragment extends BaseFragment implements OnIte
     public void onDetach() {
         mSelectListener = null;
         super.onDetach();
+    }
+
+    @Override
+    public void cancel() {
+
+    }
+
+    @Override
+    public void dismiss() {
+
     }
 
     private class RequestResponseListener implements PendingRequestListener<SearchDeviceResponseModel.List> {

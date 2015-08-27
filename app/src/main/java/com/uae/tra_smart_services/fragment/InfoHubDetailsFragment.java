@@ -7,8 +7,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.TargetImageView;
-import com.uae.tra_smart_services.entities.C;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.rest.model.response.InfoHubListItemModel;
 
 

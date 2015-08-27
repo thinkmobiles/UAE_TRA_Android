@@ -15,13 +15,15 @@ import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.rest.model.request.SmsSpamRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SmsReportRequest;
 
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class SmsReportFragment extends BaseFragment implements AlertDialogFragment.OnOkListener{
+public class SmsReportFragment extends BaseServiceFragment implements AlertDialogFragment.OnOkListener{
 
     private EditText etNumberOfSpammer, etDescription;
 
@@ -92,7 +94,7 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
         if(filters.check(etNumberOfSpammer.getText().toString()) &&
                 filters.check(etDescription.getText().toString())){
 
-            progressDialogManager.showProgressDialog(getString(R.string.str_checking));
+            showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     new SmsReportRequest(
                             new SmsReportRequestModel(
@@ -113,6 +115,16 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
         // Used exceptionally to specify OK button in dialog
     }
 
+    @Override
+    public void cancel() {
+
+    }
+
+    @Override
+    public void dismiss() {
+
+    }
+
     private final class SmsSpamReportResponseListener implements RequestListener<SmsSpamResponseModel> {
 
         @Override
@@ -122,7 +134,7 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
 
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
         }
     }

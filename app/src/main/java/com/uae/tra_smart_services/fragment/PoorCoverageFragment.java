@@ -31,6 +31,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
@@ -43,7 +44,7 @@ import retrofit.client.Response;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class PoorCoverageFragment extends BaseFragment
+public class PoorCoverageFragment extends BaseServiceFragment
         implements OnOkListener, OnItemPickListener,
         ConnectionCallbacks, OnConnectionFailedListener,
         OnSeekBarChangeListener, OnClickListener {
@@ -146,7 +147,8 @@ public class PoorCoverageFragment extends BaseFragment
             showMessage(R.string.str_location_error, R.string.str_location_error_message);
             return;
         }
-        progressDialogManager.showProgressDialog(getString(R.string.str_sending));
+
+        showProgressDialog(getString(R.string.str_sending), null);
         getSpiceManager().execute(
                 new PoorCoverageRequest(
                         mLocationModel
@@ -248,6 +250,16 @@ public class PoorCoverageFragment extends BaseFragment
 
     }
 
+    @Override
+    public void cancel() {
+
+    }
+
+    @Override
+    public void dismiss() {
+
+    }
+
     private class PoorCoverageRequestListener implements RequestListener<Response> {
 
         @Override
@@ -257,7 +269,7 @@ public class PoorCoverageFragment extends BaseFragment
 
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             switch (poorCoverageRequestModel.getStatus()) {
                 case 200:
                     showMessage(R.string.str_success, R.string.str_data_has_been_sent);

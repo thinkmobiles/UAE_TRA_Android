@@ -105,7 +105,7 @@ public class LoginFragment extends BaseAuthorizationFragment
             return;
         }
 
-        progressDialogManager.showProgressDialog("Authenticating..");
+        showProgressDialog("Authenticating..", null);
         LoginRequest request = new LoginRequest(model);
         getSpiceManager().execute(request, KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
     }
@@ -121,7 +121,7 @@ public class LoginFragment extends BaseAuthorizationFragment
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                progressDialogManager.hideProgressDialog();
+                hideProgressDialog();
                 if (result != null && actionsListener != null) {
                     actionsListener.onLogInSuccess();
                 }

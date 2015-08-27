@@ -5,7 +5,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.octo.android.robospice.retrofit.RetrofitGsonSpiceService;
-import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
 
 import retrofit.RestAdapter;
@@ -26,7 +26,7 @@ public class TRARestService extends RetrofitGsonSpiceService {
     protected String getServerUrl() {
         if (TextUtils.isEmpty(ServerConstants.BASE_URL)) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            ServerConstants.BASE_URL = prefs.getString(Constants.KEY_BASE_URL, ServerConstants.BASE_URL1);
+            ServerConstants.BASE_URL = prefs.getString(C.KEY_BASE_URL, ServerConstants.BASE_URL1);
         }
         return ServerConstants.BASE_URL;
     }

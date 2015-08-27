@@ -8,12 +8,14 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
 import com.uae.tra_smart_services.rest.robo_requests.HelpSalimRequest;
 
@@ -22,7 +24,7 @@ import retrofit.client.Response;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class HelpSalemFragment extends BaseFragment implements AlertDialogFragment.OnOkListener {
+public class HelpSalemFragment extends BaseServiceFragment implements AlertDialogFragment.OnOkListener {
     public static HelpSalemFragment newInstance() {
         return new HelpSalemFragment();
     }
@@ -82,7 +84,7 @@ public class HelpSalemFragment extends BaseFragment implements AlertDialogFragme
 
     private final void collectAndSendToServer(){
         if(filters.check(eturl.getText().toString())){
-            progressDialogManager.showProgressDialog(getString(R.string.str_checking));
+            showProgressDialog(getString(R.string.str_checking), null);
             getSpiceManager().execute(
                     new HelpSalimRequest(
                             new HelpSalimModel(
@@ -112,8 +114,20 @@ public class HelpSalemFragment extends BaseFragment implements AlertDialogFragme
 
         @Override
         public void onRequestSuccess(Response smsSpamReportResponse) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
         }
+    }
+
+    @Override
+    public void cancel() {
+        if (getSpiceManager().isStarted()) {
+//            getSpiceManager().cancel(REQUIRED_REQUEST_TO_BE STOPPED);
+        }
+    }
+
+    @Override
+    public void dismiss() {
+
     }
 }

@@ -3,6 +3,7 @@ package com.uae.tra_smart_services.fragment.base;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
@@ -19,6 +20,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.request.SpiceRequest;
+import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.octo.android.robospice.exception.NoNetworkException;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
@@ -31,18 +34,20 @@ import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;
 import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
 
+import java.util.ArrayList;
+
 import retrofit.RetrofitError;
 
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragment extends Fragment implements RetrofitFailureHandler, OnReloadData {
+public abstract class BaseFragment extends Fragment
+        implements RetrofitFailureHandler, OnReloadData{
 
     private View rootView;
     private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
     private InputMethodManager mInputMethodManager;
 
-    protected ProgressDialogManager progressDialogManager;
     protected ErrorHandler errorHandler;
     protected ToolbarTitleManager toolbarTitleManager;
     protected ThemaDefiner mThemaDefiner;
@@ -52,7 +57,6 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         super.onAttach(_activity);
         try {
             toolbarTitleManager = (ToolbarTitleManager) _activity;
-            progressDialogManager = (ProgressDialogManager) _activity;
             errorHandler = (ErrorHandler) _activity;
             mThemaDefiner = (ThemaDefiner) _activity;
         } catch (ClassCastException e) {
@@ -135,7 +139,11 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     }
 
     protected final void showProgressDialog(){
-        ProgressDialog.newInstance().show(getFragmentManager());
+        showProgressDialog("Loading...", null);
+    }
+
+    protected final void showProgressDialog(String _title, DialogInterface _callBack){
+        ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
     }
 
     protected final void hideProgressDialog(){
@@ -147,7 +155,6 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
 
     protected final void processError(final SpiceException _exception) {
         if (isAdded()) {
-            progressDialogManager.hideProgressDialog();
             hideProgressDialog();
             String errorMessage;
             Throwable cause = _exception.getCause();

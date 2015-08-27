@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
@@ -88,7 +89,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         }
         return super.onOptionsItemSelected(item);
     }
-
+    ComplainAboutServiceRequest mComplainAboutServiceRequest;
     @Override
     protected void sendComplain() {
         ComplainServiceProviderModel complainModel = new ComplainServiceProviderModel();
@@ -96,10 +97,11 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         complainModel.serviceProvider = tvServiceProvider.getText().toString();
         complainModel.referenceNumber = etReferenceNumber.getText().toString();
         complainModel.description = etDescription.getText().toString();
-        ComplainAboutServiceRequest request = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
+        mComplainAboutServiceRequest = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
 
-        showProgressDialog();
-        getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestResponseListener);
+        showProgressDialog(getString(R.string.str_sending), this);
+
+        getSpiceManager().execute(mComplainAboutServiceRequest, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestResponseListener);
     }
 
 //    private boolean validateData() {
@@ -198,5 +200,17 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_complain_about_service;
+    }
+
+    @Override
+    public void cancel(){
+        if(getSpiceManager().isStarted()){
+            getSpiceManager().cancel(mComplainAboutServiceRequest);
+        }
+    }
+
+    @Override
+    public void dismiss(){
+        Toast.makeText(getActivity(), "DISMISSED", Toast.LENGTH_LONG).show();
     }
 }
