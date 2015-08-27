@@ -201,7 +201,10 @@ public class FavoritesFragment extends BaseFragment
 
     @Override
     public void onItemClick(int _position) {
-        Log.d(getClass().getSimpleName(), "Item click: " + _position);
+        if (mFavoritesEventListener != null) {
+            hideKeyboard(getView());
+            mFavoritesEventListener.onOpenServiceClick(mFavoritesAdapter.getItem(_position));
+        }
     }
 
     @Override
@@ -262,6 +265,8 @@ public class FavoritesFragment extends BaseFragment
     public interface OnFavoritesEventListener {
         void onAddFavoritesClick();
 
-        void onOpenServiceInfo(int _position, Service _item);
+        void onOpenServiceInfo(final int _position, final Service _service);
+
+        void onOpenServiceClick(final Service _service);
     }
 }

@@ -119,6 +119,15 @@ public class HomeActivity extends BaseFragmentActivity
             case APPROVED_DEVICES:
                 replaceFragmentWithBackStack(ApprovedDevicesFragment.newInstance());
                 break;
+            case SMS_SPAM:
+                replaceFragmentWithBackStack(SmsServiceListFragment.newInstance());
+                break;
+            case MOBILE_VERIFICATION:
+                replaceFragmentWithBackStack(MobileVerificationFragment.newInstance());
+                break;
+            case POOR_COVERAGE:
+                replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
+                break;
         }
     }
 
@@ -211,12 +220,17 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onAddFavoritesClick() {
+    public final void onAddFavoritesClick() {
         replaceFragmentWithBackStack(AddServiceFragment.newInstance());
     }
 
     @Override
-    public void onFavoriteServicesSelected(final List<Service> _items) {
+    public final void onOpenServiceClick(final Service _service) {
+        onServiceSelect(_service);
+    }
+
+    @Override
+    public final void onFavoriteServicesSelected(final List<Service> _items) {
         getFragmentManager().popBackStackImmediate();
         final FavoritesFragment favoritesFragment = (FavoritesFragment) getFragmentManager().findFragmentById(getContainerId());
         Log.d("Favorites", "Selected items count: " + _items.size());

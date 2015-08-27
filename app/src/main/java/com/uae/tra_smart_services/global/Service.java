@@ -60,30 +60,6 @@ public enum Service {
             return R.drawable.ic_glb;
         }
     },
-    DOMAIN_AVAILABILITY_CHECK {
-        @Override
-        public String toString() {
-            return "Check Domain Availability";
-        }
-
-        @Override
-        @DrawableRes
-        public final int getDrawableRes() {
-            return R.drawable.ic_glb;
-        }
-    },
-    DOMAIN_DATA_CHECK {
-        @Override
-        public String toString() {
-            return "Get Domain Data";
-        }
-
-        @Override
-        @DrawableRes
-        public final int getDrawableRes() {
-            return R.drawable.ic_glb;
-        }
-    },
     ENQUIRIES {
         @Override
         public String toString() {
@@ -96,26 +72,15 @@ public enum Service {
             return R.drawable.ic_play;
         }
     },
-    SMS_SPAM_BLOCK {
+    SMS_SPAM {
         @Override
         public String toString() {
-            return "SMS Spam Block";
+            return "SMS Spam Service";
         }
 
         @Override
         @DrawableRes
         public final int getDrawableRes() {
-            return R.drawable.ic_glb;
-        }
-    },
-    SMS_SPAM_REPORT {
-        @Override
-        public String toString() {
-            return "SMS Spam Report";
-        }
-
-        @Override
-        public int getDrawableRes() {
             return R.drawable.ic_glb;
         }
     },
@@ -181,7 +146,6 @@ public enum Service {
     private static void initAllServicesList() {
         if (ALL_SERVICES == null) {
             ALL_SERVICES = new ArrayList<>(Arrays.asList(Service.values()));
-            ALL_SERVICES.remove(DOMAIN_CHECK);
         }
     }
 
