@@ -1,19 +1,27 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AddFavoritesAdapter;
 import com.uae.tra_smart_services.adapter.AddFavoritesAdapter.OnItemClickListener;
-import com.uae.tra_smart_services.entities.FavoriteItem;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,19 +29,20 @@ import java.util.List;
 /**
  * Created by mobimaks on 22.08.2015.
  */
-public class AddServiceFragment extends BaseFragment implements OnItemClickListener {
+public class AddServiceFragment extends BaseFragment implements OnItemClickListener, OnQueryTextListener {
 
     public static AddServiceFragment newInstance() {
         return new AddServiceFragment();
     }
 
-    private FrameLayout flContainer;
     private RecyclerView rvFavoritesList;
+    private ImageView ivBackground;
+    private SearchView svSearchServices;
 
     private AddFavoritesAdapter mFavoritesAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
-    private List<FavoriteItem> mSelectedItems;
+    private List<Service> mSelectedItems;
     private OnFavoriteServicesSelectedListener mServicesSelectedListener;
 
     @Override
@@ -54,12 +63,15 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_done, menu);
+        inflater.inflate(R.menu.menu_add_service, menu);
+        svSearchServices = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        svSearchServices.setOnQueryTextListener(this);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_done && mServicesSelectedListener != null) {
+            Log.d("Favorites", "Size: " + mFavoritesAdapter.getItemCount() + ", selected: " + mSelectedItems.size());
             mServicesSelectedListener.onFavoriteServicesSelected(mSelectedItems);
             return true;
         }
@@ -69,7 +81,8 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     @Override
     protected void initViews() {
         super.initViews();
-        flContainer = findView(R.id.flContainer_FAS);
+        ivBackground = findView(R.id.ivBackground_FAS);
+        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getContext()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         rvFavoritesList = findView(R.id.rvFavoritesList_FAS);
     }
 
@@ -80,29 +93,7 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     }
 
     private void initFavoritesList() {
-        final int size = 5;
-        final List<FavoriteItem> data = new ArrayList<>();
-        final String[] names = new String[]{
-                "Addressing consumer disputes request with licensees on telecommunication services",
-                "Broadband Speed Test",
-                "Cancel spectrum authorization for aerial and marin radio services",
-                "Complain about service provider",
-                "Complain about service provider"
-        };
-        final int[] backgrounds = new int[]{
-                R.drawable.background_dispute,
-                R.drawable.background_speed,
-                R.drawable.background_location,
-                R.drawable.background_complain,
-                R.drawable.background_complain
-        };
-        for (int i = 0; i < size; i++) {
-            FavoriteItem item = new FavoriteItem();
-            item.name = names[i];
-            item.backgroundDrawableRes = backgrounds[i];
-            data.add(item);
-        }
-        mFavoritesAdapter = new AddFavoritesAdapter(getActivity(), data);
+        mFavoritesAdapter = new AddFavoritesAdapter(getActivity(), getNotFavoriteServices());
         mFavoritesAdapter.setItemClickListener(this);
 
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -112,8 +103,46 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
         rvFavoritesList.setLayoutManager(mLinearLayoutManager);
     }
 
+    private List<Service> getNotFavoriteServices() {
+        final List<Service> services = Service.getAllServices();
+        final List<Service> favoriteServices = getFavoriteServices();
+        services.removeAll(favoriteServices);
+        return services;
+    }
+
+    private List<Service> getFavoriteServices() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final String favoriteServicesStr = prefs.getString(Constants.KEY_FAVORITE_SERVICES, "");
+        final List<Service> services = new ArrayList<>();
+
+        if (!favoriteServicesStr.isEmpty()) {
+            final String[] servicesStrArray = favoriteServicesStr.split(Constants.FAVORITE_SERVICES_DELIMITER);
+            for (String serviceStr : servicesStrArray) {
+                try {
+                    final Service service = Service.valueOf(serviceStr);
+                    services.add(service);
+                } catch (IllegalArgumentException e) {
+                    //continue cycle
+                }
+            }
+        }
+        return services;
+    }
+
     @Override
-    public void onItemClick(FavoriteItem _item, boolean isSelected) {
+    public boolean onQueryTextChange(final String _newText) {
+        mFavoritesAdapter.getFilter().filter(_newText);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(final String _query) {
+        mFavoritesAdapter.getFilter().filter(_query);
+        return true;
+    }
+
+    @Override
+    public void onItemClick(Service _item, boolean isSelected) {
         if (isSelected) {
             mSelectedItems.add(_item);
         } else {
@@ -139,6 +168,6 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     }
 
     public interface OnFavoriteServicesSelectedListener {
-        void onFavoriteServicesSelected(List<FavoriteItem> _items);
+        void onFavoriteServicesSelected(List<Service> _items);
     }
 }

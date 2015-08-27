@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
@@ -59,7 +60,7 @@ public class InfoHubAnnPreviewListAdapter extends RecyclerView.Adapter<InfoHubAn
         }
 
         public void setData(InfoHubAnnouncementsListItemModel _model){
-//            Picasso.with(InfoHubAnnFullListAdapter.this.mContext).load(_model.getIconUrl()).into(hexagonView);
+            Picasso.with(mContext).load(_model.getIconUrl()).into(hexagonView);
             title.setText(_model.getTitle());
             description.setText(_model.getDescription());
             date.setText(_model.getDate());
@@ -73,7 +74,7 @@ public class InfoHubAnnPreviewListAdapter extends RecyclerView.Adapter<InfoHubAn
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_info_hub_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_info_hub_list_item_second, parent, false);
         view.findViewById(R.id.vListViewItemSeparator).setVisibility(View.INVISIBLE);
         return new ViewHolder(view);
     }

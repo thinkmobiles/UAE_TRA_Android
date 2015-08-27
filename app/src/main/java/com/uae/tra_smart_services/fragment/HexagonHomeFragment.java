@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.uae.tra_smart_services.R;
@@ -16,9 +17,9 @@ import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
 import com.uae.tra_smart_services.customviews.HexagonalHeader;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.INTERNET_SPEED_TEST;
@@ -37,6 +38,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
     private HexagonalButtonsLayout mHexagonalButtonsLayout;
     private RecyclerView mRecyclerView;
     private HexagonalHeader mHexagonalHeader;
+    private ImageView ivBackground;
 
     private ServicesRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -46,7 +48,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
     private OnStaticServiceSelectListener mStaticServiceSelectListener;
 
     private ValueAnimator mHexagonalHeaderAnimator, mHexagonButtonsAnimator, mHexagonHeaderReverseAnimator,
-                            mHexagonButtonsReverseAnimator;
+            mHexagonButtonsReverseAnimator;
     private AnimatorSet mAnimatorSet, mReverseAnimator;
 
     private boolean isCollapsed = false;
@@ -68,6 +70,8 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
 
     @Override
     protected void initViews() {
+        ivBackground = findView(R.id.ivBackground_FHH);
+        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         mRecyclerView = findView(R.id.rvServices_FHH);
         mHexagonalButtonsLayout = findView(R.id.hblHexagonalButtons_FHH);
         mHexagonalHeader = findView(R.id.hhHeader_FHH);
@@ -81,8 +85,8 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
                 super.onScrollStateChanged(recyclerView, newState);
 
                 if (RecyclerView.SCROLL_STATE_SETTLING == newState ||
-                            RecyclerView.SCROLL_STATE_IDLE == newState
-                            && mAnimationProgress != 0f && mAnimationProgress != 1f) {
+                        RecyclerView.SCROLL_STATE_IDLE == newState
+                                && mAnimationProgress != 0f && mAnimationProgress != 1f) {
 
                     endAnimation();
                 }
@@ -156,7 +160,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mAnimationProgress = (float) animation.getAnimatedValue();
-                mHexagonalHeader.setAnimationProgress( (float) animation.getAnimatedValue());
+                mHexagonalHeader.setAnimationProgress((float) animation.getAnimatedValue());
                 mHexagonalButtonsLayout.setAnimationProgress((float) animation.getAnimatedValue());
             }
         });
@@ -184,7 +188,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
     }
 
     private void initServiceList() {
-        mDataSet = new ArrayList<>(Arrays.asList(Service.values()));
+        mDataSet = new ArrayList<>(Service.getSecondaryServices());
     }
 
     @Override
@@ -199,7 +203,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
 
     @Override
     public final void serviceSelected(final int _id) {
-        if(VERIFICATION_SERVICE.isEquals(_id)) {
+        if (VERIFICATION_SERVICE.isEquals(_id)) {
             mStaticServiceSelectListener.onStaticServiceSelect(VERIFICATION_SERVICE);
         } else if (SMS_SPAM_SERVICE.isEquals(_id)) {
             mStaticServiceSelectListener.onStaticServiceSelect(SMS_SPAM_SERVICE);

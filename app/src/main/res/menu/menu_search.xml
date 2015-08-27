@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="Search"
+        android:icon="@drawable/ic_action_search"
+        android:title="@string/fragment_favorites_add_service_search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="collapseActionView|always"/>
 

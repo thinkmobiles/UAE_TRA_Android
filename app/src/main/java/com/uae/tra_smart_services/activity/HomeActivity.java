@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -14,7 +15,6 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
-import com.uae.tra_smart_services.entities.FavoriteItem;
 import com.uae.tra_smart_services.fragment.AddServiceFragment;
 import com.uae.tra_smart_services.fragment.AddServiceFragment.OnFavoriteServicesSelectedListener;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
@@ -123,6 +123,15 @@ public class HomeActivity extends BaseFragmentActivity
                 break;
             case APPROVED_DEVICES:
                 replaceFragmentWithBackStack(ApprovedDevicesFragment.newInstance());
+                break;
+            case SMS_SPAM:
+                replaceFragmentWithBackStack(SmsServiceListFragment.newInstance());
+                break;
+            case MOBILE_VERIFICATION:
+                replaceFragmentWithBackStack(MobileVerificationFragment.newInstance());
+                break;
+            case POOR_COVERAGE:
+                replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
                 break;
         }
     }
@@ -238,19 +247,25 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onAddFavoritesClick() {
+    public final void onAddFavoritesClick() {
         replaceFragmentWithBackStack(AddServiceFragment.newInstance());
     }
 
     @Override
-    public void onFavoriteServicesSelected(final List<FavoriteItem> _items) {
-        getFragmentManager().popBackStackImmediate();
-        FavoritesFragment fragment = (FavoritesFragment) getFragmentManager().findFragmentById(getContainerId());
-        fragment.addServicesToFavorites(_items);
+    public final void onOpenServiceClick(final Service _service) {
+        onServiceSelect(_service);
     }
 
     @Override
-    public void onOpenServiceInfo(int _position, FavoriteItem _item) {
+    public final void onFavoriteServicesSelected(final List<Service> _items) {
+        getFragmentManager().popBackStackImmediate();
+        final FavoritesFragment favoritesFragment = (FavoritesFragment) getFragmentManager().findFragmentById(getContainerId());
+        Log.d("Favorites", "Selected items count: " + _items.size());
+        favoritesFragment.addServicesToFavorites(_items);
+    }
+
+    @Override
+    public void onOpenServiceInfo(int _position, Service _item) {
         getFragmentManager().beginTransaction()
                 .addToBackStack(null)
                 .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance())
@@ -259,10 +274,14 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void setToolbarVisibility(boolean _isVisible) {
-        if (_isVisible) {
-            getSupportActionBar().show();
-        } else {
-            getSupportActionBar().hide();
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            if (_isVisible) {
+                actionBar.show();
+            } else {
+                actionBar.hide();
+            }
         }
+
     }
 }

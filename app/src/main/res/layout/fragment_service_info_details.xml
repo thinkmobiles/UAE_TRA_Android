@@ -5,7 +5,7 @@
     android:id="@+id/llFragmentContainer_FSID"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_service_info_background"
+    android:background="?attr/serviceInfoBackground"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -20,7 +20,7 @@
         android:id="@+id/hvServiceInfoIcon_FSID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hexagonBackground="@drawable/ic_edit"
+        app:hexagonSrc="@drawable/ic_edit"
         app:hexagonBorderColor="#ffffff"
         app:hexagonBorderSize="1dp"
         app:hexagonSideSize="60dp"/>

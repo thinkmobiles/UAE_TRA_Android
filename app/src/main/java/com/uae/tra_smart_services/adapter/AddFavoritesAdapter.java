@@ -1,22 +1,27 @@
 package com.uae.tra_smart_services.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
+import android.text.TextUtils;
 import android.util.SparseBooleanArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AddFavoritesAdapter.ViewHolder;
 import com.uae.tra_smart_services.customviews.HexagonView;
-import com.uae.tra_smart_services.entities.FavoriteItem;
+import com.uae.tra_smart_services.global.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,26 +29,56 @@ import java.util.List;
 /**
  * Created by mobimaks on 18.08.2015.
  */
-public class AddFavoritesAdapter extends Adapter<ViewHolder> {
+public class AddFavoritesAdapter extends Adapter<ViewHolder> implements Filterable {
 
     private final LayoutInflater mInflater;
-    private final List<FavoriteItem> mData;
+    private final List<Service> mAllData, mShowingData;
     private final SparseBooleanArray mSelectedItems;
+    private final int mBackgroundColor;
+    private final Context mContext;
+    private SearchFilter mSearchFilter;
 
     private OnItemClickListener mItemClickListener;
 
     public AddFavoritesAdapter(final Context _context) {
-        this(_context, new ArrayList<FavoriteItem>());
+        this(_context, new ArrayList<Service>());
     }
 
-    public AddFavoritesAdapter(final Context _context, final @NonNull List<FavoriteItem> _data) {
+    public AddFavoritesAdapter(final Context _context, final @NonNull List<Service> _data) {
+        mContext = _context;
         mInflater = LayoutInflater.from(_context);
-        mData = _data;
+        mAllData = _data;
+        mShowingData = new ArrayList<>(_data);
         mSelectedItems = new SparseBooleanArray();
+
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = _context.getTheme();
+        theme.resolveAttribute(R.attr.shadowBackgroundColor, typedValue, true);
+        mBackgroundColor = typedValue.data;
     }
 
     public final SparseBooleanArray getSelectedItems() {
         return mSelectedItems;
+    }
+
+    public final void setData(final List<Service> _allData) {
+        mAllData.clear();
+        mAllData.addAll(_allData);
+        notifyDataSetChanged();
+    }
+
+    private void showData(final List<Service> _data) {
+        mShowingData.clear();
+        mShowingData.addAll(_data);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (mSearchFilter == null) {
+            mSearchFilter = new SearchFilter(mAllData);
+        }
+        return mSearchFilter;
     }
 
     @Override
@@ -53,16 +88,56 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setData(mData.get(position), position);
+        holder.setData(mShowingData.get(position), position);
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mShowingData.size();
     }
 
     public final void setItemClickListener(OnItemClickListener _itemClickListener) {
         mItemClickListener = _itemClickListener;
+    }
+
+    private class SearchFilter extends Filter {
+
+        private final List<Service> listData;
+
+        public SearchFilter(List<Service> _listData) {
+            listData = new ArrayList<>(_listData);
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            final FilterResults results = new FilterResults();
+            if (TextUtils.isEmpty(constraint)) {
+                results.count = listData.size();
+                results.values = listData;
+            } else {
+                List<Service> filteredList = getFilteredList(constraint);
+                results.count = filteredList.size();
+                results.values = filteredList;
+            }
+            return results;
+        }
+
+        private List<Service> getFilteredList(CharSequence _constraint) {
+            List<Service> serviceList = new ArrayList<>();
+            for (int i = 0; i < listData.size(); i++) {
+                Service favoriteItem = listData.get(i);
+                if (favoriteItem.getTitle(mContext).toLowerCase().contains(_constraint.toString().toLowerCase())) {
+                    serviceList.add(favoriteItem);
+                }
+            }
+            return serviceList;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            List<Service> filteredData = (List<Service>) results.values;
+            showData(filteredData);
+        }
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
@@ -81,27 +156,28 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> {
             itemView.setOnClickListener(this);
         }
 
-        public final void setData(final FavoriteItem _item, final int _position) {
-            vContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : Color.parseColor("#fff5ea"));
-            cbSelection.setChecked(mSelectedItems.get(_position));
-            tvTitle.setText(_item.name);
-            hvIcon.setBackgroundDrawable(_item.backgroundDrawableRes);
+        public final void setData(final Service _item, final int _position) {
+            vContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : mBackgroundColor);
+            cbSelection.setChecked(mSelectedItems.get(mAllData.indexOf(mShowingData.get(_position))));
+            tvTitle.setText(_item.getTitleRes());
+            hvIcon.setHexagonSrcDrawable(_item.getDrawableRes());
         }
 
         @Override
         public void onClick(View v) {
-            final int position = getAdapterPosition();
+            final int adapterPosition = getAdapterPosition();
+            final int position = mAllData.indexOf(mShowingData.get(adapterPosition));
             final boolean isAlreadySelected = mSelectedItems.get(position);
             mSelectedItems.put(position, !isAlreadySelected);
-            notifyItemChanged(position);
+            notifyItemChanged(adapterPosition);
             if (mItemClickListener != null) {
-                mItemClickListener.onItemClick(mData.get(position), !isAlreadySelected);
+                mItemClickListener.onItemClick(mAllData.get(position), !isAlreadySelected);
             }
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick(FavoriteItem _item, boolean isSelected);
+        void onItemClick(Service _item, boolean isSelected);
     }
 
 }

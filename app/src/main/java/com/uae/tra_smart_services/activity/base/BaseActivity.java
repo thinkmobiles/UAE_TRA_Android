@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.activity.base;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,14 +10,13 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.Constants;
 import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.Locale;
-
-import static com.uae.tra_smart_services.entities.H.getResIdFromString;
 
 /**
  * Created by Vitaliy on 22/07/2015.
@@ -75,10 +75,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
     }
 
     public void setApplicationTheme() {
-        mThemaStringValue = PreferenceManager
-                .getDefaultSharedPreferences(this)
-                .getString(BaseCustomSwitcher.Type.THEME.toString(), "AppThemeOrange");
-        setTheme(getResIdFromString(mThemaStringValue, R.style.class));
+        if (ImageUtils.isBlackAndWhiteMode(this)) {
+            mThemaStringValue = Constants.BLACK_AND_WHITE_THEME;
+        } else {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            mThemaStringValue = prefs.getString(BaseCustomSwitcher.Type.THEME.toString(), Constants.ORANGE_THEME);
+        }
+        setTheme(getResources().getIdentifier(mThemaStringValue, "style", getPackageName()));
     }
 
     public void setApplicationFontSize() {

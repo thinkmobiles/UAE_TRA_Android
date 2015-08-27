@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,10 +12,11 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/ivBackground_FHH"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/res_bg_2"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            tools:src="@drawable/res_bg_2"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,12 +27,12 @@
                 android:id="@+id/hhHeader_FHH"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:buttonColor="@color/hex_primary_orange"
+                app:buttonColor="?attr/hexagonHeaderButtonColor"
                 app:hexColor="#ffffff"
                 app:hexPerRow="8"
                 app:hexagonRowCount="2"
                 app:hexagonStrokeWidth="2dp"
-                app:pressedColor="#ff5b61ff"
+                app:pressedColor="?attr/hexagonHeaderButtonPressedColor"
                 android:paddingBottom="10dp"/>
 
             <android.support.v7.widget.RecyclerView
@@ -39,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layoutDirection="locale"
+                tools:listitem="@layout/recycler_service_item"
                 android:overScrollMode="never"
                 android:paddingStart="7dp"
                 android:paddingEnd="7dp"/>

@@ -2,25 +2,32 @@ package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 
 /**
  * Created by mobimaks on 02.08.2015.
  */
-public class HexagonView extends View {
+public class HexagonView extends View implements Target {
 
     private final int DEFAULT_HEXAGON_RADIUS = (int) (30 * getResources().getDisplayMetrics().density);
     private final int HEXAGON_BORDER_COUNT = 6;
@@ -28,11 +35,9 @@ public class HexagonView extends View {
     private double mHexagonSide, mHexagonInnerRadius;
     private final Path mPath;
     private Paint mPaint, mShadowPaint;
-    private int mBorderColor, mBorderWidth;
-    private Drawable mBackgroundDrawable;
+    private int mBorderColor, mBackgroundColor, mBorderWidth;
+    private Drawable mSrcDrawable;
     private Rect mHexagonRect = new Rect();
-
-    private float[] mLines;
 
     public HexagonView(Context context) {
         this(context, null);
@@ -47,7 +52,9 @@ public class HexagonView extends View {
             setHexagonSide(a.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS));
             mBorderWidth = a.getDimensionPixelSize(R.styleable.HexagonView_hexagonBorderSize, 0);
             mBorderColor = a.getColor(R.styleable.HexagonView_hexagonBorderColor, 0xFFC8C7C6);
-            mBackgroundDrawable = a.getDrawable(R.styleable.HexagonView_hexagonBackground);
+            mBackgroundColor = a.getColor(R.styleable.HexagonView_hexagonBackgroundColor, Color.TRANSPARENT);
+            mSrcDrawable = a.getDrawable(R.styleable.HexagonView_hexagonSrc);
+
         } finally {
             a.recycle();
         }
@@ -65,14 +72,24 @@ public class HexagonView extends View {
         mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
     }
 
+    @Override
+    public void setBackgroundColor(int _backgroundColor) {
+        mBackgroundColor = _backgroundColor;
+        invalidate();
+    }
+
     public final void setHexagonShadow(final float _radius, final int _color) {
         mShadowPaint = new Paint();
         mShadowPaint.setStyle(Paint.Style.FILL);
         mShadowPaint.setShadowLayer(_radius, 0, 0, _color);
     }
 
-    public final void setBackgroundDrawable(@DrawableRes final int _drawableRes) {
-        mBackgroundDrawable = ContextCompat.getDrawable(getContext(), _drawableRes);
+    public final void setHexagonSrcDrawable(@DrawableRes final int _drawableRes) {
+        setHexagonSrcDrawable(ContextCompat.getDrawable(getContext(), _drawableRes));
+    }
+
+    public final void setHexagonSrcDrawable(final Drawable _backgroundDrawable) {
+        mSrcDrawable = _backgroundDrawable;
         invalidate();
     }
 
@@ -108,7 +125,6 @@ public class HexagonView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         double section = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
-        mLines = new float[8];
 
         mPath.reset();
         mPath.moveTo(
@@ -134,27 +150,44 @@ public class HexagonView extends View {
         }
 //        canvas.restore();
         //endregion
-//
-        if (mBackgroundDrawable != null) {
+
+        if (mSrcDrawable != null) {
             canvas.clipPath(mPath);
+            canvas.drawColor(mBackgroundColor);
             canvas.getClipBounds(mHexagonRect);
-            if (mBackgroundDrawable instanceof BitmapDrawable) {
+            if (mSrcDrawable instanceof BitmapDrawable) {
 
                 float centerY = (float) (mHexagonSide + getBorderWidth() / 2f);
                 float centerX = (float) getWidth() / 2;
 
-                final int drawableWidth = mBackgroundDrawable.getMinimumWidth();
-                final int drawableHeight = mBackgroundDrawable.getMinimumHeight();
+                final int drawableWidth = mSrcDrawable.getMinimumWidth();
+                final int drawableHeight = mSrcDrawable.getMinimumHeight();
 
-                mBackgroundDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
+                mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
                         (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
             } else {
-                mBackgroundDrawable.setBounds(mHexagonRect);
+                mSrcDrawable.setBounds(mHexagonRect);
             }
-            mBackgroundDrawable.draw(canvas);
+            mSrcDrawable.draw(canvas);
             canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
         }
 
         canvas.drawPath(mPath, mPaint);
+    }
+
+    @Override
+    public final void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+        final LayerDrawable layerDrawable = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.layerlist_infohub_icon);
+        layerDrawable.setDrawableByLayerId(R.id.lli_infohub_icon_background, new ColorDrawable(Color.MAGENTA));
+        layerDrawable.setDrawableByLayerId(R.id.lli_infohub_icon_front, new BitmapDrawable(getResources(), bitmap));
+        setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getContext(), layerDrawable));
+    }
+
+    @Override
+    public final void onBitmapFailed(Drawable errorDrawable) {
+    }
+
+    @Override
+    public final void onPrepareLoad(Drawable placeHolderDrawable) {
     }
 }

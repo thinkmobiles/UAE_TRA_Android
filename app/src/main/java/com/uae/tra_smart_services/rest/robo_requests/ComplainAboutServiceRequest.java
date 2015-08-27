@@ -6,7 +6,7 @@ import android.net.Uri;
 
 import com.uae.tra_smart_services.rest.TRAServicesAPI;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
-import com.uae.tra_smart_services.util.BitmapUtils;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.io.IOException;
 
@@ -34,7 +34,7 @@ public class ComplainAboutServiceRequest extends BaseRequest<Response, TRAServic
     @Override
     public final Response loadDataFromNetwork() throws Exception {
         try {
-            mComplainServiceModel.attachment = BitmapUtils.imageToBase64(mContentResolver, mImageUri);
+            mComplainServiceModel.attachment = ImageUtils.imageToBase64(mContentResolver, mImageUri);
             return getService().complainServiceProvider(mComplainServiceModel);
         } catch (IOException e) {
             throw new Exception("Can't load image from device");

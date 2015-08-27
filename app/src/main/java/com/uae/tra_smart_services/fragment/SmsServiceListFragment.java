@@ -1,7 +1,11 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,13 +16,16 @@ import com.uae.tra_smart_services.global.SmsService;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class SmsServiceListFragment extends BaseFragment implements TextView.OnClickListener{
+public class SmsServiceListFragment extends BaseFragment implements TextView.OnClickListener {
+
+    private TextView tvReportNum, tvBlockNum;
+
+    private OnSmsServiceSelectListener mServiceSelectListener;
 
     public static SmsServiceListFragment newInstance() {
         return new SmsServiceListFragment();
     }
 
-    private OnSmsServiceSelectListener mServiceSelectListener;
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
@@ -32,35 +39,34 @@ public class SmsServiceListFragment extends BaseFragment implements TextView.OnC
     }
 
     @Override
-    protected int getTitle() {
-        return R.string.str_sms_service_list;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_sms_spam;
-    }
-
-    private TextView tvReportNum_FSS, tvBlockNum_FSS;
-    @Override
     protected void initViews() {
         super.initViews();
-        tvReportNum_FSS = findView(R.id.itmReportNum_FSS);
-        tvReportNum_FSS.setText(SmsService.REPORT.toString());
-        tvBlockNum_FSS = findView(R.id.itmBlockNum_FSS);
-        tvBlockNum_FSS.setText(SmsService.BLOCK.toString());
+        final TypedValue typedValue = new TypedValue();
+        final Resources.Theme theme = getActivity().getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        final int colorPrimary = typedValue.data;
+
+        tvReportNum = findView(R.id.itmReportNum_FSS);
+        Drawable drawableStart = tvReportNum.getCompoundDrawablesRelative()[0];
+        DrawableCompat.setTint(drawableStart, colorPrimary);
+        tvReportNum.setText(SmsService.REPORT.toString());
+
+        tvBlockNum = findView(R.id.itmBlockNum_FSS);
+        drawableStart = tvBlockNum.getCompoundDrawablesRelative()[0];
+        DrawableCompat.setTint(drawableStart, colorPrimary);
+        tvBlockNum.setText(SmsService.BLOCK.toString());
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
-        tvReportNum_FSS.setOnClickListener(this);
-        tvBlockNum_FSS.setOnClickListener(this);
+        tvReportNum.setOnClickListener(this);
+        tvBlockNum.setOnClickListener(this);
     }
 
     @Override
     public final void onClick(View _view) {
-        switch (_view.getId()){
+        switch (_view.getId()) {
             case R.id.itmReportNum_FSS:
                 mServiceSelectListener.onSmsServiceChildSelect(SmsService.REPORT);
                 break;
@@ -70,7 +76,17 @@ public class SmsServiceListFragment extends BaseFragment implements TextView.OnC
         }
     }
 
-    public interface OnSmsServiceSelectListener{
+    @Override
+    protected int getTitle() {
+        return R.string.str_sms_service_list;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_sms_spam;
+    }
+
+    public interface OnSmsServiceSelectListener {
         void onSmsServiceChildSelect(SmsService _service);
     }
 }
