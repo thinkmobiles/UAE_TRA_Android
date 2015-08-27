@@ -33,6 +33,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
     private final LayoutInflater mInflater;
     private final List<Service> mAllData, mShowingData;
     private final int mBackgroundColor;
+    private final Context mContext;
     private OnFavoriteClickListener mFavoriteClickListener;
     private Filter mServiceFilter;
     private boolean mIsOddOpaque;
@@ -42,6 +43,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
     }
 
     public FavoritesAdapter(final Context _context, final @NonNull List<Service> _data) {
+        mContext = _context;
         mInflater = LayoutInflater.from(_context);
         mAllData = _data;
         mShowingData = new ArrayList<>(_data);
@@ -73,7 +75,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
         return mShowingData.isEmpty();
     }
 
-    public final boolean isEmpty(){
+    public final boolean isEmpty() {
         return mAllData.isEmpty();
     }
 
@@ -91,7 +93,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
         notifyItemRemoved(_position);
     }
 
-    private void invalidateFilter(){
+    private void invalidateFilter() {
         mServiceFilter = null;
     }
 
@@ -152,7 +154,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
             List<Service> serviceList = new ArrayList<>();
             for (int i = 0; i < listData.size(); i++) {
                 Service favoriteItem = listData.get(i);
-                if (favoriteItem.toString().toLowerCase().contains(_constraint.toString().toLowerCase())) {
+                if (favoriteItem.getTitle(mContext).toLowerCase().contains(_constraint.toString().toLowerCase())) {
                     serviceList.add(favoriteItem);
                 }
             }
@@ -194,8 +196,8 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
             } else {
                 rlItemContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : mBackgroundColor);
             }
-            tvTitle.setText(_item.toString());
-            hvIcon.setHexagonBackgroundDrawable(_item.getDrawableRes());
+            tvTitle.setText(_item.getTitleRes());
+            hvIcon.setHexagonSrcDrawable(_item.getDrawableRes());
         }
 
         @Override

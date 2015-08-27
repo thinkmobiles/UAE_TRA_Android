@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,7 +60,7 @@ public class InfoHubFragment extends BaseFragment
         DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<InfoHubAnnouncementsListItemModel>() {
             {
                 add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("fail"+ICON_URL)
+                        .setIconUrl(ICON_URL)
                         .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
                         .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
                         .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));

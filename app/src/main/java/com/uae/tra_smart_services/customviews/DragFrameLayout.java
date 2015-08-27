@@ -76,7 +76,9 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
 
         mTrashBtn = new HexagonView(getContext());
         mTrashBtn.setHexagonSide(TRASH_BUTTON_SIZE);
-        mTrashBtn.setHexagonBackgroundDrawable(R.drawable.trash_btn_background);
+//        mTrashBtn.setHexagonSrcDrawable(R.drawable.trash_btn_background);
+        mTrashBtn.setBackgroundColor(mDeleteColor);
+        mTrashBtn.setHexagonSrcDrawable(R.drawable.ic_action_delete);
         mTrashBtn.setHexagonShadow(SHADOW_RADIUS * 2, Color.GRAY);
         mTrashBtn.setVisibility(GONE);
         addView(mTrashBtn);

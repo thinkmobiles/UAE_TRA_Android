@@ -1,6 +1,8 @@
 package com.uae.tra_smart_services.global;
 
+import android.content.Context;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 
 import com.uae.tra_smart_services.R;
 
@@ -14,8 +16,9 @@ import java.util.List;
 public enum Service {
     COMPLAIN_ABOUT_PROVIDER {
         @Override
-        public String toString() {
-            return "Complain About Service Provider";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_complain_about_provider;
         }
 
         @Override
@@ -26,8 +29,9 @@ public enum Service {
     },
     COMPLAINT_ABOUT_TRA {
         @Override
-        public String toString() {
-            return "Complain About TRA";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_complain_about_tra;
         }
 
         @Override
@@ -38,8 +42,9 @@ public enum Service {
     },
     SUGGESTION {
         @Override
-        public String toString() {
-            return "Suggestion";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_suggestion;
         }
 
         @Override
@@ -50,8 +55,9 @@ public enum Service {
     },
     DOMAIN_CHECK {
         @Override
-        public String toString() {
-            return "Domain Check Service";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_domain_check;
         }
 
         @Override
@@ -62,8 +68,9 @@ public enum Service {
     },
     ENQUIRIES {
         @Override
-        public String toString() {
-            return "Enquiries";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_enquiries;
         }
 
         @Override
@@ -74,8 +81,9 @@ public enum Service {
     },
     SMS_SPAM {
         @Override
-        public String toString() {
-            return "SMS Spam Service";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_sms_spam;
         }
 
         @Override
@@ -86,8 +94,9 @@ public enum Service {
     },
     POOR_COVERAGE {
         @Override
-        public String toString() {
-            return "Poor coverage";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_poor_coverage;
         }
 
         @Override
@@ -98,8 +107,9 @@ public enum Service {
     },
     HELP_SALIM {
         @Override
-        public String toString() {
-            return "Help Salim";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_help_salim;
         }
 
         @Override
@@ -110,8 +120,9 @@ public enum Service {
     },
     MOBILE_VERIFICATION {
         @Override
-        public String toString() {
-            return "Mobile verification";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_mobile_verification;
         }
 
         @Override
@@ -122,8 +133,9 @@ public enum Service {
     },
     APPROVED_DEVICES {
         @Override
-        public String toString() {
-            return "Approved Devices";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_approved_devices;
         }
 
         @Override
@@ -135,6 +147,13 @@ public enum Service {
 
     @DrawableRes
     public abstract int getDrawableRes();
+
+    @StringRes
+    public abstract int getTitleRes();
+
+    public final String getTitle(final Context _context) {
+        return _context.getString(getTitleRes());
+    }
 
     private static List<Service> ALL_SERVICES;
 

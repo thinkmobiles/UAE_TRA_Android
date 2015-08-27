@@ -35,6 +35,7 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> implements Filterab
     private final List<Service> mAllData, mShowingData;
     private final SparseBooleanArray mSelectedItems;
     private final int mBackgroundColor;
+    private final Context mContext;
     private SearchFilter mSearchFilter;
 
     private OnItemClickListener mItemClickListener;
@@ -44,6 +45,7 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> implements Filterab
     }
 
     public AddFavoritesAdapter(final Context _context, final @NonNull List<Service> _data) {
+        mContext = _context;
         mInflater = LayoutInflater.from(_context);
         mAllData = _data;
         mShowingData = new ArrayList<>(_data);
@@ -124,7 +126,7 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> implements Filterab
             List<Service> serviceList = new ArrayList<>();
             for (int i = 0; i < listData.size(); i++) {
                 Service favoriteItem = listData.get(i);
-                if (favoriteItem.toString().toLowerCase().contains(_constraint.toString().toLowerCase())) {
+                if (favoriteItem.getTitle(mContext).toLowerCase().contains(_constraint.toString().toLowerCase())) {
                     serviceList.add(favoriteItem);
                 }
             }
@@ -157,8 +159,8 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> implements Filterab
         public final void setData(final Service _item, final int _position) {
             vContainer.setBackgroundColor(_position % 2 == 0 ? Color.TRANSPARENT : mBackgroundColor);
             cbSelection.setChecked(mSelectedItems.get(mAllData.indexOf(mShowingData.get(_position))));
-            tvTitle.setText(_item.toString());
-            hvIcon.setHexagonBackgroundDrawable(_item.getDrawableRes());
+            tvTitle.setText(_item.getTitleRes());
+            hvIcon.setHexagonSrcDrawable(_item.getDrawableRes());
         }
 
         @Override

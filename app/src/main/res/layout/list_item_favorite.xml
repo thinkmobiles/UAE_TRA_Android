@@ -17,7 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        app:hexagonBackground="@drawable/background_speed"
+        app:hexagonSrc="@drawable/background_speed"
+        app:hexagonBackgroundColor="@android:color/white"
         app:hexagonSideSize="40dp"/>
 
     <TextView

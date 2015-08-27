@@ -77,7 +77,7 @@ public class FavoritesFragment extends BaseFragment
         ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         rlEmptyContainer = findView(R.id.rlEmptyContainer_FF);
         hvAddService = findView(R.id.hvPlusBtn);
-        hvAddService.setHexagonBackgroundDrawable(ImageUtils.getFilteredDrawable(getActivity(), R.drawable.ic_plus));
+        hvAddService.setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getActivity(), R.drawable.ic_plus));
         dflContainer = findView(R.id.dflContainer_FF);
         rvFavoritesList = findView(R.id.rvFavoritesList_FF);
         setEmptyPlaceholderVisibility(true);
