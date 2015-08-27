@@ -1,8 +1,14 @@
 package com.uae.tra_smart_services.global;
 
+import android.content.Context;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 
 import com.uae.tra_smart_services.R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by mobimaks on 10.08.2015.
@@ -10,8 +16,9 @@ import com.uae.tra_smart_services.R;
 public enum Service {
     COMPLAIN_ABOUT_PROVIDER {
         @Override
-        public String toString() {
-            return "Complain About Service Provider";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_complain_about_provider;
         }
 
         @Override
@@ -22,8 +29,9 @@ public enum Service {
     },
     COMPLAINT_ABOUT_TRA {
         @Override
-        public String toString() {
-            return "Complain About TRA";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_complain_about_tra;
         }
 
         @Override
@@ -34,8 +42,9 @@ public enum Service {
     },
     SUGGESTION {
         @Override
-        public String toString() {
-            return "Suggestion";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_suggestion;
         }
 
         @Override
@@ -46,8 +55,9 @@ public enum Service {
     },
     DOMAIN_CHECK {
         @Override
-        public String toString() {
-            return "Domain Check Service";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_domain_check;
         }
 
         @Override
@@ -58,8 +68,9 @@ public enum Service {
     },
     ENQUIRIES {
         @Override
-        public String toString() {
-            return "Enquiries";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_enquiries;
         }
 
         @Override
@@ -68,34 +79,37 @@ public enum Service {
             return R.drawable.ic_play;
         }
     },
-//    SMS_SPAM {
-//        @Override
-//        public String toString() {
-//            return "SMS Spam";
-//        }
-//
-//        @Override
-//        @DrawableRes
-//        public final int getDrawableRes() {
-//            return R.drawable.ic_glb;
-//        }
-//    },
-//    POOR_COVERAGE {
-//        @Override
-//        public String toString() {
-//            return "Poor coverage";
-//        }
-//
-//        @Override
-//        @DrawableRes
-//        public final int getDrawableRes() {
-//            return R.drawable.ic_glb;
-//        }
-//    },
+    SMS_SPAM {
+        @Override
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_sms_spam;
+        }
+
+        @Override
+        @DrawableRes
+        public final int getDrawableRes() {
+            return R.drawable.ic_glb;
+        }
+    },
+    POOR_COVERAGE {
+        @Override
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_poor_coverage;
+        }
+
+        @Override
+        @DrawableRes
+        public final int getDrawableRes() {
+            return R.drawable.ic_glb;
+        }
+    },
     HELP_SALIM {
         @Override
-        public String toString() {
-            return "Help Salim";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_help_salim;
         }
 
         @Override
@@ -104,22 +118,24 @@ public enum Service {
             return R.drawable.ic_edit;
         }
     },
-//    MOBILE_VERIFICATION {
-//        @Override
-//        public String toString() {
-//            return "Mobile verification";
-//        }
-//
-//        @Override
-//        @DrawableRes
-//        public final int getDrawableRes() {
-//            return R.drawable.ic_glb;
-//        }
-//    },
+    MOBILE_VERIFICATION {
+        @Override
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_mobile_verification;
+        }
+
+        @Override
+        @DrawableRes
+        public final int getDrawableRes() {
+            return R.drawable.ic_glb;
+        }
+    },
     APPROVED_DEVICES {
         @Override
-        public String toString() {
-            return "Approved Devices";
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_approved_devices;
         }
 
         @Override
@@ -131,4 +147,41 @@ public enum Service {
 
     @DrawableRes
     public abstract int getDrawableRes();
+
+    @StringRes
+    public abstract int getTitleRes();
+
+    public final String getTitle(final Context _context) {
+        return _context.getString(getTitleRes());
+    }
+
+    private static List<Service> ALL_SERVICES;
+
+    public static List<Service> getAllServices() {
+        initAllServicesList();
+        return new ArrayList<>(ALL_SERVICES);
+    }
+
+    private static void initAllServicesList() {
+        if (ALL_SERVICES == null) {
+            ALL_SERVICES = new ArrayList<>(Arrays.asList(Service.values()));
+        }
+    }
+
+    public static int getAllServicesCount() {
+        initAllServicesList();
+        return ALL_SERVICES.size();
+    }
+
+    public static List<Service> getSecondaryServices() {
+        List<Service> services = new ArrayList<>();
+        services.add(COMPLAIN_ABOUT_PROVIDER);
+        services.add(COMPLAINT_ABOUT_TRA);
+        services.add(SUGGESTION);
+        services.add(DOMAIN_CHECK);
+        services.add(ENQUIRIES);
+        services.add(HELP_SALIM);
+        services.add(APPROVED_DEVICES);
+        return services;
+    }
 }

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="16dp"
+    android:paddingBottom="8dp"
     android:paddingEnd="24dp"
     android:paddingStart="16dp"
     android:paddingTop="8dp"
@@ -18,15 +18,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        app:hexagonBackground="@drawable/background_speed"
-        app:hexagonSideSize="40dp"/>
+        app:hexagonBackgroundColor="@android:color/white"
+        app:hexagonSideSize="40dp"
+        app:hexagonSrc="@drawable/background_speed"/>
 
     <CheckBox
         android:id="@+id/cbSelection_LIAF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        tools:checked="true"/>
 
     <TextView
         android:id="@+id/tvTitle_LIAF"

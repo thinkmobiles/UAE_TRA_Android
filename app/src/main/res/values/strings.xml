@@ -163,8 +163,10 @@
     <string name="hexagon_button_spam">Spam</string>
     <string name="hexagon_button_coverage">Coverage</string>
     <string name="hexagon_button_internet">Internet</string>
-
-
+    <string name="fragment_favorites_add_service_done">Done</string>
+    <string name="fragment_favorites_add_service_search">Search</string>
+    <string name="fragment_favorites_menu_add">Add service</string>
+    
     <!--                PoorCoverageFragment            -->
     <string-array name="fragment_poor_coverage_signal_levels">
         <item>Very Weak</item>
@@ -173,5 +175,16 @@
         <item>Strong</item>
         <item>Very Strong</item>
     </string-array>
+    
+    <string name="service_complain_about_provider">Complain About Service Provider</string>
+    <string name="service_complain_about_tra">Complain About TRA</string>
+    <string name="service_suggestion">Suggestion</string>
+    <string name="service_domain_check">Domain Check Service</string>
+    <string name="service_enquiries">Enquiries</string>
+    <string name="service_sms_spam">SMS Spam Service</string>
+    <string name="service_poor_coverage">Poor coverage</string>
+    <string name="service_help_salim">Help Salim</string>
+    <string name="service_mobile_verification">Mobile verification</string>
+    <string name="service_approved_devices">Approved Devices</string>
 
 </resources>

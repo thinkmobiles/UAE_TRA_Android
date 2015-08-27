@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
-import com.uae.tra_smart_services.entities.FavoriteItem;
 import com.uae.tra_smart_services.fragment.AddServiceFragment;
 import com.uae.tra_smart_services.fragment.AddServiceFragment.OnFavoriteServicesSelectedListener;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
@@ -120,6 +119,15 @@ public class HomeActivity extends BaseFragmentActivity
             case APPROVED_DEVICES:
                 replaceFragmentWithBackStack(ApprovedDevicesFragment.newInstance());
                 break;
+            case SMS_SPAM:
+                replaceFragmentWithBackStack(SmsServiceListFragment.newInstance());
+                break;
+            case MOBILE_VERIFICATION:
+                replaceFragmentWithBackStack(MobileVerificationFragment.newInstance());
+                break;
+            case POOR_COVERAGE:
+                replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
+                break;
         }
     }
 
@@ -212,12 +220,17 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onAddFavoritesClick() {
+    public final void onAddFavoritesClick() {
         replaceFragmentWithBackStack(AddServiceFragment.newInstance());
     }
 
     @Override
-    public void onFavoriteServicesSelected(final List<FavoriteItem> _items) {
+    public final void onOpenServiceClick(final Service _service) {
+        onServiceSelect(_service);
+    }
+
+    @Override
+    public final void onFavoriteServicesSelected(final List<Service> _items) {
         getFragmentManager().popBackStackImmediate();
         final FavoritesFragment favoritesFragment = (FavoritesFragment) getFragmentManager().findFragmentById(getContainerId());
         Log.d("Favorites", "Selected items count: " + _items.size());
@@ -225,7 +238,7 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onOpenServiceInfo(int _position, FavoriteItem _item) {
+    public void onOpenServiceInfo(int _position, Service _item) {
         getFragmentManager().beginTransaction()
                 .addToBackStack(null)
                 .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance())

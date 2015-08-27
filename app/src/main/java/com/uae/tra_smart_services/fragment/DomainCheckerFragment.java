@@ -4,8 +4,10 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -13,6 +15,7 @@ import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
@@ -22,6 +25,7 @@ import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckRes
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
 import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -30,6 +34,10 @@ import java.util.ArrayList;
  */
 public class DomainCheckerFragment extends BaseServiceFragment
         implements View.OnClickListener, AlertDialogFragment.OnOkListener {
+
+    private ImageView ivLogo;
+    private Button btnAvail, btnWhoIS;
+    private EditText etDomainAvail;
 
     public static DomainCheckerFragment newInstance() {
         return new DomainCheckerFragment();
@@ -51,12 +59,11 @@ public class DomainCheckerFragment extends BaseServiceFragment
         return R.string.str_domain_check;
     }
 
-    private Button btnAvail, btnWhoIS;
-    private EditText etDomainAvail;
-
     @Override
     protected final void initViews() {
         super.initViews();
+        ivLogo = findView(R.id.ivLogo_FDC);
+        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(ivLogo.getContext(), R.drawable.tra_logo));
         btnAvail = findView(R.id.btnAvail_FDCH);
         btnWhoIS = findView(R.id.btnWhoIs_FDCH);
         etDomainAvail = findView(R.id.etDomainAvail_FDCH);

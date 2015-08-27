@@ -20,7 +20,6 @@ import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.INTERNET_SPEED_TEST;
@@ -198,7 +197,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
     }
 
     private void initServiceList() {
-        mDataSet = new ArrayList<>(Arrays.asList(Service.values()));
+        mDataSet = new ArrayList<>(Service.getSecondaryServices());
     }
 
     @Override

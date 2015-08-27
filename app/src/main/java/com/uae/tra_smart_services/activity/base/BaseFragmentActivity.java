@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.activity.base;
 
 import android.app.FragmentManager;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 
@@ -13,20 +14,20 @@ public abstract class BaseFragmentActivity extends BaseActivity implements BaseF
     @IdRes
     protected abstract int getContainerId();
 
-    protected final void addFragment(final BaseFragment _fragment) {
+    protected final void addFragment(final @NonNull BaseFragment _fragment) {
         getFragmentManager().beginTransaction()
                 .add(getContainerId(), _fragment)
                 .commit();
     }
 
-    public final void replaceFragmentWithBackStack(final BaseFragment _fragment) {
+    public final void replaceFragmentWithBackStack(final @NonNull BaseFragment _fragment) {
         getFragmentManager().beginTransaction()
                 .addToBackStack(null)
                 .replace(getContainerId(), _fragment)
                 .commit();
     }
 
-    public final void replaceFragmentWithOutBackStack(final BaseFragment _fragment) {
+    public final void replaceFragmentWithOutBackStack(final @NonNull BaseFragment _fragment) {
         getFragmentManager().beginTransaction()
                 .replace(getContainerId(), _fragment)
                 .commit();

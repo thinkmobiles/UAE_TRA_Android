@@ -19,19 +19,22 @@ import java.util.List;
 public class ServiceListAdapter extends BaseAdapter<Service> implements Filterable {
 
     private Filter mServiceFilter;
+    private final Context mContext;
     private boolean mIsDataChanged = true;
 
-    public ServiceListAdapter(Context context) {
-        super(context);
+    public ServiceListAdapter(final Context _context) {
+        super(_context);
+        mContext = _context;
     }
 
-    public ServiceListAdapter(Context context, List<Service> data) {
-        super(context, data);
+    public ServiceListAdapter(final Context _context, final List<Service> _data) {
+        super(_context, _data);
+        mContext = _context;
     }
 
     @Override
-    public void addData(List<Service> data) {
-        super.addData(data);
+    public void addData(final List<Service> _data) {
+        super.addData(_data);
         mIsDataChanged = true;
     }
 
@@ -41,7 +44,7 @@ public class ServiceListAdapter extends BaseAdapter<Service> implements Filterab
         mIsDataChanged = true;
     }
 
-    private void setFilteredData(final List<Service> _filteredData){
+    private void setFilteredData(final List<Service> _filteredData) {
         getData().clear();
         getData().addAll(_filteredData);
         notifyDataSetChanged();
@@ -92,7 +95,7 @@ public class ServiceListAdapter extends BaseAdapter<Service> implements Filterab
             List<Service> serviceList = new ArrayList<>();
             for (int i = 0; i < listData.size(); i++) {
                 Service service = listData.get(i);
-                if (service.toString().toLowerCase().contains(_constraint.toString().toLowerCase())) {
+                if (service.getTitle(mContext).toLowerCase().contains(_constraint.toString().toLowerCase())) {
                     serviceList.add(service);
                 }
             }
@@ -121,7 +124,7 @@ public class ServiceListAdapter extends BaseAdapter<Service> implements Filterab
 
         @Override
         protected void setData(int position, Service data) {
-            tvServiceName.setText(data.toString());
+            tvServiceName.setText(data.getTitleRes());
         }
     }
 }
