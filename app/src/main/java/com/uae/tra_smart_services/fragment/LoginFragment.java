@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -105,7 +106,17 @@ public class LoginFragment extends BaseAuthorizationFragment
             return;
         }
 
-        showProgressDialog("Authenticating..", null);
+        showProgressDialog("Authenticating..", new DialogInterface() {
+            @Override
+            public void cancel() {
+
+            }
+
+            @Override
+            public void dismiss() {
+
+            }
+        });
         LoginRequest request = new LoginRequest(model);
         getSpiceManager().execute(request, KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
     }

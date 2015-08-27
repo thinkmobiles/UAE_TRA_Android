@@ -41,7 +41,7 @@ import com.uae.tra_smart_services.fragment.SmsServiceListFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
@@ -142,8 +142,8 @@ public class HomeActivity extends BaseFragmentActivity
             replaceFragmentWithBackStack(mFragmentForReplacing);
         } else {
             Intent intent = new Intent(this, AuthorizationActivity.class);
-            intent.setAction(Constants.ACTION_LOGIN);
-            startActivityForResult(intent, Constants.REQUEST_CODE_LOGIN);
+            intent.setAction(C.ACTION_LOGIN);
+            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
         }
     }
 
@@ -151,8 +151,8 @@ public class HomeActivity extends BaseFragmentActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Constants.REQUEST_CODE_LOGIN) {
-            if (resultCode == Constants.LOGIN_SUCCESS && mFragmentForReplacing != null) {
+        if (requestCode == C.REQUEST_CODE_LOGIN) {
+            if (resultCode == C.LOGIN_SUCCESS && mFragmentForReplacing != null) {
                 replaceFragmentWithBackStack(mFragmentForReplacing);
             }
         }

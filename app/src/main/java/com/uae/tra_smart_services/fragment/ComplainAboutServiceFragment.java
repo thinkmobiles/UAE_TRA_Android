@@ -9,10 +9,10 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;

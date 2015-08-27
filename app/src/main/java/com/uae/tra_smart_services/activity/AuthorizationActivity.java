@@ -12,7 +12,7 @@ import com.uae.tra_smart_services.fragment.LoginFragment;
 import com.uae.tra_smart_services.fragment.RegisterFragment;
 import com.uae.tra_smart_services.fragment.RestorePassFragment;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
-import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 
@@ -69,8 +69,8 @@ public class AuthorizationActivity extends BaseFragmentActivity
     public void onLogInSuccess() {
         TRAApplication.setIsLoggedIn(true);
 
-        if (mAction != null && mAction.equals(Constants.ACTION_LOGIN)) {
-            setResult(Constants.LOGIN_SUCCESS);
+        if (mAction != null && mAction.equals(C.ACTION_LOGIN)) {
+            setResult(C.LOGIN_SUCCESS);
             finish();
         } else {
             startActivity(new Intent(this, HomeActivity.class));
@@ -106,8 +106,8 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
     @Override
     public void onHomeScreenOpenWithoutAuth() {
-        if (mAction != null && mAction.equals(Constants.ACTION_LOGIN)) {
-            setResult(Constants.LOGIN_SKIP);
+        if (mAction != null && mAction.equals(C.ACTION_LOGIN)) {
+            setResult(C.LOGIN_SKIP);
             finish();
         } else {
             startActivity(new Intent(this, HomeActivity.class));

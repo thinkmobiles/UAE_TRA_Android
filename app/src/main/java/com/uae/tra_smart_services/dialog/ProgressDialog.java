@@ -51,7 +51,7 @@ public final class ProgressDialog extends DialogFragment {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        dialogInterface.cancel();
+//        dialogInterface.cancel();
     }
 
     public interface MyDialogInterface extends DialogInterface{}

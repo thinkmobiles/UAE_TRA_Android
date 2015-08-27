@@ -13,10 +13,8 @@ import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
-import com.uae.tra_smart_services.rest.model.request.SmsSpamRequestModel;
+import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SmsReportRequest;
 
