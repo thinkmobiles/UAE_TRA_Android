@@ -15,7 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 
-import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.global.C;
 
 import java.io.ByteArrayOutputStream;
 
@@ -62,7 +62,7 @@ public final class ImageUtils {
     public static boolean isBlackAndWhiteMode(final Context _context) {
         if (IS_BLACK_AND_WHITE_MODE == null) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(_context);
-            IS_BLACK_AND_WHITE_MODE = prefs.getBoolean(Constants.KEY_BLACK_AND_WHITE_MODE, false);
+            IS_BLACK_AND_WHITE_MODE = prefs.getBoolean(C.KEY_BLACK_AND_WHITE_MODE, false);
         }
         return IS_BLACK_AND_WHITE_MODE;
     }

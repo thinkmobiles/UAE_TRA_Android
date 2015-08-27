@@ -19,6 +19,7 @@ import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickList
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.ServiceProvider;
 import com.uae.tra_smart_services.rest.model.request.SmsSpamRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
@@ -27,7 +28,7 @@ import com.uae.tra_smart_services.rest.robo_requests.SmsSpamRequest;
 /**
  * Created by mobimaks on 13.08.2015.
  */
-public final class SmsBlockNumberFragment extends BaseFragment
+public final class SmsBlockNumberFragment extends BaseServiceFragment
     implements OnClickListener, OnItemPickListener, AlertDialogFragment.OnOkListener {
 
     private EditText etOperatorNumber, etReferenceNumber, etDescription;
@@ -93,7 +94,7 @@ public final class SmsBlockNumberFragment extends BaseFragment
 
     private final void collectAndSendToServer(){
         if(filters.check(etOperatorNumber.getText().toString())){
-            progressDialogManager.showProgressDialog(getString(R.string.str_checking));
+            showProgressDialog(getString(R.string.str_checking), null);
             getSpiceManager().execute(
                     new SmsSpamRequest(
                             new SmsSpamRequestModel(
@@ -144,17 +145,27 @@ public final class SmsBlockNumberFragment extends BaseFragment
         // Unimplemented method
     }
 
+    @Override
+    public void cancel() {
+
+    }
+
+    @Override
+    public void dismiss() {
+
+    }
+
     private final class SmsSpamBlockResponseListener implements RequestListener<SmsSpamResponseModel> {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
         }
     }

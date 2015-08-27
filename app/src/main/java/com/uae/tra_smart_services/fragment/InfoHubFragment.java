@@ -4,15 +4,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.InfoHubAnnPreviewListAdapter;
 import com.uae.tra_smart_services.adapter.InfoHubTransactionsListAdapter;
-import com.uae.tra_smart_services.entities.C;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
 import com.uae.tra_smart_services.rest.model.response.InfoHubTransActionsListItemModel;

@@ -106,7 +106,7 @@ public class LoginFragment extends BaseAuthorizationFragment
             return;
         }
 
-        progressDialogManager.showProgressDialog("Authenticating..");
+        showProgressDialog("Authenticating..", null);
         LoginRequest request = new LoginRequest(model);
         getSpiceManager().execute(request, KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
     }
@@ -123,7 +123,7 @@ public class LoginFragment extends BaseAuthorizationFragment
              */
             @Override
             public void run() {
-                progressDialogManager.hideProgressDialog();
+                hideProgressDialog();
                 actionsListener.onLogInSuccess();
             }
         }, 2000);
@@ -140,7 +140,7 @@ public class LoginFragment extends BaseAuthorizationFragment
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                progressDialogManager.hideProgressDialog();
+                hideProgressDialog();
                 if (result != null && actionsListener != null) {
                     actionsListener.onLogInSuccess();
                 }
@@ -152,7 +152,7 @@ public class LoginFragment extends BaseAuthorizationFragment
         public void onRequestFailure(SpiceException spiceException) {
             Log.d(getClass().getSimpleName(), "Failure. isAdded: " + isAdded());
             if (isAdded()) {
-                progressDialogManager.hideProgressDialog();
+                hideProgressDialog();
                 String errorMessage;
                 Throwable cause = spiceException.getCause();
                 if (cause != null && cause instanceof RetrofitError) {

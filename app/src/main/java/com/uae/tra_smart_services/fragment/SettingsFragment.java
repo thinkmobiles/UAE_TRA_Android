@@ -24,7 +24,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
-import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.interfaces.SettingsChanged;
 import com.uae.tra_smart_services.util.ImageUtils;
@@ -64,7 +64,7 @@ public class SettingsFragment extends BaseHomePageFragment
         etServer = findView(R.id.etServer_FS);
         btnChangeServer = findView(R.id.btnChangeServer_FS);
         swBlackAndWhiteMode = findView(R.id.swBlackAndWhiteMode_FS);
-        swBlackAndWhiteMode.setChecked(mPrefs.getBoolean(Constants.KEY_BLACK_AND_WHITE_MODE, false));
+        swBlackAndWhiteMode.setChecked(mPrefs.getBoolean(C.KEY_BLACK_AND_WHITE_MODE, false));
     }
 
     @Override
@@ -140,7 +140,7 @@ public class SettingsFragment extends BaseHomePageFragment
     private void updateTheme(String _themeStrValue) {
         mPrefs.edit()
                 .putString(BaseCustomSwitcher.Type.THEME.toString(), _themeStrValue)
-                .putBoolean(Constants.KEY_BLACK_AND_WHITE_MODE, false)
+                .putBoolean(C.KEY_BLACK_AND_WHITE_MODE, false)
                 .commit();
         ImageUtils.setBlackAndWhiteMode(false);
     }
@@ -155,7 +155,7 @@ public class SettingsFragment extends BaseHomePageFragment
     @Override
     public final void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         mPrefs.edit()
-                .putBoolean(Constants.KEY_BLACK_AND_WHITE_MODE, isChecked)
+                .putBoolean(C.KEY_BLACK_AND_WHITE_MODE, isChecked)
                 .commit();
         ImageUtils.setBlackAndWhiteMode(isChecked);
         restartActivity();
@@ -173,7 +173,7 @@ public class SettingsFragment extends BaseHomePageFragment
 
     private void setBaseUrl(String _url) {
         ServerConstants.BASE_URL = _url;
-        mPrefs.edit().putString(Constants.KEY_BASE_URL, _url).commit();
+        mPrefs.edit().putString(C.KEY_BASE_URL, _url).commit();
         Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
     }
 

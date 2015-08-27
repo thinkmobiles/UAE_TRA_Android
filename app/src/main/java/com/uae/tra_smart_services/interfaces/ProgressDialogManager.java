@@ -7,7 +7,7 @@ public interface ProgressDialogManager {
 
     void showProgressDialog();
 
-    void showProgressDialog(final String _text);
+    void showProgressDialog(final String _text, boolean isCancelabel);
 
     void hideProgressDialog();
 }

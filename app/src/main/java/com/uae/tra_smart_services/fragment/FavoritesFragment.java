@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.octo.android.robospice.request.SpiceRequest;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.FavoritesAdapter;
 import com.uae.tra_smart_services.adapter.FavoritesAdapter.OnFavoriteClickListener;

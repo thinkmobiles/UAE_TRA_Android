@@ -3,9 +3,10 @@ package com.uae.tra_smart_services.fragment;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.octo.android.robospice.request.SpiceRequest;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.entities.C;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.C;
 
 /**
  * Created by ak-buffalo on 14.08.15.
@@ -22,6 +23,7 @@ public class DomainInfoFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     protected void initViews() {
         super.initViews();

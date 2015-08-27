@@ -242,6 +242,5 @@ public class HomeActivity extends BaseFragmentActivity
                 actionBar.hide();
             }
         }
-
     }
 }

@@ -16,7 +16,7 @@ import com.uae.tra_smart_services.entities.CirclePoint;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.uae.tra_smart_services.entities.H.parseXmlToMap;
+import static com.uae.tra_smart_services.global.H.parseXmlToMap;
 
 /**
  * Created by Andrey Korneychuk on 27.07.15.

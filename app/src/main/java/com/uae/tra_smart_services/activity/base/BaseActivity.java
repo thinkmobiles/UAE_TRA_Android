@@ -12,8 +12,7 @@ import android.view.View;
 
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.global.Constants;
-import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.Locale;
@@ -21,7 +20,7 @@ import java.util.Locale;
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseActivity extends AppCompatActivity implements ProgressDialogManager, BaseFragment.ThemaDefiner {
+public abstract class BaseActivity extends AppCompatActivity implements BaseFragment.ThemaDefiner {
 
     private ProgressDialog mProgressDialog;
     private String mThemaStringValue;
@@ -41,29 +40,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public final void showProgressDialog() {
-        showProgressDialog("");
-    }
-
-    @Override
-    public final void showProgressDialog(final String _text) {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setCancelable(false);
-        } else if (mProgressDialog.isShowing())
-            return;
-        mProgressDialog.setMessage(_text == null ? "" : _text);
-        mProgressDialog.show();
-    }
-
-    @Override
-    public final void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
-    }
-
     public final <T extends View> T findView(@IdRes int id) {
         return (T) findViewById(id);
     }
@@ -75,10 +51,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
 
     public void setApplicationTheme() {
         if (ImageUtils.isBlackAndWhiteMode(this)) {
-            mThemaStringValue = Constants.BLACK_AND_WHITE_THEME;
+            mThemaStringValue = C.BLACK_AND_WHITE_THEME;
         } else {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            mThemaStringValue = prefs.getString(BaseCustomSwitcher.Type.THEME.toString(), Constants.ORANGE_THEME);
+            mThemaStringValue = prefs.getString(BaseCustomSwitcher.Type.THEME.toString(), C.ORANGE_THEME);
         }
         setTheme(getResources().getIdentifier(mThemaStringValue, "style", getPackageName()));
     }

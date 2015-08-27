@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -8,22 +9,26 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
 import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
 
+import java.util.ArrayList;
+
 /**
  * Created by ak-buffalo on 10.08.15.
  */
-public class DomainCheckerFragment extends BaseFragment
+public class DomainCheckerFragment extends BaseServiceFragment
         implements View.OnClickListener, AlertDialogFragment.OnOkListener {
 
     public static DomainCheckerFragment newInstance() {
@@ -91,7 +96,7 @@ public class DomainCheckerFragment extends BaseFragment
     public final void onClick(View _view) {
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
-            progressDialogManager.showProgressDialog(getString(R.string.str_checking));
+            showProgressDialog(getString(R.string.str_checking), this);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
                     checkAvailability(domain);
@@ -104,19 +109,22 @@ public class DomainCheckerFragment extends BaseFragment
             showMessage(R.string.str_error, R.string.str_invalid_url);
         }
     }
-
+    private DomainAvailabilityCheckRequest mDomainAvailabilityCheckRequest;
     private final void checkAvailability(String _domain) {
+        mDomainAvailabilityCheckRequest = new DomainAvailabilityCheckRequest(_domain);
         getSpiceManager()
                 .execute(
-                        new DomainAvailabilityCheckRequest(_domain),
+                        mDomainAvailabilityCheckRequest,
                         new DomainAvailabilityCheckRequestListener(_domain)
                 );
     }
 
+    private DomainInfoCheckRequest mDomainInfoCheckRequest;
     private final void checkWhoIs(String _domain) {
+        mDomainInfoCheckRequest = new DomainInfoCheckRequest(_domain);
         getSpiceManager()
                 .execute(
-                        new DomainInfoCheckRequest(_domain),
+                        mDomainInfoCheckRequest,
                         new DomainInfoCheckRequestListener(_domain)
                 );
     }
@@ -124,6 +132,23 @@ public class DomainCheckerFragment extends BaseFragment
     @Override
     public void onOkPressed() {
         // Unimplemented method
+    }
+
+    @Override
+    public void cancel() {
+        if(getSpiceManager().isStarted()){
+            if(mDomainAvailabilityCheckRequest != null){
+                getSpiceManager().cancel(mDomainAvailabilityCheckRequest);
+            }
+            if(mDomainInfoCheckRequest != null){
+                getSpiceManager().cancel(mDomainInfoCheckRequest);
+            }
+        }
+    }
+
+    @Override
+    public void dismiss() {
+
     }
 
     private abstract class DomainCheckRequestListener<T> implements RequestListener<T> {
@@ -134,7 +159,7 @@ public class DomainCheckerFragment extends BaseFragment
         }
 
         public void onRequestFailure(SpiceException spiceException) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
@@ -148,7 +173,7 @@ public class DomainCheckerFragment extends BaseFragment
 
         @Override
         public void onRequestSuccess(DomainAvailabilityCheckResponseModel _str) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             if (_str.availableStatus.equals(ServerConstants.AVAILABLE)) {
                 getFragmentManager()
                         .beginTransaction()
@@ -170,7 +195,7 @@ public class DomainCheckerFragment extends BaseFragment
 
         @Override
         public void onRequestSuccess(DomainInfoCheckResponseModel domainInfoCheckResponse) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             if (!domainInfoCheckResponse.urlData.equals("No Data Found\r\n")) {
                 getFragmentManager()
                         .beginTransaction()

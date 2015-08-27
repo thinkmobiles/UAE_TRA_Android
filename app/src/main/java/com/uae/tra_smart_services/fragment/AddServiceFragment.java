@@ -73,7 +73,7 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     protected void initViews() {
         super.initViews();
         ivBackground = findView(R.id.ivBackground_FAS);
-        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getContext()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
+        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         rvFavoritesList = findView(R.id.rvFavoritesList_FAS);
     }
 

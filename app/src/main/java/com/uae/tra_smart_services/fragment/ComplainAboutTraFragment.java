@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
@@ -75,12 +76,13 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
         mImageUri = _uri;
     }
 
+    ComplainAboutTRAServiceRequest request;
     @Override
     protected void sendComplain() {
         ComplainTRAServiceModel traServiceModel = new ComplainTRAServiceModel();
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
-        ComplainAboutTRAServiceRequest request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
+        request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
         showProgressDialog();
         getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
     }
@@ -141,5 +143,13 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_complain_about_tra;
+    }
+
+    @Override
+    public void cancel() {
+    }
+
+    @Override
+    public void dismiss() {
     }
 }

@@ -87,7 +87,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     }
 
     private void doRegistration() {
-        progressDialogManager.showProgressDialog("Registration..");
+        showProgressDialog("Registration..", null);
         RegisterModel registerModel = new RegisterModel();
         registerModel.login = etUserName.getText().toString();
         registerModel.pass = etPassword.getText().toString();
@@ -110,7 +110,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
              */
             @Override
             public void run() {
-                progressDialogManager.hideProgressDialog();
+                hideProgressDialog();
                 actionsListener.onOpenLoginScreen();
             }
         }, 2000);
@@ -127,7 +127,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                progressDialogManager.hideProgressDialog();
+                hideProgressDialog();
                 if (result != null && actionsListener != null) {
                     actionsListener.onRegisterSuccess();
                 }
@@ -139,7 +139,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         public void onRequestFailure(SpiceException spiceException) {
             Log.d(getClass().getSimpleName(), "Failure. isAdded: " + isAdded());
             if (isAdded()) {
-                progressDialogManager.hideProgressDialog();
+                hideProgressDialog();
                 String errorMessage;
                 Throwable cause = spiceException.getCause();
                 if (cause != null && cause instanceof RetrofitError) {
