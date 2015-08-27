@@ -2,25 +2,32 @@ package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.uae.tra_smart_services.R;
 
 
 /**
  * Created by mobimaks on 02.08.2015.
  */
-public class HexagonView extends View {
+public class HexagonView extends View  implements Target{
 
     private final int DEFAULT_HEXAGON_RADIUS = (int) (30 * getResources().getDisplayMetrics().density);
     private final int HEXAGON_BORDER_COUNT = 6;
@@ -155,5 +162,22 @@ public class HexagonView extends View {
             canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
         }
         canvas.drawPath(mPath, mPaint);
+    }
+
+    @Override
+    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+        LayerDrawable layerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.layerlist_infohub_icon);
+        layerDrawable.setDrawableByLayerId(R.id.lli_infohub_icon_background, new ColorDrawable(Color.MAGENTA));
+        layerDrawable.setDrawableByLayerId(R.id.lli_infohub_icon_front, new BitmapDrawable(getResources(), bitmap));
+        mBackgroundDrawable = layerDrawable;
+        invalidate();
+    }
+
+    @Override
+    public void onBitmapFailed(Drawable errorDrawable) {
+    }
+
+    @Override
+    public void onPrepareLoad(Drawable placeHolderDrawable) {
     }
 }

@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.LayerDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
@@ -62,7 +64,8 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
         }
 
         public void setData(InfoHubTransActionsListItemModel _model){
-//            Picasso.with(InfoHubAnnFullListAdapter.this.mContext).load(_model.getIconUrl()).into(hexagonView);
+            hexagonView.setHexagonBackgroundDrawable(R.drawable.layerlist_infohub_icon);
+            Picasso.with(mContext).load(_model.getIconUrl()).into(hexagonView);
             title.setText(_model.getTitle());
             description.setText(_model.getDescription());
             date.setText(_model.getDate());

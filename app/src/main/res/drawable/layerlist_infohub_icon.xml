@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/lli_infohub_icon_background"
+        android:drawable="@android:color/holo_red_dark"/>
+
+    <item
+        android:id="@+id/lli_infohub_icon_front"
+        >
+        <bitmap
+            android:antialias="true"
+            android:src="@drawable/ic_action_delete"
+            android:gravity="center"/>
+    </item>
+
+</layer-list>
