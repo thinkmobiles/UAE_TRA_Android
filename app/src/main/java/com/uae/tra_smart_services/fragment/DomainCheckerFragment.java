@@ -1,24 +1,18 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
-import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
@@ -26,8 +20,6 @@ import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseMod
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
 import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
-
-import java.util.ArrayList;
 
 /**
  * Created by ak-buffalo on 10.08.15.
@@ -139,6 +131,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     @Override
     public void onOkPressed() {
         // Unimplemented method
+        // Used exceptionally to specify OK button in dialog
     }
 
     @Override

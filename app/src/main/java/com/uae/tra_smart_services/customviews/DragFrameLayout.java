@@ -59,7 +59,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
     private ColorStateList mDefaultTextColor;
     private PointF mDragPoint;
     private float mDeleteArcTop, mTrashBtnTop;
-    private boolean mNeedRedraw, mIsAnimated, mIsDragging;
+    private boolean mNeedRedraw, mIsAnimated, mIsDragging, mIsAnimationStarted;
     private OnItemDeleteListener mItemDeleteListener;
     private int mShadowBackgroundColor, mDeleteColor;
 
@@ -76,7 +76,6 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
 
         mTrashBtn = new HexagonView(getContext());
         mTrashBtn.setHexagonSide(TRASH_BUTTON_SIZE);
-//        mTrashBtn.setHexagonSrcDrawable(R.drawable.trash_btn_background);
         mTrashBtn.setBackgroundColor(mDeleteColor);
         mTrashBtn.setHexagonSrcDrawable(R.drawable.ic_action_delete);
         mTrashBtn.setHexagonShadow(SHADOW_RADIUS * 2, Color.GRAY);
@@ -181,8 +180,8 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
                 mDefaultTextColor = textView.getTextColors();
                 textView.setTextColor(mDeleteColor);
                 if (ImageUtils.isBlackAndWhiteMode(getContext())) {
-                    Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_trash_red);
-                    DrawableCompat.setTint(drawable, mDeleteColor);
+                    Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(getContext(), R.drawable.ic_trash_red));
+                    DrawableCompat.setTint(drawable.mutate(), mDeleteColor);
                     textView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
                 } else {
                     textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_trash_red, 0, 0, 0);
@@ -210,6 +209,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
         switch (event.getAction()) {
             case DragEvent.ACTION_DRAG_ENTERED:
                 mIsDragging = true;
+                mIsAnimationStarted = true;
                 mDragPoint.x = event.getX();
                 mDragPoint.y = event.getY();
                 invalidateShadowOffset();
@@ -239,8 +239,11 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
                     textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_trash_gray, 0, 0, 0);
                 }
                 mIsDragging = false;
-                mAreaAnimator.reverse();
-                mTrashBtnAnimator.reverse();
+                if (mIsAnimationStarted) {
+                    mIsAnimationStarted = false;
+                    mAreaAnimator.reverse();
+                    mTrashBtnAnimator.reverse();
+                }
                 break;
         }
 

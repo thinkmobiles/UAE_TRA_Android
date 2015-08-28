@@ -1,11 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.app.Activity;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -41,19 +37,10 @@ public class SmsServiceListFragment extends BaseFragment implements TextView.OnC
     @Override
     protected void initViews() {
         super.initViews();
-        final TypedValue typedValue = new TypedValue();
-        final Resources.Theme theme = getActivity().getTheme();
-        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        final int colorPrimary = typedValue.data;
-
         tvReportNum = findView(R.id.itmReportNum_FSS);
-        Drawable drawableStart = tvReportNum.getCompoundDrawablesRelative()[0];
-        DrawableCompat.setTint(drawableStart, colorPrimary);
         tvReportNum.setText(SmsService.REPORT.toString());
 
         tvBlockNum = findView(R.id.itmBlockNum_FSS);
-        drawableStart = tvBlockNum.getCompoundDrawablesRelative()[0];
-        DrawableCompat.setTint(drawableStart, colorPrimary);
         tvBlockNum.setText(SmsService.BLOCK.toString());
     }
 

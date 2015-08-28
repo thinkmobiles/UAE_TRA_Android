@@ -39,4 +39,6 @@
 
     <attr name="serviceInfoBackground" format="reference|color"/>
 
+    <attr name="backgroundServiceItemThemedIcon" format="reference"/>
+
 </resources>

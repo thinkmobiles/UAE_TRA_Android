@@ -201,14 +201,6 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void handleError(RetrofitError _error) {
-    }
-
-    @Override
-    public void handleError(RetrofitError _error, OnReloadData _listener) {
-    }
-
-    @Override
     public void onSmsServiceChildSelect(SmsService _service) {
         switch (_service) {
             case REPORT:

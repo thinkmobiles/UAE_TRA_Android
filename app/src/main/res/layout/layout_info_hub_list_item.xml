@@ -12,7 +12,7 @@
         android:layout_margin="5dp"
         android:layout_gravity="start"
         app:hexagonSideSize="45dp"
-        app:hexagonSrc="@android:color/holo_green_dark"
+        app:hexagonSrc="@android:color/white"
         app:hexagonBorderSize="2dp"
         app:hexagonBorderColor="#000000"/>
 

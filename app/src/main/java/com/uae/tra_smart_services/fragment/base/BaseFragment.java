@@ -3,7 +3,6 @@ package com.uae.tra_smart_services.fragment.base;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
@@ -20,35 +19,27 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
-import com.octo.android.robospice.request.SpiceRequest;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.octo.android.robospice.exception.NoNetworkException;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
-import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
-import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
-import com.uae.tra_smart_services.interfaces.RetrofitFailureHandler;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;
 import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
-
-import java.util.ArrayList;
 
 import retrofit.RetrofitError;
 
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragment extends Fragment
-        implements RetrofitFailureHandler, OnReloadData{
+public abstract class BaseFragment extends Fragment implements OnReloadData{
 
     private View rootView;
     private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
     private InputMethodManager mInputMethodManager;
 
-    protected ErrorHandler errorHandler;
     protected ToolbarTitleManager toolbarTitleManager;
     protected ThemaDefiner mThemaDefiner;
 
@@ -57,7 +48,6 @@ public abstract class BaseFragment extends Fragment
         super.onAttach(_activity);
         try {
             toolbarTitleManager = (ToolbarTitleManager) _activity;
-            errorHandler = (ErrorHandler) _activity;
             mThemaDefiner = (ThemaDefiner) _activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(_activity.toString()
@@ -86,15 +76,6 @@ public abstract class BaseFragment extends Fragment
 
     @StringRes
     protected abstract int getTitle();
-
-    @Override
-    public void failure(final RetrofitError _error) {
-        errorHandler.handleError(_error, this);
-    }
-
-    public void failure(final RetrofitError _error, final OnReloadData _listener) {
-        errorHandler.handleError(_error, _listener);
-    }
 
     protected void initViews() {
     }
@@ -213,13 +194,6 @@ public abstract class BaseFragment extends Fragment
 
     protected final <T extends View> T findView(@IdRes int _id) {
         return (T) rootView.findViewById(_id);
-    }
-
-    public interface ErrorHandler {
-
-        void handleError(final RetrofitError _error);
-
-        void handleError(final RetrofitError _error, final OnReloadData _listener);
     }
 
     public interface ThemaDefiner {

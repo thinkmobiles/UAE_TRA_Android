@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
@@ -13,13 +14,11 @@ import com.uae.tra_smart_services.fragment.RegisterFragment;
 import com.uae.tra_smart_services.fragment.RestorePassFragment;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.global.C;
-import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
-
-import retrofit.RetrofitError;
 
 /**
  * Created by Andrey Korneychuk on 22.07.15.
@@ -28,6 +27,7 @@ public class AuthorizationActivity extends BaseFragmentActivity
             implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
 
     private String mAction;
+    private ImageView ivLogo;
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -38,6 +38,10 @@ public class AuthorizationActivity extends BaseFragmentActivity
     public final void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_authorization);
+
+        ivLogo = findView(R.id.ivLogo_FSL);
+        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(this, R.drawable.tra_logo));
+
         CookieHandler.setDefault(new CookieManager());
         mAction = getIntent().getAction();
 
@@ -119,12 +123,6 @@ public class AuthorizationActivity extends BaseFragmentActivity
     protected int getContainerId() {
         return R.id.flContainer_AA;
     }
-
-    @Override
-    public void handleError(RetrofitError _error) {}
-
-    @Override
-    public void handleError(RetrofitError _error, OnReloadData _listener) {}
 
     @Override
     public void setToolbarVisibility(boolean _isVisible) {

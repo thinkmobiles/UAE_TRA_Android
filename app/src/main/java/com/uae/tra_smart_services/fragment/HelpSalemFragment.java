@@ -84,8 +84,7 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
     private final void collectAndSendToServer(){
         hideKeyboard(getView());
         if(filters.check(eturl.getText().toString())){
-            showProgressDialog(getString(R.string.str_checking), null);
-
+            showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     mHelpSalimRequest = new HelpSalimRequest(
                             new HelpSalimModel(

@@ -22,7 +22,6 @@ import java.util.Locale;
  */
 public abstract class BaseActivity extends AppCompatActivity implements BaseFragment.ThemaDefiner {
 
-    private ProgressDialog mProgressDialog;
     private String mThemaStringValue;
     private Float mFontSize;
     private String mLanguage;

@@ -123,7 +123,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         registerModel.emiratesId = etEmiratesId.getText().toString();
 
         if (mFilterPool.check(registerModel)) {
-            showProgressDialog("Registration..", null);
+            showProgressDialog(getString(R.string.str_registering), this);
             getSpiceManager().execute(mRegisterRequest = new RegisterRequest(registerModel),
                     KEY_REGISTER_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
         }
