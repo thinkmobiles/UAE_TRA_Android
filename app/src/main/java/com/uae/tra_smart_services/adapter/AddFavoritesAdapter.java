@@ -51,7 +51,7 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> implements Filterab
         mShowingData = new ArrayList<>(_data);
         mSelectedItems = new SparseBooleanArray();
 
-        TypedValue typedValue = new TypedValue();
+        TypedValue typedValue = new TypedValue();//TODO: fix
         Resources.Theme theme = _context.getTheme();
         theme.resolveAttribute(R.attr.shadowBackgroundColor, typedValue, true);
         mBackgroundColor = typedValue.data;
