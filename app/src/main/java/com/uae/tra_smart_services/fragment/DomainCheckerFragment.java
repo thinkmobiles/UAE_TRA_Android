@@ -142,7 +142,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     }
 
     @Override
-    public void cancel() {
+    public void onDialogCancel() {
         if(getSpiceManager().isStarted()){
             if(mDomainAvailabilityCheckRequest != null){
                 getSpiceManager().cancel(mDomainAvailabilityCheckRequest);
@@ -151,11 +151,6 @@ public class DomainCheckerFragment extends BaseServiceFragment
                 getSpiceManager().cancel(mDomainInfoCheckRequest);
             }
         }
-    }
-
-    @Override
-    public void dismiss() {
-
     }
 
     private abstract class DomainCheckRequestListener<T> implements RequestListener<T> {

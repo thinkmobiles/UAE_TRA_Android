@@ -14,17 +14,17 @@ import com.uae.tra_smart_services.global.C;
  */
 public final class ProgressDialog extends DialogFragment {
 
-    static DialogInterface dialogInterface;
+    static MyDialogInterface dialogInterface;
 
     public static String TAG = ProgressDialog.class.getSimpleName();
-    public static ProgressDialog newInstance(final String _title, DialogInterface _onCancel) {
+    public static ProgressDialog newInstance(final String _title, MyDialogInterface _onCancel) {
         ProgressDialog dialog = new ProgressDialog();
         Bundle bundle = new Bundle();
         bundle.putString(C.TITLE, _title);
         boolean isCancelabel = _onCancel != null ? true : false;
         bundle.putBoolean(C.IS_CANCELABLE, isCancelabel);
         dialog.setArguments(bundle);
-        dialogInterface = (DialogInterface) _onCancel;
+        dialogInterface = (MyDialogInterface) _onCancel;
         return dialog;
     }
 
@@ -46,13 +46,15 @@ public final class ProgressDialog extends DialogFragment {
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        dialogInterface.cancel();
+        if(dialogInterface != null){
+            dialogInterface.cancel();
+        }
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
-//        dialogInterface.cancel();
-    }
+    public void onDismiss(DialogInterface dialog) {/*not implemented*/}
 
-    public interface MyDialogInterface extends DialogInterface{}
+    public interface MyDialogInterface{
+        void onDialogCancel();
+    }
 }

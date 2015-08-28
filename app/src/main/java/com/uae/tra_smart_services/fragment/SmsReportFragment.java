@@ -87,6 +87,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
         return super.onOptionsItemSelected(item);
     }
 
+    private SmsReportRequest mSmsReportRequest;
     private final void collectAndSendToServer(){
         hideKeyboard(getView());
         if(filters.check(etNumberOfSpammer.getText().toString()) &&
@@ -94,7 +95,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
 
             showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
-                    new SmsReportRequest(
+                    mSmsReportRequest = new SmsReportRequest(
                             new SmsReportRequestModel(
                                     etNumberOfSpammer.getText().toString(),
                                     etDescription.getText().toString()
@@ -114,13 +115,10 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
     }
 
     @Override
-    public void cancel() {
-
-    }
-
-    @Override
-    public void dismiss() {
-
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mSmsReportRequest != null){
+            getSpiceManager().cancel(mSmsReportRequest);
+        }
     }
 
     private final class SmsSpamReportResponseListener implements RequestListener<SmsSpamResponseModel> {

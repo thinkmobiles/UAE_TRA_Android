@@ -91,12 +91,13 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
         return super.onOptionsItemSelected(item);
     }
 
+    private SmsBlockRequest mSmsBlockRequest;
     private final void collectAndSendToServer(){
         hideKeyboard(getView());
         if(filters.check(etOperatorNumber.getText().toString())){
             showProgressDialog(getString(R.string.str_checking), null);
             getSpiceManager().execute(
-                    new SmsBlockRequest(
+                    mSmsBlockRequest = new SmsBlockRequest(
                             new SmsBlockRequestModel(
                                     etOperatorNumber.getText().toString(),
                                     etReferenceNumber.getText().toString(),
@@ -146,13 +147,10 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     }
 
     @Override
-    public void cancel() {
-
-    }
-
-    @Override
-    public void dismiss() {
-
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mSmsBlockRequest != null){
+            getSpiceManager().cancel(mSmsBlockRequest);
+        }
     }
 
     private final class SmsSpamBlockResponseListener implements RequestListener<SmsSpamResponseModel> {

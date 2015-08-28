@@ -96,6 +96,13 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
         getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
     }
 
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted()){
+            getSpiceManager().cancel(request);
+        }
+    }
+
     private class RequestResponseListener implements PendingRequestListener<Response> {
 
         @Override
@@ -148,13 +155,5 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_complain_about_tra;
-    }
-
-    @Override
-    public void cancel() {
-    }
-
-    @Override
-    public void dismiss() {
     }
 }

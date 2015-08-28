@@ -179,13 +179,12 @@ public class PoorCoverageFragment extends BaseServiceFragment
                 break;
         }
     }
-
     private void showLocationSettings() {
         sbProgressBar.setVisibility(View.VISIBLE);
         etLocation.setOnClickListener(null);
-        final LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setNumUpdates(1);
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, new LocationListener() {
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setNumUpdates(1);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, new LocationListener() {
             @Override
             public void onLocationChanged(Location _location) {
                 sbProgressBar.setVisibility(View.INVISIBLE);
@@ -198,11 +197,11 @@ public class PoorCoverageFragment extends BaseServiceFragment
             }
         });
     }
-
+    private GeoLocationRequest  mGeoLocationRequest;
     private void defineUserFriendlyAddress(Location _location) {
         final Geocoder geocoder = new Geocoder(getActivity().getBaseContext(), Locale.getDefault());
         getSpiceManager().execute(
-                new GeoLocationRequest(geocoder, _location),
+                mGeoLocationRequest = new GeoLocationRequest(geocoder, _location),
                 new GeoLocationRequestListener()
         );
     }
@@ -251,13 +250,10 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     @Override
-    public void cancel() {
-
-    }
-
-    @Override
-    public void dismiss() {
-
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mGeoLocationRequest != null){
+            getSpiceManager().cancel(mGeoLocationRequest);
+        }
     }
 
     private class PoorCoverageRequestListener implements RequestListener<Response> {

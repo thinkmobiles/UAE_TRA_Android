@@ -164,6 +164,13 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         tvServiceProvider.setText(ServiceProvider.values()[_dialogItem].toString());
     }
 
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted()){
+            getSpiceManager().cancel(mComplainAboutServiceRequest);
+        }
+    }
+
     private class RequestResponseListener implements PendingRequestListener<Response> {
 
         @Override
@@ -200,17 +207,5 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_complain_about_service;
-    }
-
-    @Override
-    public void cancel(){
-        if(getSpiceManager().isStarted()){
-            getSpiceManager().cancel(mComplainAboutServiceRequest);
-        }
-    }
-
-    @Override
-    public void dismiss(){
-        Toast.makeText(getActivity(), "DISMISSED", Toast.LENGTH_LONG).show();
     }
 }

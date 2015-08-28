@@ -95,11 +95,18 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         }
         return super.onOptionsItemSelected(item);
     }
-
+    private SearchByImeiRequest mRequest;
     private void searchDeviceByImei() {
-        SearchByImeiRequest request = new SearchByImeiRequest(etImeiNumber.getText().toString());
+        mRequest = new SearchByImeiRequest(etImeiNumber.getText().toString());
         showProgressDialog();
-        getSpiceManager().execute(request, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
+        getSpiceManager().execute(mRequest, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
+    }
+
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mRequest!=null){
+            getSpiceManager().cancel(mRequest);
+        }
     }
 
     private boolean isImeiValid() {
@@ -126,16 +133,6 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
             String text = data.getStringExtra(C.KEY_SCANNER_RESULT_TEXT);
             etImeiNumber.setText(text);
         }
-    }
-
-    @Override
-    public void cancel() {
-
-    }
-
-    @Override
-    public void dismiss() {
-
     }
 
     private class RequestResponseListener implements PendingRequestListener<SearchDeviceResponseModel.List> {

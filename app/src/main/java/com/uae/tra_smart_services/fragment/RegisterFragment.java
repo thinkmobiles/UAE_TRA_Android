@@ -110,6 +110,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         }
     }
 
+    private RegisterRequest mRegisterRequest;
     private void doRegistration() {
         final RegisterModel registerModel = new RegisterModel();
         registerModel.login = etUserName.getText().toString();
@@ -123,8 +124,15 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
 
         if (mFilterPool.check(registerModel)) {
             showProgressDialog("Registration..", null);
-            getSpiceManager().execute(new RegisterRequest(registerModel),
+            getSpiceManager().execute(mRegisterRequest = new RegisterRequest(registerModel),
                     KEY_REGISTER_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
+        }
+    }
+
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mRegisterRequest!=null){
+            getSpiceManager().cancel(mRegisterRequest);
         }
     }
 

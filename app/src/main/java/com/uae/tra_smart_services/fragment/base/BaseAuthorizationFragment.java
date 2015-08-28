@@ -5,7 +5,7 @@ import android.app.Activity;
 /**
  * Created by Andrey Korneychuk on 22.07.15.
  */
-public abstract class BaseAuthorizationFragment extends BaseFragment{
+public abstract class BaseAuthorizationFragment extends BaseServiceFragment{
     protected AuthorizationActionsListener actionsListener;
 
     @Override

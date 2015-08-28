@@ -96,6 +96,7 @@ public class LoginFragment extends BaseAuthorizationFragment
         getSpiceManager().addListenerIfPending(Response.class, KEY_LOGIN_REQUEST, mRequestLoginListener);
     }
 
+    private LoginRequest mRequest;
     private void doLogIn() {
         LoginModel model = new LoginModel();
         model.login = etUserName.getText().toString();
@@ -106,19 +107,16 @@ public class LoginFragment extends BaseAuthorizationFragment
             return;
         }
 
-        showProgressDialog("Authenticating..", new DialogInterface() {
-            @Override
-            public void cancel() {
+        showProgressDialog(getString(R.string.str_authenticating), this);
 
-            }
+        getSpiceManager().execute(mRequest = new LoginRequest(model), KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
+    }
 
-            @Override
-            public void dismiss() {
-
-            }
-        });
-        LoginRequest request = new LoginRequest(model);
-        getSpiceManager().execute(request, KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mRequest!=null){
+            getSpiceManager().cancel(mRequest);
+        }
     }
 
     private class RequestResponseListener implements PendingRequestListener<Response> {

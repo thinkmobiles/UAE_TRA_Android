@@ -142,7 +142,7 @@ public abstract class BaseFragment extends Fragment
         showProgressDialog("Loading...", null);
     }
 
-    protected final void showProgressDialog(String _title, DialogInterface _callBack){
+    protected final void showProgressDialog(String _title, ProgressDialog.MyDialogInterface _callBack){
         ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
     }
 

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 /**
  * Created by ak-buffalo on 14.08.15.
  *
- * Class DomainFilterPool is verifying of compliance of the domain name
- * More then one filter can be added to check domain
+ * Class CustomFilterPool is verifying of compliance of the custom data model
+ * More then one filter can be added to check model
  *
  * @implements Filter
  * */

@@ -102,8 +102,9 @@
     <string name="str_domain_info">Domain Info</string>
     <string name="str_request_failed">Request Failed</string>
     <string name="str_something_went_wrong">Something went wrong</string>
-    <string name="str_checking">Checking...</string>
-    <string name="str_sending">Loading...</string>
+    <string name="str_checking">Checking..</string>
+    <string name="str_sending">Loading..</string>
+    <string name="str_authenticating">Authenticating..</string>
     <string name="str_report_has_been_sent">Report has been successfully sent. Thank you.</string>
     <string name="str_data_has_been_sent">Signal level has been successfully reported. Thank you.</string>
     <string name="str_complain_has_been_sent">Complaint has been successfully sent. Thank you.</string>

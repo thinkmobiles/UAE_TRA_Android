@@ -140,13 +140,10 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
     }
 
     @Override
-    public void cancel() {
-
-    }
-
-    @Override
-    public void dismiss() {
-
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted()){
+            getSpiceManager().cancel(request);
+        }
     }
 
     private class RequestResponseListener implements PendingRequestListener<SearchDeviceResponseModel.List> {

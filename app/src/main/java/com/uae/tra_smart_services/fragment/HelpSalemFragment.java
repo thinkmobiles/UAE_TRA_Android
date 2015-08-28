@@ -82,11 +82,12 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
         return super.onOptionsItemSelected(item);
     }
 
+    private HelpSalimRequest mHelpSalimRequest;
     private final void collectAndSendToServer(){
         if(filters.check(eturl.getText().toString())){
             showProgressDialog(getString(R.string.str_checking), null);
             getSpiceManager().execute(
-                    new HelpSalimRequest(
+                    mHelpSalimRequest = new HelpSalimRequest(
                             new HelpSalimModel(
                                     eturl.getText().toString(),
                                     etDescription.getText().toString()
@@ -120,14 +121,9 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
     }
 
     @Override
-    public void cancel() {
-        if (getSpiceManager().isStarted()) {
-//            getSpiceManager().cancel(REQUIRED_REQUEST_TO_BE STOPPED);
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mHelpSalimRequest!=null){
+            getSpiceManager().cancel(mHelpSalimRequest);
         }
-    }
-
-    @Override
-    public void dismiss() {
-
     }
 }
