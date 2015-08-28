@@ -51,6 +51,12 @@ public class PoorCoverageFragment extends BaseServiceFragment
     private LocationType mLocationType;
     private TextView tvSignalLevel;
 
+    private EditText etLocation;
+    private SeekBar sbPoorCoverage;
+    private ProgressBar sbProgressBar;
+
+    private PoorCoverageRequest mPoorCoverageRequest;
+
     public static PoorCoverageFragment newInstance() {
         return new PoorCoverageFragment();
     }
@@ -65,10 +71,6 @@ public class PoorCoverageFragment extends BaseServiceFragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-    private EditText etLocation;
-    private SeekBar sbPoorCoverage;
-    private ProgressBar sbProgressBar;
 
     @Override
     protected void initViews() {
@@ -149,7 +151,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
         showProgressDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(
-                new PoorCoverageRequest(
+                mPoorCoverageRequest = new PoorCoverageRequest(
                         mLocationModel
                 ),
                 new PoorCoverageRequestListener()
@@ -196,11 +198,11 @@ public class PoorCoverageFragment extends BaseServiceFragment
             }
         });
     }
-    private GeoLocationRequest  mGeoLocationRequest;
+
     private void defineUserFriendlyAddress(Location _location) {
         final Geocoder geocoder = new Geocoder(getActivity().getBaseContext(), Locale.getDefault());
         getSpiceManager().execute(
-                mGeoLocationRequest = new GeoLocationRequest(geocoder, _location),
+                new GeoLocationRequest(geocoder, _location),
                 new GeoLocationRequestListener()
         );
     }
@@ -250,8 +252,8 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
     @Override
     public void onDialogCancel() {
-        if(getSpiceManager().isStarted() && mGeoLocationRequest != null){
-            getSpiceManager().cancel(mGeoLocationRequest);
+        if(getSpiceManager().isStarted() && mPoorCoverageRequest != null){
+            getSpiceManager().cancel(mPoorCoverageRequest);
         }
     }
 

@@ -16,6 +16,7 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
     public static EnquiriesFragment newInstance() {
         return new EnquiriesFragment();
     }
+    private ComplainEnquiriesServiceRequest mRequest;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,16 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
         ComplainTRAServiceModel traServiceModel = new ComplainTRAServiceModel();
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
-        ComplainEnquiriesServiceRequest request = new ComplainEnquiriesServiceRequest(traServiceModel, getActivity(), getImageUri());
+        mRequest = new ComplainEnquiriesServiceRequest(traServiceModel, getActivity(), getImageUri());
         showProgressDialog(getString(R.string.str_sending), this);
-        getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
+        getSpiceManager().execute(mRequest, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
+    }
+
+    @Override
+    public void onDialogCancel() {
+        if (getSpiceManager().isStarted() && mRequest != null) {
+            getSpiceManager().cancel(mRequest);
+        }
     }
 
     @Override

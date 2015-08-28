@@ -33,6 +33,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     private ImageView ivAddAttachment;
     private EditText etComplainTitle, etDescription;
 
+    private ComplainAboutTRAServiceRequest request;
     private Uri mImageUri;
     private RequestResponseListener mRequestListener;
 
@@ -86,7 +87,6 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
         mImageUri = _uri;
     }
 
-    ComplainAboutTRAServiceRequest request;
     @Override
     protected void sendComplain() {
         ComplainTRAServiceModel traServiceModel = new ComplainTRAServiceModel();
