@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
@@ -39,6 +41,14 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
 
     public static ComplainAboutServiceFragment newInstance() {
         return new ComplainAboutServiceFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!TRAApplication.isLoggedIn()) {
+            getFragmentManager().popBackStack();
+        }
     }
 
     @Override
@@ -79,7 +89,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         }
         return super.onOptionsItemSelected(item);
     }
-
+    ComplainAboutServiceRequest mComplainAboutServiceRequest;
     @Override
     protected void sendComplain() {
         ComplainServiceProviderModel complainModel = new ComplainServiceProviderModel();
@@ -87,10 +97,11 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         complainModel.serviceProvider = tvServiceProvider.getText().toString();
         complainModel.referenceNumber = etReferenceNumber.getText().toString();
         complainModel.description = etDescription.getText().toString();
-        ComplainAboutServiceRequest request = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
+        mComplainAboutServiceRequest = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
 
-        showProgressDialog();
-        getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestResponseListener);
+        showProgressDialog(getString(R.string.str_sending), this);
+
+        getSpiceManager().execute(mComplainAboutServiceRequest, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestResponseListener);
     }
 
 //    private boolean validateData() {
@@ -153,6 +164,13 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         tvServiceProvider.setText(ServiceProvider.values()[_dialogItem].toString());
     }
 
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted()){
+            getSpiceManager().cancel(mComplainAboutServiceRequest);
+        }
+    }
+
     private class RequestResponseListener implements PendingRequestListener<Response> {
 
         @Override
@@ -176,10 +194,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             Log.d(getClass().getSimpleName(), "Failure. isAdded: " + isAdded());
-            if (isAdded()) {
-                hideProgressDialog();
-                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-            }
+            processError(spiceException);
             getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
     }

@@ -5,23 +5,27 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.rest.model.request.SmsSpamRequestModel;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
-import com.uae.tra_smart_services.rest.robo_requests.SmsSpamRequest;
+import com.uae.tra_smart_services.rest.robo_requests.SmsReportRequest;
 
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class SmsReportFragment extends BaseFragment implements AlertDialogFragment.OnOkListener{
+public class SmsReportFragment extends BaseServiceFragment implements AlertDialogFragment.OnOkListener{
+
+    private EditText etNumberOfSpammer, etDescription;
+
+
     public static SmsReportFragment newInstance() {
         return new SmsReportFragment();
     }
@@ -33,13 +37,17 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+
+        if (!TRAApplication.isLoggedIn()) {
+            getFragmentManager().popBackStack();
+        }
     }
 
-    private EditText etNumberOfSpammer;
     @Override
     protected void initViews() {
         super.initViews();
         etNumberOfSpammer = findView(R.id.etNumberOfSpammer_FSR);
+        etDescription = findView(R.id.etDescription_FSR);
     }
 
     private CustomFilterPool filters;
@@ -79,22 +87,24 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
         return super.onOptionsItemSelected(item);
     }
 
+    private SmsReportRequest mSmsReportRequest;
     private final void collectAndSendToServer(){
-        if(filters.check(etNumberOfSpammer.getText().toString())){
-            progressDialogManager.showProgressDialog(getString(R.string.str_checking));
+        hideKeyboard(getView());
+        if(filters.check(etNumberOfSpammer.getText().toString()) &&
+                filters.check(etDescription.getText().toString())){
+
+            showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
-                    new SmsSpamRequest(
-                            new SmsSpamRequestModel(
+                    mSmsReportRequest = new SmsReportRequest(
+                            new SmsReportRequestModel(
                                     etNumberOfSpammer.getText().toString(),
-                                    getString(R.string.str_one_empty_space),
-                                    getString(R.string.str_one_empty_space),
-                                    getString(R.string.str_one_empty_space)
+                                    etDescription.getText().toString()
                             )
                     ),
                     new SmsSpamReportResponseListener()
             );
         } else {
-            showMessage(R.string.str_error, R.string.str_invalid_number);
+            showMessage(R.string.str_error, R.string.error_fill_all_fields);
         }
     }
 
@@ -104,17 +114,23 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
         // Used exceptionally to specify OK button in dialog
     }
 
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mSmsReportRequest != null){
+            getSpiceManager().cancel(mSmsReportRequest);
+        }
+    }
+
     private final class SmsSpamReportResponseListener implements RequestListener<SmsSpamResponseModel> {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            progressDialogManager.hideProgressDialog();
-            Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
+            processError(spiceException);
         }
 
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
         }
     }

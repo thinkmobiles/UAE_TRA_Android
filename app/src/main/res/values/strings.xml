@@ -71,12 +71,12 @@
     <!--            Availability in button               -->
     <string name="str_domain_check">Domain Check</string>
     <string name="str_availabilty">Availability</string>
-    <string name="str_who_is">Who Is?</string>
+    <string name="str_who_is">Whois Lookup</string>
     <string name="str_location">Location</string>
     <string name="str_signal_level">Signal Level</string>
     <string name="str_signal_coverage">Signal Coverage</string>
     <string name="str_enter_url">Enter URL</string>
-    <string name="str_report_url">Report URL</string>
+    <string name="str_report_url">Report Website</string>
     <string name="str_description">Description</string>
     <string name="str_number_of_spammer">Number Of Spammer</string>
     <string name="str_sms_report_number">Report SMS Number</string>
@@ -91,29 +91,30 @@
     <string name="str_error">Error</string>
     <string name="str_url_not_avail">The domain %s is not available</string>
     <string name="str_url_doesnot_exist">The %s does not exist</string>
-    <string name="str_invalid_url">The format of inputted URL is not correct</string>
-    <string name="str_invalid_number">The format of inputted number is not correct</string>
-    <string name="str_ok">Ok</string>
+    <string name="str_invalid_url">Please enter a valid URL</string>
+    <string name="str_invalid_number">Please enter a valid number</string>
+    <string name="str_ok">OK</string>
     <string name="str_cancel">Cancel</string>
     <string name="str_one_empty_space"> </string>
     <string name="str_empty"></string>
-    <string name="str_domain_available">Domain Is Available</string>
+    <string name="str_domain_available">Domain is Available</string>
     <string name="str_domain_availability">Domain Availability</string>
     <string name="str_domain_info">Domain Info</string>
     <string name="str_request_failed">Request Failed</string>
     <string name="str_something_went_wrong">Something went wrong</string>
     <string name="str_checking">Checking..</string>
-    <string name="str_sending">Sending..</string>
-    <string name="str_report_has_been_sent">Report has been successfully sent</string>
-    <string name="str_data_has_been_sent">Signal level has been successfully sent</string>
-    <string name="str_complain_has_been_sent">Complain has been successfully sent</string>
+    <string name="str_sending">Loading..</string>
+    <string name="str_authenticating">Authenticating..</string>
+    <string name="str_report_has_been_sent">Report has been successfully sent. Thank you.</string>
+    <string name="str_data_has_been_sent">Signal level has been successfully reported. Thank you.</string>
+    <string name="str_complain_has_been_sent">Complaint has been successfully sent. Thank you.</string>
     <string name="str_info_hub">Info Hub</string>
     <string name="str_info_hub_title">Info Hub</string>
     <string name="str_info_hub_announcements">Info Hub Announcements</string>
     <string name="str_info_hub_announcement_details">Info Hub Details</string>
-    <string name="str_location_is_not_defined">Unfortunately, location is not defined n\r\ Please put your location manually</string>
+    <string name="str_location_is_not_defined">Could not determine location. Please enter your location manually.</string>
     <string name="str_location_error">Enter Location</string>
-    <string name="str_location_error_message">Please enter address manually or wait untill location will be found</string>
+    <string name="str_location_error_message">Please wait while location is determined or enter address manually.</string>
     <string name="signal_level_error">Please set signal level</string>
 
     <string name="str_announcements">Announcements</string>
@@ -153,7 +154,7 @@
     <string name="reference_number">Reference Number</string>
     <string name="content_description_add_attachment">Add Attachment</string>
     <string name="approved_device_information">Approved Device Information</string>
-    <string name="insert_imei_hint">Insert IMEI Manually</string>
+    <string name="insert_imei_hint">Device IMEI</string>
     <string name="hint_set_server_url">Set server url</string>
     <string name="button_change_server">Change server</string>
     <string name="favourite_service_info">Service Info</string>
@@ -186,5 +187,38 @@
     <string name="service_help_salim">Help Salim</string>
     <string name="service_mobile_verification">Mobile verification</string>
     <string name="service_approved_devices">Approved Devices</string>
+
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_emirates_id">Emirates ID No.</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_landline">Landline</string>
+    <string name="error_valid_email">Please enter valid email address</string>
+    <string name="error_valid_phone">Please enter valid phone number</string>
+    <string name="error_password_confirm">Password and confirm password must be same</string>
+    <string name="error_select_state">Please select your state</string>
+    <string name="error_no_network">Network is not available. Please check your internet connection</string>
+    <string name="error_conversion_error">Server returned wrong format of data</string>
+    <string name="error_server">Server error occured</string>
+
+    <!--            RegisterFragment            -->
+    <string-array name="countries_array">
+        <item>--Select--</item>
+        <item>Dubai</item>
+    </string-array>
+
+    <string-array name="states_array">
+        <item>--Select--</item>
+        <item>Abu Dhabi</item>
+        <item>Ajman</item>
+        <item>Dubai</item>
+        <item>Fujairah</item>
+        <item>Ras al-Khaimah</item>
+        <item>Sharjah</item>
+        <item>Umm al-Quwain</item>
+    </string-array>
+
 
 </resources>

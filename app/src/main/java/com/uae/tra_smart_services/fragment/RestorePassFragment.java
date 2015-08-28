@@ -22,4 +22,9 @@ public class RestorePassFragment extends BaseAuthorizationFragment {
     protected int getLayoutResource() {
         return R.layout.fragment_restorepass;
     }
+
+    @Override
+    public void onDialogCancel() {
+        // TODO Implement method when Restore password logic will be done.
+    }
 }

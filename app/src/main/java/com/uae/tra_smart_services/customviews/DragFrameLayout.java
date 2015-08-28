@@ -32,7 +32,7 @@ import com.uae.tra_smart_services.util.ImageUtils;
  */
 public class DragFrameLayout extends FrameLayout implements OnDragListener {
 
-    //region Constants
+    //region C
     private final float SHADOW_RADIUS = 5 * getResources().getDisplayMetrics().density;
     private final float DELETE_ARC_VISIBLE_HEIGHT = 150 * getResources().getDisplayMetrics().density;
     private final float DELETE_ARC_HEIGHT = 400 * getResources().getDisplayMetrics().density;

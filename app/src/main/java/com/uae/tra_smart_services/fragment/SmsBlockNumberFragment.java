@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -19,15 +18,16 @@ import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickList
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.ServiceProvider;
-import com.uae.tra_smart_services.rest.model.request.SmsSpamRequestModel;
+import com.uae.tra_smart_services.rest.model.request.SmsBlockRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
-import com.uae.tra_smart_services.rest.robo_requests.SmsSpamRequest;
+import com.uae.tra_smart_services.rest.robo_requests.SmsBlockRequest;
 
 /**
  * Created by mobimaks on 13.08.2015.
  */
-public final class SmsBlockNumberFragment extends BaseFragment
+public final class SmsBlockNumberFragment extends BaseServiceFragment
     implements OnClickListener, OnItemPickListener, AlertDialogFragment.OnOkListener {
 
     private EditText etOperatorNumber, etReferenceNumber, etDescription;
@@ -67,7 +67,7 @@ public final class SmsBlockNumberFragment extends BaseFragment
                 addFilter(new Filter<String>() {
                     @Override
                     public boolean check(String _data) {
-                        // TODO Implement phone validation rule here, will return true by default
+                        // TODO Implement mobile validation rule here, will return true by default
                         return true;
                     }
                 });
@@ -91,12 +91,14 @@ public final class SmsBlockNumberFragment extends BaseFragment
         return super.onOptionsItemSelected(item);
     }
 
+    private SmsBlockRequest mSmsBlockRequest;
     private final void collectAndSendToServer(){
+        hideKeyboard(getView());
         if(filters.check(etOperatorNumber.getText().toString())){
-            progressDialogManager.showProgressDialog(getString(R.string.str_checking));
+            showProgressDialog(getString(R.string.str_checking), null);
             getSpiceManager().execute(
-                    new SmsSpamRequest(
-                            new SmsSpamRequestModel(
+                    mSmsBlockRequest = new SmsBlockRequest(
+                            new SmsBlockRequestModel(
                                     etOperatorNumber.getText().toString(),
                                     etReferenceNumber.getText().toString(),
                                     etDescription.getText().toString(),
@@ -144,17 +146,23 @@ public final class SmsBlockNumberFragment extends BaseFragment
         // Unimplemented method
     }
 
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mSmsBlockRequest != null){
+            getSpiceManager().cancel(mSmsBlockRequest);
+        }
+    }
+
     private final class SmsSpamBlockResponseListener implements RequestListener<SmsSpamResponseModel> {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            progressDialogManager.hideProgressDialog();
-            Toast.makeText(getActivity(), spiceException.getMessage(), Toast.LENGTH_LONG).show();
+            processError(spiceException);
         }
 
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
         }
     }

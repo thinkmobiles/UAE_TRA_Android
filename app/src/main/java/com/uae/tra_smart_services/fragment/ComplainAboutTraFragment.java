@@ -1,19 +1,21 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutTRAServiceRequest;
@@ -35,6 +37,14 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
 
     public static ComplainAboutTraFragment newInstance() {
         return new ComplainAboutTraFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!TRAApplication.isLoggedIn()) {
+            getFragmentManager().popBackStack();
+        }
     }
 
     @Override
@@ -75,14 +85,22 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
         mImageUri = _uri;
     }
 
+    ComplainAboutTRAServiceRequest request;
     @Override
     protected void sendComplain() {
         ComplainTRAServiceModel traServiceModel = new ComplainTRAServiceModel();
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
-        ComplainAboutTRAServiceRequest request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
+        request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
         showProgressDialog();
         getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
+    }
+
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted()){
+            getSpiceManager().cancel(request);
+        }
     }
 
     private class RequestResponseListener implements PendingRequestListener<Response> {
@@ -109,11 +127,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            Log.d(getClass().getSimpleName(), "Failure. isAdded: " + isAdded());
-            if (isAdded()) {
-                hideProgressDialog();
-                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-            }
+            processError(spiceException);
             getSpiceManager().removeAllDataFromCache();
 //            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }

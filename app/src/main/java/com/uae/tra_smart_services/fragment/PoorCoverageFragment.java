@@ -31,6 +31,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
@@ -43,7 +44,7 @@ import retrofit.client.Response;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class PoorCoverageFragment extends BaseFragment
+public class PoorCoverageFragment extends BaseServiceFragment
         implements OnOkListener, OnItemPickListener,
         ConnectionCallbacks, OnConnectionFailedListener,
         OnSeekBarChangeListener, OnClickListener {
@@ -140,13 +141,14 @@ public class PoorCoverageFragment extends BaseFragment
 
     private void collectDataAdnSendToServer() {
         mLocationModel.setAddress(etLocation.getText().toString());
+        mLocationModel.setSignalLevel(sbProgressBar.getProgress() + 1);
         if (TextUtils.isEmpty(mLocationModel.getAddress()) &&
                 mLocationModel.getLocation() == null) {
             showMessage(R.string.str_location_error, R.string.str_location_error_message);
             return;
         }
 
-        progressDialogManager.showProgressDialog(getString(R.string.str_sending));
+        showProgressDialog(getString(R.string.str_sending), null);
         getSpiceManager().execute(
                 new PoorCoverageRequest(
                         mLocationModel
@@ -177,13 +179,12 @@ public class PoorCoverageFragment extends BaseFragment
                 break;
         }
     }
-
     private void showLocationSettings() {
         sbProgressBar.setVisibility(View.VISIBLE);
         etLocation.setOnClickListener(null);
-        final LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setNumUpdates(1);
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, new LocationListener() {
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setNumUpdates(1);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, new LocationListener() {
             @Override
             public void onLocationChanged(Location _location) {
                 sbProgressBar.setVisibility(View.INVISIBLE);
@@ -196,11 +197,11 @@ public class PoorCoverageFragment extends BaseFragment
             }
         });
     }
-
+    private GeoLocationRequest  mGeoLocationRequest;
     private void defineUserFriendlyAddress(Location _location) {
         final Geocoder geocoder = new Geocoder(getActivity().getBaseContext(), Locale.getDefault());
         getSpiceManager().execute(
-                new GeoLocationRequest(geocoder, _location),
+                mGeoLocationRequest = new GeoLocationRequest(geocoder, _location),
                 new GeoLocationRequestListener()
         );
     }
@@ -235,7 +236,7 @@ public class PoorCoverageFragment extends BaseFragment
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         tvSignalLevel.setText(getResources().getStringArray(R.array.fragment_poor_coverage_signal_levels)[progress]);
-        mLocationModel.setSignalLevel(progress);
+        mLocationModel.setSignalLevel(progress + 1);
     }
 
     @Override
@@ -248,17 +249,23 @@ public class PoorCoverageFragment extends BaseFragment
 
     }
 
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mGeoLocationRequest != null){
+            getSpiceManager().cancel(mGeoLocationRequest);
+        }
+    }
+
     private class PoorCoverageRequestListener implements RequestListener<Response> {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            progressDialogManager.hideProgressDialog();
-            showMessage(R.string.str_error, R.string.str_request_failed);
+            processError(spiceException);
         }
 
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
-            progressDialogManager.hideProgressDialog();
+            hideProgressDialog();
             switch (poorCoverageRequestModel.getStatus()) {
                 case 200:
                     showMessage(R.string.str_success, R.string.str_data_has_been_sent);
@@ -277,7 +284,7 @@ public class PoorCoverageFragment extends BaseFragment
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            Toast.makeText(getActivity(), getString(R.string.str_something_went_wrong), Toast.LENGTH_LONG).show();
+            processError(spiceException);
         }
 
         @Override

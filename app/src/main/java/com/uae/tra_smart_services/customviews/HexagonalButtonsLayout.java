@@ -285,9 +285,9 @@ public class HexagonalButtonsLayout extends View {
             final PointF point = mCenters.get(hexagon);
 
             if (hexagon < (mButtonsCount / 2)) {
-                buttonsPath = calculatePath(buttonsPath, point.x, point.y);
+                buttonsPath = calculatePath(buttonsPath, point.x, point.y, hexagon);
             } else {
-                buttonsSecondPath = calculatePath(buttonsSecondPath, point.x, point.y);
+                buttonsSecondPath = calculatePath(buttonsSecondPath, point.x, point.y, hexagon);
             }
         }
 
@@ -297,8 +297,12 @@ public class HexagonalButtonsLayout extends View {
         _canvas.drawPath(buttonsPath, mButtonPaint);
     }
 
-    private Path calculatePath(Path _path, final float _centerX, final float _centerY) {
-        mPolygons.add(createPoints(_centerX, _centerY));
+    private Path calculatePath(Path _path, final float _centerX, final float _centerY, final int _hexagonNumber) {
+        if (_hexagonNumber + 1 <= mPolygons.size()) {
+            changePoint(mPolygons.get(_hexagonNumber), _centerX, _centerY);
+        } else {
+            mPolygons.add(createPoints(_centerX, _centerY));
+        }
 
         _path.moveTo(_centerX, _centerY + mRadius);
         _path.lineTo(_centerX - mTriangleHeight, _centerY + mRadius / 2);
@@ -322,6 +326,15 @@ public class HexagonalButtonsLayout extends View {
         points[5] = new PointF(_centerX + mTriangleHeight, _centerY + mRadius / 2);
 
         return points;
+    }
+
+    private void changePoint(final PointF[] _points, final float _centerX, final float _centerY) {
+        _points[0].set(_centerX, _centerY + mRadius);
+        _points[1].set(_centerX - mTriangleHeight, _centerY + mRadius / 2);
+        _points[2].set(_centerX - mTriangleHeight, _centerY - mRadius / 2);
+        _points[3].set(_centerX, _centerY - mRadius);
+        _points[4].set(_centerX + mTriangleHeight, _centerY - mRadius / 2);
+        _points[5].set(_centerX + mTriangleHeight, _centerY + mRadius / 2);
     }
 
     private void drawBottomSeparator(final Canvas _canvas) {
@@ -355,7 +368,7 @@ public class HexagonalButtonsLayout extends View {
 
         if (getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
             TextPaint mTextPaint = new TextPaint();
-            mTextPaint.setTextSize(mTextSize);
+            mTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress);
             mTextPaint.setColor(0xFFF68F1E);
             StaticLayout mTextLayout = new StaticLayout(getResources().getString(R.string.hexagon_button_spam), mTextPaint,
                     (int) (mTriangleHeight * 1.5), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);

@@ -19,7 +19,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AddFavoritesAdapter;
 import com.uae.tra_smart_services.adapter.AddFavoritesAdapter.OnItemClickListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.util.ImageUtils;
 
@@ -48,9 +48,8 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
-        if (_activity instanceof OnFavoriteServicesSelectedListener) {
+        if (_activity instanceof OnFavoriteServicesSelectedListener)
             mServicesSelectedListener = (OnFavoriteServicesSelectedListener) _activity;
-        }
     }
 
     @Override
@@ -112,11 +111,11 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
 
     private List<Service> getFavoriteServices() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        final String favoriteServicesStr = prefs.getString(Constants.KEY_FAVORITE_SERVICES, "");
+        final String favoriteServicesStr = prefs.getString(C.KEY_FAVORITE_SERVICES, "");
         final List<Service> services = new ArrayList<>();
 
         if (!favoriteServicesStr.isEmpty()) {
-            final String[] servicesStrArray = favoriteServicesStr.split(Constants.FAVORITE_SERVICES_DELIMITER);
+            final String[] servicesStrArray = favoriteServicesStr.split(C.FAVORITE_SERVICES_DELIMITER);
             for (String serviceStr : servicesStrArray) {
                 try {
                     final Service service = Service.valueOf(serviceStr);
@@ -143,11 +142,10 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
 
     @Override
     public void onItemClick(Service _item, boolean isSelected) {
-        if (isSelected) {
+        if (isSelected)
             mSelectedItems.add(_item);
-        } else {
+        else
             mSelectedItems.remove(_item);
-        }
     }
 
 

@@ -271,7 +271,11 @@ public class HexagonalHeader extends View {
     }
 
     private void calculateFirstRowPath() {
-        mHexagonPath = new Path();
+        if (mHexagonPath == null) {
+            mHexagonPath = new Path();
+        } else {
+            mHexagonPath.reset();
+        }
 
         float centerY = getPaddingTop() + mAvatarRadiusCoefficient * mRadius + mHexagonAvatarBorderWidth / 2;
         float centerX = calculateDependsOnDirection(getPaddingStart() + mHexagonStrokeWidth / 2 + mTriangleHeight / 2);
@@ -288,8 +292,13 @@ public class HexagonalHeader extends View {
 
     private void calculateSecondRowHexagonPath() {
         mSecondRowPaint.setAlpha((int) (255 * (1.0 - mAnimationProgress)));
-        mSecondRowHexagonPath = new Path();
-        mLastHexagonPath = new Path();
+        if (mSecondRowHexagonPath == null) {
+            mSecondRowHexagonPath = new Path();
+            mLastHexagonPath = new Path();
+        } else {
+            mSecondRowHexagonPath.reset();
+            mLastHexagonPath.reset();
+        }
 
         float centerY = getPaddingTop() + mAvatarRadiusCoefficient * mRadius + mRadius * 1.5f + mHexagonAvatarBorderWidth / 2;
         float centerX = calculateDependsOnDirection(getPaddingLeft() + mHexagonStrokeWidth / 2 + mTriangleHeight * 1.5f);
@@ -319,10 +328,17 @@ public class HexagonalHeader extends View {
     }
 
     private void calculateButtonsPath() {
-        mFirstRowButtonsPath = new Path();
-        mSecondRowButtonsPath = new Path();
-        mFirstRowButtonsBorderPath = new Path();
-        mSecondRowButtonsBorderPath = new Path();
+        if (mFirstRowButtonsBorderPath == null) {
+            mFirstRowButtonsPath = new Path();
+            mSecondRowButtonsPath = new Path();
+            mFirstRowButtonsBorderPath = new Path();
+            mSecondRowButtonsBorderPath = new Path();
+        } else {
+            mFirstRowButtonsPath.reset();
+            mSecondRowButtonsPath.reset();
+            mFirstRowButtonsBorderPath.reset();
+            mSecondRowButtonsBorderPath.reset();
+        }
 
         float centerY = getPaddingTop() + mRadius * mAvatarRadiusCoefficient + mHexagonAvatarBorderWidth / 2;
         float centerX = calculateDependsOnDirection(getPaddingLeft() + mHexagonStrokeWidth / 2);
@@ -447,7 +463,11 @@ public class HexagonalHeader extends View {
 
     private Path calculatePathAndSave(Path _path, final int _number,
                                       final float _centerX, final float _centerY) {
-        mHexagons.put(_number, createPoints(_centerX, _centerY));
+        if (mHexagons.get(_number) != null) {
+            changePoints(mHexagons.get(_number), _centerX, _centerY);
+        } else {
+            mHexagons.put(_number, createPoints(_centerX, _centerY));
+        }
 
         return calculatePath(_path, _centerX, _centerY);
     }
@@ -463,6 +483,15 @@ public class HexagonalHeader extends View {
         points[5] = new PointF(_centerX + mTriangleHeight, _centerY + mRadius / 2);
 
         return points;
+    }
+
+    private void changePoints(final PointF[] _points, final float _centerX, final float _centerY) {
+        _points[0].set(_centerX, _centerY + mRadius);
+        _points[1].set(_centerX - mTriangleHeight, _centerY + mRadius / 2);
+        _points[2].set(_centerX - mTriangleHeight, _centerY - mRadius / 2);
+        _points[3].set(_centerX, _centerY - mRadius);
+        _points[4].set(_centerX + mTriangleHeight, _centerY - mRadius / 2);
+        _points[5].set(_centerX + mTriangleHeight, _centerY + mRadius / 2);
     }
 
     private void drawAvatarHexagon(final Canvas _canvas) {

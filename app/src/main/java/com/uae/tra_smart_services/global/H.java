@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.entities;
+package com.uae.tra_smart_services.global;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;

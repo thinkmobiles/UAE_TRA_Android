@@ -179,5 +179,4 @@ public class AddFavoritesAdapter extends Adapter<ViewHolder> implements Filterab
     public interface OnItemClickListener {
         void onItemClick(Service _item, boolean isSelected);
     }
-
 }

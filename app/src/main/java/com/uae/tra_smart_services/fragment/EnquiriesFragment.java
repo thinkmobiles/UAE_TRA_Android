@@ -1,6 +1,9 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.os.Bundle;
+
 import com.octo.android.robospice.persistence.DurationInMillis;
+import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainEnquiriesServiceRequest;
 
@@ -11,6 +14,14 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
 
     public static EnquiriesFragment newInstance() {
         return new EnquiriesFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!TRAApplication.isLoggedIn()) {
+            getFragmentManager().popBackStack();
+        }
     }
 
     @Override

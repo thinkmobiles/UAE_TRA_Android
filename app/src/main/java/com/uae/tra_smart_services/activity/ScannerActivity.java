@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.google.zxing.Result;
 import com.uae.tra_smart_services.activity.base.BaseActivity;
-import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.global.C;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView.ResultHandler;
@@ -45,7 +45,7 @@ public class ScannerActivity extends BaseActivity implements ResultHandler {
     @Override
     public void handleResult(Result _result) {
         Intent data = new Intent();
-        data.putExtra(Constants.KEY_SCANNER_RESULT_TEXT, _result.getText());
+        data.putExtra(C.KEY_SCANNER_RESULT_TEXT, _result.getText());
         setResult(RESULT_OK, data);
         finish();
     }

@@ -16,29 +16,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
+import com.octo.android.robospice.exception.NoNetworkException;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
-import com.uae.tra_smart_services.interfaces.ProgressDialogManager;
-import com.uae.tra_smart_services.interfaces.RetrofitFailureHandler;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;
+import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
 
 import retrofit.RetrofitError;
 
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragment extends Fragment implements RetrofitFailureHandler, OnReloadData {
+public abstract class BaseFragment extends Fragment implements OnReloadData{
 
     private View rootView;
     private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
     private InputMethodManager mInputMethodManager;
 
-    protected ProgressDialogManager progressDialogManager;
-    protected ErrorHandler errorHandler;
     protected ToolbarTitleManager toolbarTitleManager;
     protected ThemaDefiner mThemaDefiner;
 
@@ -47,8 +48,6 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
         super.onAttach(_activity);
         try {
             toolbarTitleManager = (ToolbarTitleManager) _activity;
-            progressDialogManager = (ProgressDialogManager) _activity;
-            errorHandler = (ErrorHandler) _activity;
             mThemaDefiner = (ThemaDefiner) _activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(_activity.toString()
@@ -77,15 +76,6 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
 
     @StringRes
     protected abstract int getTitle();
-
-    @Override
-    public void failure(final RetrofitError _error) {
-        errorHandler.handleError(_error, this);
-    }
-
-    public void failure(final RetrofitError _error, final OnReloadData _listener) {
-        errorHandler.handleError(_error, _listener);
-    }
 
     protected void initViews() {
     }
@@ -130,7 +120,11 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
     }
 
     protected final void showProgressDialog(){
-        ProgressDialog.newInstance().show(getFragmentManager());
+        showProgressDialog("Loading...", null);
+    }
+
+    protected final void showProgressDialog(String _title, ProgressDialog.MyDialogInterface _callBack){
+        ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
     }
 
     protected final void hideProgressDialog(){
@@ -139,6 +133,45 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
             dialog.dismiss();
         }
     }
+
+    protected final void processError(final SpiceException _exception) {
+        if (isAdded()) {
+            hideProgressDialog();
+            String errorMessage;
+            Throwable cause = _exception.getCause();
+            if (cause != null && cause instanceof RetrofitError) {
+                errorMessage = processRetrofitError(((RetrofitError) cause));
+            } else if (_exception instanceof NoNetworkException) {
+                errorMessage = getString(R.string.error_no_network);
+            } else {
+                errorMessage = _exception.getMessage();
+            }
+
+            Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String processRetrofitError(final RetrofitError _error) {
+        switch (_error.getKind()) {
+            case NETWORK:
+                return getString(R.string.error_no_network);
+            case CONVERSION:
+                //TODO: change this on production, added just to see when developing
+                return getString(R.string.error_conversion_error);
+            case HTTP:
+                try {
+                    ErrorResponseModel errorResponse = (ErrorResponseModel) _error.getBodyAs(ErrorResponseModel.class);
+                    return errorResponse.error;
+                } catch (RuntimeException _exc) {
+                    _exc.printStackTrace();
+                    return getString(R.string.error_server);
+                }
+            default:
+            case UNEXPECTED:
+                return getString(R.string.str_something_went_wrong);
+        }
+    }
+
 
     protected final SpiceManager getSpiceManager() {
         return spiceManager;
@@ -161,13 +194,6 @@ public abstract class BaseFragment extends Fragment implements RetrofitFailureHa
 
     protected final <T extends View> T findView(@IdRes int _id) {
         return (T) rootView.findViewById(_id);
-    }
-
-    public interface ErrorHandler {
-
-        void handleError(final RetrofitError _error);
-
-        void handleError(final RetrofitError _error, final OnReloadData _listener);
     }
 
     public interface ThemaDefiner {

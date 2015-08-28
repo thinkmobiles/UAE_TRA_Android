@@ -26,7 +26,7 @@ import com.uae.tra_smart_services.customviews.DragFrameLayout;
 import com.uae.tra_smart_services.customviews.DragFrameLayout.OnItemDeleteListener;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.global.Constants;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.util.ImageUtils;
 
@@ -109,11 +109,11 @@ public class FavoritesFragment extends BaseFragment
 
     private List<Service> getFavoriteServices() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        final String favoriteServicesStr = prefs.getString(Constants.KEY_FAVORITE_SERVICES, "");
+        final String favoriteServicesStr = prefs.getString(C.KEY_FAVORITE_SERVICES, "");
         final List<Service> services = new ArrayList<>();
 
         if (!favoriteServicesStr.isEmpty()) {
-            final String[] servicesStrArray = favoriteServicesStr.split(Constants.FAVORITE_SERVICES_DELIMITER);
+            final String[] servicesStrArray = favoriteServicesStr.split(C.FAVORITE_SERVICES_DELIMITER);
             for (String serviceStr : servicesStrArray) {
                 try {
                     final Service service = Service.valueOf(serviceStr);
@@ -159,15 +159,15 @@ public class FavoritesFragment extends BaseFragment
         final List<Service> favoriteServices = mFavoritesAdapter.getAllData();
         final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
         if (favoriteServices.isEmpty()) {
-            editor.remove(Constants.KEY_FAVORITE_SERVICES).apply();
+            editor.remove(C.KEY_FAVORITE_SERVICES).apply();
         } else {
             final int favoriteServicesCount = favoriteServices.size();
             final StringBuilder builder = new StringBuilder();
             for (int i = 0; i < favoriteServicesCount; i++) {
-                builder.append(favoriteServices.get(i).name()).append(Constants.FAVORITE_SERVICES_DELIMITER);
+                builder.append(favoriteServices.get(i).name()).append(C.FAVORITE_SERVICES_DELIMITER);
             }
             final String servicesStr = builder.toString();
-            editor.putString(Constants.KEY_FAVORITE_SERVICES, servicesStr).apply();
+            editor.putString(C.KEY_FAVORITE_SERVICES, servicesStr).apply();
         }
     }
 

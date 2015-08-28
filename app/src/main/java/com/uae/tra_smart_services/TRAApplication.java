@@ -11,9 +11,20 @@ import io.fabric.sdk.android.Fabric;
  */
 public class TRAApplication extends Application {
 
+    private static boolean isLoggedIn = false;
+
     @Override
     public void onCreate() {
         Fabric.with(this, new Crashlytics());
+        isLoggedIn = false;
         super.onCreate();
+    }
+
+    public static boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public static void setIsLoggedIn(boolean _isLoggedIn) {
+        isLoggedIn = _isLoggedIn;
     }
 }

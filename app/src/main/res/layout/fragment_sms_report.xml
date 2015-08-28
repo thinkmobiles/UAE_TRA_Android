@@ -13,4 +13,18 @@
 
     <View style="@style/AuthorizationFieldsSeparator" />
 
+    <EditText
+        android:id="@+id/etDescription_FSR"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/vComplainTitleDivider_FCAT"
+        android:background="@null"
+        android:gravity="start|top"
+        android:hint="@string/description"
+        android:inputType="textAutoCorrect|textMultiLine"
+        android:padding="8dp"
+        android:textSize="16sp"/>
+
+
 </LinearLayout>

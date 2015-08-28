@@ -7,7 +7,8 @@ import com.uae.tra_smart_services.rest.model.request.LoginModel;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.model.request.RatingServiceModel;
 import com.uae.tra_smart_services.rest.model.request.RegisterModel;
-import com.uae.tra_smart_services.rest.model.request.SmsSpamRequestModel;
+import com.uae.tra_smart_services.rest.model.request.SmsBlockRequestModel;
+import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
@@ -38,6 +39,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.REGISTER_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SEARCH_DEVICE_BY_BRAND_NAME_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SEARCH_DEVICE_BY_IMEI_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SEND_SUGGESTION_URL;
+import static com.uae.tra_smart_services.global.ServerConstants.SMS_SPAM_BLOCK_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SMS_SPAM_REPORT_URL;
 
 /**
@@ -65,7 +67,11 @@ public interface TRAServicesAPI {
     Response ratingService(@Body RatingServiceModel _ratingServiceModel);
 
     @POST(SMS_SPAM_REPORT_URL)
-    SmsSpamResponseModel reportSmsSpam(@Body SmsSpamRequestModel _smsSpamModel);
+    SmsSpamResponseModel reportSmsSpam(@Body SmsReportRequestModel _smsSpamModel);
+
+
+    @POST(SMS_SPAM_BLOCK_URL)
+    SmsSpamResponseModel blockSmsSpam(@Body SmsBlockRequestModel _smsSpamModel);
 
     @POST(POOR_COVERAGE_URL)
     Response poorCoverage(@Body PoorCoverageRequestModel _smsSpamModel);

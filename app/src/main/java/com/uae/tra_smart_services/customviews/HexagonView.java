@@ -34,7 +34,7 @@ public class HexagonView extends View implements Target {
 
     private double mHexagonSide, mHexagonInnerRadius;
     private final Path mPath;
-    private final Paint mPaint, mShadowPaint;
+    private Paint mPaint, mShadowPaint;
     private int mBorderColor, mBackgroundColor, mBorderWidth;
     private Drawable mSrcDrawable;
     private Rect mHexagonRect = new Rect();
@@ -64,9 +64,6 @@ public class HexagonView extends View implements Target {
         mPaint.setStrokeWidth(mBorderWidth);
         mPaint.setStyle(Paint.Style.STROKE);
 
-        mShadowPaint = new Paint();
-        mShadowPaint.setStyle(Paint.Style.FILL);
-
         mPath = new Path();
     }
 
@@ -82,6 +79,8 @@ public class HexagonView extends View implements Target {
     }
 
     public final void setHexagonShadow(final float _radius, final int _color) {
+        mShadowPaint = new Paint();
+        mShadowPaint.setStyle(Paint.Style.FILL);
         mShadowPaint.setShadowLayer(_radius, 0, 0, _color);
     }
 
@@ -144,10 +143,12 @@ public class HexagonView extends View implements Target {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //region Draw shadow
-        canvas.save();
-        canvas.clipPath(mPath, Region.Op.DIFFERENCE);
-        canvas.drawPath(mPath, mShadowPaint);
-        canvas.restore();
+//        canvas.save();
+//        canvas.clipPath(mPath, Region.Op.DIFFERENCE);
+        if (mShadowPaint != null) {
+            canvas.drawPath(mPath, mShadowPaint);
+        }
+//        canvas.restore();
         //endregion
 
         if (mSrcDrawable != null) {
@@ -170,6 +171,7 @@ public class HexagonView extends View implements Target {
             mSrcDrawable.draw(canvas);
             canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
         }
+
         canvas.drawPath(mPath, mPaint);
     }
 

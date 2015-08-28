@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import com.octo.android.robospice.request.SpiceRequest;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 

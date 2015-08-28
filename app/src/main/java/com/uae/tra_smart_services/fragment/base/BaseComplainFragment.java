@@ -28,7 +28,7 @@ import java.util.Date;
 /**
  * Created by mobimaks on 11.08.2015.
  */
-public abstract class BaseComplainFragment extends BaseFragment implements OnImageSourceSelectListener {
+public abstract class BaseComplainFragment extends BaseServiceFragment implements OnImageSourceSelectListener {
 
     private static final int REQUEST_GALLERY_IMAGE_CODE = 1;
     private static final int REQUEST_CAMERA_PHOTO_CODE = 2;
@@ -178,5 +178,4 @@ public abstract class BaseComplainFragment extends BaseFragment implements OnIma
         final PackageManager pm = getActivity().getPackageManager();
         return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) && takePictureIntent.resolveActivity(pm) != null;
     }
-
 }

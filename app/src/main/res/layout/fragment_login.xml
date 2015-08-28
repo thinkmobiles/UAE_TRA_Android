@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/etEmail_FLI"
+                android:id="@+id/etEmail_FR"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:hint="@string/str_email"
                 android:inputType="textPersonName" />
@@ -27,7 +27,7 @@
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
-                android:id="@+id/etPassword_FLI"
+                android:id="@+id/etPassword_FR"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:hint="@string/str_password"
                 android:inputType="textPassword" />
