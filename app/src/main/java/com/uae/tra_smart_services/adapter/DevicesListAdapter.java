@@ -1,11 +1,7 @@
 package com.uae.tra_smart_services.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -24,24 +20,24 @@ public class DevicesListAdapter extends BaseAdapter<String> implements Filterabl
 
     private Filter mServiceFilter;
     private boolean mIsDataChanged = true;
-    private final int mDrawableColor;
+//    private final int mDrawableColor;
 
     public DevicesListAdapter(final Context _context) {
         super(_context);
-        mDrawableColor = getPrimaryColor(_context);
+//        mDrawableColor = getPrimaryColor(_context);
     }
 
     public DevicesListAdapter(final Context _context, final List<String> _data) {
         super(_context, _data);
-        mDrawableColor = getPrimaryColor(_context);
+//        mDrawableColor = getPrimaryColor(_context);
     }
 
-    private int getPrimaryColor(Context _context) {
-        final TypedValue typedValue = new TypedValue();
-        final Resources.Theme theme = _context.getTheme();
-        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        return typedValue.data;
-    }
+//    private int getPrimaryColor(Context _context) {
+//        final TypedValue typedValue = new TypedValue();
+//        final Resources.Theme theme = _context.getTheme();
+//        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+//        return typedValue.data;
+//    }
 
     @Override
     public void addData(List<String> data) {
@@ -77,7 +73,7 @@ public class DevicesListAdapter extends BaseAdapter<String> implements Filterabl
 
     @Override
     protected BaseViewHolder<String> getViewHolder(View view) {
-        return new ViewHolder(view, mDrawableColor);
+        return new ViewHolder(view/*, mDrawableColor*/);
     }
 
     private class ServiceFilter extends Filter {
@@ -122,15 +118,15 @@ public class DevicesListAdapter extends BaseAdapter<String> implements Filterabl
 
     private static final class ViewHolder extends BaseViewHolder<String> {
 
-        private final int mDrawableColor;
+//        private final int mDrawableColor;
         private TextView tvServiceName;
 
-        protected ViewHolder(View view, int _drawableColor) {
+        protected ViewHolder(View view/*, int _drawableColor*/) {
             super(view);
-            mDrawableColor = _drawableColor;
-            Drawable drawableStart = tvServiceName.getCompoundDrawablesRelative()[0];
-            drawableStart.mutate();
-            DrawableCompat.setTint(drawableStart, mDrawableColor);
+//            mDrawableColor = _drawableColor;
+//            Drawable drawableStart = tvServiceName.getCompoundDrawablesRelative()[0];
+//            drawableStart.mutate();
+//            DrawableCompat.setTint(drawableStart, mDrawableColor);
         }
 
         @Override

@@ -63,7 +63,6 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
         }
 
         public void setData(InfoHubTransActionsListItemModel _model){
-            hexagonView.setHexagonSrcDrawable(R.drawable.layerlist_infohub_icon);
             Picasso.with(mContext).load(_model.getIconUrl()).into(hexagonView);
             title.setText(_model.getTitle());
             description.setText(_model.getDescription());

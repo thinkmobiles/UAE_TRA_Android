@@ -67,7 +67,6 @@ public class InfoHubAnnFullListAdapter extends RecyclerView.Adapter<InfoHubAnnFu
         }
 
         public void setData(InfoHubAnnouncementsListItemModel _model){
-            hexagonView.setHexagonSrcDrawable(R.drawable.layerlist_infohub_icon);
             Picasso.with(mContext).load(_model.getIconUrl()).into(hexagonView);
             title.setText(_model.getTitle());
             description.setText(_model.getDescription());

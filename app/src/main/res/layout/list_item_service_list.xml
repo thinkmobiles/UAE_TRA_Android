@@ -8,7 +8,7 @@
     android:layout_gravity="center_vertical"
     android:background="?attr/selectableItemBackground"
     android:drawablePadding="12dp"
-    android:drawableStart="@drawable/background_service_item_icon"
+    android:drawableStart="?attr/backgroundServiceItemThemedIcon"
     android:gravity="center_vertical|start"
     android:paddingEnd="?attr/listPreferredItemPaddingRight"
     android:paddingStart="?attr/listPreferredItemPaddingLeft"
