@@ -95,7 +95,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     private final void collectAndSendToServer(){
         hideKeyboard(getView());
         if(filters.check(etOperatorNumber.getText().toString())){
-            showProgressDialog(getString(R.string.str_checking), null);
+            showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     mSmsBlockRequest = new SmsBlockRequest(
                             new SmsBlockRequestModel(

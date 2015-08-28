@@ -92,7 +92,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
-        showProgressDialog();
+        showProgressDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
     }
 

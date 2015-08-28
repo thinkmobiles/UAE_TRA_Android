@@ -3,6 +3,7 @@ package com.uae.tra_smart_services.fragment;
 import android.os.Bundle;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
+import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainEnquiriesServiceRequest;
@@ -30,7 +31,7 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         ComplainEnquiriesServiceRequest request = new ComplainEnquiriesServiceRequest(traServiceModel, getActivity(), getImageUri());
-        showProgressDialog();
+        showProgressDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
     }
 }

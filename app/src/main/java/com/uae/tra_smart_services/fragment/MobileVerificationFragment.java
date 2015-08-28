@@ -98,7 +98,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     private SearchByImeiRequest mRequest;
     private void searchDeviceByImei() {
         mRequest = new SearchByImeiRequest(etImeiNumber.getText().toString());
-        showProgressDialog();
+        showProgressDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(mRequest, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
     }
 

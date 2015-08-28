@@ -128,7 +128,7 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
         if (mSelectListener != null) {
             String selectedBrand = mAdapter.getItem(position);
             request = new SearchByBrandRequest(selectedBrand, 0, 100);
-            showProgressDialog();
+            showProgressDialog(getString(R.string.str_loading), this);
             getSpiceManager().execute(request, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
         }
     }
