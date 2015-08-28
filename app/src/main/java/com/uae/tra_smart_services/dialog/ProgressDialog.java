@@ -47,7 +47,7 @@ public final class ProgressDialog extends DialogFragment {
     @Override
     public void onCancel(DialogInterface dialog) {
         if(dialogInterface != null){
-            dialogInterface.cancel();
+            dialogInterface.onDialogCancel();
         }
     }
 
