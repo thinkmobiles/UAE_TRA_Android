@@ -18,7 +18,7 @@
         android:layout_marginRight="60dp"
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/tra_logo" />
+        tools:src="@drawable/tra_logo" />
 
     <FrameLayout
         android:id="@+id/flContainer_AA"

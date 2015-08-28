@@ -1,12 +1,13 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.octo.android.robospice.request.SpiceRequest;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ public class DeviceApprovalFragment extends BaseFragment {
 
     private static final String SELECTED_DEVICE_KEY = "SELECTED_DEVICE_KEY";
 
+    private ImageView ivLogo;
     private TextView tvApprovedDevice;
 
     private ArrayList<SearchDeviceResponseModel> mApprovedDevices;
@@ -43,6 +45,8 @@ public class DeviceApprovalFragment extends BaseFragment {
     @Override
     protected void initViews() {
         super.initViews();
+        ivLogo = findView(R.id.ivLogo_FDA);
+        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(getActivity(), R.drawable.logo));
         tvApprovedDevice = findView(R.id.tvApprovedDevice_FADR);
     }
 
