@@ -48,9 +48,8 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
-        if (_activity instanceof OnFavoriteServicesSelectedListener) {
+        if (_activity instanceof OnFavoriteServicesSelectedListener)
             mServicesSelectedListener = (OnFavoriteServicesSelectedListener) _activity;
-        }
     }
 
     @Override
@@ -143,11 +142,10 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
 
     @Override
     public void onItemClick(Service _item, boolean isSelected) {
-        if (isSelected) {
+        if (isSelected)
             mSelectedItems.add(_item);
-        } else {
+        else
             mSelectedItems.remove(_item);
-        }
     }
 
 

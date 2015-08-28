@@ -12,7 +12,7 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragmentActivity extends BaseActivity implements BaseFragment.ErrorHandler {
+public abstract class BaseFragmentActivity extends BaseActivity{
 
     private InputMethodManager mInputMethodManager;
 

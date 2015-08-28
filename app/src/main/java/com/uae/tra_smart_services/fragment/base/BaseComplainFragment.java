@@ -178,5 +178,4 @@ public abstract class BaseComplainFragment extends BaseServiceFragment implement
         final PackageManager pm = getActivity().getPackageManager();
         return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) && takePictureIntent.resolveActivity(pm) != null;
     }
-
 }
