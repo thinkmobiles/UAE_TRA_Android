@@ -8,13 +8,11 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
 import com.uae.tra_smart_services.rest.robo_requests.HelpSalimRequest;
@@ -84,8 +82,10 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
 
     private HelpSalimRequest mHelpSalimRequest;
     private final void collectAndSendToServer(){
+        hideKeyboard(getView());
         if(filters.check(eturl.getText().toString())){
             showProgressDialog(getString(R.string.str_checking), null);
+
             getSpiceManager().execute(
                     mHelpSalimRequest = new HelpSalimRequest(
                             new HelpSalimModel(

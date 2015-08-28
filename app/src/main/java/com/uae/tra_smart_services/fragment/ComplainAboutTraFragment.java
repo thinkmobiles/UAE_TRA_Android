@@ -11,7 +11,6 @@ import android.widget.ImageView;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
@@ -66,8 +65,8 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
     @Override
     public void onStart() {
         super.onStart();
-//        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
-        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestListener);
+        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
+//        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestListener);
     }
 
     @Override
@@ -99,6 +98,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
     @Override
     public void onDialogCancel() {
         if(getSpiceManager().isStarted()){
+            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
             getSpiceManager().cancel(request);
         }
     }
@@ -121,15 +121,15 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
                 }
             }
 
-            getSpiceManager().removeAllDataFromCache();
-//            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
+//            getSpiceManager().removeAllDataFromCache();
+            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             processError(spiceException);
-            getSpiceManager().removeAllDataFromCache();
-//            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
+//            getSpiceManager().removeAllDataFromCache();
+            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
     }
 

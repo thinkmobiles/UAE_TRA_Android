@@ -201,7 +201,7 @@
     <string name="error_select_state">Please select your state</string>
     <string name="error_no_network">Network is not available. Please check your internet connection</string>
     <string name="error_conversion_error">Server returned wrong format of data</string>
-    <string name="error_server">Server error occured</string>
+    <string name="error_server">Server error occurred</string>
 
     <!--            RegisterFragment            -->
     <string-array name="countries_array">
