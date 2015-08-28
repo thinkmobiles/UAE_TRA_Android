@@ -30,7 +30,6 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
@@ -94,7 +93,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
                 if (hasFocus) {
                     (locationTypeChooser = CustomSingleChoiceDialog
                             .newInstance(PoorCoverageFragment.this))
-                            .setTitle("Please select location type")
+                            .setTitle(getString(R.string.str_select_location_type))
                             .setBodyItems(LocationType.toStringArray())
                             .show(getFragmentManager());
                 }
@@ -226,7 +225,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
         switch (_view.getId()) {
             case R.id.etLocation_FPC:
                 locationTypeChooser
-                        .setTitle("Please select location type")
+                        .setTitle(getString(R.string.str_select_location_type))
                         .setBodyItems(LocationType.toStringArray())
                         .show(getFragmentManager());
                 break;

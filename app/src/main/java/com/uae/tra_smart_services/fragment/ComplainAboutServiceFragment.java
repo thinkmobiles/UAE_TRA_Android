@@ -154,7 +154,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     private void openServiceProviderPicker() {
         CustomSingleChoiceDialog
                 .newInstance(this)
-                .setTitle("Select service provider")
+                .setTitle(getString(R.string.str_select_service_provider))
                 .setBodyItems(ServiceProvider.toStringArray())
                 .show(getFragmentManager());
     }

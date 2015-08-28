@@ -102,6 +102,7 @@
     <string name="str_domain_info">Domain Info</string>
     <string name="str_request_failed">Request Failed</string>
     <string name="str_something_went_wrong">Something went wrong</string>
+    <string name="str_registering">Registration..</string>
     <string name="str_checking">Checking..</string>
     <string name="str_sending">Sending..</string>
     <string name="str_loading">Loading..</string>
@@ -121,6 +122,9 @@
     <string name="str_announcements">Announcements</string>
     <string name="str_transactions">Transactions</string>
     <string name="str_see_more">See More</string>
+    <string name="str_select_service_provider">Select service provider</string>
+    <string name="str_select_location_type">Select location type</string>
+    <string name="str_camera_is_not_available">Camera isn\'t available</string>
 
     <string name="str_dummy_info_hub_list_item_descr">
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and...
