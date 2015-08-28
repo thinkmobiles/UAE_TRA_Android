@@ -24,14 +24,21 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
             getFragmentManager().popBackStack();
         }
     }
-
+    private ComplainSuggestionServiceRequest mComplainSuggestionServiceRequest;
     @Override
     protected void sendComplain() {
         ComplainTRAServiceModel traServiceModel = new ComplainTRAServiceModel();
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
-        ComplainSuggestionServiceRequest request = new ComplainSuggestionServiceRequest(traServiceModel, getActivity(), getImageUri());
+        mComplainSuggestionServiceRequest = new ComplainSuggestionServiceRequest(traServiceModel, getActivity(), getImageUri());
         showProgressDialog(getString(R.string.str_sending), this);
-        getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
+        getSpiceManager().execute(mComplainSuggestionServiceRequest, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
+    }
+
+    @Override
+    public void onDialogCancel() {
+        if(getSpiceManager().isStarted() && mComplainSuggestionServiceRequest != null){
+            getSpiceManager().cancel(mComplainSuggestionServiceRequest);
+        }
     }
 }

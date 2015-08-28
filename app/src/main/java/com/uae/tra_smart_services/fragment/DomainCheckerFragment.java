@@ -139,6 +139,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     @Override
     public void onOkPressed() {
         // Unimplemented method
+        // Used exceptionally to specify OK button in dialog
     }
 
     @Override
