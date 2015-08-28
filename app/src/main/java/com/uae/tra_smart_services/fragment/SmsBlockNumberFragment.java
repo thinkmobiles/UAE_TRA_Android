@@ -95,7 +95,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     private final void collectAndSendToServer(){
         hideKeyboard(getView());
         if(filters.check(etOperatorNumber.getText().toString())){
-            showProgressDialog(getString(R.string.str_checking), null);
+            showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     mSmsBlockRequest = new SmsBlockRequest(
                             new SmsBlockRequestModel(
@@ -144,6 +144,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     @Override
     public void onOkPressed() {
         // Unimplemented method
+        // Used exceptionally to specify OK button in dialog
     }
 
     @Override

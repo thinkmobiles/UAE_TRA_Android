@@ -148,7 +148,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
             return;
         }
 
-        showProgressDialog(getString(R.string.str_sending), null);
+        showProgressDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(
                 new PoorCoverageRequest(
                         mLocationModel

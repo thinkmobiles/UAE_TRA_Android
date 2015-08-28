@@ -16,6 +16,7 @@ import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutTRAServiceRequest;
@@ -25,7 +26,8 @@ import retrofit.client.Response;
 /**
  * Created by mobimaks on 11.08.2015.
  */
-public class ComplainAboutTraFragment extends BaseComplainFragment implements OnClickListener {
+public class ComplainAboutTraFragment extends BaseComplainFragment
+                                    implements OnClickListener, AlertDialogFragment.OnOkListener {
 
     protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_REQUEST";
 
@@ -92,7 +94,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
-        showProgressDialog();
+        showProgressDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
     }
 
@@ -101,6 +103,12 @@ public class ComplainAboutTraFragment extends BaseComplainFragment implements On
         if(getSpiceManager().isStarted()){
             getSpiceManager().cancel(request);
         }
+    }
+
+    @Override
+    public void onOkPressed() {
+        // Unimplemented method
+        // Used exceptionally to specify OK button in dialog
     }
 
     private class RequestResponseListener implements PendingRequestListener<Response> {
