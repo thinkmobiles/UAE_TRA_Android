@@ -11,7 +11,6 @@ import android.widget.ImageView;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
@@ -36,6 +35,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
 
     private Uri mImageUri;
     private RequestResponseListener mRequestListener;
+    private ComplainAboutTRAServiceRequest request;
 
     public static ComplainAboutTraFragment newInstance() {
         return new ComplainAboutTraFragment();
@@ -87,7 +87,6 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
         mImageUri = _uri;
     }
 
-    ComplainAboutTRAServiceRequest request;
     @Override
     protected void sendComplain() {
         ComplainTRAServiceModel traServiceModel = new ComplainTRAServiceModel();
@@ -100,8 +99,8 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
 
     @Override
     public void onDialogCancel() {
-        if(getSpiceManager().isStarted()){
-            getSpiceManager().cancel(request);
+        if (getSpiceManager().isStarted() && request != null) {
+            request.cancel();
         }
     }
 

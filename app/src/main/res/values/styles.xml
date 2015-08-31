@@ -1,8 +1,7 @@
 <resources>
 
-    <style name="BlackAndWhiteToolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="actionMenuTextColor">@android:color/white</item>
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:layoutDirection">ltr</item>
     </style>
 
     <style name="AuthorizationFieldsSeparator">

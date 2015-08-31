@@ -15,6 +15,7 @@
         <item name="shadowBackgroundColor">#fff5ea</item>
         <item name="dragDeleteColor">#f00</item>
         <item name="serviceInfoBackground">@color/fragment_service_info_background</item>
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
     </style>
 
     <style name="AppThemeOrange" parent="BaseAppTheme">

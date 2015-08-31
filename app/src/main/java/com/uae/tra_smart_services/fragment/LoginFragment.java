@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
+import com.uae.tra_smart_services.BuildConfig;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
@@ -54,8 +54,17 @@ public class LoginFragment extends BaseAuthorizationFragment
         btnRegisterNow = findView(R.id.btnRegisterNow_FLI);
         btnSkip = findView(R.id.btnSkip_FLI);
 
-        etUserName.setText("vitaliy.shuba.trash@gmail.com");
-        etPassword.setText("12345678");
+        if (BuildConfig.DEBUG) {
+            btnLogIn.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    etUserName.setText("vitaliy.shuba.trash@gmail.com");
+                    etPassword.setText("12345678");
+                    doLogIn();
+                    return true;
+                }
+            });
+        }
     }
 
     @Override
