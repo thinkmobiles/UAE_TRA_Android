@@ -7,13 +7,13 @@ public enum ServiceProvider {
     DU {
         @Override
         public String toString() {
-            return "Du service provider";
+            return "Du";
         }
     },
     ETISALAT {
         @Override
         public String toString() {
-            return "Etisalat service provider";
+            return "Etisalat";
         }
     };
 

@@ -9,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -36,6 +35,8 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     private ImageView ivAddAttachment, ivNextItem;
     private TextView tvServiceProvider;
     private EditText etComplainTitle, etReferenceNumber, etDescription;
+
+    private ComplainAboutServiceRequest mComplainAboutServiceRequest;
 
     private RequestResponseListener mRequestResponseListener;
 
@@ -89,7 +90,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         }
         return super.onOptionsItemSelected(item);
     }
-    ComplainAboutServiceRequest mComplainAboutServiceRequest;
+
     @Override
     protected void sendComplain() {
         ComplainServiceProviderModel complainModel = new ComplainServiceProviderModel();
@@ -154,7 +155,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     private void openServiceProviderPicker() {
         CustomSingleChoiceDialog
                 .newInstance(this)
-                .setTitle("Select service provider")
+                .setTitle(getString(R.string.str_select_service_provider))
                 .setBodyItems(ServiceProvider.toStringArray())
                 .show(getFragmentManager());
     }

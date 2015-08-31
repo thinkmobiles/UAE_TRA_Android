@@ -121,7 +121,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     private final void openServiceProviderPicker() {
         CustomSingleChoiceDialog
                 .newInstance(this)
-                .setTitle("Select service provider")
+                .setTitle(getString(R.string.str_select_service_provider))
                 .setBodyItems(ServiceProvider.toStringArray())
                 .show(getFragmentManager());
     }

@@ -118,7 +118,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         if (isCameraAvailable()) {
             startScanner();
         } else {
-            Toast.makeText(getActivity(), "Camera isn't available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.str_camera_is_not_available), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -33,9 +33,9 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     private ImageView ivAddAttachment;
     private EditText etComplainTitle, etDescription;
 
+    private ComplainAboutTRAServiceRequest request;
     private Uri mImageUri;
     private RequestResponseListener mRequestListener;
-    private ComplainAboutTRAServiceRequest request;
 
     public static ComplainAboutTraFragment newInstance() {
         return new ComplainAboutTraFragment();
@@ -68,8 +68,8 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     @Override
     public void onStart() {
         super.onStart();
-//        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
-        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestListener);
+        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
+//        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestListener);
     }
 
     @Override
@@ -99,8 +99,9 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
 
     @Override
     public void onDialogCancel() {
-        if (getSpiceManager().isStarted() && request != null) {
-            request.cancel();
+        if(getSpiceManager().isStarted()){
+            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
+            getSpiceManager().cancel(request);
         }
     }
 
@@ -128,15 +129,15 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
                 }
             }
 
-            getSpiceManager().removeAllDataFromCache();
-//            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
+//            getSpiceManager().removeAllDataFromCache();
+            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             processError(spiceException);
-            getSpiceManager().removeAllDataFromCache();
-//            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
+//            getSpiceManager().removeAllDataFromCache();
+            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
     }
 

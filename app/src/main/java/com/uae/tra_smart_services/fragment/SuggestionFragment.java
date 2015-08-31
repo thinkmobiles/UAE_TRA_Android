@@ -13,6 +13,8 @@ import com.uae.tra_smart_services.rest.robo_requests.ComplainSuggestionServiceRe
  */
 public class SuggestionFragment extends ComplainAboutTraFragment {
 
+    private ComplainSuggestionServiceRequest mComplainSuggestionServiceRequest;
+
     public static SuggestionFragment newInstance() {
         return new SuggestionFragment();
     }
@@ -24,7 +26,7 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
             getFragmentManager().popBackStack();
         }
     }
-    private ComplainSuggestionServiceRequest mComplainSuggestionServiceRequest;
+
     @Override
     protected void sendComplain() {
         ComplainTRAServiceModel traServiceModel = new ComplainTRAServiceModel();
@@ -40,5 +42,10 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
         if(getSpiceManager().isStarted() && mComplainSuggestionServiceRequest != null){
             getSpiceManager().cancel(mComplainSuggestionServiceRequest);
         }
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.service_suggestion;
     }
 }

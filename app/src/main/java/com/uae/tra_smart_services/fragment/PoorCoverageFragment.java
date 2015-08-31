@@ -30,7 +30,6 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
@@ -52,6 +51,12 @@ public class PoorCoverageFragment extends BaseServiceFragment
     private LocationType mLocationType;
     private TextView tvSignalLevel;
 
+    private EditText etLocation;
+    private SeekBar sbPoorCoverage;
+    private ProgressBar sbProgressBar;
+
+    private PoorCoverageRequest mPoorCoverageRequest;
+
     public static PoorCoverageFragment newInstance() {
         return new PoorCoverageFragment();
     }
@@ -66,10 +71,6 @@ public class PoorCoverageFragment extends BaseServiceFragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-    private EditText etLocation;
-    private SeekBar sbPoorCoverage;
-    private ProgressBar sbProgressBar;
 
     @Override
     protected void initViews() {
@@ -94,7 +95,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
                 if (hasFocus) {
                     (locationTypeChooser = CustomSingleChoiceDialog
                             .newInstance(PoorCoverageFragment.this))
-                            .setTitle("Please select location type")
+                            .setTitle(getString(R.string.str_select_location_type))
                             .setBodyItems(LocationType.toStringArray())
                             .show(getFragmentManager());
                 }
@@ -150,7 +151,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
         showProgressDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(
-                new PoorCoverageRequest(
+                mPoorCoverageRequest = new PoorCoverageRequest(
                         mLocationModel
                 ),
                 new PoorCoverageRequestListener()
@@ -197,11 +198,11 @@ public class PoorCoverageFragment extends BaseServiceFragment
             }
         });
     }
-    private GeoLocationRequest  mGeoLocationRequest;
+
     private void defineUserFriendlyAddress(Location _location) {
         final Geocoder geocoder = new Geocoder(getActivity().getBaseContext(), Locale.getDefault());
         getSpiceManager().execute(
-                mGeoLocationRequest = new GeoLocationRequest(geocoder, _location),
+                new GeoLocationRequest(geocoder, _location),
                 new GeoLocationRequestListener()
         );
     }
@@ -226,7 +227,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
         switch (_view.getId()) {
             case R.id.etLocation_FPC:
                 locationTypeChooser
-                        .setTitle("Please select location type")
+                        .setTitle(getString(R.string.str_select_location_type))
                         .setBodyItems(LocationType.toStringArray())
                         .show(getFragmentManager());
                 break;
@@ -251,8 +252,8 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
     @Override
     public void onDialogCancel() {
-        if(getSpiceManager().isStarted() && mGeoLocationRequest != null){
-            getSpiceManager().cancel(mGeoLocationRequest);
+        if(getSpiceManager().isStarted() && mPoorCoverageRequest != null){
+            getSpiceManager().cancel(mPoorCoverageRequest);
         }
     }
 
