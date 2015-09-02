@@ -27,7 +27,7 @@ import com.uae.tra_smart_services.util.ImageUtils;
 public class DomainCheckerFragment extends BaseServiceFragment
         implements View.OnClickListener, AlertDialogFragment.OnOkListener {
 
-    private ImageView ivLogo;
+//    private ImageView ivLogo;
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
 
@@ -54,8 +54,8 @@ public class DomainCheckerFragment extends BaseServiceFragment
     @Override
     protected final void initViews() {
         super.initViews();
-        ivLogo = findView(R.id.ivLogo_FDC);
-        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(ivLogo.getContext(), R.drawable.tra_logo));
+//        ivLogo = findView(R.id.ivLogo_FDC);
+//        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(ivLogo.getContext(), R.drawable.tra_logo));
         btnAvail = findView(R.id.btnAvail_FDCH);
         btnWhoIS = findView(R.id.btnWhoIs_FDCH);
         etDomainAvail = findView(R.id.etDomainAvail_FDCH);
