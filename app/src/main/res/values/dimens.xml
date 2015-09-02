@@ -21,4 +21,13 @@
     <dimen name="dp_dashboard_tab_drawable_padding">3dp</dimen>
     <dimen name="dp_divider_padding_side">3dp</dimen>
     <dimen name="dp_service_container_padding">10dp</dimen>
+
+    <!--            RatingView                      -->
+    <dimen name="rating_hexagon_side">30dp</dimen>
+    <dimen name="rating_hexagon_border_size">1.5dp</dimen>
+    <dimen name="rating_odd_hexagon_margin_top">16dp</dimen>
+    <dimen name="rating_hexagon_text_size">24sp</dimen>
+
+
+
 </resources>

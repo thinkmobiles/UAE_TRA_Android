@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -27,17 +28,20 @@ import com.uae.tra_smart_services.util.ImageUtils;
 /**
  * Created by mobimaks on 02.08.2015.
  */
-public class HexagonView extends View implements Target {
+public final class HexagonView extends View implements Target {
 
-    private final int DEFAULT_HEXAGON_RADIUS = (int) (30 * getResources().getDisplayMetrics().density);
+    private final int DEFAULT_TEXT_SIZE = Math.round(14 * getResources().getDisplayMetrics().density);
+    private final int DEFAULT_HEXAGON_RADIUS = Math.round(30 * getResources().getDisplayMetrics().density);
     private final int HEXAGON_BORDER_COUNT = 6;
 
-    private double mHexagonSide, mHexagonInnerRadius;
     private final Path mPath;
-    private Paint mPaint, mShadowPaint;
-    private int mBorderColor, mBackgroundColor, mBorderWidth;
+    private Paint mPaint, mShadowPaint, mTextPaint;
+    private Rect mHexagonRect, mTextRect;
     private Drawable mSrcDrawable;
-    private Rect mHexagonRect = new Rect();
+    private String mText;
+    private double mHexagonSide, mHexagonInnerRadius;
+    private int mBorderColor, mBackgroundColor, mTextColor;
+    private float mBorderWidth, mTextSize;
 
     public HexagonView(Context context) {
         this(context, null);
@@ -51,20 +55,31 @@ public class HexagonView extends View implements Target {
         try {
             setHexagonSide(a.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS));
             mBorderWidth = a.getDimensionPixelSize(R.styleable.HexagonView_hexagonBorderSize, 0);
+            mTextSize = a.getDimensionPixelSize(R.styleable.HexagonView_hexagonTextSize, DEFAULT_TEXT_SIZE);
             mBorderColor = a.getColor(R.styleable.HexagonView_hexagonBorderColor, 0xFFC8C7C6);
+            mTextColor = a.getColor(R.styleable.HexagonView_hexagonTextColor, mBorderColor);
             mBackgroundColor = a.getColor(R.styleable.HexagonView_hexagonBackgroundColor, Color.TRANSPARENT);
             mSrcDrawable = a.getDrawable(R.styleable.HexagonView_hexagonSrc);
-
+            mText = a.getString(R.styleable.HexagonView_hexagonText);
         } finally {
             a.recycle();
         }
+
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setColor(mBorderColor);
         mPaint.setStrokeWidth(mBorderWidth);
         mPaint.setStyle(Paint.Style.STROKE);
 
+        mTextPaint = new Paint();
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
+        mTextPaint.setTextSize(mTextSize);
+        mTextPaint.setColor(mTextColor);
+
         mPath = new Path();
+
+        mHexagonRect = new Rect();
+        mTextRect = new Rect();
     }
 
     public final void setHexagonSide(final int _hexagonSideSize) {
@@ -97,7 +112,7 @@ public class HexagonView extends View implements Target {
         return mHexagonSide;
     }
 
-    public int getBorderWidth() {
+    public float getBorderWidth() {
         return mBorderWidth;
     }
 
@@ -119,6 +134,15 @@ public class HexagonView extends View implements Target {
         }
 
         setMeasuredDimension((int) width, (int) Math.round(2 * mHexagonSide + mBorderWidth));
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        if (mSrcDrawable != null) {
+            mSrcDrawable.setState(getDrawableState());
+            invalidate();
+        }
     }
 
     @Override
@@ -172,7 +196,17 @@ public class HexagonView extends View implements Target {
             canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
         }
 
+        if (!TextUtils.isEmpty(mText)) {
+            drawText(canvas);
+        }
+
         canvas.drawPath(mPath, mPaint);
+    }
+
+    private void drawText(final Canvas _canvas) {
+        mTextPaint.getTextBounds(mText, 0, mText.length(), mTextRect);
+        float y = (_canvas.getHeight() + mTextRect.height()) / 2f - mTextRect.bottom;
+        _canvas.drawText(mText, _canvas.getWidth() / 2, y, mTextPaint);
     }
 
     @Override
