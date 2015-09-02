@@ -11,13 +11,7 @@
         android:background="@color/hex_authorization_background_color"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|center_vertical"
-            android:layout_margin="@dimen/abc_action_bar_content_inset_material"
-            android:adjustViewBounds="true"
-            android:src="@drawable/tra_logo" />
+        <include layout="@layout/layout_domain_check_common_header"/>
 
         <LinearLayout
             android:id="@+id/llSignInFields"
