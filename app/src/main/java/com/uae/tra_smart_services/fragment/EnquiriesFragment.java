@@ -13,10 +13,13 @@ import com.uae.tra_smart_services.rest.robo_requests.ComplainEnquiriesServiceReq
  */
 public class EnquiriesFragment extends ComplainAboutTraFragment {
 
+    private static final String KEY_ENQUIRIES_REQUEST = "ENQUIRIES_REQUEST";
+
+    private ComplainEnquiriesServiceRequest mRequest;
+
     public static EnquiriesFragment newInstance() {
         return new EnquiriesFragment();
     }
-    private ComplainEnquiriesServiceRequest mRequest;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
         traServiceModel.description = getDescriptionText();
         mRequest = new ComplainEnquiriesServiceRequest(traServiceModel, getActivity(), getImageUri());
         showProgressDialog(getString(R.string.str_sending), this);
-        getSpiceManager().execute(mRequest, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
+        getSpiceManager().execute(mRequest, getRequestKey(), DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
     }
 
     @Override
@@ -41,6 +44,11 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
         if (getSpiceManager().isStarted() && mRequest != null) {
             getSpiceManager().cancel(mRequest);
         }
+    }
+
+    @Override
+    protected String getRequestKey() {
+        return KEY_ENQUIRIES_REQUEST;
     }
 
     @Override

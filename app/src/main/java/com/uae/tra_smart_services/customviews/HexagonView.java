@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -40,8 +41,10 @@ public final class HexagonView extends View implements Target {
     private Drawable mSrcDrawable;
     private String mText;
     private double mHexagonSide, mHexagonInnerRadius;
-    private int mBorderColor, mBackgroundColor, mTextColor;
     private float mBorderWidth, mTextSize;
+
+    @ColorInt
+    private int mBorderColor, mBackgroundColor, mTextColor;
 
     public HexagonView(Context context) {
         this(context, null);

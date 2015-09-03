@@ -13,11 +13,10 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
-import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
-import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
+import com.uae.tra_smart_services.dialog.SingleChoiceDialog;
+import com.uae.tra_smart_services.dialog.SingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.ServiceProvider;
 import com.uae.tra_smart_services.rest.model.request.SmsBlockRequestModel;
@@ -118,17 +117,15 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
         openServiceProviderPicker();
     }
 
-    private final void openServiceProviderPicker() {
-        CustomSingleChoiceDialog
-                .newInstance(this)
-                .setTitle(getString(R.string.str_select_service_provider))
-                .setBodyItems(ServiceProvider.toStringArray())
+    private void openServiceProviderPicker() {
+        SingleChoiceDialog
+                .newInstance(this, R.string.str_select_service_provider, ServiceProvider.toStringResArray())
                 .show(getFragmentManager());
     }
 
     @Override
     public void onItemPicked(int _dialogItem) {
-        tvServiceProvider.setText(ServiceProvider.toStringArray()[_dialogItem].toString());
+        tvServiceProvider.setText(ServiceProvider.toStringResArray()[_dialogItem]);
     }
 
     @Override

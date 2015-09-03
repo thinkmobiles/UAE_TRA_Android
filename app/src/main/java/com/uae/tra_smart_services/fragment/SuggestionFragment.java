@@ -13,6 +13,8 @@ import com.uae.tra_smart_services.rest.robo_requests.ComplainSuggestionServiceRe
  */
 public class SuggestionFragment extends ComplainAboutTraFragment {
 
+    private static final String KEY_SUGGESTION_REQUEST = "SUGGESTION_REQUEST";
+
     private ComplainSuggestionServiceRequest mComplainSuggestionServiceRequest;
 
     public static SuggestionFragment newInstance() {
@@ -34,7 +36,12 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
         traServiceModel.description = getDescriptionText();
         mComplainSuggestionServiceRequest = new ComplainSuggestionServiceRequest(traServiceModel, getActivity(), getImageUri());
         showProgressDialog(getString(R.string.str_sending), this);
-        getSpiceManager().execute(mComplainSuggestionServiceRequest, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
+        getSpiceManager().execute(mComplainSuggestionServiceRequest, getRequestKey(), DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
+    }
+
+    @Override
+    protected String getRequestKey() {
+        return KEY_SUGGESTION_REQUEST;
     }
 
     @Override

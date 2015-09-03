@@ -225,5 +225,17 @@
         <item>Umm al-Quwain</item>
     </string-array>
 
+    <string name="fragment_complain_about_service_du">DU</string>
+    <string name="fragment_complain_about_service_etisalat">Etisalat</string>
+    <string name="fragment_complain_about_service_yahsat">Yahsat</string>
+    
+    <string name="fragment_poor_coverage_location_type_auto">Automatically</string>
+    <string name="fragment_poor_coverage_location_type_manual">Enter your location</string>
+
+    <string name="fragment_complain_about_service_no_camera_and_app">There is no camera or gallery app</string>
+    <string name="fragment_complain_about_service_take_image_from">Take image from…</string>
+    <string name="fragment_complain_about_service_camera">Camera</string>
+    <string name="fragment_complain_about_service_gallery">Gallery</string>
+
 
 </resources>

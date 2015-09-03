@@ -9,6 +9,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
+import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.global.ImageSource;
 
 import static android.app.AlertDialog.THEME_HOLO_LIGHT;
@@ -38,8 +39,8 @@ public class ImageSourcePickerDialog extends DialogFragment implements OnClickLi
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new AlertDialog.Builder(getActivity(), THEME_HOLO_LIGHT)
-                .setTitle("Take image from...")
-                .setItems(ImageSource.toStringArray(), this)
+                .setTitle(R.string.fragment_complain_about_service_take_image_from)
+                .setItems(ImageSource.toStringArray(getActivity()), this)
                 .create();
     }
 

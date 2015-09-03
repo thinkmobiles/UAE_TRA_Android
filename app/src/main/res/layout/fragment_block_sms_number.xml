@@ -7,79 +7,65 @@
 
     <EditText
         android:id="@+id/etOperatorNumber_FBSN"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:textColor="@android:color/black"
+        style="@style/UserAuthorizationDataEditTextField"
         android:background="@null"
         android:gravity="center_vertical"
-        android:inputType="phone"
         android:hint="@string/operator_number"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
+        android:inputType="phone"
         android:singleLine="true"
-        android:textSize="16sp"/>
+        android:textColor="@android:color/black"/>
 
     <View
         android:id="@+id/vOperatorNumberDivider_FBSN"
-        android:background="@android:drawable/divider_horizontal_textfield"
-        android:layout_below="@id/etOperatorNumber_FBSN"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:layout_below="@id/etOperatorNumber_FBSN"
+        android:background="@android:drawable/divider_horizontal_textfield"/>
 
     <TextView
         android:id="@+id/tvServiceProvider_FBSN"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/black"
-        android:layout_height="48dp"
+        style="@style/UserAuthorizationDataEditTextField"
         android:layout_below="@id/vOperatorNumberDivider_FBSN"
         android:background="@null"
         android:freezesText="true"
         android:gravity="center_vertical"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
         android:hint="@string/service_provider"
-        android:textSize="16sp"/>
+        android:textColor="@android:color/black"
+        android:textSize="18sp"/>
 
     <View
         android:id="@+id/vServiceProviderDivider_FBSN"
-        android:background="@android:drawable/divider_horizontal_textfield"
-        android:layout_below="@id/tvServiceProvider_FBSN"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:layout_below="@id/tvServiceProvider_FBSN"
+        android:background="@android:drawable/divider_horizontal_textfield"/>
 
     <EditText
         android:id="@+id/etReferenceNumber_FBSN"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/black"
-        android:layout_height="48dp"
+        style="@style/UserAuthorizationDataEditTextField"
         android:layout_below="@id/vServiceProviderDivider_FBSN"
         android:background="@null"
-        android:gravity="center_vertical"
         android:hint="@string/number_of_spammer"
         android:inputType="phone"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
         android:singleLine="true"
-        android:textSize="16sp"/>
+        android:textColor="@android:color/black"/>
 
     <View
         android:id="@+id/vReferenceNumberDivider_FBSN"
-        android:background="@android:drawable/divider_horizontal_textfield"
-        android:layout_below="@id/etReferenceNumber_FBSN"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:layout_below="@id/etReferenceNumber_FBSN"
+        android:background="@android:drawable/divider_horizontal_textfield"/>
 
     <EditText
         android:id="@+id/etDescription_FBSN"
-        android:layout_width="match_parent"
+        style="@style/UserAuthorizationDataEditTextField"
         android:layout_height="match_parent"
-        android:textColor="@android:color/black"
         android:layout_below="@id/vReferenceNumberDivider_FBSN"
         android:background="@null"
         android:gravity="start|top"
         android:hint="@string/description"
         android:inputType="textAutoCorrect|textMultiLine"
-        android:padding="8dp"
-        android:textSize="16sp"/>
+        android:textColor="@android:color/black"/>
 
 </RelativeLayout>

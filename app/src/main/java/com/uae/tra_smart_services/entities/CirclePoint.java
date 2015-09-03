@@ -9,4 +9,12 @@ public class CirclePoint {
     public int dX;
     public String colorThema;
     public Paint paint;
+
+    public final void setPaintStyle(final Paint.Style _paintStyle) {
+        if (paint == null) {
+            paint = new Paint();
+        }
+        paint.setStyle(_paintStyle);
+    }
+
 }

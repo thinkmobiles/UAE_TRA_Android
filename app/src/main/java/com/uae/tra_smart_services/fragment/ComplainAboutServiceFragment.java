@@ -15,8 +15,8 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
-import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
-import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
+import com.uae.tra_smart_services.dialog.SingleChoiceDialog;
+import com.uae.tra_smart_services.dialog.SingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.global.ServiceProvider;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
@@ -37,6 +37,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     private EditText etComplainTitle, etReferenceNumber, etDescription;
 
     private ComplainAboutServiceRequest mComplainAboutServiceRequest;
+    private String mSelectedService;
 
     private RequestResponseListener mRequestResponseListener;
 
@@ -77,8 +78,8 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     @Override
     public void onStart() {
         super.onStart();
-        //getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestResponseListener);
-        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestResponseListener);
+        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestResponseListener);
+//        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestResponseListener);
     }
 
     @Override
@@ -95,7 +96,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     protected void sendComplain() {
         ComplainServiceProviderModel complainModel = new ComplainServiceProviderModel();
         complainModel.title = etComplainTitle.getText().toString();
-        complainModel.serviceProvider = tvServiceProvider.getText().toString();
+        complainModel.serviceProvider = mSelectedService;
         complainModel.referenceNumber = etReferenceNumber.getText().toString();
         complainModel.description = etDescription.getText().toString();
         mComplainAboutServiceRequest = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
@@ -153,16 +154,16 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     }
 
     private void openServiceProviderPicker() {
-        CustomSingleChoiceDialog
-                .newInstance(this)
-                .setTitle(getString(R.string.str_select_service_provider))
-                .setBodyItems(ServiceProvider.toStringArray())
+        SingleChoiceDialog
+                .newInstance(this, R.string.str_select_service_provider, ServiceProvider.toStringResArray())
                 .show(getFragmentManager());
     }
 
     @Override
     public void onItemPicked(int _dialogItem) {
-        tvServiceProvider.setText(ServiceProvider.values()[_dialogItem].toString());
+        final ServiceProvider provider = ServiceProvider.values()[_dialogItem];
+        mSelectedService = provider.toString();
+        tvServiceProvider.setText(provider.getTitleRes());
     }
 
     @Override
@@ -184,12 +185,12 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
                 hideProgressDialog();
+                getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
                 if (result != null) {
                     showMessage(R.string.str_success, R.string.str_complain_has_been_sent);
                     getFragmentManager().popBackStackImmediate();
                 }
             }
-            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
 
         @Override

@@ -28,8 +28,8 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
-import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog;
-import com.uae.tra_smart_services.dialog.CustomSingleChoiceDialog.OnItemPickListener;
+import com.uae.tra_smart_services.dialog.SingleChoiceDialog;
+import com.uae.tra_smart_services.dialog.SingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
@@ -93,11 +93,9 @@ public class PoorCoverageFragment extends BaseServiceFragment
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    (locationTypeChooser = CustomSingleChoiceDialog
-                            .newInstance(PoorCoverageFragment.this))
-                            .setTitle(getString(R.string.str_select_location_type))
-                            .setBodyItems(LocationType.toStringArray())
-                            .show(getFragmentManager());
+                    locationTypeChooser = SingleChoiceDialog.newInstance(PoorCoverageFragment.this,
+                            R.string.str_select_location_type, LocationType.toStringResArray());
+                    locationTypeChooser.show(getFragmentManager());
                 }
             }
         });
@@ -105,7 +103,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
     private GoogleApiClient mGoogleApiClient;
     private PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
-    CustomSingleChoiceDialog locationTypeChooser;
+    SingleChoiceDialog locationTypeChooser;
 
     @Override
     protected void initData() {
@@ -180,6 +178,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
                 break;
         }
     }
+
     private void showLocationSettings() {
         sbProgressBar.setVisibility(View.VISIBLE);
         etLocation.setOnClickListener(null);
@@ -226,10 +225,8 @@ public class PoorCoverageFragment extends BaseServiceFragment
     public void onClick(View _view) {
         switch (_view.getId()) {
             case R.id.etLocation_FPC:
-                locationTypeChooser
-                        .setTitle(getString(R.string.str_select_location_type))
-                        .setBodyItems(LocationType.toStringArray())
-                        .show(getFragmentManager());
+                locationTypeChooser = SingleChoiceDialog.newInstance(this, R.string.str_select_location_type, LocationType.toStringResArray());
+                locationTypeChooser.show(getFragmentManager());
                 break;
         }
     }
@@ -252,7 +249,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
     @Override
     public void onDialogCancel() {
-        if(getSpiceManager().isStarted() && mPoorCoverageRequest != null){
+        if (getSpiceManager().isStarted() && mPoorCoverageRequest != null) {
             getSpiceManager().cancel(mPoorCoverageRequest);
         }
     }
