@@ -13,7 +13,7 @@
         android:background="@color/hex_authorization_background_color"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_domain_check_common_header"/>
+        <include layout="@layout/layout_domain_check_common_header" />
 
         <LinearLayout
             android:id="@+id/llSignInFields"
@@ -25,7 +25,7 @@
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
-                android:id="@+id/etDomainAvail_FDCH"
+                android:id="@+id/tvDomainAvail_FDCH"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:hint="@string/str_insert_domain_name_here"
                 android:inputType="text" />
@@ -44,37 +44,19 @@
                 android:id="@+id/btnAvail_FDCH"
                 style="@style/BlurButtonStyleSimple"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/str_availabilty" />
 
             <Button
                 android:id="@+id/btnWhoIs_FDCH"
                 style="@style/BlurButtonStyleSimple"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="@string/str_who_is"/>
+                android:layout_weight="1"
+                android:text="@string/str_whois" />
 
         </LinearLayout>
 
-        <!--<RadioGroup
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-        </RadioGroup>-->
     </LinearLayout>
 </ScrollView>

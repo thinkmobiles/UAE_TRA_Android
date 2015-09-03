@@ -108,7 +108,7 @@
     <string name="hexagon_button_internet">انترنت</string>
     <string name="hexagon_button_spam">رسائل غير مرغوبة</string>
     <string name="hexagon_button_coverage">التغطية</string>
-    <string name="str_who_is">تفاصيل النطاق</string>
+    <string name="str_whois">تفاصيل النطاق</string>
     <string name="str_availabilty">تحقق من توفر النطاق</string>
 
 

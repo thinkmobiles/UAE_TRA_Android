@@ -71,7 +71,7 @@
     <!--            Availability in button               -->
     <string name="str_domain_check">Domain Check</string>
     <string name="str_availabilty">Availability</string>
-    <string name="str_who_is">Who is\?</string>
+    <string name="str_whois">Who is\?</string>
     <string name="str_location">Location</string>
     <string name="str_signal_level">Signal Level</string>
     <string name="str_signal_coverage">Signal Coverage</string>

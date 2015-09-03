@@ -7,7 +7,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/hex_authorization_background_color"
         android:orientation="vertical">
 
@@ -16,7 +16,7 @@
         <LinearLayout
             android:id="@+id/llSignInFields"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:orientation="vertical">
 
@@ -26,6 +26,13 @@
                 android:textColor="@color/hex_black_color" />
 
         </LinearLayout>
+
+        <include
+            android:layout_gravity="center"
+            android:id="@+id/rgDomainCheckServiceRating_FDCH"
+            layout="@layout/layout_domain_check_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </ScrollView>
