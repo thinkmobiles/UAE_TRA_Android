@@ -5,7 +5,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -14,12 +13,12 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
 import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
  * Created by ak-buffalo on 10.08.15.
@@ -58,7 +57,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
 //        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(ivLogo.getContext(), R.drawable.tra_logo));
         btnAvail = findView(R.id.btnAvail_FDCH);
         btnWhoIS = findView(R.id.btnWhoIs_FDCH);
-        etDomainAvail = findView(R.id.etDomainAvail_FDCH);
+        etDomainAvail = findView(R.id.tvDomainAvail_FDCH);
     }
 
     @Override
@@ -160,18 +159,21 @@ public class DomainCheckerFragment extends BaseServiceFragment
 
     private final class DomainAvailabilityCheckRequestListener
             extends DomainCheckRequestListener<DomainAvailabilityCheckResponseModel> {
-
+        private String mDomain;
         DomainAvailabilityCheckRequestListener(String _domain) {
             super(_domain);
+            mDomain = _domain;
         }
 
         @Override
         public void onRequestSuccess(DomainAvailabilityCheckResponseModel _str) {
             hideProgressDialog();
             if (_str.availableStatus.equals(ServerConstants.AVAILABLE)) {
+                Bundle bundle = new Bundle();
+                bundle.putString(C.DOMAIN_INFO, mDomain);
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.flContainer_AH, DomainIsAvailableFragment.newInstance())
+                        .replace(R.id.flContainer_AH, DomainIsAvailableFragment.newInstance(bundle))
                         .addToBackStack(null)
                         .commit();
             } else if (_str.availableStatus.equals(ServerConstants.NOT_AVAILABLE)) {

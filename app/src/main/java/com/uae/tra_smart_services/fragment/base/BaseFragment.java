@@ -24,6 +24,7 @@ import com.octo.android.robospice.exception.NoNetworkException;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;

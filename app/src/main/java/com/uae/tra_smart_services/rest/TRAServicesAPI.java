@@ -5,12 +5,14 @@ import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
-import com.uae.tra_smart_services.rest.model.request.RatingServiceModel;
+import com.uae.tra_smart_services.rest.model.request.RatingServiceRequestModel;
 import com.uae.tra_smart_services.rest.model.request.RegisterModel;
 import com.uae.tra_smart_services.rest.model.request.SmsBlockRequestModel;
 import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
+import com.uae.tra_smart_services.rest.model.response.CustomResponse;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
+import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 
@@ -64,7 +66,7 @@ public interface TRAServicesAPI {
                                                  @Query(PARAMETER_END_LIMIT) Integer _end);
 
     @POST(RATING_SERVICE_URL)
-    Response ratingService(@Body RatingServiceModel _ratingServiceModel);
+    RatingServiceResponseModel ratingService(@Body RatingServiceRequestModel _ratingServiceModel);
 
     @POST(SMS_SPAM_REPORT_URL)
     SmsSpamResponseModel reportSmsSpam(@Body SmsReportRequestModel _smsSpamModel);
