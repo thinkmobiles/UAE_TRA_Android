@@ -25,7 +25,6 @@
                 android:textColor="@color/hex_black_color"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:padding="12dp"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +43,6 @@
         </LinearLayout>
 
         <include
-            android:id="@+id/rgDomainCheckServiceRating_FDCH"
             layout="@layout/layout_domain_check_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

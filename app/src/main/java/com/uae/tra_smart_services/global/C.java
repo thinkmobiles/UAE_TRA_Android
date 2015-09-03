@@ -27,6 +27,8 @@ public final class C {
 
     public static final String DOMAIN_INFO = "domain";
 
+    public static final String DOMAIN_INFO_RATING = "domain_info_rating";
+
     public static final String INFO_HUB_ANN_DATA = "InfoHubAnnData";
 
     public static final String IS_CANCELABLE = "isCancelabel";

@@ -20,7 +20,7 @@
         android:id="@+id/textView2" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/rgDomainCheckServiceRating_FDCH"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -29,16 +29,8 @@
         android:layout_alignParentStart="true">
 
         <RadioButton
+            android:tag="1"
             android:id="@+id/rbDomainCheckRating_1_FDC"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="35dp"
-            android:layout_marginStart="35dp"
-            android:layout_weight="1"
-            android:checked="true" />
-
-        <RadioButton
-            android:id="@+id/rbDomainCheckRating_3_FDC"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="35dp"
@@ -46,13 +38,22 @@
             android:layout_weight="1" />
 
         <RadioButton
+            android:tag="3"
+            android:id="@+id/rbDomainCheckRating_3_FDC"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="35dp"
+            android:layout_marginStart="35dp"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:tag="5"
             android:id="@+id/rbDomainCheckRating_5_FDC"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="35dp"
             android:layout_marginStart="35dp"
-            android:layout_weight="1"
-            android:checked="false" />
+            android:layout_weight="1"/>
     </RadioGroup>
 
 </RelativeLayout>

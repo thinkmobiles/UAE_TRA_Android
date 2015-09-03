@@ -109,6 +109,7 @@
     <string name="str_authenticating">Authenticating..</string>
     <string name="str_report_has_been_sent">Report has been successfully sent. Thank you.</string>
     <string name="str_data_has_been_sent">Signal level has been successfully reported. Thank you.</string>
+    <string name="str_rating_has_been_sent">Rating has been successfully reported. Thank you.</string>
     <string name="str_complain_has_been_sent">Complaint has been successfully sent. Thank you.</string>
     <string name="str_info_hub">Info Hub</string>
     <string name="str_info_hub_title">Info Hub</string>

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RadioGroup
     android:background="@drawable/background_activity_home_tab_bar"
     android:layoutDirection="locale"
