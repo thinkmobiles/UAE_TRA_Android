@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -76,7 +77,8 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     }
 
     @Override
-    protected void initData() {
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mStatesAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.states_array, R.layout.list_item_register_state);
         mStatesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

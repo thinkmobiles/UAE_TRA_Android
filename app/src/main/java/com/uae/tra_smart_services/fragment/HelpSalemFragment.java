@@ -23,9 +23,16 @@ import retrofit.client.Response;
  * Created by ak-buffalo on 11.08.15.
  */
 public class HelpSalemFragment extends BaseServiceFragment implements AlertDialogFragment.OnOkListener {
+
+    private EditText etUrl, etDescription;
+
+    private HelpSalimRequest mHelpSalimRequest;
+    private CustomFilterPool filters;
+
     public static HelpSalemFragment newInstance() {
         return new HelpSalemFragment();
     }
+
     @Override
     protected int getLayoutResource() {return R.layout.fragment_help_salem;}
 
@@ -34,16 +41,13 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
-
-    private EditText eturl, etDescription;
     @Override
     protected void initViews() {
         super.initViews();
-        eturl = findView(R.id.eturl_FHS);
+        etUrl = findView(R.id.etUrl_FHS);
         etDescription = findView(R.id.etDescription_FHS);
     }
 
-    private CustomFilterPool filters;
     @Override
     protected final void initData() {
         super.initData();
@@ -74,21 +78,19 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_send:
+                hideKeyboard(getView());
                 collectAndSendToServer();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private HelpSalimRequest mHelpSalimRequest;
-    private final void collectAndSendToServer(){
-        hideKeyboard(getView());
-        if(filters.check(eturl.getText().toString())){
+    private void collectAndSendToServer(){
+        if(filters.check(etUrl.getText().toString())){
             showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     mHelpSalimRequest = new HelpSalimRequest(
                             new HelpSalimModel(
-                                    eturl.getText().toString(),
+                                    etUrl.getText().toString(),
                                     etDescription.getText().toString()
                             )
                     ),
@@ -116,12 +118,13 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
         public void onRequestSuccess(Response smsSpamReportResponse) {
             hideProgressDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
+            getFragmentManager().popBackStackImmediate();
         }
     }
 
     @Override
     public void onDialogCancel() {
-        if(getSpiceManager().isStarted() && mHelpSalimRequest!=null){
+        if (getSpiceManager().isStarted() && mHelpSalimRequest != null) {
             getSpiceManager().cancel(mHelpSalimRequest);
         }
     }

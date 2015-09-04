@@ -68,8 +68,12 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     @Override
     public void onStart() {
         super.onStart();
-        getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
-//        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestListener);
+        getSpiceManager().getFromCache(Response.class, getRequestKey(), DurationInMillis.ALWAYS_RETURNED, mRequestListener);
+//        getSpiceManager().addListenerIfPending(Response.class, getRequestKey(), mRequestListener);
+    }
+
+    protected String getRequestKey(){
+        return KEY_COMPLAIN_REQUEST;
     }
 
     @Override
@@ -94,13 +98,13 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
         traServiceModel.description = getDescriptionText();
         request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
         showProgressDialog(getString(R.string.str_sending), this);
-        getSpiceManager().execute(request, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
+        getSpiceManager().execute(request, getRequestKey(), DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
     }
 
     @Override
     public void onDialogCancel() {
         if(getSpiceManager().isStarted()){
-            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
+            getSpiceManager().removeDataFromCache(Response.class, getRequestKey());
             getSpiceManager().cancel(request);
         }
     }
@@ -123,21 +127,18 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
                 hideProgressDialog();
+                getSpiceManager().removeDataFromCache(Response.class, getRequestKey());
                 if (result != null) {
                     showMessage(R.string.str_success, R.string.str_complain_has_been_sent);
                     getFragmentManager().popBackStackImmediate();
                 }
             }
-
-//            getSpiceManager().removeAllDataFromCache();
-            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
+            getSpiceManager().removeDataFromCache(Response.class, getRequestKey());
             processError(spiceException);
-//            getSpiceManager().removeAllDataFromCache();
-            getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
     }
 

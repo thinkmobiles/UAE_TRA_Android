@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/hex_authorization_background_color"
@@ -9,22 +10,20 @@
         android:id="@+id/etNumberOfSpammer_FSR"
         style="@style/UserAuthorizationDataEditTextField"
         android:hint="@string/str_number_of_spammer"
-        android:inputType="textPersonName" />
+        android:inputType="phone"
+        android:singleLine="true"/>
 
-    <View style="@style/AuthorizationFieldsSeparator" />
+    <View style="@style/AuthorizationFieldsSeparator"/>
 
     <EditText
         android:id="@+id/etDescription_FSR"
-        android:layout_width="match_parent"
+        style="@style/UserAuthorizationDataEditTextField"
         android:layout_height="match_parent"
-        android:textColor="@android:color/black"
-        android:layout_below="@id/vComplainTitleDivider_FCAT"
         android:background="@null"
         android:gravity="start|top"
         android:hint="@string/description"
         android:inputType="textAutoCorrect|textMultiLine"
-        android:padding="8dp"
-        android:textSize="16sp"/>
+        android:textColor="@android:color/black"/>
 
 
 </LinearLayout>

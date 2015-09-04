@@ -21,17 +21,21 @@ import com.uae.tra_smart_services.rest.robo_requests.SmsReportRequest;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class SmsReportFragment extends BaseServiceFragment implements AlertDialogFragment.OnOkListener{
+public class SmsReportFragment extends BaseServiceFragment implements AlertDialogFragment.OnOkListener {
 
     private EditText etNumberOfSpammer, etDescription;
 
+    private SmsReportRequest mSmsReportRequest;
+    private CustomFilterPool<String> filters;
 
     public static SmsReportFragment newInstance() {
         return new SmsReportFragment();
     }
 
     @Override
-    protected int getLayoutResource() { return R.layout.fragment_sms_report; }
+    protected int getLayoutResource() {
+        return R.layout.fragment_sms_report;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,11 +54,10 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
         etDescription = findView(R.id.etDescription_FSR);
     }
 
-    private CustomFilterPool filters;
     @Override
     protected void initData() {
         super.initData();
-        filters = new CustomFilterPool<String>(){
+        filters = new CustomFilterPool<String>() {
             {
                 addFilter(new Filter<String>() {
                     @Override
@@ -79,19 +82,18 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_send:
+                hideKeyboard(getView());
                 collectAndSendToServer();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private SmsReportRequest mSmsReportRequest;
-    private final void collectAndSendToServer(){
-        hideKeyboard(getView());
-        if(filters.check(etNumberOfSpammer.getText().toString()) &&
-                filters.check(etDescription.getText().toString())){
+    private void collectAndSendToServer() {
+        if (filters.check(etNumberOfSpammer.getText().toString()) &&
+                filters.check(etDescription.getText().toString())) {
 
             showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
@@ -116,7 +118,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
 
     @Override
     public void onDialogCancel() {
-        if(getSpiceManager().isStarted() && mSmsReportRequest != null){
+        if (getSpiceManager().isStarted() && mSmsReportRequest != null) {
             getSpiceManager().cancel(mSmsReportRequest);
         }
     }

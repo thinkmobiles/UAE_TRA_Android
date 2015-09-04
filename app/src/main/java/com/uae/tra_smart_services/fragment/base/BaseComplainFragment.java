@@ -90,7 +90,7 @@ public abstract class BaseComplainFragment extends BaseServiceFragment implement
         } else if (canGetPhoto) {
             openCamera();
         } else {
-            Toast.makeText(getActivity(), "There is no camera or gallery app", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.fragment_complain_about_service_no_camera_and_app, Toast.LENGTH_SHORT).show();
         }
     }
 
