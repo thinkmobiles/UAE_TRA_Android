@@ -4,9 +4,12 @@ import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Loader;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.ArrayMap;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.global.H;
 import com.uae.tra_smart_services.rest.model.request.RatingServiceRequestModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
@@ -56,6 +60,8 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
     @Override
     protected void initViews() {
         super.initViews();
+        ImageView myImageView = (ImageView) findView(R.id.ivBackground_FDI);
+        flippBackgroundImage(myImageView, -1);
         tvDomainName_FDI = findView(R.id.tvDomainName_FDI);
         tvRegisterId_FDI = findView(R.id.tvRegisterId_FDI);
         tvRegisterName_FDI = findView(R.id.tvRegisterName_FDI);
@@ -69,6 +75,11 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
             checkedButton.setChecked(true);
         }
         ratingGroup.setOnCheckedChangeListener(this);
+    }
+
+    private void flippBackgroundImage(ImageView _myImageView, int _dir){
+        Bitmap bitmap = ((BitmapDrawable)_myImageView.getDrawable()).getBitmap(); // get bitmap associated with your imageview
+        _myImageView.setImageBitmap(H.flipBitmap(bitmap, _dir));
     }
 
     @Override

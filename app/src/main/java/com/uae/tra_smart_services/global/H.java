@@ -2,6 +2,9 @@ package com.uae.tra_smart_services.global;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.Path;
 import android.support.annotation.XmlRes;
 import android.util.Log;
 
@@ -96,5 +99,28 @@ public class H {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    /**
+     * Flip Bitmap depends on direction
+     *
+     * @param src Ditmap to be flipped
+     * @param dir Flipping direction
+     * @return Already flipped bitmap
+     **/
+    public static Bitmap flipBitmap(Bitmap src, int dir) {
+        Matrix matrix = new Matrix();
+        //Vertical
+        if(dir == 1) {
+            matrix.preScale(1.0f, -1.0f);
+        } else
+        //Horizontal
+        if(dir == -1) {
+            matrix.preScale(-1.0f, 1.0f);
+        } else {
+            return src;
+        }
+
+        return Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
     }
 }
