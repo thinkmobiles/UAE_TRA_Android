@@ -72,11 +72,19 @@ public abstract class BaseComplainFragment extends BaseServiceFragment implement
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_send) {
             hideKeyboard(getView());
-            sendComplain();
+            sendComplainIfDataValid();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void sendComplainIfDataValid() {
+        if (validateData()) {
+            sendComplain();
+        }
+    }
+
+    protected abstract boolean validateData();
 
     protected abstract void sendComplain();
 
