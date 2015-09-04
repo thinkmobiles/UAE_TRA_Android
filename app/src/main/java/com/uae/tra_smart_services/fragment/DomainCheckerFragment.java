@@ -166,9 +166,9 @@ public class DomainCheckerFragment extends BaseServiceFragment
         }
 
         @Override
-        public void onRequestSuccess(DomainAvailabilityCheckResponseModel _str) {
+        public void onRequestSuccess(DomainAvailabilityCheckResponseModel _reponseModel) {
             hideProgressDialog();
-            if (_str.availableStatus.equals(ServerConstants.AVAILABLE)) {
+            if (_reponseModel.availableStatus.equals(ServerConstants.AVAILABLE)) {
                 Bundle bundle = new Bundle();
                 bundle.putString(C.DOMAIN_INFO, mDomain);
                 getFragmentManager()
@@ -176,7 +176,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
                         .replace(R.id.flContainer_AH, DomainIsAvailableFragment.newInstance(bundle))
                         .addToBackStack(null)
                         .commit();
-            } else if (_str.availableStatus.equals(ServerConstants.NOT_AVAILABLE)) {
+            } else if (_reponseModel.availableStatus.equals(ServerConstants.NOT_AVAILABLE)) {
                 showFormattedMessage(R.string.str_error, R.string.str_url_not_avail, mDomain);
             }
         }
@@ -190,14 +190,14 @@ public class DomainCheckerFragment extends BaseServiceFragment
         }
 
         @Override
-        public void onRequestSuccess(DomainInfoCheckResponseModel domainInfoCheckResponse) {
+        public void onRequestSuccess(DomainInfoCheckResponseModel _reponseModel) {
             hideProgressDialog();
-            if (!domainInfoCheckResponse.urlData.equals("No Data Found\r\n")) {
+            if (!_reponseModel.urlData.equals("No Data Found\r\n")) {
                 getFragmentManager()
                         .beginTransaction()
                         .replace(
                                 R.id.flContainer_AH,
-                                DomainInfoFragment.newInstance(domainInfoCheckResponse.urlData))
+                                DomainInfoFragment.newInstance(_reponseModel))
                         .addToBackStack(null)
                         .commit();
             } else {
