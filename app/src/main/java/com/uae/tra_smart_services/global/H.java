@@ -104,7 +104,7 @@ public class H {
     /**
      * Flip Bitmap depends on direction
      *
-     * @param src Ditmap to be flipped
+     * @param src Bitmap to be flipped
      * @param dir Flipping direction
      * @return Already flipped bitmap
      **/
