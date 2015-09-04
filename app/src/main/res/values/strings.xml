@@ -98,7 +98,9 @@
     <string name="str_one_empty_space"> </string>
     <string name="str_empty"></string>
     <string name="str_domain_available">Domain is Available</string>
+    <string name="str_domain_not_available">Domain is Not Available</string>
     <string name="str_domain_availability">Domain Availability</string>
+    <string name="str_domain_no_information">No information</string>
     <string name="str_domain_info">Domain Info</string>
     <string name="str_request_failed">Request Failed</string>
     <string name="str_something_went_wrong">Something went wrong</string>

@@ -168,17 +168,11 @@ public class DomainCheckerFragment extends BaseServiceFragment
         @Override
         public void onRequestSuccess(DomainAvailabilityCheckResponseModel _reponseModel) {
             hideProgressDialog();
-            if (_reponseModel.availableStatus.equals(ServerConstants.AVAILABLE)) {
-                Bundle bundle = new Bundle();
-                bundle.putString(C.DOMAIN_INFO, mDomain);
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flContainer_AH, DomainIsAvailableFragment.newInstance(bundle))
-                        .addToBackStack(null)
-                        .commit();
-            } else if (_reponseModel.availableStatus.equals(ServerConstants.NOT_AVAILABLE)) {
-                showFormattedMessage(R.string.str_error, R.string.str_url_not_avail, mDomain);
-            }
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.flContainer_AH, DomainIsAvailableFragment.newInstance(mDomain, _reponseModel.availableStatus))
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 
