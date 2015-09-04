@@ -12,16 +12,17 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
+import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 
 /**
  * Created by ak-buffalo on 14.08.15.
  */
 public class DomainIsAvailableFragment extends BaseFragment {
 
-    public static DomainIsAvailableFragment newInstance(String _domain, String _status) {
+    public static DomainIsAvailableFragment newInstance(DomainAvailabilityCheckResponseModel _model) {
         Bundle bundle = new Bundle();
-        bundle.putString(C.DOMAIN_INFO, _domain);
-        bundle.putString(C.DOMAIN_STATUS, _status);
+        bundle.putString(C.DOMAIN_INFO, _model.domainStrValue);
+        bundle.putString(C.DOMAIN_STATUS, _model.availableStatus);
         DomainIsAvailableFragment fragment = new DomainIsAvailableFragment();
         fragment.setArguments(bundle);
         return fragment;

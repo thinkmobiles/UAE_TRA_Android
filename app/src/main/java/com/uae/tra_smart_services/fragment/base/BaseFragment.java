@@ -24,8 +24,6 @@ import com.octo.android.robospice.exception.NoNetworkException;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
-import com.uae.tra_smart_services.global.C;
-import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;
 import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
@@ -35,7 +33,7 @@ import retrofit.RetrofitError;
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragment extends Fragment implements OnReloadData{
+public abstract class BaseFragment extends Fragment {
 
     private View rootView;
     private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
@@ -96,10 +94,6 @@ public abstract class BaseFragment extends Fragment implements OnReloadData{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mInputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-    }
-
-    @Override
-    public void reloadData() {
     }
 
     protected final ToolbarTitleManager getToolbarTitleManager() {

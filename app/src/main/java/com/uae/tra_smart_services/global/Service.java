@@ -84,6 +84,24 @@ public enum Service {
             return "domain_info_check";
         }
     },
+    DOMAIN_CHECK_AVAILABILITY {
+        @Override
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_domain_check;
+        }
+
+        @Override
+        @DrawableRes
+        public final int getDrawableRes() {
+            return R.drawable.ic_glb;
+        }
+
+        @Override
+        public String toString() {
+            return "domain_info_availabity";
+        }
+    },
     ENQUIRIES {
         @Override
         @StringRes
