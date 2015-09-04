@@ -11,7 +11,7 @@
         android:background="@color/hex_authorization_background_color"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_domain_check_common_header"/>
+        <include layout="@layout/layout_domain_check_common_header" />
 
         <LinearLayout
             android:id="@+id/llSignInFields"
@@ -20,18 +20,188 @@
             android:layout_centerVertical="true"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvDomainInfo_FDI"
-                style="@style/UserAuthorizationDataEditTextField"
-                android:textColor="@color/hex_black_color" />
+            <LinearLayout
+                android:paddingStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    android:textSize="16sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Domain Name:"
+                    android:textColor="@color/hex_black_color" />
+
+                <TextView
+                    android:id="@+id/tvDomainName_FDI"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textColor="@color/hex_primary_orange" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="Registrar ID:"
+                    android:layout_margin="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/hex_black_color" />
+
+                <TextView
+                    android:id="@+id/tvRegisterId_FDI"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textColor="@color/hex_primary_orange" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    android:textSize="16sp"
+                    android:text="Registrar Name:"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/hex_black_color" />
+
+                <TextView
+                    android:id="@+id/tvRegisterName_FDI"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textColor="@color/hex_primary_orange" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    android:textSize="16sp"
+                    android:text="Status:"
+                    android:gravity="start"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/hex_black_color" />
+
+                <TextView
+                    android:id="@+id/tvStatus_FDI"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textColor="@color/hex_primary_orange" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginStart="15dp"
+                    android:textStyle="bold"
+                    android:layout_margin="5dp"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textColor="@color/hex_black_color" />
+
+                <TextView
+                    android:id="@+id/tvRegContactId_FDI"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textColor="@color/hex_black_color" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginStart="15dp"
+                    android:textStyle="bold"
+                    android:layout_margin="5dp"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textColor="@color/hex_black_color" />
+
+                <TextView
+                    android:id="@+id/tvRegContactName_FDI"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textColor="@color/hex_black_color" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <include
-            android:layout_gravity="center"
             layout="@layout/layout_domain_check_rating"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
     </LinearLayout>
 </ScrollView>

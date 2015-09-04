@@ -35,7 +35,7 @@ public final class ServerConstants {
     public static final String BLOCK_WEBSITE_URL = "/blockwebsite";
 
     //Rating
-    public static final String RATING_SERVICE_URL = "/servicerating";
+    public static final String RATING_SERVICE_URL = "/feedback";
 
     //SMS spam
     public static final String SMS_SPAM_URL = "/insertsmsspam";

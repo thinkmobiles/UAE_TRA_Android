@@ -83,7 +83,6 @@ public class InfoHubListItemModel<T> {
         out.writeInt(mData);
     }
 
-
     public InfoHubListItemModel(Parcel in) {
         mData = in.readInt();
     }
