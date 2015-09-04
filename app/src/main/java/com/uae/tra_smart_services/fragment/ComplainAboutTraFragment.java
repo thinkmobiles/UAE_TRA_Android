@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -28,7 +29,7 @@ import retrofit.client.Response;
 public class ComplainAboutTraFragment extends BaseComplainFragment
                                     implements OnClickListener, AlertDialogFragment.OnOkListener {
 
-    protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_REQUEST";
+    protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_ABOUT_TRA_REQUEST";
 
     private ImageView ivAddAttachment;
     private EditText etComplainTitle, etDescription;
@@ -89,6 +90,21 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     @Override
     protected void onImageGet(Uri _uri) {
         mImageUri = _uri;
+    }
+
+    @Override
+    protected boolean validateData() {
+        boolean titleInvalid = etComplainTitle.getText().toString().isEmpty();
+        if (titleInvalid) {
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_title, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        boolean descriptionInvalid = etDescription.getText().toString().isEmpty();
+        if (descriptionInvalid) {
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     @Override

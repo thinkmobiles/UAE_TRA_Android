@@ -3,12 +3,13 @@ package com.uae.tra_smart_services.fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
+import android.util.Patterns;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -30,7 +31,7 @@ import retrofit.client.Response;
 public final class ComplainAboutServiceFragment extends BaseComplainFragment
         implements OnClickListener, OnItemPickListener {
 
-    protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_REQUEST";
+    protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_ABOUT_SERVICE_REQUEST";
 
     private ImageView ivAddAttachment, ivNextItem;
     private TextView tvServiceProvider;
@@ -82,15 +83,15 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
 //        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestResponseListener);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_send) {
-            hideKeyboard(getView());
-            sendComplain();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == R.id.action_send) {
+//            hideKeyboard(getView());
+//            sendComplain();
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     protected void sendComplain() {
@@ -106,33 +107,30 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         getSpiceManager().execute(mComplainAboutServiceRequest, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestResponseListener);
     }
 
-//    private boolean validateData() {
-//        boolean titleInvalid = etComplainTitle.getText().toString().isEmpty();
-//        if (titleInvalid) {
-//            Toast.makeText(getActivity(), "Please provide complaint title", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        if (mImageUri == null) {
-//            Toast.makeText(getActivity(), "Please select image", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        boolean serviceProviderSelected = !tvServiceProvider.getText().toString().isEmpty();
-//        if (!serviceProviderSelected) {
-//            Toast.makeText(getActivity(), "Please select service provider", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        boolean numberInvalid = !Patterns.PHONE.matcher(etReferenceNumber.getText().toString()).matches();
-//        if (numberInvalid) {
-//            Toast.makeText(getActivity(), "Please set reference number", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        boolean descriptionInvalid = etDescription.getText().toString().isEmpty();
-//        if (descriptionInvalid) {
-//            Toast.makeText(getActivity(), "Please provide description", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        return true;
-//    }
+    @Override
+    protected boolean validateData() {
+        boolean titleInvalid = etComplainTitle.getText().toString().isEmpty();
+        if (titleInvalid) {
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_title, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        boolean serviceProviderSelected = !tvServiceProvider.getText().toString().isEmpty();
+        if (!serviceProviderSelected) {
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_service_provider, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        boolean numberInvalid = !Patterns.PHONE.matcher(etReferenceNumber.getText().toString()).matches();
+        if (numberInvalid) {
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_reference_number, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        boolean descriptionInvalid = etDescription.getText().toString().isEmpty();
+        if (descriptionInvalid) {
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public void onClick(View v) {
