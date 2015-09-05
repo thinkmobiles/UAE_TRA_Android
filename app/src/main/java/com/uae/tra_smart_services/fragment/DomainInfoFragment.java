@@ -22,6 +22,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.H;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.rest.model.request.RatingServiceRequestModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
@@ -98,7 +99,7 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
         if(radioButton.isChecked()){
             int rating = Integer.valueOf(radioButton.getTag().toString());
             RatingServiceRequestModel model = new RatingServiceRequestModel();
-            model.setServiceName("domain_info");
+            model.setServiceName(Service.DOMAIN_CHECK_INFO.toString());
             model.setRate(rating);
             executeCall(model, radioButton);
         }

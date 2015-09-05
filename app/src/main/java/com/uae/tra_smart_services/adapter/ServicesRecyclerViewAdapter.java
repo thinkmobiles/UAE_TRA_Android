@@ -59,7 +59,7 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
                 @Override
                 public void onClick(View v) {
                     if (mServiceSelectListener != null) {
-                        mServiceSelectListener.onServiceSelect((Service) rootView.getTag());
+                        mServiceSelectListener.onServiceSelect((Service) rootView.getTag(), null);
                     }
                 }
             });

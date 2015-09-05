@@ -25,7 +25,9 @@ public final class C {
 
     public static final String DOMAIN_PATTERN = "^(http|ftp|https)://|^[a-zA-Z0-9]+\\.[a-zA-Z][a-zA-Z]";
 
-    public static final String DOMAIN_INFO = "domain";
+    public static final String DOMAIN_INFO = "domainStrValue";
+
+    public static final String DOMAIN_STATUS = "domain_status";
 
     public static final String DOMAIN_INFO_RATING = "domain_info_rating";
 

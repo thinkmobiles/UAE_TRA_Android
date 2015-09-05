@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -13,8 +14,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
-import com.uae.tra_smart_services.global.C;
-import com.uae.tra_smart_services.global.ServerConstants;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
@@ -29,9 +29,16 @@ public class DomainCheckerFragment extends BaseServiceFragment
 //    private ImageView ivLogo;
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
+    private HexagonHomeFragment.OnServiceSelectListener mServiceSelectListener;
 
     public static DomainCheckerFragment newInstance() {
         return new DomainCheckerFragment();
+    }
+
+    @Override
+    public void onAttach(Activity _activity) {
+        super.onAttach(_activity);
+        mServiceSelectListener = (HexagonHomeFragment.OnServiceSelectListener) _activity;
     }
 
     @Override
@@ -168,17 +175,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         @Override
         public void onRequestSuccess(DomainAvailabilityCheckResponseModel _reponseModel) {
             hideProgressDialog();
-            if (_reponseModel.availableStatus.equals(ServerConstants.AVAILABLE)) {
-                Bundle bundle = new Bundle();
-                bundle.putString(C.DOMAIN_INFO, mDomain);
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flContainer_AH, DomainIsAvailableFragment.newInstance(bundle))
-                        .addToBackStack(null)
-                        .commit();
-            } else if (_reponseModel.availableStatus.equals(ServerConstants.NOT_AVAILABLE)) {
-                showFormattedMessage(R.string.str_error, R.string.str_url_not_avail, mDomain);
-            }
+            mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_AVAILABILITY, _reponseModel.domainStrValue = mDomain);
         }
     }
 
@@ -193,13 +190,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         public void onRequestSuccess(DomainInfoCheckResponseModel _reponseModel) {
             hideProgressDialog();
             if (!_reponseModel.urlData.equals("No Data Found\r\n")) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(
-                                R.id.flContainer_AH,
-                                DomainInfoFragment.newInstance(_reponseModel))
-                        .addToBackStack(null)
-                        .commit();
+                mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_INFO, _reponseModel);
             } else {
                 showFormattedMessage(R.string.str_error, R.string.str_url_doesnot_exist, mDomain);
             }

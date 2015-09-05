@@ -5,9 +5,10 @@ package com.uae.tra_smart_services.rest.model.response;
  */
 public class DomainAvailabilityCheckResponseModel {
     public String availableStatus;
+    public String domainStrValue;
 
     @Override
     public String toString() {
-        return "{\"availableStatus\":" + availableStatus + "}";
+        return "{\"availableStatus\":" + availableStatus + ", \"domainStrValue\":" + domainStrValue + "}";
     }
 }

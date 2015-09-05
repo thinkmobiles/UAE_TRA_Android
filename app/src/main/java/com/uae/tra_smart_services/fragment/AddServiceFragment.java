@@ -148,7 +148,6 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
             mSelectedItems.remove(_item);
     }
 
-
     @Override
     public void onDetach() {
         mServicesSelectedListener = null;

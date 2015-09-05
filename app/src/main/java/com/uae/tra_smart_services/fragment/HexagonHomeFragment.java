@@ -214,7 +214,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
     }
 
     public interface OnServiceSelectListener {
-        void onServiceSelect(final Service _service);
+        <T> void onServiceSelect(final Service _service, T data);
     }
 
     public interface OnStaticServiceSelectListener {

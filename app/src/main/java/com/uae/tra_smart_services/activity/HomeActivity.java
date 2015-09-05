@@ -23,6 +23,8 @@ import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
+import com.uae.tra_smart_services.fragment.DomainInfoFragment;
+import com.uae.tra_smart_services.fragment.DomainIsAvailableFragment;
 import com.uae.tra_smart_services.fragment.EnquiriesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment.OnFavoritesEventListener;
@@ -44,13 +46,12 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
-import com.uae.tra_smart_services.interfaces.OnReloadData;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
+import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
+import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 
 import java.util.List;
-
-import retrofit.RetrofitError;
 
 /**
  * Created by Andrey Korneychuk on 23.07.15.
@@ -101,10 +102,16 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onServiceSelect(Service _service) {
+    public <T> void onServiceSelect(Service _service, T _data) {
         switch (_service) {
             case DOMAIN_CHECK:
                 replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
+                break;
+            case DOMAIN_CHECK_INFO:
+                replaceFragmentWithBackStack(DomainInfoFragment.newInstance((DomainInfoCheckResponseModel) _data));
+                break;
+            case DOMAIN_CHECK_AVAILABILITY:
+                replaceFragmentWithBackStack(DomainIsAvailableFragment.newInstance((DomainAvailabilityCheckResponseModel) _data));
                 break;
             case COMPLAIN_ABOUT_PROVIDER:
                 openFragmentIfAuthorized(ComplainAboutServiceFragment.newInstance());
@@ -245,7 +252,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public final void onOpenServiceClick(final Service _service) {
-        onServiceSelect(_service);
+        onServiceSelect(_service, null);
     }
 
     @Override
