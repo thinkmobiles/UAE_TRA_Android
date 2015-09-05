@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<merge
+    android:id="@+id/ivLogo_FDC"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/hex_primary_orange"
     android:paddingBottom="15dp"
     android:paddingTop="15dp"
-    android:orientation="vertical"
-    android:id="@+id/ivLogo_FDC"
-    android:layout_gravity="center|center_vertical"
-    android:adjustViewBounds="true"
-    android:background="@color/hex_primary_orange"
-    android:gravity="center"
-    tools:src="@drawable/ic_edit"
-    >
+    tools:src="@drawable/ic_edit">
 
     <com.uae.tra_smart_services.customviews.HexagonView
         android:id="@+id/hvIcon_LIHLI"
@@ -24,14 +21,15 @@
         app:hexagonBorderColor="@color/hex_text_color_white"
         app:hexagonBorderSize="2dp"
         app:hexagonSideSize="45dp"
-        app:hexagonSrc="@drawable/ic_edit" />
+        app:hexagonSrc="@drawable/ic_edit"/>
 
     <TextView
-        android:textColor="@color/hex_text_color_white"
-        android:textSize="18sp"
-        android:layout_margin="5dp"
+        android:id="@+id/tvTitle_LIHLI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Domain Check Service"/>
+        android:layout_margin="5dp"
+        android:text="Domain Check Service"
+        android:textColor="@color/hex_text_color_white"
+        android:textSize="18sp"/>
 
-</LinearLayout>
+</merge>

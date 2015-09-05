@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/hex_authorization_background_color"
-    android:orientation="vertical">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/hex_authorization_background_color"
+            android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/hex_authorization_background_color"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_domain_check_common_header" />
+        <com.uae.tra_smart_services.customviews.ServiceHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:headerIconSrc="@drawable/ic_edit"
+            app:headerTitle="@string/service_domain_check"/>
 
         <LinearLayout
             android:id="@+id/llSignInFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:orientation="vertical">
 
-            <View style="@style/AuthorizationFieldsSeparator" />
+            <View style="@style/AuthorizationFieldsSeparator"/>
 
             <EditText
                 android:id="@+id/tvDomainAvail_FDCH"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:hint="@string/str_insert_domain_name_here"
-                android:inputType="text" />
+                android:inputType="text"/>
 
-            <View style="@style/AuthorizationFieldsSeparator" />
+            <View style="@style/AuthorizationFieldsSeparator"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llSignInActions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:orientation="horizontal">
 
             <Button
@@ -46,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/str_availabilty" />
+                android:text="@string/str_availabilty"/>
 
             <Button
                 android:id="@+id/btnWhoIs_FDCH"
@@ -54,7 +56,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/str_whois" />
+                android:text="@string/str_whois"/>
 
         </LinearLayout>
 

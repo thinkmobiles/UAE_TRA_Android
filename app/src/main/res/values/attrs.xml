@@ -27,6 +27,11 @@
         <attr name="deleteColor" format="color"/>
     </declare-styleable>
 
+    <declare-styleable name="ServiceHeader">
+        <attr name="headerTitle" format="string"/>
+        <attr name="headerIconSrc" format="reference"/>
+    </declare-styleable>
+
     <attr name="homePageHeaderBackground" format="reference|color"/>
     <attr name="globalButtonTextColor" format="reference|color"/>
     <attr name="globalButtonSelector" format="reference|color"/>

@@ -91,7 +91,7 @@ public final class HexagonView extends View implements Target {
     }
 
     @Override
-    public void setBackgroundColor(int _backgroundColor) {
+    public void setBackgroundColor(@ColorInt int _backgroundColor) {
         mBackgroundColor = _backgroundColor;
         invalidate();
     }
