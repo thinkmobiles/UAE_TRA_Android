@@ -31,7 +31,7 @@
                 android:id="@+id/tvDomainAvail_FDCH"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:hint="@string/str_insert_domain_name_here"
-                android:inputType="text"/>
+                android:inputType="textUri"/>
 
             <View style="@style/AuthorizationFieldsSeparator"/>
         </LinearLayout>

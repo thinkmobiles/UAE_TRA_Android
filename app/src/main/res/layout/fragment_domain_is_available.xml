@@ -1,44 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/hex_authorization_background_color"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/hex_authorization_background_color"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_domain_check_common_header" />
+        <com.uae.tra_smart_services.customviews.ServiceHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:headerIconSrc="@drawable/ic_edit"
+            app:headerTitle="@string/service_domain_check"/>
 
         <LinearLayout
             android:id="@+id/llSignInFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="24dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/etDomainStrValue_FDCH"
-                android:textColor="@color/hex_black_color"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textAlignment="center"
+            <TextView
+                android:id="@+id/tvDomainStrValue_FDCH"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:editable="false"
+                android:layout_marginEnd="40dp"
                 android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp" />
+                android:background="@drawable/background_domain_info"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="@color/hex_black_color"
+                android:textSize="18sp"
+                tools:text="google.com"/>
 
             <Button
                 android:id="@+id/tvDomainAvail_FDCH"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:text="@string/str_domain_available"
                 android:textColor="@color/hex_primary_green"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
 
         </LinearLayout>
 
@@ -46,7 +55,7 @@
             layout="@layout/layout_domain_check_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 </ScrollView>

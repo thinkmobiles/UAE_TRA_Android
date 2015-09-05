@@ -173,9 +173,12 @@ public class DomainCheckerFragment extends BaseServiceFragment
         }
 
         @Override
-        public void onRequestSuccess(DomainAvailabilityCheckResponseModel _reponseModel) {
+        public void onRequestSuccess(DomainAvailabilityCheckResponseModel _responseModel) {
             hideProgressDialog();
-            mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_AVAILABILITY, _reponseModel.domainStrValue = mDomain);
+            if (_responseModel != null) {
+                _responseModel.domainStrValue = mDomain;
+                mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_AVAILABILITY, _responseModel);
+            }
         }
     }
 

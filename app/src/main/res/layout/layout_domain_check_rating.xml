@@ -1,59 +1,66 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginTop="15dp"
     android:layout_marginBottom="15dp"
-    android:orientation="vertical">
+    android:layout_marginTop="15dp"
+    android:orientation="vertical"
+    tools:showIn="@layout/fragment_domain_info">
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:text="CHOSE RATING"
-        android:textColor="@color/hex_primary_orange"
-        android:textSize="18sp"
-        android:id="@+id/textView2" />
+        android:textColor="?attr/colorPrimary"
+        android:textSize="18sp"/>
 
     <RadioGroup
         android:id="@+id/rgDomainCheckServiceRating_FDCH"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="right|bottom"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true">
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <RadioButton
-            android:tag="1"
             android:id="@+id/rbDomainCheckRating_1_FDC"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="35dp"
-            android:layout_marginStart="35dp"
-            android:layout_weight="1" />
+            android:background="@android:color/transparent"
+            android:layout_marginEnd="24dp"
+            android:button="@null"
+            android:drawableTop="@drawable/ic_rating_bad"
+            android:tag="1"/>
 
         <RadioButton
-            android:tag="3"
             android:id="@+id/rbDomainCheckRating_3_FDC"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="35dp"
-            android:layout_marginStart="35dp"
-            android:layout_weight="1"/>
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:button="@null"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_rating_neutral"
+            android:tag="3"/>
 
         <RadioButton
-            android:tag="5"
             android:id="@+id/rbDomainCheckRating_5_FDC"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="35dp"
-            android:layout_marginStart="35dp"
-            android:layout_weight="1"/>
+            android:background="@android:color/transparent"
+            android:layout_marginStart="24dp"
+            android:button="@null"
+            android:drawableTop="@drawable/ic_rating_good"
+            android:tag="5"/>
+
     </RadioGroup>
 
 </RelativeLayout>
