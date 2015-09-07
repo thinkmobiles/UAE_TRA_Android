@@ -110,10 +110,10 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
                     entry.getValue()
             );
             if (entry.getValue().equals(mCurrentTheme)) {
-                circlePoint.setPaintStyle(Paint.Style.STROKE);
+                circlePoint.isSelected = true;
                 mSelectedCircle = circlePoint;
             } else {
-                circlePoint.setPaintStyle(Paint.Style.FILL_AND_STROKE);
+                circlePoint.isSelected = false;
             }
             points.add(circlePoint);
             iter++;
@@ -123,12 +123,11 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
 
 
     protected void onDraw(Canvas canvas) {
-        int radius = getHeight() / 2;
         int counter = 1;
         int themeCount = points.size();
         int sectorOffset = canvas.getWidth() / themeCount;
         for (RectButton p : points) {
-            canvas.drawRect(p.rect, p.paint);
+            canvas.drawRoundRect(p.rect, 1, 1, p.paint);
             if (p.isSelected){
                 p.drawShadow(canvas);
             }
@@ -181,10 +180,11 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
                     return false;
                 }
                 mSelectedCircle = point;
+                point.isSelected = true;
                 point.setPaintStyle(Paint.Style.STROKE);
                 mSettingsChangeListener.onSettingsChanged(this, point.colorThema);
             } else {
-                point.setPaintStyle(Paint.Style.FILL_AND_STROKE);
+                point.isSelected = false;
             }
         }
         invalidate();

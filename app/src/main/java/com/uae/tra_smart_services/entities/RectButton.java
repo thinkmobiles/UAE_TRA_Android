@@ -28,11 +28,14 @@ public class RectButton {
     }
     
     public void drawShadow(Canvas _canvas){
+        if (shadowpaint == null) {
+            shadowpaint = new Paint();
+        }
         shadowpaint = new Paint();
-        shadowpaint.setStrokeWidth(5f);
+        shadowpaint.setStrokeWidth(10f);
         shadowpaint.setColor(Color.LTGRAY);
         shadowpaint.setStyle(Paint.Style.STROKE);
-        shadow = new RectF(rect.left-3, rect.top-3, rect.right+3, rect.bottom+3);
-        _canvas.drawRect(shadow, shadowpaint);
+        shadow = new RectF(rect.left, rect.top, rect.right, rect.bottom);
+        _canvas.drawRoundRect(shadow, 2, 2, shadowpaint);
     }
 }
