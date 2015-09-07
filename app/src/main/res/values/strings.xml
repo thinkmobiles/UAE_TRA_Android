@@ -245,5 +245,10 @@
     <string name="fragment_complain_about_service_camera">Camera</string>
     <string name="fragment_complain_about_service_gallery">Gallery</string>
 
+    <string name="fragment_speed_test_title">Internet speedtest</string>
+    <string name="fragment_speed_test_result">Internet speed: %s Mbit</string>
+    <string name="fragment_speed_test_progress">Measure speed…</string>
+    <string name="fragment_speed_test_run">Run speedtest</string>
+
 
 </resources>

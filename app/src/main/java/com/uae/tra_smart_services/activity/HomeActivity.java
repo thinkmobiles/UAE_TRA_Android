@@ -41,6 +41,7 @@ import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
+import com.uae.tra_smart_services.fragment.SpeedTestFragment;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
@@ -178,8 +179,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
                 break;
             case INTERNET_SPEED_TEST:
-                Toast.makeText(getApplicationContext(), "Not implemented yet.",
-                        Toast.LENGTH_SHORT).show();
+                replaceFragmentWithBackStack(SpeedTestFragment.newInstance());
                 break;
         }
     }

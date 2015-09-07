@@ -21,6 +21,7 @@
     <style name="AppThemeOrange" parent="BaseAppTheme">
         <item name="colorPrimary">@color/hex_primary_orange</item>
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_orange</item>
+        <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_orange</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_orange</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
@@ -34,6 +35,7 @@
     <style name="AppThemeGreen" parent="BaseAppTheme">
         <item name="colorPrimary">@color/hex_primary_green</item>
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_green</item>
+        <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_green</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_green</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
@@ -46,6 +48,7 @@
     <style name="AppThemeBlue" parent="BaseAppTheme">
         <item name="colorPrimary">@color/hex_primary_blue</item>
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_blue</item>
+        <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_blue</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_blue</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
@@ -58,6 +61,7 @@
     <style name="AppThemeRed" parent="BaseAppTheme">
         <item name="colorPrimary">@color/hex_primary_red</item>
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_red</item>
+        <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_red</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_red</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
@@ -70,6 +74,7 @@
     <style name="AppThemeBlackAndWhite" parent="BaseAppTheme">
         <item name="colorPrimary">@android:color/black</item>
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_black</item>
+        <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_black</item>
         <item name="colorPrimaryDark">@android:color/black</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>

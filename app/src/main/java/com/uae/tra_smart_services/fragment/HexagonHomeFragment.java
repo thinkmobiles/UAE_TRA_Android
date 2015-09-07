@@ -210,6 +210,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
         } else if (POOR_COVERAGE_SERVICE.isEquals(_id)) {
             mStaticServiceSelectListener.onStaticServiceSelect(POOR_COVERAGE_SERVICE);
         } else if (INTERNET_SPEED_TEST.isEquals(_id)) {
+            mStaticServiceSelectListener.onStaticServiceSelect(INTERNET_SPEED_TEST);
         }
     }
 

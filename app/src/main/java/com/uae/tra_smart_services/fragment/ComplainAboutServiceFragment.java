@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -16,10 +16,8 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
-import com.uae.tra_smart_services.dialog.SingleChoiceDialog;
-import com.uae.tra_smart_services.dialog.SingleChoiceDialog.OnItemPickListener;
+import com.uae.tra_smart_services.adapter.ServiceProviderAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
-import com.uae.tra_smart_services.global.ServiceProvider;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutServiceRequest;
 
@@ -29,16 +27,15 @@ import retrofit.client.Response;
  * Created by mobimaks on 10.08.2015.
  */
 public final class ComplainAboutServiceFragment extends BaseComplainFragment
-        implements OnClickListener, OnItemPickListener {
+        implements OnClickListener {
 
     protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_ABOUT_SERVICE_REQUEST";
 
-    private ImageView ivAddAttachment, ivNextItem;
-    private TextView tvServiceProvider;
+    private Spinner sProviderSpinner;
+    private ImageView ivAddAttachment;
     private EditText etComplainTitle, etReferenceNumber, etDescription;
 
     private ComplainAboutServiceRequest mComplainAboutServiceRequest;
-    private String mSelectedService;
 
     private RequestResponseListener mRequestResponseListener;
 
@@ -57,14 +54,18 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     @Override
     protected void initViews() {
         super.initViews();
+        initSpinner();
         ivAddAttachment = findView(R.id.ivAddAttachment_FCAS);
-        ivNextItem = findView(R.id.ivNextItem_FCAS);
-
-        tvServiceProvider = findView(R.id.tvServiceProvider_FCAS);
 
         etComplainTitle = findView(R.id.etComplainTitle_FCAS);
         etReferenceNumber = findView(R.id.etReferenceNumber_FCAS);
         etDescription = findView(R.id.etDescription_FCAS);
+    }
+
+    private void initSpinner() {
+        sProviderSpinner = findView(R.id.sProviderSpinner_FCAS);
+        ServiceProviderAdapter adapter = new ServiceProviderAdapter(getActivity());
+        sProviderSpinner.setAdapter(adapter);
     }
 
     @Override
@@ -72,8 +73,6 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         super.initListeners();
         mRequestResponseListener = new RequestResponseListener();
         ivAddAttachment.setOnClickListener(this);
-        ivNextItem.setOnClickListener(this);
-        tvServiceProvider.setOnClickListener(this);
     }
 
     @Override
@@ -83,21 +82,11 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
 //        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestResponseListener);
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.action_send) {
-//            hideKeyboard(getView());
-//            sendComplain();
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @Override
     protected void sendComplain() {
         ComplainServiceProviderModel complainModel = new ComplainServiceProviderModel();
         complainModel.title = etComplainTitle.getText().toString();
-        complainModel.serviceProvider = mSelectedService;
+        complainModel.serviceProvider = sProviderSpinner.getSelectedItem().toString();
         complainModel.referenceNumber = etReferenceNumber.getText().toString();
         complainModel.description = etDescription.getText().toString();
         mComplainAboutServiceRequest = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
@@ -114,11 +103,11 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
             Toast.makeText(getActivity(), R.string.fragment_complain_no_title, Toast.LENGTH_SHORT).show();
             return false;
         }
-        boolean serviceProviderSelected = !tvServiceProvider.getText().toString().isEmpty();
-        if (!serviceProviderSelected) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_service_provider, Toast.LENGTH_SHORT).show();
-            return false;
-        }
+//        boolean serviceProviderSelected = !tvServiceProvider.getText().toString().isEmpty();
+//        if (!serviceProviderSelected) {
+//            Toast.makeText(getActivity(), R.string.fragment_complain_no_service_provider, Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         boolean numberInvalid = !Patterns.PHONE.matcher(etReferenceNumber.getText().toString()).matches();
         if (numberInvalid) {
             Toast.makeText(getActivity(), R.string.fragment_complain_no_reference_number, Toast.LENGTH_SHORT).show();
@@ -139,10 +128,6 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
             case R.id.ivAddAttachment_FCAS:
                 openImagePicker();
                 break;
-            case R.id.tvServiceProvider_FCAS:
-            case R.id.ivNextItem_FCAS:
-                openServiceProviderPicker();
-                break;
         }
     }
 
@@ -151,22 +136,9 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
 
     }
 
-    private void openServiceProviderPicker() {
-        SingleChoiceDialog
-                .newInstance(this, R.string.str_select_service_provider, ServiceProvider.toStringResArray())
-                .show(getFragmentManager());
-    }
-
-    @Override
-    public void onItemPicked(int _dialogItem) {
-        final ServiceProvider provider = ServiceProvider.values()[_dialogItem];
-        mSelectedService = provider.toString();
-        tvServiceProvider.setText(provider.getTitleRes());
-    }
-
     @Override
     public void onDialogCancel() {
-        if(getSpiceManager().isStarted()){
+        if (getSpiceManager().isStarted()) {
             getSpiceManager().cancel(mComplainAboutServiceRequest);
         }
     }

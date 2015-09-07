@@ -1,107 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:ignore="HardcodedText,RtlSymmetry">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText,RtlSymmetry">
 
-    <ImageView
-        android:id="@+id/ivAddAttachment_FCAS"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="?attr/selectableItemBackground"
-        android:layout_alignParentEnd="true"
-        android:contentDescription="Add attachment"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_action_attachment"/>
-
-    <EditText
-        android:id="@+id/etComplainTitle_FCAS"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@id/ivAddAttachment_FCAS"
-        android:textColor="@android:color/black"
-        android:background="@null"
-        android:gravity="center_vertical"
-        android:hint="@string/complain_title"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:singleLine="true"
-        android:textSize="16sp"/>
-
-    <View
-        android:id="@+id/vComplainTitleDivider_FCAS"
-        android:background="@android:drawable/divider_horizontal_textfield"
-        android:layout_below="@id/etComplainTitle_FCAS"
+    <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/ivNextItem_FCAS"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/vComplainTitleDivider_FCAS"
-        android:contentDescription="Show providers"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_action_next_item"/>
+        <com.uae.tra_smart_services.customviews.ServiceHeader
+            android:id="@+id/shHeader_FCAS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="?attr/colorPrimary"
+            app:headerIconSrc="@drawable/ic_edit"
+            app:headerTitle="@string/service_domain_check"/>
 
-    <TextView
-        android:id="@+id/tvServiceProvider_FCAS"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/black"
-        android:layout_height="48dp"
-        android:layout_below="@id/etComplainTitle_FCAS"
-        android:layout_toStartOf="@id/ivNextItem_FCAS"
-        android:background="@null"
-        android:freezesText="true"
-        android:gravity="center_vertical"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:hint="@string/service_provider"
-        android:textSize="16sp"/>
+        <LinearLayout
+            android:id="@+id/llTitleContainer_FCAS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shHeader_FCAS"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_service_item"
+            android:orientation="horizontal"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            app:layout_widthPercent="90%">
 
-    <View
-        android:id="@+id/vServiceProviderDivider_FCAS"
-        android:background="@android:drawable/divider_horizontal_textfield"
-        android:layout_below="@id/tvServiceProvider_FCAS"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+            <EditText
+                android:id="@+id/etComplainTitle_FCAS"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/complain_title"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
 
-    <EditText
-        android:id="@+id/etReferenceNumber_FCAS"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/black"
-        android:layout_height="48dp"
-        android:layout_below="@id/vServiceProviderDivider_FCAS"
-        android:background="@null"
-        android:gravity="center_vertical"
-        android:hint="@string/reference_number"
-        android:inputType="number"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:singleLine="true"
-        android:textSize="16sp"/>
+            <ImageView
+                android:id="@+id/ivAddAttachment_FCAS"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Add attachment"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_action_attachment"/>
 
-    <View
-        android:id="@+id/vReferenceNumberDivider_FCAS"
-        android:background="@android:drawable/divider_horizontal_textfield"
-        android:layout_below="@id/etReferenceNumber_FCAS"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        </LinearLayout>
 
-    <EditText
-        android:id="@+id/etDescription_FCAS"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@android:color/black"
-        android:layout_below="@id/vReferenceNumberDivider_FCAS"
-        android:background="@null"
-        android:gravity="start|top"
-        android:hint="@string/description"
-        android:inputType="textAutoCorrect|textMultiLine"
-        android:padding="8dp"
-        android:textSize="16sp"/>
+        <Spinner
+            android:id="@+id/sProviderSpinner_FCAS"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/llTitleContainer_FCAS"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            app:layout_widthPercent="90%"/>
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/llProviderContainer_FCAS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/llTitleContainer_FCAS"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_service_item"
+            android:orientation="horizontal"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:visibility="gone"
+            app:layout_widthPercent="90%">
+
+            <TextView
+                android:id="@+id/tvServiceProvider_FCAS"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:freezesText="true"
+                android:gravity="center_vertical"
+                android:hint="@string/service_provider"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:id="@+id/ivNextItem_FCAS"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="Show providers"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_action_next_item"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etReferenceNumber_FCAS"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/sProviderSpinner_FCAS"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_service_item"
+            android:gravity="center_vertical"
+            android:hint="@string/reference_number"
+            android:inputType="number"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_widthPercent="90%"/>
+
+        <EditText
+            android:id="@+id/etDescription_FCAS"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/etReferenceNumber_FCAS"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_service_item"
+            android:gravity="start|top"
+            android:hint="@string/description"
+            android:inputType="textAutoCorrect|textMultiLine"
+            android:padding="8dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_widthPercent="90%"/>
+
+    </android.support.percent.PercentRelativeLayout>
+</ScrollView>

@@ -53,18 +53,18 @@ public final class ServiceProviderAdapter extends android.widget.BaseAdapter {
         return _convertView;
     }
 
-//    @Override
-//    public View getDropDownView(int _position, View _convertView, ViewGroup _parent) {
-//        final ViewHolder holder;
-//        if (_convertView == null) {
-//            _convertView = mInflater.inflate(R.layout.spinner_dropdown_item_service_provider, _parent, false);
-//            holder = new ViewHolder(_convertView);
-//        } else {
-//            holder = (ViewHolder) _convertView.getTag();
-//        }
-//        holder.setData(getItem(_position));
-//        return _convertView;
-//    }
+        @Override
+    public View getDropDownView(int _position, View _convertView, ViewGroup _parent) {
+        final ViewHolder holder;
+        if (_convertView == null) {
+            _convertView = mInflater.inflate(R.layout.spinner_dropdown_item_service_provider, _parent, false);
+            holder = new ViewHolder(_convertView);
+        } else {
+            holder = (ViewHolder) _convertView.getTag();
+        }
+        holder.setData(getItem(_position));
+        return _convertView;
+    }
 
     private class ViewHolder {
 
