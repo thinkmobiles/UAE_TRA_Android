@@ -68,6 +68,12 @@ public class SettingsFragment extends BaseHomePageFragment
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        globalInitViews();
+    }
+
+    @Override
     protected void initListeners() {
         super.initListeners();
         btnChangeServer.setOnClickListener(this);
@@ -84,12 +90,6 @@ public class SettingsFragment extends BaseHomePageFragment
             });
         }
     };
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        globalInitViews();
-    }
 
     private void globalInitViews() {
         langSwitch = findView(R.id.cvLangSwitch);
