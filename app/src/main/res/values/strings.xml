@@ -27,6 +27,7 @@
 
     <string name="str_about_tra">About TRA</string>
     <string name="str_read_more_about_tra">Read more about tra</string>
+    <string name="str_change_color_theme">Change color theme</string>
     <!--            Black and White mode              -->
     <string name="str_black_and_white_mode">Black&amp;White Mode</string>
     <!--            Phone field               -->
