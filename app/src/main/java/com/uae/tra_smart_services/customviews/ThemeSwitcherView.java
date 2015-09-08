@@ -139,7 +139,7 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
             if (counter != themeCount){
                 View separatorView = separatorFactory.createView(separator);
                 LinearLayout layout = new LinearLayout(getContext());
-                layout.setPadding(0, getHeight() / 3, 0, getHeight() / 3);
+                layout.setPadding(0, getHeight() / 2, 0, getHeight() / 2);
                 layout.addView(separatorView);
                 layout.measure(canvas.getWidth(), canvas.getHeight());
                 layout.layout(12, 12, canvas.getWidth(), canvas.getHeight());
