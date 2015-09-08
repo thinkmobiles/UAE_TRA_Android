@@ -92,14 +92,12 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
     protected void unBindView(View view) {/*Unimplemented method*/}
 
     private int mContainerWidth;
-    private int mContainerHeight;
     private ArrayList<RectButton> points;
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mContainerWidth = w;
-        mContainerHeight = h;
         points = new ArrayList<>();
         int iter = 0;
         for (Map.Entry<String, String> entry : mColorsMap.entrySet()) {
@@ -141,6 +139,7 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
             if (counter != themeCount){
                 View separatorView = separatorFactory.createView(separator);
                 LinearLayout layout = new LinearLayout(getContext());
+                layout.setPadding(0, getHeight() / 3, 0, getHeight() / 3);
                 layout.addView(separatorView);
                 layout.measure(canvas.getWidth(), canvas.getHeight());
                 layout.layout(12, 12, canvas.getWidth(), canvas.getHeight());

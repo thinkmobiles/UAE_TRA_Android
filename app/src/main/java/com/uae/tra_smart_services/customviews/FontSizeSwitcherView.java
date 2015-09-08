@@ -24,7 +24,7 @@ import java.util.Map;
 public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
 
-    protected float mScaleMin, mScaleMax, mScaleStep, mFontScale, mFontScaleNew;
+    protected float mScaleMin, mScaleMax, mFontScale, mFontScaleNew;
 
     TextView makeBigger, makeMedium, makeSmaller;
     SeekBar seekbar;
@@ -54,7 +54,6 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
         try {
             mScaleMin = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleMin, 0.5f);
             mScaleMax = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleMax, 1.5f);
-            mScaleStep = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleStep, 0.5f);
         } finally {
             typedArrayData.recycle();
         }
@@ -117,7 +116,7 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
     @Override
     protected final void bindView(final View _view) {
         _view.setOnClickListener(this);
-        ((TextView) _view).setTextColor(/*getResources().getColor(R.color.hex_color_light_gray)*/Color.LTGRAY);
+        ((TextView) _view).setTextColor(Color.LTGRAY);
     }
 
     @Override
@@ -134,11 +133,11 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
+        // Has not to be implemented
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-
+        // Has not to be implemented
     }
 }

@@ -57,14 +57,12 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
     @Override
     protected void initViews() {
         super.initViews();
-//        int index = 0;
         setOrientation(HORIZONTAL);
-        setPadding(5, 5, 5, 5);
+        setPadding(15, 0, 15, 0);
         langViews = new TextView[]{
                 enLang = findView(R.id.tvEnglishLang_LS),
                 arLang = findView(R.id.tvArabicLang_LS)
         };
-
         for (TextView langView : langViews){
             if(Locale.getDefault().getLanguage().equals(langView.getTag().toString())){
                 unBindView(langView);
