@@ -115,6 +115,34 @@
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingStart="@dimen/dp_transparent_fields_padding"
+                    android:paddingTop="@dimen/dp_transparent_fields_padding"
+                    android:textColor="@android:color/black"
+                    android:gravity="start|center"
+                    android:textSize="@dimen/sp_settings_static_text_size"
+                    android:hint="@string/str_about_tra"
+                    android:inputType="text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dp_transparent_fields_padding"
+                    android:hint="@string/str_read_more_about_tra"
+                    android:inputType="text" />
+
+
+            </LinearLayout>
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
             <!--
             <LinearLayout
                 android:layout_width="match_parent"
