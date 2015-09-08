@@ -14,9 +14,9 @@ public class SeparatorFactory extends AbstractViewFactory<View, Separator> {
 
 	@Override
 	public View createView(Separator entity) {
-		View textView = new View(mContext);
-		prepareData(textView, entity);
-		return textView;
+		View separatorView = new View(mContext);
+		prepareData(separatorView, entity);
+		return separatorView;
 	}
 
 	@Override
@@ -24,5 +24,8 @@ public class SeparatorFactory extends AbstractViewFactory<View, Separator> {
 		ViewGroup.LayoutParams param1 = new ViewGroup.LayoutParams(entity.getWidth(), entity.getHeight());
 		separator.setBackgroundColor(entity.getColor());
 		separator.setLayoutParams(param1);
+		if(entity.dX != -1){
+			separator.setX(entity.dX);
+		}
 	}
 }
