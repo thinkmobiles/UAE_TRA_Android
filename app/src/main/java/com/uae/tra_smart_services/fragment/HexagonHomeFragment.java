@@ -14,7 +14,10 @@ import android.widget.RelativeLayout;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.ServicesRecyclerViewAdapter;
 import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
+import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.OnServiceSelected;
 import com.uae.tra_smart_services.customviews.HexagonalHeader;
+import com.uae.tra_smart_services.customviews.HexagonalHeader.HexagonButton;
+import com.uae.tra_smart_services.customviews.HexagonalHeader.OnButtonClickListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.util.ImageUtils;
@@ -30,7 +33,7 @@ import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.Stat
 /**
  * Created by Vitaliy on 13/08/2015.
  */
-public class HexagonHomeFragment extends BaseFragment implements HexagonalButtonsLayout.OnServiceSelected {
+public class HexagonHomeFragment extends BaseFragment implements OnServiceSelected, OnButtonClickListener {
 
 
     public final String RECYCLER_TAG = "RecyclerView_test";
@@ -46,6 +49,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
 
     private OnServiceSelectListener mServiceSelectListener;
     private OnStaticServiceSelectListener mStaticServiceSelectListener;
+    private OnOpenUserProfileClickListener mProfileClickListener;
 
     private ValueAnimator mHexagonalHeaderAnimator, mHexagonButtonsAnimator, mHexagonHeaderReverseAnimator,
             mHexagonButtonsReverseAnimator;
@@ -66,6 +70,9 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
         super.onAttach(_activity);
         mServiceSelectListener = (OnServiceSelectListener) _activity;
         mStaticServiceSelectListener = (OnStaticServiceSelectListener) _activity;
+        if (_activity instanceof OnOpenUserProfileClickListener) {
+            mProfileClickListener = (OnOpenUserProfileClickListener) _activity;
+        }
     }
 
     @Override
@@ -136,6 +143,7 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
                 }
             }
         });
+        mHexagonalHeader.setOnButtonClickListener(this);
     }
 
     private void endAnimation() {
@@ -212,6 +220,22 @@ public class HexagonHomeFragment extends BaseFragment implements HexagonalButton
         } else if (INTERNET_SPEED_TEST.isEquals(_id)) {
             mStaticServiceSelectListener.onStaticServiceSelect(INTERNET_SPEED_TEST);
         }
+    }
+
+    @Override
+    public void onAvatarButtonClick() {
+        if (mProfileClickListener != null) {
+            mProfileClickListener.onOpenUserProfileClick();
+        }
+    }
+
+    @Override
+    public void onHexagonButtonClick(@HexagonButton final int _hexagonButton) {
+
+    }
+
+    public interface OnOpenUserProfileClickListener {
+        void onOpenUserProfileClick();
     }
 
     public interface OnServiceSelectListener {

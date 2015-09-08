@@ -30,6 +30,7 @@ import com.uae.tra_smart_services.fragment.FavoritesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment.OnFavoritesEventListener;
 import com.uae.tra_smart_services.fragment.HelpSalemFragment;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnOpenUserProfileClickListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
@@ -60,7 +61,8 @@ import java.util.List;
 public class HomeActivity extends BaseFragmentActivity
         implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
-        OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener {
+        OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
+        OnOpenUserProfileClickListener {
 
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
@@ -261,6 +263,11 @@ public class HomeActivity extends BaseFragmentActivity
         final FavoritesFragment favoritesFragment = (FavoritesFragment) getFragmentManager().findFragmentById(getContainerId());
         Log.d("Favorites", "Selected items count: " + _items.size());
         favoritesFragment.addServicesToFavorites(_items);
+    }
+
+    @Override
+    public final void onOpenUserProfileClick() {
+
     }
 
     @Override
