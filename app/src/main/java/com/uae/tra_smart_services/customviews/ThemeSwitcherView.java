@@ -118,12 +118,11 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         }
     }
 
-
-
     protected void onDraw(Canvas canvas) {
         int counter = 1;
         int themeCount = points.size();
         int sectorOffset = canvas.getWidth() / themeCount;
+        int separatorPadding = getHeight() / 3;
         for (RectButton p : points) {
             canvas.drawRoundRect(p.rect, 1, 1, p.paint);
             if (p.isSelected){
@@ -139,10 +138,10 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
             if (counter != themeCount){
                 View separatorView = separatorFactory.createView(separator);
                 LinearLayout layout = new LinearLayout(getContext());
-                layout.setPadding(0, getHeight() / 2, 0, getHeight() / 2);
+                layout.setPadding(0, separatorPadding, 0, separatorPadding);
                 layout.addView(separatorView);
                 layout.measure(canvas.getWidth(), canvas.getHeight());
-                layout.layout(12, 12, canvas.getWidth(), canvas.getHeight());
+                layout.layout(0, 0, canvas.getWidth(), canvas.getHeight());
                 layout.draw(canvas);
             }
             counter++;
