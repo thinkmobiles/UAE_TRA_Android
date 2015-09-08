@@ -48,8 +48,9 @@
 
     <!--                Settings screens                -->
     <!--            Font size switcher               -->
-    <string name="str_A_plus">A+</string>
-    <string name="str_A_minus">"<b>A-</b>"</string>
+    <string name="str_small">Small</string>
+    <string name="str_medium">Medium</string>
+    <string name="str_large">Large</string>
 
     <!--               Home screens                -->
     <string name="str_home">Home</string>
@@ -216,6 +217,9 @@
         <item>--Select--</item>
         <item>Dubai</item>
     </string-array>
+
+    <string name="lang_en">english</string>
+    <string name="lang_ar">العربية</string>
 
     <string-array name="states_array">
         <item>--Select--</item>

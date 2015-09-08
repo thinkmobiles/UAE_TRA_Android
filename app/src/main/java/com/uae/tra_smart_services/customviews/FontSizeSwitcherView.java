@@ -2,22 +2,36 @@ package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.gson.internal.LinkedHashTreeMap;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Andrey Korneychuk on 23.07.15.
  */
-public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
+public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
 
     protected float mScaleMin, mScaleMax, mScaleStep, mFontScale, mFontScaleNew;
 
-    TextView makeBigger, makeSmaller;
+    TextView makeBigger, makeMedium, makeSmaller;
+    SeekBar seekbar;
+    LinearLayout valuesContainer;
+    Float[] keyset;
+
+    private Map<Float, TextView> scaleSeekbarMap = new LinkedHashTreeMap<>();
 
     public FontSizeSwitcherView(Context _context) {
         super(_context);
@@ -33,14 +47,14 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
     }
 
     @Override
-    protected void initData(Context context, AttributeSet attrs){
+    protected void initData(Context context, AttributeSet attrs) {
         TypedArray typedArrayData =
                 context.getTheme().obtainStyledAttributes(attrs, R.styleable.FontSizeSwitcherView, 0, 0);
         mFontScale = getResources().getConfiguration().fontScale;
         try {
             mScaleMin = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleMin, 0.5f);
             mScaleMax = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleMax, 1.5f);
-            mScaleStep = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleStep, 0.1f);
+            mScaleStep = typedArrayData.getFloat(R.styleable.FontSizeSwitcherView_scaleStep, 0.5f);
         } finally {
             typedArrayData.recycle();
         }
@@ -49,23 +63,39 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
     @Override
     protected void initViews() {
         super.initViews();
-        makeBigger = findView(R.id.tvMakeBigger_SA);
+        setOrientation(VERTICAL);
+        seekbar = findView(R.id.sbFontSizeSwitcher_LFS);
+        valuesContainer = findView(R.id.lL_fontSizeValuesContainer_LFS);
+        /**
+         * Make sure the elements should be added by growth order
+         * START
+         * */
         makeSmaller = findView(R.id.tvMakeSmaller_SA);
+        scaleSeekbarMap.put(mScaleMin, makeSmaller);
+
+        makeMedium = findView(R.id.tvMakeMedium_SA);
+        scaleSeekbarMap.put(1f, makeMedium);
+
+        makeBigger = findView(R.id.tvMakeBigger_SA);
+        scaleSeekbarMap.put(mScaleMax, makeBigger);
+        /** END */
     }
 
     @Override
     protected final void initConfigs() {
-        if (mFontScale < mScaleMax){
-            bindView(makeBigger);
-        } else {
-            unBindView(makeBigger);
+        int i = 0;
+        for(Map.Entry<Float, TextView> entry : scaleSeekbarMap.entrySet()){
+            if(entry.getKey() == mFontScale){
+                seekbar.setProgress(i);
+                unBindView(entry.getValue());
+            } else {
+                bindView(entry.getValue());
+            }
+            i++;
         }
-
-        if (mFontScale > mScaleMin){
-            bindView(makeSmaller);
-        } else {
-            unBindView(makeSmaller);
-        }
+        seekbar.setOnSeekBarChangeListener(this);
+        keyset = new Float[scaleSeekbarMap.size()];
+        scaleSeekbarMap.keySet().toArray(keyset);
     }
 
     @Override
@@ -80,43 +110,35 @@ public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnC
 
     @Override
     public final void onClick(final View _view) {
-        mFontScale = mFontScaleNew == 0 ? mFontScale : mFontScaleNew;
-        switch (_view.getId()){
-            case R.id.tvMakeBigger_SA:
-                makeTextBigger(_view);
-                break;
-            case R.id.tvMakeSmaller_SA:
-                makeTextSmaller(_view);
-                break;
-        }
-        mSettingsChangeListener.onSettingsChanged(this, mFontScaleNew);
-    }
-
-    private final void makeTextBigger(final View _view){
-        if ((mFontScaleNew = mFontScale + mScaleStep) >= mScaleMax) {
-            unBindView(_view);
-        } else if((mFontScaleNew = mFontScale + mScaleStep) == mScaleMin + mScaleStep){
-            bindView(makeSmaller);
-        }
-    }
-
-    private final void makeTextSmaller(final View _view){
-        if ((mFontScaleNew = mFontScale - mScaleStep) <= mScaleMin) {
-            unBindView(_view);
-        } else if((mFontScaleNew = mFontScale - mScaleStep) == mScaleMax - mScaleStep){
-            bindView(makeBigger);
-        }
+        bindView(scaleSeekbarMap.get(mFontScale));
+        mSettingsChangeListener.onSettingsChanged(this, Float.valueOf((String) _view.getTag()));
     }
 
     @Override
-    protected final void bindView(final View _view){
+    protected final void bindView(final View _view) {
         _view.setOnClickListener(this);
-        ((TextView)_view).setTextColor(getResources().getColor(R.color.hex_black_color));
+        ((TextView) _view).setTextColor(/*getResources().getColor(R.color.hex_color_light_gray)*/Color.LTGRAY);
     }
 
     @Override
-    protected final void unBindView(final View _view){
+    protected final void unBindView(final View _view) {
         _view.setOnClickListener(null);
-        ((TextView)_view).setTextColor(getResources().getColor(R.color.hex_color_light_gray));
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        unBindView(scaleSeekbarMap.get(keyset[progress]));
+        bindView(scaleSeekbarMap.get(mFontScale));
+        mSettingsChangeListener.onSettingsChanged(this, keyset[progress]);
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
     }
 }

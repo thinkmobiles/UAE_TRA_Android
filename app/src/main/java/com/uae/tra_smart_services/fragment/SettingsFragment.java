@@ -26,14 +26,14 @@ import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
-import com.uae.tra_smart_services.interfaces.SettingsChanged;
+import com.uae.tra_smart_services.interfaces.SettingsChangeListener;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
  * Created by Andrey Korneychuk on 30.07.15.
  */
 public class SettingsFragment extends BaseHomePageFragment
-        implements SettingsChanged, OnClickListener, OnOkListener, OnCheckedChangeListener {
+        implements SettingsChangeListener, OnClickListener, OnOkListener, OnCheckedChangeListener {
 
     public static final String CHANGED = "changed";
 
@@ -86,8 +86,8 @@ public class SettingsFragment extends BaseHomePageFragment
     };
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume() {
+        super.onResume();
         globalInitViews();
     }
 
@@ -118,6 +118,7 @@ public class SettingsFragment extends BaseHomePageFragment
                 updateTheme((String) data);
                 break;
         }
+        getActivity().finish();
         restartActivity();
     }
 

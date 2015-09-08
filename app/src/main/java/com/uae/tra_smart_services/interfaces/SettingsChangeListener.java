@@ -5,6 +5,6 @@ package com.uae.tra_smart_services.interfaces;
 /**
  * Created by Andrey Korneychuk on 27.07.15.
  */
-public interface SettingsChanged {
+public interface SettingsChangeListener {
     void onSettingsChanged(BaseCustomSwitcher caller, Object data);
 }

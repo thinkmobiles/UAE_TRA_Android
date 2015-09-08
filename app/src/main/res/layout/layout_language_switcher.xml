@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_switcher_view">
+    <TextView
+        android:id="@+id/tvEnglishLang_LS"
+        android:tag="en"
+        android:padding="5dp"
+        android:background="?attr/homePageHeaderBackground"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/lang_en" />
+    <TextView
+        android:padding="5dp"
+        android:id="@+id/tvArabicLang_LS"
+        android:tag="ar"
+        android:background="?attr/homePageHeaderBackground"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/lang_ar" />
+</merge>
