@@ -2,27 +2,32 @@
 <RelativeLayout
     android:id="@+id/rlFragmentContainer_FSI"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/serviceInfoBackground"
-    android:padding="10dp"
+    android:padding="20dp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/ivCloseInfo_FSI"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/ic_play"
+        android:id="@+id/ivNotificationListClose_FN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btn_close"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/rvNotificationsList_FN"/>
 
     <TextView
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:id="@+id/tvNotificationListStatus_FN"
+        android:textColor="@color/hex_text_color_white"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:drawableEnd="@drawable/ic_not"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        />
 
     <!--<ScrollView
         android:layout_width="match_parent"
@@ -221,9 +226,8 @@
         android:id="@+id/rvNotificationsList_FN"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:visibility="invisible"
         tools:listitem="@layout/list_item_favorite"
-        android:layout_below="@+id/ivCloseInfo_FSI" />
+        android:layout_below="@+id/tvNotificationListStatus_FN" />
 
 </RelativeLayout>

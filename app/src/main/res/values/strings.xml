@@ -283,5 +283,6 @@
 
     <string name="str_you_have_notification">You have %s Notifications</string>
     <string name="str_no_notifications">There are no notifications\nfor you as of the moment</string>
+    <string name="str_no">no</string>
 
 </resources>
