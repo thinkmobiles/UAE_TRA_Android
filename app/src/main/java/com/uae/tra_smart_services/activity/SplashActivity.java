@@ -30,6 +30,6 @@ public class SplashActivity extends Activity {
                 // close this activity
                 finish();
             }
-        }, getResources().getInteger(R.integer.int_splash_delay));
+        }, 0);
     }
 }

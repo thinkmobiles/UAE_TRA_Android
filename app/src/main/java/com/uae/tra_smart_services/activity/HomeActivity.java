@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.activity;
 
+import android.app.Fragment;
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
@@ -37,6 +39,7 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectLi
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
+import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ResetPasswordFragment;
 import com.uae.tra_smart_services.fragment.ServiceInfoFragment;
@@ -316,9 +319,18 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
-        getFragmentManager().beginTransaction()
+        Fragment fragment = null;
+        switch(_service){
+            case NOTIFICATION:
+                fragment = NotificationsFragment.newInstance();
+                break;
+        }
+        if(fragment != null){
+            getFragmentManager()
+                .beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance())
+                .add(R.id.rlGlobalContainer_AH, fragment)
                 .commit();
+        }
     }
 }

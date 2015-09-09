@@ -281,5 +281,7 @@
     <string name="fragment_change_password_new_password">NEW PASSWORD</string>
     <string name="fragment_change_password_retype_new_password">RETYPE NEW PASSWORD</string>
 
+    <string name="str_you_have_notification">You have %s Notifications</string>
+    <string name="str_no_notifications">There are no notifications\nfor you as of the moment</string>
 
 </resources>
