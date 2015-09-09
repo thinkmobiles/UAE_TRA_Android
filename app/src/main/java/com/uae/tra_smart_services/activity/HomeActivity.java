@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
@@ -46,6 +47,7 @@ import com.uae.tra_smart_services.fragment.SpeedTestFragment;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
@@ -62,7 +64,7 @@ public class HomeActivity extends BaseFragmentActivity
         implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
-        OnOpenUserProfileClickListener {
+        OnOpenUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener {
 
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
@@ -288,5 +290,13 @@ public class HomeActivity extends BaseFragmentActivity
                 actionBar.hide();
             }
         }
+    }
+
+    @Override
+    public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
+        getFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance())
+                .commit();
     }
 }
