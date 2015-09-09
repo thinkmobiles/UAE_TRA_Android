@@ -285,7 +285,8 @@
     <string name="str_no_notifications">There are no notifications\nfor you as of the moment</string>
     <string name="str_no">no</string>
 
-    <string name="str_put_search_phrase">Put search phrase here</string>
+    <string name="str_put_search_phrase">Type Your search phrase here</string>
     <string name="str_no_search_result">There are no search\nresult where found</string>
+    <string name="str_are_you_looking_for">ARE YOU LOOKING FOR</string>
 
 </resources>

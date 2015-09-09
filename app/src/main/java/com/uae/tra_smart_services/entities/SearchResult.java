@@ -31,6 +31,11 @@ public class SearchResult {
         public String getText() {
             return text;
         }
+
+        @Override
+        public String toString() {
+            return getText();
+        }
     }
 
     public int getCount(){

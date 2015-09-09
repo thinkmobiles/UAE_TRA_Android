@@ -30,13 +30,26 @@
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/hvSearchButton_FS" />
 
+    <TextView
+        android:id="@+id/tvHint_FS"
+        android:visibility="invisible"
+        android:textSize="10sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/hex_text_color_white"
+        android:text="@string/str_are_you_looking_for"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/view"
+        android:layout_alignParentStart="true" />
+
     <View style="@style/AuthorizationFieldsSeparator"
         android:layout_alignBottom="@+id/etSearch_FS"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="7dp"
         android:background="@color/hex_text_color_white"
-        android:layout_toStartOf="@+id/hvSearchButton_FS" />
-
+        android:layout_toStartOf="@+id/hvSearchButton_FS"
+        android:id="@+id/view" />
 
     <com.uae.tra_smart_services.customviews.HexagonView
         android:id="@+id/hvSearchButton_FS"
@@ -53,9 +66,10 @@
     <TextView
         android:gravity="center"
         android:textSize="20sp"
+        android:padding="20dp"
         android:textColor="@color/hex_text_color_white"
         android:text="@string/str_no_search_result"
-        android:id="@+id/tvNoNotifications_FN"
+        android:id="@+id/tvNoSearchResult_FS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -65,10 +79,10 @@
         android:id="@+id/rvSearchResultList_FS"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:listitem="@layout/list_item_favorite"
-        android:layout_below="@+id/hvSearchButton_FS"
+        android:paddingEnd="30dp"
+        tools:listitem="@layout/recycler_search_item"
         android:layout_above="@+id/tvNoNotifications_FN"
-        android:layout_alignEnd="@+id/etSearch_FS" />
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tvHint_FS" />
 
 </RelativeLayout>

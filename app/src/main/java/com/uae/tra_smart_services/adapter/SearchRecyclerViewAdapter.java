@@ -20,8 +20,7 @@ import java.util.List;
 /**
  * Created by and on 09.09.15.
  */
-public class SearchRecyclerViewAdapter
-                            extends RecyclerView.Adapter<SearchRecyclerViewAdapter.ViewHolder>
+public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecyclerViewAdapter.ViewHolder>
                                                                             implements Filterable{
     /** FIELDS */
     private SearchResult mDataSet;
@@ -33,6 +32,7 @@ public class SearchRecyclerViewAdapter
         mDataSet = _dataSet;
         mContext = _context;
     }
+
     /** OVERRIDEN METHODS */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -72,16 +72,15 @@ public class SearchRecyclerViewAdapter
     }
 
     /** ENTITIES */
-    public interface OnSearchResultItemClickListener{
-        void onSearchResultItemClicked(SearchResult.SearchResultItem _item);
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         private final LinearLayout container;
         private final TextView textView;
+
         public ViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.tvSearchResultItem_RSI);
+            textView.setOnClickListener(this);
             container = (LinearLayout) itemView.findViewById(R.id.llContainer_RSI);
         }
 
@@ -92,12 +91,13 @@ public class SearchRecyclerViewAdapter
         public void setData(final SearchResult.SearchResultItem searchResultItem) {
             textView.setText(searchResultItem.getText());
             container.setTag(searchResultItem);
-            container.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View _view) {
-            listener.onSearchResultItemClicked((SearchResult.SearchResultItem) _view.getTag());
+            if(listener != null){
+                listener.onSearchResultItemClicked((SearchResult.SearchResultItem) _view.getTag());
+            }
         }
     }
 
@@ -118,5 +118,9 @@ public class SearchRecyclerViewAdapter
             mAdapter.addAllFiltered((ArrayList<SearchResult.SearchResultItem>) results.values);
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    public interface OnSearchResultItemClickListener{
+        void onSearchResultItemClicked(SearchResult.SearchResultItem _item);
     }
 }
