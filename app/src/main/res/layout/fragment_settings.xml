@@ -55,7 +55,7 @@
 
                 <TextView
                     style="@style/UserSettingsStaticText"
-                    android:hint="@string/str_black_and_white_mode"/>
+                    android:hint="@string/str_color_impaired"/>
 
                 <Space
                     android:layout_width="0dp"
