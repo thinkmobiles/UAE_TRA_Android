@@ -141,7 +141,7 @@ public class FavoritesFragment extends BaseFragment
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         searchItem.setVisible(isItemsVisible);
 
-        final boolean isAllServicesAlreadyFavorite = mFavoritesAdapter.getAllData().size() == Service.getAllServicesCount();
+        final boolean isAllServicesAlreadyFavorite = mFavoritesAdapter.getAllData().size() == Service.getUniqueServicesCount();
         final MenuItem addItem = menu.findItem(R.id.action_add);
         addItem.setVisible(isItemsVisible && !isAllServicesAlreadyFavorite);
     }

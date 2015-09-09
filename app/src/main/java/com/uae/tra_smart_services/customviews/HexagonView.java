@@ -178,9 +178,9 @@ public final class HexagonView extends View implements Target {
 //        canvas.restore();
         //endregion
 
+        canvas.clipPath(mPath);
+        canvas.drawColor(mBackgroundColor);
         if (mSrcDrawable != null) {
-            canvas.clipPath(mPath);
-            canvas.drawColor(mBackgroundColor);
             canvas.getClipBounds(mHexagonRect);
             if (mSrcDrawable instanceof BitmapDrawable) {
 
@@ -196,12 +196,12 @@ public final class HexagonView extends View implements Target {
                 mSrcDrawable.setBounds(mHexagonRect);
             }
             mSrcDrawable.draw(canvas);
-            canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
         }
 
         if (!TextUtils.isEmpty(mText)) {
             drawText(canvas);
         }
+        canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
 
         canvas.drawPath(mPath, mPaint);
     }

@@ -249,6 +249,29 @@
     <string name="fragment_speed_test_result">Internet speed: %s Mbit</string>
     <string name="fragment_speed_test_progress">Measure speed…</string>
     <string name="fragment_speed_test_run">Run speedtest</string>
+    
+    <string name="fragment_user_profile_title">User Profile</string>
+    <string name="fragment_user_profile_edit_profile">Edit Profile</string>
+    <string name="fragment_user_profile_change_password">Change Password</string>
+    <string name="fragment_user_profile_reset_password">Reset Password</string>
+    <string name="fragment_user_profile_logout">Logout from your Account</string>
+
+    <string name="fragment_edit_user_profile_change_photo">CHANGE PHOTO</string>
+    <string name="fragment_edit_user_profile_first_name">FIRST NAME</string>
+    <string name="fragment_edit_user_profile_last_name">LAST NAME</string>
+    <string name="fragment_edit_user_profile_address">STREET ADDRESS</string>
+    <string name="fragment_edit_user_profile_emirate">EMIRATE</string>
+    <string name="fragment_edit_user_profile_number">CONTACT NUMBER</string>
+
+    <string name="fragment_reset_password_reset_title">Reset Password</string>
+    <string name="fragment_reset_password_reset_info">To reset your password, please type your email in the field below and a temporary password will be sent tou you.</string>
+    <string name="fragment_reset_password_email">EMAIL</string>
+    <string name="fragment_reset_password_retype_email">RETYPE YOUR EMAIL</string>
+
+    <string name="fragment_change_password_change_title">Change Password</string>
+    <string name="fragment_change_password_old_password">OLD PASSWORD</string>
+    <string name="fragment_change_password_new_password">NEW PASSWORD</string>
+    <string name="fragment_change_password_retype_new_password">RETYPE NEW PASSWORD</string>
 
 
 </resources>
