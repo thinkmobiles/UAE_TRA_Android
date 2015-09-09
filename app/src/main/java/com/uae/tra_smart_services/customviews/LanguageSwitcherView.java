@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -8,10 +9,8 @@ import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
-import com.uae.tra_smart_services.entities.LanguageSelector;
-import com.uae.tra_smart_services.entities.Separator;
+import com.uae.tra_smart_services.entities.ButtonFactory;
 import com.uae.tra_smart_services.entities.SeparatorFactory;
-import com.uae.tra_smart_services.entities.TextViewFactory;
 
 import java.util.Locale;
 import java.util.Map;
@@ -22,6 +21,10 @@ import static com.uae.tra_smart_services.global.H.parseXmlToMap;
  * Created by Andrey Korneychuk on 24.07.15.
  */
 public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
+    private TextView mAcitveLang, enLang, arLang;
+    private TextView[] langViews;
+    private ButtonFactory mButtonfactory;
+    private SeparatorFactory mSeparatorFactory;
 
     public LanguageSwitcherView(Context context) {
         super(context);
@@ -31,12 +34,9 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
         super(context, attrs);
     }
 
-    private TextViewFactory mTextViewFactoryFactory;
-    private SeparatorFactory mSeparatorFactory;
-
     @Override
     protected void initFactories(){
-        mTextViewFactoryFactory = new TextViewFactory(getContext());
+        mButtonfactory = new ButtonFactory(getContext());
         mSeparatorFactory = new SeparatorFactory(getContext());
     }
 
@@ -54,39 +54,27 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
         }
     }
 
-    private TextView mAcitveLang;
     @Override
     protected void initViews() {
         super.initViews();
-        int index = 0;
-        for (Map.Entry<String,String> entry : mLangsMap.entrySet()){
-            LanguageSelector languageSelector = new LanguageSelector(
-                    entry.getValue(), entry.getKey(), android.R.style.TextAppearance_Medium, R.color.hex_black_color, this
-            );
-            TextView langSelector = mTextViewFactoryFactory.createView(languageSelector);
-
-            if (index != 0){
-                Separator separator = new Separator(
-                        getContext(),
-                        getResources().getDimensionPixelSize(R.dimen.dp_authorization_fields_separator_height),
-                        langSelector.getLineHeight() * 4 / 3,
-                        R.color.hex_auth_fields_separator_color
-                );
-                addView(mSeparatorFactory.createView(separator));
+        setOrientation(HORIZONTAL);
+        setPadding(15, 0, 15, 0);
+        langViews = new TextView[]{
+                enLang = findView(R.id.tvEnglishLang_LS),
+                arLang = findView(R.id.tvArabicLang_LS)
+        };
+        for (TextView langView : langViews){
+            if(Locale.getDefault().getLanguage().equals(langView.getTag().toString())){
+                unBindView(langView);
+            } else {
+                bindView(langView);
             }
-
-            if(Locale.getDefault().getLanguage().equals(entry.getKey())){
-                mAcitveLang = langSelector;
-                unBindView(langSelector);
-            }
-            addView(langSelector);
-            index++;
         }
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_switcher;
+        return R.layout.layout_language_switcher;
     }
 
     @Override
@@ -96,21 +84,17 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
 
     @Override
     protected void bindView(View view){
-        mAcitveLang.setOnClickListener(this);
-        mAcitveLang.setTextColor(getResources().getColor(R.color.hex_black_color));
-        mAcitveLang = (TextView) view;
+        view.setBackgroundColor(Color.LTGRAY);
+        view.setOnClickListener(this);
     }
 
     @Override
     protected void unBindView(View view){
         view.setOnClickListener(null);
-        ((TextView) view).setTextColor(getResources().getColor(R.color.hex_color_middle_gray));
     }
 
     @Override
     public void onClick(View view) {
-        unBindView(view);
-        bindView(view);
         mSettingsChangeListener.onSettingsChanged(this, view.getTag());
     }
 }

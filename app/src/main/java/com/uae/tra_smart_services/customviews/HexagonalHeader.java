@@ -669,8 +669,6 @@ public class HexagonalHeader extends View {
 
     public interface OnButtonClickListener {
         void onAvatarButtonClick();
-
         void onHexagonButtonClick(@HexagonButton final int _hexagonButton);
     }
-
 }

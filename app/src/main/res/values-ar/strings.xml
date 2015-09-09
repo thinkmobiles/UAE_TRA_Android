@@ -37,8 +37,9 @@
 
     <!--                Settings screens                -->
     <!--            Font size switcher               -->
-    <string name="str_A_plus">A+</string>
-    <string name="str_A_minus">"<b>A-</b>"</string>
+    <string name="str_small">صغير</string>
+    <string name="str_medium">متوسط</string>
+    <string name="str_large">كبير</string>
 
     <!--               Home screens                -->
     <string name="str_home">الرئيسية</string>

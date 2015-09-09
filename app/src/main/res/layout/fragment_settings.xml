@@ -1,186 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tra="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/hex_authorization_background_color"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/llRegisterFields_FR"
+    <ImageView
+        android:id="@+id/ivBackground_FS"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/res_bg_2" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tra="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/UserSettingsStaticText"
-                android:hint="@string/str_username" />
-
-            <EditText
-                android:id="@+id/etUserName_AS"
-                style="@style/UserSettingsEditableText"
-                android:layout_width="match_parent"
-                android:text="@string/str_user_name"
-                android:gravity="center_vertical|end"/>
-        </LinearLayout>
-
-        <View style="@style/AuthorizationFieldsSeparator" />
-
-        <LinearLayout
+            android:id="@+id/llRegisterFields_FR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                style="@style/UserSettingsStaticText"
-                android:hint="@string/str_email" />
-
-            <EditText
-                android:id="@+id/etEmail_AS"
-                style="@style/UserSettingsEditableText"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:text="test@mail.com"
-                android:gravity="center_vertical|end" />
-
-        </LinearLayout>
-
-        <View style="@style/AuthorizationFieldsSeparator" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/UserSettingsStaticText"
-                android:hint="@string/str_language" />
-
-            <com.uae.tra_smart_services.customviews.LanguageSwitcherView
-                android:id="@+id/cvLangSwitch"
-                tools:contex=".SettingsActivity"
                 android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/UserSettingsStaticText"
+                    android:hint="@string/str_language" />
+
+                <com.uae.tra_smart_services.customviews.LanguageSwitcherView
+                    android:id="@+id/cvLangSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|end"
+                    tools:contex=".SettingsActivity" />
+
+            </LinearLayout>
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:gravity="center_vertical|end" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible">
 
-        </LinearLayout>
+                <TextView
+                    style="@style/UserSettingsStaticText"
+                    android:hint="@string/str_black_and_white_mode" />
 
-        <View style="@style/AuthorizationFieldsSeparator" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/swBlackAndWhiteMode_FS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:minWidth="48dp"
+                    android:padding="12dp" />
 
-            <TextView
-                style="@style/UserSettingsStaticText"
-                android:hint="@string/str_fontsize" />
+            </LinearLayout>
 
-            <com.uae.tra_smart_services.customviews.FontSizeSwitcherView
-                android:id="@+id/cvFontSwitch"
-                tools:contex=".SettingsActivity"
+            <View
+                style="@style/AuthorizationFieldsSeparator"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/UserSettingsStaticText"
+                    android:hint="@string/str_fontsize" />
+
+                <com.uae.tra_smart_services.customviews.FontSizeSwitcherView
+                    android:id="@+id/cvFontSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|end"
+                    tools:contex=".SettingsActivity"
+                    tra:scaleMax="1.3"
+                    tra:scaleMin="0.7" />
+
+            </LinearLayout>
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:hint="@string/str_themesoptions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/dp_transparent_fields_padding"
+                        android:paddingTop="@dimen/dp_transparent_fields_padding"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp_settings_static_text_size"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/str_change_color_theme"
+                        android:paddingBottom="@dimen/dp_transparent_fields_padding"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/dp_transparent_fields_padding" />
+                </LinearLayout>
+
+                <com.uae.tra_smart_services.customviews.ThemeSwitcherView
+                    android:id="@+id/cvThemeSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:contex=".SettingsActivity" />
+            </LinearLayout>
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:hint="@string/str_about_tra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/dp_transparent_fields_padding"
+                    android:paddingTop="@dimen/dp_transparent_fields_padding"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_settings_static_text_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/str_read_more_about_tra"
+                    android:inputType="text"
+                    android:paddingBottom="@dimen/dp_transparent_fields_padding"
+                    android:paddingStart="@dimen/dp_transparent_fields_padding" />
+
+
+            </LinearLayout>
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <!--
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/UserSettingsStaticText"
+                    android:hint="@string/str_username" />
+
+                <EditText
+                    android:id="@+id/etUserName_AS"
+                    style="@style/UserSettingsEditableText"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical|end"
+                    android:text="@string/str_user_name" />
+            </LinearLayout>
+
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                tra:scaleMin="0.5"
-                tra:scaleMax="1.5"
-                tra:scaleStep="0.1"
-                android:gravity="center_vertical|end" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <TextView
+                    style="@style/UserSettingsStaticText"
+                    android:hint="@string/str_email" />
 
-        <View style="@style/AuthorizationFieldsSeparator" />
+                <EditText
+                    android:id="@+id/etEmail_AS"
+                    style="@style/UserSettingsEditableText"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical|end"
+                    android:text="test@mail.com" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            </LinearLayout>
 
-            <TextView
-                style="@style/UserSettingsStaticText"
-                android:hint="@string/str_themesoptions"
-                android:inputType="text" />
+            <View style="@style/AuthorizationFieldsSeparator" />
+            -->
 
-            <com.uae.tra_smart_services.customviews.ThemeSwitcherView
-                android:id="@+id/cvThemeSwitch"
-                tools:contex=".SettingsActivity"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:padding="5dp"
-                android:gravity="center|end" />
-        </LinearLayout>
 
-        <View style="@style/AuthorizationFieldsSeparator" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:visibility="visible"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/UserSettingsStaticText"
-                android:hint="@string/str_black_and_white_mode"/>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/swBlackAndWhiteMode_FS"
-                android:layout_width="wrap_content"
-                android:minWidth="48dp"
-                android:padding="12dp"
-                android:layout_height="match_parent"/>
-
-        </LinearLayout>
-
-        <View style="@style/AuthorizationFieldsSeparator"
-            android:visibility="visible"/>
-
-        <!--<LinearLayout-->
+            <!--<LinearLayout-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:orientation="horizontal">-->
 
             <!--<TextView-->
-                <!--style="@style/UserSettingsStaticText"-->
-                <!--android:hint="@string/str_logout"-->
-                <!--android:inputType="text" />-->
+            <!--style="@style/UserSettingsStaticText"-->
+            <!--android:hint="@string/str_logout"-->
+            <!--android:inputType="text" />-->
 
             <!--<ImageButton-->
-                <!--style="@style/UserSettingsEditableText"-->
-                <!--android:text="asdasdads" />-->
-        <!--</LinearLayout>-->
+            <!--style="@style/UserSettingsEditableText"-->
+            <!--android:text="asdasdads" />-->
+            <!--</LinearLayout>-->
 
-        <!--<View style="@style/AuthorizationFieldsSeparator" />-->
+            <!--<View style="@style/AuthorizationFieldsSeparator" />-->
 
-        <EditText
-            style="@style/UserSettingsStaticText"
-            android:id="@+id/etServer_FS"
-            android:inputType="textUri"
-            android:textDirection="locale"
-            android:layout_width="match_parent"
-            android:gravity="start"
-            android:hint="@string/hint_set_server_url"
-            android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/etServer_FS"
+                style="@style/UserSettingsStaticText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/hint_set_server_url"
+                android:inputType="textUri"
+                android:textDirection="locale" />
 
-        <View style="@style/AuthorizationFieldsSeparator" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_gravity="end"
-            android:id="@+id/btnChangeServer_FS"
-            android:textColor="?attr/homePageHeaderBackground"
-            android:text="@string/button_change_server"
-            android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btnChangeServer_FS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/button_change_server"
+                android:textColor="?attr/homePageHeaderBackground" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
+</FrameLayout>

@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.entities;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class TextViewFactory extends AbstractViewFactory<TextView, LanguageSelec
 		textView.setOnClickListener(entity.getHadler());
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
 				ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.MATCH_PARENT
+				ViewGroup.LayoutParams.WRAP_CONTENT
 		);
 		textView.setLayoutParams(params);
 	}
