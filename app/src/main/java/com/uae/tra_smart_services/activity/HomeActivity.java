@@ -26,6 +26,7 @@ import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.DomainInfoFragment;
 import com.uae.tra_smart_services.fragment.DomainIsAvailableFragment;
+import com.uae.tra_smart_services.fragment.EditUserProfileFragment;
 import com.uae.tra_smart_services.fragment.EnquiriesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment.OnFavoritesEventListener;
@@ -68,7 +69,7 @@ public class HomeActivity extends BaseFragmentActivity
         implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
-        OnOpenUserProfileClickListener, OnUserProfileClickListener {
+        OnOpenUserProfileClickListener, OnUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener {
 
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
