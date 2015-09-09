@@ -103,7 +103,7 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     }
 
     private List<Service> getNotFavoriteServices() {
-        final List<Service> services = Service.getAllServices();
+        final List<Service> services = Service.getUniqueServices();
         final List<Service> favoriteServices = getFavoriteServices();
         services.removeAll(favoriteServices);
         return services;
