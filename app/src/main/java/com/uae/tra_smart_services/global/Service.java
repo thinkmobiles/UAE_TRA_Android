@@ -191,22 +191,24 @@ public enum Service {
         return _context.getString(getTitleRes());
     }
 
-    private static List<Service> ALL_SERVICES;
+    private static List<Service> UNIQUE_SERVICES;
 
-    public static List<Service> getAllServices() {
-        initAllServicesList();
-        return new ArrayList<>(ALL_SERVICES);
+    public static List<Service> getUniqueServices() {
+        initUniqueServicesList();
+        return new ArrayList<>(UNIQUE_SERVICES);
     }
 
-    private static void initAllServicesList() {
-        if (ALL_SERVICES == null) {
-            ALL_SERVICES = new ArrayList<>(Arrays.asList(Service.values()));
+    private static void initUniqueServicesList() {
+        if (UNIQUE_SERVICES == null) {
+            UNIQUE_SERVICES = new ArrayList<>(Arrays.asList(Service.values()));
+            UNIQUE_SERVICES.remove(DOMAIN_CHECK_AVAILABILITY);
+            UNIQUE_SERVICES.remove(DOMAIN_CHECK_INFO);
         }
     }
 
-    public static int getAllServicesCount() {
-        initAllServicesList();
-        return ALL_SERVICES.size();
+    public static int getUniqueServicesCount() {
+        initUniqueServicesList();
+        return UNIQUE_SERVICES.size();
     }
 
     public static List<Service> getSecondaryServices() {

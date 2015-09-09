@@ -32,6 +32,11 @@
         <attr name="headerIconSrc" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="ThemedImageView">
+        <attr name="imageSrc" format="reference"/>
+        <attr name="tintColor" format="reference|color"/>
+    </declare-styleable>
+
     <attr name="homePageHeaderBackground" format="reference|color"/>
     <attr name="globalButtonTextColor" format="reference|color"/>
     <attr name="globalButtonSelector" format="reference|color"/>
@@ -47,5 +52,7 @@
     <attr name="backgroundServiceItemThemedIcon" format="reference"/>
 
     <attr name="spinnerItemThemedBackground" format="reference"/>
+
+    <attr name="userProfileBackground" format="reference"/>
 
 </resources>

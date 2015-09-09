@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
@@ -20,6 +19,7 @@ import com.uae.tra_smart_services.fragment.AddServiceFragment;
 import com.uae.tra_smart_services.fragment.AddServiceFragment.OnFavoriteServicesSelectedListener;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
+import com.uae.tra_smart_services.fragment.ChangePasswordFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
@@ -37,6 +37,7 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSe
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
+import com.uae.tra_smart_services.fragment.ResetPasswordFragment;
 import com.uae.tra_smart_services.fragment.ServiceInfoFragment;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
@@ -45,6 +46,9 @@ import com.uae.tra_smart_services.fragment.SmsServiceListFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SpeedTestFragment;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
+import com.uae.tra_smart_services.fragment.UserProfileFragment;
+import com.uae.tra_smart_services.fragment.UserProfileFragment.OnUserProfileClickListener;
+import com.uae.tra_smart_services.fragment.UserProfileFragment.UserProfileAction;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.HeaderStaticService;
@@ -64,7 +68,7 @@ public class HomeActivity extends BaseFragmentActivity
         implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
-        OnOpenUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener {
+        OnOpenUserProfileClickListener, OnUserProfileClickListener {
 
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
@@ -269,7 +273,24 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public final void onOpenUserProfileClick() {
+        replaceFragmentWithBackStack(UserProfileFragment.newInstance());
+    }
 
+    @Override
+    public void onUserProfileItemClick(@UserProfileAction int _profileItem) {
+        switch (_profileItem){
+            case UserProfileFragment.USER_PROFILE_EDIT_PROFILE:
+                replaceFragmentWithBackStack(EditUserProfileFragment.newInstance());
+                break;
+            case UserProfileFragment.USER_PROFILE_CHANGE_PASSWORD:
+                replaceFragmentWithBackStack(ChangePasswordFragment.newInstance());
+                break;
+            case UserProfileFragment.USER_PROFILE_RESET_PASSWORD:
+                replaceFragmentWithBackStack(ResetPasswordFragment.newInstance());
+                break;
+            case UserProfileFragment.USER_PROFILE_LOGOUT:
+                break;
+        }
     }
 
     @Override
