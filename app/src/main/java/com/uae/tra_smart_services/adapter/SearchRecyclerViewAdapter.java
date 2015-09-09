@@ -90,7 +90,7 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
 
         public void setData(final SearchResult.SearchResultItem searchResultItem) {
             textView.setText(searchResultItem.getText());
-            container.setTag(searchResultItem);
+            textView.setTag(searchResultItem);
         }
 
         @Override

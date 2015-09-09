@@ -77,7 +77,7 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public void onSearchResultItemClicked(SearchResult.SearchResultItem _item) {
-        Toast.makeText(getActivity(), _item.getText(), Toast.LENGTH_LONG);
+        Toast.makeText(getActivity(), _item.getText(), Toast.LENGTH_LONG).show();
     }
 
     @Override
