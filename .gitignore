@@ -20,3 +20,11 @@
 .idea/vcs.xml
 *.iml
 .idea/gradle.xml
+
+
+app/.idea/
+app/gradle/
+app/gradlew
+app/gradlew.bat
+app/local.properties
+

@@ -23,8 +23,6 @@ import static com.uae.tra_smart_services.global.H.parseXmlToMap;
 public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
     private TextView mAcitveLang, enLang, arLang;
     private TextView[] langViews;
-    private ButtonFactory mButtonfactory;
-    private SeparatorFactory mSeparatorFactory;
 
     public LanguageSwitcherView(Context context) {
         super(context);
@@ -35,30 +33,12 @@ public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnC
     }
 
     @Override
-    protected void initFactories(){
-        mButtonfactory = new ButtonFactory(getContext());
-        mSeparatorFactory = new SeparatorFactory(getContext());
-    }
-
-    @Override
     public <T> void initPreferences(T prefs){}
-
-    private Map<String, String> mLangsMap;
-
-    @Override
-    protected void initData(Context context, AttributeSet attrs){
-        try {
-            mLangsMap = parseXmlToMap(context, R.xml.languages);
-        } catch(Exception ex) {
-            Log.e(this.getClass().getSimpleName().toString(), ex.toString());
-        }
-    }
 
     @Override
     protected void initViews() {
         super.initViews();
         setOrientation(HORIZONTAL);
-        setPadding(15, 0, 15, 0);
         langViews = new TextView[]{
                 enLang = findView(R.id.tvEnglishLang_LS),
                 arLang = findView(R.id.tvArabicLang_LS)

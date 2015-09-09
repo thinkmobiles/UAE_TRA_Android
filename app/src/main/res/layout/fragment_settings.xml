@@ -160,8 +160,6 @@
 
             </LinearLayout>
 
-            <View style="@style/AuthorizationFieldsSeparator" />
-
             <!--
             <LinearLayout
                 android:layout_width="match_parent"
@@ -222,6 +220,7 @@
             <!--<View style="@style/AuthorizationFieldsSeparator" />-->
 
             <EditText
+                android:visibility="gone"
                 android:id="@+id/etServer_FS"
                 style="@style/UserSettingsStaticText"
                 android:layout_width="match_parent"
@@ -233,6 +232,7 @@
 
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/btnChangeServer_FS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
