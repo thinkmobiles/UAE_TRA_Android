@@ -42,6 +42,7 @@ import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ResetPasswordFragment;
+import com.uae.tra_smart_services.fragment.SearchFragment;
 import com.uae.tra_smart_services.fragment.ServiceInfoFragment;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
@@ -323,6 +324,9 @@ public class HomeActivity extends BaseFragmentActivity
         switch(_service){
             case NOTIFICATION:
                 fragment = NotificationsFragment.newInstance();
+                break;
+            case SEARCH:
+                fragment = SearchFragment.newInstance();
                 break;
         }
         if(fragment != null){

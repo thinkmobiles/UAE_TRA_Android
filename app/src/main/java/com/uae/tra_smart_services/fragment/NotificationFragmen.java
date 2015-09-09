@@ -33,7 +33,7 @@ public class NotificationFragmen extends BaseFragment implements View.OnClickLis
          * */
         ivCloseInfo = findView(R.id.ivCloseInfo_FSI);
         rlFragmentContainer = findView(R.id.rlFragmentContainer_FSI);
-        hvServiceInfo = findView(R.id.hvServiceInfo_FSI);
+        hvServiceInfo = findView(R.id.hvSearchButton_FS);
         hvRequiredDocuments = findView(R.id.hvRequiredDocuments_FSI);
         hvTermsAndConditions = findView(R.id.hvTermsAndConditions_FSI);
         hvServicePackage = findView(R.id.hvServicePackage_FSI);
@@ -61,7 +61,7 @@ public class NotificationFragmen extends BaseFragment implements View.OnClickLis
             case R.id.ivCloseInfo_FSI:
                 getFragmentManager().popBackStack();
                 break;
-            case R.id.hvServiceInfo_FSI:
+            case R.id.hvSearchButton_FS:
             case R.id.hvRequiredDocuments_FSI:
             case R.id.hvTermsAndConditions_FSI:
             case R.id.hvServicePackage_FSI:

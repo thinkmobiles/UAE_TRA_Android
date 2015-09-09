@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llContainer_RSI"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="asasas"
+        android:textSize="16dp"
+        android:layout_marginTop="7dp"
+        android:id="@+id/tvSearchResultItem_RSI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View style="@style/AuthorizationFieldsSeparator"
+        android:layout_alignBottom="@+id/etSearch_FS"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:background="@color/hex_text_color_white"
+        android:layout_toStartOf="@+id/hvSearchButton_FS" />
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,9 +10,9 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 
 /**
- * Created by PC on 9/9/2015.
+ * Created by Andrey Korneychuk on 9/9/2015.
  */
-public class NotificationsFragment extends BaseFragment implements View.OnClickListener {
+public class NotificationsFragment extends BaseFragment implements View.OnClickListener, View.OnTouchListener {
 
     private ImageView ivCloseNotificationList;
     private TextView tvNotificationListStatus;
@@ -26,10 +27,10 @@ public class NotificationsFragment extends BaseFragment implements View.OnClickL
         ivCloseNotificationList = findView(R.id.ivNotificationListClose_FN);
         tvNotificationListStatus = findView(R.id.tvNotificationListStatus_FN);
         tvNotificationListStatus.setText(
-            getResources().getString(
-                    R.string.str_you_have_notification,
-                    getResources().getString(R.string.str_no)
-            )
+                getResources().getString(
+                        R.string.str_you_have_notification,
+                        getResources().getString(R.string.str_no)
+                )
         );
     }
 
@@ -37,6 +38,12 @@ public class NotificationsFragment extends BaseFragment implements View.OnClickL
     protected void initListeners() {
         super.initListeners();
         ivCloseNotificationList.setOnClickListener(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.setOnTouchListener(this);
     }
 
     @Override
@@ -56,5 +63,10 @@ public class NotificationsFragment extends BaseFragment implements View.OnClickL
                 getFragmentManager().popBackStack();
                 break;
         }
+    }
+
+    @Override
+    public final boolean onTouch(final View _view, final MotionEvent _event) {
+        return true;
     }
 }
