@@ -273,12 +273,16 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public final void onOpenUserProfileClick() {
-        replaceFragmentWithBackStack(UserProfileFragment.newInstance());
+        if (TRAApplication.isLoggedIn()) {
+            replaceFragmentWithBackStack(UserProfileFragment.newInstance());
+        } else {
+            Toast.makeText(this, R.string.activity_home_not_logged_in, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
-    public void onUserProfileItemClick(@UserProfileAction int _profileItem) {
-        switch (_profileItem){
+    public final void onUserProfileItemClick(@UserProfileAction int _profileItem) {
+        switch (_profileItem) {
             case UserProfileFragment.USER_PROFILE_EDIT_PROFILE:
                 replaceFragmentWithBackStack(EditUserProfileFragment.newInstance());
                 break;
@@ -287,8 +291,6 @@ public class HomeActivity extends BaseFragmentActivity
                 break;
             case UserProfileFragment.USER_PROFILE_RESET_PASSWORD:
                 replaceFragmentWithBackStack(ResetPasswordFragment.newInstance());
-                break;
-            case UserProfileFragment.USER_PROFILE_LOGOUT:
                 break;
         }
     }

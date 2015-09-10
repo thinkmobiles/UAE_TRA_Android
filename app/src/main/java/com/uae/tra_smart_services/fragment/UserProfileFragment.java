@@ -7,17 +7,26 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.octo.android.robospice.persistence.DurationInMillis;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.rest.robo_requests.LogoutRequest;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import retrofit.client.Response;
 
 /**
  * Created by mobimaks on 08.09.2015.
  */
 public final class UserProfileFragment extends BaseFragment implements OnClickListener {
+
+    private static final String KEY_LOGOUT_REQUEST = "LOGOUT_REQUEST";
 
     public static final int USER_PROFILE_EDIT_PROFILE = 0;
     public static final int USER_PROFILE_CHANGE_PASSWORD = 1;
@@ -31,9 +40,10 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
     private HexagonView hvUserAvatar;
     private TextView tvUsername;
-    private LinearLayout llEditProfile, llChangePassword, llResetPassword, llLogout;
+    private LinearLayout llEditProfile, llChangePassword,/* llResetPassword, */llLogout;
 
     private OnUserProfileClickListener mProfileClickListener;
+    private LogoutRequest mLogoutRequest;
 
     public static UserProfileFragment newInstance() {
         return new UserProfileFragment();
@@ -55,7 +65,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
         llEditProfile = findView(R.id.llEditProfile_FUP);
         llChangePassword = findView(R.id.llChangePassword_FUP);
-        llResetPassword = findView(R.id.llResetPassword_FUP);
+//        llResetPassword = findView(R.id.llResetPassword_FUP);
         llLogout = findView(R.id.llLogout_FUP);
     }
 
@@ -64,7 +74,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         super.initListeners();
         llEditProfile.setOnClickListener(this);
         llChangePassword.setOnClickListener(this);
-        llResetPassword.setOnClickListener(this);
+//        llResetPassword.setOnClickListener(this);
         llLogout.setOnClickListener(this);
     }
 
@@ -78,15 +88,40 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
                 case R.id.llChangePassword_FUP:
                     mProfileClickListener.onUserProfileItemClick(USER_PROFILE_CHANGE_PASSWORD);
                     break;
-                case R.id.llResetPassword_FUP:
-                    mProfileClickListener.onUserProfileItemClick(USER_PROFILE_RESET_PASSWORD);
-                    break;
+//                case R.id.llResetPassword_FUP:
+//                    mProfileClickListener.onUserProfileItemClick(USER_PROFILE_RESET_PASSWORD);
+//                    break;
                 case R.id.llLogout_FUP:
-                    mProfileClickListener.onUserProfileItemClick(USER_PROFILE_LOGOUT);
+                    logout();
                     break;
             }
         }
     }
+
+    private void logout() {
+        mLogoutRequest = new LogoutRequest();
+        showProgressDialog();
+        getSpiceManager().execute(mLogoutRequest, KEY_LOGOUT_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mLogoutRequestListener);
+    }
+
+    private RequestListener<Response> mLogoutRequestListener = new RequestListener<Response>() {
+
+        @Override
+        public void onRequestSuccess(final Response _result) {
+            TRAApplication.setIsLoggedIn(false);
+            if (isAdded()) {
+                hideProgressDialog();
+                getFragmentManager().popBackStackImmediate();
+            }
+        }
+
+        @Override
+        public void onRequestFailure(final SpiceException _spiceException) {
+            processError(_spiceException);
+        }
+
+    };
+
 
     @Override
     public void onDetach() {

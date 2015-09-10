@@ -8,12 +8,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.ArrayMap;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -85,7 +83,7 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
 
     @Override
     protected int getTitle() {
-        return R.string.str_domain_info;
+        return R.string.fragment_domain_info_title;
     }
 
     @Override
@@ -144,7 +142,7 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
     }
 
     @Override
-    public Loader onCreateLoader(int id, Bundle args) {
+    public DomainDataParser onCreateLoader(int id, Bundle args) {
         return new DomainDataParser(getActivity(),  (DomainInfoCheckResponseModel) args.getParcelable(C.DOMAIN_INFO));
     }
 

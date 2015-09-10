@@ -16,7 +16,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
@@ -37,10 +38,10 @@
                 android:id="@+id/tvChangePhoto_FEUP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="36dp"
                 android:layout_below="@id/hvUserAvatar_FEUP"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
+                android:minHeight="36dp"
                 android:text="@string/fragment_edit_user_profile_change_photo"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="10sp"/>
@@ -134,6 +135,17 @@
                 android:id="@+id/vPhoneDivider_FEUP"
                 style="@style/UserProfileDivider"
                 android:layout_below="@id/etPhone_FEUP"/>
+
+            <com.uae.tra_smart_services.customviews.ProfileController
+                android:id="@+id/pcProfileController_FEUP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vPhoneDivider_FEUP"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"/>
+
+            <!--app:layout_widthPercent="90%"/>-->
 
         </android.support.percent.PercentRelativeLayout>
 

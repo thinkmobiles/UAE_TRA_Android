@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">UAE TRA</string>
     <string name="title_activity_splash">SplashActivity</string>
 
@@ -226,7 +226,7 @@
     <string name="lang_ar">العربية</string>
 
     <string-array name="states_array">
-        <item>--Select--</item>
+        <!--<item>&#45;&#45;Select&#45;&#45;</item>-->
         <item>Abu Dhabi</item>
         <item>Ajman</item>
         <item>Dubai</item>
@@ -270,6 +270,10 @@
     <string name="fragment_edit_user_profile_address">STREET ADDRESS</string>
     <string name="fragment_edit_user_profile_emirate">EMIRATE</string>
     <string name="fragment_edit_user_profile_number">CONTACT NUMBER</string>
+    <string name="fragment_edit_user_profile_cancel" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="fragment_edit_user_profile_reset">RESET</string>
+    <string name="fragment_edit_user_profile_confirm">SAVE CHANGES</string>
+
 
     <string name="fragment_reset_password_reset_title">Reset Password</string>
     <string name="fragment_reset_password_reset_info">To reset your password, please type your email in the field below and a temporary password will be sent tou you.</string>
@@ -280,6 +284,11 @@
     <string name="fragment_change_password_old_password">OLD PASSWORD</string>
     <string name="fragment_change_password_new_password">NEW PASSWORD</string>
     <string name="fragment_change_password_retype_new_password">RETYPE NEW PASSWORD</string>
+
+    <string name="fragment_domain_info_title">WHO IS</string>
+    <string name="fragment_domain_availability_title">AVAILABILITY</string>
+
+    <string name="activity_home_not_logged_in">You are not logged in</string>
 
 
 </resources>
