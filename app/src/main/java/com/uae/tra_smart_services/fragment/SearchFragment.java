@@ -1,10 +1,12 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,7 +21,7 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
  * Created by Andrey Korneychuk on 09.09.15.
  */
 public class SearchFragment extends BaseFragment
-        implements SearchRecyclerViewAdapter.OnSearchResultItemClickListener, TextWatcher {
+    implements SearchRecyclerViewAdapter.OnSearchResultItemClickListener, TextWatcher, View.OnTouchListener {
 
     private EditText etSearch;
     private TextView tvNoSearchResult, tvHint;
@@ -34,6 +36,11 @@ public class SearchFragment extends BaseFragment
     @Override
     protected int getTitle() {
         return 0;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_search;
     }
 
     @Override
@@ -71,8 +78,9 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_search;
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.setOnTouchListener(this);
     }
 
     @Override
@@ -100,4 +108,9 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public void afterTextChanged(Editable s) {/**Not implemented method*/}
+
+    @Override
+    public final boolean onTouch(final View _view, final MotionEvent _event) {
+        return true;
+    }
 }
