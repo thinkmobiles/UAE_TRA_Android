@@ -10,9 +10,9 @@ import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 
 /**
- * Created by Vitaliy on 21/08/2015.
+ * Created by and on 09.09.15.
  */
-public class ServiceInfoFragment extends BaseFragment implements View.OnClickListener, View.OnTouchListener {
+public class NotificationFragmen extends BaseFragment implements View.OnClickListener, View.OnTouchListener {
 
     private ImageView ivCloseInfo;
     private HexagonView hvServiceInfo, hvRequiredDocuments, hvTermsAndConditions,
@@ -26,6 +26,11 @@ public class ServiceInfoFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     protected final void initViews() {
+
+        /**
+         *
+         * tvResult.setText(getString(R.string.fragment_speed_test_result, bd.toString()));
+         * */
         ivCloseInfo = findView(R.id.ivCloseInfo_FSI);
         rlFragmentContainer = findView(R.id.rlFragmentContainer_FSI);
         hvServiceInfo = findView(R.id.hvSearchButton_FS);

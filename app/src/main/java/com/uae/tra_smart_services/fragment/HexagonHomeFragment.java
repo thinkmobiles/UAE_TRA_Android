@@ -19,6 +19,7 @@ import com.uae.tra_smart_services.customviews.HexagonalHeader;
 import com.uae.tra_smart_services.customviews.HexagonalHeader.HexagonButton;
 import com.uae.tra_smart_services.customviews.HexagonalHeader.OnButtonClickListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.util.ImageUtils;
 
@@ -29,6 +30,10 @@ import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.Stat
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.POOR_COVERAGE_SERVICE;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.SMS_SPAM_SERVICE;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.VERIFICATION_SERVICE;
+
+import static com.uae.tra_smart_services.global.HeaderStaticService.NOTIFICATION;
+import static com.uae.tra_smart_services.global.HeaderStaticService.HINT;
+import static com.uae.tra_smart_services.global.HeaderStaticService.SEARCH;
 
 /**
  * Created by Vitaliy on 13/08/2015.
@@ -49,6 +54,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
     private OnServiceSelectListener mServiceSelectListener;
     private OnStaticServiceSelectListener mStaticServiceSelectListener;
+    private OnHeaderStaticServiceSelectedListener mHeaderStaticServiceSelectedListener;
     private OnOpenUserProfileClickListener mProfileClickListener;
 
     private ValueAnimator mHexagonalHeaderAnimator, mHexagonButtonsAnimator, mHexagonHeaderReverseAnimator,
@@ -70,8 +76,12 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
         super.onAttach(_activity);
         mServiceSelectListener = (OnServiceSelectListener) _activity;
         mStaticServiceSelectListener = (OnStaticServiceSelectListener) _activity;
+
         if (_activity instanceof OnOpenUserProfileClickListener) {
             mProfileClickListener = (OnOpenUserProfileClickListener) _activity;
+        }
+        if (_activity instanceof OnHeaderStaticServiceSelectedListener) {
+            mHeaderStaticServiceSelectedListener = (OnHeaderStaticServiceSelectedListener) _activity;
         }
     }
 
@@ -231,7 +241,13 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
     @Override
     public void onHexagonButtonClick(@HexagonButton final int _hexagonButton) {
-
+        if(NOTIFICATION.equals(_hexagonButton)){
+            mHeaderStaticServiceSelectedListener.onHeaderStaticServiceSelected(NOTIFICATION);
+        } else if(HINT.equals(_hexagonButton)){
+            mHeaderStaticServiceSelectedListener.onHeaderStaticServiceSelected(HINT);
+        } else if(SEARCH.equals(_hexagonButton)){
+            mHeaderStaticServiceSelectedListener.onHeaderStaticServiceSelected(SEARCH);
+        }
     }
 
     public interface OnOpenUserProfileClickListener {
@@ -244,6 +260,10 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
     public interface OnStaticServiceSelectListener {
         void onStaticServiceSelect(final HexagonalButtonsLayout.StaticService _service);
+    }
+
+    public interface OnHeaderStaticServiceSelectedListener{
+        void onHeaderStaticServiceSelected(final HeaderStaticService _service);
     }
 
     @Override

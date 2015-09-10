@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.activity;
 
+import android.app.Fragment;
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
@@ -37,8 +39,10 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectLi
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
+import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ResetPasswordFragment;
+import com.uae.tra_smart_services.fragment.SearchFragment;
 import com.uae.tra_smart_services.fragment.ServiceInfoFragment;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
@@ -52,6 +56,7 @@ import com.uae.tra_smart_services.fragment.UserProfileFragment.OnUserProfileClic
 import com.uae.tra_smart_services.fragment.UserProfileFragment.UserProfileAction;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
@@ -68,7 +73,7 @@ public class HomeActivity extends BaseFragmentActivity
         implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
-        OnOpenUserProfileClickListener, OnUserProfileClickListener {
+        OnOpenUserProfileClickListener, OnUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener {
 
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
@@ -312,6 +317,26 @@ public class HomeActivity extends BaseFragmentActivity
             } else {
                 actionBar.hide();
             }
+        }
+    }
+
+    @Override
+    public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
+        Fragment fragment = null;
+        switch(_service){
+            case NOTIFICATION:
+                fragment = NotificationsFragment.newInstance();
+                break;
+            case SEARCH:
+                fragment = SearchFragment.newInstance();
+                break;
+        }
+        if(fragment != null){
+            getFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.rlGlobalContainer_AH, fragment)
+                .commit();
         }
     }
 }

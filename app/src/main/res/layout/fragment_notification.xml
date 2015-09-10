@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rlFragmentContainer_FSI"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/serviceInfoBackground"
+    android:padding="20dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/ivNotificationListClose_FN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btn_close"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/rvNotificationsList_FN"/>
+
+    <TextView
+        android:id="@+id/tvNotificationListStatus_FN"
+        android:textColor="@color/hex_text_color_white"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/ic_not"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        />
+
+    <TextView
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/hex_text_color_white"
+        android:text="@string/str_no_notifications"
+        android:id="@+id/tvNoNotifications_FN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvNotificationsList_FN"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        tools:listitem="@layout/list_item_favorite"
+        android:layout_below="@+id/tvNotificationListStatus_FN" />
+
+</RelativeLayout>

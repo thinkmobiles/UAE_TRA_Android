@@ -45,7 +45,7 @@
 
             </LinearLayout>
 
-            <View style="@style/AuthorizationFieldsSeparator"/>
+            <View style="@style/AuthorizationFieldsSeparator" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +55,7 @@
 
                 <TextView
                     style="@style/UserSettingsStaticText"
-                    android:hint="@string/str_black_and_white_mode"/>
+                    android:hint="@string/str_color_impaired"/>
 
                 <Space
                     android:layout_width="0dp"
@@ -108,7 +108,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start|center"
                         android:hint="@string/str_themesoptions"
@@ -161,10 +161,11 @@
                     android:paddingBottom="@dimen/dp_transparent_fields_padding"
                     android:paddingStart="@dimen/dp_transparent_fields_padding"/>
 
-
             </LinearLayout>
 
-            <View style="@style/AuthorizationFieldsSeparator"/>
+            <View style="@style/AuthorizationFieldsSeparator" />
+
+
 
             <!--
             <LinearLayout
@@ -226,6 +227,7 @@
             <!--<View style="@style/AuthorizationFieldsSeparator" />-->
 
             <EditText
+                android:visibility="gone"
                 android:id="@+id/etServer_FS"
                 style="@style/UserSettingsStaticText"
                 android:layout_width="match_parent"
@@ -237,11 +239,13 @@
 
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/btnChangeServer_FS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:text="@string/button_change_server"
+                android:textColor="?attr/homePageHeaderBackground" />
                 android:textColor="?attr/homePageHeaderBackground"/>
 
         </LinearLayout>

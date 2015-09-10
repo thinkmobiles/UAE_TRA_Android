@@ -29,7 +29,7 @@
     <string name="str_read_more_about_tra">Read more about tra</string>
     <string name="str_change_color_theme">Change color theme</string>
     <!--            Black and White mode              -->
-    <string name="str_black_and_white_mode">Black&amp;White Mode</string>
+    <string name="str_color_impaired">Color Impaired</string>
     <!--            Phone field               -->
     <string name="str_phone">Phone</string>
     <!--            Password field               -->
@@ -290,5 +290,12 @@
 
     <string name="activity_home_not_logged_in">You are not logged in</string>
 
+    <string name="str_you_have_notification">You have %s Notifications</string>
+    <string name="str_no_notifications">There are no notifications\nfor you as of the moment</string>
+    <string name="str_no">no</string>
+
+    <string name="str_put_search_phrase">Type Your search phrase here</string>
+    <string name="str_no_search_result">There are no search\nresult where found</string>
+    <string name="str_are_you_looking_for">ARE YOU LOOKING FOR</string>
 
 </resources>
