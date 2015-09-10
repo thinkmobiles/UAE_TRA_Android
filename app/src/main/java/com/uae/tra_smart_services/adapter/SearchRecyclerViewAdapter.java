@@ -2,6 +2,9 @@ package com.uae.tra_smart_services.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +36,7 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
         mContext = _context;
     }
 
-    /** OVERRIDEN METHODS */
+    /** CALLBACKS */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -68,7 +71,7 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
     }
 
     public void addAllFiltered(ArrayList<SearchResult.SearchResultItem> filteredValues){
-            mDataSet.addAllItems(filteredValues);
+        mDataSet.addAllItems(filteredValues);
     }
 
     /** ENTITIES */
@@ -89,7 +92,7 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
         }
 
         public void setData(final SearchResult.SearchResultItem searchResultItem) {
-            textView.setText(searchResultItem.getText());
+            textView.setText(searchResultItem.getSpannedText());
             textView.setTag(searchResultItem);
         }
 
@@ -114,9 +117,26 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
+            ArrayList<SearchResult.SearchResultItem> result = (ArrayList<SearchResult.SearchResultItem>) results.values;
             mAdapter.clear();
-            mAdapter.addAllFiltered((ArrayList<SearchResult.SearchResultItem>) results.values);
+            mAdapter.addAllFiltered(makeSelectedTextBold(constraint, result));
             mAdapter.notifyDataSetChanged();
+        }
+
+        private ArrayList<SearchResult.SearchResultItem> makeSelectedTextBold(CharSequence constraint, ArrayList<SearchResult.SearchResultItem> result){
+            if(result != null){
+                for(SearchResult.SearchResultItem item : result){
+                    String originalText = item.getOriginalText();
+                    int startFrom = originalText.toString().toLowerCase().indexOf((String) constraint);
+                    if(startFrom >= 0 && originalText.length() > startFrom + constraint.length()){
+                        SpannableStringBuilder spannedText = new SpannableStringBuilder(originalText);
+                        final StyleSpan bss = new StyleSpan(android.graphics.Typeface.BOLD);
+                        spannedText.setSpan(bss, startFrom, startFrom + constraint.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                        item.setSpannedText(spannedText);
+                    }
+                }
+            }
+            return result;
         }
     }
 

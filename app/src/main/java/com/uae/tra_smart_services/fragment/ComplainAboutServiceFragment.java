@@ -103,7 +103,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
             Toast.makeText(getActivity(), R.string.fragment_complain_no_title, Toast.LENGTH_SHORT).show();
             return false;
         }
-//        boolean serviceProviderSelected = !tvServiceProvider.getText().toString().isEmpty();
+//        boolean serviceProviderSelected = !tvServiceProvider.getSpannedText().toString().isEmpty();
 //        if (!serviceProviderSelected) {
 //            Toast.makeText(getActivity(), R.string.fragment_complain_no_service_provider, Toast.LENGTH_SHORT).show();
 //            return false;

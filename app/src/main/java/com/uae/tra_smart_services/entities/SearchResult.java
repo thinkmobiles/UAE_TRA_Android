@@ -1,5 +1,7 @@
 package com.uae.tra_smart_services.entities;
 
+import android.text.SpannableStringBuilder;
+
 import java.util.ArrayList;
 
 /**
@@ -22,19 +24,27 @@ public class SearchResult {
     }
 
     public class SearchResultItem{
-        private String text;
+        private SpannableStringBuilder spannedText;
+        private String originalText;
 
         SearchResultItem(String _text){
-            text = _text;
+            originalText = _text;
         }
 
-        public String getText() {
-            return text;
+        public String getOriginalText() {
+            return originalText;
+        }
+
+        public SpannableStringBuilder getSpannedText() {
+            return spannedText != null ? spannedText : new SpannableStringBuilder(originalText);
+        }
+        public void setSpannedText(SpannableStringBuilder _spannedText){
+            spannedText = _spannedText;
         }
 
         @Override
         public String toString() {
-            return getText();
+            return spannedText != null ? spannedText.toString() : originalText.toString();
         }
     }
 
