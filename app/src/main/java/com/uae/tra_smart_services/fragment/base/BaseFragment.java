@@ -10,8 +10,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,11 +17,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
-import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.octo.android.robospice.exception.NoNetworkException;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
+import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;
 import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
@@ -66,9 +64,10 @@ public abstract class BaseFragment extends Fragment {
         return rootView;
     }
 
+    @CallSuper
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if (getTitle() != 0)
             toolbarTitleManager.setTitle(getTitle());
     }

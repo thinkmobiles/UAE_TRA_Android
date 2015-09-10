@@ -54,7 +54,7 @@ public class DomainIsAvailableFragment extends BaseFragment {
 
     @Override
     protected int getTitle() {
-        return R.string.str_domain_availability;
+        return R.string.fragment_domain_availability_title;
     }
 
     @Override

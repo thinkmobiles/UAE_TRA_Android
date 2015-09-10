@@ -15,7 +15,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
@@ -37,11 +38,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/hvUserAvatar_FUP"
-                android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:textColor="#455560"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:text="Maher Al Mulla"/>
 
             <LinearLayout
@@ -139,59 +140,59 @@
                 android:layout_below="@id/llChangePassword_FUP"
                 app:layout_widthPercent="90%"/>
 
-            <LinearLayout
-                android:id="@+id/llResetPassword_FUP"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_below="@id/vChangePasswordDivider_FUP"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layout_widthPercent="90%">
+            <!--<LinearLayout-->
+            <!--android:id="@+id/llResetPassword_FUP"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_below="@id/vChangePasswordDivider_FUP"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--app:layout_widthPercent="90%">-->
 
-                <com.uae.tra_smart_services.customviews.ThemedImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerInside"
-                    app:imageSrc="@drawable/ic_profile_lock"
-                    app:tintColor="?attr/colorPrimary"/>
+            <!--<com.uae.tra_smart_services.customviews.ThemedImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:scaleType="centerInside"-->
+            <!--app:imageSrc="@drawable/ic_profile_lock"-->
+            <!--app:tintColor="?attr/colorPrimary"/>-->
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/fragment_user_profile_reset_password"
-                    android:textColor="#475762"
-                    android:textSize="14sp"/>
+            <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginEnd="16dp"-->
+            <!--android:layout_marginStart="16dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:ellipsize="end"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="@string/fragment_user_profile_reset_password"-->
+            <!--android:textColor="#475762"-->
+            <!--android:textSize="14sp"/>-->
 
-                <com.uae.tra_smart_services.customviews.ThemedImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerInside"
-                    app:imageSrc="@drawable/ic_profile_arrow"
-                    app:tintColor="?attr/colorPrimary"/>
+            <!--<com.uae.tra_smart_services.customviews.ThemedImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:scaleType="centerInside"-->
+            <!--app:imageSrc="@drawable/ic_profile_arrow"-->
+            <!--app:tintColor="?attr/colorPrimary"/>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
-            <View
-                android:id="@+id/vResetPasswordDivider_FUP"
-                style="@style/UserProfileDivider"
-                android:layout_below="@id/llResetPassword_FUP"
-                app:layout_widthPercent="90%"/>
+            <!--<View-->
+            <!--android:id="@+id/vResetPasswordDivider_FUP"-->
+            <!--style="@style/UserProfileDivider"-->
+            <!--android:layout_below="@id/llResetPassword_FUP"-->
+            <!--app:layout_widthPercent="90%"/>-->
 
             <LinearLayout
                 android:id="@+id/llLogout_FUP"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_below="@id/vResetPasswordDivider_FUP"
+                android:layout_below="@id/vChangePasswordDivider_FUP"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"

@@ -74,7 +74,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         btnWhoIS.setOnClickListener(this);
     }
 
-    private CustomFilterPool filters;
+    private CustomFilterPool<String> filters;
 
     @Override
     protected final void initData() {
@@ -115,7 +115,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         }
     }
     private DomainAvailabilityCheckRequest mDomainAvailabilityCheckRequest;
-    private final void checkAvailability(String _domain) {
+    private void checkAvailability(String _domain) {
         mDomainAvailabilityCheckRequest = new DomainAvailabilityCheckRequest(_domain);
         getSpiceManager()
                 .execute(
@@ -125,7 +125,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     }
 
     private DomainInfoCheckRequest mDomainInfoCheckRequest;
-    private final void checkWhoIs(String _domain) {
+    private void checkWhoIs(String _domain) {
         mDomainInfoCheckRequest = new DomainInfoCheckRequest(_domain);
         getSpiceManager()
                 .execute(

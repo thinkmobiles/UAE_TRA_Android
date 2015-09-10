@@ -9,6 +9,8 @@ import com.uae.tra_smart_services.R;
 
 public class SplashActivity extends Activity {
 
+    private static final int SPLASH_DELAY = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,6 @@ public class SplashActivity extends Activity {
                 // close this activity
                 finish();
             }
-        }, 0);
+        }, /*BuildConfig.DEBUG ? 0 :*/ SPLASH_DELAY);
     }
 }

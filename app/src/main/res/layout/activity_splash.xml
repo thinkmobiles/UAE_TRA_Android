@@ -1,25 +1,26 @@
-<LinearLayout
+<android.support.percent.PercentFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|center_vertical"
-        android:layout_margin="@dimen/abc_action_bar_content_inset_material"
-        android:src="@drawable/tra_logo"
-        android:adjustViewBounds="true"/>
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"
+        android:src="@drawable/splash_background"
+        tools:ignore="ContentDescription"/>
 
-    <TextView
-        android:text="UAE TRA"
+    <ImageView
         android:layout_width="wrap_content"
+        app:layout_marginTopPercent="15%"
+        android:scaleType="centerInside"
+        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:textColor="#5b5b5b"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:textSize="@dimen/abc_action_button_min_height_material" />
+        app:layout_widthPercent="80%"
+        android:src="@drawable/splash_logo"
+        tools:ignore="ContentDescription"/>
 
-</LinearLayout>
+
+</android.support.percent.PercentFrameLayout>

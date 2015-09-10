@@ -120,7 +120,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         registerModel.mobile = etPhone.getText().toString();
         registerModel.first = etFirstName.getText().toString();
         registerModel.last = etLastName.getText().toString();
-        registerModel.state = acsState.getSelectedItemPosition();
+        registerModel.state = acsState.getSelectedItemPosition()+1;
         registerModel.email = etEmail.getText().toString();
         registerModel.emiratesId = etEmiratesId.getText().toString();
 

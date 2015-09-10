@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +21,9 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
  * Created by Andrey Korneychuk on 09.09.15.
  */
 public class SearchFragment extends BaseFragment
-    implements SearchRecyclerViewAdapter.OnSearchResultItemClickListener, TextWatcher, View.OnTouchListener {
+        implements SearchRecyclerViewAdapter.OnSearchResultItemClickListener, TextWatcher, View.OnTouchListener, View.OnClickListener {
 
+    private ImageView ivSearchClose;
     private EditText etSearch;
     private TextView tvNoSearchResult, tvHint;
     private RecyclerView rvSearchResultList;
@@ -38,14 +40,9 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_search;
-    }
-
-    @Override
     protected void initData() {
         super.initData();
-        INITIAL_DATA = new SearchResult(){
+        INITIAL_DATA = new SearchResult() {
             {
                 addItem("Spectrum application");
                 addItem("Check spectrum requirements");
@@ -60,20 +57,30 @@ public class SearchFragment extends BaseFragment
     @Override
     protected void initViews() {
         super.initViews();
+        ivSearchClose = findView(R.id.ivSearchClose_FS);
         tvNoSearchResult = findView(R.id.tvNoSearchResult_FS);
         tvHint = findView(R.id.tvHint_FS);
-
         etSearch = findView(R.id.etSearch_FS);
-        etSearch.addTextChangedListener(this);
+        rvSearchResultList = findView(R.id.rvSearchResultList_FS);
+    }
 
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+        ivSearchClose.setOnClickListener(this);
+        etSearch.addTextChangedListener(this);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mAdapter = new SearchRecyclerViewAdapter(getActivity(), INITIAL_DATA);
         mAdapter.setOnSearchResultItemClickListener(this);
-
-        rvSearchResultList = findView(R.id.rvSearchResultList_FS);
         rvSearchResultList.setLayoutManager(
                 new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)
         );
         rvSearchResultList.setAdapter(mAdapter);
+
     }
 
     @Override
@@ -83,8 +90,18 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_search;
+    }
+
+    @Override
     public void onSearchResultItemClicked(SearchResult.SearchResultItem _item) {
         Toast.makeText(getActivity(), _item.getSpannedText(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return true;
     }
 
     @Override
@@ -109,7 +126,13 @@ public class SearchFragment extends BaseFragment
     public void afterTextChanged(Editable s) {/**Not implemented method*/}
 
     @Override
-    public final boolean onTouch(final View _view, final MotionEvent _event) {
-        return true;
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ivSearchClose_FS:
+                hideKeyboard(v);
+                getFragmentManager().popBackStackImmediate();
+                break;
+        }
+
     }
 }

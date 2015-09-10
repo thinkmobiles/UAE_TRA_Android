@@ -18,7 +18,7 @@
             android:layout_marginBottom="8dp"
             android:background="?attr/colorPrimary"
             app:headerIconSrc="@drawable/ic_edit"
-            app:headerTitle="@string/service_domain_check"/>
+            app:headerTitle="@string/service_complain_about_provider"/>
 
         <LinearLayout
             android:id="@+id/llTitleContainer_FCAS"
