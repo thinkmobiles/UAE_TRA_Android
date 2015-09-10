@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     package="com.uae.tra_smart_services"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -14,6 +15,7 @@
         android:required="false"/>
 
     <application
+        tools:overrideLibrary="android.support.test.uiautomator.v18"
         android:name=".TRAApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

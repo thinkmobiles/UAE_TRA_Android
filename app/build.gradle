@@ -21,10 +21,14 @@ android {
 
     defaultConfig {
         applicationId "com.uae.tra_smart_services"
-        minSdkVersion 17
+        minSdkVersion 18
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        testApplicationId "com.uae.tra_smart_services.test"
+//        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunnersupport.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
     buildTypes {
         release {
@@ -55,4 +59,16 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
         transitive = true;
     }
+    androidTestCompile 'com.jakewharton.espresso:espresso:1.1-r3'
+    androidTestCompile ('com.jakewharton.espresso:espresso-support-v4:1.1-r3') {
+        exclude group:'com.android.support', module:'support-v4'
+    }
+    androidTestCompile 'com.android.support.test:runner:0.3'
+    androidTestCompile 'com.android.support.test:rules:0.3'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
+    // Solve conflict : Warning:Conflict with dependency 'com.android.support:support-annotations'. Resolved versions for app (23.0.1) and test app (22.2.0) differ.
+    androidTestCompile 'com.android.support:support-annotations:23.0.1'
+    // Override org.hamcrest.Matcher class
+    compile group: 'junit', name: 'junit', version: '4.12'
 }
