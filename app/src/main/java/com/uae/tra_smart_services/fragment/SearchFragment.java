@@ -3,7 +3,6 @@ package com.uae.tra_smart_services.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
@@ -85,7 +84,7 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public void onSearchResultItemClicked(SearchResult.SearchResultItem _item) {
-        Toast.makeText(getActivity(), _item.getText(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), _item.getSpannedText(), Toast.LENGTH_LONG).show();
     }
 
     @Override

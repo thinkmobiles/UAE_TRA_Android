@@ -8,6 +8,7 @@
     <TextView
         android:text="asasas"
         android:textSize="16dp"
+        android:bufferType="spannable"
         android:textColor="@color/hex_text_color_white"
         android:layout_marginTop="7dp"
         android:id="@+id/tvSearchResultItem_RSI"
