@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.uae.tra_smart_services.BuildConfig;
 import com.uae.tra_smart_services.R;
 
 public class SplashActivity extends Activity {
 
-    private static final int SPLASH_DELAY = 2000;
+    private static final int SPLASH_DELAY = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,6 @@ public class SplashActivity extends Activity {
                 // close this activity
                 finish();
             }
-        }, BuildConfig.DEBUG ? 0 : SPLASH_DELAY);
+        }, /*BuildConfig.DEBUG ? 0 :*/ SPLASH_DELAY);
     }
 }

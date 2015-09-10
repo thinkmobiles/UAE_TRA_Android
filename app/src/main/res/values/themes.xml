@@ -87,7 +87,7 @@
         <item name="shadowBackgroundColor">#e1e1e1</item>
         <item name="dragDeleteColor">?attr/colorPrimary</item>
 
-        <item name="homePageHeaderBackground">#ededed</item>
+        <item name="homePageHeaderBackground">@android:color/black</item>
         <item name="globalButtonTextColor">@android:color/black</item>
         <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_black</item>
         <item name="userProfileBackground">@drawable/img_bg_gray</item>
