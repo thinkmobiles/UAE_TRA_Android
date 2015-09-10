@@ -64,8 +64,9 @@ public abstract class BaseFragment extends Fragment {
         return rootView;
     }
 
+    @CallSuper
     @Override
-    public final void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (getTitle() != 0)
             toolbarTitleManager.setTitle(getTitle());

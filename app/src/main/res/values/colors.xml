@@ -2,18 +2,22 @@
 <resources>
 
     <color name="hex_primary_orange">#f2911a</color>
-    <color name="hex_dark_orange">#ff996300</color>
+    <color name="hex_translucent_orange">#ddf2911a</color>
+    <color name="hex_dark_orange">#996300</color>
 
     <color name="hex_primary_green">#01864f</color>
-    <color name="hex_dark_green">#ff128200</color>
+    <color name="hex_translucent_green">#dd01864f</color>
+    <color name="hex_dark_green">#01713c</color>
 
     <color name="hex_primary_blue">#01549f</color>
-    <color name="hex_dark_blue">#ff058797</color>
+    <color name="hex_translucent_blue">#dd01549f</color>
+    <color name="hex_dark_blue">#014284</color>
 
     <color name="hex_primary_red">#ff0000</color>
     <color name="hex_dark_red">#ff8d0000</color>
 
     <color name="hex_black_color">#ff000000</color>
+    <color name="hex_translucent_black">#dd000000</color>
     <color name="hex_text_color_white">#ffffff</color>
     <color name="hex_color_accent">#ff8c8c8c</color>
     <color name="hex_color_light_gray">#00dddddd</color>
@@ -43,9 +47,8 @@
     <color name="activity_home_tab_bar_top_border">#cfcfcf</color>
 
     <!--                Service info                -->
-    <color name="fragment_service_info_background">#f7f5ab5d</color>
-    <color name="fragment_service_info_background_black">#c000</color>
-    
+    <color name="fragment_service_info_background">#f2911a</color>
+
     <color name="fragment_user_profile_divider_color">#e8e8e8</color>
     <color name="fragment_user_profile_text_color_primary">#475762</color>
 

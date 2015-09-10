@@ -60,7 +60,7 @@ public class NotificationsFragment extends BaseFragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ivNotificationListClose_FN:
-                getFragmentManager().popBackStack();
+                getFragmentManager().popBackStackImmediate();
                 break;
         }
     }
