@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.uae.tra_smart_services.R;
@@ -27,6 +28,12 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
         if (!TRAApplication.isLoggedIn()) {
             getFragmentManager().popBackStack();
         }
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+        ((EditText)findView(R.id.etComplainTitle_FCAT)).setHint(getString(R.string.str_suggestion_title));
     }
 
     @Override

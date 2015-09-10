@@ -298,4 +298,7 @@
     <string name="str_no_search_result">There are no search\nresult where found</string>
     <string name="str_are_you_looking_for">ARE YOU LOOKING FOR</string>
 
+    <string name="str_enquires_title">Enquires Title</string>
+    <string name="str_suggestion_title">Suggestion Title</string>
+
 </resources>

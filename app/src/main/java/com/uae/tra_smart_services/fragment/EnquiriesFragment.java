@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.uae.tra_smart_services.R;
@@ -16,6 +17,7 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
     private static final String KEY_ENQUIRIES_REQUEST = "ENQUIRIES_REQUEST";
 
     private ComplainEnquiriesServiceRequest mRequest;
+    private EditText etTitle;
 
     public static EnquiriesFragment newInstance() {
         return new EnquiriesFragment();
@@ -37,6 +39,12 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
         mRequest = new ComplainEnquiriesServiceRequest(traServiceModel, getActivity(), getImageUri());
         showProgressDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(mRequest, getRequestKey(), DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+        ((EditText)findView(R.id.etComplainTitle_FCAT)).setHint(getString(R.string.str_enquires_title));
     }
 
     @Override
