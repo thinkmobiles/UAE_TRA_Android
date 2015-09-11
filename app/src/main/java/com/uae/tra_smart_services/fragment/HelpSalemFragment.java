@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -27,7 +28,7 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
     private EditText etUrl, etDescription;
 
     private HelpSalimRequest mHelpSalimRequest;
-    private CustomFilterPool filters;
+    private CustomFilterPool<String> filters;
 
     public static HelpSalemFragment newInstance() {
         return new HelpSalemFragment();
@@ -85,7 +86,7 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
         return super.onOptionsItemSelected(item);
     }
     private void collectAndSendToServer(){
-        if(filters.check(etUrl.getText().toString())){
+        if(validateData()){
             showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     mHelpSalimRequest = new HelpSalimRequest(
@@ -96,9 +97,19 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
                     ),
                     new HelpSalimRequestListener()
             );
-        } else {
-            showMessage(R.string.str_error, R.string.str_invalid_url);
         }
+    }
+
+    private boolean validateData() {
+        if (!filters.check(etUrl.getText().toString())) {
+            Toast.makeText(getActivity(), R.string.str_invalid_url, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (etDescription.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     @Override

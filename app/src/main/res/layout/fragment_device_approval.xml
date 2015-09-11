@@ -7,9 +7,9 @@
               tools:ignore="HardcodedText">
 
     <ImageView
+        android:id="@+id/ivLogo_FDA"
         android:layout_width="300dp"
         android:layout_height="200dp"
-        android:id="@+id/ivLogo_FDA"
         android:layout_gravity="center_horizontal"
         android:contentDescription="Logo"
         android:scaleType="centerInside"
@@ -17,16 +17,24 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:text="@string/approved_device_information"
-        android:textSize="16sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="8dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"/>
+        android:text="@string/approved_device_information"
+        android:textSize="16sp"/>
 
-    <TextView
-        android:id="@+id/tvApprovedDevice_FADR"
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/tvApprovedDevice_FADR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </ScrollView>
 
 </LinearLayout>

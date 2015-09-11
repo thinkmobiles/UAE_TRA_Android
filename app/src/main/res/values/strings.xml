@@ -148,7 +148,7 @@
     <!--                ServiceInfoFragment             -->
     <string name="fragment_service_info_service_info">About the Service</string>
     <string name="fragment_service_info_required_documents">Required Documents</string>
-    <string name="fragment_service_info_terms_and_conditions">Terms &amp; Conditions </string>
+    <string name="fragment_service_info_terms_and_conditions">Terms &amp; Conditions</string>
     <string name="fragment_service_info_service_package">Service Package</string>
     <string name="fragment_service_info_processing_time">Expected Time</string>
     <string name="fragment_service_info_service_fees">Service Fees</string>

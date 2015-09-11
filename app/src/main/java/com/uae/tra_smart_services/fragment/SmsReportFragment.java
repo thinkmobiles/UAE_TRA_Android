@@ -5,11 +5,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
@@ -41,10 +41,6 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
-
-        if (!TRAApplication.isLoggedIn()) {
-            getFragmentManager().popBackStack();
-        }
     }
 
     @Override
@@ -86,14 +82,13 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
             case R.id.action_send:
                 hideKeyboard(getView());
                 collectAndSendToServer();
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void collectAndSendToServer() {
-        if (filters.check(etNumberOfSpammer.getText().toString()) &&
-                filters.check(etDescription.getText().toString())) {
+        if (validateData()) {
 
             showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
@@ -105,9 +100,19 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
                     ),
                     new SmsSpamReportResponseListener()
             );
-        } else {
-            showMessage(R.string.str_error, R.string.error_fill_all_fields);
         }
+    }
+
+    private boolean validateData() {
+        if (etNumberOfSpammer.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), R.string.str_invalid_number, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (etDescription.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     @Override

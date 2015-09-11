@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -27,7 +28,7 @@ import com.uae.tra_smart_services.rest.robo_requests.SmsBlockRequest;
  * Created by mobimaks on 13.08.2015.
  */
 public final class SmsBlockNumberFragment extends BaseServiceFragment
-    implements OnClickListener, OnItemPickListener, AlertDialogFragment.OnOkListener {
+        implements OnClickListener, OnItemPickListener, AlertDialogFragment.OnOkListener {
 
     private EditText etOperatorNumber, etReferenceNumber, etDescription;
     private TextView tvServiceProvider;
@@ -58,10 +59,11 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     }
 
     private CustomFilterPool filters;
+
     @Override
     protected final void initData() {
         super.initData();
-        filters = new CustomFilterPool<String>(){
+        filters = new CustomFilterPool<String>() {
             {
                 addFilter(new Filter<String>() {
                     @Override
@@ -91,9 +93,10 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     }
 
     private SmsBlockRequest mSmsBlockRequest;
-    private final void collectAndSendToServer(){
+
+    private void collectAndSendToServer() {
         hideKeyboard(getView());
-        if(filters.check(etOperatorNumber.getText().toString())){
+        if (validateData()) {
             showProgressDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     mSmsBlockRequest = new SmsBlockRequest(
@@ -106,9 +109,27 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
                     ),
                     new SmsSpamBlockResponseListener()
             );
-        } else {
-            showMessage(R.string.str_error, R.string.str_invalid_number);
         }
+    }
+
+    private boolean validateData() {
+        if (etOperatorNumber.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), R.string.str_invalid_number, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (tvServiceProvider.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_service_provider, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (etReferenceNumber.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), R.string.str_invalid_number, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (etDescription.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -146,7 +167,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
 
     @Override
     public void onDialogCancel() {
-        if(getSpiceManager().isStarted() && mSmsBlockRequest != null){
+        if (getSpiceManager().isStarted() && mSmsBlockRequest != null) {
             getSpiceManager().cancel(mSmsBlockRequest);
         }
     }
@@ -162,6 +183,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
             hideProgressDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
+            getFragmentManager().popBackStack();
         }
     }
 }
