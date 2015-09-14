@@ -26,9 +26,8 @@ import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
  * Created by ak-buffalo on 10.08.15.
  */
 public class DomainCheckerFragment extends BaseServiceFragment
-        implements DomainServiceRatingView.CallBacks, View.OnClickListener, AlertDialogFragment.OnOkListener {
+        implements View.OnClickListener, AlertDialogFragment.OnOkListener {
 
-//    private ImageView ivLogo;
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
     private DomainServiceRatingView ratingView;
@@ -63,13 +62,9 @@ public class DomainCheckerFragment extends BaseServiceFragment
     @Override
     protected final void initViews() {
         super.initViews();
-//        ivLogo = findView(R.id.ivLogo_FDC);
-//        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(ivLogo.getContext(), R.drawable.tra_logo));
         btnAvail = findView(R.id.btnAvail_FDCH);
         btnWhoIS = findView(R.id.btnWhoIs_FDCH);
         etDomainAvail = findView(R.id.tvDomainAvail_FDCH);
-        ratingView = findView(R.id.llDomainServiceRatingView);
-        ratingView.init(this);
     }
 
     @Override
@@ -155,41 +150,6 @@ public class DomainCheckerFragment extends BaseServiceFragment
                 getSpiceManager().cancel(mDomainInfoCheckRequest);
             }
         }
-    }
-
-    @Override
-    public Service getServiceType() {
-        return Service.DOMAIN_CHECK;
-    }
-
-    @Override
-    public SpiceManager getPublicSpiceManager() {
-        return getSpiceManager();
-    }
-
-    @Override
-    public void preExecuteCall() {
-        showProgressDialog(getString(R.string.str_sending), null);
-    }
-
-    @Override
-    public void postExecuteCall() {
-        hideProgressDialog();
-    }
-
-    @Override
-    public void onRatedSuccessfully() {
-        showMessage(R.string.str_success, R.string.str_rating_has_been_sent);
-    }
-
-    @Override
-    public void onRatedUnSuccessfully() {
-        showMessage(R.string.str_error, R.string.str_something_went_wrong);
-    }
-
-    @Override
-    public void onRatedError(SpiceException _spiceException) {
-        processError(_spiceException);
     }
 
     private abstract class DomainCheckRequestListener<T> implements RequestListener<T> {

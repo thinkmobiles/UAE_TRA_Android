@@ -1,7 +1,6 @@
 package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -11,7 +10,6 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.rest.model.request.RatingServiceRequestModel;
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
@@ -46,11 +44,10 @@ public class DomainServiceRatingView extends RelativeLayout implements RadioGrou
 
     private void initViews(){
         ratingGroup = (RadioGroup) findViewById(R.id.rgDomainCheckServiceRating_FDCH);
-        int initRating = PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(C.DOMAIN_INFO_RATING, 0);
-        RadioButton checkedButton;
+        /*RadioButton checkedButton;
         if((checkedButton = ((RadioButton) ratingGroup.findViewWithTag(initRating))) != null){
             checkedButton.setChecked(true);
-        }
+        }*/
         ratingGroup.setOnCheckedChangeListener(this);
     }
 
@@ -88,9 +85,9 @@ public class DomainServiceRatingView extends RelativeLayout implements RadioGrou
                                 mCallBacks.onRatedUnSuccessfully();
                                 _radio.setChecked(false);
                                 break;
-                            default:
+                            /*default:
                                 PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putInt(C.DOMAIN_INFO_RATING, _model.getRate());
-                                break;
+                                break;*/
                         }
                     }
                 }
