@@ -5,6 +5,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,9 +22,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
@@ -46,7 +53,7 @@ import retrofit.client.Response;
 public class PoorCoverageFragment extends BaseServiceFragment
         implements OnOkListener, OnItemPickListener,
         ConnectionCallbacks, OnConnectionFailedListener,
-        OnSeekBarChangeListener, OnClickListener {
+        OnSeekBarChangeListener, OnClickListener, ResultCallback<LocationSettingsResult> {
 
     private LocationType mLocationType;
     private TextView tvSignalLevel;
@@ -104,16 +111,92 @@ public class PoorCoverageFragment extends BaseServiceFragment
     private GoogleApiClient mGoogleApiClient;
     private PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
     SingleChoiceDialog locationTypeChooser;
-
+    protected LocationRequest mLocationRequest;
+    protected LocationSettingsRequest mLocationSettingsRequest;
+    protected boolean mRequestingLocationUpdates;
     @Override
     protected void initData() {
         super.initData();
+        /*mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();*/
+
+        buildGoogleApiClient();
+        createLocationRequest();
+        buildLocationSettingsRequest();
+        startLocationUpdates();
+    }
+
+    protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
+    }
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
+            UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+
+        // Sets the desired interval for active location updates. This interval is
+        // inexact. You may not receive updates at all if no location sources are available, or
+        // you may receive them slower than requested. You may also receive updates faster than
+        // requested if other applications are requesting location at a faster interval.
+        mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+
+        // Sets the fastest rate for active location updates. This interval is exact, and your
+        // application will never receive updates faster than this value.
+        mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    protected void buildLocationSettingsRequest() {
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(mLocationRequest);
+        mLocationSettingsRequest = builder.build();
+    }
+
+    protected void startLocationUpdates() {
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient,
+                mLocationRequest,
+                new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location _location) {
+                        sbProgressBar.setVisibility(View.INVISIBLE);
+                        mLocationModel.setLocation(
+                                String.valueOf(_location.getLatitude()),
+                                String.valueOf(_location.getLongitude())
+                        );
+                        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+                        defineUserFriendlyAddress(_location);
+                    }
+                }
+        ).setResultCallback(new ResultCallback<Status>() {
+            public void onResult(Status status) {
+                mRequestingLocationUpdates = true;
+                //setButtonsEnabledState();
+            }
+        });
+
+    }
+
+
+    protected void checkLocationSettings() {
+        PendingResult<LocationSettingsResult> result =
+                LocationServices.SettingsApi.checkLocationSettings(
+                        mGoogleApiClient,
+                        mLocationSettingsRequest
+                );
+        result.setResultCallback(this);
     }
 
     @Override
@@ -169,7 +252,8 @@ public class PoorCoverageFragment extends BaseServiceFragment
         switch (LocationType.values()[_dialogItem]) {
             case AUTO:
                 if (mGoogleApiClient.isConnected()) {
-                    showLocationSettings();
+                    checkLocationSettings();
+//                    showLocationSettings();
                 }
                 break;
             case MANUAL:
@@ -187,13 +271,13 @@ public class PoorCoverageFragment extends BaseServiceFragment
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, new LocationListener() {
             @Override
             public void onLocationChanged(Location _location) {
-                sbProgressBar.setVisibility(View.INVISIBLE);
+                /*sbProgressBar.setVisibility(View.INVISIBLE);
                 mLocationModel.setLocation(
                         String.valueOf(_location.getLatitude()),
                         String.valueOf(_location.getLongitude())
                 );
                 LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-                defineUserFriendlyAddress(_location);
+                defineUserFriendlyAddress(_location);*/
             }
         });
     }
@@ -215,10 +299,12 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
     @Override
     public void onConnectionSuspended(int i) {
+        int k = 0;
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        int i = 0;
     }
 
     @Override
@@ -251,6 +337,33 @@ public class PoorCoverageFragment extends BaseServiceFragment
     public void onDialogCancel() {
         if (getSpiceManager().isStarted() && mPoorCoverageRequest != null) {
             getSpiceManager().cancel(mPoorCoverageRequest);
+        }
+    }
+
+    @Override
+    public void onResult(LocationSettingsResult locationSettingsResult) {
+        final Status status = locationSettingsResult.getStatus();
+        switch (status.getStatusCode()) {
+            case LocationSettingsStatusCodes.SUCCESS:
+                Log.i("AAAAAAAAAAAAa", "All location settings are satisfied.");
+                startLocationUpdates();
+                break;
+            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                Log.i("AAAAAAAAAAAAa", "Location settings are not satisfied. Show the user a dialog to" +
+                        "upgrade location settings ");
+
+               /* try {
+                    // Show the dialog by calling startResolutionForResult(), and check the result
+                    // in onActivityResult().
+     //               status.startResolutionForResult(MainActivity.this, REQUEST_CHECK_SETTINGS);
+                } catch (IntentSender.SendIntentException e) {
+                    Log.i(TAG, "PendingIntent unable to execute request.");
+                }*/
+                break;
+            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                Log.i("AAAAAAAAAAAAa", "Location settings are inadequate, and cannot be fixed here. Dialog " +
+                        "not created.");
+                break;
         }
     }
 
@@ -299,4 +412,60 @@ public class PoorCoverageFragment extends BaseServiceFragment
             etLocation.setText(userFriendlyAddress);
         }
     }
+    protected void stopLocationUpdates() {
+        // It is a good practice to remove location requests when the activity is in a paused or
+        // stopped state. Doing so helps battery performance and is especially
+        // recommended in applications that request frequent location updates.
+        LocationServices.FusedLocationApi.removeLocationUpdates(
+                mGoogleApiClient,
+                new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+
+                    }
+                }
+        ).setResultCallback(new ResultCallback<Status>() {
+            public void onResult(Status status) {
+                mRequestingLocationUpdates = false;
+                //setButtonsEnabledState();
+            }
+        });
+    }
+
+
+
+/*
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+*/
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Within {@code onPause()}, we pause location updates, but leave the
+        // connection to GoogleApiClient intact.  Here, we resume receiving
+        // location updates if the user has requested them.
+        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
+            startLocationUpdates();
+        }
+    }
+/*
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Stop location updates to save battery, but don't disconnect the GoogleApiClient object.
+        if (mGoogleApiClient.isConnected()) {
+            stopLocationUpdates();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
+    }*/
 }

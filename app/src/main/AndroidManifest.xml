@@ -33,7 +33,7 @@
 
         </activity>
 
-        <activity android:name=".activity.HomeActivity"
+        <activity android:name=".activity.TestLocationActivity"
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
