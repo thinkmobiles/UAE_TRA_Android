@@ -33,7 +33,7 @@ public class SearchResult {
         return searchResultItems;
     }
 
-    public class SearchResultItem{
+    public class SearchResultItem {
         private Service service;
         private SpannableStringBuilder spannedText;
         private String originalText;

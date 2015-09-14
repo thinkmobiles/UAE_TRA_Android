@@ -44,6 +44,14 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
+    public void onAttach(Activity _activity) {
+        super.onAttach(_activity);
+        if (_activity instanceof OnServiceSelectListener) {
+            mServiceSelectListener = (OnServiceSelectListener) _activity;
+        }
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         INITIAL_DATA = new SearchResult(){
@@ -71,6 +79,12 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.setOnTouchListener(this);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mAdapter = new SearchRecyclerViewAdapter(getActivity(), INITIAL_DATA);
@@ -79,20 +93,7 @@ public class SearchFragment extends BaseFragment
                 new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)
         );
         rvSearchResultList.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        view.setOnTouchListener(this);
-    }
-
-    @Override
-    public void onAttach(Activity _activity) {
-        super.onAttach(_activity);
-        if (_activity instanceof OnServiceSelectListener) {
-            mServiceSelectListener = (OnServiceSelectListener) _activity;
-        }
+        mAdapter.getFilter().initFromAdapter(mAdapter);
     }
 
     @Override
@@ -142,6 +143,5 @@ public class SearchFragment extends BaseFragment
                 getFragmentManager().popBackStackImmediate();
                 break;
         }
-
     }
 }
