@@ -8,14 +8,17 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.StringRes;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
@@ -32,7 +35,7 @@ import java.util.Map;
 /**
  * Created by ak-buffalo on 14.08.15.
  */
-public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener, AlertDialogFragment.OnOkListener, LoaderManager.LoaderCallbacks<Map<String, String>> {
+public class DomainInfoFragment extends BaseFragment implements DomainServiceRatingView.CallBacks,/*RadioGroup.OnCheckedChangeListener,*/ AlertDialogFragment.OnOkListener, LoaderManager.LoaderCallbacks<Map<String, String>> {
 
     private TextView tvDomainName_FDI;
     private TextView tvRegisterId_FDI;
@@ -40,7 +43,8 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
     private TextView tvStatus_FDI;
     private TextView tvRegContactId_FDI;
     private TextView tvRegContactName_FDI;
-    private RadioGroup ratingGroup;
+    /*private RadioGroup ratingGroup;*/
+    private DomainServiceRatingView ratingView;
 
     public static DomainInfoFragment newInstance(DomainInfoCheckResponseModel _domainInfo) {
         Bundle bundle = new Bundle();
@@ -59,7 +63,7 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
     @Override
     protected void initViews() {
         super.initViews();
-        ImageView myImageView = (ImageView) findView(R.id.ivBackground_FDI);
+        ImageView myImageView = findView(R.id.ivBackground_FDI);
         flippBackgroundImage(myImageView, -1);
         tvDomainName_FDI = findView(R.id.tvDomainName_FDI);
         tvRegisterId_FDI = findView(R.id.tvRegisterId_FDI);
@@ -67,13 +71,15 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
         tvStatus_FDI = findView(R.id.tvStatus_FDI);
         tvRegContactId_FDI = findView(R.id.tvRegContactId_FDI);
         tvRegContactName_FDI = findView(R.id.tvRegContactName_FDI);
-        ratingGroup = findView(R.id.rgDomainCheckServiceRating_FDCH);
+        /*ratingGroup = findView(R.id.rgDomainCheckServiceRating_FDCH);
         int initRating = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(C.DOMAIN_INFO_RATING, 0);
         RadioButton checkedButton;
         if((checkedButton = ((RadioButton) ratingGroup.findViewWithTag(initRating))) != null){
             checkedButton.setChecked(true);
         }
-        ratingGroup.setOnCheckedChangeListener(this);
+        ratingGroup.setOnCheckedChangeListener(this);*/
+        ratingView = findView(R.id.llDomainServiceRatingView);
+        ratingView.init(this);
     }
 
     private void flippBackgroundImage(ImageView _myImageView, int _dir){
@@ -91,7 +97,7 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
         return R.layout.fragment_domain_info;
     }
 
-    @Override
+    /*@Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
         if(radioButton.isChecked()){
@@ -101,9 +107,9 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
             model.setRate(rating);
             executeCall(model, radioButton);
         }
-    }
+    }*/
 
-    private void executeCall(final RatingServiceRequestModel _model, final RadioButton _radio){
+    /*private void executeCall(final RatingServiceRequestModel _model, final RadioButton _radio){
         showProgressDialog(getString(R.string.str_sending), null);
         getSpiceManager().execute(
                 new RatingServiceRequest(_model),
@@ -133,7 +139,7 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
                     }
                 }
         );
-    }
+    }*/
 
     @Override
     public void onOkPressed() {
@@ -159,6 +165,41 @@ public class DomainInfoFragment extends BaseFragment implements RadioGroup.OnChe
     @Override
     public void onLoaderReset(Loader loader) {
         loader.reset();
+    }
+
+    @Override
+    public Service getServiceType() {
+        return Service.DOMAIN_CHECK_INFO;
+    }
+
+    @Override
+    public SpiceManager getPublicSpiceManager() {
+        return getSpiceManager();
+    }
+
+    @Override
+    public void preExecuteCall() {
+        showProgressDialog(getString(R.string.str_sending), null);
+    }
+
+    @Override
+    public void postExecuteCall() {
+        hideProgressDialog();
+    }
+
+    @Override
+    public void onRatedSuccessfully() {
+        showMessage(R.string.str_success, R.string.str_rating_has_been_sent);
+    }
+
+    @Override
+    public void onRatedUnSuccessfully() {
+        showMessage(R.string.str_error, R.string.str_something_went_wrong);
+    }
+
+    @Override
+    public void onRatedError(SpiceException _spiceException) {
+        processError(_spiceException);
     }
 
     private static class DomainDataParser extends AsyncTaskLoader<Map<String, String>>{
