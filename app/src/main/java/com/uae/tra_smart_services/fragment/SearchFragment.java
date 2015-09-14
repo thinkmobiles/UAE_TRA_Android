@@ -80,7 +80,6 @@ public class SearchFragment extends BaseFragment
                 new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)
         );
         rvSearchResultList.setAdapter(mAdapter);
-
     }
 
     @Override
