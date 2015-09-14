@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.octo.android.robospice.retrofit.RetrofitGsonSpiceService;
+import com.uae.tra_smart_services.BuildConfig;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
 
@@ -18,7 +19,9 @@ public class TRARestService extends RetrofitGsonSpiceService {
     @Override
     protected RestAdapter.Builder createRestAdapterBuilder() {
         RestAdapter.Builder builder = super.createRestAdapterBuilder();
-        builder.setLogLevel(RestAdapter.LogLevel.FULL);
+        if (BuildConfig.DEBUG) {
+            builder.setLogLevel(RestAdapter.LogLevel.FULL);
+        }
         return builder;
     }
 

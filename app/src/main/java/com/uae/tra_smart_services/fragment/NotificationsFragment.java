@@ -69,4 +69,9 @@ public class NotificationsFragment extends BaseFragment implements View.OnClickL
     public final boolean onTouch(final View _view, final MotionEvent _event) {
         return true;
     }
+
+    @Override
+     protected void setToolbarVisibility() {
+        toolbarTitleManager.setToolbarVisibility(false);
+    }
 }

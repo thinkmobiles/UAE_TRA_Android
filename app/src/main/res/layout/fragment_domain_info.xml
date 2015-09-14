@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/ivBackground_FDI"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/res_bg_2"
         android:scaleX="-1"
-        android:scaleY="-1"/>
+        android:scaleY="-1"
+        android:src="?mainBackground"/>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical"
+        android:overScrollMode="never">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -28,7 +30,7 @@
             <com.uae.tra_smart_services.customviews.ServiceHeader
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
+                android:background="?attr/serviceInfoBackground"
                 app:headerIconSrc="@drawable/ic_edit"
                 app:headerTitle="@string/service_domain_check"/>
 
@@ -53,7 +55,7 @@
                         android:text="Domain Name:"
                         android:textColor="@color/hex_black_color"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/tvDomainName_FDI"
@@ -64,7 +66,7 @@
                         android:text="Description"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -83,7 +85,7 @@
                         android:text="Registrar ID:"
                         android:textColor="@color/hex_black_color"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/tvRegisterId_FDI"
@@ -94,7 +96,7 @@
                         android:text="Description"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -113,7 +115,7 @@
                         android:text="Registrar Name:"
                         android:textColor="@color/hex_black_color"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/tvRegisterName_FDI"
@@ -124,7 +126,7 @@
                         android:text="Description"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -143,7 +145,7 @@
                         android:text="Status:"
                         android:textColor="@color/hex_black_color"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/tvStatus_FDI"
@@ -155,7 +157,7 @@
                         android:text="Description"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -173,7 +175,7 @@
                         android:text="Title"
                         android:textColor="@color/hex_black_color"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/tvRegContactId_FDI"
@@ -182,7 +184,7 @@
                         android:layout_gravity="center"
                         android:text="Description"
                         android:textColor="@color/hex_black_color"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"/>
 
                 </LinearLayout>
 
@@ -200,7 +202,7 @@
                         android:text="Title"
                         android:textColor="@color/hex_black_color"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/tvRegContactName_FDI"
@@ -209,7 +211,7 @@
                         android:layout_gravity="center"
                         android:text="Description"
                         android:textColor="@color/hex_black_color"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"/>
 
                 </LinearLayout>
 
@@ -219,7 +221,7 @@
                 layout="@layout/layout_domain_check_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 

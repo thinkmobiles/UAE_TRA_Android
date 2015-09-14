@@ -51,8 +51,8 @@ public final class ServiceHeader extends LinearLayout {
             tvTitle.setText(array.getString(R.styleable.ServiceHeader_headerTitle));
             Drawable drawable = array.getDrawable(R.styleable.ServiceHeader_headerIconSrc);
             if (drawable != null) {
-                DrawableCompat.wrap(drawable.mutate());
-                DrawableCompat.setTint(drawable, Color.WHITE);
+                Drawable wrappedDrawable = DrawableCompat.wrap(drawable.mutate());
+                DrawableCompat.setTint(wrappedDrawable, Color.WHITE);
                 hvIcon.setHexagonSrcDrawable(drawable);
             }
         } finally {

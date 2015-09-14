@@ -44,7 +44,7 @@
         android:layout_alignStart="@id/tvTitle_LIF"
         android:layout_below="@id/tvTitle_LIF"
         android:drawablePadding="8dp"
-        android:drawableStart="@drawable/ic_info"
+        android:drawableStart="@drawable/ic_info_favorite"
         android:gravity="center_vertical"
         android:paddingEnd="16dp"
         android:text="@string/favourite_service_info"/>

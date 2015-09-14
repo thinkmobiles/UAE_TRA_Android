@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AddFavoritesAdapter;
@@ -21,7 +20,6 @@ import com.uae.tra_smart_services.adapter.AddFavoritesAdapter.OnItemClickListene
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     }
 
     private RecyclerView rvFavoritesList;
-    private ImageView ivBackground;
+//    private ImageView ivBackground;
     private SearchView svSearchServices;
 
     private AddFavoritesAdapter mFavoritesAdapter;
@@ -80,8 +78,8 @@ public class AddServiceFragment extends BaseFragment implements OnItemClickListe
     @Override
     protected void initViews() {
         super.initViews();
-        ivBackground = findView(R.id.ivBackground_FAS);
-        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
+//        ivBackground = findView(R.id.ivBackground_FAS);
+//        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         rvFavoritesList = findView(R.id.rvFavoritesList_FAS);
     }
 

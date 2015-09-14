@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/ivBackground_FIH"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:id="@+id/ivBackground_FIH"
-        android:src="@drawable/res_bg_2" />
+        android:src="?attr/favoritesBackground"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -26,29 +28,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:text="@string/str_announcements"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="@string/str_announcements" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tvSeeMorebAnn_FIH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:padding="10dp"
-                android:textSize="14sp"
                 android:layout_alignParentTop="true"
                 android:clickable="true"
+                android:padding="10dp"
+                android:text="@string/str_see_more"
                 android:textColor="@drawable/selector_simple_triggerable_textview"
-                android:text="@string/str_see_more" />
+                android:textSize="14sp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvInfoHubListPrev_FIH"
                 android:layout_width="match_parent"
-                android:scrollbars="horizontal"
                 android:layout_height="125dp"
                 android:layout_below="@+id/tvAnnText_FIH"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:scrollbars="horizontal"/>
         </RelativeLayout>
 
         <View
@@ -56,7 +58,7 @@
             android:layout_alignEnd="@+id/textView2"
             android:layout_alignStart="@+id/tvSeeMoreInfoHubAnn_FIH"
             android:layout_below="@+id/hvIcon_LIHLI"
-            android:layout_marginStart="5dp" />
+            android:layout_marginStart="5dp"/>
 
         <RelativeLayout
             android:id="@+id/rlContainerTransactionsList_FIH"
@@ -67,16 +69,16 @@
                 android:id="@+id/tvTransText_FIH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
                 android:padding="10dp"
-                android:textStyle="bold"
-                android:text="@string/str_transactions" />
+                android:text="@string/str_transactions"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvTransactionsList_FIH"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/tvTransText_FIH" />
+                android:layout_below="@+id/tvTransText_FIH"/>
         </RelativeLayout>
     </LinearLayout>
 

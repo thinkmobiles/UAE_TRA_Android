@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.uae.tra_smart_services.R;
@@ -44,7 +43,6 @@ public class FavoritesFragment extends BaseFragment
     private RelativeLayout rlEmptyContainer;
     private HexagonView hvAddService;
     private SearchView svSearchFavorites;
-    private ImageView ivBackground;
 
     private FavoritesAdapter mFavoritesAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -72,9 +70,8 @@ public class FavoritesFragment extends BaseFragment
     @Override
     protected void initViews() {
         super.initViews();
-        ivBackground = findView(R.id.ivBackground_FF);
-        ivBackground.setImageDrawable(ImageUtils.getFilteredDrawable(getActivity(), R.drawable.res_bg_2));
-        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
+//        ivBackground = findView(R.id.ivBackground_FF);
+//        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         rlEmptyContainer = findView(R.id.rlEmptyContainer_FF);
         hvAddService = findView(R.id.hvPlusBtn);
         hvAddService.setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getActivity(), R.drawable.ic_plus));

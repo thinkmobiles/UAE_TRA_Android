@@ -20,6 +20,7 @@ import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
+import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -79,8 +80,11 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
         mTrashBtn.setBackgroundColor(mDeleteColor);
         mTrashBtn.setHexagonSrcDrawable(R.drawable.ic_action_delete);
         mTrashBtn.setHexagonShadow(SHADOW_RADIUS * 2, Color.GRAY);
-        mTrashBtn.setVisibility(GONE);
-        addView(mTrashBtn);
+
+        ViewGroup invisibleContainer = new FrameLayout(getContext());
+        invisibleContainer.setVisibility(INVISIBLE);
+        invisibleContainer.addView(mTrashBtn);
+        addView(invisibleContainer);
         initAnimations();
     }
 
@@ -145,14 +149,14 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
         mTrashBtnAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                mTrashBtn.setVisibility(VISIBLE);
+//                mTrashBtn.setVisibility(VISIBLE);
                 mIsAnimated = true;
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 mIsAnimated = false;
-                mTrashBtn.setVisibility(GONE);
+//                mTrashBtn.setVisibility(GONE);
                 if (!mIsDragging) {
                     mDragTarget = null;
                 }
@@ -160,7 +164,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                mTrashBtn.setVisibility(GONE);
+//                mTrashBtn.setVisibility(GONE);
                 mIsAnimated = false;
             }
 
