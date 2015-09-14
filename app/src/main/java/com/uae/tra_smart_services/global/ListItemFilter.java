@@ -10,19 +10,20 @@ import java.util.List;
  * Created by ak-buffalo on 19.08.15.
  */
 public abstract class ListItemFilter<T,K> extends Filter {
-    protected static ListItemFilter mInstance;
-
-    protected final T mAdapter;
+    protected T mAdapter;
 
     private final List<K> originalList;
 
     private final List<K> filteredList;
 
-    protected ListItemFilter(T adapter, List<K> originalList) {
+    protected ListItemFilter(/*T adapter, */List<K> originalList) {
         super();
-        this.mAdapter = adapter;
         this.originalList = new LinkedList<>(originalList);
         this.filteredList = new ArrayList<>();
+    }
+
+    public void initFromAdapter(T _adapter){
+        this.mAdapter = _adapter;
     }
 
     @Override

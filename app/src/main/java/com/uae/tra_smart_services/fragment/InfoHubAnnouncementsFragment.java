@@ -70,6 +70,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
                 return true;
             }
         });
+        mAdapter.getFilter().initFromAdapter(mAdapter);
     }
 
     @Override

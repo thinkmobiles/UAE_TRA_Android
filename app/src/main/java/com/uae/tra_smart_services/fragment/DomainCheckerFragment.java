@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
@@ -26,9 +28,9 @@ import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
 public class DomainCheckerFragment extends BaseServiceFragment
         implements View.OnClickListener, AlertDialogFragment.OnOkListener {
 
-//    private ImageView ivLogo;
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
+    private DomainServiceRatingView ratingView;
     private HexagonHomeFragment.OnServiceSelectListener mServiceSelectListener;
 
     public static DomainCheckerFragment newInstance() {
@@ -60,8 +62,6 @@ public class DomainCheckerFragment extends BaseServiceFragment
     @Override
     protected final void initViews() {
         super.initViews();
-//        ivLogo = findView(R.id.ivLogo_FDC);
-//        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(ivLogo.getContext(), R.drawable.tra_logo));
         btnAvail = findView(R.id.btnAvail_FDCH);
         btnWhoIS = findView(R.id.btnWhoIs_FDCH);
         etDomainAvail = findView(R.id.tvDomainAvail_FDCH);
