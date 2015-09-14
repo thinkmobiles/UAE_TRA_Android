@@ -105,9 +105,11 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
     }
 
     public static class SearchResultFilter extends ListItemFilter<SearchRecyclerViewAdapter, SearchResult.SearchResultItem> {
+
         private SearchResultFilter(SearchRecyclerViewAdapter adapter, List<SearchResult.SearchResultItem> originalList) {
             super(adapter, originalList);
         }
+
         public static ListItemFilter getInstance(SearchRecyclerViewAdapter adapter, List<SearchResult.SearchResultItem> originalList){
             if(mInstance == null){
                 mInstance = new SearchResultFilter(adapter, originalList);

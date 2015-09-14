@@ -1,34 +1,50 @@
 package com.uae.tra_smart_services.entities;
 
+import android.content.Context;
 import android.text.SpannableStringBuilder;
 
+import com.uae.tra_smart_services.global.Service;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by and on 09.09.15.
+ * Created by Andrey Korneychuk on 09.09.15.
  */
 public class SearchResult {
 
-    private ArrayList<SearchResultItem> searchResultItems;
+    private List<SearchResultItem> searchResultItems;
 
     public SearchResult(){
         searchResultItems = new ArrayList<>();
     }
 
-    public void addItem(String _text){
-        searchResultItems.add(new SearchResultItem(_text));
+    public void initFromServicesList(List<Service> _services, Context _context){
+        for(Service service : _services){
+            addItem(service, service.getTitle(_context));
+        }
     }
 
-    public ArrayList<SearchResultItem> getSearchResultItems(){
+    private void addItem(Service _service, String _text){
+        searchResultItems.add(new SearchResultItem(_service, _text));
+    }
+
+    public List<SearchResultItem> getSearchResultItems(){
         return searchResultItems;
     }
 
     public class SearchResultItem{
+        private Service service;
         private SpannableStringBuilder spannedText;
         private String originalText;
 
-        SearchResultItem(String _text){
+        SearchResultItem(Service _service, String _text){
+            service = _service;
             originalText = _text;
+        }
+
+        public Service getBindedService(){
+            return service;
         }
 
         public String getOriginalText() {
@@ -38,6 +54,7 @@ public class SearchResult {
         public SpannableStringBuilder getSpannedText() {
             return spannedText != null ? spannedText : new SpannableStringBuilder(originalText);
         }
+
         public void setSpannedText(SpannableStringBuilder _spannedText){
             spannedText = _spannedText;
         }
