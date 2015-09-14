@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/llFragmentContainer_FSID"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/llFragmentContainer_FSID"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/serviceInfoBackground"
@@ -11,27 +12,44 @@
 
     <ImageView
         android:id="@+id/ivCloseInfo_FSID"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:scaleType="center"
         android:layout_gravity="end"
-        android:src="@drawable/ic_play"/>
+        android:src="@drawable/ic_white_close"
+        tools:ignore="ContentDescription"/>
 
-    <com.uae.tra_smart_services.customviews.HexagonView
-        android:id="@+id/hvServiceInfoIcon_FSID"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hexagonSrc="@drawable/ic_edit"
-        app:hexagonBorderColor="#ffffff"
-        app:hexagonBorderSize="1dp"
-        app:hexagonSideSize="60dp"/>
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
-    <TextView
-        android:id="@+id/tvServiceInfoContent_FSID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:scrollbars="none"
-        android:text="@string/str_dummy_info_hub_list_item_full_descr"
-        android:textColor="@android:color/white"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.uae.tra_smart_services.customviews.HexagonView
+                android:id="@+id/hvServiceInfoIcon_FSID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hexagonBorderColor="#ffffff"
+                app:hexagonBorderSize="1dp"
+                app:hexagonSideSize="52dp"
+                app:hexagonSrc="@drawable/ic_service_info"/>
+
+            <TextView
+                android:id="@+id/tvServiceInfoContent_FSID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:scrollbars="none"
+                android:text="@string/str_dummy_info_hub_list_item_full_descr"
+                android:textColor="@android:color/white"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

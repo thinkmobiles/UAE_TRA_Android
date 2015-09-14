@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlFragmentContainer_FSI"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,14 +11,18 @@
 
     <ImageView
         android:id="@+id/ivCloseInfo_FSI"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:scaleType="center"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_play"/>
+        android:src="@drawable/ic_white_close"
+        tools:ignore="ContentDescription"/>
 
     <ScrollView
         android:layout_width="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
         android:layout_height="match_parent"
         android:layout_below="@id/ivCloseInfo_FSI">
 
@@ -31,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                app:hexagonSrc="@drawable/ic_edit"
+                app:hexagonSrc="@drawable/ic_service_info"
                 app:hexagonBorderColor="#ffffff"
                 app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="35dp"
@@ -54,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                app:hexagonSrc="@drawable/ic_edit"
+                app:hexagonSrc="@drawable/ic_required_documents"
                 app:hexagonBorderColor="#ffffff"
                 app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="35dp"
@@ -76,10 +81,11 @@
             <com.uae.tra_smart_services.customviews.HexagonView
                 android:id="@+id/hvTermsAndConditions_FSI"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/tvServiceInfoLabel_FSI"
-                app:hexagonSrc="@drawable/ic_edit"
+                app:hexagonSrc="@drawable/ic_terms_and_conditions"
                 app:hexagonBorderColor="#ffffff"
                 app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="35dp"
@@ -101,9 +107,10 @@
                 android:id="@+id/hvServicePackage_FSI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/tvRequiredDocumentsLabel_FSI"
-                app:hexagonSrc="@drawable/ic_edit"
+                app:hexagonSrc="@drawable/ic_service_package"
                 app:hexagonBorderColor="#ffffff"
                 app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="35dp"
@@ -126,9 +133,10 @@
                 android:id="@+id/hvProcessingTime_FSI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/tvTermsAndConditionsLabel_FSI"
-                app:hexagonSrc="@drawable/ic_edit"
+                app:hexagonSrc="@drawable/ic_processing_time"
                 app:hexagonBorderColor="#ffffff"
                 app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="35dp"
@@ -150,9 +158,10 @@
                 android:id="@+id/hvServiceFees_FSI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/tvServicePackageLabel_FSI"
-                app:hexagonSrc="@drawable/ic_edit"
+                app:hexagonSrc="@drawable/ic_service_fees"
                 app:hexagonBorderColor="#ffffff"
                 app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="35dp"
@@ -174,10 +183,11 @@
             <com.uae.tra_smart_services.customviews.HexagonView
                 android:id="@+id/hvContactInCharge_FSI"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvProcessingTimeLabel_FSI"
                 android:layout_centerHorizontal="true"
-                app:hexagonSrc="@drawable/ic_edit"
+                app:hexagonSrc="@drawable/ic_contact_in_charge"
                 app:hexagonBorderColor="#ffffff"
                 app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="35dp"
@@ -191,7 +201,7 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:text="@string/fragment_service_info_service_info"
+                android:text="@string/fragment_service_info_contact_in_charge"
                 android:textColor="@android:color/white"/>
 
         </android.support.percent.PercentRelativeLayout>
