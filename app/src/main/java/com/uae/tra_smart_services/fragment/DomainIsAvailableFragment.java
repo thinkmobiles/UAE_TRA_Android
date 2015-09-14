@@ -6,17 +6,22 @@ import android.support.annotation.StringRes;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 
 /**
  * Created by ak-buffalo on 14.08.15.
  */
-public class DomainIsAvailableFragment extends BaseFragment {
+public class DomainIsAvailableFragment extends BaseFragment implements DomainServiceRatingView.CallBacks{
 
+    private DomainServiceRatingView ratingView;
     public static DomainIsAvailableFragment newInstance(DomainAvailabilityCheckResponseModel _model) {
         Bundle bundle = new Bundle();
         bundle.putString(C.DOMAIN_INFO, _model.domainStrValue);
@@ -50,6 +55,8 @@ public class DomainIsAvailableFragment extends BaseFragment {
         }
         statustext.setText(getString(availabilityTextRes));
         statustext.setTextColor(getResources().getColor(availabilityColorRes));
+        ratingView = findView(R.id.llDomainServiceRatingView);
+        ratingView.init(this);
     }
 
     @Override
@@ -60,5 +67,40 @@ public class DomainIsAvailableFragment extends BaseFragment {
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_domain_is_available;
+    }
+
+    @Override
+    public Service getServiceType() {
+        return Service.DOMAIN_CHECK_AVAILABILITY;
+    }
+
+    @Override
+    public SpiceManager getPublicSpiceManager() {
+        return getSpiceManager();
+    }
+
+    @Override
+    public void preExecuteCall() {
+        showProgressDialog(getString(R.string.str_sending), null);
+    }
+
+    @Override
+    public void postExecuteCall() {
+        hideProgressDialog();
+    }
+
+    @Override
+    public void onRatedSuccessfully() {
+        showMessage(R.string.str_success, R.string.str_rating_has_been_sent);
+    }
+
+    @Override
+    public void onRatedUnSuccessfully() {
+        showMessage(R.string.str_error, R.string.str_something_went_wrong);
+    }
+
+    @Override
+    public void onRatedError(SpiceException _spiceException) {
+        processError(_spiceException);
     }
 }

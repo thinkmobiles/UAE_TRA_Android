@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
@@ -24,11 +26,12 @@ import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
  * Created by ak-buffalo on 10.08.15.
  */
 public class DomainCheckerFragment extends BaseServiceFragment
-        implements View.OnClickListener, AlertDialogFragment.OnOkListener {
+        implements DomainServiceRatingView.CallBacks, View.OnClickListener, AlertDialogFragment.OnOkListener {
 
 //    private ImageView ivLogo;
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
+    private DomainServiceRatingView ratingView;
     private HexagonHomeFragment.OnServiceSelectListener mServiceSelectListener;
 
     public static DomainCheckerFragment newInstance() {
@@ -65,6 +68,8 @@ public class DomainCheckerFragment extends BaseServiceFragment
         btnAvail = findView(R.id.btnAvail_FDCH);
         btnWhoIS = findView(R.id.btnWhoIs_FDCH);
         etDomainAvail = findView(R.id.tvDomainAvail_FDCH);
+        ratingView = findView(R.id.llDomainServiceRatingView);
+        ratingView.init(this);
     }
 
     @Override
@@ -150,6 +155,41 @@ public class DomainCheckerFragment extends BaseServiceFragment
                 getSpiceManager().cancel(mDomainInfoCheckRequest);
             }
         }
+    }
+
+    @Override
+    public Service getServiceType() {
+        return Service.DOMAIN_CHECK;
+    }
+
+    @Override
+    public SpiceManager getPublicSpiceManager() {
+        return getSpiceManager();
+    }
+
+    @Override
+    public void preExecuteCall() {
+        showProgressDialog(getString(R.string.str_sending), null);
+    }
+
+    @Override
+    public void postExecuteCall() {
+        hideProgressDialog();
+    }
+
+    @Override
+    public void onRatedSuccessfully() {
+        showMessage(R.string.str_success, R.string.str_rating_has_been_sent);
+    }
+
+    @Override
+    public void onRatedUnSuccessfully() {
+        showMessage(R.string.str_error, R.string.str_something_went_wrong);
+    }
+
+    @Override
+    public void onRatedError(SpiceException _spiceException) {
+        processError(_spiceException);
     }
 
     private abstract class DomainCheckRequestListener<T> implements RequestListener<T> {
