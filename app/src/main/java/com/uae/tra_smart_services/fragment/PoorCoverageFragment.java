@@ -389,6 +389,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
             switch (poorCoverageRequestModel.getStatus()) {
                 case 200:
                     showMessage(R.string.str_success, R.string.str_data_has_been_sent);
+                    getFragmentManager().popBackStack();
                     break;
                 case 400:
                     showMessage(R.string.str_error, R.string.str_something_went_wrong);
@@ -405,6 +406,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             processError(spiceException);
+            sbProgressBar.setVisibility(View.INVISIBLE);
         }
 
         @Override
