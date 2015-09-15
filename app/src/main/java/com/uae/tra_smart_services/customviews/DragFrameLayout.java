@@ -158,6 +158,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
                 mIsAnimated = false;
 //                mTrashBtn.setVisibility(GONE);
                 if (!mIsDragging) {
+                    mDragTarget.setVisibility(VISIBLE);
                     mDragTarget = null;
                 }
             }

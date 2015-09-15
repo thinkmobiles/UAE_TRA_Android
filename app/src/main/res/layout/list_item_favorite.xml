@@ -10,13 +10,14 @@
     android:paddingEnd="24dp"
     android:paddingStart="16dp"
     android:paddingTop="8dp"
-    tools:background="@android:color/darker_gray">
+    tools:background="@android:color/white">
 
     <com.uae.tra_smart_services.customviews.HexagonView
         android:id="@+id/hvIcon_LIF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        app:hexagonBorderSize="1dp"
         app:hexagonSrc="@drawable/background_speed"
         app:hexagonBackgroundColor="@android:color/white"
         app:hexagonSideSize="40dp"/>
