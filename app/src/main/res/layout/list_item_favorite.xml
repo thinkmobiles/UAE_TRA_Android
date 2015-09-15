@@ -10,13 +10,14 @@
     android:paddingEnd="24dp"
     android:paddingStart="16dp"
     android:paddingTop="8dp"
-    tools:background="@android:color/darker_gray">
+    tools:background="@android:color/white">
 
     <com.uae.tra_smart_services.customviews.HexagonView
         android:id="@+id/hvIcon_LIF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        app:hexagonBorderSize="1dp"
         app:hexagonSrc="@drawable/background_speed"
         app:hexagonBackgroundColor="@android:color/white"
         app:hexagonSideSize="40dp"/>
@@ -44,7 +45,7 @@
         android:layout_alignStart="@id/tvTitle_LIF"
         android:layout_below="@id/tvTitle_LIF"
         android:drawablePadding="8dp"
-        android:drawableStart="@drawable/ic_info"
+        android:drawableStart="@drawable/ic_info_favorite"
         android:gravity="center_vertical"
         android:paddingEnd="16dp"
         android:text="@string/favourite_service_info"/>

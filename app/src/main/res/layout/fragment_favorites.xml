@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.uae.tra_smart_services.customviews.DragFrameLayout
-    android:id="@+id/dflContainer_FF"
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    app:shadowBackground="?attr/shadowBackgroundColor"
-    app:deleteColor="?attr/dragDeleteColor"
     android:layout_height="match_parent">
 
     <ImageView
@@ -14,66 +11,80 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        tools:src="@drawable/res_bg_2"/>
+        android:src="?favoritesBackground"
+        tools:background="@android:color/white"/>
 
-    <RelativeLayout
-        android:id="@+id/rlEmptyContainer_FF"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <com.uae.tra_smart_services.customviews.HexagonView
-            android:id="@+id/hvExclamation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            app:hexagonSrc="@drawable/ic_exclamation"
-            app:hexagonBorderColor="#455560"
-            app:hexagonBorderSize="1dp"
-            app:hexagonSideSize="48dp"/>
-
-        <TextView
-            android:id="@+id/tvNoFavorites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/hvExclamation"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:gravity="center"
-            android:text="@string/fragment_favorites_empty_favorites"
-            android:textColor="#455560"
-            android:textSize="18sp"/>
-
-        <com.uae.tra_smart_services.customviews.HexagonView
-            android:id="@+id/hvPlusBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvNoFavorites"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            app:hexagonBorderColor="?attr/addServiceColor"
-            app:hexagonBorderSize="1dp"
-            tools:hexagonBackground="@drawable/ic_plus"/>
-
-        <TextView
-            android:id="@+id/tvAddService"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/hvPlusBtn"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="@string/fragment_favorites_add_service"
-            android:textColor="?attr/addServiceColor"
-            android:textSize="12sp"/>
-    </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvFavoritesList_FF"
+    <com.uae.tra_smart_services.customviews.DragFrameLayout
+        android:id="@+id/dflContainer_FF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
-        tools:listitem="@layout/list_item_favorite"/>
+        app:deleteColor="?attr/dragDeleteColor"
+        app:shadowBackground="?attr/shadowBackgroundColor">
 
 
-</com.uae.tra_smart_services.customviews.DragFrameLayout>
+        <RelativeLayout
+            android:id="@+id/rlEmptyContainer_FF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="?attr/actionBarSize"
+            tools:visibility="visible">
+
+            <com.uae.tra_smart_services.customviews.HexagonView
+                android:id="@+id/hvExclamation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:hexagonBorderColor="#455560"
+                app:hexagonBorderSize="1dp"
+                app:hexagonSideSize="48dp"
+                app:hexagonSrc="@drawable/ic_exclamation"/>
+
+            <TextView
+                android:id="@+id/tvNoFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hvExclamation"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:text="@string/fragment_favorites_empty_favorites"
+                android:textColor="#455560"
+                android:textSize="18sp"/>
+
+            <com.uae.tra_smart_services.customviews.HexagonView
+                android:id="@+id/hvPlusBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvNoFavorites"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                app:hexagonBorderColor="?attr/addServiceColor"
+                app:hexagonBorderSize="1dp"
+                tools:hexagonBackground="@drawable/ic_plus"/>
+
+            <TextView
+                android:id="@+id/tvAddService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hvPlusBtn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/fragment_favorites_add_service"
+                android:textColor="?attr/addServiceColor"
+                android:textSize="12sp"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvFavoritesList_FF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:visibility="invisible"
+            tools:listitem="@layout/list_item_favorite"
+            tools:visibility="invisible"/>
+
+
+    </com.uae.tra_smart_services.customviews.DragFrameLayout>
+</FrameLayout>

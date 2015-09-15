@@ -9,9 +9,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
@@ -82,6 +82,7 @@ public class HomeActivity extends BaseFragmentActivity
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
     private BaseFragment mFragmentForReplacing;
+    private ImageView ivBackground;
 
 
     @Override

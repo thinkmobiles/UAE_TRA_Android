@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.uae.tra_smart_services.R;
@@ -21,7 +20,6 @@ import com.uae.tra_smart_services.customviews.HexagonalHeader.OnButtonClickListe
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +28,8 @@ import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.Stat
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.POOR_COVERAGE_SERVICE;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.SMS_SPAM_SERVICE;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.VERIFICATION_SERVICE;
-
-import static com.uae.tra_smart_services.global.HeaderStaticService.NOTIFICATION;
 import static com.uae.tra_smart_services.global.HeaderStaticService.HINT;
+import static com.uae.tra_smart_services.global.HeaderStaticService.NOTIFICATION;
 import static com.uae.tra_smart_services.global.HeaderStaticService.SEARCH;
 
 /**
@@ -46,7 +43,6 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
     private HexagonalButtonsLayout mHexagonalButtonsLayout;
     private RecyclerView mRecyclerView;
     private HexagonalHeader mHexagonalHeader;
-    private ImageView ivBackground;
 
     private ServicesRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -87,8 +83,6 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
     @Override
     protected void initViews() {
-        ivBackground = findView(R.id.ivBackground_FHH);
-        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         mRecyclerView = findView(R.id.rvServices_FHH);
         mHexagonalButtonsLayout = findView(R.id.hblHexagonalButtons_FHH);
         mHexagonalHeader = findView(R.id.hhHeader_FHH);

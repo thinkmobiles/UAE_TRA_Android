@@ -63,8 +63,8 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
     @Override
     protected void initViews() {
         super.initViews();
-        ImageView myImageView = findView(R.id.ivBackground_FDI);
-        flippBackgroundImage(myImageView, -1);
+//        ImageView myImageView = (ImageView) findView(R.id.ivBackground_FDI);
+//        flippBackgroundImage(myImageView, -1);
         tvDomainName_FDI = findView(R.id.tvDomainName_FDI);
         tvRegisterId_FDI = findView(R.id.tvRegisterId_FDI);
         tvRegisterName_FDI = findView(R.id.tvRegisterName_FDI);

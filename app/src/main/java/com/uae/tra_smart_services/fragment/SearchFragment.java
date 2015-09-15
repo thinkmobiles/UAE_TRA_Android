@@ -144,4 +144,9 @@ public class SearchFragment extends BaseFragment
                 break;
         }
     }
+
+    @Override
+    protected void setToolbarVisibility() {
+        toolbarTitleManager.setToolbarVisibility(false);
+    }
 }
