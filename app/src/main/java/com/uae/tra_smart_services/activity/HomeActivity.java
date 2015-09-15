@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -122,7 +123,7 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public <T> void onServiceSelect(Service _service, T _data) {
+    public <T> void onServiceSelect(Service _service, @Nullable T _data) {
         switch (_service) {
             case DOMAIN_CHECK:
                 replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
@@ -134,16 +135,16 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(DomainIsAvailableFragment.newInstance((DomainAvailabilityCheckResponseModel) _data));
                 break;
             case COMPLAIN_ABOUT_PROVIDER:
-                openFragmentIfAuthorized(ComplainAboutServiceFragment.newInstance());
+                openFragmentIfAuthorized(ComplainAboutServiceFragment.newInstance(), _service);
                 break;
             case ENQUIRIES:
-                openFragmentIfAuthorized(EnquiriesFragment.newInstance());
+                openFragmentIfAuthorized(EnquiriesFragment.newInstance(), _service);
                 break;
             case COMPLAINT_ABOUT_TRA:
-                openFragmentIfAuthorized(ComplainAboutTraFragment.newInstance());
+                openFragmentIfAuthorized(ComplainAboutTraFragment.newInstance(), _service);
                 break;
             case SUGGESTION:
-                openFragmentIfAuthorized(SuggestionFragment.newInstance());
+                openFragmentIfAuthorized(SuggestionFragment.newInstance(), _service);
                 break;
             case HELP_SALIM:
                 replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
@@ -163,13 +164,13 @@ public class HomeActivity extends BaseFragmentActivity
         }
     }
 
-    private void openFragmentIfAuthorized(final BaseFragment _fragment) {
-        mFragmentForReplacing = _fragment;
+    private void openFragmentIfAuthorized(final BaseFragment _fragment, final Service _service) {
         if (TRAApplication.isLoggedIn()) {
-            replaceFragmentWithBackStack(mFragmentForReplacing);
+            replaceFragmentWithBackStack(_fragment);
         } else {
             Intent intent = new Intent(this, AuthorizationActivity.class);
             intent.setAction(C.ACTION_LOGIN);
+            intent.putExtra(C.FRAGMENT_FOR_REPLACING, _service);
             startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
         }
     }
@@ -180,10 +181,10 @@ public class HomeActivity extends BaseFragmentActivity
 
         switch (requestCode){
             case C.REQUEST_CODE_LOGIN:
-                    if (resultCode == C.LOGIN_SUCCESS && mFragmentForReplacing != null) {
-                        replaceFragmentWithBackStack(mFragmentForReplacing);
-                    }
-
+                if (resultCode == C.LOGIN_SUCCESS) {
+                    final Service _service = (Service) data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
+                    onServiceSelect(_service, null);
+                }
                 break;
             case REQUEST_CHECK_SETTINGS:
                 Log.i(TAG, "User agreed to make required location settings changes.");

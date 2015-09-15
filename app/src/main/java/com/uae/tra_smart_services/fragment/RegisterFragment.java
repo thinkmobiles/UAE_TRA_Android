@@ -36,6 +36,8 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     private TextView btnLogInNow;
     private Spinner acsState, acsCountry;
 
+    private RegisterRequest mRegisterRequest;
+
     private ArrayAdapter<CharSequence> mStatesAdapter, mCountriesAdapter;
     private CustomFilterPool<RegisterModel> mFilterPool;
 
@@ -66,14 +68,12 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
 //        acsCountry = findView(R.id.spCountry_FR);
         // Actions
         tvRegister = findView(R.id.tvRegister_FLI);
-        btnLogInNow = findView(R.id.btnLogInNow_FLI);
     }
 
     @Override
     protected final void initListeners() {
         mRequestListener = new RequestListener();
         tvRegister.setOnClickListener(this);
-        btnLogInNow.setOnClickListener(this);
     }
 
     @Override
@@ -106,13 +106,9 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
             case R.id.tvRegister_FLI:
                 doRegistration();
                 break;
-            case R.id.btnLogInNow_FLI:
-                actionsListener.onOpenLoginScreen();
-                break;
         }
     }
 
-    private RegisterRequest mRegisterRequest;
     private void doRegistration() {
         final RegisterModel registerModel = new RegisterModel();
         registerModel.login = etUserName.getText().toString();

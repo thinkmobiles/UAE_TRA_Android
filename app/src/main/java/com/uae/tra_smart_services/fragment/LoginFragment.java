@@ -29,8 +29,8 @@ public class LoginFragment extends BaseAuthorizationFragment
     private static final String KEY_LOGIN_REQUEST = "LOGIN_REQUEST";
 
     private EditText etUserName, etPassword;
-    private Button btnLogIn, btnRegisterNow, btnSkip;
-    private TextView tvRestorePassword;
+    private Button btnLogIn;
+    private TextView tvRegisterNow, tvForgotPassword;
 
     private RequestResponseListener mRequestLoginListener;
 
@@ -49,10 +49,9 @@ public class LoginFragment extends BaseAuthorizationFragment
         etUserName = findView(R.id.etEmail_FR);
         etPassword = findView(R.id.etPassword_FR);
         // Actions
-        tvRestorePassword = findView(R.id.btnRestorePassword_FLI);
         btnLogIn = findView(R.id.btnLogIn_FLI);
-        btnRegisterNow = findView(R.id.btnRegisterNow_FLI);
-        btnSkip = findView(R.id.btnSkip_FLI);
+        tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
+        tvForgotPassword = findView(R.id.tvSkip_FLI);
 
         if (BuildConfig.DEBUG) {
             btnLogIn.setOnLongClickListener(new View.OnLongClickListener() {
@@ -70,10 +69,10 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     protected final void initListeners() {
         mRequestLoginListener = new RequestResponseListener();
-        tvRestorePassword.setOnClickListener(this);
+//        tvRestorePassword.setOnClickListener(this);
         btnLogIn.setOnClickListener(this);
-        btnRegisterNow.setOnClickListener(this);
-        btnSkip.setOnClickListener(this);
+        tvRegisterNow.setOnClickListener(this);
+        tvForgotPassword.setOnClickListener(this);
     }
 
     @Override
@@ -84,17 +83,14 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     public final void onClick(final View _v) {
         switch (_v.getId()) {
-            case R.id.btnRestorePassword_FLI:
-                actionsListener.onOpenRestorePassScreen();
-                break;
             case R.id.btnLogIn_FLI:
                 doLogIn();
                 break;
-            case R.id.btnRegisterNow_FLI:
+            case R.id.tvRegisterNow_FLI:
                 actionsListener.onOpenRegisterScreen();
                 break;
-            case R.id.btnSkip_FLI:
-                actionsListener.onHomeScreenOpenWithoutAuth();
+            case R.id.tvSkip_FLI:
+                actionsListener.onOpenRestorePassScreen();
                 break;
         }
     }
