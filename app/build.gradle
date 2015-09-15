@@ -55,4 +55,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
         transitive = true;
     }
+
+    compile 'io.reactivex:rxjava:1.0.11'
+    compile 'io.reactivex:rxandroid:0.24.0'
 }
