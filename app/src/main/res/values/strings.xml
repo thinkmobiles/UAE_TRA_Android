@@ -127,6 +127,7 @@
     <string name="str_location_error_message">Please wait while location is determined or enter address manually.</string>
     <string name="signal_level_error">Please set signal level</string>
 
+    <string name="str_mobile_verification">Mobile verification</string>
     <string name="str_announcements">Announcements</string>
     <string name="str_transactions">Transactions</string>
     <string name="str_see_more">See More</string>
