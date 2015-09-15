@@ -26,7 +26,7 @@ public class SplashActivity extends Activity {
             public void run() {
 
                 // We are starting the Main activity
-                Intent i = new Intent(SplashActivity.this, AuthorizationActivity.class);
+                Intent i = new Intent(SplashActivity.this, HomeActivity.class);
                 startActivity(i);
 
                 // close this activity
