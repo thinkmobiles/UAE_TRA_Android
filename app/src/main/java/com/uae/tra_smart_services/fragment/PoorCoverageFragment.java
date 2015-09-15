@@ -61,24 +61,23 @@ public class PoorCoverageFragment extends BaseServiceFragment
         ConnectionCallbacks, OnConnectionFailedListener,
         OnSeekBarChangeListener, OnClickListener, ResultCallback<LocationSettingsResult>, LocationListener {
 
-
     /** CONSTANTS */
-    protected static final String TAG = "PoorCoverageFragment";
-    protected static final int REQUEST_CHECK_SETTINGS = 1000;
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+    private static final String TAG = "PoorCoverageFragment";
+    private static final int REQUEST_CHECK_SETTINGS = 1000;
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
 
     /** MEMBERS */
-    protected GoogleApiClient mGoogleApiClient;
-    protected LocationRequest mLocationRequest;
-    protected LocationSettingsRequest mLocationSettingsRequest;
-    protected Location mCurrentLocation;
-    protected Boolean mRequestingLocationUpdates = false;
-    protected String mLastUpdateTime = "";
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private LocationSettingsRequest mLocationSettingsRequest;
+    private Location mCurrentLocation;
+    private Boolean mRequestingLocationUpdates = false;
+    private String mLastUpdateTime = "";
     private PoorCoverageRequest mPoorCoverageRequest;
     private PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
 
-
+    /** VIEWS */
     private SingleChoiceDialog locationTypeChooser;
     private TextView tvSignalLevel;
     private EditText etLocation;
@@ -95,9 +94,31 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     @Override
+    protected int getTitle() {
+        return R.string.str_signal_coverage;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_send, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_send:
+                hideKeyboard(tvSignalLevel);
+                collectDataAdnSendToServer();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -191,7 +212,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
         mLocationSettingsRequest =
                 new LocationSettingsRequest.Builder()
                         .addLocationRequest(mLocationRequest)
-                        .setAlwaysShow(true)//this is the key ingredient
+                        .setAlwaysShow(true)
                         .build();
     }
 
@@ -248,28 +269,10 @@ public class PoorCoverageFragment extends BaseServiceFragment
         });
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        mCurrentLocation = location;
-        defineUserFriendlyAddress();
-        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-        stopLocationUpdates();
-    }
-
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        /*if (mCurrentLocation == null) {
-            mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-        }*/
-        Log.i(TAG, "Connection succeed");
-    }
-
     private void collectDataAdnSendToServer() {
         mLocationModel.setAddress(etLocation.getText().toString());
         mLocationModel.setSignalLevel(sbProgressBar.getProgress() + 1);
-        if (TextUtils.isEmpty(mLocationModel.getAddress()) &&
-                mLocationModel.getLocation() == null) {
+        if (TextUtils.isEmpty(mLocationModel.getAddress()) && mLocationModel.getLocation() == null) {
             showMessage(R.string.str_location_error, R.string.str_location_error_message);
             return;
         }
@@ -291,6 +294,20 @@ public class PoorCoverageFragment extends BaseServiceFragment
         );
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        mCurrentLocation = location;
+        defineUserFriendlyAddress();
+        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+        stopLocationUpdates();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        Log.i(TAG, "Connection succeed");
+    }
+
+    @Override
     public void onConnectionSuspended(int cause) {
         Log.i(TAG, "Connection suspended");
     }
@@ -298,28 +315,6 @@ public class PoorCoverageFragment extends BaseServiceFragment
     @Override
     public void onConnectionFailed(ConnectionResult result) {
         Log.i(TAG, "Connection failed: ErrorCode = " + result.getErrorCode());
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_send, menu);
-    }
-
-    @Override
-    protected int getTitle() {
-        return R.string.str_signal_coverage;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_send:
-                hideKeyboard(tvSignalLevel);
-                collectDataAdnSendToServer();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -361,12 +356,12 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
+        // Unhandled callback
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-
+        // Unhandled callback
     }
 
     @Override
