@@ -216,7 +216,7 @@ public class HexagonalHeader extends View {
         mDrawables.put(HEXAGON_BUTTON_SEARCH, ContextCompat.getDrawable(getContext(), R.drawable.ic_search));
         mDrawables.put(HEXAGON_BUTTON_NOTIFICATION, ContextCompat.getDrawable(getContext(), R.drawable.ic_not));
 
-        mAvatarPlaceholder = ContextCompat.getDrawable(getContext(), R.drawable.ic_user);
+        mAvatarPlaceholder = ContextCompat.getDrawable(getContext(), R.drawable.ic_user_placeholder);
     }
 
     @Override

@@ -35,7 +35,7 @@
     <!--            Password field               -->
     <string name="str_password">Password</string>
     <!--            Forgot password field               -->
-    <string name="str_forgot_password">Forgot Password</string>
+    <string name="str_forgot_password">Password?</string>
     <!--            Sign in button               -->
     <string name="str_login">Login</string>
     <!--            Sign in button               -->
@@ -300,5 +300,6 @@
 
     <string name="str_enquires_title">Enquires Title</string>
     <string name="str_suggestion_title">Suggestion Title</string>
+    <string name="login_username_hint">Username</string>
 
 </resources>

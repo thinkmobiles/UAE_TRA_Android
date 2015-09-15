@@ -2,59 +2,68 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/hex_authorization_background_color"
     android:orientation="vertical">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/hex_authorization_background_color"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <LinearLayout
             android:id="@+id/llRegisterFields_FR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/etFirstName_FR"
-                style="@style/UserAuthorizationDataEditTextField"
+                style="@style/AuthorizationFields"
                 android:hint="@string/hint_first_name"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
                 android:id="@+id/etLastName_FR"
-                style="@style/UserAuthorizationDataEditTextField"
+                style="@style/AuthorizationFields"
                 android:hint="@string/hint_last_name"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
                 android:id="@+id/etEmiratesID_FR"
-                style="@style/UserAuthorizationDataEditTextField"
+                style="@style/AuthorizationFields"
                 android:hint="@string/hint_emirates_id"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/dp_transparent_fields_padding" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
                 android:id="@+id/etUsername_FR"
-                style="@style/UserAuthorizationDataEditTextField"
+                style="@style/AuthorizationFields"
                 android:hint="@string/hint_username"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_username"
+                android:drawablePadding="@dimen/dp_transparent_fields_padding"/>
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
                 android:id="@+id/etAddress_FR"
-                style="@style/UserAuthorizationDataEditTextField"
+                style="@style/AuthorizationFields"
                 android:hint="@string/hint_address"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
@@ -76,54 +85,64 @@
 
             <EditText
                 android:id="@+id/etLandline_FR"
-                style="@style/UserAuthorizationDataEditTextField"
+                style="@style/AuthorizationFields"
                 android:hint="@string/hint_landline"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
                 android:id="@+id/etPhone_FR"
-                style="@style/UserAuthorizationDataEditTextField"
+                style="@style/AuthorizationFields"
                 android:hint="@string/str_phone"
-                android:inputType="text" />
+                android:inputType="text"
+                android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
-            android:id="@+id/etEmail_FR"
-            style="@style/UserAuthorizationDataEditTextField"
-            android:hint="@string/str_email"
-            android:inputType="textEmailAddress" />
+                android:id="@+id/etEmail_FR"
+                style="@style/AuthorizationFields"
+                android:hint="@string/str_email"
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/dp_transparent_fields_padding" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
 
             <EditText
                 android:id="@+id/etPassword_FR"
-                style="@style/UserAuthorizationDataEditTextField"
+                style="@style/AuthorizationFields"
                 android:hint="@string/str_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/ic_pass"
+                android:drawablePadding="@dimen/dp_transparent_fields_padding" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
                 android:id="@+id/etConfirmPassword_FR"
-                style="@style/UserAuthorizationDataEditTextField"
+                style="@style/AuthorizationFields"
                 android:hint="@string/hint_confirm_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/ic_pass"
+                android:drawablePadding="@dimen/dp_transparent_fields_padding" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llRegisterActions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingTop="@dimen/dp_register_actions_area_padding"
-            android:paddingBottom="@dimen/dp_register_actions_area_padding"
-            android:orientation="vertical">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/llRegisterActions"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:paddingTop="@dimen/dp_register_actions_area_padding"-->
+            <!--android:paddingBottom="@dimen/dp_register_actions_area_padding"-->
+            <!--android:orientation="vertical">-->
 
             <Button
                 android:id="@+id/tvRegister_FLI"
@@ -132,16 +151,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/str_register" />
 
-            <TextView
-                android:id="@+id/btnLogInNow_FLI"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="all"
-                android:gravity="center"
-                android:padding="@dimen/dp_login_now_static_text_padding"
-                android:text="@string/str_login"
-                android:textColor="?attr/globalButtonTextColor"
-                android:textSize="@dimen/sp_authorization_button_text_size" />
-        </LinearLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/btnLogInNow_FLI"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:autoLink="all"-->
+                <!--android:gravity="center"-->
+                <!--android:padding="@dimen/dp_login_now_static_text_padding"-->
+                <!--android:text="@string/str_login"-->
+                <!--android:textColor="?attr/globalButtonTextColor"-->
+                <!--android:paddingBottom="@dimen/dp_register_actions_area_padding"-->
+                <!--android:textSize="@dimen/sp_authorization_button_text_size" />-->
+        <!--</LinearLayout>-->
     </LinearLayout>
 </ScrollView>

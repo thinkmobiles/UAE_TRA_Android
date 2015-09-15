@@ -39,4 +39,6 @@ public final class C {
     public static final String KEY_FAVORITE_SERVICES = "FAVORITE_SERVICES";
 
     public static final String FAVORITE_SERVICES_DELIMITER = ",";
+
+    public static final String FRAGMENT_FOR_REPLACING = "fragment_for_replacing";
 }

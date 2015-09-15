@@ -47,7 +47,7 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
         final Toolbar toolbar = findView(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragment(LoginFragment.newInstance());
@@ -59,7 +59,7 @@ public class AuthorizationActivity extends BaseFragmentActivity
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -74,7 +74,9 @@ public class AuthorizationActivity extends BaseFragmentActivity
         TRAApplication.setIsLoggedIn(true);
 
         if (mAction != null && mAction.equals(C.ACTION_LOGIN)) {
-            setResult(C.LOGIN_SUCCESS);
+            final Intent data = new Intent();
+            data.putExtra(C.FRAGMENT_FOR_REPLACING, getIntent().getSerializableExtra(C.FRAGMENT_FOR_REPLACING));
+            setResult(C.LOGIN_SUCCESS, data);
             finish();
         } else {
             startActivity(new Intent(this, HomeActivity.class));
