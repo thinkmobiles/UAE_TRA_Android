@@ -10,7 +10,6 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.InfoHubAnnFullListAdapter;
@@ -18,7 +17,6 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -28,7 +26,7 @@ import java.util.ArrayList;
 public class InfoHubAnnouncementsFragment extends BaseFragment
         implements OnInfoHubItemClickListener<InfoHubAnnouncementsListItemModel> {
 
-    private ImageView ivBackground;
+//    private ImageView ivBackground;
     private RecyclerView mList;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -72,6 +70,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
                 return true;
             }
         });
+        mAdapter.getFilter().initFromAdapter(mAdapter);
     }
 
     @Override
@@ -188,8 +187,8 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     @Override
     protected void initViews() {
         super.initViews();
-        ivBackground = findView(R.id.ivBackground_FIHA);
-        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
+//        ivBackground = findView(R.id.ivBackground_FIHA);
+//        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         mList = findView(R.id.rvInfoHubAnnList_FIHA);
         mList.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());

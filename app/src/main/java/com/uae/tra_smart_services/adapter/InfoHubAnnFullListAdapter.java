@@ -110,17 +110,18 @@ public class InfoHubAnnFullListAdapter extends RecyclerView.Adapter<InfoHubAnnFu
     }
 
     @Override
-    public Filter getFilter() {
-        return AnnouncementsFilter.getInstance(this, mDataSet);
+    public ListItemFilter getFilter() {
+        return AnnouncementsFilter.getInstance(mDataSet);
     }
 
     public static class AnnouncementsFilter extends ListItemFilter<InfoHubAnnFullListAdapter, InfoHubAnnouncementsListItemModel> {
-        private AnnouncementsFilter(InfoHubAnnFullListAdapter adapter, List<InfoHubAnnouncementsListItemModel> originalList) {
-            super(adapter, originalList);
+        private AnnouncementsFilter(List<InfoHubAnnouncementsListItemModel> originalList) {
+            super(originalList);
         }
-        public static ListItemFilter getInstance(InfoHubAnnFullListAdapter adapter, List<InfoHubAnnouncementsListItemModel> originalList){
+        private static ListItemFilter mInstance;
+        public static ListItemFilter getInstance(List<InfoHubAnnouncementsListItemModel> originalList){
             if(mInstance == null){
-                mInstance = new AnnouncementsFilter(adapter, originalList);
+                mInstance = new AnnouncementsFilter(originalList);
             }
             return mInstance;
         }

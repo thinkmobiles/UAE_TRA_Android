@@ -8,7 +8,6 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by and on 09.09.15.
+ * Created by Andrey Korneychuk on 09.09.15.
  */
 public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecyclerViewAdapter.ViewHolder>
                                                                             implements Filterable{
@@ -55,8 +54,8 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
     }
 
     @Override
-    public Filter getFilter() {
-        return SearchResultFilter.getInstance(this, mDataSet.getSearchResultItems());
+    public ListItemFilter getFilter() {
+        return SearchResultFilter.getInstance(/*this, */mDataSet.getSearchResultItems());
     }
 
     /** METHODS */
@@ -105,12 +104,14 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
     }
 
     public static class SearchResultFilter extends ListItemFilter<SearchRecyclerViewAdapter, SearchResult.SearchResultItem> {
-        private SearchResultFilter(SearchRecyclerViewAdapter adapter, List<SearchResult.SearchResultItem> originalList) {
-            super(adapter, originalList);
+
+        private SearchResultFilter(List<SearchResult.SearchResultItem> originalList) {
+            super(originalList);
         }
-        public static ListItemFilter getInstance(SearchRecyclerViewAdapter adapter, List<SearchResult.SearchResultItem> originalList){
+        private static ListItemFilter mInstance;
+        public static ListItemFilter getInstance(List<SearchResult.SearchResultItem> originalList){
             if(mInstance == null){
-                mInstance = new SearchResultFilter(adapter, originalList);
+                mInstance = new SearchResultFilter(originalList);
             }
             return mInstance;
         }

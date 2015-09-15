@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.uae.tra_smart_services.R;
@@ -36,7 +35,7 @@ import java.util.List;
 /**
  * Created by mobimaks on 18.08.2015.
  */
-public class FavoritesFragment extends BaseFragment
+public final class FavoritesFragment extends BaseFragment
         implements OnFavoriteClickListener, OnItemDeleteListener, OnClickListener, OnQueryTextListener {
 
     private DragFrameLayout dflContainer;
@@ -44,7 +43,6 @@ public class FavoritesFragment extends BaseFragment
     private RelativeLayout rlEmptyContainer;
     private HexagonView hvAddService;
     private SearchView svSearchFavorites;
-    private ImageView ivBackground;
 
     private FavoritesAdapter mFavoritesAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -72,9 +70,8 @@ public class FavoritesFragment extends BaseFragment
     @Override
     protected void initViews() {
         super.initViews();
-        ivBackground = findView(R.id.ivBackground_FF);
-        ivBackground.setImageDrawable(ImageUtils.getFilteredDrawable(getActivity(), R.drawable.res_bg_2));
-        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
+//        ivBackground = findView(R.id.ivBackground_FF);
+//        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         rlEmptyContainer = findView(R.id.rlEmptyContainer_FF);
         hvAddService = findView(R.id.hvPlusBtn);
         hvAddService.setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getActivity(), R.drawable.ic_plus));
@@ -141,15 +138,15 @@ public class FavoritesFragment extends BaseFragment
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         searchItem.setVisible(isItemsVisible);
 
-        final boolean isAllServicesAlreadyFavorite = mFavoritesAdapter.getAllData().size() == Service.getUniqueServicesCount();
-        final MenuItem addItem = menu.findItem(R.id.action_add);
-        addItem.setVisible(isItemsVisible && !isAllServicesAlreadyFavorite);
+//        final boolean isAllServicesAlreadyFavorite = mFavoritesAdapter.getAllData().size() == Service.getUniqueServicesCount();
+//        final MenuItem addItem = menu.findItem(R.id.action_add);
+//        addItem.setVisible(isItemsVisible && !isAllServicesAlreadyFavorite);
     }
 
     public final void addServicesToFavorites(final List<Service> _items) {
-        Log.d("Favorites", "Items before new added: " + mFavoritesAdapter.getItemCount());
+        Log.d("Favorites", "Items before new added: " + (mFavoritesAdapter.getItemCount() - 1));
         mFavoritesAdapter.addData(_items);
-        Log.d("Favorites", "Items after new added: " + mFavoritesAdapter.getItemCount());
+        Log.d("Favorites", "Items after new added: " + (mFavoritesAdapter.getItemCount() - 1));
         getActivity().invalidateOptionsMenu();
         saveFavoriteServices();
         setEmptyPlaceholderVisibility(mFavoritesAdapter.isEmpty());
@@ -189,12 +186,20 @@ public class FavoritesFragment extends BaseFragment
     @Override
     public boolean onQueryTextSubmit(String query) {
         mFavoritesAdapter.getFilter().filter(query);
+        hideKeyboard(getView());
         return true;
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.hvPlusBtn && mFavoritesEventListener != null) {
+        if (v.getId() == R.id.hvPlusBtn) {
+            onAddServiceClick();
+        }
+    }
+
+    @Override
+    public void onAddServiceClick() {
+        if (mFavoritesEventListener != null) {
             mFavoritesEventListener.onAddFavoritesClick();
         }
     }
@@ -220,7 +225,7 @@ public class FavoritesFragment extends BaseFragment
     public void onRemoveLongClick(View _view, int _position) {
         hideKeyboard(_view);
         ClipData data = ClipData.newPlainText("Item remove", "" + _position);
-        View itemView = mLinearLayoutManager.findViewByPosition(_position);
+        View itemView = mLinearLayoutManager.findViewByPosition(_position + 1);
         itemView.setTag(_view);
         dflContainer.starDragChild(itemView, data);
     }
@@ -228,7 +233,7 @@ public class FavoritesFragment extends BaseFragment
     @Override
     public void onDeleteItem(int _position) {
         mFavoritesAdapter.removeItem(_position);
-        Log.d("Favorites", "Items after delete operation: " + mFavoritesAdapter.getItemCount());
+        Log.d("Favorites", "Items after delete operation: " + (mFavoritesAdapter.getItemCount() - 1));
         getActivity().invalidateOptionsMenu();
         saveFavoriteServices();
         if (mFavoritesAdapter.isEmpty()) {

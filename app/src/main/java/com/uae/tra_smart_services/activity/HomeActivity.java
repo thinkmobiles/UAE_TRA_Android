@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.activity;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
@@ -75,8 +77,14 @@ public class HomeActivity extends BaseFragmentActivity
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
         OnOpenUserProfileClickListener, OnUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener {
 
+    private static final String TAG = "HomeActivity";
+    protected static final int REQUEST_CHECK_SETTINGS = 1000;
+
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
+    private BaseFragment mFragmentForReplacing;
+    private ImageView ivBackground;
+
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
@@ -171,11 +179,19 @@ public class HomeActivity extends BaseFragmentActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == C.REQUEST_CODE_LOGIN) {
-            if (resultCode == C.LOGIN_SUCCESS) {
-                final Service _service = (Service) data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
-                onServiceSelect(_service, null);
-            }
+        switch (requestCode){
+            case C.REQUEST_CODE_LOGIN:
+                if (resultCode == C.LOGIN_SUCCESS) {
+                    final Service _service = (Service) data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
+                    onServiceSelect(_service, null);
+                }
+                break;
+            case REQUEST_CHECK_SETTINGS:
+                Log.i(TAG, "User agreed to make required location settings changes.");
+                getFragmentManager()
+                        .findFragmentById(R.id.flContainer_AH)
+                        .onActivityResult(requestCode, resultCode, data);
+                break;
         }
     }
 

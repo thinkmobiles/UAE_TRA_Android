@@ -2,42 +2,42 @@
 
 
 <RadioGroup
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/background_activity_home_tab_bar"
     android:layoutDirection="locale"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:paddingRight="@dimen/dp_dashboard_tab_padding"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="horizontal">
+    <!--android:paddingRight="@dimen/dp_dashboard_tab_padding"-->
 
     <RadioButton
+        android:id="@+id/rbHome_BNRG"
         style="@style/DashboardRadioButton"
         android:checked="true"
         android:drawableTop="@drawable/ic_home"
-        android:id="@+id/rbHome_BNRG"
         android:text="@string/str_home"/>
 
     <RadioButton
+        android:id="@+id/rbFavorites_BNRG"
         style="@style/DashboardRadioButton"
         android:drawableTop="@drawable/ic_favorites"
-        android:id="@+id/rbFavorites_BNRG"
         android:text="@string/str_favorites"/>
 
     <RadioButton
+        android:id="@+id/rbInfoHub_BNRG"
         style="@style/DashboardRadioButton"
         android:drawableTop="@drawable/ic_info"
-        android:id="@+id/rbInfoHub_BNRG"
         android:text="@string/str_info_hub"/>
 
     <RadioButton
+        android:id="@+id/rbInquiries_BNRG"
         style="@style/DashboardRadioButton"
         android:drawableTop="@drawable/ic_inq"
-        android:id="@+id/rbInquiries_BNRG"
         android:text="@string/str_inquiries"/>
 
     <RadioButton
+        android:id="@+id/rbSettings_BNRG"
         style="@style/DashboardRadioButton"
         android:drawableTop="@drawable/ic_settings"
-        android:id="@+id/rbSettings_BNRG"
         android:text="@string/str_settings"/>
 </RadioGroup>

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
@@ -15,7 +14,6 @@ import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
 import com.uae.tra_smart_services.rest.model.response.InfoHubTransActionsListItemModel;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -31,7 +29,7 @@ public class InfoHubFragment extends BaseFragment
         return new InfoHubFragment();
     }
 
-    private ImageView ivBackground;
+//    private ImageView ivBackground;
     private TextView tvSeeMoreAnnouncements;
     private RecyclerView mAnnouncementsListPreview;
     private RecyclerView mTransactionsList;
@@ -173,8 +171,8 @@ public class InfoHubFragment extends BaseFragment
     @Override
     protected void initViews() {
         super.initViews();
-        ivBackground = findView(R.id.ivBackground_FIH);
-        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
+//        ivBackground = findView(R.id.ivBackground_FIH);
+//        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         tvSeeMoreAnnouncements = findView(R.id.tvSeeMorebAnn_FIH);
         initAnnouncementsListPreview();
         initTransactionsList();

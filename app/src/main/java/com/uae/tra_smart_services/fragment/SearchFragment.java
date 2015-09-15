@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.SearchRecyclerViewAdapter;
 import com.uae.tra_smart_services.entities.SearchResult;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 
 /**
  * Created by Andrey Korneychuk on 09.09.15.
@@ -29,6 +32,7 @@ public class SearchFragment extends BaseFragment
     private RecyclerView rvSearchResultList;
     private static SearchResult INITIAL_DATA;
     private SearchRecyclerViewAdapter mAdapter;
+    private OnServiceSelectListener mServiceSelectListener;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -40,16 +44,19 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
+    public void onAttach(Activity _activity) {
+        super.onAttach(_activity);
+        if (_activity instanceof OnServiceSelectListener) {
+            mServiceSelectListener = (OnServiceSelectListener) _activity;
+        }
+    }
+
+    @Override
     protected void initData() {
         super.initData();
-        INITIAL_DATA = new SearchResult() {
+        INITIAL_DATA = new SearchResult(){
             {
-                addItem("Spectrum application");
-                addItem("Check spectrum requirements");
-                addItem("Spectrum");
-                addItem("Hello world");
-                addItem("Lorem ipsum text");
-                addItem("Dummy text");
+                initFromServicesList(Service.getUniqueServices(), getActivity());
             }
         };
     }
@@ -72,6 +79,12 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.setOnTouchListener(this);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mAdapter = new SearchRecyclerViewAdapter(getActivity(), INITIAL_DATA);
@@ -80,12 +93,7 @@ public class SearchFragment extends BaseFragment
                 new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)
         );
         rvSearchResultList.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        view.setOnTouchListener(this);
+        mAdapter.getFilter().initFromAdapter(mAdapter);
     }
 
     @Override
@@ -95,7 +103,10 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public void onSearchResultItemClicked(SearchResult.SearchResultItem _item) {
-        Toast.makeText(getActivity(), _item.getSpannedText(), Toast.LENGTH_LONG).show();
+        if(mServiceSelectListener != null){
+            getFragmentManager().popBackStackImmediate();
+            mServiceSelectListener.onServiceSelect(_item.getBindedService(), null);
+        }
     }
 
     @Override
@@ -132,6 +143,10 @@ public class SearchFragment extends BaseFragment
                 getFragmentManager().popBackStackImmediate();
                 break;
         }
+    }
 
+    @Override
+    protected void setToolbarVisibility() {
+        toolbarTitleManager.setToolbarVisibility(false);
     }
 }
