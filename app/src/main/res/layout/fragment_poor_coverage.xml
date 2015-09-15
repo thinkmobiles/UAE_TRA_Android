@@ -25,6 +25,7 @@
             style="@android:style/Widget.ProgressBar.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:layout_alignBottom="@id/etLocation_FPC"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@id/etLocation_FPC"
