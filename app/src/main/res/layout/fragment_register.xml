@@ -57,39 +57,21 @@
 
             <View style="@style/AuthorizationFieldsSeparator" />
 
-            <EditText
-                android:id="@+id/etAddress_FR"
-                style="@style/AuthorizationFields"
-                android:hint="@string/hint_address"
-                android:inputType="textEmailAddress"
-                android:drawableStart="@drawable/ic_mail"
-                android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
+            <!--<EditText-->
+                <!--android:id="@+id/etAddress_FR"-->
+                <!--style="@style/AuthorizationFields"-->
+                <!--android:hint="@string/hint_address"-->
+                <!--android:inputType="textEmailAddress"-->
+                <!--android:drawableStart="@drawable/ic_mail"-->
+                <!--android:drawablePadding="@dimen/dp_transparent_fields_padding"  />-->
 
-            <View style="@style/AuthorizationFieldsSeparator" />
+            <!--<View style="@style/AuthorizationFieldsSeparator" />-->
 
             <Spinner
                 android:id="@+id/spState_FR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.AppCompat.Spinner"/>
-
-            <View style="@style/AuthorizationFieldsSeparator" />
-
-            <!--<Spinner-->
-                <!--android:id="@+id/spCountry_FR"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--style="@style/Widget.AppCompat.Spinner"/>-->
-
-            <!--<View style="@style/AuthorizationFieldsSeparator" />-->
-
-            <EditText
-                android:id="@+id/etLandline_FR"
-                style="@style/AuthorizationFields"
-                android:hint="@string/hint_landline"
-                android:inputType="textEmailAddress"
-                android:drawableStart="@drawable/ic_mail"
-                android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
+                android:background="@null"/>
 
             <View style="@style/AuthorizationFieldsSeparator" />
 

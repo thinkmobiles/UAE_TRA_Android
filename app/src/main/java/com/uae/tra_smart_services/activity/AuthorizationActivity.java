@@ -27,7 +27,7 @@ public class AuthorizationActivity extends BaseFragmentActivity
             implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
 
     private String mAction;
-    private ImageView ivLogo;
+    private ImageView ivLogo, ivBackground;
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -40,7 +40,10 @@ public class AuthorizationActivity extends BaseFragmentActivity
         setContentView(R.layout.activity_authorization);
 
         ivLogo = findView(R.id.ivLogo_FSL);
-        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(this, R.drawable.tra_logo));
+        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(this, R.drawable.authorization_logo));
+
+        ivBackground = findView(R.id.ivBackground_AA);
+        ivBackground.setImageDrawable(ImageUtils.getFilteredDrawable(this, R.drawable.bg_authorization));
 
         CookieHandler.setDefault(new CookieManager());
         mAction = getIntent().getAction();

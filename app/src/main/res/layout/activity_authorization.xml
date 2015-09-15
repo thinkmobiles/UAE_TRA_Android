@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/res_bg_2"/>
+        android:src="@drawable/bg_authorization"/>
 
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="match_parent"
@@ -35,7 +35,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
-            tools:src="@drawable/tra_logo" />
+            tools:src="@drawable/authorization_logo" />
 
         <FrameLayout
             android:id="@+id/flContainer_AA"

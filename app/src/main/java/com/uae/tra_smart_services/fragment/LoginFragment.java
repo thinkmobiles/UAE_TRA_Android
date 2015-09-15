@@ -17,6 +17,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
 import com.uae.tra_smart_services.rest.robo_requests.LoginRequest;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import retrofit.client.Response;
 
@@ -47,7 +48,12 @@ public class LoginFragment extends BaseAuthorizationFragment
     protected final void initViews() {
         // Input fields
         etUserName = findView(R.id.etEmail_FR);
+
+        etUserName.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+
         etPassword = findView(R.id.etPassword_FR);
+
+        etPassword.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
         // Actions
         btnLogIn = findView(R.id.btnLogIn_FLI);
         tvRegisterNow = findView(R.id.tvRegisterNow_FLI);

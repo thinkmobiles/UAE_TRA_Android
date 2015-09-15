@@ -3,6 +3,7 @@ package com.uae.tra_smart_services.util;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -10,10 +11,13 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Base64;
+import android.util.TypedValue;
 
 import com.uae.tra_smart_services.global.C;
 
@@ -82,5 +86,22 @@ public final class ImageUtils {
             _origDrawable.mutate().setColorFilter(mColorFilter);
         }
         return _origDrawable;
+    }
+
+    public static Drawable getFilteredDrawableByTheme(final Context _context, final @DrawableRes int drawableRes, @AttrRes final int _attr) {
+        final Drawable drawable = ContextCompat.getDrawable(_context, drawableRes);
+
+        if (!isBlackAndWhiteMode(_context)) {
+            final TypedValue typedValue = new TypedValue();
+            final Resources.Theme theme = _context.getTheme();
+            theme.resolveAttribute(_attr, typedValue, true);
+            final int drawableColor = typedValue.data;
+
+            Drawable wrappedDrawable = DrawableCompat.wrap(drawable.mutate());
+            DrawableCompat.setTint(wrappedDrawable, drawableColor);
+            return drawable;
+        } else {
+            return getFilteredDrawable(_context, drawable);
+        }
     }
 }

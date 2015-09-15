@@ -53,7 +53,7 @@ public final class ServiceProviderAdapter extends android.widget.BaseAdapter {
         return _convertView;
     }
 
-        @Override
+    @Override
     public View getDropDownView(int _position, View _convertView, ViewGroup _parent) {
         final ViewHolder holder;
         if (_convertView == null) {
