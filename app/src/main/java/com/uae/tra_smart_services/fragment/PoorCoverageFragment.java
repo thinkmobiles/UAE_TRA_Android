@@ -164,6 +164,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
                         break;
                     case Activity.RESULT_CANCELED:
                         Log.i(TAG, "User chose not to make required location settings changes.");
+                        sbProgressBar.setVisibility(View.INVISIBLE);
                         break;
                 }
                 break;
@@ -341,6 +342,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
     public void onItemPicked(int _dialogItem) {
         switch (LocationType.values()[_dialogItem]) {
             case AUTO:
+                hideKeyboard(tvSignalLevel);
                 sbProgressBar.setVisibility(View.VISIBLE);
                 checkLocationSettings();
                 break;
