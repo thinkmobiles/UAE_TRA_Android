@@ -186,6 +186,7 @@ public final class FavoritesFragment extends BaseFragment
     @Override
     public boolean onQueryTextSubmit(String query) {
         mFavoritesAdapter.getFilter().filter(query);
+        hideKeyboard(getView());
         return true;
     }
 
