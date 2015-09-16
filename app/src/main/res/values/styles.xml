@@ -83,9 +83,9 @@
         <item name="android:layout_margin">10dp</item>
     </style>
 
-    <style name="AuthorizationButtons">
-        <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
-        <item name="android:textColor">?attr/globalButtonTextColor</item>
+    <style name="AuthorizationButtons" parent="BlurButtonStyle">
+        <item name="android:textColor">@color/hex_text_color_white</item>
+        <item name="android:background">?attr/authorizationButtonsBackground</item>
     </style>
 
     <style name="BlurButtonStyleSimple" parent="BlurButtonStyle">
