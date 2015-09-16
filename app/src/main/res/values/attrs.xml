@@ -65,4 +65,6 @@
 
     <attr name="authorizationDrawableColors" format="reference|color"/>
 
+    <attr name="themeMainColor" format="reference|color"/>
+
 </resources>

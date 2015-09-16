@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -248,8 +249,12 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
 
     protected class HeaderViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
+        private HexagonView hvIcon;
+
         public HeaderViewHolder(final View _itemView) {
             super(_itemView);
+            hvIcon = (HexagonView) _itemView.findViewById(R.id.hvIcon_LAS);
+            hvIcon.setHexagonSrcDrawable(ImageUtils.getFilteredDrawableByTheme(hvIcon.getContext(), R.drawable.ic_add_service_plus, R.attr.themeMainColor));
             _itemView.setOnClickListener(this);
         }
 
