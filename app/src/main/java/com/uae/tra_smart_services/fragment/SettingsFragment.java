@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
@@ -40,6 +41,7 @@ public class SettingsFragment extends BaseHomePageFragment
 
     private EditText etServer;
     private Button btnChangeServer;
+    private LinearLayout llAboutTRA;
     private SwitchCompat swBlackAndWhiteMode;
 
     private FontSizeSwitcherView fontSwitch;
@@ -48,8 +50,18 @@ public class SettingsFragment extends BaseHomePageFragment
 
     private SharedPreferences mPrefs;
 
+    private OnOpenAboutTraClickListener mOpenAboutTraClickListener;
+
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
+    }
+
+    @Override
+    public void onAttach(Activity _activity) {
+        super.onAttach(_activity);
+        if (_activity instanceof OnOpenAboutTraClickListener) {
+            mOpenAboutTraClickListener = (OnOpenAboutTraClickListener) _activity;
+        }
     }
 
     @Override
@@ -66,6 +78,7 @@ public class SettingsFragment extends BaseHomePageFragment
         btnChangeServer = findView(R.id.btnChangeServer_FS);
         swBlackAndWhiteMode = findView(R.id.swBlackAndWhiteMode_FS);
         swBlackAndWhiteMode.setChecked(mPrefs.getBoolean(C.KEY_BLACK_AND_WHITE_MODE, false));
+        llAboutTRA = findView(R.id.llAboutTRA_FS);
     }
 
     @Override
@@ -79,6 +92,7 @@ public class SettingsFragment extends BaseHomePageFragment
         super.initListeners();
         btnChangeServer.setOnClickListener(this);
         swBlackAndWhiteMode.setOnCheckedChangeListener(this);
+        llAboutTRA.setOnClickListener(this);
     }
 
     private static CustomFilterPool<String> filters = new CustomFilterPool<String>() {
@@ -165,8 +179,21 @@ public class SettingsFragment extends BaseHomePageFragment
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.llAboutTRA_FS:
+                if (mOpenAboutTraClickListener != null) {
+                    mOpenAboutTraClickListener.onOpenAboutTraClick();
+                }
+                break;
+            case R.id.btnChangeServer_FS:
+                changeBaseUrl();
+                break;
+        }
+    }
+
+    private void changeBaseUrl() {
         String baseUrl = etServer.getText().toString();
-        if (v.getId() == R.id.btnChangeServer_FS && filters.check(baseUrl)) {
+        if (filters.check(baseUrl)) {
             setBaseUrl(baseUrl);
         } else {
             showMessage(R.string.str_error, R.string.str_invalid_url);
@@ -177,6 +204,12 @@ public class SettingsFragment extends BaseHomePageFragment
         ServerConstants.BASE_URL = _url;
         mPrefs.edit().putString(C.KEY_BASE_URL, _url).commit();
         Toast.makeText(getActivity(), getString(R.string.str_success), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDetach() {
+        mOpenAboutTraClickListener = null;
+        super.onDetach();
     }
 
     @Override
@@ -193,6 +226,10 @@ public class SettingsFragment extends BaseHomePageFragment
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_settings;
+    }
+
+    public interface OnOpenAboutTraClickListener {
+        void onOpenAboutTraClick();
     }
 
 }

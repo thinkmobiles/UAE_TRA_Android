@@ -303,4 +303,20 @@
     <string name="str_suggestion_title">Suggestion Title</string>
     <string name="login_username_hint">Username</string>
 
+    <string name="fragment_about_tra_html"><![CDATA[
+            <p>The Telecommunications Regulatory Authority (TRA) of the United Arab Emirates (UAE) has been established according to the UAE Federal Law by Decree No. 3 of 2003 – Telecom Law. TRA is responsible for the management of every aspect of the telecommunications and information technology industries in the UAE. Despite its relatively short life-span, TRA has exceeded expectations by achieving its projected goals in record time.</p>
+<p>The organizational objectives of TRA are derived from the UAE Telecommunications Law, its Executive Order and the UAE National Telecommunications Policy. These objectives include: ensuring adequacy of telecommunications services throughout the UAE; achieving enhancement of services, both in terms of quality and variety; ensuring quality of service and adherence to terms of licenses by licensees; encouraging telecommunications and IT services within the UAE; promoting and enhancing the telecommunications sector within the UAE; resolving disputes between the licensed operators; establishing and implementing a regulatory and policy framework; promoting new technologies; ensuring that the UAE becomes the regional ICT hub; developing the country´s human capital; and encouraging research and development.</p>
+<p>TRA, and as determined by its mandate, is entrusted with a wide range of responsibilities related to the Telecommunications and Information Technology Sector, both within and outside the UAE. According to the UAE Federal Telecom Law No. (3) For the Year 2003 and its amendments, TRA is to exercise its functions and powers and under this Law and its Executive Order to:</p>
+<ul>
+<li>Ensure that the telecommunications services provided throughout the state are sufficient to satisfy the public demands of those who wish to make use of such services</li>
+<li>Enhance the level of service provided by the telecommunications sector in order to promote the interests of such services</li>
+<li>Ensure that licensees meet quality standards of performance and adhere to the terms and conditions of the licenses granted to them</li>
+<li>Ensure that licensees meet quality standards of performance and adhere to the terms and conditions of the licenses granted to them</li>
+<li>Encourage, promote, and develop the telecommunications and information technology industries in the state</li>
+<li>Promote and enhance the telecommunications system in the state as indicated by the development and the establishment of industry related training institutions and through the availability of the latest apparatus, equipment, and facilities provided by telecommunications technologies</li>
+</ul>
+    ]]></string>
+
+
+
 </resources>
