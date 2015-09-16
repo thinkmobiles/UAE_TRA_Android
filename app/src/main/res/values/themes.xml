@@ -12,6 +12,7 @@
         <item name="hexagonHeaderButtonColor">?attr/colorPrimary</item>
         <item name="authorizationTextColors">?attr/colorPrimary</item>
         <item name="authorizationDrawableColors">?attr/colorPrimary</item>
+        <item name="themeMainColor">?attr/colorPrimary</item>
         <item name="hexagonHeaderButtonPressedColor">#ff5b61ff</item>
         <item name="addServiceColor">#f68f1e</item>
         <item name="shadowBackgroundColor">#fff5ea</item>

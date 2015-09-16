@@ -2,16 +2,18 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?attr/listPreferredItemHeightLarge"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:layout_height="64dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fragment_favorites_add_service"
-        android:textColor="#f7901e"
+        android:textColor="?attr/themeMainColor"
         android:textSize="16sp"/>
 
     <Space
@@ -21,10 +23,11 @@
     <com.uae.tra_smart_services.customviews.HexagonView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:hexagonBorderColor="@color/hex_primary_orange"
-        app:hexagonBorderSize="1dp"
+        android:id="@+id/hvIcon_LAS"
         app:hexagonBackgroundColor="@android:color/white"
+        app:hexagonBorderColor="?attr/themeMainColor"
+        app:hexagonBorderSize="1dp"
         app:hexagonSideSize="24dp"
-        app:hexagonSrc="@drawable/ic_add_service_plus"/>
+        tools:hexagonSrc="@drawable/ic_add_service_plus"/>
 
 </LinearLayout>

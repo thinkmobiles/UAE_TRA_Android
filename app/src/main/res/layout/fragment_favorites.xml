@@ -60,9 +60,9 @@
                 android:layout_below="@id/tvNoFavorites"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
-                app:hexagonBorderColor="?attr/addServiceColor"
+                app:hexagonBorderColor="?attr/colorPrimary"
                 app:hexagonBorderSize="1dp"
-                tools:hexagonBackground="@drawable/ic_plus"/>
+                tools:hexagonSrc="@drawable/ic_plus"/>
 
             <TextView
                 android:id="@+id/tvAddService"
@@ -73,7 +73,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/fragment_favorites_add_service"
-                android:textColor="?attr/addServiceColor"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="12sp"/>
         </RelativeLayout>
 

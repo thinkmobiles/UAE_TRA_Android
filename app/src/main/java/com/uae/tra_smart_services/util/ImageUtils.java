@@ -99,7 +99,7 @@ public final class ImageUtils {
 
             Drawable wrappedDrawable = DrawableCompat.wrap(drawable.mutate());
             DrawableCompat.setTint(wrappedDrawable, drawableColor);
-            return drawable;
+            return wrappedDrawable;
         } else {
             return getFilteredDrawable(_context, drawable);
         }
