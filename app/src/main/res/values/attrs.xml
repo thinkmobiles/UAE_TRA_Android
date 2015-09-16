@@ -65,6 +65,8 @@
 
     <attr name="authorizationDrawableColors" format="reference|color"/>
 
+    <attr name="authorizationButtonsBackground" format="reference"/>
+
     <attr name="themeMainColor" format="reference|color"/>
 
 </resources>

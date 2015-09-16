@@ -125,7 +125,7 @@
 </ul>
     ]]>
     </string>
-
+    <string name="login_username_hint">اسم المستخدم</string>
 
 
 </resources>

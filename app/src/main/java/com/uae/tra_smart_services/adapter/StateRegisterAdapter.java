@@ -78,7 +78,7 @@ public class StateRegisterAdapter extends android.widget.BaseAdapter {
         }
 
         public void setDrawableColors() {
-            tvTitle.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(mContext, R.drawable.ic_state, R.attr.authorizationDrawableColors), null,
+            tvTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(mContext, R.drawable.ic_state, R.attr.authorizationDrawableColors), null,
                     ImageUtils.getFilteredDrawableByTheme(mContext, R.drawable.ic_profile_arrow_down, R.attr.authorizationDrawableColors), null);
         }
 

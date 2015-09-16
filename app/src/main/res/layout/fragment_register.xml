@@ -128,7 +128,7 @@
 
             <Button
                 android:id="@+id/tvRegister_FLI"
-                style="@style/BlurButtonStyle"
+                style="@style/AuthorizationButtons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/str_register" />

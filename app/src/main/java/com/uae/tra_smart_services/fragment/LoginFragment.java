@@ -49,11 +49,11 @@ public class LoginFragment extends BaseAuthorizationFragment
         // Input fields
         etUserName = findView(R.id.etEmail_FR);
 
-        etUserName.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+        etUserName.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
 
         etPassword = findView(R.id.etPassword_FR);
 
-        etPassword.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
+        etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
         // Actions
         btnLogIn = findView(R.id.btnLogIn_FLI);
         tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
