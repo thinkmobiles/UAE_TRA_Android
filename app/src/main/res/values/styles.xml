@@ -41,8 +41,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">@dimen/dp_transparent_fields_padding</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">@color/hex_primary_orange</item>
-        <item name="android:textColorHint">@color/hex_primary_orange</item>
+        <item name="android:textColor">?attr/authorizationTextColors</item>
+        <item name="android:textColorHint">?attr/authorizationTextColors</item>
     </style>
 
     <style name="UserSettingsStaticText">
@@ -85,7 +85,7 @@
 
     <style name="AuthorizationButtons">
         <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
-        <item name="android:textColor">@color/hex_primary_orange</item>
+        <item name="android:textColor">?attr/globalButtonTextColor</item>
     </style>
 
     <style name="BlurButtonStyleSimple" parent="BlurButtonStyle">
@@ -95,7 +95,7 @@
 
     <style name="AuthorizationTextViews">
         <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
-        <item name="android:textColor">@color/hex_primary_orange</item>
+        <item name="android:textColor">?attr/authorizationTextColors</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_margin">10dp</item>

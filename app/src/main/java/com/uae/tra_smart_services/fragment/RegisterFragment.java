@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -15,11 +14,15 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.adapter.StateRegisterAdapter;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.RegisterModel;
 import com.uae.tra_smart_services.rest.robo_requests.RegisterRequest;
+import com.uae.tra_smart_services.util.ImageUtils;
+
+import java.util.Arrays;
 
 import retrofit.client.Response;
 
@@ -38,7 +41,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
 
     private RegisterRequest mRegisterRequest;
 
-    private ArrayAdapter<CharSequence> mStatesAdapter, mCountriesAdapter;
+    private StateRegisterAdapter mStatesAdapter, mCountriesAdapter;
     private CustomFilterPool<RegisterModel> mFilterPool;
 
     private RequestListener mRequestListener;
@@ -56,13 +59,29 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     protected final void initViews() {
         // Input fields
         etUserName = findView(R.id.etUsername_FR);
+        etUserName.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+
         etPhone = findView(R.id.etPhone_FR);
+        etPhone.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+
         etPassword = findView(R.id.etPassword_FR);
+        etPassword.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
+
         etConfirmPassword = findView(R.id.etConfirmPassword_FR);
+        etConfirmPassword.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
+
         etFirstName = findView(R.id.etFirstName_FR);
+        etFirstName.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+
         etLastName = findView(R.id.etLastName_FR);
+        etLastName.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+
         etEmiratesId = findView(R.id.etEmiratesID_FR);
+        etEmiratesId.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+
         etEmail = findView(R.id.etEmail_FR);
+        etEmail.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_mail, R.attr.authorizationDrawableColors), null, null, null);
+
 
         acsState = findView(R.id.spState_FR);
 //        acsCountry = findView(R.id.spCountry_FR);
@@ -79,10 +98,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mStatesAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.states_array, R.layout.list_item_register_state);
-        mStatesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+        mStatesAdapter = new StateRegisterAdapter(getActivity(), Arrays.asList(getResources().getStringArray(R.array.states_array)));
         acsState.setAdapter(mStatesAdapter);
 
         initFilters();

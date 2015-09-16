@@ -61,4 +61,8 @@
 
     <attr name="toolbarBackground" format="reference|color"/>
 
+    <attr name="authorizationTextColors" format="reference|color"/>
+
+    <attr name="authorizationDrawableColors" format="reference|color"/>
+
 </resources>
