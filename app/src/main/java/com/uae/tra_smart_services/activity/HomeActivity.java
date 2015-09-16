@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
@@ -168,9 +167,7 @@ public class HomeActivity extends BaseFragmentActivity
         if (TRAApplication.isLoggedIn()) {
             replaceFragmentWithBackStack(_fragment);
         } else {
-            Intent intent = new Intent(this, AuthorizationActivity.class);
-            intent.setAction(C.ACTION_LOGIN);
-            intent.putExtra(C.FRAGMENT_FOR_REPLACING, _service);
+            Intent intent = AuthorizationActivity.getStartForResultIntent(this, _service);
             startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
         }
     }

@@ -1,7 +1,9 @@
 package com.uae.tra_smart_services.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -24,10 +26,17 @@ import java.net.CookieManager;
  * Created by Andrey Korneychuk on 22.07.15.
  */
 public class AuthorizationActivity extends BaseFragmentActivity
-            implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
+        implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
 
     private String mAction;
     private ImageView ivLogo;
+
+    public static Intent getStartForResultIntent(final Context _context, final Enum _fragmentIdentifier){
+        final Intent intent = new Intent(_context, AuthorizationActivity.class);
+        intent.setAction(C.ACTION_LOGIN);
+        intent.putExtra(C.FRAGMENT_FOR_REPLACING, _fragmentIdentifier);
+        return intent;
+    }
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -47,7 +56,10 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
         final Toolbar toolbar = findView(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragment(LoginFragment.newInstance());

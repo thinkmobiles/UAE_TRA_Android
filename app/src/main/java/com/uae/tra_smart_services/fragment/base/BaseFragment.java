@@ -9,6 +9,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,6 +119,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected final void showProgressDialog(String _title, ProgressDialog.MyDialogInterface _callBack){
+        Log.d(getClass().getSimpleName(), "showProgressDialog");
         ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
     }
 
