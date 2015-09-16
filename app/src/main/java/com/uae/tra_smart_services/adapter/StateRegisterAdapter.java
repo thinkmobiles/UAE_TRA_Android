@@ -59,7 +59,7 @@ public class StateRegisterAdapter extends android.widget.BaseAdapter {
     public View getDropDownView(int _position, View _convertView, ViewGroup _parent) {
         final ViewHolder holder;
         if (_convertView == null) {
-            _convertView = mInflater.inflate(R.layout.spinner_state_dropdown, _parent, false);
+            _convertView = mInflater.inflate(android.R.layout.simple_spinner_dropdown_item, _parent, false);
             holder = new ViewHolder(_convertView);
         } else {
             holder = (ViewHolder) _convertView.getTag();
@@ -78,7 +78,7 @@ public class StateRegisterAdapter extends android.widget.BaseAdapter {
         }
 
         public void setDrawableColors() {
-            tvTitle.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(mContext, R.drawable.ic_mail, R.attr.authorizationDrawableColors), null,
+            tvTitle.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(mContext, R.drawable.ic_state, R.attr.authorizationDrawableColors), null,
                     ImageUtils.getFilteredDrawableByTheme(mContext, R.drawable.ic_profile_arrow_down, R.attr.authorizationDrawableColors), null);
         }
 
