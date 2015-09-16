@@ -18,6 +18,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
+import com.uae.tra_smart_services.entities.FragmentType;
 import com.uae.tra_smart_services.fragment.AboutTraFragment;
 import com.uae.tra_smart_services.fragment.AddServiceFragment;
 import com.uae.tra_smart_services.fragment.AddServiceFragment.OnFavoriteServicesSelectedListener;
@@ -175,22 +176,34 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(final int _requestCode, final int _resultCode, final Intent _data) {
+        super.onActivityResult(_requestCode, _resultCode, _data);
 
-        switch (requestCode){
+        switch (_requestCode){
             case C.REQUEST_CODE_LOGIN:
-                if (resultCode == C.LOGIN_SUCCESS) {
-                    final Service _service = (Service) data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
-                    onServiceSelect(_service, null);
+                if (_resultCode == C.LOGIN_SUCCESS) {
+                    openFragmentAfterLogin(_data);
                 }
                 break;
             case REQUEST_CHECK_SETTINGS:
                 Log.i(TAG, "User agreed to make required location settings changes.");
                 getFragmentManager()
                         .findFragmentById(R.id.flContainer_AH)
-                        .onActivityResult(requestCode, resultCode, data);
+                        .onActivityResult(_requestCode, _resultCode, _data);
                 break;
+        }
+    }
+
+    private void openFragmentAfterLogin(final Intent _data) {
+        final Enum fragmentType = (Enum) _data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
+        if (fragmentType instanceof Service) {
+            onServiceSelect((Service) fragmentType, null);
+        } else {
+            switch (((FragmentType) fragmentType)) {
+                case USER_PROFILE:
+                    replaceFragmentWithBackStack(UserProfileFragment.newInstance());
+                    break;
+            }
         }
     }
 
@@ -296,7 +309,8 @@ public class HomeActivity extends BaseFragmentActivity
         if (TRAApplication.isLoggedIn()) {
             replaceFragmentWithBackStack(UserProfileFragment.newInstance());
         } else {
-            Toast.makeText(this, R.string.activity_home_not_logged_in, Toast.LENGTH_SHORT).show();
+            Intent intent = AuthorizationActivity.getStartForResultIntent(this, FragmentType.USER_PROFILE);
+            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
         }
     }
 

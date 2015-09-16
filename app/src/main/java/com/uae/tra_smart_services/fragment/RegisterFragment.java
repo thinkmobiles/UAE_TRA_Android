@@ -62,7 +62,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         etUserName.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
 
         etPhone = findView(R.id.etPhone_FR);
-        etPhone.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+        etPhone.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_phone, R.attr.authorizationDrawableColors), null, null, null);
 
         etPassword = findView(R.id.etPassword_FR);
         etPassword.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
@@ -77,7 +77,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         etLastName.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
 
         etEmiratesId = findView(R.id.etEmiratesID_FR);
-        etEmiratesId.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+        etEmiratesId.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_id, R.attr.authorizationDrawableColors), null, null, null);
 
         etEmail = findView(R.id.etEmail_FR);
         etEmail.setCompoundDrawablesWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_mail, R.attr.authorizationDrawableColors), null, null, null);
