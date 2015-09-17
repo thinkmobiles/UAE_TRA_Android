@@ -37,6 +37,7 @@ public class SurfaceViewLayout extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawBitmap(backgroundBitmap, 0, 0, null);
             surfaceHolder.unlockCanvasAndPost(canvas);
+            canDraw = false;
         }
     }
 
