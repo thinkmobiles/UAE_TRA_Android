@@ -182,20 +182,7 @@ public final class HexagonView extends View implements Target {
         canvas.drawColor(mBackgroundColor);
         if (mSrcDrawable != null) {
             canvas.getClipBounds(mHexagonRect);
-            if (mSrcDrawable instanceof BitmapDrawable) {
-
-                float centerY = (float) (mHexagonSide + getBorderWidth() / 2f);
-                float centerX = (float) getWidth() / 2;
-
-                final int drawableWidth = mSrcDrawable.getMinimumWidth();
-                final int drawableHeight = mSrcDrawable.getMinimumHeight();
-
-                mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
-                        (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
-            } else {
-                mSrcDrawable.setBounds(mHexagonRect);
-            }
-            mSrcDrawable.draw(canvas);
+            drawSrc(canvas, mSrcDrawable);
         }
 
         if (!TextUtils.isEmpty(mText)) {
@@ -204,6 +191,32 @@ public final class HexagonView extends View implements Target {
         canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
 
         canvas.drawPath(mPath, mPaint);
+    }
+
+    private void drawSrc(final Canvas _canvas, final Drawable _drawable) {
+        int drawableWidth = _drawable.getIntrinsicWidth(), drawableHeight = _drawable.getIntrinsicHeight();
+        int canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
+
+        drawableWidth = drawableWidth == -1 ? canvasWidth : drawableWidth;
+        drawableHeight = drawableHeight == -1 ? canvasHeight : drawableHeight;
+        _drawable.setBounds(0, 0, drawableWidth, drawableHeight);
+
+        float scale;
+        if (drawableWidth < canvasWidth || drawableHeight < canvasHeight) {
+            scale = 1f;
+        } else if (drawableWidth * canvasHeight > canvasWidth * drawableHeight) {//image is wider
+            scale = (float) canvasHeight / (float) drawableHeight;
+        } else { //image is higher
+            scale = (float) canvasWidth / (float) drawableWidth;
+        }
+        float dx = (canvasWidth - drawableWidth * scale) / 2f;
+        float dy = (canvasHeight - drawableHeight * scale) / 2f;
+
+        _canvas.save();
+        _canvas.scale(scale, scale);
+        _canvas.translate(Math.round(dx), Math.round(dy));
+        _drawable.draw(_canvas);
+        _canvas.restore();
     }
 
     private void drawText(final Canvas _canvas) {
