@@ -13,10 +13,12 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/etEmail_FR"
+            android:id="@+id/etEmail_FRP"
             style="@style/AuthorizationFields"
             android:hint="@string/str_email"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:drawablePadding="@dimen/dp_transparent_fields_padding"
+            />
 
         <View style="@style/AuthorizationFieldsSeparator" />
 
@@ -32,7 +34,7 @@
         android:paddingTop="@dimen/dp_register_actions_area_padding">
 
         <Button
-            android:id="@+id/btnLogIn_FLI"
+            android:id="@+id/btnDoRestorePass_FRP"
             style="@style/AuthorizationButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

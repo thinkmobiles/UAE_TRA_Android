@@ -61,6 +61,7 @@ public final class ServerConstants {
     public static final String POOR_COVERAGE_URL = "/sendPoorCoverage";
     public static final String REGISTER_URL = "/crm/register";
     public static final String LOGIN_URL = "/crm/signIn";
+    public static final String RESTORE_PASS_URL = "/crm/???????"; // Not defined yet
     public static final String LOGOUT_URL = "/crm/signOut";
 
     //!!!!!!!!!!!! API PARAMETERS !!!!!!!!!!!!!!!!!!

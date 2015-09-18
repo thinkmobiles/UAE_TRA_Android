@@ -116,7 +116,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
     }
 
     @Override
-    public void onOkPressed() {
+    public void onOkPressed(final int _mMessageId) {
         // Unimplemented method
         // Used exceptionally to specify OK button in dialog
     }

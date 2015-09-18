@@ -13,7 +13,7 @@ import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.LoginFragment;
 import com.uae.tra_smart_services.fragment.RegisterFragment;
-import com.uae.tra_smart_services.fragment.RestorePassFragment;
+import com.uae.tra_smart_services.fragment.RestorePasswordFragment;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
@@ -111,7 +111,7 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
     @Override
     public void onOpenRestorePassScreen() {
-        super.replaceFragmentWithBackStack(RestorePassFragment.newInstance());
+        super.replaceFragmentWithBackStack(RestorePasswordFragment.newInstance());
 
     }
 

@@ -39,6 +39,7 @@ public final class HexagonView extends View implements Target {
     private Paint mPaint, mShadowPaint, mTextPaint;
     private Rect mHexagonRect, mTextRect;
     private Drawable mSrcDrawable;
+    private @DrawableRes int mSrcRes;
     private String mText;
     private double mHexagonSide, mHexagonInnerRadius;
     private float mBorderWidth, mTextSize;
@@ -63,6 +64,7 @@ public final class HexagonView extends View implements Target {
             mTextColor = a.getColor(R.styleable.HexagonView_hexagonTextColor, mBorderColor);
             mBackgroundColor = a.getColor(R.styleable.HexagonView_hexagonBackgroundColor, Color.TRANSPARENT);
             mSrcDrawable = a.getDrawable(R.styleable.HexagonView_hexagonSrc);
+            mSrcRes = a.getResourceId(R.styleable.HexagonView_hexagonSrc, R.drawable.authorization_logo);
             mText = a.getString(R.styleable.HexagonView_hexagonText);
         } finally {
             a.recycle();
@@ -117,6 +119,11 @@ public final class HexagonView extends View implements Target {
 
     public float getBorderWidth() {
         return mBorderWidth;
+    }
+
+    @DrawableRes
+    public int getHexagonSrc(){
+        return mSrcRes;
     }
 
     @Override
