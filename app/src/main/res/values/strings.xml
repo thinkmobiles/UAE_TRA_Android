@@ -112,8 +112,10 @@
     <string name="str_registering">Registration..</string>
     <string name="str_checking">Checking..</string>
     <string name="str_sending">Sending..</string>
+    <string name="str_restoring">Restoring..</string>
     <string name="str_loading">Loading..</string>
     <string name="str_authenticating">Authenticating..</string>
+    <string name="str_restore_pass_mail">We\'ll send an email</string>
     <string name="str_report_has_been_sent">Report has been successfully sent. Thank you.</string>
     <string name="str_data_has_been_sent">Signal level has been successfully reported. Thank you.</string>
     <string name="str_rating_has_been_sent">Rating has been successfully reported. Thank you.</string>
@@ -316,6 +318,10 @@
 <li>Promote and enhance the telecommunications system in the state as indicated by the development and the establishment of industry related training institutions and through the availability of the latest apparatus, equipment, and facilities provided by telecommunications technologies</li>
 </ul>
     ]]></string>
+    
+    <string name="str__service_info__about_service__default">@string/str_dummy_info_hub_list_item_full_descr</string>
+    <string name="str__service_info__about_service__complain_about_service_provider">You can file a complaint or put remarks about your telecom service provider</string>
+    <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
 
 
 

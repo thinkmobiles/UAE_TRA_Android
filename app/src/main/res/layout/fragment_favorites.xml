@@ -19,6 +19,7 @@
         android:id="@+id/dflContainer_FF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         app:deleteColor="?attr/dragDeleteColor"
         app:shadowBackground="?attr/shadowBackgroundColor">
 
@@ -28,7 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="?attr/actionBarSize"
             tools:visibility="visible">
 
             <com.uae.tra_smart_services.customviews.HexagonView
@@ -81,7 +81,6 @@
             android:id="@+id/rvFavoritesList_FF"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
             android:visibility="invisible"
             tools:listitem="@layout/list_item_favorite"
             tools:visibility="invisible"/>

@@ -163,6 +163,9 @@ public class HomeActivity extends BaseFragmentActivity
             case POOR_COVERAGE:
                 replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
                 break;
+            case INTERNET_SPEEDTEST:
+                replaceFragmentWithBackStack(SpeedTestFragment.newInstance());
+                break;
         }
     }
 
@@ -333,7 +336,7 @@ public class HomeActivity extends BaseFragmentActivity
     public void onOpenServiceInfo(int _position, Service _item) {
         getFragmentManager().beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance())
+                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance(_item))
                 .commit();
     }
 

@@ -160,7 +160,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     }
 
     @Override
-    public void onOkPressed() {
+    public void onOkPressed(final int _mMessageId) {
         // Unimplemented method
         // Used exceptionally to specify OK button in dialog
     }

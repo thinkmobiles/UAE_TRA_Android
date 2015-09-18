@@ -21,4 +21,10 @@ public class ResetPasswordFragment extends BaseFragment {
     protected int getLayoutResource() {
         return R.layout.fragment_reset_password;
     }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+
+    }
 }

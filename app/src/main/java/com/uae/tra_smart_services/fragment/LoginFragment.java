@@ -47,7 +47,7 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     protected final void initViews() {
         // Input fields
-        etUserName = findView(R.id.etEmail_FR);
+        etUserName = findView(R.id.etEmail_FRP);
 
         etUserName.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
 
@@ -55,9 +55,9 @@ public class LoginFragment extends BaseAuthorizationFragment
 
         etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
         // Actions
-        btnLogIn = findView(R.id.btnLogIn_FLI);
+        btnLogIn = findView(R.id.btnDoRestorePass_FRP);
         tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
-        tvForgotPassword = findView(R.id.tvSkip_FLI);
+        tvForgotPassword = findView(R.id.tvForgotPass_FLI);
 
         if (BuildConfig.DEBUG) {
             btnLogIn.setOnLongClickListener(new View.OnLongClickListener() {
@@ -89,14 +89,14 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     public final void onClick(final View _v) {
         switch (_v.getId()) {
-            case R.id.btnLogIn_FLI:
+            case R.id.btnDoRestorePass_FRP:
                 doLogIn();
                 break;
             case R.id.tvRegisterNow_FLI:
                 actionsListener.onOpenRegisterScreen();
                 break;
-            case R.id.tvSkip_FLI:
-                actionsListener.onOpenRestorePassScreen();
+            case R.id.tvForgotPass_FLI:
+                    actionsListener.onOpenRestorePassScreen();
                 break;
         }
     }

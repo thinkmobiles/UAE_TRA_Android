@@ -101,6 +101,7 @@ public final class FavoritesFragment extends BaseFragment
         rvFavoritesList.setAdapter(mFavoritesAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         rvFavoritesList.setLayoutManager(mLinearLayoutManager);
+        invalidateAddServiceBtnVisibility();
         setEmptyPlaceholderVisibility(mFavoritesAdapter.isEmpty());
     }
 
@@ -144,19 +145,25 @@ public final class FavoritesFragment extends BaseFragment
     }
 
     public final void addServicesToFavorites(final List<Service> _items) {
-        Log.d("Favorites", "Items before new added: " + (mFavoritesAdapter.getItemCount() - 1));
+        Log.d("Favorites", "Items before new added: " + (mFavoritesAdapter.getItemCount() - mFavoritesAdapter.getHeaderCount()));
         mFavoritesAdapter.addData(_items);
-        Log.d("Favorites", "Items after new added: " + (mFavoritesAdapter.getItemCount() - 1));
+        Log.d("Favorites", "Items after new added: " + (mFavoritesAdapter.getItemCount() - mFavoritesAdapter.getHeaderCount()));
+        invalidateAddServiceBtnVisibility();
         getActivity().invalidateOptionsMenu();
         saveFavoriteServices();
         setEmptyPlaceholderVisibility(mFavoritesAdapter.isEmpty());
+    }
+
+    private void invalidateAddServiceBtnVisibility() {
+        final boolean isAllServicesAlreadyFavorite = mFavoritesAdapter.getAllData().size() == Service.getUniqueServicesCount();
+        mFavoritesAdapter.setAddButtonVisibility(!isAllServicesAlreadyFavorite);
     }
 
     private void saveFavoriteServices() {
         final List<Service> favoriteServices = mFavoritesAdapter.getAllData();
         final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
         if (favoriteServices.isEmpty()) {
-            editor.remove(C.KEY_FAVORITE_SERVICES).apply();
+            editor.remove(C.KEY_FAVORITE_SERVICES).commit();
         } else {
             final int favoriteServicesCount = favoriteServices.size();
             final StringBuilder builder = new StringBuilder();
@@ -164,7 +171,7 @@ public final class FavoritesFragment extends BaseFragment
                 builder.append(favoriteServices.get(i).name()).append(C.FAVORITE_SERVICES_DELIMITER);
             }
             final String servicesStr = builder.toString();
-            editor.putString(C.KEY_FAVORITE_SERVICES, servicesStr).apply();
+            editor.putString(C.KEY_FAVORITE_SERVICES, servicesStr).commit();
         }
     }
 
@@ -225,7 +232,7 @@ public final class FavoritesFragment extends BaseFragment
     public void onRemoveLongClick(View _view, int _position) {
         hideKeyboard(_view);
         ClipData data = ClipData.newPlainText("Item remove", "" + _position);
-        View itemView = mLinearLayoutManager.findViewByPosition(_position + 1);
+        View itemView = mLinearLayoutManager.findViewByPosition(_position);
         itemView.setTag(_view);
         dflContainer.starDragChild(itemView, data);
     }
@@ -233,7 +240,8 @@ public final class FavoritesFragment extends BaseFragment
     @Override
     public void onDeleteItem(int _position) {
         mFavoritesAdapter.removeItem(_position);
-        Log.d("Favorites", "Items after delete operation: " + (mFavoritesAdapter.getItemCount() - 1));
+        Log.d("Favorites", "Items after delete operation: " + (mFavoritesAdapter.getItemCount()));
+        invalidateAddServiceBtnVisibility();
         getActivity().invalidateOptionsMenu();
         saveFavoriteServices();
         if (mFavoritesAdapter.isEmpty()) {
