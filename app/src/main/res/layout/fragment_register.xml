@@ -86,7 +86,7 @@
             <View style="@style/AuthorizationFieldsSeparator" />
 
             <EditText
-                android:id="@+id/etEmail_FR"
+                android:id="@+id/etEmail_FRP"
                 style="@style/AuthorizationFields"
                 android:hint="@string/str_email"
                 android:inputType="textEmailAddress"

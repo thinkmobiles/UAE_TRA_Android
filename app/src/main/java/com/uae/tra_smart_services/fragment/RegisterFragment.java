@@ -79,7 +79,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         etEmiratesId = findView(R.id.etEmiratesID_FR);
         etEmiratesId.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_id, R.attr.authorizationDrawableColors), null, null, null);
 
-        etEmail = findView(R.id.etEmail_FR);
+        etEmail = findView(R.id.etEmail_FRP);
         etEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_mail, R.attr.authorizationDrawableColors), null, null, null);
 
 
@@ -209,7 +209,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
                     @Override
                     public boolean check(final RegisterModel _data) {
                         if (!Patterns.EMAIL_ADDRESS.matcher(_data.email).matches()) {
-                            showMessage(R.string.str_error, R.string.error_valid_email);
+                            showMessage(0, R.string.str_error, R.string.error_valid_email);
                             etEmail.setError(getString(R.string.error_valid_email));
                             etEmail.requestFocus();
                             return false;
@@ -222,7 +222,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
                     @Override
                     public boolean check(final RegisterModel _data) {
                         if (!Patterns.PHONE.matcher(_data.mobile).matches()) {
-                            showMessage(R.string.str_error, R.string.error_valid_phone);
+                            showMessage(0, R.string.str_error, R.string.error_valid_phone);
                             etPhone.setError(getString(R.string.error_valid_phone));
                             etPhone.requestFocus();
                             return false;
@@ -235,7 +235,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
                     @Override
                     public boolean check(RegisterModel _data) {
                         if (!_data.pass.equals(etConfirmPassword.getText().toString())) {
-                            showMessage(R.string.str_error, R.string.error_password_confirm);
+                            showMessage(0, R.string.str_error, R.string.error_password_confirm);
                             etPassword.setError(getString(R.string.error_password_confirm));
                             etConfirmPassword.setError(getString(R.string.error_password_confirm));
                             etConfirmPassword.requestFocus();
