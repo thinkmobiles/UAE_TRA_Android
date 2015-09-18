@@ -163,6 +163,9 @@ public class HomeActivity extends BaseFragmentActivity
             case POOR_COVERAGE:
                 replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
                 break;
+            case INTERNET_SPEEDTEST:
+                replaceFragmentWithBackStack(SpeedTestFragment.newInstance());
+                break;
         }
     }
 

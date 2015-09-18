@@ -199,24 +199,31 @@ public final class HexagonView extends View implements Target {
 
         drawableWidth = drawableWidth == -1 ? canvasWidth : drawableWidth;
         drawableHeight = drawableHeight == -1 ? canvasHeight : drawableHeight;
-        _drawable.setBounds(0, 0, drawableWidth, drawableHeight);
 
-        float scale;
         if (drawableWidth < canvasWidth || drawableHeight < canvasHeight) {
-            scale = 1f;
-        } else if (drawableWidth * canvasHeight > canvasWidth * drawableHeight) {//image is wider
-            scale = (float) canvasHeight / (float) drawableHeight;
-        } else { //image is higher
-            scale = (float) canvasWidth / (float) drawableWidth;
-        }
-        float dx = (canvasWidth - drawableWidth * scale) / 2f;
-        float dy = (canvasHeight - drawableHeight * scale) / 2f;
+            float centerY = (float) (mHexagonSide + getBorderWidth() / 2f);
+            float centerX = (float) getWidth() / 2;
 
-        _canvas.save();
-        _canvas.scale(scale, scale);
-        _canvas.translate(Math.round(dx), Math.round(dy));
-        _drawable.draw(_canvas);
-        _canvas.restore();
+            mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
+                    (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
+            _drawable.draw(_canvas);
+        } else {
+            float scale;
+            _drawable.setBounds(0, 0, drawableWidth, drawableHeight);
+            if (drawableWidth * canvasHeight > canvasWidth * drawableHeight) {//image is wider
+                scale = (float) canvasHeight / (float) drawableHeight;
+            } else { //image is higher
+                scale = (float) canvasWidth / (float) drawableWidth;
+            }
+            float dx = (canvasWidth - drawableWidth * scale) / 2f;
+            float dy = (canvasHeight - drawableHeight * scale) / 2f;
+
+            _canvas.save();
+            _canvas.scale(scale, scale);
+            _canvas.translate(Math.round(dx), Math.round(dy));
+            _drawable.draw(_canvas);
+            _canvas.restore();
+        }
     }
 
     private void drawText(final Canvas _canvas) {

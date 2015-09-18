@@ -7,7 +7,6 @@ import android.support.annotation.StringRes;
 import com.uae.tra_smart_services.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -68,6 +67,11 @@ public enum Service {
     },
     DOMAIN_CHECK_INFO {
         @Override
+        protected boolean isMainScreenService() {
+            return false;
+        }
+
+        @Override
         @StringRes
         public int getTitleRes() {
             return R.string.service_domain_check;
@@ -85,6 +89,11 @@ public enum Service {
         }
     },
     DOMAIN_CHECK_AVAILABILITY {
+        @Override
+        protected boolean isMainScreenService() {
+            return false;
+        }
+
         @Override
         @StringRes
         public int getTitleRes() {
@@ -115,30 +124,17 @@ public enum Service {
             return R.drawable.ic_play;
         }
     },
-    SMS_SPAM {
+    APPROVED_DEVICES {
         @Override
         @StringRes
         public int getTitleRes() {
-            return R.string.service_sms_spam;
+            return R.string.service_approved_devices;
         }
 
         @Override
         @DrawableRes
         public final int getDrawableRes() {
-            return R.drawable.ic_glb;
-        }
-    },
-    POOR_COVERAGE {
-        @Override
-        @StringRes
-        public int getTitleRes() {
-            return R.string.service_poor_coverage;
-        }
-
-        @Override
-        @DrawableRes
-        public final int getDrawableRes() {
-            return R.drawable.ic_glb;
+            return R.drawable.ic_lock;
         }
     },
     HELP_SALIM {
@@ -156,36 +152,86 @@ public enum Service {
     },
     MOBILE_VERIFICATION {
         @Override
+        protected boolean isStaticMainScreenService() {
+            return true;
+        }
+
+        @Override
         @StringRes
         public int getTitleRes() {
             return R.string.service_mobile_verification;
         }
 
         @Override
-        @DrawableRes
-        public final int getDrawableRes() {
-            return R.drawable.ic_glb;
+        public int getDrawableRes() {
+            return R.drawable.ic_verif_gray;
         }
     },
-    APPROVED_DEVICES {
+    SMS_SPAM {
         @Override
-        @StringRes
-        public int getTitleRes() {
-            return R.string.service_approved_devices;
+        protected boolean isStaticMainScreenService() {
+            return true;
         }
 
         @Override
-        @DrawableRes
-        public final int getDrawableRes() {
-            return R.drawable.ic_lock;
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_sms_spam;
+        }
+
+        @Override
+        public int getDrawableRes() {
+            return R.drawable.ic_spam_gray;
+        }
+    },
+    POOR_COVERAGE {
+        @Override
+        protected boolean isStaticMainScreenService() {
+            return true;
+        }
+
+        @Override
+        @StringRes
+        public int getTitleRes() {
+            return R.string.service_poor_coverage;
+        }
+
+        @Override
+        public int getDrawableRes() {
+            return R.drawable.ic_coverage_gray;
+        }
+    }, INTERNET_SPEEDTEST {
+        @Override
+        protected boolean isStaticMainScreenService() {
+            return true;
+        }
+
+        @Override
+        public int getTitleRes() {
+            return R.string.fragment_speed_test_title;
+        }
+
+        @Override
+        public int getDrawableRes() {
+            return R.drawable.ic_internet_gray;
         }
     };
 
     @DrawableRes
-    public abstract int getDrawableRes();
+    public int getDrawableRes() {
+        return R.drawable.ic_glb;
+    }
 
     @StringRes
     public abstract int getTitleRes();
+
+    protected boolean isMainScreenService() {
+        return true;
+    }
+
+    protected boolean isStaticMainScreenService() {
+        return false;
+    }
 
     public final String getTitle(final Context _context) {
         return _context.getString(getTitleRes());
@@ -200,9 +246,12 @@ public enum Service {
 
     private static void initUniqueServicesList() {
         if (UNIQUE_SERVICES == null) {
-            UNIQUE_SERVICES = new ArrayList<>(Arrays.asList(Service.values()));
-            UNIQUE_SERVICES.remove(DOMAIN_CHECK_AVAILABILITY);
-            UNIQUE_SERVICES.remove(DOMAIN_CHECK_INFO);
+            UNIQUE_SERVICES = new ArrayList<>();
+            for (Service service : Service.values()) {
+                if (service.isMainScreenService()) {
+                    UNIQUE_SERVICES.add(service);
+                }
+            }
         }
     }
 
@@ -213,13 +262,11 @@ public enum Service {
 
     public static List<Service> getSecondaryServices() {
         List<Service> services = new ArrayList<>();
-        services.add(COMPLAIN_ABOUT_PROVIDER);
-        services.add(COMPLAINT_ABOUT_TRA);
-        services.add(SUGGESTION);
-        services.add(DOMAIN_CHECK);
-        services.add(ENQUIRIES);
-        services.add(HELP_SALIM);
-        services.add(APPROVED_DEVICES);
+        for (Service service : Service.values()) {
+            if (service.isMainScreenService() && !service.isStaticMainScreenService()) {
+                services.add(service);
+            }
+        }
         return services;
     }
 }
