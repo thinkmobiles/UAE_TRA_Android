@@ -25,6 +25,12 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_edit;
         }
+
+        @Override
+        @StringRes
+        public int getInfoAboutService() {
+            return R.string.str__service_info__about_service__complain_about_service_provider;
+        }
     },
     COMPLAINT_ABOUT_TRA {
         @Override
@@ -50,6 +56,12 @@ public enum Service {
         @DrawableRes
         public final int getDrawableRes() {
             return R.drawable.ic_sugg;
+        }
+
+        @Override
+        @StringRes
+        public int getInfoAboutService() {
+            return R.string.str__service_info__about_service__suggestion;
         }
     },
     DOMAIN_CHECK {
@@ -136,6 +148,7 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_lock;
         }
+
     },
     HELP_SALIM {
         @Override
@@ -149,6 +162,7 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_edit;
         }
+
     },
     MOBILE_VERIFICATION {
         @Override
@@ -166,6 +180,7 @@ public enum Service {
         public int getDrawableRes() {
             return R.drawable.ic_verif_gray;
         }
+
     },
     SMS_SPAM {
         @Override
@@ -200,6 +215,7 @@ public enum Service {
         public int getDrawableRes() {
             return R.drawable.ic_coverage_gray;
         }
+
     }, INTERNET_SPEEDTEST {
         @Override
         protected boolean isStaticMainScreenService() {
@@ -224,6 +240,11 @@ public enum Service {
 
     @StringRes
     public abstract int getTitleRes();
+
+    @StringRes
+    public int getInfoAboutService() {
+        return R.string.str__service_info__about_service__default;
+    }
 
     protected boolean isMainScreenService() {
         return true;

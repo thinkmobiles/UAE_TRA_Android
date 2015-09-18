@@ -1,7 +1,5 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.view.MotionEvent;
@@ -85,7 +83,7 @@ public class ServiceInfoFragment extends BaseFragment implements View.OnClickLis
                 hexagonSrc = ((HexagonView) _view).getHexagonSrc();
                 getFragmentManager().beginTransaction()
                         .addToBackStack(null)
-                        .replace(R.id.rlGlobalContainer_AH, ServiceInfoDetailsFragment.newInstance(hexagonSrc, mServiceType.getInfo_AboutService()))
+                        .replace(R.id.rlGlobalContainer_AH, ServiceInfoDetailsFragment.newInstance(hexagonSrc, mServiceType.getInfoAboutService()))
                         .commit();
                 break;
         }
