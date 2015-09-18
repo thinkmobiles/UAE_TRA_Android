@@ -35,6 +35,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvLanguage_FS"
                     style="@style/UserSettingsStaticText"
                     android:hint="@string/str_language"/>
 

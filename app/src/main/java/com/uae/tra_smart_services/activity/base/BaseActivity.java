@@ -1,6 +1,6 @@
 package com.uae.tra_smart_services.activity.base;
 
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -10,12 +10,16 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.Locale;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Vitaliy on 22/07/2015.
@@ -25,6 +29,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
     private String mThemaStringValue;
     private Float mFontSize;
     private String mLanguage;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +80,25 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
         mLanguage = PreferenceManager
                 .getDefaultSharedPreferences(this)
                 .getString(BaseCustomSwitcher.Type.LANGUAGE.toString(), "en");
+
+        if (mLanguage.equals("en")) {
+            initDefaultFont("fonts/Lato-Regular.ttf");
+        } else {
+            initDefaultFont("fonts/DroidKufi-Regular.ttf");
+        }
+
         Locale locale = new Locale(mLanguage);
         Locale.setDefault(locale);
         Configuration config = getResources().getConfiguration();
         config.locale = locale;
         getResources().updateConfiguration(config, null);
+    }
+
+    public final void initDefaultFont(final String _fontPath) {
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath(_fontPath)
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
     }
 }
