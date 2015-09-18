@@ -333,7 +333,7 @@ public class HomeActivity extends BaseFragmentActivity
     public void onOpenServiceInfo(int _position, Service _item) {
         getFragmentManager().beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance())
+                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance(_item))
                 .commit();
     }
 

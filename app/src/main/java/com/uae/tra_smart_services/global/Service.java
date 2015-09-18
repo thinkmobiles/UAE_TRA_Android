@@ -26,6 +26,12 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_edit;
         }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__complain_about_service_provider;
+        }
     },
     COMPLAINT_ABOUT_TRA {
         @Override
@@ -38,6 +44,12 @@ public enum Service {
         @DrawableRes
         public final int getDrawableRes() {
             return R.drawable.ic_chat;
+        }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__default;
         }
     },
     SUGGESTION {
@@ -52,6 +64,12 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_sugg;
         }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__suggestion;
+        }
     },
     DOMAIN_CHECK {
         @Override
@@ -65,6 +83,12 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_glb;
         }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__default;
+        }
     },
     DOMAIN_CHECK_INFO {
         @Override
@@ -77,6 +101,12 @@ public enum Service {
         @DrawableRes
         public final int getDrawableRes() {
             return R.drawable.ic_glb;
+        }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__default;
         }
 
         @Override
@@ -98,6 +128,12 @@ public enum Service {
         }
 
         @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__default;
+        }
+
+        @Override
         public String toString() {
             return "domain_info_availabity";
         }
@@ -114,6 +150,12 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_play;
         }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__default;
+        }
     },
     SMS_SPAM {
         @Override
@@ -126,6 +168,12 @@ public enum Service {
         @DrawableRes
         public final int getDrawableRes() {
             return R.drawable.ic_glb;
+        }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__default;
         }
     },
     POOR_COVERAGE {
@@ -140,6 +188,12 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_glb;
         }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__default;
+        }
     },
     HELP_SALIM {
         @Override
@@ -152,6 +206,12 @@ public enum Service {
         @DrawableRes
         public final int getDrawableRes() {
             return R.drawable.ic_edit;
+        }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__default;
         }
     },
     MOBILE_VERIFICATION {
@@ -166,6 +226,12 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_glb;
         }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__default;
+        }
     },
     APPROVED_DEVICES {
         @Override
@@ -179,6 +245,12 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_lock;
         }
+
+        @Override
+        @StringRes
+        public int getInfo_AboutService() {
+            return R.string.str__service_info__about_service__default;
+        }
     };
 
     @DrawableRes
@@ -186,6 +258,9 @@ public enum Service {
 
     @StringRes
     public abstract int getTitleRes();
+
+    @StringRes
+    public abstract int getInfo_AboutService();
 
     public final String getTitle(final Context _context) {
         return _context.getString(getTitleRes());
