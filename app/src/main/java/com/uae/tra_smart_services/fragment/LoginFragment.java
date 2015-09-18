@@ -118,6 +118,7 @@ public class LoginFragment extends BaseAuthorizationFragment
             return;
         }
 
+        hideKeyboard(getView());
         showProgressDialog(getString(R.string.str_authenticating), this);
 
         getSpiceManager().execute(mRequest = new LoginRequest(model), KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
