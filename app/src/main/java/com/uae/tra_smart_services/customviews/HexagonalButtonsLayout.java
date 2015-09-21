@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +27,8 @@ import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by Vitaliy on 13/08/2015.
@@ -156,11 +159,13 @@ public class HexagonalButtonsLayout extends View {
         mButtonSecondColorPaint.setStyle(Paint.Style.FILL);
 
         mOrangeTextPaint = new Paint();
+        mOrangeTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
         mOrangeTextPaint.setTextAlign(Paint.Align.CENTER);
         mOrangeTextPaint.setTextSize(mTextSize);
         mOrangeTextPaint.setColor(ImageUtils.isBlackAndWhiteMode(getContext()) ? Color.BLACK : 0xFFF68F1E);
 
         mWhiteTextPain = new Paint();
+        mWhiteTextPain.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
         mWhiteTextPain.setTextAlign(Paint.Align.CENTER);
         mWhiteTextPain.setTextSize(mTextSize);
         mWhiteTextPain.setColor(Color.WHITE);
@@ -368,7 +373,8 @@ public class HexagonalButtonsLayout extends View {
 
         if (getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
             TextPaint mTextPaint = new TextPaint();
-            mTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress);
+            mTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress - mTextSizeDifference);
+            mTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
             mTextPaint.setColor(0xFFF68F1E);
             StaticLayout mTextLayout = new StaticLayout(getResources().getString(R.string.hexagon_button_spam), mTextPaint,
                     (int) (mTriangleHeight * 1.5), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);

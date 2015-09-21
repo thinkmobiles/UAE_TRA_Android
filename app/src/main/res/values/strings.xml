@@ -322,7 +322,7 @@
     <string name="str__service_info__about_service__default">@string/str_dummy_info_hub_list_item_full_descr</string>
     <string name="str__service_info__about_service__complain_about_service_provider">You can file a complaint or put remarks about your telecom service provider</string>
     <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
-
+    <string name="release_version_label">Release Version</string>
 
 
 </resources>

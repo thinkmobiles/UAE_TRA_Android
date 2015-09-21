@@ -46,6 +46,12 @@ public class HexagonalHeader extends View {
     public @interface HexagonButton {
     }
 
+    public static final int TUTORIAL_TYPE_NONE = 0;
+    public static final int TUTORIAL_TYPE_AVATAR = 1;
+    public static final int TUTORIAL_TYPE_INNOVATIONS = 2;
+    public static final int TUTORIAL_TYPE_SEARCH = 3;
+    public static final int TUTORIAL_TYPE_NOTIFICATIONS = 4;
+
     private Path mHexagonPath;
     private Path mSecondRowHexagonPath;
     private Path mLastHexagonPath;
@@ -64,6 +70,7 @@ public class HexagonalHeader extends View {
     private Paint mDefaultAvatarBackgroundPaint;
     private Paint mNotificationBorderPaint;
     private TextPaint mNotificationTextPaint;
+    private Paint mShadowPaint;
     private int mHexPaintColor;
     private int mButtonColor;
     private int mPressedButtonColor;
@@ -74,6 +81,8 @@ public class HexagonalHeader extends View {
     private float mHexagonStrokeWidth;
     private float mTriangleHeight;
     private float mRadius;
+
+    private int mTutorialType;
 
     private Drawable mAvatarPlaceholder;
     private HashMap<Integer, Drawable> mDrawables;
@@ -196,6 +205,7 @@ public class HexagonalHeader extends View {
             mRowCount = typedArrayData.getInt(R.styleable.HexagonalHeader_hexagonRowCount, 2);
             mHexagonStrokeWidth = typedArrayData.getDimension(R.styleable.HexagonalHeader_hexagonStrokeWidth, 3);
             mAvatarPlaceholderBackground = typedArrayData.getColor(R.styleable.HexagonalHeader_avatarPlaceholderBackground, 0xFF455560);
+            mTutorialType = typedArrayData.getInt(R.styleable.HexagonalHeader_tutorialType, TUTORIAL_TYPE_NONE);
 
             mHexagonAvatarBorderWidth = mHexagonStrokeWidth * 2.5f;
         } finally {
@@ -225,6 +235,10 @@ public class HexagonalHeader extends View {
         mDefaultAvatarBackgroundPaint = new Paint();
         mDefaultAvatarBackgroundPaint.setColor(mAvatarPlaceholderBackground);
         mDefaultAvatarBackgroundPaint.setStyle(Paint.Style.FILL);
+
+        mShadowPaint = new Paint();
+        mShadowPaint.setShadowLayer(12.0f, 0f, 0f, 0xff4b4b4b);
+        mShadowPaint.setStyle(Paint.Style.FILL);
 
         mButtonPaint = new Paint();
         mButtonPaint.setColor(mButtonColor);
@@ -523,8 +537,10 @@ public class HexagonalHeader extends View {
 
     @Override
     protected final void onDraw(final Canvas _canvas) {
-        drawHexagons(_canvas);
-        drawDrawables(_canvas);
+        if (mTutorialType != TUTORIAL_TYPE_AVATAR) {
+            drawHexagons(_canvas);
+            drawDrawables(_canvas);
+        }
         drawAvatarHexagon(_canvas);
     }
 
@@ -589,11 +605,6 @@ public class HexagonalHeader extends View {
     private void drawNotificationIcon(final Canvas _canvas) {
         _canvas.drawRoundRect(mNotificationBorderBounds, mNotificationBorderBounds.height(), mNotificationBorderBounds.height(), mButtonPaint);
         _canvas.drawRoundRect(mNotificationBorderBounds, mNotificationBorderBounds.height(), mNotificationBorderBounds.height(), mNotificationBorderPaint);
-//        Paint paint = new Paint();
-//        paint.setColor(Color.RED);
-//        paint.setAntiAlias(true);
-//        paint.setStyle(Paint.Style.FILL);
-//        _canvas.drawRect(mNotificationTextBounds, paint);
         _canvas.drawText(mNotificationCountText, mNotificationTextBounds.centerX(), mNotificationTextBounds.bottom, mNotificationTextPaint);
     }
 
@@ -657,6 +668,9 @@ public class HexagonalHeader extends View {
     }
 
     private void drawAvatarHexagon(final Canvas _canvas) {
+        if (mTutorialType == TUTORIAL_TYPE_AVATAR) {
+            _canvas.drawPath(mAvatarPath, mShadowPaint);
+        }
         _canvas.drawPath(mAvatarPath, mDefaultAvatarBackgroundPaint);
         _canvas.clipPath(mAvatarClipPath);
 
@@ -770,7 +784,6 @@ public class HexagonalHeader extends View {
 
     public interface OnButtonClickListener {
         void onAvatarButtonClick();
-
         void onHexagonButtonClick(@HexagonButton final int _hexagonButton);
     }
 }
