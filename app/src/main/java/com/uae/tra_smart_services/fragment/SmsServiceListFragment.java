@@ -1,12 +1,16 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.TRAApplication;
+import com.uae.tra_smart_services.activity.AuthorizationActivity;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.SmsService;
 
 /**
@@ -25,7 +29,9 @@ public class SmsServiceListFragment extends BaseFragment implements TextView.OnC
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
-        mServiceSelectListener = (OnSmsServiceSelectListener) _activity;
+        if (_activity instanceof OnSmsServiceSelectListener) {
+            mServiceSelectListener = (OnSmsServiceSelectListener) _activity;
+        }
     }
 
     @Override
@@ -53,13 +59,32 @@ public class SmsServiceListFragment extends BaseFragment implements TextView.OnC
 
     @Override
     public final void onClick(View _view) {
-        switch (_view.getId()) {
-            case R.id.itmReportNum_FSS:
-                mServiceSelectListener.onSmsServiceChildSelect(SmsService.REPORT);
-                break;
-            case R.id.itmBlockNum_FSS:
-                mServiceSelectListener.onSmsServiceChildSelect(SmsService.BLOCK);
-                break;
+        if (mServiceSelectListener != null) {
+            switch (_view.getId()) {
+                case R.id.itmReportNum_FSS:
+                    openReportSmsScreenOrLogin();
+                    break;
+                case R.id.itmBlockNum_FSS:
+                    mServiceSelectListener.onSmsServiceChildSelect(SmsService.BLOCK);
+                    break;
+            }
+        }
+    }
+
+    private void openReportSmsScreenOrLogin() {
+        if (TRAApplication.isLoggedIn() && mServiceSelectListener != null) {
+            mServiceSelectListener.onSmsServiceChildSelect(SmsService.REPORT);
+        } else {
+            Intent intent = AuthorizationActivity.getStartForResultIntent(getActivity(), SmsService.REPORT);
+            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == C.REQUEST_CODE_LOGIN && resultCode == C.LOGIN_SUCCESS) {
+            openReportSmsScreenOrLogin();
         }
     }
 
@@ -71,6 +96,12 @@ public class SmsServiceListFragment extends BaseFragment implements TextView.OnC
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_sms_spam;
+    }
+
+    @Override
+    public void onDetach() {
+        mServiceSelectListener = null;
+        super.onDetach();
     }
 
     public interface OnSmsServiceSelectListener {

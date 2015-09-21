@@ -52,25 +52,39 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
     }
 
     @Override
-    public final void onRequestSuccess(final Long _kbPerSecond) {
-        if (isAdded() && _kbPerSecond != null) {
-            double mBitPerSecond = _kbPerSecond / 1024f;
-            BigDecimal bd = new BigDecimal(mBitPerSecond);
-            bd = bd.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-            tvResult.setText(getString(R.string.fragment_speed_test_result, bd.toString()));
-            hideProgressDialog();
-        }
+    public void onStart() {
+        super.onStart();
+        getSpiceManager().getFromCache(Long.class, KEY_SPEED_TEST_REQUEST, DurationInMillis.ALWAYS_RETURNED, this);
     }
 
-    @Override
-    public final void onDialogCancel() {
+    private void cancelRequest() {
         if (mSpeedTestRequest != null) {
             mSpeedTestRequest.cancel();
         }
     }
 
     @Override
+    public final void onRequestSuccess(final Long _kbPerSecond) {
+        if (isAdded()) {
+            if (_kbPerSecond != null) {
+                double mBitPerSecond = _kbPerSecond / 1024f;
+                BigDecimal bd = new BigDecimal(mBitPerSecond);
+                bd = bd.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                tvResult.setText(getString(R.string.fragment_speed_test_result, bd.toString()));
+                getSpiceManager().removeDataFromCache(Long.class, KEY_SPEED_TEST_REQUEST);
+            }
+            hideProgressDialog();
+        }
+    }
+
+    @Override
+    public final void onDialogCancel() {
+        cancelRequest();
+    }
+
+    @Override
     public final void onRequestFailure(final SpiceException _spiceException) {
+        getSpiceManager().removeDataFromCache(Long.class, KEY_SPEED_TEST_REQUEST);
         processError(_spiceException);
     }
 

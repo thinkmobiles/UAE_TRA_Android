@@ -17,14 +17,15 @@ public final class ProgressDialog extends DialogFragment {
     static MyDialogInterface dialogInterface;
 
     public static String TAG = ProgressDialog.class.getSimpleName();
+
     public static ProgressDialog newInstance(final String _title, MyDialogInterface _onCancel) {
         ProgressDialog dialog = new ProgressDialog();
         Bundle bundle = new Bundle();
         bundle.putString(C.TITLE, _title);
-        boolean isCancelabel = _onCancel != null ? true : false;
-        bundle.putBoolean(C.IS_CANCELABLE, isCancelabel);
+        boolean isCancelable = _onCancel != null;
+        bundle.putBoolean(C.IS_CANCELABLE, isCancelable);
         dialog.setArguments(bundle);
-        dialogInterface = (MyDialogInterface) _onCancel;
+        dialogInterface = _onCancel;
         return dialog;
     }
 
@@ -34,9 +35,10 @@ public final class ProgressDialog extends DialogFragment {
         android.app.ProgressDialog dialog = new android.app.ProgressDialog(getActivity(), AlertDialog.THEME_HOLO_LIGHT);
         dialog.setIndeterminate(true);
         dialog.setMessage(bundle.getString(C.TITLE));
-        boolean isCancelabel = bundle.getBoolean(C.IS_CANCELABLE);
-        dialog.setCancelable(isCancelabel);
-        dialog.setCanceledOnTouchOutside(isCancelabel);
+        boolean isCancelable = bundle.getBoolean(C.IS_CANCELABLE);
+        dialog.setCancelable(isCancelable);
+        dialog.setCanceledOnTouchOutside(isCancelable);
+        setCancelable(isCancelable);
         return dialog;
     }
 
@@ -49,6 +51,7 @@ public final class ProgressDialog extends DialogFragment {
         if(dialogInterface != null){
             dialogInterface.onDialogCancel();
         }
+        dismiss();
     }
 
     @Override

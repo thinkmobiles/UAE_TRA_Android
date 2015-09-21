@@ -1,10 +1,10 @@
 package com.uae.tra_smart_services.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,6 +18,8 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
+import com.uae.tra_smart_services.entities.FragmentType;
+import com.uae.tra_smart_services.fragment.AboutTraFragment;
 import com.uae.tra_smart_services.fragment.AddServiceFragment;
 import com.uae.tra_smart_services.fragment.AddServiceFragment.OnFavoriteServicesSelectedListener;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
@@ -39,6 +41,7 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnOpenUserProfile
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
+import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
@@ -74,7 +77,8 @@ public class HomeActivity extends BaseFragmentActivity
         implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
-        OnOpenUserProfileClickListener, OnUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener {
+        OnOpenUserProfileClickListener, OnUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener,
+        SettingsFragment.OnOpenAboutTraClickListener {
 
     private static final String TAG = "HomeActivity";
     protected static final int REQUEST_CHECK_SETTINGS = 1000;
@@ -122,7 +126,7 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public <T> void onServiceSelect(Service _service, T _data) {
+    public <T> void onServiceSelect(Service _service, @Nullable T _data) {
         switch (_service) {
             case DOMAIN_CHECK:
                 replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
@@ -134,16 +138,16 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(DomainIsAvailableFragment.newInstance((DomainAvailabilityCheckResponseModel) _data));
                 break;
             case COMPLAIN_ABOUT_PROVIDER:
-                openFragmentIfAuthorized(ComplainAboutServiceFragment.newInstance());
+                openFragmentIfAuthorized(ComplainAboutServiceFragment.newInstance(), _service);
                 break;
             case ENQUIRIES:
-                openFragmentIfAuthorized(EnquiriesFragment.newInstance());
+                openFragmentIfAuthorized(EnquiriesFragment.newInstance(), _service);
                 break;
             case COMPLAINT_ABOUT_TRA:
-                openFragmentIfAuthorized(ComplainAboutTraFragment.newInstance());
+                openFragmentIfAuthorized(ComplainAboutTraFragment.newInstance(), _service);
                 break;
             case SUGGESTION:
-                openFragmentIfAuthorized(SuggestionFragment.newInstance());
+                openFragmentIfAuthorized(SuggestionFragment.newInstance(), _service);
                 break;
             case HELP_SALIM:
                 replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
@@ -160,37 +164,50 @@ public class HomeActivity extends BaseFragmentActivity
             case POOR_COVERAGE:
                 replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
                 break;
+            case INTERNET_SPEEDTEST:
+                replaceFragmentWithBackStack(SpeedTestFragment.newInstance());
+                break;
         }
     }
 
-    private void openFragmentIfAuthorized(final BaseFragment _fragment) {
-        mFragmentForReplacing = _fragment;
+    private void openFragmentIfAuthorized(final BaseFragment _fragment, final Service _service) {
         if (TRAApplication.isLoggedIn()) {
-            replaceFragmentWithBackStack(mFragmentForReplacing);
+            replaceFragmentWithBackStack(_fragment);
         } else {
-            Intent intent = new Intent(this, AuthorizationActivity.class);
-            intent.setAction(C.ACTION_LOGIN);
+            Intent intent = AuthorizationActivity.getStartForResultIntent(this, _service);
             startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(final int _requestCode, final int _resultCode, final Intent _data) {
+        super.onActivityResult(_requestCode, _resultCode, _data);
 
-        switch (requestCode){
+        switch (_requestCode){
             case C.REQUEST_CODE_LOGIN:
-                    if (resultCode == C.LOGIN_SUCCESS && mFragmentForReplacing != null) {
-                        replaceFragmentWithBackStack(mFragmentForReplacing);
-                    }
-
+                if (_resultCode == C.LOGIN_SUCCESS) {
+                    openFragmentAfterLogin(_data);
+                }
                 break;
             case REQUEST_CHECK_SETTINGS:
                 Log.i(TAG, "User agreed to make required location settings changes.");
                 getFragmentManager()
                         .findFragmentById(R.id.flContainer_AH)
-                        .onActivityResult(requestCode, resultCode, data);
+                        .onActivityResult(_requestCode, _resultCode, _data);
                 break;
+        }
+    }
+
+    private void openFragmentAfterLogin(final Intent _data) {
+        final Enum fragmentType = (Enum) _data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
+        if (fragmentType instanceof Service) {
+            onServiceSelect((Service) fragmentType, null);
+        } else {
+            switch (((FragmentType) fragmentType)) {
+                case USER_PROFILE:
+                    replaceFragmentWithBackStack(UserProfileFragment.newInstance());
+                    break;
+            }
         }
     }
 
@@ -263,8 +280,10 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithOutBackStack(InfoHubFragment.newInstance());
                 break;
             case R.id.rbInquiries_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: Inquiries",
-                        Toast.LENGTH_SHORT).show();
+                getFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.rlGlobalContainer_AH, LoaderFragment.newInstance())
+                        .commit();
                 break;
             case R.id.rbSettings_BNRG:
                 clearBackStack();
@@ -296,7 +315,8 @@ public class HomeActivity extends BaseFragmentActivity
         if (TRAApplication.isLoggedIn()) {
             replaceFragmentWithBackStack(UserProfileFragment.newInstance());
         } else {
-            Toast.makeText(this, R.string.activity_home_not_logged_in, Toast.LENGTH_SHORT).show();
+            Intent intent = AuthorizationActivity.getStartForResultIntent(this, FragmentType.USER_PROFILE);
+            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
         }
     }
 
@@ -319,8 +339,13 @@ public class HomeActivity extends BaseFragmentActivity
     public void onOpenServiceInfo(int _position, Service _item) {
         getFragmentManager().beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance())
+                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance(_item))
                 .commit();
+    }
+
+    @Override
+    public void onOpenAboutTraClick() {
+        replaceFragmentWithBackStack(AboutTraFragment.newInstance());
     }
 
     @Override

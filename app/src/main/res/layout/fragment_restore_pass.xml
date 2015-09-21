@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp">
+
+    <LinearLayout
+        android:id="@+id/llSignInFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etEmail_FRP"
+            style="@style/AuthorizationFields"
+            android:hint="@string/str_email"
+            android:inputType="textPersonName"
+            android:drawablePadding="@dimen/dp_transparent_fields_padding"
+            />
+
+        <View style="@style/AuthorizationFieldsSeparator" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llRegisterActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_register_actions_area_padding"
+        android:paddingTop="@dimen/dp_register_actions_area_padding">
+
+        <Button
+            android:id="@+id/btnDoRestorePass_FRP"
+            style="@style/AuthorizationButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_restore" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -10,6 +10,12 @@
         <item name="android:background">@color/hex_auth_fields_separator_color</item>
     </style>
 
+    <style name="AuthorizationFieldsSeparatorVertical">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/dp_authorization_fields_separator_height</item>
+        <item name="android:background">@color/hex_auth_fields_separator_color</item>
+    </style>
+
     <style name="ListViewItemSeparator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_authorization_fields_separator_height</item>
@@ -28,6 +34,15 @@
         <item name="android:padding">@dimen/dp_transparent_fields_padding</item>
         <item name="android:background">@color/hex_authorization_background_color</item>
         <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="AuthorizationFields">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/dp_transparent_fields_padding</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">?attr/authorizationTextColors</item>
+        <item name="android:textColorHint">?attr/authorizationTextColors</item>
     </style>
 
     <style name="UserSettingsStaticText">
@@ -68,9 +83,23 @@
         <item name="android:layout_margin">10dp</item>
     </style>
 
+    <style name="AuthorizationButtons" parent="BlurButtonStyle">
+        <item name="android:textColor">@color/hex_text_color_white</item>
+        <item name="android:background">?attr/authorizationButtonsBackground</item>
+    </style>
+
     <style name="BlurButtonStyleSimple" parent="BlurButtonStyle">
         <item name="android:layout_marginStart">150dp</item>
         <item name="android:layout_marginEnd">150dp</item>
+    </style>
+
+    <style name="AuthorizationTextViews">
+        <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
+        <item name="android:textColor">?attr/authorizationTextColors</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="DashboardRadioButton">
@@ -81,7 +110,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">?attr/globalButtonSelector</item>
     </style>
 

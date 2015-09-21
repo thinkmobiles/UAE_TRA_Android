@@ -22,7 +22,7 @@ public final class SpeedTestRequest extends SpiceRequest<Long> {
 
     @Override
     public Long loadDataFromNetwork() throws Exception {
-        final int count = 3;
+        final int count = 1;
         final long[] speedResults = new long[count];
         for (int i = 0; i < count; i++) {
             final long kbPerSecond = calculateDownloadingSpeed();

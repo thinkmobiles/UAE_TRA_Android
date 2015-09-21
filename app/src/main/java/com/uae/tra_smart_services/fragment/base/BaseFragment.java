@@ -9,6 +9,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,6 +119,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected final void showProgressDialog(String _title, ProgressDialog.MyDialogInterface _callBack){
+        Log.d(getClass().getSimpleName(), "showProgressDialog");
         ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
     }
 
@@ -194,8 +196,9 @@ public abstract class BaseFragment extends Fragment {
         String getThemeStringValue();
     }
 
-    protected final void showMessage(@StringRes int _titleRes, @StringRes int _bodyRes){
+    protected final void showMessage(int messageId, @StringRes int _titleRes, @StringRes int _bodyRes){
         AlertDialogFragment.newInstance(this)
+                .setMessageId(messageId)
                 .setDialogTitle(getString(_titleRes))
                 .setDialogBody(
                         getString(_bodyRes)
@@ -203,12 +206,21 @@ public abstract class BaseFragment extends Fragment {
                 .show(getFragmentManager());
     }
 
-    protected final void showFormattedMessage(@StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
+    protected final void showMessage(@StringRes int _titleRes, @StringRes int _bodyRes){
+        showMessage(-1, _titleRes, _bodyRes);
+    }
+
+    protected final void showFormattedMessage(int messageId, @StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
         AlertDialogFragment.newInstance(this)
+                .setMessageId(messageId)
                 .setDialogTitle(getString(_titleRes))
                 .setDialogBody(
                         String.format(getString(_bodyRes), _replace)
                 )
                 .show(getFragmentManager());
+    }
+
+    protected final void showFormattedMessage(@StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
+        showFormattedMessage(-1, _titleRes, _bodyRes, _replace);
     }
 }

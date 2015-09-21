@@ -19,6 +19,7 @@ import static android.app.AlertDialog.THEME_HOLO_LIGHT;
 public class AlertDialogFragment extends DialogFragment implements OnClickListener {
     private OnOkListener mSelectListener;
     private String mTitle, mBody;
+    private int mMessageId;
 
     public static AlertDialogFragment newInstance(Fragment targetFragment) {
         AlertDialogFragment pickerDialog = new AlertDialogFragment();
@@ -33,6 +34,11 @@ public class AlertDialogFragment extends DialogFragment implements OnClickListen
         if (targetFragment instanceof OnOkListener) {
             mSelectListener = (OnOkListener) targetFragment;
         }
+    }
+
+    public final AlertDialogFragment setMessageId(int _messageId){
+        mMessageId =_messageId;
+        return this;
     }
 
     public final AlertDialogFragment setDialogTitle(String _title){
@@ -70,10 +76,10 @@ public class AlertDialogFragment extends DialogFragment implements OnClickListen
         if (mSelectListener != null) {
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
-                    mSelectListener.onOkPressed();
+                    mSelectListener.onOkPressed(mMessageId);
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
-                    ((OnOkCancelListener)mSelectListener).onCancelPressed();
+                    ((OnOkCancelListener)mSelectListener).onCancelPressed(mMessageId);
                     break;
             }
         }
@@ -86,10 +92,10 @@ public class AlertDialogFragment extends DialogFragment implements OnClickListen
     }
 
     public interface OnOkListener {
-        void onOkPressed();
+        void onOkPressed(final int _messageId);
     }
 
     public interface OnOkCancelListener extends OnOkListener{
-        void onCancelPressed();
+        void onCancelPressed(final int _messageId);
     }
 }

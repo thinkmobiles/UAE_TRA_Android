@@ -167,7 +167,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
 
     @Override
     protected int getTitle() {
-        return R.string.str_one_empty_space;
+        return R.string.str_mobile_verification;
     }
 
     @Override

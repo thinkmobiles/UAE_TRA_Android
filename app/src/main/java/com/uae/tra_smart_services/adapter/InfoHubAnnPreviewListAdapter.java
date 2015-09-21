@@ -74,7 +74,7 @@ public class InfoHubAnnPreviewListAdapter extends RecyclerView.Adapter<InfoHubAn
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_info_hub_list_item_second, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub_second, parent, false);
         view.findViewById(R.id.vListViewItemSeparator).setVisibility(View.INVISIBLE);
         return new ViewHolder(view);
     }

@@ -35,7 +35,7 @@
     <!--            Password field               -->
     <string name="str_password">Password</string>
     <!--            Forgot password field               -->
-    <string name="str_forgot_password">Forgot Password</string>
+    <string name="str_forgot_password">Password?</string>
     <!--            Sign in button               -->
     <string name="str_login">Login</string>
     <!--            Sign in button               -->
@@ -112,8 +112,10 @@
     <string name="str_registering">Registration..</string>
     <string name="str_checking">Checking..</string>
     <string name="str_sending">Sending..</string>
+    <string name="str_restoring">Restoring..</string>
     <string name="str_loading">Loading..</string>
     <string name="str_authenticating">Authenticating..</string>
+    <string name="str_restore_pass_mail">We\'ll send an email</string>
     <string name="str_report_has_been_sent">Report has been successfully sent. Thank you.</string>
     <string name="str_data_has_been_sent">Signal level has been successfully reported. Thank you.</string>
     <string name="str_rating_has_been_sent">Rating has been successfully reported. Thank you.</string>
@@ -127,6 +129,7 @@
     <string name="str_location_error_message">Please wait while location is determined or enter address manually.</string>
     <string name="signal_level_error">Please set signal level</string>
 
+    <string name="str_mobile_verification">Mobile verification</string>
     <string name="str_announcements">Announcements</string>
     <string name="str_transactions">Transactions</string>
     <string name="str_see_more">See More</string>
@@ -300,5 +303,26 @@
 
     <string name="str_enquires_title">Enquires Title</string>
     <string name="str_suggestion_title">Suggestion Title</string>
+    <string name="login_username_hint">Username</string>
+
+    <string name="fragment_about_tra_html"><![CDATA[
+            <p>The Telecommunications Regulatory Authority (TRA) of the United Arab Emirates (UAE) has been established according to the UAE Federal Law by Decree No. 3 of 2003 – Telecom Law. TRA is responsible for the management of every aspect of the telecommunications and information technology industries in the UAE. Despite its relatively short life-span, TRA has exceeded expectations by achieving its projected goals in record time.</p>
+<p>The organizational objectives of TRA are derived from the UAE Telecommunications Law, its Executive Order and the UAE National Telecommunications Policy. These objectives include: ensuring adequacy of telecommunications services throughout the UAE; achieving enhancement of services, both in terms of quality and variety; ensuring quality of service and adherence to terms of licenses by licensees; encouraging telecommunications and IT services within the UAE; promoting and enhancing the telecommunications sector within the UAE; resolving disputes between the licensed operators; establishing and implementing a regulatory and policy framework; promoting new technologies; ensuring that the UAE becomes the regional ICT hub; developing the country´s human capital; and encouraging research and development.</p>
+<p>TRA, and as determined by its mandate, is entrusted with a wide range of responsibilities related to the Telecommunications and Information Technology Sector, both within and outside the UAE. According to the UAE Federal Telecom Law No. (3) For the Year 2003 and its amendments, TRA is to exercise its functions and powers and under this Law and its Executive Order to:</p>
+<ul>
+<li>Ensure that the telecommunications services provided throughout the state are sufficient to satisfy the public demands of those who wish to make use of such services</li>
+<li>Enhance the level of service provided by the telecommunications sector in order to promote the interests of such services</li>
+<li>Ensure that licensees meet quality standards of performance and adhere to the terms and conditions of the licenses granted to them</li>
+<li>Ensure that licensees meet quality standards of performance and adhere to the terms and conditions of the licenses granted to them</li>
+<li>Encourage, promote, and develop the telecommunications and information technology industries in the state</li>
+<li>Promote and enhance the telecommunications system in the state as indicated by the development and the establishment of industry related training institutions and through the availability of the latest apparatus, equipment, and facilities provided by telecommunications technologies</li>
+</ul>
+    ]]></string>
+    
+    <string name="str__service_info__about_service__default">@string/str_dummy_info_hub_list_item_full_descr</string>
+    <string name="str__service_info__about_service__complain_about_service_provider">You can file a complaint or put remarks about your telecom service provider</string>
+    <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
+
+
 
 </resources>

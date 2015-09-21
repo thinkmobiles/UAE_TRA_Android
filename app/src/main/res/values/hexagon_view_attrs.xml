@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="HexagonView">
         <attr name="hexagonBorderColor" format="color"/>
+        <attr name="hexagonProcessBorderColor" format="color"/>
         <attr name="hexagonBackgroundColor" format="color"/>
         <attr name="hexagonSrc" format="reference|color"/>
         <attr name="hexagonSideSize" format="dimension"/>

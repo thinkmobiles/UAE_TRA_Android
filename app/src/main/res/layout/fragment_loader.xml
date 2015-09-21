@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlFragmentContainer_FSI"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/serviceInfoBackground"
+    android:padding="16dp">
+    <TextView
+        android:text="LoaderFragment"
+        android:textColor="@color/hex_text_color_white"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    
+    <com.uae.tra_smart_services.customviews.LoaderView
+        android:id="@+id/hvLoaderView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:hexagonBorderColor="#c9c8c3"
+        app:hexagonProcessBorderColor="#f1f8ff"
+        app:hexagonBorderSize="1dp"
+        app:hexagonSideSize="48dp"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
