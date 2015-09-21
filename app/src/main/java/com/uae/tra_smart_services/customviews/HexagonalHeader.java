@@ -7,13 +7,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.IntDef;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Size;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.LayoutDirection;
 import android.view.MotionEvent;
@@ -58,6 +62,8 @@ public class HexagonalHeader extends View {
     private Paint mPressedButtonPaint;
     private Paint mDefaultAvatarBorderPaint;
     private Paint mDefaultAvatarBackgroundPaint;
+    private Paint mNotificationBorderPaint;
+    private TextPaint mNotificationTextPaint;
     private int mHexPaintColor;
     private int mButtonColor;
     private int mPressedButtonColor;
@@ -89,8 +95,13 @@ public class HexagonalHeader extends View {
     private float mAvatarRadiusCoefficient = 1.6f;
 
     private float mAnimationProgress = 0.0f;
+    private int mNotificationCount = 0;
 
+    private String mNotificationCountText;
     private OnButtonClickListener mButtonClickListener;
+
+    private final RectF mNotificationTextBounds = new RectF();
+    private final RectF mNotificationBorderBounds = new RectF();
 
     public HexagonalHeader(final Context _context, final AttributeSet _attrs) {
         super(_context, _attrs);
@@ -146,6 +157,34 @@ public class HexagonalHeader extends View {
         return getStartPoint() + getDirectionCoeff() * _number;
     }
 
+    public final void clearNotificationCount() {
+        setNotificationCount(0);
+    }
+
+    public final void setNotificationCount(@IntRange(from = 0, to = 1000) int _notificationCount) {
+        _notificationCount = _notificationCount <= 0 ? 0 : _notificationCount;
+        if (mNotificationCount == _notificationCount) {
+            return;
+        }
+        mNotificationCount = _notificationCount;
+
+        final Drawable notificationIconDrawable;
+        if (mNotificationCount == 0) {
+            notificationIconDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_not);
+        } else {
+            notificationIconDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_ntf);
+        }
+        mDrawables.put(HEXAGON_BUTTON_NOTIFICATION, notificationIconDrawable);
+
+        if (mNotificationCount < 100) {
+            mNotificationCountText = String.valueOf(mNotificationCount);
+        } else {
+            mNotificationCountText = "99+";
+        }
+        measureDrawableBounds();
+        invalidate();
+    }
+
     private void initProperties(final AttributeSet _attrs) {
         TypedArray typedArrayData = getContext().getTheme().
                 obtainStyledAttributes(_attrs, R.styleable.HexagonalHeader, 0, 0);
@@ -194,6 +233,20 @@ public class HexagonalHeader extends View {
         mPressedButtonPaint = new Paint();
         mPressedButtonPaint.setColor(mPressedButtonColor);
         mPressedButtonPaint.setStyle(Paint.Style.FILL);
+
+        final float density = getResources().getDisplayMetrics().density;
+
+        mNotificationTextPaint = new TextPaint();
+        mNotificationTextPaint.setAntiAlias(true);
+        mNotificationTextPaint.setTextAlign(Paint.Align.CENTER);
+        mNotificationTextPaint.setColor(mHexPaintColor);
+        mNotificationTextPaint.setTextSize(12 * density);
+
+        mNotificationBorderPaint = new Paint();
+        mNotificationBorderPaint.setAntiAlias(true);
+        mNotificationBorderPaint.setStrokeWidth(1.5f * density);
+        mNotificationBorderPaint.setColor(mHexPaintColor);
+        mNotificationBorderPaint.setStyle(Paint.Style.STROKE);
     }
 
     private void initButtons() {
@@ -292,9 +345,43 @@ public class HexagonalHeader extends View {
             final int drawableWidth = mDrawables.get(number).getMinimumWidth();
             final int drawableHeight = mDrawables.get(number).getMinimumHeight();
 
-            mDrawables.get(number).setBounds((int) (currentX - drawableWidth / 2), (int) (currentY - drawableHeight / 2),
-                    (int) (currentX + drawableWidth / 2), (int) (currentY + drawableHeight / 2));
+            float drawableHorizontalOffset = 0f, drawableVerticalOffset = 0f;
+            if (number == HEXAGON_BUTTON_NOTIFICATION && mNotificationCount > 0) {
+                measureNotificationIconBounds(currentX, currentY);
+                drawableHorizontalOffset = 0.25f;
+                drawableVerticalOffset = 0.1f;
+            }
+
+            mDrawables.get(number).setBounds(
+                    Math.round(currentX - drawableWidth * (0.5f + drawableHorizontalOffset)),
+                    Math.round(currentY - drawableHeight * (0.5f + drawableVerticalOffset)),
+                    Math.round(currentX + drawableWidth * (0.5f - drawableHorizontalOffset)),
+                    Math.round(currentY + drawableHeight * (0.5f - drawableVerticalOffset)));
         }
+    }
+
+    private void measureNotificationIconBounds(final float _centerX, float _centerY) {
+        final float notificationBorderPadding = 3 * getResources().getDisplayMetrics().density;
+        final float hexagonBorderPadding = 4 * getResources().getDisplayMetrics().density;
+        _centerY -= notificationBorderPadding;
+
+        final Rect notificationTextBounds = new Rect();
+        mNotificationTextPaint.getTextBounds(mNotificationCountText, 0, mNotificationCountText.length(), notificationTextBounds);
+
+        mNotificationBorderBounds.set(notificationTextBounds);
+        mNotificationBorderBounds.inset(-notificationBorderPadding, -notificationBorderPadding);
+        if (mNotificationBorderBounds.width() < mNotificationBorderBounds.height()) {//make border rounded
+            final float dif = Math.abs(mNotificationBorderBounds.height() - mNotificationBorderBounds.width());
+            mNotificationBorderBounds.right += dif;
+        }
+        final float notificationBorderWidth = mNotificationBorderBounds.width();
+        final float notificationBorderRight = Math.min(_centerX + notificationBorderWidth, _centerX + mTriangleHeight - hexagonBorderPadding);
+        mNotificationBorderBounds.offsetTo(notificationBorderRight - notificationBorderWidth, _centerY);
+
+        mNotificationTextBounds.set(notificationTextBounds);
+        mNotificationTextBounds.offsetTo(
+                mNotificationBorderBounds.centerX() - mNotificationTextBounds.width() / 2,
+                mNotificationBorderBounds.centerY() - mNotificationTextBounds.height() / 2);
     }
 
     private void calculateFirstRowPath() {
@@ -493,7 +580,21 @@ public class HexagonalHeader extends View {
     private void drawDrawables(final Canvas _canvas) {
         for (final Integer number : mHexagons.keySet()) {
             mDrawables.get(number).draw(_canvas);
+            if (number == HEXAGON_BUTTON_NOTIFICATION && mNotificationCount > 0) {
+                drawNotificationIcon(_canvas);
+            }
         }
+    }
+
+    private void drawNotificationIcon(final Canvas _canvas) {
+        _canvas.drawRoundRect(mNotificationBorderBounds, mNotificationBorderBounds.height(), mNotificationBorderBounds.height(), mButtonPaint);
+        _canvas.drawRoundRect(mNotificationBorderBounds, mNotificationBorderBounds.height(), mNotificationBorderBounds.height(), mNotificationBorderPaint);
+//        Paint paint = new Paint();
+//        paint.setColor(Color.RED);
+//        paint.setAntiAlias(true);
+//        paint.setStyle(Paint.Style.FILL);
+//        _canvas.drawRect(mNotificationTextBounds, paint);
+        _canvas.drawText(mNotificationCountText, mNotificationTextBounds.centerX(), mNotificationTextBounds.bottom, mNotificationTextPaint);
     }
 
     private Path calculateButtonFill(Path _path, final float _centerX, final float _centerY) {
@@ -669,6 +770,7 @@ public class HexagonalHeader extends View {
 
     public interface OnButtonClickListener {
         void onAvatarButtonClick();
+
         void onHexagonButtonClick(@HexagonButton final int _hexagonButton);
     }
 }
