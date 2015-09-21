@@ -5,13 +5,17 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 
 /**
- * Created by and on 21.09.15.
+ * Created by Andrey Korneychuk on 21.09.15.
  */
 
 public class LoaderFragment extends BaseFragment implements View.OnTouchListener{
+
+    private LoaderView loaderView;
+
     public static LoaderFragment newInstance() {
         Bundle args = new Bundle();
         
@@ -30,7 +34,18 @@ public class LoaderFragment extends BaseFragment implements View.OnTouchListener
     }
 
     @Override
+    protected void initViews() {
+        super.initViews();
+        loaderView = findView(R.id.lvLoaderView);
+    }
+
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()){
+            case  MotionEvent.ACTION_MOVE:
+                loaderView.doAnimate();
+                break;
+        }
         return true;
     }
 }

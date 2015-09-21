@@ -282,7 +282,7 @@ public class HomeActivity extends BaseFragmentActivity
             case R.id.rbInquiries_BNRG:
                 getFragmentManager()
                         .beginTransaction()
-                        .add(R.id.rlGlobalContainer_AH, LoaderFragment.newInstance())
+                        .replace(R.id.rlGlobalContainer_AH, LoaderFragment.newInstance())
                         .commit();
                 break;
             case R.id.rbSettings_BNRG:

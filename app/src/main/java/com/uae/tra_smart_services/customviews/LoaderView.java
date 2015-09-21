@@ -15,13 +15,13 @@ import android.view.View;
 import com.uae.tra_smart_services.R;
 
 /**
- * Created by and on 21.09.15.
+ * Created by Andrey Korneychuk on 21.09.15.
  */
 
-public class LoaderView extends SurfaceView {
+public class LoaderView extends View {
 
-    private final Path mPath;
-    private final Paint mPaint;
+    private final Path mPath, mStartPath;
+    private final Paint mPaint, mProcessPaint;
     private final int HEXAGON_BORDER_COUNT = 6;
     private double mHexagonSide, mHexagonInnerRadius;
     private final int DEFAULT_HEXAGON_RADIUS = Math.round(30 * getResources().getDisplayMetrics().density);
@@ -29,6 +29,7 @@ public class LoaderView extends SurfaceView {
     private int mBorderColor, mProcessBorderColor;
     private float mBorderWidth;
 
+    private int STATE = 0;
 
     public LoaderView(Context context) {
         this(context, null);
@@ -47,20 +48,51 @@ public class LoaderView extends SurfaceView {
         mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
 
         mPath = new Path();
+        mStartPath = new Path();
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setColor(mBorderColor);
         mPaint.setStrokeWidth(mBorderWidth);
         mPaint.setStyle(Paint.Style.STROKE);
+
+        mProcessPaint = new Paint();
+        mProcessPaint.setAntiAlias(true);
+        mProcessPaint.setColor(mProcessBorderColor);
+        mProcessPaint.setStrokeWidth(mBorderWidth);
+        mProcessPaint.setStyle(Paint.Style.STROKE);
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        final float widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        final float myWidth = Math.round(2 * mHexagonInnerRadius + mBorderWidth);
+        final float width;
+
+        if (widthMode == MeasureSpec.EXACTLY) {
+            width = widthSize;
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            width = Math.min(myWidth, widthSize);
+        } else {
+            width = myWidth;
+        }
+
+        setMeasuredDimension((int) width, (int) Math.round(2 * mHexagonSide + mBorderWidth));
+    }
+    double section;
+    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        double section = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
+        section = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
 
         mPath.reset();
         mPath.moveTo(
+                (float) (w / 2 + mHexagonSide * Math.sin(0)),
+                (float) (h / 2 + mHexagonSide * Math.cos(0)));
+
+        mStartPath.moveTo(
                 (float) (w / 2 + mHexagonSide * Math.sin(0)),
                 (float) (h / 2 + mHexagonSide * Math.cos(0)));
 
@@ -87,6 +119,36 @@ public class LoaderView extends SurfaceView {
         }*/
 //        canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
 
-        canvas.drawPath(mPath, mPaint);
+        if(STATE == 0){
+            canvas.drawPath(mPath, mPaint);
+        }
+        drawStart(canvas);
+        drawEnd(canvas);
+    }
+
+    private int i=1;
+    private void drawStart(Canvas canvas) {
+        mStartPath.lineTo(
+                (float) (getWidth() / 2 + mHexagonSide * STATE * Math.sin(section * i)),
+                (float) (getHeight() / 2 + mHexagonSide * Math.cos(section * i)));
+    }
+
+    private void drawEnd(Canvas canvas) {
+    }
+
+    public void doAnimate(){
+        if (++STATE < 100){
+            invalidate();
+        }else{
+            layout(getWidth(), getHeight(), getWidth(), getHeight());
+        }
+
+    }
+
+    public void finishAnimate(){
+        STATE = 0;
+        invalidate();
     }
 }
+
+

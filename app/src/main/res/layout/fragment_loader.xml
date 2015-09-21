@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlFragmentContainer_FSI"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/serviceInfoBackground"
     android:padding="16dp">
     <TextView
-        android:text="LoaderFragment"
+        android:id="@+id/tvLoaderText"
+        tools:text="Give us a moment while processing request"
+        android:text="Give us a moment while processing request"
         android:textColor="@color/hex_text_color_white"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-    
+        android:textAlignment="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_above="@+id/lvLoaderView"
+        android:layout_centerHorizontal="true" />
+
     <com.uae.tra_smart_services.customviews.LoaderView
-        android:id="@+id/hvLoaderView"
+        android:id="@+id/lvLoaderView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:hexagonSideSize="48dp"
         app:hexagonBorderColor="#c9c8c3"
         app:hexagonProcessBorderColor="#f1f8ff"
-        app:hexagonBorderSize="1dp"
-        app:hexagonSideSize="48dp"
+        app:hexagonBorderSize="5dp"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
