@@ -143,4 +143,8 @@
         <item name="layout_widthPercent">90%</item>
     </style>
 
+    <style name="SeekBarStyle">
+        <item name="android:layoutDirection">ltr</item>
+    </style>
+
 </resources>

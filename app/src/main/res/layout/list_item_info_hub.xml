@@ -76,7 +76,7 @@
         android:id="@+id/vListViewItemSeparator"
         android:layout_marginStart="5dp"
         android:layout_alignStart="@+id/hvDescr_LIHLI"
-        android:layout_below="@+id/hvIcon_LIHLI"
+        android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/hvDescr_LIHLI" />
 
 </RelativeLayout> 

@@ -30,6 +30,7 @@
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_orange</item>
         <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_orange</item>
         <item name="authorizationButtonsBackground">@drawable/selector_authorization_buttons_orange</item>
+        <item name="hexagonHeaderButtonPressedColor">@color/hex_dark_orange</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_orange</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
@@ -47,6 +48,7 @@
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_green</item>
         <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_green</item>
         <item name="authorizationButtonsBackground">@drawable/selector_authorization_buttons_green</item>
+        <item name="hexagonHeaderButtonPressedColor">@color/hex_dark_green</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_green</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
@@ -63,6 +65,7 @@
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_blue</item>
         <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_blue</item>
         <item name="authorizationButtonsBackground">@drawable/selector_authorization_buttons_blue</item>
+        <item name="hexagonHeaderButtonPressedColor">@color/hex_dark_blue</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_blue</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>

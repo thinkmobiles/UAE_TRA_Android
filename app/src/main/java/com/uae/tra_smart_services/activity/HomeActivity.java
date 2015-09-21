@@ -58,6 +58,7 @@ import com.uae.tra_smart_services.fragment.UserProfileFragment;
 import com.uae.tra_smart_services.fragment.UserProfileFragment.OnUserProfileClickListener;
 import com.uae.tra_smart_services.fragment.UserProfileFragment.UserProfileAction;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.tutorial.AvatarTutorialFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
@@ -361,6 +362,9 @@ public class HomeActivity extends BaseFragmentActivity
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
         Fragment fragment = null;
         switch(_service){
+            case HINT:
+                fragment = AvatarTutorialFragment.newInstance();
+                break;
             case NOTIFICATION:
                 fragment = NotificationsFragment.newInstance();
                 break;

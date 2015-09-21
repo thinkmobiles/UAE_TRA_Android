@@ -14,8 +14,10 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.uae.tra_smart_services.BuildConfig;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.HomeActivity;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
@@ -43,6 +45,7 @@ public class SettingsFragment extends BaseHomePageFragment
     private Button btnChangeServer;
     private LinearLayout llAboutTRA;
     private SwitchCompat swBlackAndWhiteMode;
+    private TextView tvVersionName;
 
     private FontSizeSwitcherView fontSwitch;
     private LanguageSwitcherView langSwitch;
@@ -79,6 +82,7 @@ public class SettingsFragment extends BaseHomePageFragment
         swBlackAndWhiteMode = findView(R.id.swBlackAndWhiteMode_FS);
         swBlackAndWhiteMode.setChecked(mPrefs.getBoolean(C.KEY_BLACK_AND_WHITE_MODE, false));
         llAboutTRA = findView(R.id.llAboutTRA_FS);
+        tvVersionName = findView(R.id.tvVersionName_FS);
     }
 
     @Override
@@ -118,6 +122,8 @@ public class SettingsFragment extends BaseHomePageFragment
         themeSwitch = findView(R.id.cvThemeSwitch);
         themeSwitch.globalInit(mThemaDefiner.getThemeStringValue());
         themeSwitch.registerObserver(this);
+
+        tvVersionName.setHint("v1.0, build " + BuildConfig.VERSION_NAME);
     }
 
     @Override

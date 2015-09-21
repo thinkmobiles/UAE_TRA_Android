@@ -37,7 +37,7 @@
                 <TextView
                     android:id="@+id/tvLanguage_FS"
                     style="@style/UserSettingsStaticText"
-                    android:hint="@string/str_language"/>
+                    android:text="@string/str_language"/>
 
                 <com.uae.tra_smart_services.customviews.LanguageSwitcherView
                     android:id="@+id/cvLangSwitch"
@@ -58,7 +58,7 @@
 
                 <TextView
                     style="@style/UserSettingsStaticText"
-                    android:hint="@string/str_color_impaired"/>
+                    android:text="@string/str_color_impaired"/>
 
                 <Space
                     android:layout_width="0dp"
@@ -85,7 +85,7 @@
 
                 <TextView
                     style="@style/UserSettingsStaticText"
-                    android:hint="@string/str_fontsize"/>
+                    android:text="@string/str_fontsize"/>
 
                 <com.uae.tra_smart_services.customviews.FontSizeSwitcherView
                     android:id="@+id/cvFontSwitch"
@@ -114,7 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start|center"
-                        android:hint="@string/str_themesoptions"
+                        android:text="@string/str_themesoptions"
                         android:paddingStart="@dimen/dp_transparent_fields_padding"
                         android:paddingTop="@dimen/dp_transparent_fields_padding"
                         android:textColor="@android:color/black"
@@ -152,7 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:hint="@string/str_about_tra"
+                    android:text="@string/str_about_tra"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/sp_settings_static_text_size"/>
 
@@ -165,6 +165,32 @@
 
             <View style="@style/AuthorizationFieldsSeparator"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llVersionNumber_FS"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp_transparent_fields_padding"
+                android:paddingEnd="@dimen/dp_transparent_fields_padding"
+                android:paddingStart="@dimen/dp_transparent_fields_padding"
+                android:paddingTop="@dimen/dp_transparent_fields_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:text="@string/release_version_label"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_settings_static_text_size"/>
+
+                <TextView
+                    android:id="@+id/tvVersionName_FS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!--<View style="@style/AuthorizationFieldsSeparator"/>-->
 
             <!--
             <LinearLayout
