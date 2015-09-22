@@ -2,11 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlFragmentContainer_FSI"
+    android:id="@+id/rlFragmentContainer_FL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/serviceInfoBackground"
     android:padding="16dp">
+
     <TextView
         android:id="@+id/tvLoaderText"
         tools:text="Give us a moment while processing request"
@@ -24,9 +25,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:hexagonSideSize="48dp"
-        app:hexagonBorderColor="#c9c8c3"
+        app:hexagonBorderColor="#a6a5a0"
         app:hexagonProcessBorderColor="#f1f8ff"
-        app:hexagonBorderSize="5dp"
+        app:hexagonSuccessBorderColor="?attr/serviceInfoBackground"
+        app:hexagonBorderSize="3dp"
+        app:hexagonProcessBorderSize="3dp"
+        app:hexagonSuccessBorderSize="5dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
 

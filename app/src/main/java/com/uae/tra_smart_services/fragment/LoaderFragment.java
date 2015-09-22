@@ -1,8 +1,9 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.LoaderView;
@@ -12,9 +13,10 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
  * Created by Andrey Korneychuk on 21.09.15.
  */
 
-public class LoaderFragment extends BaseFragment implements View.OnTouchListener{
+public class LoaderFragment extends BaseFragment implements View.OnClickListener {
 
     private LoaderView loaderView;
+    private RelativeLayout rlFragmentContainer;
 
     public static LoaderFragment newInstance() {
         Bundle args = new Bundle();
@@ -36,16 +38,24 @@ public class LoaderFragment extends BaseFragment implements View.OnTouchListener
     @Override
     protected void initViews() {
         super.initViews();
+        rlFragmentContainer = findView(R.id.rlFragmentContainer_FL);
         loaderView = findView(R.id.lvLoaderView);
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()){
-            case  MotionEvent.ACTION_MOVE:
-                loaderView.doAnimate();
-                break;
+    protected void initListeners() {
+        super.initListeners();
+        rlFragmentContainer.setOnClickListener(this);
+    }
+
+    boolean state = true;
+    @Override
+    public void onClick(View v) {
+        if(state == true){
+            loaderView.startLoading();
+        } else {
+            loaderView.finishLoading();
         }
-        return true;
+        state = !state;
     }
 }
