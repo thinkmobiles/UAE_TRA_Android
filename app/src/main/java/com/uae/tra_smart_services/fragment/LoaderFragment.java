@@ -3,7 +3,6 @@ package com.uae.tra_smart_services.fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.LoaderView;
@@ -52,9 +51,9 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if(state == true){
-            loaderView.startLoading();
+            loaderView.startProcessing();
         } else {
-            loaderView.finishLoading();
+            loaderView.startFilling();
         }
         state = !state;
     }

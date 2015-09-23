@@ -106,7 +106,11 @@ public class HomeActivity extends BaseFragmentActivity
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
-            replaceFragmentWithOutBackStack(LoaderFragment.newInstance());
+            getFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .add(R.id.rlGlobalContainer_AH, LoaderFragment.newInstance())
+                    .commit();
         }
 
         onBackStackChanged();
