@@ -12,7 +12,7 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
  * Created by Andrey Korneychuk on 21.09.15.
  */
 
-public class LoaderFragment extends BaseFragment implements View.OnClickListener {
+public class LoaderFragment extends BaseFragment implements View.OnClickListener, LoaderView.OnPressListener {
 
     private LoaderView loaderView;
     private RelativeLayout rlFragmentContainer;
@@ -56,5 +56,11 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
             loaderView.startFilling();
         }
         state = !state;
+    }
+
+    @Override
+    public boolean onPressed(LoaderView.State _state) {
+        getFragmentManager().popBackStack();
+        return true;
     }
 }

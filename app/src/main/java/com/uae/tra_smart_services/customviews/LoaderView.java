@@ -10,9 +10,12 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.PathMeasure;
+import android.os.SystemClock;
 import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
@@ -22,40 +25,40 @@ import com.uae.tra_smart_services.R;
  * Created by Andrey Korneychuk on 21.09.15.
  */
 
-public class LoaderView extends View {
+public class LoaderView extends View implements View.OnTouchListener {
 
-    private enum State{
-        INITIALL(0),
-        PROCESSING(1),
-        FILLING(2),
-        SUCCESS(3),
-        FAILURE(4);
+    public enum State{
+        INITIALL(0), PROCESSING(1), FILLING(2), SUCCESS(3), FAILURE(4);
 
         private int state;
-        State(int _state){
-            state = _state;
-        }
+        State(int _state){ state = _state; }
     }
 
     @ColorInt
     private int mBorderColor, mProcessBorderColor, mSuccessBorderColor;
+    private double mHexagonSide, mHexagonInnerRadius;
+    private float mSuccessAnimationLength;
+    private float mProcessAnimationLength;
+    private long mTouchDownTime;
     private float mBorderSize, mProcessBorderSize, mSuccessBorderSize;
+
+    private final int DEFAULT_HEXAGON_RADIUS = Math.round(30 * getResources().getDisplayMetrics().density);
+    private final int HEXAGON_BORDER_COUNT = 6;
+    private final double mHexagonSection = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
+    private final int mSuccessFigureOffsetX = 25;
+    private final int mSuccessFigureOffsetY = 35;
+
+    private State mAnimationState = State.INITIALL;
+
     private final Path mHexagonPath, okIconPath;
     private final Paint mBorderPaint, mProcessPaint, mEndProcessPaint, mFillArePaint, mSuccessPaint;
-    private final int HEXAGON_BORDER_COUNT = 6;
-    private double mHexagonSide, mHexagonInnerRadius;
-    private final int DEFAULT_HEXAGON_RADIUS = Math.round(30 * getResources().getDisplayMetrics().density);
-    private float mSuccessAnimationLength;
-    private State mAnimationState = State.INITIALL;
-    private double mHexagonSection;
-    private float mProcessAnimationLength;
-    private int successFigureOffsetX = 25;
-    private int successFigureOffsetY = 35;
 
     private ObjectAnimator animatorStart;
     private ObjectAnimator animatorEnd;
     private ObjectAnimator animatorFilling;
     private ObjectAnimator animatorSuccess;
+
+    private OnPressListener listener;
 
     public LoaderView(Context context) {
         this(context, null);
@@ -64,6 +67,7 @@ public class LoaderView extends View {
     public LoaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        setOnTouchListener(this);
 
         mHexagonPath = new Path();
         okIconPath = new Path();
@@ -194,8 +198,6 @@ public class LoaderView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        mHexagonSection = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
-
         mHexagonPath.reset();
         mHexagonPath.moveTo(
                 (float) (w / 2 - mHexagonSide * Math.sin(0)),
@@ -209,9 +211,9 @@ public class LoaderView extends View {
         mHexagonPath.close();
 
         okIconPath.reset();
-        okIconPath.moveTo(successFigureOffsetX + 20, successFigureOffsetY + 60);
-        okIconPath.lineTo(successFigureOffsetX + 45, successFigureOffsetY + 95);
-        okIconPath.lineTo(successFigureOffsetX + 100, successFigureOffsetY + 40);
+        okIconPath.moveTo(mSuccessFigureOffsetX + 20, mSuccessFigureOffsetY + 60);
+        okIconPath.lineTo(mSuccessFigureOffsetX + 45, mSuccessFigureOffsetY + 95);
+        okIconPath.lineTo(mSuccessFigureOffsetX + 100, mSuccessFigureOffsetY + 40);
     }
 
     public void startProcessing(){
@@ -270,6 +272,10 @@ public class LoaderView extends View {
             );
     }
 
+    public void setOnPressListener(OnPressListener _listener){
+        listener = _listener;
+    }
+
     @Override
     public void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
@@ -290,6 +296,32 @@ public class LoaderView extends View {
                 // TODO: Have to implemented to draw failure figure on the hexagon
                 break;
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        boolean handled = false;
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mTouchDownTime = SystemClock.elapsedRealtime();
+                handled = true;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                handled = false;
+                break;
+
+            case MotionEvent.ACTION_UP:
+                if (SystemClock.elapsedRealtime() - mTouchDownTime <= ViewConfiguration.getTapTimeout()) {
+                    return (listener != null && mAnimationState == State.SUCCESS) ? listener.onPressed(mAnimationState) : false;
+                }
+                break;
+        }
+        return handled;
+    }
+
+    public interface OnPressListener{
+        boolean onPressed(State _state);
     }
 }
 
