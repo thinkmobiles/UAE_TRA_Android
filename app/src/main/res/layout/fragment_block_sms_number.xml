@@ -7,27 +7,26 @@
     android:paddingTop="?attr/actionBarSize"
     tools:ignore="HardcodedText,RtlSymmetry">
 
-    <EditText
-        android:id="@+id/etOperatorNumber_FBSN"
-        style="@style/UserAuthorizationDataEditTextField"
-        android:background="@null"
-        android:gravity="center_vertical"
-        android:hint="@string/operator_number"
-        android:inputType="phone"
-        android:singleLine="true"
-        android:textColor="@android:color/black"/>
+    <!--<EditText-->
+        <!--android:id="@+id/etOperatorNumber_FBSN"-->
+        <!--style="@style/UserAuthorizationDataEditTextField"-->
+        <!--android:background="@null"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:hint="@string/operator_number"-->
+        <!--android:inputType="phone"-->
+        <!--android:singleLine="true"-->
+        <!--android:textColor="@android:color/black"/>-->
 
-    <View
-        android:id="@+id/vOperatorNumberDivider_FBSN"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/etOperatorNumber_FBSN"
-        android:background="@android:drawable/divider_horizontal_textfield"/>
+    <!--<View-->
+        <!--android:id="@+id/vOperatorNumberDivider_FBSN"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_below="@id/etOperatorNumber_FBSN"-->
+        <!--android:background="@android:drawable/divider_horizontal_textfield"/>-->
 
     <TextView
         android:id="@+id/tvServiceProvider_FBSN"
         style="@style/UserAuthorizationDataEditTextField"
-        android:layout_below="@id/vOperatorNumberDivider_FBSN"
         android:background="@null"
         android:freezesText="true"
         android:gravity="center_vertical"

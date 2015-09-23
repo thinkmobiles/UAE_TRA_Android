@@ -29,6 +29,8 @@ import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;
 import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
 
+import java.net.HttpURLConnection;
+
 import retrofit.RetrofitError;
 
 /**
@@ -159,6 +161,9 @@ public abstract class BaseFragment extends Fragment {
                 //TODO: change this on production, added just to see when developing
                 return getString(R.string.error_conversion_error);
             case HTTP:
+                if (_error.getResponse().getStatus() == HttpURLConnection.HTTP_INTERNAL_ERROR) {
+                    return getString(R.string.error_server);
+                }
                 try {
                     ErrorResponseModel errorResponse = (ErrorResponseModel) _error.getBodyAs(ErrorResponseModel.class);
                     return errorResponse.error;

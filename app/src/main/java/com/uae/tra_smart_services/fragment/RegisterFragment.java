@@ -22,8 +22,6 @@ import com.uae.tra_smart_services.rest.model.request.RegisterModel;
 import com.uae.tra_smart_services.rest.robo_requests.RegisterRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
 
-import java.util.Arrays;
-
 import retrofit.client.Response;
 
 /**
@@ -83,8 +81,8 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         etEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_mail, R.attr.authorizationDrawableColors), null, null, null);
 
 
-        acsState = findView(R.id.spState_FR);
-//        acsCountry = findView(R.id.spCountry_FR);
+//        acsState = findView(R.id.spState_FR);
+    //        acsCountry = findView(R.id.spCountry_FR);
         // Actions
         tvRegister = findView(R.id.tvRegister_FLI);
     }
@@ -98,8 +96,8 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mStatesAdapter = new StateRegisterAdapter(getActivity(), Arrays.asList(getResources().getStringArray(R.array.states_array)));
-        acsState.setAdapter(mStatesAdapter);
+//        mStatesAdapter = new StateRegisterAdapter(getActivity(), Arrays.asList(getResources().getStringArray(R.array.states_array)));
+//        acsState.setAdapter(mStatesAdapter);
 
         initFilters();
     }
@@ -132,7 +130,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         registerModel.mobile = etPhone.getText().toString();
         registerModel.first = etFirstName.getText().toString();
         registerModel.last = etLastName.getText().toString();
-        registerModel.state = acsState.getSelectedItemPosition()+1;
+        registerModel.state = 3; // HARDCODED DUBAI
         registerModel.email = etEmail.getText().toString();
         registerModel.emiratesId = etEmiratesId.getText().toString();
 
