@@ -106,11 +106,7 @@ public class HomeActivity extends BaseFragmentActivity
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
-            getFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .add(R.id.rlGlobalContainer_AH, LoaderFragment.newInstance())
-                    .commit();
+            addFragment(HexagonHomeFragment.newInstance());
         }
 
         onBackStackChanged();
@@ -286,7 +282,8 @@ public class HomeActivity extends BaseFragmentActivity
             case R.id.rbInquiries_BNRG:
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.rlGlobalContainer_AH, LoaderFragment.newInstance())
+                        .addToBackStack(null)
+                        .add(R.id.rlGlobalContainer_AH, LoaderFragment.newInstance())
                         .commit();
                 break;
             case R.id.rbSettings_BNRG:

@@ -39,6 +39,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         super.initViews();
         rlFragmentContainer = findView(R.id.rlFragmentContainer_FL);
         loaderView = findView(R.id.lvLoaderView);
+        loaderView.setOnPressListener(this);
     }
 
     @Override

@@ -306,11 +306,9 @@ public class LoaderView extends View implements View.OnTouchListener {
                 mTouchDownTime = SystemClock.elapsedRealtime();
                 handled = true;
                 break;
-
             case MotionEvent.ACTION_MOVE:
                 handled = false;
                 break;
-
             case MotionEvent.ACTION_UP:
                 if (SystemClock.elapsedRealtime() - mTouchDownTime <= ViewConfiguration.getTapTimeout()) {
                     return (listener != null && mAnimationState == State.SUCCESS) ? listener.onPressed(mAnimationState) : false;
