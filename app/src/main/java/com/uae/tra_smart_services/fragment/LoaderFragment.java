@@ -91,6 +91,12 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        startLoading();
+    }
+
+    @Override
     public void startLoading() {
         tvLoaderTitleText.setText(R.string.str_give_us_moment);
         tvBackOrCancelButton.setVisibility(View.VISIBLE);

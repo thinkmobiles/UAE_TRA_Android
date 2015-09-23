@@ -234,7 +234,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-    Loader loader;
+    public Loader loader;
     public void showLoader(LoaderFragment.OnLoadingListener _onLoadingListener){
         getFragmentManager()
                 .beginTransaction()
