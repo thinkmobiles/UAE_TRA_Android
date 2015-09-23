@@ -62,6 +62,7 @@ import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
@@ -77,7 +78,7 @@ public class HomeActivity extends BaseFragmentActivity
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
         OnOpenUserProfileClickListener, OnUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener,
-        SettingsFragment.OnOpenAboutTraClickListener {
+        SettingsFragment.OnOpenAboutTraClickListener{
 
     private static final String TAG = "HomeActivity";
     protected static final int REQUEST_CHECK_SETTINGS = 1000;
@@ -106,6 +107,7 @@ public class HomeActivity extends BaseFragmentActivity
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
+//            addFragmentWithBackStackGlobally(LoaderFragment.newInstance());
         }
 
         onBackStackChanged();
@@ -149,6 +151,7 @@ public class HomeActivity extends BaseFragmentActivity
                 openFragmentIfAuthorized(SuggestionFragment.newInstance(), _service);
                 break;
             case HELP_SALIM:
+                // not implement
                 replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
                 break;
             case APPROVED_DEVICES:
@@ -255,9 +258,11 @@ public class HomeActivity extends BaseFragmentActivity
     public void onSmsServiceChildSelect(SmsService _service) {
         switch (_service) {
             case REPORT:
+                // not implement
                 replaceFragmentWithBackStack(SmsReportFragment.newInstance());
                 break;
             case BLOCK:
+                // not implement
                 replaceFragmentWithBackStack(SmsBlockNumberFragment.newInstance());
                 break;
         }
@@ -363,7 +368,7 @@ public class HomeActivity extends BaseFragmentActivity
                 addFragmentWithBackStackGlobally(SearchFragment.newInstance());
                 break;
             case HINT:
-                addFragmentWithBackStackGlobally(LoaderFragment.newInstance());
+//                addFragmentWithBackStackGlobally(LoaderFragment.newInstance());
                 break;
         }
     }

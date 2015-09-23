@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:hexagonSideSize="48dp"
-        app:hexagonBorderColor="#a6a5a0"
+        app:hexagonBorderColor="#cecdc8"
         app:hexagonProcessBorderColor="#f1f8ff"
         app:hexagonSuccessBorderColor="?attr/serviceInfoBackground"
         app:hexagonBorderSize="3dp"
@@ -48,5 +48,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/lvLoaderView"
         android:layout_centerHorizontal="true" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/start"
+            android:text="start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/success"
+            android:text="success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/failure"
+            android:text="failure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 
 </RelativeLayout>

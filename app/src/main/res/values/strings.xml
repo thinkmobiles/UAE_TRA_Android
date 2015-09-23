@@ -324,7 +324,10 @@
     <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
 
     <string name="str_back_to_dashboard">BACK TO DASHBOARD</string>
+    <string name="str_cancel_request">CANCEL REQUEST</string>
     <string name="str_give_us_moment">Give us a moment while processing request</string>
     <string name="str_reuqest_has_been_sent">Your Request has been successfully sent and you will receive an SMS reply shortly</string>
+    <string name="str_reuqest_has_been_failed">Your Request has been failed</string>
+    <string name="str_reuqest_has_been_cancelled">Your Request has been cancelled</string>
 
 </resources>

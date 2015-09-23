@@ -23,6 +23,8 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
+import com.uae.tra_smart_services.fragment.LoaderFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;
 import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
@@ -49,7 +51,7 @@ public abstract class BaseFragment extends Fragment {
             mThemaDefiner = (ThemaDefiner) _activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(_activity.toString()
-                    + " must implement ProgressDialogManager and ErrorHandler and ThemaDefiner");
+                    + " must implement ProgressDialogManager and ErrorHandler and ThemaDefiner and Loader");
         }
     }
 
@@ -130,8 +132,10 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+
     protected final void processError(final SpiceException _exception) {
         if (isAdded()) {
+            showFailureLoading();
             hideProgressDialog();
             String errorMessage;
             Throwable cause = _exception.getCause();
@@ -222,5 +226,33 @@ public abstract class BaseFragment extends Fragment {
 
     protected final void showFormattedMessage(@StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
         showFormattedMessage(-1, _titleRes, _bodyRes, _replace);
+    }
+
+
+    Loader loader;
+    public void showLoader(LoaderFragment.OnLoadingListener _onLoadingListener){
+        getFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.rlGlobalContainer_AH, (Fragment) (loader = LoaderFragment.newInstance(_onLoadingListener)))
+                .commit();
+    }
+
+    public void showSuccessLoading(){
+        if(loader != null){
+            loader.successLoading();
+        }
+    }
+
+    public void showFailureLoading(){
+        if(loader != null){
+            loader.failureLoading();
+        }
+    }
+
+    public void showCancelLoading(){
+        if(loader != null){
+            loader.cancelLoading();
+        }
     }
 }

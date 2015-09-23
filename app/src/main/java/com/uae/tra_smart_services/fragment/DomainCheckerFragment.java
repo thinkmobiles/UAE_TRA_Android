@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
@@ -26,7 +26,7 @@ import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
  * Created by ak-buffalo on 10.08.15.
  */
 public class DomainCheckerFragment extends BaseServiceFragment
-        implements View.OnClickListener, AlertDialogFragment.OnOkListener {
+        implements View.OnClickListener, AlertDialogFragment.OnOkListener, LoaderFragment.OnLoadingListener {
 
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
@@ -101,7 +101,8 @@ public class DomainCheckerFragment extends BaseServiceFragment
     public final void onClick(View _view) {
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
-            showProgressDialog(getString(R.string.str_checking), this);
+//            showProgressDialog(getString(R.string.str_checking), this);
+            showLoader(this);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
                     checkAvailability(domain);
@@ -152,6 +153,18 @@ public class DomainCheckerFragment extends BaseServiceFragment
         }
     }
 
+    @Override
+    public void onRequestCancel(LoaderView.State _state) {
+        if(getSpiceManager().isStarted()){
+            if(mDomainAvailabilityCheckRequest != null){
+                getSpiceManager().cancel(mDomainAvailabilityCheckRequest);
+            }
+            if(mDomainInfoCheckRequest != null){
+                getSpiceManager().cancel(mDomainInfoCheckRequest);
+            }
+        }
+    }
+
     private abstract class DomainCheckRequestListener<T> implements RequestListener<T> {
         protected String mDomain;
 
@@ -175,6 +188,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         @Override
         public void onRequestSuccess(DomainAvailabilityCheckResponseModel _responseModel) {
             hideProgressDialog();
+            showSuccessLoading();
             if (_responseModel != null) {
                 _responseModel.domainStrValue = mDomain;
                 mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_AVAILABILITY, _responseModel);
@@ -192,6 +206,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         @Override
         public void onRequestSuccess(DomainInfoCheckResponseModel _reponseModel) {
             hideProgressDialog();
+            showSuccessLoading();
             if (!_reponseModel.urlData.equals("No Data Found\r\n")) {
                 mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_INFO, _reponseModel);
             } else {
