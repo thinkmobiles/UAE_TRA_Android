@@ -363,16 +363,13 @@ public class HomeActivity extends BaseFragmentActivity
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
         switch(_service){
             case HINT:
-                fragment = AvatarTutorialFragment.newInstance();
+                addFragmentWithBackStackGlobally(AvatarTutorialFragment.newInstance());
                 break;
             case NOTIFICATION:
                 addFragmentWithBackStackGlobally(NotificationsFragment.newInstance());
                 break;
             case SEARCH:
                 addFragmentWithBackStackGlobally(SearchFragment.newInstance());
-                break;
-            case HINT:
-//                addFragmentWithBackStackGlobally(LoaderFragment.newInstance());
                 break;
         }
     }
