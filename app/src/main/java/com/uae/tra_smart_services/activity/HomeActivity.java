@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
@@ -106,7 +105,7 @@ public class HomeActivity extends BaseFragmentActivity
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
-            addFragment(HexagonHomeFragment.newInstance());
+            addFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
         }
 
         onBackStackChanged();
@@ -280,11 +279,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithOutBackStack(InfoHubFragment.newInstance());
                 break;
             case R.id.rbInquiries_BNRG:
-                getFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .add(R.id.rlGlobalContainer_AH, LoaderFragment.newInstance())
-                        .commit();
+
                 break;
             case R.id.rbSettings_BNRG:
                 clearBackStack();
@@ -338,10 +333,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onOpenServiceInfo(int _position, Service _item) {
-        getFragmentManager().beginTransaction()
-                .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance(_item))
-                .commit();
+        addFragmentWithBackStackGlobally(ServiceInfoFragment.newInstance(_item));
     }
 
     @Override
@@ -363,21 +355,16 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
-        Fragment fragment = null;
         switch(_service){
             case NOTIFICATION:
-                fragment = NotificationsFragment.newInstance();
+                addFragmentWithBackStackGlobally(NotificationsFragment.newInstance());
                 break;
             case SEARCH:
-                fragment = SearchFragment.newInstance();
+                addFragmentWithBackStackGlobally(SearchFragment.newInstance());
                 break;
-        }
-        if(fragment != null){
-            getFragmentManager()
-                .beginTransaction()
-                .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, fragment)
-                .commit();
+            case HINT:
+                addFragmentWithBackStackGlobally(LoaderFragment.newInstance());
+                break;
         }
     }
 }

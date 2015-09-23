@@ -65,7 +65,7 @@ public class AuthorizationActivity extends BaseFragmentActivity
         }
 
         if (getFragmentManager().findFragmentById(getContainerId()) == null) {
-            addFragment(LoginFragment.newInstance());
+            addFragmentWithOutBackStack(LoginFragment.newInstance());
         }
     }
 

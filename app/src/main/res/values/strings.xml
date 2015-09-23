@@ -323,6 +323,8 @@
     <string name="str__service_info__about_service__complain_about_service_provider">You can file a complaint or put remarks about your telecom service provider</string>
     <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
 
-
+    <string name="str_back_to_dashboard">BACK TO DASHBOARD</string>
+    <string name="str_give_us_moment">Give us a moment while processing request</string>
+    <string name="str_reuqest_has_been_sent">Your Request has been successfully sent and you will receive an SMS reply shortly</string>
 
 </resources>
