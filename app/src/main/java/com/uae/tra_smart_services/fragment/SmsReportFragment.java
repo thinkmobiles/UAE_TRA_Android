@@ -90,7 +90,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
     private void collectAndSendToServer() {
         if (validateData()) {
 
-            showProgressDialog(getString(R.string.str_checking), this);
+            showLoaderDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     mSmsReportRequest = new SmsReportRequest(
                             new SmsReportRequestModel(
@@ -122,7 +122,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted() && mSmsReportRequest != null) {
             getSpiceManager().cancel(mSmsReportRequest);
         }
@@ -137,7 +137,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
 
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
-            hideProgressDialog();
+            dissmissLoaderDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
         }
     }

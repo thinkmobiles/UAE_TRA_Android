@@ -74,4 +74,5 @@ public final class ServerConstants {
     //!!!!!!!!!!!! SERVER RESPONSES !!!!!!!!!!!!!!!!!
     public static final String AVAILABLE = "Available";
     public static final String NOT_AVAILABLE = "Not Available";
+    public static final String NO_DATA_FOUND = "No Data Found\r\n";
 }

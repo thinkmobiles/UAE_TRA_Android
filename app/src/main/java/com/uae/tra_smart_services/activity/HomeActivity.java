@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
@@ -41,6 +40,7 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnOpenUserProfile
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
+import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
@@ -63,6 +63,7 @@ import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
@@ -78,7 +79,7 @@ public class HomeActivity extends BaseFragmentActivity
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
         OnOpenUserProfileClickListener, OnUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener,
-        SettingsFragment.OnOpenAboutTraClickListener {
+        SettingsFragment.OnOpenAboutTraClickListener{
 
     private static final String TAG = "HomeActivity";
     protected static final int REQUEST_CHECK_SETTINGS = 1000;
@@ -106,7 +107,8 @@ public class HomeActivity extends BaseFragmentActivity
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
-            addFragment(HexagonHomeFragment.newInstance());
+            addFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
+//            addFragmentWithBackStackGlobally(LoaderFragment.newInstance());
         }
 
         onBackStackChanged();
@@ -150,6 +152,7 @@ public class HomeActivity extends BaseFragmentActivity
                 openFragmentIfAuthorized(SuggestionFragment.newInstance(), _service);
                 break;
             case HELP_SALIM:
+                // not implement
                 replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
                 break;
             case APPROVED_DEVICES:
@@ -256,9 +259,11 @@ public class HomeActivity extends BaseFragmentActivity
     public void onSmsServiceChildSelect(SmsService _service) {
         switch (_service) {
             case REPORT:
+                // not implement
                 replaceFragmentWithBackStack(SmsReportFragment.newInstance());
                 break;
             case BLOCK:
+                // not implement
                 replaceFragmentWithBackStack(SmsBlockNumberFragment.newInstance());
                 break;
         }
@@ -280,8 +285,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithOutBackStack(InfoHubFragment.newInstance());
                 break;
             case R.id.rbInquiries_BNRG:
-                Toast.makeText(getApplicationContext(), "choice: Inquiries",
-                        Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.rbSettings_BNRG:
                 clearBackStack();
@@ -335,10 +339,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onOpenServiceInfo(int _position, Service _item) {
-        getFragmentManager().beginTransaction()
-                .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, ServiceInfoFragment.newInstance(_item))
-                .commit();
+        addFragmentWithBackStackGlobally(ServiceInfoFragment.newInstance(_item));
     }
 
     @Override
@@ -360,7 +361,6 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
-        Fragment fragment = null;
         switch(_service){
             case HINT:
                 getSupportFragmentManager().beginTransaction()
@@ -369,18 +369,11 @@ public class HomeActivity extends BaseFragmentActivity
                         .commit();
                 break;
             case NOTIFICATION:
-                fragment = NotificationsFragment.newInstance();
+                addFragmentWithBackStackGlobally(NotificationsFragment.newInstance());
                 break;
             case SEARCH:
-                fragment = SearchFragment.newInstance();
+                addFragmentWithBackStackGlobally(SearchFragment.newInstance());
                 break;
-        }
-        if(fragment != null){
-            getFragmentManager()
-                .beginTransaction()
-                .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, fragment)
-                .commit();
         }
     }
 }

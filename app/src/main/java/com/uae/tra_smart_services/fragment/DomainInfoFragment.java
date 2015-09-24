@@ -7,16 +7,11 @@ import android.content.Loader;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.StringRes;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
@@ -24,10 +19,7 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.H;
 import com.uae.tra_smart_services.global.Service;
-import com.uae.tra_smart_services.rest.model.request.RatingServiceRequestModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
-import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
-import com.uae.tra_smart_services.rest.robo_requests.RatingServiceRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +27,7 @@ import java.util.Map;
 /**
  * Created by ak-buffalo on 14.08.15.
  */
-public class DomainInfoFragment extends BaseFragment implements DomainServiceRatingView.CallBacks,/*RadioGroup.OnCheckedChangeListener,*/ AlertDialogFragment.OnOkListener, LoaderManager.LoaderCallbacks<Map<String, String>> {
+public class DomainInfoFragment extends BaseFragment implements DomainServiceRatingView.CallBacks, AlertDialogFragment.OnOkListener, LoaderManager.LoaderCallbacks<Map<String, String>> {
 
     private TextView tvDomainName_FDI;
     private TextView tvRegisterId_FDI;
@@ -110,7 +102,7 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
     }*/
 
     /*private void executeCall(final RatingServiceRequestModel _model, final RadioButton _radio){
-        showProgressDialog(getString(R.string.str_sending), null);
+        showLoaderDialog(getString(R.string.str_sending), null);
         getSpiceManager().execute(
                 new RatingServiceRequest(_model),
                 new RequestListener<RatingServiceResponseModel>() {
@@ -122,7 +114,7 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
 
                     @Override
                     public void onRequestSuccess(RatingServiceResponseModel response) {
-                        hideProgressDialog();
+                        dissmissLoaderDialog();
                         switch (response.getStatus()) {
                             case 201:
                                 showMessage(R.string.str_success, R.string.str_rating_has_been_sent);
@@ -179,12 +171,12 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
 
     @Override
     public void preExecuteCall() {
-        showProgressDialog(getString(R.string.str_sending), null);
+        showLoaderDialog(getString(R.string.str_sending), null);
     }
 
     @Override
     public void postExecuteCall() {
-        hideProgressDialog();
+        dissmissLoaderDialog();
     }
 
     @Override

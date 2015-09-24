@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
@@ -104,7 +103,7 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment implement
         mRestorePasswordRequestModel = new RestorePasswordRequestModel(etEmail.getText().toString());
 
         if (mFilterPool.check(mRestorePasswordRequestModel)) {
-            showProgressDialog(getString(R.string.str_restoring), this);
+            showLoaderDialog(getString(R.string.str_restoring), this);
             getSpiceManager()
                     .execute(
                             mRestorePasswordRequest = new RestorePasswordRequest(mRestorePasswordRequestModel),
@@ -113,7 +112,7 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment implement
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted() && mRestorePasswordRequest!=null){
             getSpiceManager().cancel(mRestorePasswordRequest);
         }
@@ -137,7 +136,7 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment implement
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                hideProgressDialog();
+                dissmissLoaderDialog();
                 onRestorePassMessageId = (int) Math.random();
                 showMessage(onRestorePassMessageId, R.string.str_success, R.string.str_restore_pass_mail);
             }

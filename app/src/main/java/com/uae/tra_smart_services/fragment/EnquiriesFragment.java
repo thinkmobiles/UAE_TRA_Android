@@ -37,7 +37,7 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         mRequest = new ComplainEnquiriesServiceRequest(traServiceModel, getActivity(), getImageUri());
-        showProgressDialog(getString(R.string.str_sending), this);
+        showLoaderOverlay(getString(R.string.str_sending), this);
         getSpiceManager().execute(mRequest, getRequestKey(), DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
     }
 
@@ -48,7 +48,7 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted() && mRequest != null) {
             getSpiceManager().cancel(mRequest);
         }
