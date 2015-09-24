@@ -45,7 +45,6 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
-
         mSelectListener = (ApprovedDevicesFragment.OnDeviceSelectListener) _activity;
     }
 
