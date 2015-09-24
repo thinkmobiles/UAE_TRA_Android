@@ -72,7 +72,6 @@ public class LoaderView extends View {
     public LoaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-//        setOnTouchListener(this);
 
         mHexagonPath = new Path();
         okIconPath = new Path();
@@ -105,7 +104,7 @@ public class LoaderView extends View {
     private void initPaints(){
         mBorderPaint.setAntiAlias(true);
         mBorderPaint.setColor(mBorderColor);
-//        mBorderPaint.setAlpha(30);
+        mBorderPaint.setAlpha(10);
         mBorderPaint.setStrokeWidth(mBorderSize);
         mBorderPaint.setStyle(Paint.Style.STROKE);
 
@@ -115,8 +114,7 @@ public class LoaderView extends View {
         mProcessPaint.setStyle(Paint.Style.STROKE);
 
         mEndProcessPaint.setAntiAlias(true);
-        mEndProcessPaint.setColor(mBorderColor);
-//        mEndProcessPaint.setAlpha(30);
+        mEndProcessPaint.setColor(mSuccessBorderColor);
         mEndProcessPaint.setStrokeWidth(mBorderSize);
         mEndProcessPaint.setStyle(Paint.Style.STROKE);
 
@@ -314,6 +312,7 @@ public class LoaderView extends View {
                 _canvas.drawPath(mHexagonPath, mBorderPaint);
                 _canvas.drawPath(mHexagonPath, mProcessPaint);
                 _canvas.drawPath(mHexagonPath, mEndProcessPaint);
+                _canvas.drawPath(mHexagonPath, mBorderPaint);
                 break;
             case FILLING:
                 _canvas.drawPath(mHexagonPath, mFillArePaint);
