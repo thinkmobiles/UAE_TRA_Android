@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.activity;
 
-import android.app.Fragment;
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
@@ -40,7 +40,6 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnOpenUserProfile
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
-import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
@@ -66,13 +65,11 @@ import com.uae.tra_smart_services.fragment.spam.ReportWebSpamFragment;
 import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment;
 import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment.OnAddToSpamClickListener;
 import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment.SpamType;
-import com.uae.tra_smart_services.fragment.tutorial.AvatarTutorialFragment;
 import com.uae.tra_smart_services.fragment.tutorial.TutorialContainerFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
-import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
@@ -89,8 +86,6 @@ public class HomeActivity extends BaseFragmentActivity
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
         OnOpenUserProfileClickListener, OnUserProfileClickListener, OnHeaderStaticServiceSelectedListener,
         OnOpenAboutTraClickListener, OnReportSpamServiceSelectListener, OnAddToSpamClickListener {
-        OnOpenUserProfileClickListener, OnUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener,
-        SettingsFragment.OnOpenAboutTraClickListener{
 
     private static final String TAG = "HomeActivity";
     protected static final int REQUEST_CHECK_SETTINGS = 1000;

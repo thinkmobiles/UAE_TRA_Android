@@ -13,8 +13,8 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.SpamServiceProviderAdapter;
-import com.uae.tra_smart_services.dialog.ProgressDialog.MyDialogInterface;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SmsReportRequest;
@@ -23,7 +23,7 @@ import com.uae.tra_smart_services.util.SmsUtils;
 /**
  * Created by mobimaks on 24.09.2015.
  */
-public class ReportSmsSpamFragment extends BaseFragment implements OnClickListener, MyDialogInterface {
+public class ReportSmsSpamFragment extends BaseFragment implements OnClickListener, Cancelled {
 
     private static final String KEY_REPORT_SMS_SPAM_REQUEST = "REPORT_SMS_SPAM_REQUEST";
 
@@ -77,7 +77,7 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
 
     private void validateAndSendData() {
         if (validateData()) {
-            showProgressDialog(getString(R.string.str_checking), this);
+            showLoaderOverlay(getString(R.string.str_sending), this);
             mSmsReportRequest = new SmsReportRequest(
                     new SmsReportRequestModel(
                             etNumberOfSpammer.getText().toString(),
@@ -109,7 +109,7 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted() && mSmsReportRequest != null) {
             getSpiceManager().cancel(mSmsReportRequest);
         }
@@ -126,7 +126,8 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
             if (isAdded()) {
-                hideProgressDialog();
+                dissmissLoaderDialog();
+                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent));
                 getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_SMS_SPAM_REQUEST);
                 if (smsSpamReportResponse != null) {
                     showMessage(R.string.str_success, R.string.str_report_has_been_sent);
