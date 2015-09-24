@@ -21,6 +21,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.ScannerActivity;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByImeiRequest;
 
@@ -98,6 +99,13 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     private void searchDeviceByImei() {
         mRequest = new SearchByImeiRequest(etImeiNumber.getText().toString());
         showLoaderOverlay(getString(R.string.str_sending), this);
+        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+            @Override
+            public void onBackButtonPressed() {
+                getFragmentManager().popBackStack();
+                getFragmentManager().popBackStack();
+            }
+        });
         getSpiceManager().execute(mRequest, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
     }
 

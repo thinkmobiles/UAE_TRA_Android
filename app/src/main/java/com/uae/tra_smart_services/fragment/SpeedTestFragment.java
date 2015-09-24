@@ -57,16 +57,11 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
         getSpiceManager().getFromCache(Long.class, KEY_SPEED_TEST_REQUEST, DurationInMillis.ALWAYS_RETURNED, this);
     }
 
-    private void cancelRequest() {
-        if (mSpeedTestRequest != null) {
-            mSpeedTestRequest.cancel();
-        }
-    }
-
     @Override
     public final void onRequestSuccess(final Long _kbPerSecond) {
         if (isAdded()) {
             dissmissLoaderDialog();
+
             dissmissLoaderOverlay(SpeedTestFragment.this);
             if (_kbPerSecond != null) {
                 double mBitPerSecond = _kbPerSecond / 1024f;
@@ -80,7 +75,9 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
 
     @Override
     public final void onLoadingCanceled() {
-        cancelRequest();
+        if (mSpeedTestRequest != null) {
+            mSpeedTestRequest.cancel();
+        }
     }
 
     @Override

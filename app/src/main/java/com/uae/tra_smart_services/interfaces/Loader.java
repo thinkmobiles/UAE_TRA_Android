@@ -14,6 +14,8 @@ public interface Loader {
 
     void dissmissLoading(Dismiss afterDissmiss);
 
+    void setBackButtonPressedBehaviour(BackButton backButtonPressed);
+
     void backButtonPressed();
 
     interface Dismiss {
@@ -22,5 +24,9 @@ public interface Loader {
 
     interface Cancelled{
         void onLoadingCanceled();
+    }
+
+    interface BackButton{
+        void onBackButtonPressed();
     }
 }

@@ -22,7 +22,6 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
-import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
 import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
@@ -36,7 +35,7 @@ import retrofit.RetrofitError;
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragment extends Fragment implements Loader.Dismiss {
+public abstract class BaseFragment extends Fragment implements Loader.Dismiss, Loader.BackButton {
 
     private View rootView;
     private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
@@ -170,6 +169,22 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss {
         }
     }
 
+    protected final void setLoaderOverlayBackButtonBehaviour(Loader.BackButton _backButtonPressed){
+        if(loader != null){
+            loader.setBackButtonPressedBehaviour(_backButtonPressed);
+        }
+    }
+
+    @Override
+    public void onLoadingDismissed() {
+        getFragmentManager().popBackStackImmediate();
+    }
+
+    @Override
+    public void onBackButtonPressed() {
+        onLoadingDismissed();
+    }
+
     protected final void processError(final SpiceException _exception) {
         if (isAdded()) {
             String errorMessage;
@@ -263,10 +278,5 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss {
 
     protected final void showFormattedMessage(@StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
         showFormattedMessage(-1, _titleRes, _bodyRes, _replace);
-    }
-
-    @Override
-    public void onLoadingDismissed() {
-        getFragmentManager().popBackStackImmediate();
     }
 }
