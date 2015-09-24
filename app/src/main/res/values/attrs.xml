@@ -69,4 +69,8 @@
 
     <attr name="themeMainColor" format="reference|color"/>
 
+    <attr name="reportSpam" format="reference"/>
+
+    <attr name="spamHistory" format="reference"/>
+
 </resources>

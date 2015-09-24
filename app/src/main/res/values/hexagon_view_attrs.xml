@@ -4,6 +4,7 @@
         <attr name="hexagonBorderColor" format="color"/>
         <attr name="hexagonBackgroundColor" format="color"/>
         <attr name="hexagonSrc" format="reference|color"/>
+        <attr name="hexagonSrcTintColor" format="reference|color"/>
         <attr name="hexagonSideSize" format="dimension"/>
         <attr name="hexagonBorderSize" format="dimension"/>
         <attr name="hexagonText" format="string"/>

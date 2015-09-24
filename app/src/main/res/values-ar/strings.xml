@@ -128,5 +128,6 @@
 
     <string name="login_username_hint">اسم المستخدم</string>
 
+    <string name="fragment_report_spam_title">رسائل غير مرغوبة</string>
 
 </resources>

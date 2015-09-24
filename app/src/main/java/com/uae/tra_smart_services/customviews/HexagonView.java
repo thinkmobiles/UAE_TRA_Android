@@ -16,6 +16,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -39,13 +40,15 @@ public final class HexagonView extends View implements Target {
     private Paint mPaint, mShadowPaint, mTextPaint;
     private Rect mHexagonRect, mTextRect;
     private Drawable mSrcDrawable;
-    private @DrawableRes int mSrcRes;
+    private
+    @DrawableRes
+    int mSrcRes;
     private String mText;
     private double mHexagonSide, mHexagonInnerRadius;
     private float mBorderWidth, mTextSize;
 
     @ColorInt
-    private int mBorderColor, mBackgroundColor, mTextColor;
+    private int mBorderColor, mBackgroundColor, mTextColor, mSrcTintColor;
 
     public HexagonView(Context context) {
         this(context, null);
@@ -62,6 +65,7 @@ public final class HexagonView extends View implements Target {
             mTextSize = a.getDimensionPixelSize(R.styleable.HexagonView_hexagonTextSize, DEFAULT_TEXT_SIZE);
             mBorderColor = a.getColor(R.styleable.HexagonView_hexagonBorderColor, 0xFFC8C7C6);
             mTextColor = a.getColor(R.styleable.HexagonView_hexagonTextColor, mBorderColor);
+            mSrcTintColor = a.getColor(R.styleable.HexagonView_hexagonSrcTintColor, Color.TRANSPARENT);
             mBackgroundColor = a.getColor(R.styleable.HexagonView_hexagonBackgroundColor, Color.TRANSPARENT);
             mSrcDrawable = a.getDrawable(R.styleable.HexagonView_hexagonSrc);
             mSrcRes = a.getResourceId(R.styleable.HexagonView_hexagonSrc, R.drawable.authorization_logo);
@@ -69,6 +73,8 @@ public final class HexagonView extends View implements Target {
         } finally {
             a.recycle();
         }
+
+        tintDrawableIfNeed();
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -85,6 +91,14 @@ public final class HexagonView extends View implements Target {
 
         mHexagonRect = new Rect();
         mTextRect = new Rect();
+    }
+
+    private void tintDrawableIfNeed() {
+        if (mSrcDrawable != null && mSrcTintColor != Color.TRANSPARENT) {
+            Drawable wrappedDrawable = DrawableCompat.wrap(mSrcDrawable);
+            DrawableCompat.setTint(wrappedDrawable.mutate(), mSrcTintColor);
+            mSrcDrawable = wrappedDrawable;
+        }
     }
 
     public final void setHexagonSide(final int _hexagonSideSize) {
@@ -110,6 +124,7 @@ public final class HexagonView extends View implements Target {
 
     public final void setHexagonSrcDrawable(final Drawable _backgroundDrawable) {
         mSrcDrawable = _backgroundDrawable;
+        tintDrawableIfNeed();
         invalidate();
     }
 
@@ -122,7 +137,7 @@ public final class HexagonView extends View implements Target {
     }
 
     @DrawableRes
-    public int getHexagonSrc(){
+    public int getHexagonSrc() {
         return mSrcRes;
     }
 

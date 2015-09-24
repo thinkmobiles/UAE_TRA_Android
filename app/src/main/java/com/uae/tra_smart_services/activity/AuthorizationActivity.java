@@ -122,6 +122,11 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
     @Override
     public void onBackPressed() {
+        if (mAction != null && mAction.equals(C.ACTION_LOGIN)) {
+            final Intent data = new Intent();
+            data.putExtra(C.FRAGMENT_FOR_REPLACING, getIntent().getSerializableExtra(C.FRAGMENT_FOR_REPLACING));
+            setResult(RESULT_CANCELED, data);
+        }
         super.onBackPressed();
     }
 
