@@ -21,6 +21,7 @@ import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.RegisterModel;
 import com.uae.tra_smart_services.rest.robo_requests.RegisterRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
+import com.uae.tra_smart_services.util.TRAPatterns;
 
 import retrofit.client.Response;
 
@@ -79,7 +80,6 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
 
         etEmail = findView(R.id.etEmail_FRP);
         etEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_mail, R.attr.authorizationDrawableColors), null, null, null);
-
 
 //        acsState = findView(R.id.spState_FR);
     //        acsCountry = findView(R.id.spCountry_FR);
@@ -210,6 +210,19 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
                             showMessage(0, R.string.str_error, R.string.error_valid_email);
                             etEmail.setError(getString(R.string.error_valid_email));
                             etEmail.requestFocus();
+                            return false;
+                        }
+                        return true;
+                    }
+                });
+
+                addFilter(new Filter<RegisterModel>() {
+                    @Override
+                    public boolean check(RegisterModel _data) {
+                        if(!TRAPatterns.EMIRATES_ID.matcher(_data.emiratesId).matches()) {
+                            showMessage(0, R.string.str_error, R.string.error_valid_emid);
+                            etEmiratesId.setError(getString(R.string.error_valid_emid));
+                            etEmiratesId.requestFocus();
                             return false;
                         }
                         return true;

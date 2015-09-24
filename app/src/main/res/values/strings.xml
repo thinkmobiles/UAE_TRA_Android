@@ -206,7 +206,7 @@
 
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
-    <string name="hint_emirates_id">Emirates ID No.</string>
+    <string name="hint_emirates_id">e.g. 784-YYYY-NNNNNNN-C</string>
     <string name="hint_username">Username</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="hint_address">Address</string>
@@ -323,6 +323,7 @@
     <string name="str__service_info__about_service__complain_about_service_provider">You can file a complaint or put remarks about your telecom service provider</string>
     <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
     <string name="release_version_label">Release Version</string>
+    <string name="error_valid_emid">Please enter valid emirates id</string>
 
 
 </resources>

@@ -136,6 +136,20 @@ public class HexagonalHeader extends View {
         invalidate();
     }
 
+    public final PointF getAvatarCenter() {
+        final float avatarTriangleHeight = mTriangleHeight * mAvatarRadiusCoefficient;
+        final float radius = mRadius * mAvatarRadiusCoefficient;
+
+        final float centerY = getPaddingTop() + radius + mHexagonAvatarBorderWidth / 2;
+        final float centerX = calculateDependsOnDirection(getPaddingStart() + mHexagonStrokeWidth / 2 + 2.5f * mTriangleHeight);
+
+        return new PointF(centerX, centerY);
+    }
+
+    public final float getAvatarSideOffset() {
+        return mTriangleHeight;
+    }
+
     public final float getStartPoint() {
         final int direction = getLayoutDirection();
         switch (direction) {
@@ -304,9 +318,13 @@ public class HexagonalHeader extends View {
 
         mAvatarRadiusCoefficient = mAvatarRadiusCoefficientStartValue -
                 mAnimationProgress * mAvatarRadiusCoefficientDifference;
-        myHeight = (int) Math.ceil(radius * mAvatarRadiusCoefficient * 2
-                + radius + mHexagonStrokeWidth + paddings - paddings * mAnimationProgress
-                - mAnimationProgress * radius);
+        if (mTutorialType == TUTORIAL_TYPE_NONE) {
+            myHeight = (int) Math.ceil(radius * mAvatarRadiusCoefficient * 2
+                    + radius + mHexagonStrokeWidth + paddings - paddings * mAnimationProgress
+                    - mAnimationProgress * radius);
+        } else {
+            myHeight = (int) Math.ceil(radius * mAvatarRadiusCoefficient * 2 + paddings);
+        }
 
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
