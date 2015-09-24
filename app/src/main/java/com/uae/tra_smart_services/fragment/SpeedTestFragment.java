@@ -61,7 +61,6 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
     public final void onRequestSuccess(final Long _kbPerSecond) {
         if (isAdded()) {
             dissmissLoaderDialog();
-
             dissmissLoaderOverlay(SpeedTestFragment.this);
             if (_kbPerSecond != null) {
                 double mBitPerSecond = _kbPerSecond / 1024f;

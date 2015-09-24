@@ -10,12 +10,9 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.PathMeasure;
-import android.os.SystemClock;
 import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
@@ -39,25 +36,26 @@ public class LoaderView extends View {
     private double mHexagonSide, mHexagonInnerRadius;
     private float mSuccessOrFailedAnimationLength;
     private float mProcessAnimationLength;
-    private long mTouchDownTime;
     private float mBorderSize, mProcessBorderSize, mSuccessBorderSize;
 
     private final int DEFAULT_HEXAGON_RADIUS = Math.round(30 * getResources().getDisplayMetrics().density);
     private final int HEXAGON_BORDER_COUNT = 6;
     private final double mHexagonSection = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
-    private final int mSuccessFigureOffsetX = 45;
-    private final int mSuccessFigureOffsetY = 95;
 
     private int mCenterWidth, mCenterHeight;
 
-    private int mFailureFigureWH = 60;
+    private int mSuccessFigureWH = 90;
+    private float mSuccessFigureOffsetX;
+    private float mSuccessFigureOffsetY;
+
+    private int mFailureFigureWH = 70;
     private int mFailureFigureOffsetX;
-    private int mFailureFigureOffsetY = 20;
+    private int mFailureFigureOffsetY;
 
     private State mAnimationState = State.INITIALL;
     private State mCurrentState;
 
-    private final Path mHexagonPath, okIconPath, badIconPath;
+    private final Path mHexagonPath, successIconPath, dismissedIconPath;
     private final Paint mBorderPaint, mProcessPaint, mEndProcessPaint, mFillArePaint, mSuccessOrFailPaint;
 
     private ObjectAnimator animatorStart;
@@ -74,8 +72,8 @@ public class LoaderView extends View {
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         mHexagonPath = new Path();
-        okIconPath = new Path();
-        badIconPath = new Path();
+        successIconPath = new Path();
+        dismissedIconPath = new Path();
 
         mBorderPaint = new Paint();
         mProcessPaint = new Paint();
@@ -214,6 +212,10 @@ public class LoaderView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mCenterWidth = w / 2;
         mCenterHeight = h / 2;
+
+        mSuccessFigureOffsetX = (float) (mCenterWidth -  mSuccessFigureWH / 2);
+        mSuccessFigureOffsetY = (float) (mCenterHeight - mSuccessFigureWH * 0.4);
+
         mFailureFigureOffsetX = mCenterWidth - mFailureFigureWH / 2;
         mFailureFigureOffsetY = mCenterHeight - mFailureFigureWH / 2;
 
@@ -228,16 +230,16 @@ public class LoaderView extends View {
         }
         mHexagonPath.close();
 
-        okIconPath.reset();
-        okIconPath.moveTo(mSuccessFigureOffsetX, mSuccessFigureOffsetY);
-        okIconPath.lineTo(mSuccessFigureOffsetX + 25, mSuccessFigureOffsetY + 35);
-        okIconPath.lineTo(mSuccessFigureOffsetX + 80, mSuccessFigureOffsetY - 20);
+        successIconPath.reset();
+        successIconPath.moveTo(mSuccessFigureOffsetX, mSuccessFigureOffsetY + mSuccessFigureWH / 2);
+        successIconPath.lineTo(mSuccessFigureOffsetX + (float) (mSuccessFigureWH * 0.4), mSuccessFigureOffsetY + (float) (mSuccessFigureWH * 0.8));
+        successIconPath.lineTo(mSuccessFigureOffsetX + mSuccessFigureWH, mSuccessFigureOffsetY);
 
-        badIconPath.reset();
-        badIconPath.moveTo(mFailureFigureOffsetX, mFailureFigureOffsetY);
-        badIconPath.lineTo(mFailureFigureOffsetX + 60, mFailureFigureOffsetY + 60);
-        badIconPath.moveTo(mFailureFigureOffsetX + 60, mFailureFigureOffsetY);
-        badIconPath.lineTo(mFailureFigureOffsetX, mFailureFigureOffsetY + 60);
+        dismissedIconPath.reset();
+        dismissedIconPath.moveTo(mFailureFigureOffsetX, mFailureFigureOffsetY);
+        dismissedIconPath.lineTo(mFailureFigureOffsetX + mFailureFigureWH, mFailureFigureOffsetY + mFailureFigureWH);
+        dismissedIconPath.moveTo(mFailureFigureOffsetX + mFailureFigureWH, mFailureFigureOffsetY);
+        dismissedIconPath.lineTo(mFailureFigureOffsetX, mFailureFigureOffsetY + mFailureFigureWH);
     }
 
     public void startProcessing(){
@@ -260,7 +262,7 @@ public class LoaderView extends View {
     private void startDrawSuccessFigure() {
         mAnimationState = State.SUCCESS;
 
-        PathMeasure measure = new PathMeasure(okIconPath, false);
+        PathMeasure measure = new PathMeasure(successIconPath, false);
         mSuccessOrFailedAnimationLength = measure.getLength();
         animatorSuccessOrFailed.start();
     }
@@ -268,7 +270,7 @@ public class LoaderView extends View {
     private void startDrawFailureFigure() {
         mAnimationState = State.FAILURE;
 
-        PathMeasure measure = new PathMeasure(badIconPath, false);
+        PathMeasure measure = new PathMeasure(dismissedIconPath, false);
         mSuccessOrFailedAnimationLength = measure.getLength();
         animatorSuccessOrFailed.start();
     }
@@ -319,11 +321,11 @@ public class LoaderView extends View {
                 break;
             case SUCCESS:
                 _canvas.drawPath(mHexagonPath, mFillArePaint);
-                _canvas.drawPath(okIconPath, mSuccessOrFailPaint);
+                _canvas.drawPath(successIconPath, mSuccessOrFailPaint);
                 break;
             case FAILURE:
                 _canvas.drawPath(mHexagonPath, mFillArePaint);
-                _canvas.drawPath(badIconPath, mSuccessOrFailPaint);
+                _canvas.drawPath(dismissedIconPath, mSuccessOrFailPaint);
                 break;
         }
     }
