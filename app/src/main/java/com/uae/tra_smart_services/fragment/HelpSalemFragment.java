@@ -134,7 +134,7 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted() && mHelpSalimRequest != null) {
             getSpiceManager().cancel(mHelpSalimRequest);
         }

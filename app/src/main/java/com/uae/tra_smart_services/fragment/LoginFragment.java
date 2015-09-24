@@ -125,7 +125,7 @@ public class LoginFragment extends BaseAuthorizationFragment
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted() && mRequest!=null){
             getSpiceManager().cancel(mRequest);
         }

@@ -22,9 +22,9 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     private LoaderView lvLoader;
     private TextView tvBackOrCancelBtn, tvLoaderTitleText;
     private RelativeLayout rlFragmentContainer;
-    private static ProgressDialog.MyDialogInterface mOnLoadingListener;
+    private static Loader.Cancelled mOnLoadingListener;
 
-    public static LoaderFragment newInstance(String _msg, ProgressDialog.MyDialogInterface _onLoadingListener) {
+    public static LoaderFragment newInstance(String _msg, Loader.Cancelled _onLoadingListener) {
         Bundle args = new Bundle();
         args.putString(MSG, _msg);
         mOnLoadingListener = _onLoadingListener;
@@ -63,7 +63,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         switch (v.getId()){
             case R.id.tvLoaderBackButton:
                 if(v.getTag() == LoaderView.State.PROCESSING){
-                    mOnLoadingListener.onDialogCancel();
+                    mOnLoadingListener.onLoadingCanceled();
                 } else {
                     backButtonPressed();
                 }
@@ -101,8 +101,8 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void dissmissLoading(AfterDissmiss afterDissmiss) {
-        afterDissmiss.onAfterDissmiss();
+    public void dissmissLoading(Dismiss afterDissmiss) {
+        afterDissmiss.onLoadingDismissed();
     }
 
     @Override
@@ -118,8 +118,4 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         toolbarTitleManager.setToolbarVisibility(true);
         getFragmentManager().popBackStackImmediate();
     }
-/*
-    public interface OnLoadingListener{
-        void onRequestCancel();
-    }*/
 }

@@ -138,7 +138,7 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted()){
             getSpiceManager().cancel(request);
         }

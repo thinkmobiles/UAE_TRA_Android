@@ -122,7 +122,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted() && mSmsReportRequest != null) {
             getSpiceManager().cancel(mSmsReportRequest);
         }

@@ -102,7 +102,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     public final void onClick(View _view) {
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
-            showLoaderDialog(getString(R.string.str_checking), this);
+            showLoaderOverlay(getString(R.string.str_checking), this);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
                     checkAvailability(domain);
@@ -142,7 +142,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted()){
             if(mDomainAvailabilityCheckRequest != null){
                 getSpiceManager().cancel(mDomainAvailabilityCheckRequest);

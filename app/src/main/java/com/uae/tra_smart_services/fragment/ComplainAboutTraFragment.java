@@ -118,7 +118,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted()){
             getSpiceManager().removeDataFromCache(Response.class, getRequestKey());
             getSpiceManager().cancel(request);
@@ -143,6 +143,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
                 dissmissLoaderDialog();
+                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent));
                 getSpiceManager().removeDataFromCache(Response.class, getRequestKey());
                 if (result != null) {
                     showMessage(R.string.str_success, R.string.str_complain_has_been_sent);

@@ -12,11 +12,15 @@ public interface Loader {
 
     void dissmissLoading(String _msg);
 
-    void dissmissLoading(AfterDissmiss afterDissmiss);
+    void dissmissLoading(Dismiss afterDissmiss);
 
     void backButtonPressed();
 
-    interface AfterDissmiss {
-        void onAfterDissmiss();
+    interface Dismiss {
+        void onLoadingDismissed();
+    }
+
+    interface Cancelled{
+        void onLoadingCanceled();
     }
 }

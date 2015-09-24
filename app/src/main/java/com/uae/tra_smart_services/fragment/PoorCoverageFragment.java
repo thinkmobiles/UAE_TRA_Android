@@ -363,7 +363,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted() && mPoorCoverageRequest != null) {
             getSpiceManager().cancel(mPoorCoverageRequest);
         }

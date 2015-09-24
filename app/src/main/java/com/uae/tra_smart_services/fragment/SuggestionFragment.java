@@ -52,7 +52,7 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted() && mComplainSuggestionServiceRequest != null){
             getSpiceManager().cancel(mComplainSuggestionServiceRequest);
         }

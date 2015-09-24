@@ -166,7 +166,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted() && mSmsBlockRequest != null) {
             getSpiceManager().cancel(mSmsBlockRequest);
         }

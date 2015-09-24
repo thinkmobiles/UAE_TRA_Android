@@ -142,7 +142,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted() && mRegisterRequest!=null){
             getSpiceManager().cancel(mRegisterRequest);
         }

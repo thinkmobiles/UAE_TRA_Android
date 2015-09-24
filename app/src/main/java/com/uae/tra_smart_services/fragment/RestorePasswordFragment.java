@@ -112,7 +112,7 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment implement
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted() && mRestorePasswordRequest!=null){
             getSpiceManager().cancel(mRestorePasswordRequest);
         }

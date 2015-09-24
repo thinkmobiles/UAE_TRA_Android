@@ -24,11 +24,9 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
 import com.uae.tra_smart_services.fragment.LoaderFragment;
-import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;
-import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
 
 import java.net.HttpURLConnection;
@@ -38,7 +36,7 @@ import retrofit.RetrofitError;
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragment extends Fragment implements Loader.AfterDissmiss {
+public abstract class BaseFragment extends Fragment implements Loader.Dismiss {
 
     private View rootView;
     private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
@@ -127,7 +125,7 @@ public abstract class BaseFragment extends Fragment implements Loader.AfterDissm
         showLoaderDialog("Loading...", null);
     }
 
-    protected final void showLoaderDialog(String _title, ProgressDialog.MyDialogInterface _callBack){
+    protected final void showLoaderDialog(String _title, Loader.Cancelled _callBack){
         ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
     }
 
@@ -148,7 +146,7 @@ public abstract class BaseFragment extends Fragment implements Loader.AfterDissm
         return isLoaded;
     }
 
-    protected final void showLoaderOverlay(String _title, ProgressDialog.MyDialogInterface _callBack){
+    protected final void showLoaderOverlay(String _title, Loader.Cancelled _callBack){
         getFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
@@ -168,7 +166,7 @@ public abstract class BaseFragment extends Fragment implements Loader.AfterDissm
         }
     }
 
-    protected final void dissmissLoaderOverlay(Loader.AfterDissmiss _afterDissmiss){
+    protected final void dissmissLoaderOverlay(Loader.Dismiss _afterDissmiss){
         if(loader != null){
             loader.dissmissLoading(_afterDissmiss);
         }
@@ -270,7 +268,7 @@ public abstract class BaseFragment extends Fragment implements Loader.AfterDissm
     }
 
     @Override
-    public void onAfterDissmiss() {
+    public void onLoadingDismissed() {
         getFragmentManager().popBackStackImmediate();
     }
 }

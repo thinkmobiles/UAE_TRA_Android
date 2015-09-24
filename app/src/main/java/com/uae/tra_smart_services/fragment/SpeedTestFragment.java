@@ -9,8 +9,8 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.dialog.ProgressDialog.MyDialogInterface;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.robo_requests.SpeedTestRequest;
 
 import java.math.BigDecimal;
@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 /**
  * Created by mobimaks on 07.09.2015.
  */
-public final class SpeedTestFragment extends BaseFragment implements OnClickListener, MyDialogInterface, RequestListener<Long> {
+public final class SpeedTestFragment extends BaseFragment implements OnClickListener, Loader.Cancelled, RequestListener<Long> {
 
     private static final String KEY_SPEED_TEST_REQUEST = "SPEED_TEST_REQUEST";
 
@@ -78,7 +78,7 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
     }
 
     @Override
-    public final void onDialogCancel() {
+    public final void onLoadingCanceled() {
         cancelRequest();
     }
 
