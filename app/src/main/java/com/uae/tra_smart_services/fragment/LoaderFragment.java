@@ -2,12 +2,13 @@ package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.LoaderView;
+import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 
@@ -16,73 +17,53 @@ import com.uae.tra_smart_services.interfaces.Loader;
  */
 public class LoaderFragment extends BaseFragment implements View.OnClickListener, Loader {
 
-    private LoaderView lvLoader;
-    private TextView tvBackOrCancelButton, tvLoaderTitleText;
-    private RelativeLayout rlFragmentContainer;
-    private Button btnStart, btnSuccess, btnFailure, btnCancel;
-    private static OnLoadingListener mOnLoadingListener;
+    private static final String MSG = "message";
 
-    public static LoaderFragment newInstance(LoaderFragment.OnLoadingListener _onLoadingListener) {
+    private LoaderView lvLoader;
+    private TextView tvBackOrCancelBtn, tvLoaderTitleText;
+    private RelativeLayout rlFragmentContainer;
+    private static ProgressDialog.MyDialogInterface mOnLoadingListener;
+
+    public static LoaderFragment newInstance(String _msg, ProgressDialog.MyDialogInterface _onLoadingListener) {
         Bundle args = new Bundle();
+        args.putString(MSG, _msg);
         mOnLoadingListener = _onLoadingListener;
         LoaderFragment fragment = new LoaderFragment();
         fragment.setArguments(args);
         return fragment;
     }
-    @Override
-    protected int getTitle() {
-        return 0;
-    }
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_loader;
-    }
+    protected int getTitle() { return 0; }
+
+    @Override
+    protected int getLayoutResource() { return R.layout.fragment_loader; }
+
+    @Override
+    protected void setToolbarVisibility() { toolbarTitleManager.setToolbarVisibility(true); }
 
     @Override
     protected void initViews() {
         super.initViews();
-        btnStart = findView(R.id.start);
-        btnStart.setOnClickListener(this);
-        btnSuccess = findView(R.id.success);
-        btnSuccess.setOnClickListener(this);
-        btnFailure = findView(R.id.failure);
-        btnFailure.setOnClickListener(this);
-
-
         rlFragmentContainer = findView(R.id.rlFragmentContainer_FL);
         lvLoader = findView(R.id.lvLoaderView);
         tvLoaderTitleText = findView(R.id.tvLoaderTitleText);
-        tvBackOrCancelButton = findView(R.id.tvLoaderBackButton);
+        tvBackOrCancelBtn = findView(R.id.tvLoaderBackButton);
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
         rlFragmentContainer.setOnClickListener(this);
-        tvBackOrCancelButton.setOnClickListener(this);
-    }
-
-    @Override
-    protected void setToolbarVisibility() {
-        toolbarTitleManager.setToolbarVisibility(false);
+        tvBackOrCancelBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.start:
-                startLoading();
-                break;
-            case R.id.success:
-                showSuccessLoading();
-                break;
-            case R.id.failure:
-                showFailureLoading();
-                break;
             case R.id.tvLoaderBackButton:
                 if(v.getTag() == LoaderView.State.PROCESSING){
-                    showCancelLoading();
+                    mOnLoadingListener.onDialogCancel();
                 } else {
                     backButtonPressed();
                 }
@@ -91,43 +72,45 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        startLoading();
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // start processing after layout globlly created
+                startLoading(getArguments().getString(MSG));
+                ViewTreeObserver obs = view.getViewTreeObserver();
+                obs.removeGlobalOnLayoutListener(this);
+            }
+        });
     }
 
     @Override
-    public void startLoading() {
-        tvLoaderTitleText.setText(R.string.str_give_us_moment);
-        tvBackOrCancelButton.setVisibility(View.VISIBLE);
-        tvBackOrCancelButton.setText(R.string.str_cancel_request);
-        tvBackOrCancelButton.setTag(LoaderView.State.PROCESSING);
+    public void startLoading(String _msg) {
         lvLoader.startProcessing();
+        tvLoaderTitleText.setText(getArguments().getString(MSG));
+        tvBackOrCancelBtn.setTag(LoaderView.State.PROCESSING);
     }
 
     @Override
-    public void successLoading() {
+    public void successLoading(String _msg) {
         lvLoader.startFilling(LoaderView.State.SUCCESS);
-        tvLoaderTitleText.setText(R.string.str_reuqest_has_been_sent);
-        tvBackOrCancelButton.setText(R.string.str_back_to_dashboard);
-        tvBackOrCancelButton.setTag(LoaderView.State.SUCCESS);
+        tvLoaderTitleText.setText(_msg);
+        tvBackOrCancelBtn.setTag(LoaderView.State.SUCCESS);
+        tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
     }
 
     @Override
-    public void cancelLoading() {
+    public void dissmissLoading(AfterDissmiss afterDissmiss) {
+        afterDissmiss.onAfterDissmiss();
+    }
+
+    @Override
+    public void dissmissLoading(String _msg) {
         lvLoader.startFilling(LoaderView.State.CANCELLED);
-        tvLoaderTitleText.setText(R.string.str_reuqest_has_been_cancelled);
-        tvBackOrCancelButton.setText(R.string.str_back_to_dashboard);
-        tvBackOrCancelButton.setTag(LoaderView.State.CANCELLED);
-        mOnLoadingListener.onRequestCancel(LoaderView.State.CANCELLED);
-    }
-
-    @Override
-    public void failureLoading() {
-        lvLoader.startFilling(LoaderView.State.FAILURE);
-        tvLoaderTitleText.setText(R.string.str_reuqest_has_been_failed);
-        tvBackOrCancelButton.setText(R.string.str_back_to_dashboard);
-        tvBackOrCancelButton.setTag(LoaderView.State.FAILURE);
+        tvLoaderTitleText.setText(_msg);
+        tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
+        tvBackOrCancelBtn.setTag(LoaderView.State.CANCELLED);
     }
 
     @Override
@@ -135,8 +118,8 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         toolbarTitleManager.setToolbarVisibility(true);
         getFragmentManager().popBackStackImmediate();
     }
-
+/*
     public interface OnLoadingListener{
-        void onRequestCancel(LoaderView.State _state);
-    }
+        void onRequestCancel();
+    }*/
 }

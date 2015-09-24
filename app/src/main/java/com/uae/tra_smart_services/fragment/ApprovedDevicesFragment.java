@@ -15,11 +15,9 @@ import android.widget.ListView;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.DevicesListAdapter;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByBrandRequest;
@@ -128,7 +126,7 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
         if (mSelectListener != null) {
             String selectedBrand = mAdapter.getItem(position);
             request = new SearchByBrandRequest(selectedBrand, 0, 100);
-            showProgressDialog(getString(R.string.str_loading), this);
+            showLoaderDialog(getString(R.string.str_loading), this);
             getSpiceManager().execute(request, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
         }
     }
@@ -157,7 +155,7 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
         public void onRequestSuccess(SearchDeviceResponseModel.List result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                hideProgressDialog();
+                dissmissLoaderDialog();
                 if (result != null && mSelectListener!=null) {
                     mSelectListener.onDeviceSelect(result);
                 }

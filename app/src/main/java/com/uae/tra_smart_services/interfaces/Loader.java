@@ -1,18 +1,22 @@
 package com.uae.tra_smart_services.interfaces;
 
 /**
- * Created by Andrey Korneychuk on 23.09.15.
+ * Created by Andrey Korneychuk on 24.09.15.
  */
 
 public interface Loader {
 
-    void startLoading();
+    void startLoading(String _msg);
 
-    void cancelLoading();
+    void successLoading(String _msg);
 
-    void successLoading();
+    void dissmissLoading(String _msg);
 
-    void failureLoading();
+    void dissmissLoading(AfterDissmiss afterDissmiss);
 
     void backButtonPressed();
+
+    interface AfterDissmiss {
+        void onAfterDissmiss();
+    }
 }

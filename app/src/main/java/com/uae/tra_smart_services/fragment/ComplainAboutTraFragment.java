@@ -113,7 +113,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
-        showProgressDialog(getString(R.string.str_sending), this);
+        showLoaderDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(request, getRequestKey(), DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
     }
 
@@ -142,7 +142,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                hideProgressDialog();
+                dissmissLoaderDialog();
                 getSpiceManager().removeDataFromCache(Response.class, getRequestKey());
                 if (result != null) {
                     showMessage(R.string.str_success, R.string.str_complain_has_been_sent);

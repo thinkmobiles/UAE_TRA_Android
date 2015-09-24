@@ -37,7 +37,7 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         mRequest = new ComplainEnquiriesServiceRequest(traServiceModel, getActivity(), getImageUri());
-        showProgressDialog(getString(R.string.str_sending), this);
+        showLoaderDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(mRequest, getRequestKey(), DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
     }
 

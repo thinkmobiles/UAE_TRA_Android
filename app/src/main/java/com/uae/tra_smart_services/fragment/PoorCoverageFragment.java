@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -41,7 +40,6 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.SingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.SingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
-import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
@@ -277,7 +275,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
             return;
         }
 
-        showProgressDialog(getString(R.string.str_sending), this);
+        showLoaderDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(
                 mPoorCoverageRequest = new PoorCoverageRequest(
                         mLocationModel
@@ -380,7 +378,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
-            hideProgressDialog();
+            dissmissLoaderDialog();
             switch (poorCoverageRequestModel.getStatus()) {
                 case 200:
                     showMessage(R.string.str_success, R.string.str_data_has_been_sent);

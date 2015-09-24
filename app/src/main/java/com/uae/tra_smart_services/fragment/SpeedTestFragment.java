@@ -46,7 +46,7 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
 
     @Override
     public final void onClick(final View _view) {
-        showProgressDialog(getString(R.string.fragment_speed_test_progress), this);
+        showLoaderDialog(getString(R.string.fragment_speed_test_progress), this);
         mSpeedTestRequest = new SpeedTestRequest();
         getSpiceManager().execute(mSpeedTestRequest, KEY_SPEED_TEST_REQUEST, DurationInMillis.ALWAYS_EXPIRED, this);
     }
@@ -73,7 +73,7 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
                 tvResult.setText(getString(R.string.fragment_speed_test_result, bd.toString()));
                 getSpiceManager().removeDataFromCache(Long.class, KEY_SPEED_TEST_REQUEST);
             }
-            hideProgressDialog();
+            dissmissLoaderDialog();
         }
     }
 

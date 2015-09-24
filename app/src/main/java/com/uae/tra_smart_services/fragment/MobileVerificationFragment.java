@@ -19,7 +19,6 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.ScannerActivity;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
@@ -98,7 +97,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     private SearchByImeiRequest mRequest;
     private void searchDeviceByImei() {
         mRequest = new SearchByImeiRequest(etImeiNumber.getText().toString());
-        showProgressDialog(getString(R.string.str_sending), this);
+        showLoaderDialog(getString(R.string.str_sending), this);
         getSpiceManager().execute(mRequest, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
     }
 
@@ -146,7 +145,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         public void onRequestSuccess(SearchDeviceResponseModel.List result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                hideProgressDialog();
+                dissmissLoaderDialog();
                 if (result != null) {
                     mSelectListener.onDeviceSelect(result);
                 }

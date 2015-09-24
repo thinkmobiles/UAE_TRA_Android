@@ -97,7 +97,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     private void collectAndSendToServer() {
         hideKeyboard(getView());
         if (validateData()) {
-            showProgressDialog(getString(R.string.str_checking), this);
+            showLoaderDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     mSmsBlockRequest = new SmsBlockRequest(
                             new SmsBlockRequestModel(
@@ -181,7 +181,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
 
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
-            hideProgressDialog();
+            dissmissLoaderDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
             getFragmentManager().popBackStack();
         }

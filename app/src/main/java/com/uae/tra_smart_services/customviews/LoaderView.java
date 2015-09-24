@@ -25,7 +25,7 @@ import com.uae.tra_smart_services.R;
  * Created by Andrey Korneychuk on 21.09.15.
  */
 
-public class LoaderView extends View /*implements View.OnTouchListener*/ {
+public class LoaderView extends View {
 
     public enum State{
         INITIALL(0), PROCESSING(1), FILLING(2), SUCCESS(3), CANCELLED(4),FAILURE(5);
@@ -54,8 +54,8 @@ public class LoaderView extends View /*implements View.OnTouchListener*/ {
     private int mFailureFigureOffsetX;
     private int mFailureFigureOffsetY = 20;
 
-
     private State mAnimationState = State.INITIALL;
+    private State mCurrentState;
 
     private final Path mHexagonPath, okIconPath, badIconPath;
     private final Paint mBorderPaint, mProcessPaint, mEndProcessPaint, mFillArePaint, mSuccessOrFailPaint;
@@ -64,8 +64,6 @@ public class LoaderView extends View /*implements View.OnTouchListener*/ {
     private ObjectAnimator animatorEnd;
     private ObjectAnimator animatorFilling;
     private ObjectAnimator animatorSuccessOrFailed;
-
-//    private OnPressListener listener;
 
     public LoaderView(Context context) {
         this(context, null);
@@ -90,7 +88,6 @@ public class LoaderView extends View /*implements View.OnTouchListener*/ {
         initPaints();
         initAnimators();
     }
-
 
     private void initParams(Context context, AttributeSet attrs){
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.HexagonView);
@@ -254,7 +251,7 @@ public class LoaderView extends View /*implements View.OnTouchListener*/ {
         animatorStart.start();
         animatorEnd.start();
     }
-    State mCurrentState;
+
     public void startFilling(final State _currentState){
         mAnimationState = State.FILLING;
         mCurrentState = _currentState;
@@ -309,10 +306,6 @@ public class LoaderView extends View /*implements View.OnTouchListener*/ {
             );
     }
 
-    /*public void setOnPressListener(OnPressListener _listener){
-        listener = _listener;
-    }*/
-
     @Override
     public void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
@@ -335,27 +328,6 @@ public class LoaderView extends View /*implements View.OnTouchListener*/ {
                 break;
         }
     }
-
-    /*@Override
-    public boolean onTouch(View v, MotionEvent event) {
-        boolean handled = false;
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mTouchDownTime = SystemClock.elapsedRealtime();
-                handled = true;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                handled = false;
-                break;
-            case MotionEvent.ACTION_UP:
-                if (SystemClock.elapsedRealtime() - mTouchDownTime <= ViewConfiguration.getTapTimeout()) {
-                    return (listener != null && mAnimationState == State.SUCCESS) ? listener.onPressed(mAnimationState) : false;
-                }
-                break;
-        }
-        return handled;
-    }
-    */
 }
 
 
