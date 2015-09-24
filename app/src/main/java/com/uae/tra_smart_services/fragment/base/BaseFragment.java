@@ -45,7 +45,6 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss {
     protected ToolbarTitleManager toolbarTitleManager;
     protected ThemaDefiner mThemaDefiner;
     private Loader loader;
-    private HexagonHomeFragment.OnServiceSelectListener mServiceSelectListener;
 
     @Override
     public void onAttach(final Activity _activity) {
@@ -53,7 +52,6 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss {
         try {
             toolbarTitleManager = (ToolbarTitleManager) _activity;
             mThemaDefiner = (ThemaDefiner) _activity;
-            mServiceSelectListener = (HexagonHomeFragment.OnServiceSelectListener) _activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(_activity.toString()
                     + " must implement ProgressDialogManager and ErrorHandler and ThemaDefiner and Loader");

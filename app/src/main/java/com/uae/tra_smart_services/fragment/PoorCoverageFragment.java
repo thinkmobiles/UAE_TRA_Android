@@ -275,7 +275,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
             return;
         }
 
-        showLoaderDialog(getString(R.string.str_sending), this);
+        showLoaderOverlay(getString(R.string.str_sending), this);
         getSpiceManager().execute(
                 mPoorCoverageRequest = new PoorCoverageRequest(
                         mLocationModel
@@ -378,16 +378,28 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
-            dissmissLoaderDialog();
+            boolean isDialog = dissmissLoaderDialog();
             switch (poorCoverageRequestModel.getStatus()) {
                 case 200:
-                    showMessage(R.string.str_success, R.string.str_data_has_been_sent);
+                    if(isDialog){
+                        showMessage(R.string.str_success, R.string.str_data_has_been_sent);
+                    } else {
+                        dissmissLoaderOverlay(getString(R.string.str_data_has_been_sent));
+                    }
                     break;
                 case 400:
-                    showMessage(R.string.str_error, R.string.str_something_went_wrong);
+                    if(isDialog) {
+                        showMessage(R.string.str_error, R.string.str_something_went_wrong);
+                    } else {
+                        dissmissLoaderOverlay(getString(R.string.str_something_went_wrong));
+                    }
                     break;
                 case 500:
-                    showMessage(R.string.str_error, R.string.str_request_failed);
+                    if(isDialog) {
+                        showMessage(R.string.str_error, R.string.str_request_failed);
+                    } else {
+                        dissmissLoaderOverlay(getString(R.string.str_request_failed));
+                    }
                     break;
             }
         }

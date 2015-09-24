@@ -126,7 +126,7 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
         if (mSelectListener != null) {
             String selectedBrand = mAdapter.getItem(position);
             request = new SearchByBrandRequest(selectedBrand, 0, 100);
-            showLoaderDialog(getString(R.string.str_loading), this);
+            showLoaderOverlay(getString(R.string.str_loading), this);
             getSpiceManager().execute(request, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
         }
     }
@@ -156,6 +156,7 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
                 dissmissLoaderDialog();
+                dissmissLoaderOverlay(ApprovedDevicesFragment.this);
                 if (result != null && mSelectListener!=null) {
                     mSelectListener.onDeviceSelect(result);
                 }
