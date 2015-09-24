@@ -91,7 +91,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         complainModel.description = etDescription.getText().toString();
         mComplainAboutServiceRequest = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
 
-        showProgressDialog(getString(R.string.str_sending), this);
+        showLoaderOverlay(getString(R.string.str_sending), this);
 
         getSpiceManager().execute(mComplainAboutServiceRequest, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestResponseListener);
     }
@@ -137,7 +137,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted()) {
             getSpiceManager().cancel(mComplainAboutServiceRequest);
         }
@@ -154,7 +154,8 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                hideProgressDialog();
+                dissmissLoaderDialog();
+                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent));
                 getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
                 if (result != null) {
                     showMessage(R.string.str_success, R.string.str_complain_has_been_sent);

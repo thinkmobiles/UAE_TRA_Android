@@ -1,14 +1,25 @@
 package com.uae.tra_smart_services.fragment.tutorial;
 
+import android.graphics.PointF;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.customviews.AvatarTipView;
+import com.uae.tra_smart_services.customviews.HexagonalHeader;
 
 /**
  * Created by Vitaliy on 21/09/2015.
  */
-public class AvatarTutorialFragment extends BaseFragment {
+public class AvatarTutorialFragment extends Fragment {
+
+    private HexagonalHeader hhAvatar;
+    private AvatarTipView atvAvatarTip;
 
     public static AvatarTutorialFragment newInstance() {
         AvatarTutorialFragment fragment = new AvatarTutorialFragment();
@@ -17,19 +28,39 @@ public class AvatarTutorialFragment extends BaseFragment {
         return fragment;
     }
 
+    @Nullable
     @Override
-    protected int getTitle() {
-        return 0;
+    public View onCreateView(final LayoutInflater _inflater, final ViewGroup _viewGroup, final Bundle _savedInstanceState) {
+        final View view = _inflater.inflate(R.layout.fragment_avatar_tutorial, _viewGroup, false);
+
+        initViews(view);
+        initListeners();
+
+        return view;
     }
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_avatar_tutorial;
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
+    private void initViews(final View _view) {
+        hhAvatar = (HexagonalHeader) _view.findViewById(R.id.hhHeader_FAT);
 
-    @Override
-    protected void setToolbarVisibility() {
-        toolbarTitleManager.setToolbarVisibility(false);
+        atvAvatarTip = (AvatarTipView) _view.findViewById(R.id.atvAvatarTip_FAT);
+        hhAvatar.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                atvAvatarTip.setCenterPoints(new PointF[]{hhAvatar.getAvatarCenter()});
+                atvAvatarTip.setSideOffset(hhAvatar.getAvatarSideOffset());
+
+                hhAvatar.getViewTreeObserver().removeOnPreDrawListener(this);
+                return true;
+            }
+        });
+    }
+
+    private void initListeners() {
+
     }
 }

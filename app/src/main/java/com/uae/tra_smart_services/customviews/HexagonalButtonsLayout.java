@@ -56,6 +56,8 @@ public class HexagonalButtonsLayout extends View {
     private float mTextSize, mTextSizeDifference;
     private Integer mOldWidth;
 
+    private boolean mIsTutorialMode;
+
     private List<PointF> mCenters;
     private List<Drawable> mDrawables;
     private List<PointF[]> mPolygons;
@@ -129,6 +131,7 @@ public class HexagonalButtonsLayout extends View {
             mSeparatorStrokeWidth = typedArrayData.getDimension(R.styleable.HexagonalButtonsLayoutAttrs_separatorStrokeWidth, 3);
             mHexagonGapWidth = typedArrayData.getDimension(R.styleable.HexagonalButtonsLayoutAttrs_hexagonGapWidth, 3);
             mTextSize = typedArrayData.getDimension(R.styleable.HexagonalButtonsLayoutAttrs_hexTextSize, 14);
+            mIsTutorialMode = typedArrayData.getBoolean(R.styleable.HexagonalButtonsLayoutAttrs_isTutorialMode, false);
         } finally {
             typedArrayData.recycle();
         }
@@ -151,8 +154,12 @@ public class HexagonalButtonsLayout extends View {
         mButtonPaint.setStyle(Paint.Style.FILL);
 
         mShadowPaint = new Paint();
-        mShadowPaint.setShadowLayer(3.0f, 4.0f, 4.0f, 0xFF8C8C8C);
         mShadowPaint.setStyle(Paint.Style.FILL);
+        if (mIsTutorialMode) {
+            mShadowPaint.setShadowLayer(15.0f, 0, 0, 0xff4b4b4b);
+        } else {
+            mShadowPaint.setShadowLayer(3.0f, 4.0f, 4.0f, 0xFF8C8C8C);
+        }
 
         mButtonSecondColorPaint = new Paint();
         mButtonSecondColorPaint.setColor(0xFF44545F);
@@ -276,7 +283,11 @@ public class HexagonalButtonsLayout extends View {
         super.onDraw(_canvas);
 
         drawHexagons(_canvas);
-        drawBottomSeparator(_canvas);
+
+        if (!mIsTutorialMode) {
+            drawBottomSeparator(_canvas);
+        }
+
         drawDrawables(_canvas);
         drawText(_canvas);
     }

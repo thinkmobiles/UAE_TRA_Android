@@ -19,9 +19,9 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.ScannerActivity;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByImeiRequest;
 
@@ -45,7 +45,6 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
-
         mSelectListener = (ApprovedDevicesFragment.OnDeviceSelectListener) _activity;
     }
 
@@ -98,12 +97,19 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     private SearchByImeiRequest mRequest;
     private void searchDeviceByImei() {
         mRequest = new SearchByImeiRequest(etImeiNumber.getText().toString());
-        showProgressDialog(getString(R.string.str_sending), this);
+        showLoaderOverlay(getString(R.string.str_sending), this);
+        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+            @Override
+            public void onBackButtonPressed() {
+                getFragmentManager().popBackStack();
+                getFragmentManager().popBackStack();
+            }
+        });
         getSpiceManager().execute(mRequest, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted() && mRequest!=null){
             getSpiceManager().cancel(mRequest);
         }
@@ -146,7 +152,8 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         public void onRequestSuccess(SearchDeviceResponseModel.List result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                hideProgressDialog();
+                dissmissLoaderDialog();
+                dissmissLoaderOverlay(MobileVerificationFragment.this);
                 if (result != null) {
                     mSelectListener.onDeviceSelect(result);
                 }

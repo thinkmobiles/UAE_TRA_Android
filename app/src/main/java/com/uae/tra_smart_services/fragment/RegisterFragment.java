@@ -21,6 +21,7 @@ import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.RegisterModel;
 import com.uae.tra_smart_services.rest.robo_requests.RegisterRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
+import com.uae.tra_smart_services.util.TRAPatterns;
 
 import retrofit.client.Response;
 
@@ -80,7 +81,6 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         etEmail = findView(R.id.etEmail_FRP);
         etEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_mail, R.attr.authorizationDrawableColors), null, null, null);
 
-
 //        acsState = findView(R.id.spState_FR);
     //        acsCountry = findView(R.id.spCountry_FR);
         // Actions
@@ -135,14 +135,14 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         registerModel.emiratesId = etEmiratesId.getText().toString();
 
         if (mFilterPool.check(registerModel)) {
-            showProgressDialog(getString(R.string.str_registering), this);
+            showLoaderDialog(getString(R.string.str_registering), this);
             getSpiceManager().execute(mRegisterRequest = new RegisterRequest(registerModel),
                     KEY_REGISTER_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
         }
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted() && mRegisterRequest!=null){
             getSpiceManager().cancel(mRegisterRequest);
         }
@@ -159,7 +159,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                hideProgressDialog();
+                dissmissLoaderDialog();
                 if (result != null && actionsListener != null) {
                     actionsListener.onRegisterSuccess();
                 }
@@ -210,6 +210,19 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
                             showMessage(0, R.string.str_error, R.string.error_valid_email);
                             etEmail.setError(getString(R.string.error_valid_email));
                             etEmail.requestFocus();
+                            return false;
+                        }
+                        return true;
+                    }
+                });
+
+                addFilter(new Filter<RegisterModel>() {
+                    @Override
+                    public boolean check(RegisterModel _data) {
+                        if(!TRAPatterns.EMIRATES_ID.matcher(_data.emiratesId).matches()) {
+                            showMessage(0, R.string.str_error, R.string.error_valid_emid);
+                            etEmiratesId.setError(getString(R.string.error_valid_emid));
+                            etEmiratesId.requestFocus();
                             return false;
                         }
                         return true;

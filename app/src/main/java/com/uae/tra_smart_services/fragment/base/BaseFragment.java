@@ -9,7 +9,6 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,8 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
+import com.uae.tra_smart_services.fragment.LoaderFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.TRARestService;
 import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
@@ -34,7 +35,7 @@ import retrofit.RetrofitError;
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements Loader.Dismiss, Loader.BackButton {
 
     private View rootView;
     private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
@@ -42,6 +43,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected ToolbarTitleManager toolbarTitleManager;
     protected ThemaDefiner mThemaDefiner;
+    private Loader loader;
 
     @Override
     public void onAttach(final Activity _activity) {
@@ -51,7 +53,7 @@ public abstract class BaseFragment extends Fragment {
             mThemaDefiner = (ThemaDefiner) _activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(_activity.toString()
-                    + " must implement ProgressDialogManager and ErrorHandler and ThemaDefiner");
+                    + " must implement ProgressDialogManager and ErrorHandler and ThemaDefiner and Loader");
         }
     }
 
@@ -116,25 +118,75 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    protected final void showProgressDialog(){
-        showProgressDialog("Loading...", null);
+    protected final void showLoaderDialog(){
+        showLoaderDialog("Loading...", null);
     }
 
-    protected final void showProgressDialog(String _title, ProgressDialog.MyDialogInterface _callBack){
-        Log.d(getClass().getSimpleName(), "showProgressDialog");
+    protected final void showLoaderDialog(String _title, Loader.Cancelled _callBack){
         ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
     }
 
-    protected final void hideProgressDialog(){
+    protected final boolean dissmissLoaderDialog(){
         ProgressDialog dialog = findFragmentByTag(ProgressDialog.TAG);
         if (dialog != null) {
             dialog.dismiss();
+            return true;
+        } else {
+            return false;
         }
+    }
+
+    protected final boolean dissmissLoaderDialog(String _msg){
+        boolean isLoaded = dissmissLoaderDialog();
+        if (isLoaded)
+            Toast.makeText(getActivity(), _msg, Toast.LENGTH_SHORT).show();
+        return isLoaded;
+    }
+
+    protected final void showLoaderOverlay(String _title, Loader.Cancelled _callBack){
+        getFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.rlGlobalContainer_AH, (Fragment) (loader = LoaderFragment.newInstance(_title, _callBack)))
+                .commit();
+    }
+
+    public void changeLoaderOverlay_Success(String _msg){
+        if(loader != null){
+            loader.successLoading(_msg);
+        }
+    }
+
+    public void dissmissLoaderOverlay(String _msg){
+        if(loader != null){
+            loader.dissmissLoading(_msg);
+        }
+    }
+
+    protected final void dissmissLoaderOverlay(Loader.Dismiss _afterDissmiss){
+        if(loader != null){
+            loader.dissmissLoading(_afterDissmiss);
+        }
+    }
+
+    protected final void setLoaderOverlayBackButtonBehaviour(Loader.BackButton _backButtonPressed){
+        if(loader != null){
+            loader.setBackButtonPressedBehaviour(_backButtonPressed);
+        }
+    }
+
+    @Override
+    public void onLoadingDismissed() {
+        getFragmentManager().popBackStackImmediate();
+    }
+
+    @Override
+    public void onBackButtonPressed() {
+        onLoadingDismissed();
     }
 
     protected final void processError(final SpiceException _exception) {
         if (isAdded()) {
-            hideProgressDialog();
             String errorMessage;
             Throwable cause = _exception.getCause();
             if (cause != null && cause instanceof RetrofitError) {
@@ -144,8 +196,8 @@ public abstract class BaseFragment extends Fragment {
             } else {
                 errorMessage = _exception.getMessage();
             }
-
-            Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+            dissmissLoaderDialog(errorMessage);
+            dissmissLoaderOverlay(errorMessage);
         }
     }
 
@@ -172,7 +224,6 @@ public abstract class BaseFragment extends Fragment {
                 return getString(R.string.str_something_went_wrong);
         }
     }
-
 
     protected final SpiceManager getSpiceManager() {
         return spiceManager;
@@ -211,7 +262,7 @@ public abstract class BaseFragment extends Fragment {
                 .show(getFragmentManager());
     }
 
-    protected final void showMessage(@StringRes int _titleRes, @StringRes int _bodyRes){
+    protected final void showMessage(@StringRes int _titleRes, @StringRes int _bodyRes) {
         showMessage(-1, _titleRes, _bodyRes);
     }
 

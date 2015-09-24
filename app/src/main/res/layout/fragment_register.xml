@@ -41,7 +41,7 @@
                 android:id="@+id/etEmiratesID_FR"
                 style="@style/AuthorizationFields"
                 android:hint="@string/hint_emirates_id"
-                android:inputType="textEmailAddress"
+                android:inputType="number|text"
                 android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding" />
 

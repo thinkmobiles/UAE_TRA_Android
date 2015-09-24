@@ -2,11 +2,15 @@
 <resources>
     <declare-styleable name="HexagonView">
         <attr name="hexagonBorderColor" format="color"/>
+        <attr name="hexagonProcessBorderColor" format="color"/>
+        <attr name="hexagonSuccessBorderColor" format="color"/>
         <attr name="hexagonBackgroundColor" format="color"/>
+        <attr name="hexagonBorderSize" format="dimension"/>
+        <attr name="hexagonProcessBorderSize" format="dimension"/>
+        <attr name="hexagonSuccessBorderSize" format="dimension"/>
         <attr name="hexagonSrc" format="reference|color"/>
         <attr name="hexagonSrcTintColor" format="reference|color"/>
         <attr name="hexagonSideSize" format="dimension"/>
-        <attr name="hexagonBorderSize" format="dimension"/>
         <attr name="hexagonText" format="string"/>
         <attr name="hexagonTextSize" format="dimension"/>
         <attr name="hexagonTextColor" format="color"/>
