@@ -40,7 +40,6 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnOpenUserProfile
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
-import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
@@ -409,7 +408,8 @@ public class HomeActivity extends BaseFragmentActivity
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
         switch(_service){
             case HINT:
-                getSupportFragmentManager().beginTransaction()
+                getSupportFragmentManager()
+                        .beginTransaction()
                         .addToBackStack(null)
                         .add(R.id.rlGlobalContainer_AH, TutorialContainerFragment.newInstance())
                         .commit();
