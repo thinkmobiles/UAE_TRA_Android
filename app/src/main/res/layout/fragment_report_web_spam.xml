@@ -61,61 +61,76 @@
             android:layout_marginBottom="16dp"
             android:background="?attr/colorPrimary"/>
 
-
-        <com.uae.tra_smart_services.customviews.ThemedImageView
-            android:id="@+id/tivPhoneIcon_FRWS"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="12dp"
-            android:scaleType="centerInside"
-            app:imageSrc="@drawable/ic_www"
-            app:layout_marginEndPercent="10%"
-            app:tintColor="?colorPrimary"/>
-
-        <EditText
-            android:id="@+id/etUrlOfSpammer_FRWS"
+        <ScrollView
             android:layout_width="match_parent"
-            android:inputType="textUri|textAutoComplete"
-            android:layout_height="48dp"
-            android:layout_alignTop="@id/tivPhoneIcon_FRWS"
-            android:layout_marginEnd="16dp"
-            android:layout_toStartOf="@id/tivPhoneIcon_FRWS"
-            android:background="@android:color/transparent"
-            android:hint="@string/fragment_report_spam_web_link"
-            android:singleLine="true"
-            android:textColor="?attr/colorPrimary"
-            android:textColorHint="?attr/colorPrimary"
-            android:textSize="18sp"
-            app:layout_marginStartPercent="10%"
-            tools:ignore="TextFields"/>
-
-        <View
-            android:id="@+id/vNumberOfSpammerDivider_FRWS"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/etUrlOfSpammer_FRWS"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="4dp"
-            android:background="?attr/colorPrimary"/>
-
-        <EditText
-            android:id="@+id/etDescription_FRWS"
-            android:layout_width="match_parent"
+            android:fillViewport="true"
             android:layout_height="match_parent"
             android:layout_above="@id/vDescriptionDivider_FRWS"
-            android:layout_below="@id/vNumberOfSpammerDivider_FRWS"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@android:color/transparent"
-            android:gravity="top"
-            android:hint="@string/fragment_report_spam_web_description_hint"
-            android:inputType="textAutoCorrect|textMultiLine"
-            android:minHeight="128dp"
-            android:textColor="?attr/colorPrimary"
-            android:textColorHint="@color/hex_color_middle_gray"
-            android:textSize="18sp"/>
+            android:layout_alignParentTop="true"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.uae.tra_smart_services.customviews.ThemedImageView
+                    android:id="@+id/tivPhoneIcon_FRWS"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="12dp"
+                    android:scaleType="centerInside"
+                    app:imageSrc="@drawable/ic_www"
+                    app:layout_marginEndPercent="10%"
+                    app:tintColor="?colorPrimary"/>
+
+                <EditText
+                    android:id="@+id/etUrlOfSpammer_FRWS"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_alignTop="@id/tivPhoneIcon_FRWS"
+                    android:layout_marginEnd="16dp"
+                    android:layout_toStartOf="@id/tivPhoneIcon_FRWS"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/fragment_report_spam_web_link"
+                    android:inputType="textUri|textAutoComplete"
+                    android:singleLine="true"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="?attr/colorPrimary"
+                    android:textSize="18sp"
+                    app:layout_marginStartPercent="10%"
+                    tools:ignore="TextFields"/>
+
+                <View
+                    android:id="@+id/vNumberOfSpammerDivider_FRWS"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/etUrlOfSpammer_FRWS"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="4dp"
+                    android:background="?attr/colorPrimary"/>
+
+                <EditText
+                    android:id="@+id/etDescription_FRWS"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/vNumberOfSpammerDivider_FRWS"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="@string/fragment_report_spam_web_description_hint"
+                    android:inputType="textAutoCorrect|textMultiLine"
+                    android:minHeight="72dp"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="@color/hex_color_middle_gray"
+                    android:textSize="18sp"/>
+
+            </RelativeLayout>
+
+        </ScrollView>
 
     </RelativeLayout>
 
