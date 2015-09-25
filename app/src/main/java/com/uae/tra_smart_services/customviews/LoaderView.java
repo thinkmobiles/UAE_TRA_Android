@@ -58,6 +58,8 @@ public class LoaderView extends View {
     private State mAnimationState = State.INITIALL;
     private State mCurrentState;
 
+    private int mLoadingAnimationPeriod;
+
     private final Path mHexagonPath, successIconPath, dismissedIconPath;
     private final Paint mBorderPaint, mProcessPaint, mEndProcessPaint, mFillArePaint, mSuccessOrFailPaint;
 
@@ -99,6 +101,7 @@ public class LoaderView extends View {
             mBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonBorderSize, 3);
             mProcessBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonProcessBorderSize, 3);
             mSuccessBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonSuccessBorderSize, 5);
+            mLoadingAnimationPeriod = array.getInt(R.styleable.HexagonView_hexagonLoaderPeriod, 1500);
             mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
             mSrcDrawable = array.getDrawable(R.styleable.HexagonView_hexagonSrc);
         } finally {
@@ -134,13 +137,13 @@ public class LoaderView extends View {
 
     private void initAnimators(){
         animatorStart = ObjectAnimator.ofFloat(LoaderView.this, "phaseStart", 1.0f, 0.0f);
-        animatorStart.setDuration(1500);
+        animatorStart.setDuration(mLoadingAnimationPeriod);
         animatorStart.setInterpolator(new DecelerateInterpolator());
         animatorStart.setRepeatCount(ObjectAnimator.INFINITE);
         animatorStart.setRepeatMode(ObjectAnimator.RESTART);
 
         animatorEnd = ObjectAnimator.ofFloat(LoaderView.this, "phaseEnd", 1.0f, 0.0f);
-        animatorEnd.setDuration(1500);
+        animatorEnd.setDuration(mLoadingAnimationPeriod);
         animatorEnd.setInterpolator(new AccelerateInterpolator());
         animatorEnd.setRepeatCount(ObjectAnimator.INFINITE);
         animatorEnd.setRepeatMode(ObjectAnimator.RESTART);

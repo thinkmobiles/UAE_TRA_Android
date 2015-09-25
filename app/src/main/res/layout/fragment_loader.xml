@@ -27,15 +27,16 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        app:hexagonSideSize="54dp"
+        app:hexagonSideSize="50dp"
         app:hexagonBorderColor="#ffffff"
         app:hexagonProcessBorderColor="#ffffff"
         app:hexagonSuccessBorderColor="?attr/serviceInfoBackground"
-        app:hexagonBorderSize="4dp"
-        app:hexagonProcessBorderSize="4dp"
-        app:hexagonSuccessBorderSize="6dp"
+        app:hexagonBorderSize="3dp"
+        app:hexagonProcessBorderSize="3dp"
+        app:hexagonSuccessBorderSize="5dp"
         app:hexagonSrc="@mipmap/ic_logo_2x"
-        app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"/>
+        app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
+        app:hexagonLoaderPeriod="2000"/>
 
     <TextView
         android:id="@+id/tvLoaderBackButton"
