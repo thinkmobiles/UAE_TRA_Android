@@ -20,6 +20,7 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.exception.NoNetworkException;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.fragment.LoaderFragment;
@@ -181,7 +182,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     }
 
     @Override
-    public void onBackButtonPressed() {
+    public void onBackButtonPressed(LoaderView.State _currentState) {
         onLoadingDismissed();
     }
 

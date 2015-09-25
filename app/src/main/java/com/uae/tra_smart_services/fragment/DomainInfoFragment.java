@@ -35,8 +35,7 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
     private TextView tvStatus_FDI;
     private TextView tvRegContactId_FDI;
     private TextView tvRegContactName_FDI;
-    /*private RadioGroup ratingGroup;*/
-    private DomainServiceRatingView ratingView;
+//    private DomainServiceRatingView ratingView;
 
     public static DomainInfoFragment newInstance(DomainInfoCheckResponseModel _domainInfo) {
         Bundle bundle = new Bundle();
@@ -55,28 +54,14 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
     @Override
     protected void initViews() {
         super.initViews();
-//        ImageView myImageView = (ImageView) findView(R.id.ivBackground_FDI);
-//        flippBackgroundImage(myImageView, -1);
         tvDomainName_FDI = findView(R.id.tvDomainName_FDI);
         tvRegisterId_FDI = findView(R.id.tvRegisterId_FDI);
         tvRegisterName_FDI = findView(R.id.tvRegisterName_FDI);
         tvStatus_FDI = findView(R.id.tvStatus_FDI);
         tvRegContactId_FDI = findView(R.id.tvRegContactId_FDI);
         tvRegContactName_FDI = findView(R.id.tvRegContactName_FDI);
-        /*ratingGroup = findView(R.id.rgDomainCheckServiceRating_FDCH);
-        int initRating = PreferenceManager.getDefaultSharedPreferences(getActivity()).getInt(C.DOMAIN_INFO_RATING, 0);
-        RadioButton checkedButton;
-        if((checkedButton = ((RadioButton) ratingGroup.findViewWithTag(initRating))) != null){
-            checkedButton.setChecked(true);
-        }
-        ratingGroup.setOnCheckedChangeListener(this);*/
-        ratingView = findView(R.id.llDomainServiceRatingView);
-        ratingView.init(this);
-    }
-
-    private void flippBackgroundImage(ImageView _myImageView, int _dir){
-        Bitmap bitmap = ((BitmapDrawable)_myImageView.getDrawable()).getBitmap(); // get bitmap associated with your imageview
-        _myImageView.setImageBitmap(H.flipBitmap(bitmap, _dir));
+//        ratingView = findView(R.id.llDomainServiceRatingView);
+//        ratingView.init(this);
     }
 
     @Override
@@ -88,50 +73,6 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
     protected int getLayoutResource() {
         return R.layout.fragment_domain_info;
     }
-
-    /*@Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
-        if(radioButton.isChecked()){
-            int rating = Integer.valueOf(radioButton.getTag().toString());
-            RatingServiceRequestModel model = new RatingServiceRequestModel();
-            model.setServiceName(Service.DOMAIN_CHECK_INFO.toString());
-            model.setRate(rating);
-            executeCall(model, radioButton);
-        }
-    }*/
-
-    /*private void executeCall(final RatingServiceRequestModel _model, final RadioButton _radio){
-        showLoaderDialog(getString(R.string.str_sending), null);
-        getSpiceManager().execute(
-                new RatingServiceRequest(_model),
-                new RequestListener<RatingServiceResponseModel>() {
-                    @Override
-                    public void onRequestFailure(SpiceException spiceException) {
-                        _radio.setChecked(false);
-                        processError(spiceException);
-                    }
-
-                    @Override
-                    public void onRequestSuccess(RatingServiceResponseModel response) {
-                        dissmissLoaderDialog();
-                        switch (response.getStatus()) {
-                            case 201:
-                                showMessage(R.string.str_success, R.string.str_rating_has_been_sent);
-                                PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putInt(C.DOMAIN_INFO_RATING, _model.getRate());
-                                break;
-                            case 400:
-                                showMessage(R.string.str_error, R.string.str_something_went_wrong);
-                                _radio.setChecked(false);
-                                break;
-                            default:
-                                PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putInt(C.DOMAIN_INFO_RATING, _model.getRate());
-                                break;
-                        }
-                    }
-                }
-        );
-    }*/
 
     @Override
     public void onOkPressed(final int _mMessageId) {
