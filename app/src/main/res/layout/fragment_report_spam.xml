@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="35dp"
                 app:hexagonSrc="@drawable/ic_mail"
                 app:hexagonSrcTintColor="?attr/colorPrimary"
                 app:hexagonBorderColor="?attr/colorPrimary"
@@ -60,7 +60,7 @@
                 app:hexagonSrc="@drawable/ic_report"
                 app:hexagonBorderColor="@color/hex_primary_orange"
                 app:hexagonBorderSize="1dp"
-                app:hexagonSideSize="36dp"/>
+                app:hexagonSideSize="38dp"/>
 
             <TextView
                 android:id="@+id/tvReportSms_FRS"
@@ -84,7 +84,7 @@
                 android:layout_below="@id/tvTitle_FRS"
                 app:hexagonBorderColor="@color/hex_primary_green"
                 app:hexagonBorderSize="1dp"
-                app:hexagonSideSize="36dp"/>
+                app:hexagonSideSize="38dp"/>
 
             <TextView
                 android:id="@+id/tvReportWeb_FRS"
@@ -108,7 +108,7 @@
                 android:layout_marginTop="24dp"
                 app:hexagonBorderColor="@color/hex_color_middle_gray"
                 app:hexagonBorderSize="1dp"
-                app:hexagonSideSize="36dp"/>
+                app:hexagonSideSize="38dp"/>
 
 
             <TextView
