@@ -40,6 +40,7 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnOpenUserProfile
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
+import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
@@ -113,7 +114,7 @@ public class HomeActivity extends BaseFragmentActivity
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
-//            addFragmentWithBackStackGlobally(LoaderFragment.newInstance());
+//            addFragmentWithBackStackGlobally(LoaderFragment.newInstance("",null));
         }
 
         onBackStackChanged();

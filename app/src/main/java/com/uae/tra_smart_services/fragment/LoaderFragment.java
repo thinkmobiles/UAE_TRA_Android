@@ -67,14 +67,12 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tvLoaderBackButton:
-                if(v.getTag() == LoaderView.State.PROCESSING){
+                if(v.getTag() == LoaderView.State.PROCESSING && mOnLoadingListener != null){
                     mOnLoadingListener.onLoadingCanceled();
-                } else {
-                    if(afterBackButton != null){
+                } else if(afterBackButton != null){
                         afterBackButton.onBackButtonPressed();
-                    } else {
-                        backButtonPressed();
-                    }
+                } else {
+                    backButtonPressed();
                 }
                 break;
         }
@@ -135,7 +133,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
 
     private int defineBGColor(View _view){
         Bitmap bitmap = ((BitmapDrawable)_view.getBackground()).getBitmap();
-        int pixel = bitmap.getPixel(10, 10);
+        int pixel = bitmap.getPixel(bitmap.getWidth() / 2, bitmap.getHeight() / 2);
         return Color.rgb(Color.red(pixel), Color.green(pixel), Color.blue(pixel));
     }
 }
