@@ -331,6 +331,5 @@
     <string name="str_reuqest_has_been_sent">Your Request has been successfully sent and you will receive an SMS reply shortly</string>
     <string name="str_reuqest_has_been_failed">Your Request has been failed</string>
     <string name="str_reuqest_has_been_cancelled">Your Request has been cancelled</string>
-    <string name="release_version_label">Release Version</string>
 
 </resources>

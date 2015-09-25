@@ -25,12 +25,12 @@
         app:titleBorderWidth="1dp"
         app:linePointerWidth="1.5dp"
         app:viewPointerRadius="2dp"
-        app:tipTextSize="14dp"
+        app:tipTextSize="18dp"
         app:titleTextSize="20dp"
         app:linePointerColor="@android:color/white"
         app:tipTextColor="@android:color/white"
         app:viewPointerColor="@android:color/white"
-        app:tipText="Test text"
+        app:tipText="@string/str_dummy_info_hub_list_item_descr"
         app:titleText="ACTIVE USER AVATAR"
         app:tutorialTipType="avatar"/>
 
