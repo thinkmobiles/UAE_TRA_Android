@@ -198,10 +198,10 @@
     <string name="service_suggestion">Suggestion</string>
     <string name="service_domain_check">Domain Check Service</string>
     <string name="service_enquiries">Enquiries</string>
-    <string name="service_sms_spam">SMS Spam Service</string>
-    <string name="service_poor_coverage">Poor coverage</string>
+    <string name="service_sms_spam">Spam Service</string>
+    <string name="service_poor_coverage">Poor Coverage</string>
     <string name="service_help_salim">Help Salim</string>
-    <string name="service_mobile_verification">Mobile verification</string>
+    <string name="service_mobile_verification">Mobile Verification</string>
     <string name="service_approved_devices">Approved Devices</string>
 
     <string name="hint_first_name">First Name</string>

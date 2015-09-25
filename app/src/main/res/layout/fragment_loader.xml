@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/serviceInfoBackground">
+    android:alpha="0.8"
+    android:background="?attr/hexagonLoaderBackground">
 
     <TextView
         android:id="@+id/tvLoaderTitleText"
@@ -25,6 +26,8 @@
         android:id="@+id/lvLoaderView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         app:hexagonSideSize="54dp"
         app:hexagonBorderColor="#ffffff"
         app:hexagonProcessBorderColor="#ffffff"
@@ -32,8 +35,8 @@
         app:hexagonBorderSize="4dp"
         app:hexagonProcessBorderSize="4dp"
         app:hexagonSuccessBorderSize="6dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        app:hexagonSrc="@mipmap/ic_logo_2x"
+        app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"/>
 
     <TextView
         android:id="@+id/tvLoaderBackButton"
