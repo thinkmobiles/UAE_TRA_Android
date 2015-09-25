@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -71,15 +70,17 @@ public final class SpamHistoryAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
-        protected static final int ODD_MARGIN = 20;
-        protected static final int EVEN_MARGIN = 36;
+        protected static final int ODD_MARGIN = 4;
+        protected static final int EVEN_MARGIN = ODD_MARGIN + 12;
 
+        private View itemContainer;
         private HexagonView hvIcon;
         private TextView tvTitle, tvDescription;
         private ImageView ivDelete;
 
         public ViewHolder(final View _itemView) {
             super(_itemView);
+            itemContainer = _itemView;
             hvIcon = (HexagonView) _itemView.findViewById(R.id.hvIcon_LISH);
             tvTitle = (TextView) _itemView.findViewById(R.id.tvTitle_LISH);
             tvDescription = (TextView) _itemView.findViewById(R.id.tvDescription_LISH);
@@ -93,17 +94,14 @@ public final class SpamHistoryAdapter extends RecyclerView.Adapter<ViewHolder> {
         }
 
         private void initMargins(final int _position) {
-            MarginLayoutParams layoutParams = (MarginLayoutParams) hvIcon.getLayoutParams();
-            if (layoutParams != null) {
-                final float marginStart;
-                if (mEvenOffset) {
-                    marginStart = (_position % 2 == 0 ? EVEN_MARGIN : ODD_MARGIN) * hvIcon.getResources().getDisplayMetrics().density;
-                } else {
-                    marginStart = (_position % 2 == 0 ? ODD_MARGIN : EVEN_MARGIN) * hvIcon.getResources().getDisplayMetrics().density;
-                }
-                layoutParams.setMarginStart(Math.round(marginStart));
-                hvIcon.setLayoutParams(layoutParams);
+            final float marginStart;
+            if (mEvenOffset) {
+                marginStart = (_position % 2 == 0 ? EVEN_MARGIN : ODD_MARGIN) * hvIcon.getResources().getDisplayMetrics().density;
+            } else {
+                marginStart = (_position % 2 == 0 ? ODD_MARGIN : EVEN_MARGIN) * hvIcon.getResources().getDisplayMetrics().density;
             }
+            itemContainer.setPaddingRelative(Math.round(marginStart), itemContainer.getPaddingTop(),
+                    itemContainer.getPaddingEnd(), itemContainer.getPaddingBottom());
         }
 
         @Override

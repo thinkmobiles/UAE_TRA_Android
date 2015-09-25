@@ -71,6 +71,7 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
 
     @Override
     public final void onClick(final View _view) {
+        hideKeyboard(_view);
         switch (_view.getId()) {
             case R.id.btnClose_FRWS:
                 getFragmentManager().popBackStack();
