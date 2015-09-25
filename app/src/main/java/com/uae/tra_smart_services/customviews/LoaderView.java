@@ -138,13 +138,13 @@ public class LoaderView extends View {
     private void initAnimators(){
         animatorStart = ObjectAnimator.ofFloat(LoaderView.this, "phaseStart", 1.0f, 0.0f);
         animatorStart.setDuration(mLoadingAnimationPeriod);
-        animatorStart.setInterpolator(new DecelerateInterpolator());
+        animatorStart.setInterpolator(new DecelerateInterpolator(1.3f));
         animatorStart.setRepeatCount(ObjectAnimator.INFINITE);
         animatorStart.setRepeatMode(ObjectAnimator.RESTART);
 
         animatorEnd = ObjectAnimator.ofFloat(LoaderView.this, "phaseEnd", 1.0f, 0.0f);
         animatorEnd.setDuration(mLoadingAnimationPeriod);
-        animatorEnd.setInterpolator(new AccelerateInterpolator());
+        animatorEnd.setInterpolator(new AccelerateInterpolator(0.7f));
         animatorEnd.setRepeatCount(ObjectAnimator.INFINITE);
         animatorEnd.setRepeatMode(ObjectAnimator.RESTART);
         animatorEnd.addListener(new Animator.AnimatorListener() {
