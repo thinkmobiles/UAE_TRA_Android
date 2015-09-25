@@ -109,7 +109,7 @@ public class LoaderView extends View {
     private void initPaints(){
         mBorderPaint.setAntiAlias(true);
         mBorderPaint.setColor(mBorderColor);
-        mBorderPaint.setAlpha(10);
+        mBorderPaint.setAlpha(30);
         mBorderPaint.setStrokeWidth(mBorderSize);
         mBorderPaint.setStyle(Paint.Style.STROKE);
 
@@ -119,7 +119,7 @@ public class LoaderView extends View {
         mProcessPaint.setStyle(Paint.Style.STROKE);
 
         mEndProcessPaint.setAntiAlias(true);
-        mEndProcessPaint.setStrokeWidth(mBorderSize);
+        mEndProcessPaint.setStrokeWidth(mBorderSize+1);
         mEndProcessPaint.setStyle(Paint.Style.STROKE);
 
         mFillArePaint.setAntiAlias(true);
@@ -319,7 +319,6 @@ public class LoaderView extends View {
         super.onDraw(_canvas);
         switch (mAnimationState){
             case PROCESSING:
-                _canvas.drawPath(mHexagonPath, mBorderPaint);
                 _canvas.drawPath(mHexagonPath, mProcessPaint);
                 _canvas.drawPath(mHexagonPath, mEndProcessPaint);
                 _canvas.drawPath(mHexagonPath, mBorderPaint);
