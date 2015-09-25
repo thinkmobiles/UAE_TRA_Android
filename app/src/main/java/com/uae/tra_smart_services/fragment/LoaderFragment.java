@@ -45,7 +45,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void setToolbarVisibility() { toolbarTitleManager.setToolbarVisibility(true); }
-    private int backGroundColor;
+
     @Override
     protected void initViews() {
         super.initViews();
