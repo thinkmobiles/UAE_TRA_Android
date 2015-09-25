@@ -221,7 +221,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(UserProfileFragment.newInstance());
                 break;
             case REPORT_SMS_SPAM:
-                replaceFragmentWithBackStack(SmsReportFragment.newInstance());
+                replaceFragmentWithBackStack(ReportSmsSpamFragment.newInstance());
                 break;
             case REPORT_WEB_SPAM:
                 replaceFragmentWithBackStack(ReportWebSpamFragment.newInstance());
