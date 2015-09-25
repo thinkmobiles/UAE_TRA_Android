@@ -109,7 +109,7 @@ public class LoaderView extends View {
     private void initPaints(){
         mBorderPaint.setAntiAlias(true);
         mBorderPaint.setColor(mBorderColor);
-        mBorderPaint.setAlpha(30);
+        mBorderPaint.setAlpha(20);
         mBorderPaint.setStrokeWidth(mBorderSize);
         mBorderPaint.setStyle(Paint.Style.STROKE);
 
@@ -309,7 +309,7 @@ public class LoaderView extends View {
 
     private static PathEffect createPathEffect(float _pathLength, float _phase, float _offset) {
         return new DashPathEffect(
-                new float[] { _pathLength, _pathLength },
+                new float[] { _pathLength, _pathLength},
                 Math.max(_phase * _pathLength, _offset)
             );
     }
