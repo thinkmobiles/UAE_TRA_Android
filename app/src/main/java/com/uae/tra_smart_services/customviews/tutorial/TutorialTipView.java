@@ -1,12 +1,14 @@
-package com.uae.tra_smart_services.customviews;
+package com.uae.tra_smart_services.customviews.tutorial;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.text.Layout;
+import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.LayoutDirection;
@@ -32,6 +34,12 @@ public abstract class TutorialTipView extends View {
     protected float mPointRadius;
     protected float mLineWidth;
     protected float mTitleBorderWidth;
+    protected float mViewPointerLineLength;
+    protected float mTextPointerLineLength;
+    protected float mTitleTextPadding;
+    protected StaticLayout mTipTextLayout;
+    protected StaticLayout mTitleTextLayout;
+    protected float mTitleRectMargin;
     protected String mTitleText;
     protected String mTipText;
     protected View mDependView;
@@ -57,6 +65,11 @@ public abstract class TutorialTipView extends View {
     protected Paint mViewPointerPaint;
     protected Paint mLinePointerPaint;
     protected Paint mTitleBorderPaint;
+    //endregion
+
+    //region PATHS
+    protected Path mLinePointerPath;
+    protected Path mTextPointerPath;
     //endregion
 
     //region INIT METHODS

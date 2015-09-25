@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.AvatarTipView;
 import com.uae.tra_smart_services.customviews.HexagonalHeader;
+import com.uae.tra_smart_services.customviews.tutorial.AvatarTipView;
 
 /**
  * Created by Vitaliy on 21/09/2015.

@@ -178,12 +178,12 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     private void openFragmentIfAuthorized(final BaseFragment _fragment, final Enum _service) {
-        if (TRAApplication.isLoggedIn()) {
+//        if (TRAApplication.isLoggedIn()) {
             replaceFragmentWithBackStack(_fragment);
-        } else {
-            Intent intent = AuthorizationActivity.getStartForResultIntent(this, _service);
-            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
-        }
+//        } else {
+//            Intent intent = AuthorizationActivity.getStartForResultIntent(this, _service);
+//            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
+//        }
     }
 
     @Override
@@ -221,7 +221,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(UserProfileFragment.newInstance());
                 break;
             case REPORT_SMS_SPAM:
-                replaceFragmentWithBackStack(SmsReportFragment.newInstance());
+                replaceFragmentWithBackStack(ReportSmsSpamFragment.newInstance());
                 break;
             case REPORT_WEB_SPAM:
                 replaceFragmentWithBackStack(ReportWebSpamFragment.newInstance());

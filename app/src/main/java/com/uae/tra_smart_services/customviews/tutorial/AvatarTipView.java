@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.customviews;
+package com.uae.tra_smart_services.customviews.tutorial;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,19 +16,7 @@ import android.util.TypedValue;
 public class AvatarTipView extends TutorialTipView {
 
     //region STATIC PROPERTIES
-    private float mViewPointerLineLength;
-    private float mTextPointerLineLength;
-    private float mTitleTextPadding;
-    private StaticLayout mTipTextLayout;
-    private StaticLayout mTitleTextLayout;
     private float mSideOffset;
-    private float mTitleRectMargin;
-    //endregion
-
-    //region PATHS
-    private Path mLinePointerPath;
-    private Path mTitleBorderPath;
-    private Path mTextPointerPath;
     //endregion
 
     private boolean initialized = false;

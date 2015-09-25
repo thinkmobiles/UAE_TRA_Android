@@ -5,7 +5,6 @@ import android.widget.EditText;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainEnquiriesServiceRequest;
 
@@ -26,9 +25,9 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!TRAApplication.isLoggedIn()) {
-            getFragmentManager().popBackStack();
-        }
+//        if (!TRAApplication.isLoggedIn()) {
+//            getFragmentManager().popBackStack();
+//        }
     }
 
     @Override

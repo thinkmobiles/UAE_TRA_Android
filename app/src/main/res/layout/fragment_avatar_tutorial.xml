@@ -18,7 +18,7 @@
         app:pressedColor="?attr/hexagonHeaderButtonPressedColor"
         app:tutorialType="avatar"/>
 
-    <com.uae.tra_smart_services.customviews.AvatarTipView
+    <com.uae.tra_smart_services.customviews.tutorial.AvatarTipView
         android:id="@+id/atvAvatarTip_FAT"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
