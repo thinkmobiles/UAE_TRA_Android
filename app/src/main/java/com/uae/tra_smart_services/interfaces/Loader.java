@@ -1,5 +1,7 @@
 package com.uae.tra_smart_services.interfaces;
 
+import com.uae.tra_smart_services.customviews.LoaderView;
+
 /**
  * Created by Andrey Korneychuk on 24.09.15.
  */
@@ -27,6 +29,6 @@ public interface Loader {
     }
 
     interface BackButton{
-        void onBackButtonPressed();
+        void onBackButtonPressed(LoaderView.State _currentState);
     }
 }

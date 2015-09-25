@@ -120,5 +120,7 @@
         <item name="userProfileBackground">@drawable/img_bg_gray</item>
         <item name="reportSpam">@drawable/res_bg_img_gray</item>
         <item name="spamHistory">@drawable/res_bg_img_pol_gray</item>
+
+        <!--<item name="hexagonLoaderBackground">@drawable/loader_bg_orange</item>-->
     </style>
 </resources>

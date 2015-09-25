@@ -44,10 +44,6 @@ public class DomainServiceRatingView extends RelativeLayout implements RadioGrou
 
     private void initViews(){
         ratingGroup = (RadioGroup) findViewById(R.id.rgDomainCheckServiceRating_FDCH);
-        /*RadioButton checkedButton;
-        if((checkedButton = ((RadioButton) ratingGroup.findViewWithTag(initRating))) != null){
-            checkedButton.setChecked(true);
-        }*/
         ratingGroup.setOnCheckedChangeListener(this);
     }
 
@@ -85,9 +81,6 @@ public class DomainServiceRatingView extends RelativeLayout implements RadioGrou
                                 mCallBacks.onRatedUnSuccessfully();
                                 _radio.setChecked(false);
                                 break;
-                            /*default:
-                                PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putInt(C.DOMAIN_INFO_RATING, _model.getRate());
-                                break;*/
                         }
                     }
                 }

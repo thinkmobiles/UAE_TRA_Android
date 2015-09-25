@@ -113,7 +113,7 @@ public class HomeActivity extends BaseFragmentActivity
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             addFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
-//            addFragmentWithBackStackGlobally(LoaderFragment.newInstance());
+//            addFragmentWithBackStackGlobally(LoaderFragment.newInstance("",null));
         }
 
         onBackStackChanged();
@@ -408,7 +408,8 @@ public class HomeActivity extends BaseFragmentActivity
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
         switch(_service){
             case HINT:
-                getSupportFragmentManager().beginTransaction()
+                getSupportFragmentManager()
+                        .beginTransaction()
                         .addToBackStack(null)
                         .add(R.id.rlGlobalContainer_AH, TutorialContainerFragment.newInstance())
                         .commit();

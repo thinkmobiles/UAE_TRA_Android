@@ -2,7 +2,12 @@ package com.uae.tra_smart_services.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -14,6 +19,7 @@ import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
  * Created by Andrey Korneychuk on 21.09.15.
@@ -26,7 +32,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     private TextView tvBackOrCancelBtn, tvLoaderTitleText;
     private RelativeLayout rlFragmentContainer;
     private static Loader.Cancelled mOnLoadingListener;
-    BackButton afterBackButton;
+    private BackButton afterBackButton;
 
     public static LoaderFragment newInstance(String _msg, Loader.Cancelled _onLoadingListener) {
         Bundle args = new Bundle();
@@ -45,13 +51,18 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void setToolbarVisibility() { toolbarTitleManager.setToolbarVisibility(true); }
-    private int backGroundColor;
+
     @Override
     protected void initViews() {
         super.initViews();
         rlFragmentContainer = findView(R.id.rlFragmentContainer_FL);
+        int bgColor = defineBGColor(rlFragmentContainer);
+        if(ImageUtils.isBlackAndWhiteMode(getActivity())){
+            ImageUtils.getFilteredDrawable(getActivity(), rlFragmentContainer.getBackground());
+            bgColor = Color.parseColor("#505050");
+        }
         lvLoader = findView(R.id.lvLoaderView);
-        lvLoader.setTag(defineBGColor(rlFragmentContainer));
+        lvLoader.setTag(bgColor);
         tvLoaderTitleText = findView(R.id.tvLoaderTitleText);
         tvBackOrCancelBtn = findView(R.id.tvLoaderBackButton);
     }
@@ -67,14 +78,12 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tvLoaderBackButton:
-                if(v.getTag() == LoaderView.State.PROCESSING){
+                if(v.getTag() == LoaderView.State.PROCESSING && mOnLoadingListener != null){
                     mOnLoadingListener.onLoadingCanceled();
+                } else if(afterBackButton != null){
+                        afterBackButton.onBackButtonPressed(lvLoader.getCurrentState());
                 } else {
-                    if(afterBackButton != null){
-                        afterBackButton.onBackButtonPressed();
-                    } else {
-                        backButtonPressed();
-                    }
+                    backButtonPressed();
                 }
                 break;
         }
@@ -135,7 +144,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
 
     private int defineBGColor(View _view){
         Bitmap bitmap = ((BitmapDrawable)_view.getBackground()).getBitmap();
-        int pixel = bitmap.getPixel(10, 10);
+        int pixel = bitmap.getPixel(bitmap.getWidth() / 2, bitmap.getHeight() / 2);
         return Color.rgb(Color.red(pixel), Color.green(pixel), Color.blue(pixel));
     }
 }

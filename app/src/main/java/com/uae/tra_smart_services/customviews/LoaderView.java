@@ -58,6 +58,8 @@ public class LoaderView extends View {
     private State mAnimationState = State.INITIALL;
     private State mCurrentState;
 
+    private int mLoadingAnimPeriod, mFillingAnimPeriod, mStatusAnimPeriod;
+
     private final Path mHexagonPath, successIconPath, dismissedIconPath;
     private final Paint mBorderPaint, mProcessPaint, mEndProcessPaint, mFillArePaint, mSuccessOrFailPaint;
 
@@ -99,6 +101,9 @@ public class LoaderView extends View {
             mBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonBorderSize, 3);
             mProcessBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonProcessBorderSize, 3);
             mSuccessBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonSuccessBorderSize, 5);
+            mLoadingAnimPeriod = array.getInt(R.styleable.HexagonView_hexagonLoaderPeriod, 1500);
+            mFillingAnimPeriod = array.getInt(R.styleable.HexagonView_hexagonFillingPeriod, 500);
+            mStatusAnimPeriod = array.getInt(R.styleable.HexagonView_hexagonStatusPeriod, 500);
             mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
             mSrcDrawable = array.getDrawable(R.styleable.HexagonView_hexagonSrc);
         } finally {
@@ -109,7 +114,7 @@ public class LoaderView extends View {
     private void initPaints(){
         mBorderPaint.setAntiAlias(true);
         mBorderPaint.setColor(mBorderColor);
-        mBorderPaint.setAlpha(30);
+        mBorderPaint.setAlpha(20);
         mBorderPaint.setStrokeWidth(mBorderSize);
         mBorderPaint.setStyle(Paint.Style.STROKE);
 
@@ -134,14 +139,14 @@ public class LoaderView extends View {
 
     private void initAnimators(){
         animatorStart = ObjectAnimator.ofFloat(LoaderView.this, "phaseStart", 1.0f, 0.0f);
-        animatorStart.setDuration(1500);
-        animatorStart.setInterpolator(new DecelerateInterpolator());
+        animatorStart.setDuration(mLoadingAnimPeriod);
+        animatorStart.setInterpolator(new DecelerateInterpolator(1.3f));
         animatorStart.setRepeatCount(ObjectAnimator.INFINITE);
         animatorStart.setRepeatMode(ObjectAnimator.RESTART);
 
         animatorEnd = ObjectAnimator.ofFloat(LoaderView.this, "phaseEnd", 1.0f, 0.0f);
-        animatorEnd.setDuration(1500);
-        animatorEnd.setInterpolator(new AccelerateInterpolator());
+        animatorEnd.setDuration(mLoadingAnimPeriod);
+        animatorEnd.setInterpolator(new AccelerateInterpolator(0.7f));
         animatorEnd.setRepeatCount(ObjectAnimator.INFINITE);
         animatorEnd.setRepeatMode(ObjectAnimator.RESTART);
         animatorEnd.addListener(new Animator.AnimatorListener() {
@@ -161,12 +166,11 @@ public class LoaderView extends View {
         });
 
         animatorFilling = ObjectAnimator.ofFloat(LoaderView.this, "phaseFilling", 0.0f, 255.0f);
-        animatorFilling.setDuration(710);
+        animatorFilling.setDuration(mFillingAnimPeriod);
         animatorFilling.setInterpolator(new DecelerateInterpolator());
         animatorFilling.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
-
                 switch (mCurrentState) {
                     case SUCCESS:
                         startDrawSuccessFigure();
@@ -182,15 +186,14 @@ public class LoaderView extends View {
             public void onAnimationStart(Animator animation) {/* Is not implemented */}
 
             @Override
-            public void onAnimationCancel(Animator animation) {
-            }
+            public void onAnimationCancel(Animator animation) {/* Is not implemented */}
 
             @Override
             public void onAnimationRepeat(Animator animation) {/* Is not implemented */}
         });
 
         animatorSuccessOrFailed = ObjectAnimator.ofFloat(LoaderView.this, "phaseSuccessOrFailure", 1.0f, 0.0f);
-        animatorSuccessOrFailed.setDuration(710);
+        animatorSuccessOrFailed.setDuration(mStatusAnimPeriod);
     }
 
     @Override
@@ -245,6 +248,10 @@ public class LoaderView extends View {
         dismissedIconPath.lineTo(mFailureFigureOffsetX + mFailureFigureWH, mFailureFigureOffsetY + mFailureFigureWH);
         dismissedIconPath.moveTo(mFailureFigureOffsetX + mFailureFigureWH, mFailureFigureOffsetY);
         dismissedIconPath.lineTo(mFailureFigureOffsetX, mFailureFigureOffsetY + mFailureFigureWH);
+    }
+
+    public State getCurrentState(){
+        return mCurrentState;
     }
 
     public void startProcessing(){
@@ -309,7 +316,7 @@ public class LoaderView extends View {
 
     private static PathEffect createPathEffect(float _pathLength, float _phase, float _offset) {
         return new DashPathEffect(
-                new float[] { _pathLength, _pathLength },
+                new float[] { _pathLength, _pathLength},
                 Math.max(_phase * _pathLength, _offset)
             );
     }

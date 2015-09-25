@@ -103,14 +103,15 @@
     </style>
 
     <style name="DashboardRadioButton">
-        <item name="android:padding">@dimen/dp_dashboard_tab_padding</item>
+        <item name="android:paddingTop">@dimen/dp_dashboard_tab_padding</item>
+        <item name="android:paddingStart">@dimen/dp_dashboard_tab_padding</item>
         <item name="android:drawablePadding">@dimen/dp_dashboard_tab_drawable_padding</item>
         <item name="android:button">@null</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">?attr/globalButtonSelector</item>
     </style>
 
