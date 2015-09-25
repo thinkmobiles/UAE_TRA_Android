@@ -19,6 +19,7 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.ScannerActivity;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.Loader;
@@ -100,7 +101,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         showLoaderOverlay(getString(R.string.str_sending), this);
         setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
             @Override
-            public void onBackButtonPressed() {
+            public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();
                 getFragmentManager().popBackStack();
             }

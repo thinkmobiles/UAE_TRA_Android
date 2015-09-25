@@ -247,6 +247,10 @@ public class LoaderView extends View {
         dismissedIconPath.lineTo(mFailureFigureOffsetX, mFailureFigureOffsetY + mFailureFigureWH);
     }
 
+    public State getCurrentState(){
+        return mCurrentState;
+    }
+
     public void startProcessing(){
         mAnimationState = State.PROCESSING;
 

@@ -26,7 +26,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     private TextView tvBackOrCancelBtn, tvLoaderTitleText;
     private RelativeLayout rlFragmentContainer;
     private static Loader.Cancelled mOnLoadingListener;
-    BackButton afterBackButton;
+    private BackButton afterBackButton;
 
     public static LoaderFragment newInstance(String _msg, Loader.Cancelled _onLoadingListener) {
         Bundle args = new Bundle();
@@ -70,7 +70,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
                 if(v.getTag() == LoaderView.State.PROCESSING && mOnLoadingListener != null){
                     mOnLoadingListener.onLoadingCanceled();
                 } else if(afterBackButton != null){
-                        afterBackButton.onBackButtonPressed();
+                        afterBackButton.onBackButtonPressed(lvLoader.getCurrentState());
                 } else {
                     backButtonPressed();
                 }
