@@ -14,5 +14,6 @@
         <attr name="hexagonText" format="string"/>
         <attr name="hexagonTextSize" format="dimension"/>
         <attr name="hexagonTextColor" format="color"/>
+        <attr name="hexagonLoaderBackground" format="reference"/>
     </declare-styleable>
 </resources>
