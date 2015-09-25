@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/serviceInfoBackground">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/serviceInfoBackground">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpTutorial_FTC"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <Space
+        android:id="@+id/sSpace_FTC"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:id="@+id/ivCLose_FTC"
+        android:layout_width="48dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_white_close"/>
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/cpiCirclePageIndicator_FTC"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@id/sSpace_FTC"
+        android:layout_toStartOf="@id/ivCLose_FTC"/>
 
 </RelativeLayout>
