@@ -37,8 +37,8 @@
         app:hexagonSrc="@mipmap/ic_logo_2x"
         app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
         app:hexagonLoaderPeriod="2000"
-        app:hexagonFillingPeriod="500"
-        app:hexagonStatusPeriod="500"/>
+        app:hexagonFillingPeriod="600"
+        app:hexagonStatusPeriod="400"/>
 
     <TextView
         android:id="@+id/tvLoaderBackButton"
