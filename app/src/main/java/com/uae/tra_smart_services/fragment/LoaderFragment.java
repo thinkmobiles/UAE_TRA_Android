@@ -1,5 +1,8 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -42,12 +45,25 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void setToolbarVisibility() { toolbarTitleManager.setToolbarVisibility(true); }
-
+    private int backGroundColor;
     @Override
     protected void initViews() {
         super.initViews();
         rlFragmentContainer = findView(R.id.rlFragmentContainer_FL);
+
+
+
+        Bitmap bitmap = ((BitmapDrawable)rlFragmentContainer.getBackground()).getBitmap();
+        int pixel = bitmap.getPixel(10, 10);
+
+//        int redValue = Color.red(pixel);
+//        int blueValue = Color.blue(pixel);
+//        int greenValue = Color.green(pixel);
+
+        backGroundColor = Color.rgb(Color.red(pixel), Color.green(pixel), Color.blue(pixel));
+
         lvLoader = findView(R.id.lvLoaderView);
+        lvLoader.setTag(backGroundColor);
         tvLoaderTitleText = findView(R.id.tvLoaderTitleText);
         tvBackOrCancelBtn = findView(R.id.tvLoaderBackButton);
     }

@@ -41,6 +41,8 @@
         <item name="globalButtonTextColor">@color/hex_primary_orange</item>
         <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_orange</item>
         <item name="android:layoutDirection">locale</item>
+
+        <item name="hexagonLoaderBackground">@drawable/loader_bg_orange</item>
     </style>
 
     <style name="AppThemeGreen" parent="BaseAppTheme">
@@ -58,6 +60,8 @@
         <item name="homePageHeaderBackground">@color/hex_primary_green</item>
         <item name="globalButtonTextColor">@color/hex_primary_green</item>
         <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_green</item>
+
+        <item name="hexagonLoaderBackground">@drawable/loader_bg_green</item>
     </style>
 
     <style name="AppThemeBlue" parent="BaseAppTheme">
@@ -75,6 +79,8 @@
         <item name="homePageHeaderBackground">@color/hex_primary_blue</item>
         <item name="globalButtonTextColor">@color/hex_primary_blue</item>
         <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_blue</item>
+
+        <item name="hexagonLoaderBackground">@drawable/loader_bg_blue</item>
     </style>
 
     <!--<style name="AppThemeRed" parent="BaseAppTheme">-->

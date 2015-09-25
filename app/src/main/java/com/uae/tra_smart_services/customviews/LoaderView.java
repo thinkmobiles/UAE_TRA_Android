@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.PathMeasure;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
@@ -30,6 +31,8 @@ public class LoaderView extends View {
         private int state;
         State(int _state){ state = _state; }
     }
+
+    private Drawable mSrcDrawable;
 
     @ColorInt
     private int mBorderColor, mProcessBorderColor, mSuccessBorderColor;
@@ -88,15 +91,19 @@ public class LoaderView extends View {
 
     private void initParams(Context context, AttributeSet attrs){
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.HexagonView);
-
-        mHexagonSide = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS);
-        mBorderColor = array.getColor(R.styleable.HexagonView_hexagonBorderColor, 0xFFC8C7C6);
-        mProcessBorderColor = array.getColor(R.styleable.HexagonView_hexagonProcessBorderColor, 0xFFFFFFFF);
-        mSuccessBorderColor = array.getColor(R.styleable.HexagonView_hexagonSuccessBorderColor, 0xFFFFFFFF);
-        mBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonBorderSize, 3);
-        mProcessBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonProcessBorderSize, 3);
-        mSuccessBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonSuccessBorderSize, 5);
-        mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
+        try {
+            mHexagonSide = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS);
+            mBorderColor = array.getColor(R.styleable.HexagonView_hexagonBorderColor, 0xFFC8C7C6);
+            mProcessBorderColor = array.getColor(R.styleable.HexagonView_hexagonProcessBorderColor, 0xFFFFFFFF);
+            mSuccessBorderColor = array.getColor(R.styleable.HexagonView_hexagonSuccessBorderColor, 0xFFFFFFFF);
+            mBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonBorderSize, 3);
+            mProcessBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonProcessBorderSize, 3);
+            mSuccessBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonSuccessBorderSize, 5);
+            mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
+            mSrcDrawable = array.getDrawable(R.styleable.HexagonView_hexagonSrc);
+        } finally {
+            array.recycle();
+        }
     }
 
     private void initPaints(){
@@ -110,11 +117,6 @@ public class LoaderView extends View {
         mProcessPaint.setColor(mProcessBorderColor);
         mProcessPaint.setStrokeWidth(mProcessBorderSize);
         mProcessPaint.setStyle(Paint.Style.STROKE);
-
-        mEndProcessPaint.setAntiAlias(true);
-        mEndProcessPaint.setColor(mSuccessBorderColor);
-        mEndProcessPaint.setStrokeWidth(mBorderSize);
-        mEndProcessPaint.setStyle(Paint.Style.STROKE);
 
         mFillArePaint.setAntiAlias(true);
         mFillArePaint.setColor(mProcessBorderColor);
@@ -162,7 +164,7 @@ public class LoaderView extends View {
             @Override
             public void onAnimationEnd(Animator animation) {
 
-                switch (mCurrentState){
+                switch (mCurrentState) {
                     case SUCCESS:
                         startDrawSuccessFigure();
                         break;
@@ -243,6 +245,11 @@ public class LoaderView extends View {
     }
 
     public void startProcessing(){
+        int bgColor = (int) getTag();
+        mEndProcessPaint.setAntiAlias(true);
+        mEndProcessPaint.setColor(bgColor);
+        mEndProcessPaint.setStrokeWidth(mBorderSize);
+        mEndProcessPaint.setStyle(Paint.Style.STROKE);
         mAnimationState = State.PROCESSING;
 
         PathMeasure measure = new PathMeasure(mHexagonPath, false);
@@ -315,6 +322,9 @@ public class LoaderView extends View {
                 _canvas.drawPath(mHexagonPath, mProcessPaint);
                 _canvas.drawPath(mHexagonPath, mEndProcessPaint);
                 _canvas.drawPath(mHexagonPath, mBorderPaint);
+                if (mSrcDrawable != null) {
+                    drawSrc(_canvas, mSrcDrawable);
+                }
                 break;
             case FILLING:
                 _canvas.drawPath(mHexagonPath, mFillArePaint);
@@ -327,6 +337,39 @@ public class LoaderView extends View {
                 _canvas.drawPath(mHexagonPath, mFillArePaint);
                 _canvas.drawPath(dismissedIconPath, mSuccessOrFailPaint);
                 break;
+        }
+    }
+
+    private void drawSrc(final Canvas _canvas, final Drawable _drawable) {
+        int drawableWidth = _drawable.getIntrinsicWidth() + 30, drawableHeight = _drawable.getIntrinsicHeight() + 30;
+        int canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
+
+        drawableWidth = drawableWidth == -1 ? canvasWidth : drawableWidth;
+        drawableHeight = drawableHeight == -1 ? canvasHeight : drawableHeight;
+
+        if (drawableWidth < canvasWidth || drawableHeight < canvasHeight) {
+            float centerY = (float) (mHexagonSide + mBorderSize / 2f);
+            float centerX = (float) getWidth() / 2;
+
+            mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
+                    (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
+            _drawable.draw(_canvas);
+        } else {
+            float scale;
+            _drawable.setBounds(0, 0, drawableWidth, drawableHeight);
+            if (drawableWidth * canvasHeight > canvasWidth * drawableHeight) {//image is wider
+                scale = (float) canvasHeight / (float) drawableHeight;
+            } else { //image is higher
+                scale = (float) canvasWidth / (float) drawableWidth;
+            }
+            float dx = (canvasWidth - drawableWidth * scale) / 2f;
+            float dy = (canvasHeight - drawableHeight * scale) / 2f;
+
+            _canvas.save();
+            _canvas.scale(scale, scale);
+            _canvas.translate(Math.round(dx), Math.round(dy));
+            _drawable.draw(_canvas);
+            _canvas.restore();
         }
     }
 }
