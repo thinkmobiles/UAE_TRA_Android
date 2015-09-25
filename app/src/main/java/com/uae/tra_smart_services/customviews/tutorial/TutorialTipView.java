@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Typeface;
-import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -114,6 +113,7 @@ public abstract class TutorialTipView extends View {
         mTipTextPaint.setColor(mTextColor);
 
         mViewPointerPaint = new Paint();
+        mViewPointerPaint.setAntiAlias(true);
         mViewPointerPaint.setStyle(Paint.Style.FILL);
         mViewPointerPaint.setColor(mViewPointerColor);
 
@@ -140,7 +140,7 @@ public abstract class TutorialTipView extends View {
         mDependView = _dependView;
     }
 
-    public final void setCenterPoints(final PointF[] _centerPoints) {
+    public void setCenterPoints(final PointF[] _centerPoints) {
         mCenterPoints = _centerPoints;
     }
 
@@ -209,15 +209,8 @@ public abstract class TutorialTipView extends View {
         return getStartPoint() + getDirectionCoeff() * _number;
     }
 
-    protected Layout.Alignment getAlignment() {
-        final int direction = getLayoutDirection();
-        switch (direction) {
-            default:
-            case LayoutDirection.LTR:
-                return Layout.Alignment.ALIGN_NORMAL;
-            case LayoutDirection.RTL:
-                return Layout.Alignment.ALIGN_OPPOSITE;
-        }
+    protected float getLineSpacing() {
+        return getLayoutDirection() == View.LAYOUT_DIRECTION_RTL ? 0.7f : 1;
     }
     //endregion
 }

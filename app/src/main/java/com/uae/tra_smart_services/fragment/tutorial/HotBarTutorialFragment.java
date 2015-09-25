@@ -6,13 +6,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
+import com.uae.tra_smart_services.customviews.tutorial.HotBarTipView;
 
 /**
  * Created by Vitaliy on 23/09/2015.
  */
 public class HotBarTutorialFragment extends Fragment {
+
+    private HexagonalButtonsLayout hblHexagonButtons;
+    private HotBarTipView hbtvHotBarTipView;
 
     public static HotBarTutorialFragment newInstance() {
         HotBarTutorialFragment fragment = new HotBarTutorialFragment();
@@ -34,7 +40,16 @@ public class HotBarTutorialFragment extends Fragment {
     }
 
     private void initViews(final View _view) {
+        hblHexagonButtons = (HexagonalButtonsLayout) _view.findViewById(R.id.hblHexagonalButtons_FHBT);
+        hblHexagonButtons.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                hbtvHotBarTipView.setCenterPoints(hblHexagonButtons.getCenters());
+                return true;
+            }
+        });
 
+        hbtvHotBarTipView = (HotBarTipView) _view.findViewById(R.id.hbtvHotBarTipView_FHBT);
     }
 
     private void initListeners() {

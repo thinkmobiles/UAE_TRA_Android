@@ -76,6 +76,10 @@ public class HexagonalButtonsLayout extends View {
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
+    public final PointF[] getCenters() {
+        return mCenters.toArray(new PointF[mCenters.size()]);
+    }
+
     public final float getStartPoint() {
         final int direction = getLayoutDirection();
         switch (direction) {
@@ -203,7 +207,7 @@ public class HexagonalButtonsLayout extends View {
                 mHexagonGapWidth * mButtonsCount - mHexagonGapWidth) / mButtonsCount) / 2;
         final float radius = (float) (triangleHeight * 2 / Math.sqrt(3));
 
-        myHeight = (int) (radius * 2 + mHexagonGapWidth + mSeparatorStrokeWidth);
+        myHeight = (int) (radius * 2 + mHexagonGapWidth + mSeparatorStrokeWidth + getPaddingTop() + getPaddingBottom());
 
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;

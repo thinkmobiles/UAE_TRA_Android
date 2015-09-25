@@ -47,7 +47,8 @@ public class AvatarTipView extends TutorialTipView {
 
     private void calculateTextLayouts() {
         mTipTextLayout = new StaticLayout(mTipText, mTipTextPaint,
-                (int) (getWidth() - mSideOffset * 2), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                (int) (getWidth() - mSideOffset * 2), Layout.Alignment.ALIGN_NORMAL,
+                getLineSpacing(), 0, false);
 
         final int maxTextWidth = (int) (getWidth() - mSideOffset * 2 - mTitleTextPadding * 2);
         final Rect textRect = new Rect();
@@ -56,7 +57,7 @@ public class AvatarTipView extends TutorialTipView {
 
         mTitleTextLayout = new StaticLayout(mTitleText, mTitleTextPaint,
                 textWidth < maxTextWidth ? textWidth + 1 : maxTextWidth,
-                Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+                Layout.Alignment.ALIGN_CENTER, 1, 0, false);
     }
 
     //region CALCULATE PATHS
@@ -112,7 +113,6 @@ public class AvatarTipView extends TutorialTipView {
     }
 
     private void drawTitleRect(final Canvas _canvas) {
-        mTitleTextLayout.getWidth();
         final float topOfRect = getPaddingTop() + mViewPointerLineLength + mTitleRectMargin;
         final float start = calculateDependsOnDirection(mSideOffset);
         final float end = start + calculateWithCoefficient(mTitleTextLayout.getWidth() + mTitleTextPadding * 2);

@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="bottom">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:gravity="bottom">
+    <include
+        android:id="@+id/rgBottomNavRadio_FTBT"
+        layout="@layout/layout_bottom_nav_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+    <com.uae.tra_smart_services.customviews.tutorial.TabBarTipView
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/vTabBarSeparator_AH"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:titleBorderWidth="1dp"
+        app:linePointerWidth="1.5dp"
+        app:viewPointerRadius="2.5dp"
+        app:tipTextSize="18dp"
+        app:titleTextSize="20dp"
+        app:linePointerColor="@android:color/white"
+        app:tipTextColor="@android:color/white"
+        app:viewPointerColor="@android:color/white"
+        app:tipText="@string/lorem_ipsum_tutorial"
+        app:titleText="MAIN MENU"
+        app:tutorialTipType="avatar"
+        android:paddingBottom="5dp"/>
 
     <View
         android:id="@+id/vTabBarSeparator_AH"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/activity_home_tab_bar_top_border"/>
+        android:background="@color/activity_home_tab_bar_top_border"
+        android:layout_above="@id/rgBottomNavRadio_FTBT"/>
 
-    <include
-        android:id="@+id/rgBottomNavRadio_AH"
-        layout="@layout/layout_bottom_nav_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
-</LinearLayout>
+</RelativeLayout>
