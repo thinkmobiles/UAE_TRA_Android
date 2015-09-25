@@ -21,7 +21,7 @@ import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckRes
  */
 public class DomainIsAvailableFragment extends BaseFragment implements DomainServiceRatingView.CallBacks{
 
-    private DomainServiceRatingView ratingView;
+//    private DomainServiceRatingView ratingView;
     public static DomainIsAvailableFragment newInstance(DomainAvailabilityCheckResponseModel _model) {
         Bundle bundle = new Bundle();
         bundle.putString(C.DOMAIN_INFO, _model.domainStrValue);
@@ -55,8 +55,8 @@ public class DomainIsAvailableFragment extends BaseFragment implements DomainSer
         }
         statustext.setText(getString(availabilityTextRes));
         statustext.setTextColor(getResources().getColor(availabilityColorRes));
-        ratingView = findView(R.id.llDomainServiceRatingView);
-        ratingView.init(this);
+//        ratingView = findView(R.id.llDomainServiceRatingView);
+//        ratingView.init(this);
     }
 
     @Override
