@@ -50,20 +50,8 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     protected void initViews() {
         super.initViews();
         rlFragmentContainer = findView(R.id.rlFragmentContainer_FL);
-
-
-
-        Bitmap bitmap = ((BitmapDrawable)rlFragmentContainer.getBackground()).getBitmap();
-        int pixel = bitmap.getPixel(10, 10);
-
-//        int redValue = Color.red(pixel);
-//        int blueValue = Color.blue(pixel);
-//        int greenValue = Color.green(pixel);
-
-        backGroundColor = Color.rgb(Color.red(pixel), Color.green(pixel), Color.blue(pixel));
-
         lvLoader = findView(R.id.lvLoaderView);
-        lvLoader.setTag(backGroundColor);
+        lvLoader.setTag(defineBGColor(rlFragmentContainer));
         tvLoaderTitleText = findView(R.id.tvLoaderTitleText);
         tvBackOrCancelBtn = findView(R.id.tvLoaderBackButton);
     }
@@ -143,5 +131,11 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     public void backButtonPressed() {
         toolbarTitleManager.setToolbarVisibility(true);
         getFragmentManager().popBackStackImmediate();
+    }
+
+    private int defineBGColor(View _view){
+        Bitmap bitmap = ((BitmapDrawable)_view.getBackground()).getBitmap();
+        int pixel = bitmap.getPixel(10, 10);
+        return Color.rgb(Color.red(pixel), Color.green(pixel), Color.blue(pixel));
     }
 }

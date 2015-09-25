@@ -118,13 +118,16 @@ public class LoaderView extends View {
         mProcessPaint.setStrokeWidth(mProcessBorderSize);
         mProcessPaint.setStyle(Paint.Style.STROKE);
 
+        mEndProcessPaint.setAntiAlias(true);
+        mEndProcessPaint.setStrokeWidth(mBorderSize);
+        mEndProcessPaint.setStyle(Paint.Style.STROKE);
+
         mFillArePaint.setAntiAlias(true);
         mFillArePaint.setColor(mProcessBorderColor);
         mFillArePaint.setStrokeWidth(mBorderSize);
         mFillArePaint.setStyle(Paint.Style.FILL);
 
         mSuccessOrFailPaint.setAntiAlias(true);
-        mSuccessOrFailPaint.setColor(mSuccessBorderColor);
         mSuccessOrFailPaint.setStrokeWidth(mSuccessBorderSize);
         mSuccessOrFailPaint.setStyle(Paint.Style.STROKE);
     }
@@ -245,12 +248,10 @@ public class LoaderView extends View {
     }
 
     public void startProcessing(){
-        int bgColor = (int) getTag();
-        mEndProcessPaint.setAntiAlias(true);
-        mEndProcessPaint.setColor(bgColor);
-        mEndProcessPaint.setStrokeWidth(mBorderSize);
-        mEndProcessPaint.setStyle(Paint.Style.STROKE);
         mAnimationState = State.PROCESSING;
+
+        mEndProcessPaint.setColor((int) getTag());
+        mSuccessOrFailPaint.setColor((int) getTag());
 
         PathMeasure measure = new PathMeasure(mHexagonPath, false);
         mProcessAnimationLength = measure.getLength();
