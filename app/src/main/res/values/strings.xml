@@ -325,6 +325,26 @@
     <string name="release_version_label">Release Version</string>
     <string name="error_valid_emid">Please enter valid emirates id</string>
 
+    <string name="fragment_report_spam_title">SPAM</string>
+    <string name="fragment_report_spam_hint">Report SMS or Websites\nas Spam to TRA</string>
+    <string name="fragment_report_spam_sms">REPORT\nSMS</string>
+    <string name="fragment_report_spam_web">REPORT\nWEB</string>
+    <string name="fragment_report_spam_history">VIEW\nMY LIST</string>
+    <string name="fragment_report_spam_cant_send_sms">"Can't send sms. Please, install sms messenger"</string>
+
+    <string name="fragment_report_spam_sms_title">SPAM - SMS</string>
+    <string name="fragment_report_spam_sms_number">Number</string>
+    <string name="fragment_report_spam_sms_description_hint">Copy and Paste the SMS here…</string>
+    <string name="fragment_report_spam_sms_close">CLOSE</string>
+    <string name="fragment_report_spam_sms_submit">SUBMIT</string>
+
+    <string name="fragment_report_spam_web_title">SPAM - WEBSITE</string>
+    <string name="fragment_report_spam_web_link">Link</string>
+    <string name="fragment_report_spam_web_description_hint">Description…</string>
+
+    <string name="fragment_report_history_title">MY LIST</string>
+    <string name="fragment_report_history_add_to_spam">ADD TO SPAM</string>
+    
     <string name="str_back_to_dashboard">BACK TO DASHBOARD</string>
     <string name="str_cancel_request">CANCEL REQUEST</string>
     <string name="str_give_us_moment">Give us a moment while processing request</string>

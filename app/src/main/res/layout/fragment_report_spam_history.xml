@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:src="?spamHistory"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="?attr/actionBarSize"
+        tools:paddingTop="0dp">
+
+        <RadioGroup
+            android:id="@+id/rgSpamHistoryTabs_FRSH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbSmsSpam_FRSH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="true"
+                android:drawableStart="@drawable/background_radio_button_sms_history"
+                android:gravity="center"
+                android:minHeight="48dp"/>
+
+            <RadioButton
+                android:id="@+id/rbWebSpam_FRSH"
+                android:layout_width="wrap_content"
+                android:clickable="false"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@drawable/background_radio_button_web_history"/>
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/llAddToSpam_FRSH"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/listPreferredItemHeightLarge"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:layout_height="64dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_report_history_add_to_spam"
+                android:textColor="?attr/themeMainColor"
+                android:textSize="16sp"/>
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"/>
+
+            <com.uae.tra_smart_services.customviews.HexagonView
+                android:id="@+id/hvIcon_FRSH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:hexagonBackgroundColor="@android:color/white"
+                app:hexagonBorderColor="?attr/themeMainColor"
+                app:hexagonBorderSize="1dp"
+                app:hexagonSideSize="24dp"
+                app:hexagonSrc="@drawable/ic_add_service_plus"
+                app:hexagonSrcTintColor="?attr/themeMainColor"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvSpamHistory_FRSH"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/list_item_spam_history"/>
+
+    </LinearLayout>
+</FrameLayout>

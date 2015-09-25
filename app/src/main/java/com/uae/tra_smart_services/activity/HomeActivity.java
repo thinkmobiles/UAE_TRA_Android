@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.activity;
 
-import android.app.Fragment;
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
@@ -34,13 +34,12 @@ import com.uae.tra_smart_services.fragment.EditUserProfileFragment;
 import com.uae.tra_smart_services.fragment.EnquiriesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment.OnFavoritesEventListener;
-import com.uae.tra_smart_services.fragment.HelpSalemFragment;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnHeaderStaticServiceSelectedListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnOpenUserProfileClickListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
-import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
@@ -48,9 +47,9 @@ import com.uae.tra_smart_services.fragment.ResetPasswordFragment;
 import com.uae.tra_smart_services.fragment.SearchFragment;
 import com.uae.tra_smart_services.fragment.ServiceInfoFragment;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
+import com.uae.tra_smart_services.fragment.SettingsFragment.OnOpenAboutTraClickListener;
 import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
-import com.uae.tra_smart_services.fragment.SmsServiceListFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SpeedTestFragment;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
@@ -58,12 +57,19 @@ import com.uae.tra_smart_services.fragment.UserProfileFragment;
 import com.uae.tra_smart_services.fragment.UserProfileFragment.OnUserProfileClickListener;
 import com.uae.tra_smart_services.fragment.UserProfileFragment.UserProfileAction;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.spam.ReportSmsSpamFragment;
+import com.uae.tra_smart_services.fragment.spam.ReportSpamFragment;
+import com.uae.tra_smart_services.fragment.spam.ReportSpamFragment.OnReportSpamServiceSelectListener;
+import com.uae.tra_smart_services.fragment.spam.ReportSpamFragment.SpamOption;
+import com.uae.tra_smart_services.fragment.spam.ReportWebSpamFragment;
+import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment;
+import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment.OnAddToSpamClickListener;
+import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment.SpamType;
 import com.uae.tra_smart_services.fragment.tutorial.TutorialContainerFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.SmsService;
-import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
@@ -78,8 +84,8 @@ public class HomeActivity extends BaseFragmentActivity
         implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
-        OnOpenUserProfileClickListener, OnUserProfileClickListener, HexagonHomeFragment.OnHeaderStaticServiceSelectedListener,
-        SettingsFragment.OnOpenAboutTraClickListener{
+        OnOpenUserProfileClickListener, OnUserProfileClickListener, OnHeaderStaticServiceSelectedListener,
+        OnOpenAboutTraClickListener, OnReportSpamServiceSelectListener, OnAddToSpamClickListener {
 
     private static final String TAG = "HomeActivity";
     protected static final int REQUEST_CHECK_SETTINGS = 1000;
@@ -88,7 +94,6 @@ public class HomeActivity extends BaseFragmentActivity
     private RadioGroup bottomNavRadios;
     private BaseFragment mFragmentForReplacing;
     private ImageView ivBackground;
-
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
@@ -128,7 +133,7 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public <T> void onServiceSelect(Service _service, @Nullable T _data) {
+    public <T> void onServiceSelect(final Service _service, @Nullable T _data) {
         switch (_service) {
             case DOMAIN_CHECK:
                 replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
@@ -151,15 +156,14 @@ public class HomeActivity extends BaseFragmentActivity
             case SUGGESTION:
                 openFragmentIfAuthorized(SuggestionFragment.newInstance(), _service);
                 break;
-            case HELP_SALIM:
-                // not implement
-                replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
-                break;
+//            case HELP_SALIM:
+//                replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
+//                break;
             case APPROVED_DEVICES:
                 replaceFragmentWithBackStack(ApprovedDevicesFragment.newInstance());
                 break;
             case SMS_SPAM:
-                replaceFragmentWithBackStack(SmsServiceListFragment.newInstance());
+                replaceFragmentWithBackStack(ReportSpamFragment.newInstance());
                 break;
             case MOBILE_VERIFICATION:
                 replaceFragmentWithBackStack(MobileVerificationFragment.newInstance());
@@ -173,7 +177,7 @@ public class HomeActivity extends BaseFragmentActivity
         }
     }
 
-    private void openFragmentIfAuthorized(final BaseFragment _fragment, final Service _service) {
+    private void openFragmentIfAuthorized(final BaseFragment _fragment, final Enum _service) {
         if (TRAApplication.isLoggedIn()) {
             replaceFragmentWithBackStack(_fragment);
         } else {
@@ -186,10 +190,12 @@ public class HomeActivity extends BaseFragmentActivity
     protected void onActivityResult(final int _requestCode, final int _resultCode, final Intent _data) {
         super.onActivityResult(_requestCode, _resultCode, _data);
 
-        switch (_requestCode){
+        switch (_requestCode) {
             case C.REQUEST_CODE_LOGIN:
-                if (_resultCode == C.LOGIN_SUCCESS) {
-                    openFragmentAfterLogin(_data);
+                if (_resultCode == C.LOGIN_SUCCESS || true) {//TODO: remove when server ok
+                    Toast.makeText(this, "Fix code when server will be ok. Current status: " + (_resultCode == C.LOGIN_SUCCESS ? "OK" : "FAIL"), Toast.LENGTH_LONG).show();
+                    final Enum fragmentType = (Enum) _data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
+                    openFragmentAfterLogin(fragmentType);
                 }
                 break;
             case REQUEST_CHECK_SETTINGS:
@@ -201,16 +207,28 @@ public class HomeActivity extends BaseFragmentActivity
         }
     }
 
-    private void openFragmentAfterLogin(final Intent _data) {
-        final Enum fragmentType = (Enum) _data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
-        if (fragmentType instanceof Service) {
-            onServiceSelect((Service) fragmentType, null);
-        } else {
-            switch (((FragmentType) fragmentType)) {
-                case USER_PROFILE:
-                    replaceFragmentWithBackStack(UserProfileFragment.newInstance());
-                    break;
-            }
+    private void openFragmentAfterLogin(final Enum _fragmentType) {
+        if (_fragmentType instanceof Service) {
+            onServiceSelect((Service) _fragmentType, null);
+        } else if (_fragmentType instanceof FragmentType) {
+            openFragmentAfterLogin((FragmentType) _fragmentType);
+        }
+    }
+
+    private void openFragmentAfterLogin(final FragmentType _fragmentType) {
+        switch (_fragmentType) {
+            case USER_PROFILE:
+                replaceFragmentWithBackStack(UserProfileFragment.newInstance());
+                break;
+            case REPORT_SMS_SPAM:
+                replaceFragmentWithBackStack(SmsReportFragment.newInstance());
+                break;
+            case REPORT_WEB_SPAM:
+                replaceFragmentWithBackStack(ReportWebSpamFragment.newInstance());
+                break;
+            case SPAM_REPORT_HISTORY:
+                replaceFragmentWithBackStack(SpamHistoryFragment.newInstance());
+                break;
         }
     }
 
@@ -221,7 +239,7 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithBackStack(MobileVerificationFragment.newInstance());
                 break;
             case SMS_SPAM_SERVICE:
-                replaceFragmentWithBackStack(SmsServiceListFragment.newInstance());
+                replaceFragmentWithBackStack(ReportSpamFragment.newInstance());
                 break;
             case POOR_COVERAGE_SERVICE:
                 replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
@@ -256,7 +274,7 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onSmsServiceChildSelect(SmsService _service) {
+    public void onSmsServiceChildSelect(final SmsService _service) {
         switch (_service) {
             case REPORT:
                 // not implement
@@ -265,6 +283,21 @@ public class HomeActivity extends BaseFragmentActivity
             case BLOCK:
                 // not implement
                 replaceFragmentWithBackStack(SmsBlockNumberFragment.newInstance());
+                break;
+        }
+    }
+
+    @Override
+    public final void onReportSpamServiceSelect(@SpamOption int _service) {
+        switch (_service) {
+            case ReportSpamFragment.SPAM_OPTION_REPORT_SMS:
+                openFragmentIfAuthorized(ReportSmsSpamFragment.newInstance(), FragmentType.REPORT_SMS_SPAM);
+                break;
+            case ReportSpamFragment.SPAM_OPTION_REPORT_WEB:
+                openFragmentIfAuthorized(ReportWebSpamFragment.newInstance(), FragmentType.REPORT_WEB_SPAM);
+                break;
+            case ReportSpamFragment.SPAM_OPTION_REPORT_HISTORY:
+                openFragmentIfAuthorized(SpamHistoryFragment.newInstance(), FragmentType.SPAM_REPORT_HISTORY);
                 break;
         }
     }
@@ -297,6 +330,18 @@ public class HomeActivity extends BaseFragmentActivity
     @Override
     public final void onAddFavoritesClick() {
         replaceFragmentWithBackStack(AddServiceFragment.newInstance());
+    }
+
+    @Override
+    public final void onAddToSpamClick(@SpamType final int _spamType) {
+        switch (_spamType) {
+            case SpamHistoryFragment.SPAM_SMS:
+                openFragmentIfAuthorized(ReportSmsSpamFragment.newInstance(), FragmentType.REPORT_SMS_SPAM);
+                break;
+            case SpamHistoryFragment.SPAM_WEB:
+                openFragmentIfAuthorized(ReportWebSpamFragment.newInstance(), FragmentType.REPORT_WEB_SPAM);
+                break;
+        }
     }
 
     @Override

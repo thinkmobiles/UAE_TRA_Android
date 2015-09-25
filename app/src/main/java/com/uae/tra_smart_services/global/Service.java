@@ -150,20 +150,20 @@ public enum Service {
         }
 
     },
-    HELP_SALIM {
-        @Override
-        @StringRes
-        public int getTitleRes() {
-            return R.string.service_help_salim;
-        }
-
-        @Override
-        @DrawableRes
-        public final int getDrawableRes() {
-            return R.drawable.ic_edit;
-        }
-
-    },
+//    HELP_SALIM {
+//        @Override
+//        @StringRes
+//        public int getTitleRes() {
+//            return R.string.service_help_salim;
+//        }
+//
+//        @Override
+//        @DrawableRes
+//        public final int getDrawableRes() {
+//            return R.drawable.ic_edit;
+//        }
+//
+//    },
     MOBILE_VERIFICATION {
         @Override
         protected boolean isStaticMainScreenService() {

@@ -9,6 +9,7 @@
         <attr name="hexagonProcessBorderSize" format="dimension"/>
         <attr name="hexagonSuccessBorderSize" format="dimension"/>
         <attr name="hexagonSrc" format="reference|color"/>
+        <attr name="hexagonSrcTintColor" format="reference|color"/>
         <attr name="hexagonSideSize" format="dimension"/>
         <attr name="hexagonText" format="string"/>
         <attr name="hexagonTextSize" format="dimension"/>

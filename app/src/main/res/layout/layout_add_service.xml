@@ -28,6 +28,7 @@
         app:hexagonBorderColor="?attr/themeMainColor"
         app:hexagonBorderSize="1dp"
         app:hexagonSideSize="24dp"
-        tools:hexagonSrc="@drawable/ic_add_service_plus"/>
+        app:hexagonSrcTintColor="?attr/themeMainColor"
+        app:hexagonSrc="@drawable/ic_add_service_plus"/>
 
 </LinearLayout>
