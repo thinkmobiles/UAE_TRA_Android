@@ -61,4 +61,16 @@
 
     <attr name="toolbarBackground" format="reference|color"/>
 
+    <attr name="authorizationTextColors" format="reference|color"/>
+
+    <attr name="authorizationDrawableColors" format="reference|color"/>
+
+    <attr name="authorizationButtonsBackground" format="reference"/>
+
+    <attr name="themeMainColor" format="reference|color"/>
+
+    <attr name="reportSpam" format="reference"/>
+
+    <attr name="spamHistory" format="reference"/>
+
 </resources>

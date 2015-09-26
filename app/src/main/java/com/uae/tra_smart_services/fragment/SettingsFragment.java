@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,9 +13,11 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.uae.tra_smart_services.BuildConfig;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.HomeActivity;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
@@ -27,6 +30,7 @@ import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
+import com.uae.tra_smart_services.interfaces.OnActivateTutorialListener;
 import com.uae.tra_smart_services.interfaces.SettingsChangeListener;
 import com.uae.tra_smart_services.util.ImageUtils;
 
@@ -40,7 +44,9 @@ public class SettingsFragment extends BaseHomePageFragment
 
     private EditText etServer;
     private Button btnChangeServer;
-    private SwitchCompat swBlackAndWhiteMode;
+    private LinearLayout llAboutTRA;
+    private SwitchCompat swBlackAndWhiteMode, swActivateTutorial;
+    private TextView tvVersionName;
 
     private FontSizeSwitcherView fontSwitch;
     private LanguageSwitcherView langSwitch;
@@ -48,8 +54,22 @@ public class SettingsFragment extends BaseHomePageFragment
 
     private SharedPreferences mPrefs;
 
+    private OnOpenAboutTraClickListener mOpenAboutTraClickListener;
+    private OnActivateTutorialListener mOnActivateTutorialListener;
+
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
+    }
+
+    @Override
+    public void onAttach(Activity _activity) {
+        super.onAttach(_activity);
+        if (_activity instanceof OnOpenAboutTraClickListener) {
+            mOpenAboutTraClickListener = (OnOpenAboutTraClickListener) _activity;
+        }
+        if (_activity instanceof OnActivateTutorialListener) {
+            mOnActivateTutorialListener = (OnActivateTutorialListener) _activity;
+        }
     }
 
     @Override
@@ -66,6 +86,10 @@ public class SettingsFragment extends BaseHomePageFragment
         btnChangeServer = findView(R.id.btnChangeServer_FS);
         swBlackAndWhiteMode = findView(R.id.swBlackAndWhiteMode_FS);
         swBlackAndWhiteMode.setChecked(mPrefs.getBoolean(C.KEY_BLACK_AND_WHITE_MODE, false));
+        llAboutTRA = findView(R.id.llAboutTRA_FS);
+        tvVersionName = findView(R.id.tvVersionName_FS);
+        swActivateTutorial = findView(R.id.swActivateTutorial_FS);
+        swActivateTutorial.setChecked(false);
     }
 
     @Override
@@ -79,6 +103,8 @@ public class SettingsFragment extends BaseHomePageFragment
         super.initListeners();
         btnChangeServer.setOnClickListener(this);
         swBlackAndWhiteMode.setOnCheckedChangeListener(this);
+        swActivateTutorial.setOnCheckedChangeListener(this);
+        llAboutTRA.setOnClickListener(this);
     }
 
     private static CustomFilterPool<String> filters = new CustomFilterPool<String>() {
@@ -104,6 +130,8 @@ public class SettingsFragment extends BaseHomePageFragment
         themeSwitch = findView(R.id.cvThemeSwitch);
         themeSwitch.globalInit(mThemaDefiner.getThemeStringValue());
         themeSwitch.registerObserver(this);
+
+        tvVersionName.setHint("v1.0, build " + BuildConfig.VERSION_NAME);
     }
 
     @Override
@@ -155,18 +183,46 @@ public class SettingsFragment extends BaseHomePageFragment
     }
 
     @Override
-    public final void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    public final void onCheckedChanged(final CompoundButton _buttonView, final boolean _isChecked) {
+        switch (_buttonView.getId()) {
+            case R.id.swBlackAndWhiteMode_FS:
+                changeBlackAndWhite(_isChecked);
+                break;
+            case R.id.swActivateTutorial_FS:
+                activateTutorial();
+                break;
+        }
+    }
+
+    private void changeBlackAndWhite(final boolean _isChecked) {
         mPrefs.edit()
-                .putBoolean(C.KEY_BLACK_AND_WHITE_MODE, isChecked)
+                .putBoolean(C.KEY_BLACK_AND_WHITE_MODE, _isChecked)
                 .commit();
-        ImageUtils.setBlackAndWhiteMode(isChecked);
+        ImageUtils.setBlackAndWhiteMode(_isChecked);
         restartActivity();
+    }
+
+    private void activateTutorial() {
+        mOnActivateTutorialListener.onActivateTutorial();
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.llAboutTRA_FS:
+                if (mOpenAboutTraClickListener != null) {
+                    mOpenAboutTraClickListener.onOpenAboutTraClick();
+                }
+                break;
+            case R.id.btnChangeServer_FS:
+                changeBaseUrl();
+                break;
+        }
+    }
+
+    private void changeBaseUrl() {
         String baseUrl = etServer.getText().toString();
-        if (v.getId() == R.id.btnChangeServer_FS && filters.check(baseUrl)) {
+        if (filters.check(baseUrl)) {
             setBaseUrl(baseUrl);
         } else {
             showMessage(R.string.str_error, R.string.str_invalid_url);
@@ -180,7 +236,13 @@ public class SettingsFragment extends BaseHomePageFragment
     }
 
     @Override
-    public void onOkPressed() {
+    public void onDetach() {
+        mOpenAboutTraClickListener = null;
+        super.onDetach();
+    }
+
+    @Override
+    public void onOkPressed(final int _mMessageId) {
         // Unimplemented method
         // Used exceptionally to specify OK button in dialog
     }
@@ -195,4 +257,7 @@ public class SettingsFragment extends BaseHomePageFragment
         return R.layout.fragment_settings;
     }
 
+    public interface OnOpenAboutTraClickListener {
+        void onOpenAboutTraClick();
+    }
 }

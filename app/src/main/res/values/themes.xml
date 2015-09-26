@@ -8,8 +8,10 @@
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
         <item name="colorAccent">?attr/colorPrimary</item>
-
         <item name="hexagonHeaderButtonColor">?attr/colorPrimary</item>
+        <item name="authorizationTextColors">?attr/colorPrimary</item>
+        <item name="authorizationDrawableColors">?attr/colorPrimary</item>
+        <item name="themeMainColor">?attr/colorPrimary</item>
         <item name="hexagonHeaderButtonPressedColor">#ff5b61ff</item>
         <item name="addServiceColor">#f68f1e</item>
         <item name="shadowBackgroundColor">#fff5ea</item>
@@ -18,6 +20,8 @@
         <item name="userProfileBackground">@drawable/img_bg</item>
         <item name="mainBackground">@drawable/res_bg_2</item>
         <item name="favoritesBackground">@drawable/favorites_bg</item>
+        <item name="reportSpam">@drawable/res_bg_img</item>
+        <item name="spamHistory">@drawable/res_bg_img_pol</item>
     </style>
 
     <style name="AppThemeOrange" parent="BaseAppTheme">
@@ -26,6 +30,8 @@
         <item name="toolbarBackground">@color/hex_toolbar_orange</item>
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_orange</item>
         <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_orange</item>
+        <item name="authorizationButtonsBackground">@drawable/selector_authorization_buttons_orange</item>
+        <item name="hexagonHeaderButtonPressedColor">@color/hex_dark_orange</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_orange</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
@@ -34,6 +40,8 @@
         <item name="globalButtonTextColor">@color/hex_primary_orange</item>
         <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_orange</item>
         <item name="android:layoutDirection">locale</item>
+
+        <item name="hexagonLoaderBackground">@drawable/loader_bg_orange</item>
     </style>
 
     <style name="AppThemeGreen" parent="BaseAppTheme">
@@ -42,6 +50,8 @@
         <item name="toolbarBackground">@color/hex_toolbar_green</item>
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_green</item>
         <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_green</item>
+        <item name="authorizationButtonsBackground">@drawable/selector_authorization_buttons_green</item>
+        <item name="hexagonHeaderButtonPressedColor">@color/hex_dark_green</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_green</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
@@ -49,6 +59,8 @@
         <item name="homePageHeaderBackground">@color/hex_primary_green</item>
         <item name="globalButtonTextColor">@color/hex_primary_green</item>
         <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_green</item>
+
+        <item name="hexagonLoaderBackground">@drawable/loader_bg_green</item>
     </style>
 
     <style name="AppThemeBlue" parent="BaseAppTheme">
@@ -57,6 +69,8 @@
         <item name="toolbarBackground">@color/hex_toolbar_blue</item>
         <item name="backgroundServiceItemThemedIcon">@drawable/background_service_item_icon_blue</item>
         <item name="spinnerItemThemedBackground">@drawable/background_spinner_item_blue</item>
+        <item name="authorizationButtonsBackground">@drawable/selector_authorization_buttons_blue</item>
+        <item name="hexagonHeaderButtonPressedColor">@color/hex_dark_blue</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/hex_dark_blue</item>
         <item name="android:textColorPrimary">@color/hex_text_color_white</item>
@@ -64,6 +78,8 @@
         <item name="homePageHeaderBackground">@color/hex_primary_blue</item>
         <item name="globalButtonTextColor">@color/hex_primary_blue</item>
         <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_blue</item>
+
+        <item name="hexagonLoaderBackground">@drawable/loader_bg_blue</item>
     </style>
 
     <!--<style name="AppThemeRed" parent="BaseAppTheme">-->
@@ -94,10 +110,16 @@
         <item name="addServiceColor">@android:color/black</item>
         <item name="shadowBackgroundColor">#e1e1e1</item>
         <item name="dragDeleteColor">?attr/colorPrimary</item>
+        <item name="authorizationTextColors">@color/hex_color_dark_gray</item>
+        <item name="authorizationButtonsBackground">@drawable/selector_authorization_buttons_black</item>
 
         <item name="homePageHeaderBackground">@android:color/black</item>
         <item name="globalButtonTextColor">@android:color/black</item>
         <item name="globalButtonSelector">@drawable/selector_bottom_nav_radio_text_black</item>
         <item name="userProfileBackground">@drawable/img_bg_gray</item>
+        <item name="reportSpam">@drawable/res_bg_img_gray</item>
+        <item name="spamHistory">@drawable/res_bg_img_pol_gray</item>
+
+        <!--<item name="hexagonLoaderBackground">@drawable/loader_bg_orange</item>-->
     </style>
 </resources>

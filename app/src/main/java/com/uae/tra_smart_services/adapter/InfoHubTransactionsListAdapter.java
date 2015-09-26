@@ -77,7 +77,7 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_info_hub_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub, parent, false);
         return new ViewHolder(view);
     }
 

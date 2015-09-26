@@ -35,7 +35,7 @@
     <!--            Password field               -->
     <string name="str_password">Password</string>
     <!--            Forgot password field               -->
-    <string name="str_forgot_password">Forgot Password</string>
+    <string name="str_forgot_password">Password?</string>
     <!--            Sign in button               -->
     <string name="str_login">Login</string>
     <!--            Sign in button               -->
@@ -112,8 +112,10 @@
     <string name="str_registering">Registration..</string>
     <string name="str_checking">Checking..</string>
     <string name="str_sending">Sending..</string>
+    <string name="str_restoring">Restoring..</string>
     <string name="str_loading">Loading..</string>
     <string name="str_authenticating">Authenticating..</string>
+    <string name="str_restore_pass_mail">We\'ll send an email</string>
     <string name="str_report_has_been_sent">Report has been successfully sent. Thank you.</string>
     <string name="str_data_has_been_sent">Signal level has been successfully reported. Thank you.</string>
     <string name="str_rating_has_been_sent">Rating has been successfully reported. Thank you.</string>
@@ -127,6 +129,7 @@
     <string name="str_location_error_message">Please wait while location is determined or enter address manually.</string>
     <string name="signal_level_error">Please set signal level</string>
 
+    <string name="str_mobile_verification">Mobile verification</string>
     <string name="str_announcements">Announcements</string>
     <string name="str_transactions">Transactions</string>
     <string name="str_see_more">See More</string>
@@ -195,15 +198,15 @@
     <string name="service_suggestion">Suggestion</string>
     <string name="service_domain_check">Domain Check Service</string>
     <string name="service_enquiries">Enquiries</string>
-    <string name="service_sms_spam">SMS Spam Service</string>
-    <string name="service_poor_coverage">Poor coverage</string>
+    <string name="service_sms_spam">Spam Service</string>
+    <string name="service_poor_coverage">Poor Coverage</string>
     <string name="service_help_salim">Help Salim</string>
-    <string name="service_mobile_verification">Mobile verification</string>
+    <string name="service_mobile_verification">Mobile Verification</string>
     <string name="service_approved_devices">Approved Devices</string>
 
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
-    <string name="hint_emirates_id">Emirates ID No.</string>
+    <string name="hint_emirates_id">e.g. 784-YYYY-NNNNNNN-C</string>
     <string name="hint_username">Username</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="hint_address">Address</string>
@@ -300,5 +303,56 @@
 
     <string name="str_enquires_title">Enquires Title</string>
     <string name="str_suggestion_title">Suggestion Title</string>
+    <string name="login_username_hint">Username</string>
+
+    <string name="fragment_about_tra_html"><![CDATA[
+            <p>The Telecommunications Regulatory Authority (TRA) of the United Arab Emirates (UAE) has been established according to the UAE Federal Law by Decree No. 3 of 2003 – Telecom Law. TRA is responsible for the management of every aspect of the telecommunications and information technology industries in the UAE. Despite its relatively short life-span, TRA has exceeded expectations by achieving its projected goals in record time.</p>
+<p>The organizational objectives of TRA are derived from the UAE Telecommunications Law, its Executive Order and the UAE National Telecommunications Policy. These objectives include: ensuring adequacy of telecommunications services throughout the UAE; achieving enhancement of services, both in terms of quality and variety; ensuring quality of service and adherence to terms of licenses by licensees; encouraging telecommunications and IT services within the UAE; promoting and enhancing the telecommunications sector within the UAE; resolving disputes between the licensed operators; establishing and implementing a regulatory and policy framework; promoting new technologies; ensuring that the UAE becomes the regional ICT hub; developing the country´s human capital; and encouraging research and development.</p>
+<p>TRA, and as determined by its mandate, is entrusted with a wide range of responsibilities related to the Telecommunications and Information Technology Sector, both within and outside the UAE. According to the UAE Federal Telecom Law No. (3) For the Year 2003 and its amendments, TRA is to exercise its functions and powers and under this Law and its Executive Order to:</p>
+<ul>
+<li>Ensure that the telecommunications services provided throughout the state are sufficient to satisfy the public demands of those who wish to make use of such services</li>
+<li>Enhance the level of service provided by the telecommunications sector in order to promote the interests of such services</li>
+<li>Ensure that licensees meet quality standards of performance and adhere to the terms and conditions of the licenses granted to them</li>
+<li>Ensure that licensees meet quality standards of performance and adhere to the terms and conditions of the licenses granted to them</li>
+<li>Encourage, promote, and develop the telecommunications and information technology industries in the state</li>
+<li>Promote and enhance the telecommunications system in the state as indicated by the development and the establishment of industry related training institutions and through the availability of the latest apparatus, equipment, and facilities provided by telecommunications technologies</li>
+</ul>
+    ]]></string>
+    
+    <string name="str__service_info__about_service__default">@string/str_dummy_info_hub_list_item_full_descr</string>
+    <string name="str__service_info__about_service__complain_about_service_provider">You can file a complaint or put remarks about your telecom service provider</string>
+    <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
+    <string name="release_version_label">Release Version</string>
+    <string name="error_valid_emid">Please enter valid emirates id</string>
+
+    <string name="fragment_report_spam_title">SPAM</string>
+    <string name="fragment_report_spam_hint">Report SMS or Websites\nas Spam to TRA</string>
+    <string name="fragment_report_spam_sms">REPORT\nSMS</string>
+    <string name="fragment_report_spam_web">REPORT\nWEB</string>
+    <string name="fragment_report_spam_history">VIEW\nMY LIST</string>
+    <string name="fragment_report_spam_cant_send_sms">"Can't send sms. Please, install sms messenger"</string>
+
+    <string name="fragment_report_spam_sms_title">SPAM - SMS</string>
+    <string name="fragment_report_spam_sms_number">Number</string>
+    <string name="fragment_report_spam_sms_description_hint">Copy and Paste the SMS here…</string>
+    <string name="fragment_report_spam_sms_close">CLOSE</string>
+    <string name="fragment_report_spam_sms_submit">SUBMIT</string>
+
+    <string name="fragment_report_spam_web_title">SPAM - WEBSITE</string>
+    <string name="fragment_report_spam_web_link">Link</string>
+    <string name="fragment_report_spam_web_description_hint">Description…</string>
+
+    <string name="fragment_report_history_title">MY LIST</string>
+    <string name="fragment_report_history_add_to_spam">ADD TO SPAM</string>
+    
+    <string name="str_back_to_dashboard">BACK TO DASHBOARD</string>
+    <string name="str_cancel_request">CANCEL REQUEST</string>
+    <string name="str_give_us_moment">Give us a moment while processing request</string>
+    <string name="str_reuqest_has_been_sent">Your Request has been successfully sent and you will receive an SMS reply shortly</string>
+    <string name="str_reuqest_has_been_failed">Your Request has been failed</string>
+    <string name="str_reuqest_has_been_cancelled">Your Request has been cancelled</string>
+    <string name="lorem_ipsum_tutorial">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\\'s standard dummy text ever since the 1500s...</string>
+    <string name="app_tutorial_screens">App Tutorial Screens</string>
+    <string name="activate_tutorial">Activates the tutorials screens</string>
 
 </resources>

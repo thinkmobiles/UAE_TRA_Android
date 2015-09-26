@@ -46,7 +46,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     @Override
     protected final void initViews() {
         super.initViews();
-        etOperatorNumber = findView(R.id.etOperatorNumber_FBSN);
+//        etOperatorNumber = findView(R.id.etOperatorNumber_FBSN);
         etReferenceNumber = findView(R.id.etReferenceNumber_FBSN);
         etDescription = findView(R.id.etDescription_FBSN);
         tvServiceProvider = findView(R.id.tvServiceProvider_FBSN);
@@ -97,11 +97,11 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     private void collectAndSendToServer() {
         hideKeyboard(getView());
         if (validateData()) {
-            showProgressDialog(getString(R.string.str_checking), this);
+            showLoaderDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     mSmsBlockRequest = new SmsBlockRequest(
                             new SmsBlockRequestModel(
-                                    etOperatorNumber.getText().toString(),
+                                    "7726",                                     // TODO: TEMPORARY HARDCODED
                                     etReferenceNumber.getText().toString(),
                                     etDescription.getText().toString(),
                                     tvServiceProvider.getText().toString()
@@ -113,10 +113,10 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     }
 
     private boolean validateData() {
-        if (etOperatorNumber.getText().toString().isEmpty()) {
-            Toast.makeText(getActivity(), R.string.str_invalid_number, Toast.LENGTH_SHORT).show();
-            return false;
-        }
+//        if (etOperatorNumber.getText().toString().isEmpty()) {
+//            Toast.makeText(getActivity(), R.string.str_invalid_number, Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         if (tvServiceProvider.getText().toString().isEmpty()) {
             Toast.makeText(getActivity(), R.string.fragment_complain_no_service_provider, Toast.LENGTH_SHORT).show();
             return false;
@@ -160,13 +160,13 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
     }
 
     @Override
-    public void onOkPressed() {
+    public void onOkPressed(final int _mMessageId) {
         // Unimplemented method
         // Used exceptionally to specify OK button in dialog
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted() && mSmsBlockRequest != null) {
             getSpiceManager().cancel(mSmsBlockRequest);
         }
@@ -181,7 +181,7 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
 
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
-            hideProgressDialog();
+            dissmissLoaderDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
             getFragmentManager().popBackStack();
         }

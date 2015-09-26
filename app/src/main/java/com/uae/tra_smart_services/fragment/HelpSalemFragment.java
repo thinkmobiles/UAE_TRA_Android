@@ -87,7 +87,7 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
     }
     private void collectAndSendToServer(){
         if(validateData()){
-            showProgressDialog(getString(R.string.str_checking), this);
+            showLoaderDialog(getString(R.string.str_checking), this);
             getSpiceManager().execute(
                     mHelpSalimRequest = new HelpSalimRequest(
                             new HelpSalimModel(
@@ -113,7 +113,7 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
     }
 
     @Override
-    public void onOkPressed() {
+    public void onOkPressed(final int _mMessageId) {
         // Unimplemented method
         // Used exceptionally to specify OK button in dialog
     }
@@ -127,14 +127,14 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
 
         @Override
         public void onRequestSuccess(Response smsSpamReportResponse) {
-            hideProgressDialog();
+            dissmissLoaderDialog();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
             getFragmentManager().popBackStackImmediate();
         }
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted() && mHelpSalimRequest != null) {
             getSpiceManager().cancel(mHelpSalimRequest);
         }

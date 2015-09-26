@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <com.uae.tra_smart_services.customviews.HexagonalHeader
+        android:id="@+id/hhHeader_FHBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        app:buttonColor="?attr/hexagonHeaderButtonColor"
+        app:hexColor="#ffffff"
+        app:hexPerRow="8"
+        app:hexagonRowCount="2"
+        app:hexagonStrokeWidth="2dp"
+        app:pressedColor="?attr/hexagonHeaderButtonPressedColor"
+        android:visibility="invisible"/>
+
+    <com.uae.tra_smart_services.customviews.HexagonalButtonsLayout
+        android:id="@+id/hblHexagonalButtons_FHBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hhHeader_FHBT"
+        android:paddingTop="5dp"
+        app:hexTextSize="12dp"
+        app:hexagonGapWidth="10dp"
+        app:layout_behavior="com.uae.tra_smart_services.customviews.ScrollingBehaviorTest"
+        app:separatorStrokeWidth="2dp"
+        app:isTutorialMode="true"/>
+
+    <com.uae.tra_smart_services.customviews.tutorial.HotBarTipView
+        android:id="@+id/hbtvHotBarTipView_FHBT"
+        android:layout_below="@id/hblHexagonalButtons_FHBT"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:titleBorderWidth="1dp"
+        app:linePointerWidth="1.5dp"
+        app:viewPointerRadius="2.5dp"
+        app:tipTextSize="16dp"
+        app:titleTextSize="18dp"
+        app:linePointerColor="@android:color/white"
+        app:tipTextColor="@android:color/white"
+        app:viewPointerColor="@android:color/white"
+        app:tipText="@string/lorem_ipsum_tutorial"
+        app:titleText="HOT BAR/QUICK ACCESS LINKS"
+        app:tutorialTipType="avatar"/>
+
+</RelativeLayout>

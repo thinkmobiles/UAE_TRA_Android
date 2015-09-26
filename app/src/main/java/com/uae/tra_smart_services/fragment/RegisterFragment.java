@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -15,11 +14,14 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.adapter.StateRegisterAdapter;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.RegisterModel;
 import com.uae.tra_smart_services.rest.robo_requests.RegisterRequest;
+import com.uae.tra_smart_services.util.ImageUtils;
+import com.uae.tra_smart_services.util.TRAPatterns;
 
 import retrofit.client.Response;
 
@@ -36,7 +38,9 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     private TextView btnLogInNow;
     private Spinner acsState, acsCountry;
 
-    private ArrayAdapter<CharSequence> mStatesAdapter, mCountriesAdapter;
+    private RegisterRequest mRegisterRequest;
+
+    private StateRegisterAdapter mStatesAdapter, mCountriesAdapter;
     private CustomFilterPool<RegisterModel> mFilterPool;
 
     private RequestListener mRequestListener;
@@ -54,36 +58,46 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     protected final void initViews() {
         // Input fields
         etUserName = findView(R.id.etUsername_FR);
-        etPhone = findView(R.id.etPhone_FR);
-        etPassword = findView(R.id.etPassword_FR);
-        etConfirmPassword = findView(R.id.etConfirmPassword_FR);
-        etFirstName = findView(R.id.etFirstName_FR);
-        etLastName = findView(R.id.etLastName_FR);
-        etEmiratesId = findView(R.id.etEmiratesID_FR);
-        etEmail = findView(R.id.etEmail_FR);
+        etUserName.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
 
-        acsState = findView(R.id.spState_FR);
-//        acsCountry = findView(R.id.spCountry_FR);
+        etPhone = findView(R.id.etPhone_FR);
+        etPhone.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_phone, R.attr.authorizationDrawableColors), null, null, null);
+
+        etPassword = findView(R.id.etPassword_FR);
+        etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
+
+        etConfirmPassword = findView(R.id.etConfirmPassword_FR);
+        etConfirmPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
+
+        etFirstName = findView(R.id.etFirstName_FR);
+        etFirstName.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+
+        etLastName = findView(R.id.etLastName_FR);
+        etLastName.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+
+        etEmiratesId = findView(R.id.etEmiratesID_FR);
+        etEmiratesId.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_id, R.attr.authorizationDrawableColors), null, null, null);
+
+        etEmail = findView(R.id.etEmail_FRP);
+        etEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_mail, R.attr.authorizationDrawableColors), null, null, null);
+
+//        acsState = findView(R.id.spState_FR);
+    //        acsCountry = findView(R.id.spCountry_FR);
         // Actions
         tvRegister = findView(R.id.tvRegister_FLI);
-        btnLogInNow = findView(R.id.btnLogInNow_FLI);
     }
 
     @Override
     protected final void initListeners() {
         mRequestListener = new RequestListener();
         tvRegister.setOnClickListener(this);
-        btnLogInNow.setOnClickListener(this);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mStatesAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.states_array, R.layout.list_item_register_state);
-        mStatesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        acsState.setAdapter(mStatesAdapter);
+//        mStatesAdapter = new StateRegisterAdapter(getActivity(), Arrays.asList(getResources().getStringArray(R.array.states_array)));
+//        acsState.setAdapter(mStatesAdapter);
 
         initFilters();
     }
@@ -106,13 +120,9 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
             case R.id.tvRegister_FLI:
                 doRegistration();
                 break;
-            case R.id.btnLogInNow_FLI:
-                actionsListener.onOpenLoginScreen();
-                break;
         }
     }
 
-    private RegisterRequest mRegisterRequest;
     private void doRegistration() {
         final RegisterModel registerModel = new RegisterModel();
         registerModel.login = etUserName.getText().toString();
@@ -120,19 +130,19 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         registerModel.mobile = etPhone.getText().toString();
         registerModel.first = etFirstName.getText().toString();
         registerModel.last = etLastName.getText().toString();
-        registerModel.state = acsState.getSelectedItemPosition()+1;
+        registerModel.state = 3; // HARDCODED DUBAI
         registerModel.email = etEmail.getText().toString();
         registerModel.emiratesId = etEmiratesId.getText().toString();
 
         if (mFilterPool.check(registerModel)) {
-            showProgressDialog(getString(R.string.str_registering), this);
+            showLoaderDialog(getString(R.string.str_registering), this);
             getSpiceManager().execute(mRegisterRequest = new RegisterRequest(registerModel),
                     KEY_REGISTER_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
         }
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted() && mRegisterRequest!=null){
             getSpiceManager().cancel(mRegisterRequest);
         }
@@ -149,7 +159,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                hideProgressDialog();
+                dissmissLoaderDialog();
                 if (result != null && actionsListener != null) {
                     actionsListener.onRegisterSuccess();
                 }
@@ -197,7 +207,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
                     @Override
                     public boolean check(final RegisterModel _data) {
                         if (!Patterns.EMAIL_ADDRESS.matcher(_data.email).matches()) {
-                            showMessage(R.string.str_error, R.string.error_valid_email);
+                            showMessage(0, R.string.str_error, R.string.error_valid_email);
                             etEmail.setError(getString(R.string.error_valid_email));
                             etEmail.requestFocus();
                             return false;
@@ -208,9 +218,22 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
 
                 addFilter(new Filter<RegisterModel>() {
                     @Override
+                    public boolean check(RegisterModel _data) {
+                        if(!TRAPatterns.EMIRATES_ID.matcher(_data.emiratesId).matches()) {
+                            showMessage(0, R.string.str_error, R.string.error_valid_emid);
+                            etEmiratesId.setError(getString(R.string.error_valid_emid));
+                            etEmiratesId.requestFocus();
+                            return false;
+                        }
+                        return true;
+                    }
+                });
+
+                addFilter(new Filter<RegisterModel>() {
+                    @Override
                     public boolean check(final RegisterModel _data) {
                         if (!Patterns.PHONE.matcher(_data.mobile).matches()) {
-                            showMessage(R.string.str_error, R.string.error_valid_phone);
+                            showMessage(0, R.string.str_error, R.string.error_valid_phone);
                             etPhone.setError(getString(R.string.error_valid_phone));
                             etPhone.requestFocus();
                             return false;
@@ -223,7 +246,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
                     @Override
                     public boolean check(RegisterModel _data) {
                         if (!_data.pass.equals(etConfirmPassword.getText().toString())) {
-                            showMessage(R.string.str_error, R.string.error_password_confirm);
+                            showMessage(0, R.string.str_error, R.string.error_password_confirm);
                             etPassword.setError(getString(R.string.error_password_confirm));
                             etConfirmPassword.setError(getString(R.string.error_password_confirm));
                             etConfirmPassword.requestFocus();

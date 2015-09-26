@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
@@ -45,8 +44,11 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
     private final List<Service> mAllData, mShowingData;
     private final int mBackgroundColor;
     private final Context mContext;
+
     private OnFavoriteClickListener mFavoriteClickListener;
     private Filter mServiceFilter;
+    private boolean mIsAddBtnVisible;
+    private boolean mIsDataFilterEnable;
     private boolean mIsOddOpaque;
 
     public FavoritesAdapter(final Context _context) {
@@ -90,6 +92,23 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
         return mAllData.isEmpty();
     }
 
+    public void setAddButtonVisibility(final boolean _isVisible) {
+        if (mIsAddBtnVisible == _isVisible) {
+            return;
+        }
+
+        mIsAddBtnVisible = _isVisible;
+        if (mIsAddBtnVisible) {
+            notifyItemInserted(0);
+        } else {
+            notifyItemRemoved(0);
+        }
+    }
+
+    public int getHeaderCount() {
+        return mIsAddBtnVisible && !mIsDataFilterEnable ? 1 : 0;
+    }
+
     public final void addData(final List<Service> _items) {
         mAllData.addAll(_items);
         invalidateFilter();
@@ -97,15 +116,17 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
     }
 
     public final void removeItem(final int _position) {
-        mAllData.remove(mShowingData.get(_position));
-        mShowingData.remove(_position);
+        final Service service = mShowingData.get(_position - getHeaderCount());
+        mAllData.remove(service);
+        mShowingData.remove(service);
         mIsOddOpaque = !mIsOddOpaque;
+        notifyItemRemoved(_position);
         invalidateFilter();
-        notifyItemRemoved(_position + 1);
     }
 
     private void invalidateFilter() {
         mServiceFilter = null;
+        mIsDataFilterEnable = false;
     }
 
     @Override
@@ -126,21 +147,21 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         if (getItemViewType(position) == SIMPLE_ITEM) {
-            ((ItemViewHolder) holder).setData(mShowingData.get(position - 1), position - 1);
+            ((ItemViewHolder) holder).setData(mShowingData.get(position - getHeaderCount()), position - getHeaderCount());
         }
     }
 
     @ItemType
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? HEADER_ITEM : SIMPLE_ITEM;
+        return getHeaderCount() != 0 && position == 0 ? HEADER_ITEM : SIMPLE_ITEM;
     }
 
     @Override
     public int getItemCount() {
-        return mShowingData.size() + 1;
+        return mShowingData.size() + getHeaderCount();
     }
 
     public void setFavoriteClickListener(OnFavoriteClickListener _favoriteClickListener) {
@@ -148,7 +169,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
     }
 
     public Service getItem(int _position) {
-        return mShowingData.get(_position);
+        return mShowingData.get(_position - getHeaderCount());
     }
 
     private class SearchFilter extends Filter {
@@ -166,9 +187,9 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
                 results.count = listData.size();
                 results.values = listData;
             } else {
-                List<Service> filteredList = getFilteredList(constraint);
-                results.count = filteredList.size();
-                results.values = filteredList;
+                List<Service> filteredData = getFilteredList(constraint);
+                results.count = filteredData.size();
+                results.values = filteredData;
             }
             return results;
         }
@@ -187,6 +208,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             List<Service> filteredData = (List<Service>) results.values;
+            mIsDataFilterEnable = filteredData.size() != listData.size();
             showData(filteredData);
         }
     }
@@ -228,10 +250,10 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
             if (mFavoriteClickListener != null) {
                 switch (v.getId()) {
                     case R.id.rlItemContainer_LIF:
-                        mFavoriteClickListener.onItemClick(getAdapterPosition() - 1);
+                        mFavoriteClickListener.onItemClick(getAdapterPosition());
                         break;
                     case R.id.tvServiceInfo_LIF:
-                        mFavoriteClickListener.onServiceInfoClick(getAdapterPosition() - 1);
+                        mFavoriteClickListener.onServiceInfoClick(getAdapterPosition());
                         break;
                 }
             }
@@ -240,16 +262,19 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
         @Override
         public boolean onLongClick(View v) {
             if (mFavoriteClickListener != null) {
-                mFavoriteClickListener.onRemoveLongClick(tvRemove, getAdapterPosition() - 1);
+                mFavoriteClickListener.onRemoveLongClick(tvRemove, getAdapterPosition());
             }
             return true;
         }
     }
 
-    protected class HeaderViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
+    protected class HeaderViewHolder extends ViewHolder implements OnClickListener {
+
+        private HexagonView hvIcon;
 
         public HeaderViewHolder(final View _itemView) {
             super(_itemView);
+            hvIcon = (HexagonView) _itemView.findViewById(R.id.hvIcon_LAS);
             _itemView.setOnClickListener(this);
         }
 

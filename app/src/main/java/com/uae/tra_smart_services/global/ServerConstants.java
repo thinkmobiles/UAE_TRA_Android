@@ -61,6 +61,7 @@ public final class ServerConstants {
     public static final String POOR_COVERAGE_URL = "/sendPoorCoverage";
     public static final String REGISTER_URL = "/crm/register";
     public static final String LOGIN_URL = "/crm/signIn";
+    public static final String RESTORE_PASS_URL = "/crm/???????"; // Not defined yet
     public static final String LOGOUT_URL = "/crm/signOut";
 
     //!!!!!!!!!!!! API PARAMETERS !!!!!!!!!!!!!!!!!!
@@ -73,4 +74,5 @@ public final class ServerConstants {
     //!!!!!!!!!!!! SERVER RESPONSES !!!!!!!!!!!!!!!!!
     public static final String AVAILABLE = "Available";
     public static final String NOT_AVAILABLE = "Not Available";
+    public static final String NO_DATA_FOUND = "No Data Found\r\n";
 }

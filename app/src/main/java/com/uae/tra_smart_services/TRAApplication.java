@@ -18,6 +18,8 @@ public class TRAApplication extends Application {
         Fabric.with(this, new Crashlytics());
         isLoggedIn = false;
         super.onCreate();
+
+
     }
 
     public static boolean isLoggedIn() {

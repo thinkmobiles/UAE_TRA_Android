@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hhHeader_FHH"
+            android:paddingTop="5dp"
             app:hexTextSize="12dp"
             app:hexagonGapWidth="10dp"
             app:layout_behavior="com.uae.tra_smart_services.customviews.ScrollingBehaviorTest"

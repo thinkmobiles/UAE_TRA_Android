@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
@@ -19,7 +18,9 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
@@ -29,7 +30,7 @@ import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
  * Created by ak-buffalo on 10.08.15.
  */
 public class DomainCheckerFragment extends BaseServiceFragment
-        implements View.OnClickListener, AlertDialogFragment.OnOkListener {
+        implements View.OnClickListener, AlertDialogFragment.OnOkListener{
 
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
@@ -109,7 +110,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     public final void onClick(View _view) {
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
-            showProgressDialog(getString(R.string.str_checking), this);
+            showLoaderOverlay(getString(R.string.str_checking), this);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
                     checkAvailability(domain);
@@ -143,13 +144,13 @@ public class DomainCheckerFragment extends BaseServiceFragment
     }
 
     @Override
-    public void onOkPressed() {
+    public void onOkPressed(final int _mMessageId) {
         // Unimplemented method
         // Used exceptionally to specify OK button in dialog
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted()){
             if(mDomainAvailabilityCheckRequest != null){
                 getSpiceManager().cancel(mDomainAvailabilityCheckRequest);
@@ -182,10 +183,17 @@ public class DomainCheckerFragment extends BaseServiceFragment
 
         @Override
         public void onRequestSuccess(DomainAvailabilityCheckResponseModel _responseModel) {
-            hideProgressDialog();
             if (_responseModel != null) {
                 _responseModel.domainStrValue = mDomain;
+                dissmissLoaderDialog();
+                dissmissLoaderOverlay(DomainCheckerFragment.this);
                 mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_AVAILABILITY, _responseModel);
+            } else {
+                if(dissmissLoaderDialog()){
+                    showMessage(R.string.str_error, R.string.str_something_went_wrong);
+                } else {
+                    dissmissLoaderOverlay(getString(R.string.str_url_not_avail));
+                }
             }
         }
     }
@@ -199,11 +207,16 @@ public class DomainCheckerFragment extends BaseServiceFragment
 
         @Override
         public void onRequestSuccess(DomainInfoCheckResponseModel _reponseModel) {
-            hideProgressDialog();
-            if (!_reponseModel.urlData.equals("No Data Found\r\n")) {
+            if (!_reponseModel.urlData.equals(ServerConstants.NO_DATA_FOUND)) {
+                dissmissLoaderDialog();
+                dissmissLoaderOverlay(DomainCheckerFragment.this);
                 mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_INFO, _reponseModel);
             } else {
-                showFormattedMessage(R.string.str_error, R.string.str_url_doesnot_exist, mDomain);
+                if(dissmissLoaderDialog()) {
+                    showFormattedMessage(R.string.str_error, R.string.str_url_doesnot_exist, mDomain);
+                } else {
+                    dissmissLoaderOverlay(String.format(getString(R.string.str_url_doesnot_exist), mDomain));
+                }
             }
         }
     }

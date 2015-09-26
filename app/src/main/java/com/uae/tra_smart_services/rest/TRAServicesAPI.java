@@ -7,6 +7,7 @@ import com.uae.tra_smart_services.rest.model.request.LoginModel;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.model.request.RatingServiceRequestModel;
 import com.uae.tra_smart_services.rest.model.request.RegisterModel;
+import com.uae.tra_smart_services.rest.model.request.RestorePasswordRequestModel;
 import com.uae.tra_smart_services.rest.model.request.SmsBlockRequestModel;
 import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
@@ -29,6 +30,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ABOUT_T
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ENQUIRIES_SERVICE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.HELP_SALIM_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGIN_URL;
+import static com.uae.tra_smart_services.global.ServerConstants.RESTORE_PASS_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGOUT_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_CHECK_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_DEVICE_BRAND;
@@ -99,6 +101,9 @@ public interface TRAServicesAPI {
 
     @POST(LOGIN_URL)
     Response login(@Body LoginModel _loginModel);
+
+    @POST(RESTORE_PASS_URL)
+    Response restorePassword(@Body RestorePasswordRequestModel _loginModel);
 
     @POST(LOGOUT_URL)
     Response logout();

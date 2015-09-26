@@ -1,7 +1,9 @@
 package com.uae.tra_smart_services.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -11,7 +13,7 @@ import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.LoginFragment;
 import com.uae.tra_smart_services.fragment.RegisterFragment;
-import com.uae.tra_smart_services.fragment.RestorePassFragment;
+import com.uae.tra_smart_services.fragment.RestorePasswordFragment;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
@@ -24,10 +26,17 @@ import java.net.CookieManager;
  * Created by Andrey Korneychuk on 22.07.15.
  */
 public class AuthorizationActivity extends BaseFragmentActivity
-            implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
+        implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
 
     private String mAction;
-    private ImageView ivLogo;
+    private ImageView ivLogo, ivBackground;
+
+    public static Intent getStartForResultIntent(final Context _context, final Enum _fragmentIdentifier){
+        final Intent intent = new Intent(_context, AuthorizationActivity.class);
+        intent.setAction(C.ACTION_LOGIN);
+        intent.putExtra(C.FRAGMENT_FOR_REPLACING, _fragmentIdentifier);
+        return intent;
+    }
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -40,17 +49,23 @@ public class AuthorizationActivity extends BaseFragmentActivity
         setContentView(R.layout.activity_authorization);
 
         ivLogo = findView(R.id.ivLogo_FSL);
-        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(this, R.drawable.tra_logo));
+        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(this, R.drawable.authorization_logo));
+
+        ivBackground = findView(R.id.ivBackground_AA);
+        ivBackground.setImageDrawable(ImageUtils.getFilteredDrawable(this, R.drawable.bg_authorization));
 
         CookieHandler.setDefault(new CookieManager());
         mAction = getIntent().getAction();
 
         final Toolbar toolbar = findView(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         if (getFragmentManager().findFragmentById(getContainerId()) == null) {
-            addFragment(LoginFragment.newInstance());
+            addFragmentWithOutBackStack(LoginFragment.newInstance());
         }
     }
 
@@ -59,7 +74,7 @@ public class AuthorizationActivity extends BaseFragmentActivity
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -74,7 +89,9 @@ public class AuthorizationActivity extends BaseFragmentActivity
         TRAApplication.setIsLoggedIn(true);
 
         if (mAction != null && mAction.equals(C.ACTION_LOGIN)) {
-            setResult(C.LOGIN_SUCCESS);
+            final Intent data = new Intent();
+            data.putExtra(C.FRAGMENT_FOR_REPLACING, getIntent().getSerializableExtra(C.FRAGMENT_FOR_REPLACING));
+            setResult(C.LOGIN_SUCCESS, data);
             finish();
         } else {
             startActivity(new Intent(this, HomeActivity.class));
@@ -94,7 +111,7 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
     @Override
     public void onOpenRestorePassScreen() {
-        super.replaceFragmentWithBackStack(RestorePassFragment.newInstance());
+        super.replaceFragmentWithBackStack(RestorePasswordFragment.newInstance());
 
     }
 
@@ -105,6 +122,11 @@ public class AuthorizationActivity extends BaseFragmentActivity
 
     @Override
     public void onBackPressed() {
+        if (mAction != null && mAction.equals(C.ACTION_LOGIN)) {
+            final Intent data = new Intent();
+            data.putExtra(C.FRAGMENT_FOR_REPLACING, getIntent().getSerializableExtra(C.FRAGMENT_FOR_REPLACING));
+            setResult(RESULT_CANCELED, data);
+        }
         super.onBackPressed();
     }
 

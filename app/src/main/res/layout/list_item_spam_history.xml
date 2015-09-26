@@ -1,0 +1,66 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="12dp"
+    android:paddingTop="12dp">
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvIcon_LISH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="16dp"
+        app:hexagonBorderColor="?attr/colorPrimary"
+        app:hexagonBorderSize="2dp"
+        app:hexagonSideSize="44dp"
+        app:hexagonSrc="@drawable/ic_mail"
+        app:hexagonSrcTintColor="?attr/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/tvTitle_LISH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/hvIcon_LISH"
+        android:layout_marginEnd="8dp"
+        android:layout_toEndOf="@id/hvIcon_LISH"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:singleLine="true"
+        android:textColor="?attr/globalButtonTextColor"
+        android:textSize="18sp"
+        tools:text="Promotions"/>
+
+    <ImageView
+        android:id="@+id/ivDelete_LISH"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/tvTitle_LISH"
+        android:scaleType="centerInside"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_del"/>
+
+    <TextView
+        android:id="@+id/tvDescription_LISH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle_LISH"
+        android:layout_toEndOf="@id/hvIcon_LISH"
+        android:layout_toStartOf="@id/ivDelete_LISH"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:lines="3"
+        android:textSize="16sp"
+        android:text="John Doe asdasd asdasda asdasda najsdnasjn jnj nkjnkjqdsn adads akjsdna asdjnaskjdas da sda sd as   asdasdasdasd asdasdasdasd najsdnasjn jnj nkjnkjqdsn adads akjsdna asdjnaskjdas da sda sd as   asdasdasdasd asdasdasdasd asdasda najsdnasjn jnj nkjnkjqdsn adads akjsdna asdjnaskjdas da sda sd as   asdasdasdasd asdasdasdasd asdasdas dasd as d"/>
+
+    <View
+        android:id="@+id/vListViewItemSeparator"
+        style="@style/ListViewItemSeparator"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/tvDescription_LISH"/>
+
+</RelativeLayout> 

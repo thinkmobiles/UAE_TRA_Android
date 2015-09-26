@@ -44,6 +44,11 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_search;
+    }
+
+    @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
         if (_activity instanceof OnServiceSelectListener) {
@@ -94,11 +99,6 @@ public class SearchFragment extends BaseFragment
         );
         rvSearchResultList.setAdapter(mAdapter);
         mAdapter.getFilter().initFromAdapter(mAdapter);
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_search;
     }
 
     @Override

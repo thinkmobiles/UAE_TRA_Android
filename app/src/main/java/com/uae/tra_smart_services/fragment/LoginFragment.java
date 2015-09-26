@@ -17,6 +17,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
 import com.uae.tra_smart_services.rest.robo_requests.LoginRequest;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import retrofit.client.Response;
 
@@ -29,8 +30,8 @@ public class LoginFragment extends BaseAuthorizationFragment
     private static final String KEY_LOGIN_REQUEST = "LOGIN_REQUEST";
 
     private EditText etUserName, etPassword;
-    private Button btnLogIn, btnRegisterNow, btnSkip;
-    private TextView tvRestorePassword;
+    private Button btnLogIn;
+    private TextView tvRegisterNow, tvForgotPassword;
 
     private RequestResponseListener mRequestLoginListener;
 
@@ -46,13 +47,17 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     protected final void initViews() {
         // Input fields
-        etUserName = findView(R.id.etEmail_FR);
+        etUserName = findView(R.id.etEmail_FRP);
+
+        etUserName.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
+
         etPassword = findView(R.id.etPassword_FR);
+
+        etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
         // Actions
-        tvRestorePassword = findView(R.id.btnRestorePassword_FLI);
-        btnLogIn = findView(R.id.btnLogIn_FLI);
-        btnRegisterNow = findView(R.id.btnRegisterNow_FLI);
-        btnSkip = findView(R.id.btnSkip_FLI);
+        btnLogIn = findView(R.id.btnDoRestorePass_FRP);
+        tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
+        tvForgotPassword = findView(R.id.tvForgotPass_FLI);
 
         if (BuildConfig.DEBUG) {
             btnLogIn.setOnLongClickListener(new View.OnLongClickListener() {
@@ -70,10 +75,10 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     protected final void initListeners() {
         mRequestLoginListener = new RequestResponseListener();
-        tvRestorePassword.setOnClickListener(this);
+//        tvRestorePassword.setOnClickListener(this);
         btnLogIn.setOnClickListener(this);
-        btnRegisterNow.setOnClickListener(this);
-        btnSkip.setOnClickListener(this);
+        tvRegisterNow.setOnClickListener(this);
+        tvForgotPassword.setOnClickListener(this);
     }
 
     @Override
@@ -84,17 +89,14 @@ public class LoginFragment extends BaseAuthorizationFragment
     @Override
     public final void onClick(final View _v) {
         switch (_v.getId()) {
-            case R.id.btnRestorePassword_FLI:
-                actionsListener.onOpenRestorePassScreen();
-                break;
-            case R.id.btnLogIn_FLI:
+            case R.id.btnDoRestorePass_FRP:
                 doLogIn();
                 break;
-            case R.id.btnRegisterNow_FLI:
+            case R.id.tvRegisterNow_FLI:
                 actionsListener.onOpenRegisterScreen();
                 break;
-            case R.id.btnSkip_FLI:
-                actionsListener.onHomeScreenOpenWithoutAuth();
+            case R.id.tvForgotPass_FLI:
+                    actionsListener.onOpenRestorePassScreen();
                 break;
         }
     }
@@ -116,13 +118,14 @@ public class LoginFragment extends BaseAuthorizationFragment
             return;
         }
 
-        showProgressDialog(getString(R.string.str_authenticating), this);
+        hideKeyboard(getView());
+        showLoaderDialog(getString(R.string.str_authenticating), this);
 
         getSpiceManager().execute(mRequest = new LoginRequest(model), KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if(getSpiceManager().isStarted() && mRequest!=null){
             getSpiceManager().cancel(mRequest);
         }
@@ -139,7 +142,7 @@ public class LoginFragment extends BaseAuthorizationFragment
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                hideProgressDialog();
+                dissmissLoaderDialog();
                 if (result != null && actionsListener != null) {
                     actionsListener.onLogInSuccess();
                 }

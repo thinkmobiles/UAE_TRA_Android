@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.adapter;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Created by mobimaks on 04.09.2015.
  */
-public final class ServiceProviderAdapter extends android.widget.BaseAdapter {
+public class ServiceProviderAdapter extends android.widget.BaseAdapter {
 
     private final LayoutInflater mInflater;
     private List<ServiceProvider> mData;
@@ -44,8 +45,8 @@ public final class ServiceProviderAdapter extends android.widget.BaseAdapter {
     public View getView(final int _position, View _convertView, final ViewGroup _parent) {
         final ViewHolder holder;
         if (_convertView == null) {
-            _convertView = mInflater.inflate(R.layout.spinner_item_service_provider, _parent, false);
-            holder = new ViewHolder(_convertView);
+            _convertView = mInflater.inflate(getItemLayoutRes(), _parent, false);
+            holder = getViewHolder(_convertView);
         } else {
             holder = (ViewHolder) _convertView.getTag();
         }
@@ -53,12 +54,17 @@ public final class ServiceProviderAdapter extends android.widget.BaseAdapter {
         return _convertView;
     }
 
-        @Override
+    @LayoutRes
+    protected int getItemLayoutRes() {
+        return R.layout.spinner_item_service_provider;
+    }
+
+    @Override
     public View getDropDownView(int _position, View _convertView, ViewGroup _parent) {
         final ViewHolder holder;
         if (_convertView == null) {
-            _convertView = mInflater.inflate(R.layout.spinner_dropdown_item_service_provider, _parent, false);
-            holder = new ViewHolder(_convertView);
+            _convertView = mInflater.inflate(getDropDownLayoutRes(), _parent, false);
+            holder = getDropDownViewHolder(_convertView);
         } else {
             holder = (ViewHolder) _convertView.getTag();
         }
@@ -66,18 +72,41 @@ public final class ServiceProviderAdapter extends android.widget.BaseAdapter {
         return _convertView;
     }
 
-    private class ViewHolder {
+    protected ViewHolder getDropDownViewHolder(View _view) {
+        return new ServiceViewHolder(_view);
+    }
+
+    protected ViewHolder getViewHolder(View _view) {
+        return new ServiceViewHolder(_view);
+    }
+
+    @LayoutRes
+    protected int getDropDownLayoutRes() {
+        return R.layout.spinner_dropdown_item_service_provider;
+    }
+
+    private class ServiceViewHolder extends ViewHolder {
 
         private final TextView tvTitle;
 
-        public ViewHolder(final View _view) {
+        public ServiceViewHolder(final View _view) {
+            super(_view);
             tvTitle = (TextView) _view;
-            _view.setTag(this);
         }
 
         public void setData(final ServiceProvider _provider) {
             tvTitle.setText(_provider.getTitleRes());
         }
+
+    }
+
+    protected abstract class ViewHolder {
+
+        public ViewHolder(final View _view) {
+            _view.setTag(this);
+        }
+
+        public abstract void setData(final ServiceProvider _provider);
 
     }
 }

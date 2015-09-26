@@ -19,6 +19,7 @@
         android:id="@+id/dflContainer_FF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         app:deleteColor="?attr/dragDeleteColor"
         app:shadowBackground="?attr/shadowBackgroundColor">
 
@@ -28,7 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="?attr/actionBarSize"
             tools:visibility="visible">
 
             <com.uae.tra_smart_services.customviews.HexagonView
@@ -60,9 +60,9 @@
                 android:layout_below="@id/tvNoFavorites"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
-                app:hexagonBorderColor="?attr/addServiceColor"
+                app:hexagonBorderColor="?attr/colorPrimary"
                 app:hexagonBorderSize="1dp"
-                tools:hexagonBackground="@drawable/ic_plus"/>
+                tools:hexagonSrc="@drawable/ic_plus"/>
 
             <TextView
                 android:id="@+id/tvAddService"
@@ -73,7 +73,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/fragment_favorites_add_service"
-                android:textColor="?attr/addServiceColor"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="12sp"/>
         </RelativeLayout>
 
@@ -81,7 +81,6 @@
             android:id="@+id/rvFavoritesList_FF"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
             android:visibility="invisible"
             tools:listitem="@layout/list_item_favorite"
             tools:visibility="invisible"/>

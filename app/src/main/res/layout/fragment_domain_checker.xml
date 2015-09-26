@@ -31,6 +31,7 @@
             <View style="@style/AuthorizationFieldsSeparator"/>
 
             <EditText
+                android:text="tra.gov.ae"
                 android:id="@+id/tvDomainAvail_FDCH"
                 style="@style/UserAuthorizationDataEditTextField"
                 android:hint="@string/str_insert_domain_name_here"

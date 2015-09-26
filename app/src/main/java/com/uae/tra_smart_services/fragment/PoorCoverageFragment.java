@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -41,7 +40,6 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.SingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.SingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
-import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
@@ -277,7 +275,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
             return;
         }
 
-        showProgressDialog(getString(R.string.str_sending), this);
+        showLoaderOverlay(getString(R.string.str_sending), this);
         getSpiceManager().execute(
                 mPoorCoverageRequest = new PoorCoverageRequest(
                         mLocationModel
@@ -328,8 +326,9 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     @Override
-    public void onOkPressed() {
-        getFragmentManager().popBackStack();
+    public void onOkPressed(final int _mMessageId) {
+        // Unimplemented method
+        // Used exceptionally to specify OK button in dialog
     }
 
     @Override
@@ -364,7 +363,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     @Override
-    public void onDialogCancel() {
+    public void onLoadingCanceled() {
         if (getSpiceManager().isStarted() && mPoorCoverageRequest != null) {
             getSpiceManager().cancel(mPoorCoverageRequest);
         }
@@ -379,16 +378,28 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
-            hideProgressDialog();
+            boolean isDialog = dissmissLoaderDialog();
             switch (poorCoverageRequestModel.getStatus()) {
                 case 200:
-                    showMessage(R.string.str_success, R.string.str_data_has_been_sent);
+                    if(isDialog){
+                        showMessage(R.string.str_success, R.string.str_data_has_been_sent);
+                    } else {
+                        dissmissLoaderOverlay(getString(R.string.str_data_has_been_sent));
+                    }
                     break;
                 case 400:
-                    showMessage(R.string.str_error, R.string.str_something_went_wrong);
+                    if(isDialog) {
+                        showMessage(R.string.str_error, R.string.str_something_went_wrong);
+                    } else {
+                        dissmissLoaderOverlay(getString(R.string.str_something_went_wrong));
+                    }
                     break;
                 case 500:
-                    showMessage(R.string.str_error, R.string.str_request_failed);
+                    if(isDialog) {
+                        showMessage(R.string.str_error, R.string.str_request_failed);
+                    } else {
+                        dissmissLoaderOverlay(getString(R.string.str_request_failed));
+                    }
                     break;
             }
         }

@@ -2,12 +2,21 @@
 <resources>
     <declare-styleable name="HexagonView">
         <attr name="hexagonBorderColor" format="color"/>
+        <attr name="hexagonProcessBorderColor" format="color"/>
+        <attr name="hexagonSuccessBorderColor" format="color"/>
         <attr name="hexagonBackgroundColor" format="color"/>
-        <attr name="hexagonSrc" format="reference|color"/>
-        <attr name="hexagonSideSize" format="dimension"/>
         <attr name="hexagonBorderSize" format="dimension"/>
+        <attr name="hexagonProcessBorderSize" format="dimension"/>
+        <attr name="hexagonSuccessBorderSize" format="dimension"/>
+        <attr name="hexagonSrc" format="reference|color"/>
+        <attr name="hexagonSrcTintColor" format="reference|color"/>
+        <attr name="hexagonSideSize" format="dimension"/>
         <attr name="hexagonText" format="string"/>
         <attr name="hexagonTextSize" format="dimension"/>
         <attr name="hexagonTextColor" format="color"/>
+        <attr name="hexagonLoaderBackground" format="reference"/>
+        <attr name="hexagonLoaderPeriod" format="integer"/>
+        <attr name="hexagonFillingPeriod" format="integer"/>
+        <attr name="hexagonStatusPeriod" format="integer"/>
     </declare-styleable>
 </resources>
