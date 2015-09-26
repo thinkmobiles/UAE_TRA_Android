@@ -41,4 +41,6 @@ public final class C {
     public static final String FAVORITE_SERVICES_DELIMITER = ",";
 
     public static final String FRAGMENT_FOR_REPLACING = "fragment_for_replacing";
+
+    public static final String NOT_FIRST_START = "not_first_start";
 }

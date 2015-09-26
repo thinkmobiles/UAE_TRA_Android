@@ -30,6 +30,7 @@ import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseHomePageFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
+import com.uae.tra_smart_services.interfaces.OnActivateTutorialListener;
 import com.uae.tra_smart_services.interfaces.SettingsChangeListener;
 import com.uae.tra_smart_services.util.ImageUtils;
 
@@ -44,7 +45,7 @@ public class SettingsFragment extends BaseHomePageFragment
     private EditText etServer;
     private Button btnChangeServer;
     private LinearLayout llAboutTRA;
-    private SwitchCompat swBlackAndWhiteMode;
+    private SwitchCompat swBlackAndWhiteMode, swActivateTutorial;
     private TextView tvVersionName;
 
     private FontSizeSwitcherView fontSwitch;
@@ -54,6 +55,7 @@ public class SettingsFragment extends BaseHomePageFragment
     private SharedPreferences mPrefs;
 
     private OnOpenAboutTraClickListener mOpenAboutTraClickListener;
+    private OnActivateTutorialListener mOnActivateTutorialListener;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -64,6 +66,9 @@ public class SettingsFragment extends BaseHomePageFragment
         super.onAttach(_activity);
         if (_activity instanceof OnOpenAboutTraClickListener) {
             mOpenAboutTraClickListener = (OnOpenAboutTraClickListener) _activity;
+        }
+        if (_activity instanceof OnActivateTutorialListener) {
+            mOnActivateTutorialListener = (OnActivateTutorialListener) _activity;
         }
     }
 
@@ -83,6 +88,8 @@ public class SettingsFragment extends BaseHomePageFragment
         swBlackAndWhiteMode.setChecked(mPrefs.getBoolean(C.KEY_BLACK_AND_WHITE_MODE, false));
         llAboutTRA = findView(R.id.llAboutTRA_FS);
         tvVersionName = findView(R.id.tvVersionName_FS);
+        swActivateTutorial = findView(R.id.swActivateTutorial_FS);
+        swActivateTutorial.setChecked(false);
     }
 
     @Override
@@ -96,6 +103,7 @@ public class SettingsFragment extends BaseHomePageFragment
         super.initListeners();
         btnChangeServer.setOnClickListener(this);
         swBlackAndWhiteMode.setOnCheckedChangeListener(this);
+        swActivateTutorial.setOnCheckedChangeListener(this);
         llAboutTRA.setOnClickListener(this);
     }
 
@@ -175,12 +183,27 @@ public class SettingsFragment extends BaseHomePageFragment
     }
 
     @Override
-    public final void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    public final void onCheckedChanged(final CompoundButton _buttonView, final boolean _isChecked) {
+        switch (_buttonView.getId()) {
+            case R.id.swBlackAndWhiteMode_FS:
+                changeBlackAndWhite(_isChecked);
+                break;
+            case R.id.swActivateTutorial_FS:
+                activateTutorial();
+                break;
+        }
+    }
+
+    private void changeBlackAndWhite(final boolean _isChecked) {
         mPrefs.edit()
-                .putBoolean(C.KEY_BLACK_AND_WHITE_MODE, isChecked)
+                .putBoolean(C.KEY_BLACK_AND_WHITE_MODE, _isChecked)
                 .commit();
-        ImageUtils.setBlackAndWhiteMode(isChecked);
+        ImageUtils.setBlackAndWhiteMode(_isChecked);
         restartActivity();
+    }
+
+    private void activateTutorial() {
+        mOnActivateTutorialListener.onActivateTutorial();
     }
 
     @Override

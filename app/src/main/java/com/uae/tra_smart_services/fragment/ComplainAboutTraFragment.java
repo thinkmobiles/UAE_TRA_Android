@@ -15,6 +15,7 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
@@ -44,9 +45,9 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (!TRAApplication.isLoggedIn()) {
-//            getFragmentManager().popBackStack();
-//        }
+        if (!TRAApplication.isLoggedIn()) {
+            getFragmentManager().popBackStack();
+        }
     }
 
     @Override

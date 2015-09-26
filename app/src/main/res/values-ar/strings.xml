@@ -132,5 +132,7 @@
     <string name="lorem_ipsum_tutorial">الخيل والليل والبيداء تعرفني والسيف والرمح والقرطاس و القلمصحبت في الفلوات الوحش منفردا حتى تعجب مني القور و الأكم
  يا من يعز علينا ان نفارقهم وجداننا كل شيء بعدكم عدم
  ما كان أخلقنا منكم بتكرمة لو ان أمركم من أمرنا أمم</string>
+    <string name="app_tutorial_screens">App Tutorial Screens</string>
+    <string name="activate_tutorial">Activates the tutorials screens</string>
 
 </resources>

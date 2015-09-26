@@ -71,7 +71,7 @@ public class TabBarTipView extends TutorialTipView {
 
         mTipTextView = new TextView(getContext());
         mTipTextView.setGravity(Gravity.BOTTOM);
-        mTipTextView.setTextSize(18);
+        mTipTextView.setTextSize(16);
         mTipTextView.setText(mTipText);
         mTipTextView.setEllipsize(TextUtils.TruncateAt.END);
         mTipTextView.setTextColor(mTextColor);

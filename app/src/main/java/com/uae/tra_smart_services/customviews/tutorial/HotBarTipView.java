@@ -34,7 +34,8 @@ public class HotBarTipView extends TutorialTipView {
         isInitialized = true;
         calculateVariables();
         calculateTextLayouts();
-        calculatePaths();
+        calculateLinePointerPath();
+        calculateTextPointerPath();
         requestLayout();
     }
 
@@ -46,12 +47,14 @@ public class HotBarTipView extends TutorialTipView {
 
     //region CALCULATING
     private void calculateVariables() {
-        mViewPointerLineLength = getHeight() * 0.1f;
+        mViewPointerLineLength = getHeight() * 0.15f;
         mTextPointerLineLength = mViewPointerLineLength * 0.4f;
         mMultiplePointerLength = mViewPointerLineLength * 0.4f;
     }
 
     private void calculateTextLayouts() {
+        mTextPadding = getWidth() * 0.05f;
+
         final int maxTextWidth = (int) (getWidth() - mTextPadding * 2 - mTitleTextPadding * 2);
         final Rect textRect = new Rect();
         mTitleTextPaint.getTextBounds(mTitleText, 0, mTitleText.length(), textRect);
@@ -60,9 +63,14 @@ public class HotBarTipView extends TutorialTipView {
         mTitleTextLayout = new StaticLayout(mTitleText, mTitleTextPaint,
                 textWidth < maxTextWidth ? (textWidth + 20) : maxTextWidth,
                 Layout.Alignment.ALIGN_CENTER, 1, 0, false);
+
+
+        mTipTextLayout = new StaticLayout(mTipText, mTipTextPaint,
+                (int) (getWidth() - mTextPadding * 2), Layout.Alignment.ALIGN_NORMAL,
+                getLineSpacing(), 0, false);
     }
 
-    private void calculatePaths() {
+    private void calculateLinePointerPath() {
         mLinePointerPath = new Path();
         PointF firstPoint = mCenterPoints[0];
         PointF lastPoint = mCenterPoints[mCenterPoints.length - 1];
@@ -89,6 +97,18 @@ public class HotBarTipView extends TutorialTipView {
         mLinePointerPath.moveTo(centerX, startY);
         mLinePointerPath.lineTo(centerX, startY + mViewPointerLineLength - mMultiplePointerLength);
     }
+
+    private void calculateTextPointerPath() {
+        mTextPointerPath = new Path();
+
+        final float startY = getPaddingTop() + mPointRadius + mViewPointerLineLength +
+                mTitleBorderWidth + mTitleTextPadding * 2 +
+                mTitleBorderWidth + mTitleTextLayout.getHeight() + mTitleBorderWidth;
+        final float endY = startY + mTextPointerLineLength;
+
+        mTextPointerPath.moveTo(getWidth() / 2 - mLineWidth / 2, startY);
+        mTextPointerPath.lineTo(getWidth() / 2 - mLineWidth / 2, endY);
+    }
     //endregion
 
     //region DRAWING
@@ -98,7 +118,9 @@ public class HotBarTipView extends TutorialTipView {
 
         if (isInitialized) {
             drawViewPointer(_canvas);
+            drawTextPointer(_canvas);
             drawTitleRect(_canvas);
+            drawTipText(_canvas);
         }
     }
 
@@ -121,6 +143,22 @@ public class HotBarTipView extends TutorialTipView {
         _canvas.translate(start + mTitleTextPadding,
                 topOfRect + mTitleTextPadding);
         mTitleTextLayout.draw(_canvas);
+        _canvas.restore();
+    }
+
+    private void drawTextPointer(final Canvas _canvas) {
+        _canvas.drawPath(mTextPointerPath, mLinePointerPaint);
+    }
+
+    private void drawTipText(final Canvas _canvas) {
+        final float translateY = getPaddingTop() + mPointRadius + mViewPointerLineLength +
+                mTitleBorderWidth + mTitleTextPadding * 2 +
+                mTitleBorderWidth + mTitleTextLayout.getHeight() +
+                mTextPadding / 4 + mTextPointerLineLength;
+
+        _canvas.save();
+        _canvas.translate(mTextPadding, translateY);
+        mTipTextLayout.draw(_canvas);
         _canvas.restore();
     }
     //endregion

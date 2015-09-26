@@ -352,5 +352,7 @@
     <string name="str_reuqest_has_been_failed">Your Request has been failed</string>
     <string name="str_reuqest_has_been_cancelled">Your Request has been cancelled</string>
     <string name="lorem_ipsum_tutorial">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\\'s standard dummy text ever since the 1500s...</string>
+    <string name="app_tutorial_screens">App Tutorial Screens</string>
+    <string name="activate_tutorial">Activates the tutorials screens</string>
 
 </resources>
