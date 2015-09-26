@@ -6,11 +6,14 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.CustomSurfaceView;
+import com.uae.tra_smart_services.customviews.CustomView;
 import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
@@ -62,9 +65,14 @@ public class DomainCheckerFragment extends BaseServiceFragment
     @Override
     protected final void initViews() {
         super.initViews();
+
         btnAvail = findView(R.id.btnAvail_FDCH);
         btnWhoIS = findView(R.id.btnWhoIs_FDCH);
         etDomainAvail = findView(R.id.tvDomainAvail_FDCH);
+
+        CustomView customView = findView(R.id.customView);
+//        LinearLayout container = findView(R.id.container);
+//        container.addView(new CustomSurfaceView(getActivity()));
     }
 
     @Override
