@@ -44,14 +44,14 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
         sProviderSpinner = findView(R.id.sProviderSpinner_FRSS);
         etNumberOfSpammer = findView(R.id.etNumberOfSpammer_FRSS);
         etDescription = findView(R.id.etDescription_FRSS);
-        btnClose = findView(R.id.btnClose_FRSS);
+//        btnClose = findView(R.id.btnClose_FRSS);
         btnSubmit = findView(R.id.btnSubmit_FRSS);
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
-        btnClose.setOnClickListener(this);
+//        btnClose.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
     }
 
@@ -66,9 +66,9 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
     public final void onClick(final View _view) {
         hideKeyboard(_view);
         switch (_view.getId()) {
-            case R.id.btnClose_FRSS:
-                getFragmentManager().popBackStack();
-                break;
+//            case R.id.btnClose_FRSS:
+//                getFragmentManager().popBackStack();
+//                break;
             case R.id.btnSubmit_FRSS:
                 validateAndSendData();
                 break;

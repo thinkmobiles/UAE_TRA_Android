@@ -308,10 +308,10 @@ public class HomeActivity extends BaseFragmentActivity
                 openFragmentIfAuthorized(ReportSmsSpamFragment.newInstance(), FragmentType.REPORT_SMS_SPAM);
                 break;
             case ReportSpamFragment.SPAM_OPTION_REPORT_WEB:
-                openFragmentIfAuthorized(ReportWebSpamFragment.newInstance(), FragmentType.REPORT_WEB_SPAM);
+                replaceFragmentWithBackStack(ReportWebSpamFragment.newInstance());
                 break;
             case ReportSpamFragment.SPAM_OPTION_REPORT_HISTORY:
-                openFragmentIfAuthorized(SpamHistoryFragment.newInstance(), FragmentType.SPAM_REPORT_HISTORY);
+                replaceFragmentWithBackStack(SpamHistoryFragment.newInstance());
                 break;
         }
     }

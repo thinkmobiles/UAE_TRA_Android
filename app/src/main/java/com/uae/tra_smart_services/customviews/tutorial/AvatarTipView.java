@@ -56,7 +56,7 @@ public class AvatarTipView extends TutorialTipView {
         final int textWidth = textRect.width();
 
         mTitleTextLayout = new StaticLayout(mTitleText, mTitleTextPaint,
-                textWidth < maxTextWidth ? textWidth + 1 : maxTextWidth,
+                textWidth < maxTextWidth ? textWidth + 10 : maxTextWidth,
                 Layout.Alignment.ALIGN_CENTER, 1, 0, false);
     }
 
