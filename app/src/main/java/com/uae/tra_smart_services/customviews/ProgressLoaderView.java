@@ -92,19 +92,18 @@ public class ProgressLoaderView extends View {
             rects[i] = new RectF(-elementWidth, 0, 0, actualHeight);
         }
 
-        AnimatorSet animSetXY = new AnimatorSet();
-
-        animator = ObjectAnimator.ofFloat(ProgressLoaderView.this, "phase1", 0.0f, Float.MAX_VALUE - 1);
-        animator.setDuration(10000);
+        animator = ObjectAnimator.ofFloat(ProgressLoaderView.this, "phase", 0.0f, /*Float.MAX_VALUE - 1*/actualWidth);
+        animator.setDuration(1500);
         animator.setRepeatCount(ObjectAnimator.INFINITE);
         animator.setRepeatMode(ObjectAnimator.RESTART);
     }
 
     /** It will be called by animator to draw the start of loading animation */
-    public void setPhase1(float _phase) {
-//        for (int i = 0; i < rects.length; i++){
-            rects[0].set(_phase * _phase - elementWidth, 0, _phase * _phase, actualHeight);
-//        }
+    public void setPhase(float _phase) {
+        for (int i = 0; i < rects.length; i++){
+            float offset = (float) Math.pow(_phase, 1);
+            rects[i].set(offset - elementWidth, 0, offset, actualHeight);
+        }
         invalidate();
     }
 
