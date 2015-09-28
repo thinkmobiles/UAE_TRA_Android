@@ -15,7 +15,7 @@ import com.uae.tra_smart_services.R;
 /**
  * Created by AndreyKorneychuk on 9/26/2015.
  */
-public class CustomView extends View {
+public class CustomViewAnimation extends View {
     private boolean CanDraw = false;
     private SurfaceHolder surfaceHolder;
     private Bitmap picture;
@@ -23,9 +23,9 @@ public class CustomView extends View {
     private long prevTime;
     private Thread drawThread;
 
-    public CustomView(Context context) { this(context, null); }
+    public CustomViewAnimation(Context context) { this(context, null); }
 
-    public CustomView(Context context, AttributeSet attrs) {
+    public CustomViewAnimation(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         setWillNotDraw(false);

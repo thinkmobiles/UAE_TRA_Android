@@ -15,7 +15,7 @@ import com.uae.tra_smart_services.R;
 /**
  * Created by AndreyKorneychuk on 9/26/2015.
  */
-public class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
+public class CustomSurfaceViewAnimation extends SurfaceView implements SurfaceHolder.Callback, Runnable {
     private boolean CanDraw = false;
     private SurfaceHolder surfaceHolder;
     private Bitmap picture;
@@ -23,7 +23,7 @@ public class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Call
     private long prevTime;
     private Thread drawThread;
 
-    public CustomSurfaceView(Context context) {
+    public CustomSurfaceViewAnimation(Context context) {
         super(context);
         getHolder().addCallback(this);
 
@@ -39,7 +39,7 @@ public class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Call
         prevTime = System.currentTimeMillis();
     }
 
-    public CustomSurfaceView(Context context, AttributeSet attrs) {
+    public CustomSurfaceViewAnimation(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

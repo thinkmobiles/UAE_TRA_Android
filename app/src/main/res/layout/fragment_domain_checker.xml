@@ -70,7 +70,7 @@
             android:layout_height="250dp">
         </LinearLayout>-->
 
-        <com.uae.tra_smart_services.customviews.CustomView
+        <com.uae.tra_smart_services.customviews.CustomViewAnimation
             android:id="@+id/customView"
             android:layout_width="match_parent"
             android:layout_height="250dp" />

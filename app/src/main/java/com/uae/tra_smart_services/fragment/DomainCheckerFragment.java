@@ -6,13 +6,11 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.CustomSurfaceView;
-import com.uae.tra_smart_services.customviews.CustomView;
+import com.uae.tra_smart_services.customviews.CustomViewAnimation;
 import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
@@ -20,7 +18,6 @@ import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.global.Service;
-import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
@@ -71,7 +68,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         btnWhoIS = findView(R.id.btnWhoIs_FDCH);
         etDomainAvail = findView(R.id.tvDomainAvail_FDCH);
 
-        CustomView customView = findView(R.id.customView);
+        CustomViewAnimation customView = findView(R.id.customView);
 //        LinearLayout container = findView(R.id.container);
 //        container.addView(new CustomSurfaceView(getActivity()));
     }

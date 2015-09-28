@@ -110,7 +110,7 @@ public class HomeActivity extends BaseFragmentActivity
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
-            addFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
+            addFragmentWithOutBackStack(SpeedTestFragment.newInstance());
             showTutorialIfNeed();
         }
 

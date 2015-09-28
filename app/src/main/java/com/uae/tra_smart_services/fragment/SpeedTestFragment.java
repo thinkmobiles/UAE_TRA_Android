@@ -9,6 +9,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.ProgressLoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.robo_requests.SpeedTestRequest;
@@ -31,11 +32,15 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
         return new SpeedTestFragment();
     }
 
+
+    ProgressLoaderView loaderView;
     @Override
     protected final void initViews() {
         super.initViews();
         tvResult = findView(R.id.tvResult_FS);
         btnRunSpeedtest = findView(R.id.btnRunSpeedtest_FS);
+
+        loaderView = findView(R.id.loaderView);
     }
 
     @Override
@@ -44,11 +49,18 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
         btnRunSpeedtest.setOnClickListener(this);
     }
 
+    boolean status = true;
     @Override
     public final void onClick(final View _view) {
-        showLoaderOverlay(getString(R.string.fragment_speed_test_progress), this);
-        mSpeedTestRequest = new SpeedTestRequest();
-        getSpiceManager().execute(mSpeedTestRequest, KEY_SPEED_TEST_REQUEST, DurationInMillis.ALWAYS_EXPIRED, this);
+        if(status){
+            loaderView.start();
+        } else {
+            loaderView.stop();
+        }
+        status = !status;
+//        showLoaderOverlay(getString(R.string.fragment_speed_test_progress), this);
+//        mSpeedTestRequest = new SpeedTestRequest();
+//        getSpiceManager().execute(mSpeedTestRequest, KEY_SPEED_TEST_REQUEST, DurationInMillis.ALWAYS_EXPIRED, this);
     }
 
     @Override
