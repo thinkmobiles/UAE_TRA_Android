@@ -1,11 +1,13 @@
-package com.uae.tra_smart_services.customviews;
+package com.uae.tra_smart_services.customviews.tutorial;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Typeface;
+import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.LayoutDirection;
@@ -31,6 +33,12 @@ public abstract class TutorialTipView extends View {
     protected float mPointRadius;
     protected float mLineWidth;
     protected float mTitleBorderWidth;
+    protected float mViewPointerLineLength;
+    protected float mTextPointerLineLength;
+    protected float mTitleTextPadding;
+    protected StaticLayout mTipTextLayout;
+    protected StaticLayout mTitleTextLayout;
+    protected float mTitleRectMargin;
     protected String mTitleText;
     protected String mTipText;
     protected View mDependView;
@@ -56,6 +64,11 @@ public abstract class TutorialTipView extends View {
     protected Paint mViewPointerPaint;
     protected Paint mLinePointerPaint;
     protected Paint mTitleBorderPaint;
+    //endregion
+
+    //region PATHS
+    protected Path mLinePointerPath;
+    protected Path mTextPointerPath;
     //endregion
 
     //region INIT METHODS
@@ -100,6 +113,7 @@ public abstract class TutorialTipView extends View {
         mTipTextPaint.setColor(mTextColor);
 
         mViewPointerPaint = new Paint();
+        mViewPointerPaint.setAntiAlias(true);
         mViewPointerPaint.setStyle(Paint.Style.FILL);
         mViewPointerPaint.setColor(mViewPointerColor);
 
@@ -126,7 +140,7 @@ public abstract class TutorialTipView extends View {
         mDependView = _dependView;
     }
 
-    public final void setCenterPoints(final PointF[] _centerPoints) {
+    public void setCenterPoints(final PointF[] _centerPoints) {
         mCenterPoints = _centerPoints;
     }
 
@@ -193,6 +207,10 @@ public abstract class TutorialTipView extends View {
 
     protected float calculateDependsOnDirection(final float _number) {
         return getStartPoint() + getDirectionCoeff() * _number;
+    }
+
+    protected float getLineSpacing() {
+        return getLayoutDirection() == View.LAYOUT_DIRECTION_RTL ? 0.7f : 1;
     }
     //endregion
 }

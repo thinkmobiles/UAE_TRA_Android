@@ -201,6 +201,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
     private void initServiceList() {
         mDataSet = new ArrayList<>(Service.getSecondaryServices());
+        mDataSet.addAll(Service.getSecondaryServices());
     }
 
     @Override

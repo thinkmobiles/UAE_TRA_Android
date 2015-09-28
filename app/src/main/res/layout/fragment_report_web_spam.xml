@@ -12,7 +12,7 @@
         android:scaleType="centerCrop"
         android:src="?reportSpam"/>
 
-    <RelativeLayout
+    <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
@@ -28,35 +28,35 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="16dp"/>
 
-        <Button
-            android:id="@+id/btnClose_FRWS"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_alignBottom="@id/sButtonsDivider_FRWS"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@id/sButtonsDivider_FRWS"
-            android:background="@drawable/background_spam_close_btn"
-            android:text="@string/fragment_report_spam_sms_close"
-            android:textColor="@android:color/white"
-            tools:ignore="RtlHardcoded"/>
+        <!--<Button-->
+            <!--android:id="@+id/btnClose_FRWS"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_alignBottom="@id/sButtonsDivider_FRWS"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_toLeftOf="@id/sButtonsDivider_FRWS"-->
+            <!--android:background="@drawable/background_spam_close_btn"-->
+            <!--android:text="@string/fragment_report_spam_sms_close"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--tools:ignore="RtlHardcoded"/>-->
 
         <Button
             android:id="@+id/btnSubmit_FRWS"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_widthPercent="60%"
             android:layout_height="48dp"
             android:layout_alignBottom="@id/sButtonsDivider_FRWS"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/sButtonsDivider_FRWS"
             android:background="?authorizationButtonsBackground"
             android:text="@string/fragment_report_spam_sms_submit"
             android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
             tools:ignore="RtlHardcoded"/>
 
         <View
             android:id="@+id/vDescriptionDivider_FRWS"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_above="@id/btnClose_FRWS"
+            android:layout_above="@id/btnSubmit_FRWS"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="16dp"
             android:background="?attr/colorPrimary"/>
@@ -132,6 +132,6 @@
 
         </ScrollView>
 
-    </RelativeLayout>
+    </android.support.percent.PercentRelativeLayout>
 
 </android.support.percent.PercentFrameLayout>

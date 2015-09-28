@@ -58,14 +58,14 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
         super.initViews();
         etUrl = findView(R.id.etUrlOfSpammer_FRWS);
         etDescription = findView(R.id.etDescription_FRWS);
-        btnClose = findView(R.id.btnClose_FRWS);
+//        btnClose = findView(R.id.btnClose_FRWS);
         btnSubmit = findView(R.id.btnSubmit_FRWS);
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
-        btnClose.setOnClickListener(this);
+//        btnClose.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
     }
 
@@ -73,9 +73,9 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
     public final void onClick(final View _view) {
         hideKeyboard(_view);
         switch (_view.getId()) {
-            case R.id.btnClose_FRWS:
-                getFragmentManager().popBackStack();
-                break;
+//            case R.id.btnClose_FRWS:
+//                getFragmentManager().popBackStack();
+//                break;
             case R.id.btnSubmit_FRWS:
                 hideKeyboard(_view);
                 collectAndSendToServer();

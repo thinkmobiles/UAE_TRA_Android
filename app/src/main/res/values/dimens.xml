@@ -6,7 +6,7 @@
     <!--            AuthorizationActivity               -->
     <dimen name="dp_authorization_fields_separator_height">1dp</dimen>
     <dimen name="dp_authorization_fields_separator_margin">15dp</dimen>
-    <dimen name="dp_transparent_fields_padding">15dp</dimen>
+    <dimen name="dp_transparent_fields_padding">14dp</dimen>
     <dimen name="sp_authorization_button_text_size">20sp</dimen>
     <dimen name="authorization_button_stroke_width">1dp</dimen>
     <dimen name="dp_button_margin">10dp</dimen>

@@ -15,5 +15,8 @@
         <attr name="hexagonTextSize" format="dimension"/>
         <attr name="hexagonTextColor" format="color"/>
         <attr name="hexagonLoaderBackground" format="reference"/>
+        <attr name="hexagonLoaderPeriod" format="integer"/>
+        <attr name="hexagonFillingPeriod" format="integer"/>
+        <attr name="hexagonStatusPeriod" format="integer"/>
     </declare-styleable>
 </resources>
