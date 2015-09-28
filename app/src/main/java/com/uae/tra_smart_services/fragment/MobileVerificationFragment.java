@@ -56,17 +56,27 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     }
 
     @Override
+    protected int getTitle() {
+        return R.string.str_mobile_verification;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_mobile_verification;
+    }
+
+    @Override
     protected void initViews() {
         super.initViews();
-        ivCameraBtn = findView(R.id.ivCameraBtn_FMV);
-        etImeiNumber = findView(R.id.etImeiNumber_FMV);
+//        ivCameraBtn = findView(R.id.ivCameraBtn_FMV);
+//        etImeiNumber = findView(R.id.etImeiNumber_FMV);
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
-        mRequestListener = new RequestResponseListener();
-        ivCameraBtn.setOnClickListener(this);
+//        mRequestListener = new RequestResponseListener();
+//        ivCameraBtn.setOnClickListener(this);
     }
 
     @Override
@@ -173,13 +183,5 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         return getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
 
-    @Override
-    protected int getTitle() {
-        return R.string.str_mobile_verification;
-    }
 
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_mobile_verification;
-    }
 }

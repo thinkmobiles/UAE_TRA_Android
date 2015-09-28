@@ -170,7 +170,7 @@
     <string name="reference_number">Reference Number</string>
     <string name="content_description_add_attachment">Add Attachment</string>
     <string name="approved_device_information">Approved Device Information</string>
-    <string name="insert_imei_hint">Device IMEI</string>
+    <string name="str_insert_imei_hint">Device IMEI</string>
     <string name="hint_set_server_url">Set server url</string>
     <string name="button_change_server">Change server</string>
     <string name="favourite_service_info">Service Info</string>
@@ -354,5 +354,9 @@
     <string name="lorem_ipsum_tutorial">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\\'s standard dummy text ever since the 1500s...</string>
     <string name="app_tutorial_screens">App Tutorial Screens</string>
     <string name="activate_tutorial">Activates the tutorials screens</string>
+
+    <string name="str_enter_imei">Enter the IMEI of the mobil phone to be verified</string>
+    <string name="str_where_find_imei">Where to find the IMEI code on your phone?</string>
+    <string name="str_send_imei">SEND IMEI CODE</string>
 
 </resources>
