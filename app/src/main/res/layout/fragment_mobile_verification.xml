@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 app:hexagonBorderColor="?attr/homePageHeaderBackground"
-                app:hexagonBorderSize="3dp"
+                app:hexagonBorderSize="2dp"
                 app:hexagonSideSize="48dp"
                 app:hexagonSrc="@drawable/ic_mobile"
                 app:hexagonSrcTintColor="?attr/homePageHeaderBackground"/>
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 app:hexagonBorderColor="#00CC66"
-                app:hexagonBorderSize="3dp"
+                app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="35dp"
                 app:hexagonSrcTintColor="#00CC66"
                 app:hexagonSrc="@drawable/ic_check_ver_grn"/>
