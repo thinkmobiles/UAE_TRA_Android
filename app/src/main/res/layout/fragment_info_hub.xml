@@ -76,7 +76,7 @@
                 android:textStyle="bold"/>
 
             <android.support.v7.widget.RecyclerView
-                tools:listitem="@layout/list_item_info_hub_second"
+                tools:listitem="@layout/list_item_info_hub"
                 android:id="@+id/rvTransactionsList_FIH"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
