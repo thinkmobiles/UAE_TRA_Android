@@ -25,7 +25,7 @@
         android:id="@+id/linearLayout">
 
         <com.uae.tra_smart_services.customviews.HexagonView
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +81,6 @@
                     style="@style/AuthorizationFields"
                     android:id="@+id/etImeiNumber_FMV"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
                     android:layout_alignParentStart="true"
                     android:layout_toStartOf="@id/ivCameraBtn_FMV"
                     android:gravity="center_vertical"
@@ -89,7 +88,7 @@
                     android:inputType="number"
                     android:singleLine="true"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="18sp"/>
 
                 <View style="@style/AuthorizationFieldsSeparator"
                     android:background="?attr/homePageHeaderBackground"
@@ -116,7 +115,7 @@
     <LinearLayout
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linearLayout2"
