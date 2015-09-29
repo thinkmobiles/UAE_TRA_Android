@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Vitaliy on 01/08/2015.
+ * Created by Mikazme on 01/08/2015.
  */
 public class HexagonalHeader extends View {
 

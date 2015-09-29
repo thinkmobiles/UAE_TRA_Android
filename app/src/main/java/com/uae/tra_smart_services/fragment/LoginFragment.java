@@ -17,7 +17,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
 import com.uae.tra_smart_services.rest.robo_requests.LoginRequest;
-import com.uae.tra_smart_services.util.ImageUtils;
+import com.uae.tra_smart_services.util.LayoutDirectionUtils;
 
 import retrofit.client.Response;
 
@@ -48,12 +48,10 @@ public class LoginFragment extends BaseAuthorizationFragment
     protected final void initViews() {
         // Input fields
         etUserName = findView(R.id.etEmail_FRP);
-
-        etUserName.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_username, R.attr.authorizationDrawableColors), null, null, null);
-
+        LayoutDirectionUtils.setDrawableStart(getActivity(), etUserName, R.drawable.ic_username);
         etPassword = findView(R.id.etPassword_FR);
+        LayoutDirectionUtils.setDrawableStart(getActivity(), etPassword, R.drawable.ic_pass);
 
-        etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
         // Actions
         btnLogIn = findView(R.id.btnDoRestorePass_FRP);
         tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
@@ -63,7 +61,7 @@ public class LoginFragment extends BaseAuthorizationFragment
             btnLogIn.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    etUserName.setText("vitaliy.shuba.trash@gmail.com");
+                    etUserName.setText("Mikazme.shuba.trash@gmail.com");
                     etPassword.setText("12345678");
                     doLogIn();
                     return true;

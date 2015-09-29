@@ -89,6 +89,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
 
     @Override
     protected void onImageGet(Uri _uri) {
+        ivAddAttachment.setImageResource(R.drawable.ic_check);
         mImageUri = _uri;
     }
 

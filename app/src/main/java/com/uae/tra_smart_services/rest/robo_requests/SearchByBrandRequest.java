@@ -4,7 +4,7 @@ import com.uae.tra_smart_services.rest.TRAServicesAPI;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 
 /**
- * Created by Vitaliy on 13/08/2015.
+ * Created by Mikazme on 13/08/2015.
  */
 public class SearchByBrandRequest extends BaseRequest<SearchDeviceResponseModel.List, TRAServicesAPI> {
 

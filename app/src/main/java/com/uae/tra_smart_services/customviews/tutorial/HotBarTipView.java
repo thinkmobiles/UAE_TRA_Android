@@ -12,7 +12,7 @@ import android.util.TypedValue;
 import android.widget.TextView;
 
 /**
- * Created by Vitaliy on 25/09/2015.
+ * Created by Mikazme on 25/09/2015.
  */
 public class HotBarTipView extends TutorialTipView {
 

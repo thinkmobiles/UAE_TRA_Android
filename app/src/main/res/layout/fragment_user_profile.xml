@@ -29,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
-                app:hexagonBackgroundColor="@color/hex_dark_blue"
+                app:hexagonSrc="@drawable/ic_user_placeholder"
+                app:hexagonBackgroundColor="@color/avatar_background"
                 app:hexagonBorderColor="@android:color/white"
                 app:hexagonBorderSize="2dp"
                 app:hexagonSideSize="48dp"/>
@@ -82,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:scaleType="centerInside"
+                    style="@style/ImageViewRotationStyle"
                     app:imageSrc="@drawable/ic_profile_arrow"
                     app:tintColor="?attr/colorPrimary"/>
 
@@ -130,6 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:scaleType="centerInside"
+                    style="@style/ImageViewRotationStyle"
                     app:imageSrc="@drawable/ic_profile_arrow"
                     app:tintColor="?attr/colorPrimary"/>
 

@@ -70,13 +70,12 @@
     <string-array name="languages">
         <item>English</item>
         <item>العربية</item>
-        <item>Español</item>
     </string-array>
 
     <!--            Availability in button               -->
     <string name="str_domain_check">Domain Check</string>
     <string name="str_availabilty">Availability</string>
-    <string name="str_whois">Who is\?</string>
+    <string name="str_whois">WHOIS Service</string>
     <string name="str_location">Location</string>
     <string name="str_signal_level">Signal Level</string>
     <string name="str_signal_coverage">Signal Coverage</string>
@@ -112,9 +111,9 @@
     <string name="str_registering">Registration..</string>
     <string name="str_checking">Checking..</string>
     <string name="str_sending">Sending..</string>
-    <string name="str_restoring">Restoring..</string>
-    <string name="str_loading">Loading..</string>
-    <string name="str_authenticating">Authenticating..</string>
+    <string name="str_restoring">Restoring...</string>
+    <string name="str_loading">Loading...</string>
+    <string name="str_authenticating">Authenticating...</string>
     <string name="str_restore_pass_mail">We\'ll send an email</string>
     <string name="str_report_has_been_sent">Report has been successfully sent. Thank you.</string>
     <string name="str_data_has_been_sent">Signal level has been successfully reported. Thank you.</string>
@@ -156,7 +155,7 @@
     <string name="fragment_service_info_processing_time">Expected Time</string>
     <string name="fragment_service_info_service_fees">Service Fees</string>
     <string name="fragment_service_info_contact_in_charge">Officer in Charge of this Service</string>
-    
+
     <!--                FavoritesFragment               -->
     <string name="fragment_favorites_empty_favorites">You have not selected a TRA\nservice as part of your\nFavorites list yet.</string>
     <string name="fragment_favorites_add_service">ADD A SERVICE</string>
@@ -183,7 +182,10 @@
     <string name="fragment_favorites_add_service_done">Done</string>
     <string name="fragment_favorites_add_service_search">Search</string>
     <string name="fragment_favorites_menu_add">Add service</string>
-    
+
+
+
+
     <!--                PoorCoverageFragment            -->
     <string-array name="fragment_poor_coverage_signal_levels">
         <item>Very Weak</item>
@@ -192,13 +194,13 @@
         <item>Strong</item>
         <item>Very Strong</item>
     </string-array>
-    
+
     <string name="service_complain_about_provider">Complain About Service Provider</string>
     <string name="service_complain_about_tra">Complain About TRA</string>
     <string name="service_suggestion">Suggestion</string>
     <string name="service_domain_check">Domain Check Service</string>
     <string name="service_enquiries">Enquiries</string>
-    <string name="service_sms_spam">Spam Service</string>
+    <string name="service_sms_spam">SMS Spam Service</string>
     <string name="service_poor_coverage">Poor Coverage</string>
     <string name="service_help_salim">Help Salim</string>
     <string name="service_mobile_verification">Mobile Verification</string>
@@ -206,7 +208,7 @@
 
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
-    <string name="hint_emirates_id">e.g. 784-YYYY-NNNNNNN-C</string>
+    <string name="hint_emirates_id">784-YYYY-NNNNNNN-C</string>
     <string name="hint_username">Username</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="hint_address">Address</string>
@@ -225,7 +227,7 @@
         <item>Dubai</item>
     </string-array>
 
-    <string name="lang_en">english</string>
+    <string name="lang_en">English</string>
     <string name="lang_ar">العربية</string>
 
     <string-array name="states_array">
@@ -247,7 +249,7 @@
     <string name="fragment_complain_about_service_du">DU</string>
     <string name="fragment_complain_about_service_etisalat">Etisalat</string>
     <string name="fragment_complain_about_service_yahsat">Yahsat</string>
-    
+
     <string name="fragment_poor_coverage_location_type_auto">Automatically</string>
     <string name="fragment_poor_coverage_location_type_manual">Enter your location</string>
 
@@ -260,7 +262,7 @@
     <string name="fragment_speed_test_result">Internet speed: %s Mbit</string>
     <string name="fragment_speed_test_progress">Measure speed…</string>
     <string name="fragment_speed_test_run">Run speedtest</string>
-    
+
     <string name="fragment_user_profile_title">User Profile</string>
     <string name="fragment_user_profile_edit_profile">Edit Profile</string>
     <string name="fragment_user_profile_change_password">Change Password</string>
@@ -318,7 +320,7 @@
 <li>Promote and enhance the telecommunications system in the state as indicated by the development and the establishment of industry related training institutions and through the availability of the latest apparatus, equipment, and facilities provided by telecommunications technologies</li>
 </ul>
     ]]></string>
-    
+
     <string name="str__service_info__about_service__default">@string/str_dummy_info_hub_list_item_full_descr</string>
     <string name="str__service_info__about_service__complain_about_service_provider">You can file a complaint or put remarks about your telecom service provider</string>
     <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
@@ -344,7 +346,7 @@
 
     <string name="fragment_report_history_title">MY LIST</string>
     <string name="fragment_report_history_add_to_spam">ADD TO SPAM</string>
-    
+
     <string name="str_back_to_dashboard">BACK TO DASHBOARD</string>
     <string name="str_cancel_request">CANCEL REQUEST</string>
     <string name="str_give_us_moment">Give us a moment while processing request</string>
@@ -354,5 +356,11 @@
     <string name="lorem_ipsum_tutorial">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\\'s standard dummy text ever since the 1500s...</string>
     <string name="app_tutorial_screens">App Tutorial Screens</string>
     <string name="activate_tutorial">Activates the tutorials screens</string>
+    <string name="tutorial_avatar_title">USER PROFILE</string>
+    <string name="tutorial_avatar_text">Tap here to log in or edit your profile</string>
+    <string name="tutorial_hot_bar_title">QUICK ACCESS LINKS</string>
+    <string name="tutorial_hot_bar_text">Quick access to top popular links</string>
+    <string name="tutorial_tab_bar_title">MAIN MENU</string>
+    <string name="tutorial_tab_bar_text">You can reach your favorite services, news and change settings from here</string>
 
 </resources>

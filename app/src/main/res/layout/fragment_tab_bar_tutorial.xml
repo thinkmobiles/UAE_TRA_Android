@@ -24,8 +24,8 @@
         app:linePointerColor="@android:color/white"
         app:tipTextColor="@android:color/white"
         app:viewPointerColor="@android:color/white"
-        app:tipText="@string/lorem_ipsum_tutorial"
-        app:titleText="MAIN MENU"
+        app:tipText="@string/tutorial_tab_bar_text"
+        app:titleText="@string/tutorial_tab_bar_title"
         app:tutorialTipType="avatar"
         android:paddingBottom="5dp"/>
 

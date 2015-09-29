@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
@@ -17,7 +16,7 @@ import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 
 /**
- * Created by Vitaliy on 21/08/2015.
+ * Created by Mikazme on 21/08/2015.
  */
 public class ServiceInfoDetailsFragment extends BaseFragment implements View.OnTouchListener,
         View.OnClickListener {

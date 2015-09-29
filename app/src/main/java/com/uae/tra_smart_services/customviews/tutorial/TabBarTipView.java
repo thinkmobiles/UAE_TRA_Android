@@ -17,7 +17,7 @@ import android.widget.TextView;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
- * Created by Vitaliy on 25/09/2015.
+ * Created by Mikazme on 25/09/2015.
  */
 public class TabBarTipView extends TutorialTipView {
 

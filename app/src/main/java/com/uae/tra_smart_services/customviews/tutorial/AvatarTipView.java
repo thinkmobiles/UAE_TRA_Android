@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 
 /**
- * Created by Vitaliy on 24/09/2015.
+ * Created by Mikazme on 24/09/2015.
  */
 public class AvatarTipView extends TutorialTipView {
 

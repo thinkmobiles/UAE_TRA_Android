@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
-                app:hexagonBackgroundColor="@color/hex_dark_blue"
+                app:hexagonSrc="@drawable/ic_user_placeholder"
+                app:hexagonBackgroundColor="@color/avatar_background"
                 app:hexagonBorderColor="@android:color/white"
                 app:hexagonBorderSize="2dp"
                 app:hexagonSideSize="48dp"/>
@@ -101,27 +102,9 @@
                 android:layout_below="@id/etAddress_FEUP"/>
 
             <TextView
-                android:id="@+id/tvEmirateHint_FEUP"
-                style="@style/EditUserProfileEditTextHintStyle"
-                android:layout_below="@id/vAddressDivider_FEUP"
-                android:layout_marginTop="16dp"
-                android:text="@string/fragment_edit_user_profile_emirate"/>
-
-            <Spinner
-                android:id="@+id/sEmirate_FEUP"
-                style="@style/EditUserProfileEditTextStyle"
-                android:layout_below="@id/tvEmirateHint_FEUP"
-                tools:background="@android:color/holo_orange_light"/>
-
-            <View
-                android:id="@+id/vEmirateDivider_FEUP"
-                style="@style/UserProfileDivider"
-                android:layout_below="@id/sEmirate_FEUP"/>
-
-            <TextView
                 android:id="@+id/tvPhoneHint_FEUP"
                 style="@style/EditUserProfileEditTextHintStyle"
-                android:layout_below="@id/vEmirateDivider_FEUP"
+                android:layout_below="@id/vAddressDivider_FEUP"
                 android:layout_marginTop="16dp"
                 android:text="@string/fragment_edit_user_profile_number"/>
 

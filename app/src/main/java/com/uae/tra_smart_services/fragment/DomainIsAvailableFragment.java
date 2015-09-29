@@ -3,7 +3,6 @@ package com.uae.tra_smart_services.fragment;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.StringRes;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.octo.android.robospice.SpiceManager;
@@ -21,7 +20,6 @@ import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckRes
  */
 public class DomainIsAvailableFragment extends BaseFragment implements DomainServiceRatingView.CallBacks{
 
-//    private DomainServiceRatingView ratingView;
     public static DomainIsAvailableFragment newInstance(DomainAvailabilityCheckResponseModel _model) {
         Bundle bundle = new Bundle();
         bundle.putString(C.DOMAIN_INFO, _model.domainStrValue);
@@ -35,7 +33,7 @@ public class DomainIsAvailableFragment extends BaseFragment implements DomainSer
     protected void initViews() {
         super.initViews();
         ((TextView) findView(R.id.tvDomainStrValue_FDCH)).setText(getArguments().getString(C.DOMAIN_INFO));
-        Button statustext = findView(R.id.tvDomainAvail_FDCH);
+        TextView statustext = findView(R.id.tvDomainAvail_FDCH);
         String status = getArguments().getString(C.DOMAIN_STATUS, "");
         @StringRes int availabilityTextRes;
         @ColorRes int availabilityColorRes;
@@ -55,8 +53,6 @@ public class DomainIsAvailableFragment extends BaseFragment implements DomainSer
         }
         statustext.setText(getString(availabilityTextRes));
         statustext.setTextColor(getResources().getColor(availabilityColorRes));
-//        ratingView = findView(R.id.llDomainServiceRatingView);
-//        ratingView.init(this);
     }
 
     @Override

@@ -30,8 +30,8 @@
         app:linePointerColor="@android:color/white"
         app:tipTextColor="@android:color/white"
         app:viewPointerColor="@android:color/white"
-        app:tipText="@string/lorem_ipsum_tutorial"
-        app:titleText="ACTIVE USER AVATAR"
+        app:tipText="@string/tutorial_avatar_text"
+        app:titleText="@string/tutorial_avatar_title"
         app:tutorialTipType="avatar"/>
 
 </LinearLayout>

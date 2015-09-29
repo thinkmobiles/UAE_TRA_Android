@@ -13,7 +13,7 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.Service;
 
 /**
- * Created by Vitaliy on 21/08/2015.
+ * Created by Mikazme on 21/08/2015.
  */
 public class ServiceInfoFragment extends BaseFragment implements View.OnClickListener, View.OnTouchListener {
 

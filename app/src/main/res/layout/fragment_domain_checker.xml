@@ -1,67 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/hex_authorization_background_color"
-    android:orientation="vertical"
-    android:overScrollMode="never"
-    android:paddingTop="?attr/actionBarSize">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/hex_authorization_background_color"
-        android:orientation="vertical">
+        android:scaleType="centerCrop"
+        android:src="?attr/userProfileBackground"
+        tools:ignore="ContentDescription"/>
 
-        <com.uae.tra_smart_services.customviews.ServiceHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/serviceInfoBackground"
-            app:headerIconSrc="@drawable/ic_edit"
-            app:headerTitle="@string/service_domain_check"/>
-
-        <LinearLayout
-            android:id="@+id/llSignInFields"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <View style="@style/AuthorizationFieldsSeparator"/>
-
-            <EditText
-                android:text="tra.gov.ae"
-                android:id="@+id/tvDomainAvail_FDCH"
-                style="@style/UserAuthorizationDataEditTextField"
-                android:hint="@string/str_insert_domain_name_here"
-                android:inputType="textUri|textAutoComplete"/>
-
-            <View style="@style/AuthorizationFieldsSeparator"/>
-        </LinearLayout>
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:paddingTop="?attr/actionBarSize">
 
         <LinearLayout
-            android:id="@+id/llSignInActions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
-            <Button
-                android:id="@+id/btnAvail_FDCH"
-                style="@style/BlurButtonStyleSimple"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/llSignInFields"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/str_availabilty"/>
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnWhoIs_FDCH"
-                style="@style/BlurButtonStyleSimple"
-                android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/tvDomainAvail_FDCH"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:hint="@string/str_insert_domain_name_here"
+                    android:inputType="textUri|textAutoComplete"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="?attr/colorPrimary"
+                    android:textSize="18sp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"/>
+
+                <View style="@style/AuthorizationFieldsSeparator"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSignInActions"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/str_whois"/>
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAvail_FDCH"
+                    style="@style/AuthorizationButtons"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/str_availabilty"/>
+
+                <Button
+                    android:id="@+id/btnWhoIs_FDCH"
+                    style="@style/AuthorizationButtons"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/str_whois"/>
+
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</FrameLayout>

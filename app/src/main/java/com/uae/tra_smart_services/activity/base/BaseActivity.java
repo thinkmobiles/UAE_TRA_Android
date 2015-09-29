@@ -22,7 +22,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
- * Created by Vitaliy on 22/07/2015.
+ * Created by Mikazme on 22/07/2015.
  */
 public abstract class BaseActivity extends AppCompatActivity implements BaseFragment.ThemaDefiner {
 

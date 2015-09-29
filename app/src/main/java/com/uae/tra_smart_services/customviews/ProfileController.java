@@ -22,9 +22,9 @@ public final class ProfileController extends LinearLayout implements OnClickList
     public @interface ControllerButton {
     }
 
-    private static final int BUTTON_CANCEL = 0;
-    private static final int BUTTON_RESET = 1;
-    private static final int BUTTON_CONFIRM = 2;
+    public static final int BUTTON_CANCEL = 0;
+    public static final int BUTTON_RESET = 1;
+    public static final int BUTTON_CONFIRM = 2;
 
     private HexagonView hvCancel, hvReset, hvConfirm;
 

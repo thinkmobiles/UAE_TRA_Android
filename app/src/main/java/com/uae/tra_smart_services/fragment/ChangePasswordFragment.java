@@ -70,7 +70,22 @@ public class ChangePasswordFragment extends BaseFragment implements OnCheckedCha
 
     @Override
     public void onControllerButtonClick(@ControllerButton int _buttonId) {
+        switch (_buttonId) {
+            case ProfileController.BUTTON_CANCEL:
+                getFragmentManager().popBackStack();
+                break;
+            case ProfileController.BUTTON_CONFIRM:
+                break;
+            case ProfileController.BUTTON_RESET:
+                clearAllFields();
+                break;
+        }
+    }
 
+    private void clearAllFields() {
+        etOldPassword.getText().clear();
+        etNewPassword.getText().clear();
+        etNewPasswordRetype.getText().clear();
     }
 
     @Override

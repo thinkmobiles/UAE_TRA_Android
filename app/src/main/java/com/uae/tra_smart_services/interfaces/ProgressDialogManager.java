@@ -1,7 +1,7 @@
 package com.uae.tra_smart_services.interfaces;
 
 /**
- * Created by Vitaliy on 22/07/2015.
+ * Created by Mikazme on 22/07/2015.
  */
 public interface ProgressDialogManager {
 

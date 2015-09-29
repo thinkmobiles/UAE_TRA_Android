@@ -7,7 +7,7 @@ import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
 /**
- * Created by Vitaliy on 24/08/2015.
+ * Created by Mikazme on 24/08/2015.
  */
 public class TRAApplication extends Application {
 

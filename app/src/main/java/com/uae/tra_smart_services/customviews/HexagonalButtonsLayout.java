@@ -31,7 +31,7 @@ import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
- * Created by Vitaliy on 13/08/2015.
+ * Created by Mikazme on 13/08/2015.
  */
 public class HexagonalButtonsLayout extends View {
 

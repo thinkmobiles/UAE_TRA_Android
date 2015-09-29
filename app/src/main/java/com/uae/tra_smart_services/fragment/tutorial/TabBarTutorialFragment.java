@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.uae.tra_smart_services.R;
 
 /**
- * Created by Vitaliy on 24/09/2015.
+ * Created by Mikazme on 24/09/2015.
  */
 public class TabBarTutorialFragment extends Fragment {
 

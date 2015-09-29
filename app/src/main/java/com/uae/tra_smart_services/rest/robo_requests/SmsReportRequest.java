@@ -5,7 +5,7 @@ import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 
 /**
- * Created by Vitaliy on 26/08/2015.
+ * Created by Mikazme on 26/08/2015.
  */
 public class SmsReportRequest extends BaseRequest<SmsSpamResponseModel, TRAServicesAPI> {
 

@@ -13,7 +13,7 @@ import java.io.IOException;
 import retrofit.client.Response;
 
 /**
- * Created by Vitaliy on 13/08/2015.
+ * Created by Mikazme on 13/08/2015.
  */
 public class ComplainAboutServiceRequest extends BaseRequest<Response, TRAServicesAPI> {
 

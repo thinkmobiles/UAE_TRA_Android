@@ -7,7 +7,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
@@ -26,7 +25,6 @@ public final class EditUserProfileFragment extends BaseFragment
     private HexagonView hvUserAvatar;
     private TextView tvChangePhoto;
     private EditText etFirstName, etLastName, etAddress, etPhone;
-    private Spinner sEmirate;
     private ProfileController pcProfileController;
 
     private ArrayAdapter mStatesAdapter;
@@ -44,7 +42,6 @@ public final class EditUserProfileFragment extends BaseFragment
         etLastName = findView(R.id.etLastName_FEUP);
         etAddress = findView(R.id.etAddress_FEUP);
         etPhone = findView(R.id.etPhone_FEUP);
-        sEmirate = findView(R.id.sEmirate_FEUP);
         pcProfileController = findView(R.id.pcProfileController_FEUP);
     }
 
@@ -52,7 +49,6 @@ public final class EditUserProfileFragment extends BaseFragment
     protected final void initListeners() {
         super.initListeners();
         tvChangePhoto.setOnClickListener(this);
-        sEmirate.setOnItemSelectedListener(this);
         pcProfileController.setOnButtonClickListener(this);
     }
 
@@ -61,8 +57,6 @@ public final class EditUserProfileFragment extends BaseFragment
         super.onActivityCreated(_savedInstanceState);
         mStatesAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.states_array, R.layout.spinner_item_emirate);
         mStatesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        sEmirate.setAdapter(mStatesAdapter);
     }
 
     @Override
@@ -82,7 +76,23 @@ public final class EditUserProfileFragment extends BaseFragment
 
     @Override
     public void onControllerButtonClick(@ControllerButton int _buttonId) {
+        switch (_buttonId) {
+            case ProfileController.BUTTON_CANCEL:
+                getFragmentManager().popBackStack();
+                break;
+            case ProfileController.BUTTON_CONFIRM:
+                break;
+            case ProfileController.BUTTON_RESET:
+                clearAllFields();
+                break;
+        }
+    }
 
+    private void clearAllFields() {
+        etFirstName.getText().clear();
+        etLastName.getText().clear();
+        etAddress.getText().clear();
+        etPhone.getText().clear();
     }
 
     @Override

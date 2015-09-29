@@ -3,7 +3,7 @@ package com.uae.tra_smart_services.util;
 import android.graphics.PointF;
 
 /**
- * Created by Vitaliy on 15/08/2015.
+ * Created by Mikazme on 15/08/2015.
  */
 public abstract class HexagonUtils {
 

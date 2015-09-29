@@ -7,24 +7,18 @@
     <style name="AuthorizationFieldsSeparator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_authorization_fields_separator_height</item>
-        <item name="android:background">@color/hex_auth_fields_separator_color</item>
+        <item name="android:background">?attr/colorPrimary</item>
     </style>
 
     <style name="AuthorizationFieldsSeparatorVertical">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">@dimen/dp_authorization_fields_separator_height</item>
-        <item name="android:background">@color/hex_auth_fields_separator_color</item>
+        <item name="android:background">?attr/colorPrimary</item>
     </style>
 
     <style name="ListViewItemSeparator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_authorization_fields_separator_height</item>
-        <item name="android:background">@color/hex_auth_fields_separator_color</item>
-    </style>
-
-    <style name="VerticalFieldsSeparator">
-        <item name="android:layout_width">@dimen/dp_authorization_fields_separator_height</item>
-        <item name="android:layout_height">30dp</item>
         <item name="android:background">@color/hex_auth_fields_separator_color</item>
     </style>
 
@@ -54,29 +48,10 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="UserSettingsEditableText" parent="UserAuthorizationDataEditTextField" >
-        <item name="android:textColor">@color/hex_black_color</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:capitalize">none</item>
-        <item name="android:gravity">center|end</item>
-    </style>
 
-    <style name="UserSettingsSwitchers" parent="UserAuthorizationDataEditTextField" >
-        <item name="android:textColor">@color/hex_black_color</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:capitalize">none</item>
-    </style>
-
-    <style name="TransparentWhiteButton">
-        <item name="android:background">@drawable/sel_auth_button_background</item>
-        <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
-        <item name="android:textColor">?attr/globalButtonTextColor</item>
-    </style>
-
-    <style name="BlurButtonStyle" parent="TransparentWhiteButton">
+    <style name="BlurButtonStyle">
         <item name="android:layout_marginStart">@dimen/dp_button_margin</item>
+        <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
         <item name="android:layout_marginEnd">@dimen/dp_button_margin</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -88,11 +63,6 @@
         <item name="android:background">?attr/authorizationButtonsBackground</item>
     </style>
 
-    <style name="BlurButtonStyleSimple" parent="BlurButtonStyle">
-        <item name="android:layout_marginStart">150dp</item>
-        <item name="android:layout_marginEnd">150dp</item>
-    </style>
-
     <style name="AuthorizationTextViews">
         <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
         <item name="android:textColor">?attr/authorizationTextColors</item>
@@ -102,7 +72,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="DashboardRadioButton">
+    <style name="TabBarButtonStyle">
         <item name="android:paddingTop">@dimen/dp_dashboard_tab_padding</item>
         <item name="android:paddingStart">@dimen/dp_dashboard_tab_padding</item>
         <item name="android:drawablePadding">@dimen/dp_dashboard_tab_drawable_padding</item>
@@ -148,4 +118,7 @@
         <item name="android:layoutDirection">ltr</item>
     </style>
 
+    <style name="ImageViewRotationStyle">
+        <item name="android:rotationY">0</item>
+    </style>
 </resources>

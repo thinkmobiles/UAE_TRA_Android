@@ -12,7 +12,7 @@ import com.uae.tra_smart_services.global.ServerConstants;
 import retrofit.RestAdapter;
 
 /**
- * Created by Vitaliy on 13/08/2015.
+ * Created by Mikazme on 13/08/2015.
  */
 public class TRARestService extends RetrofitGsonSpiceService {
 

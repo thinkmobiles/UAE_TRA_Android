@@ -18,7 +18,7 @@ import com.uae.tra_smart_services.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
- * Created by Vitaliy on 24/09/2015.
+ * Created by Mikazme on 24/09/2015.
  */
 public abstract class TutorialTipView extends View {
 

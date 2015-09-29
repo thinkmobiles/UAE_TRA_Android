@@ -9,7 +9,7 @@ import com.uae.tra_smart_services.fragment.tutorial.HotBarTutorialFragment;
 import com.uae.tra_smart_services.fragment.tutorial.TabBarTutorialFragment;
 
 /**
- * Created by Vitaliy on 24/09/2015.
+ * Created by Mikazme on 24/09/2015.
  */
 public class TutorialPagerAdapter extends FragmentPagerAdapter {
 

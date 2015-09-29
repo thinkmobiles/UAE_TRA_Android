@@ -34,7 +34,7 @@ import java.net.HttpURLConnection;
 import retrofit.RetrofitError;
 
 /**
- * Created by Vitaliy on 22/07/2015.
+ * Created by Mikazme on 22/07/2015.
  */
 public abstract class BaseFragment extends Fragment implements Loader.Dismiss, Loader.BackButton {
 
@@ -67,6 +67,10 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         initListeners();
         setToolbarVisibility();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        return rootView;
+    }
+
+    protected View getRootView() {
         return rootView;
     }
 

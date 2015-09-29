@@ -332,7 +332,8 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithOutBackStack(InfoHubFragment.newInstance());
                 break;
             case R.id.rbInquiries_BNRG:
-
+                clearBackStack();
+                replaceFragmentWithOutBackStack(EnquiriesFragment.newInstance());
                 break;
             case R.id.rbSettings_BNRG:
                 clearBackStack();
@@ -422,6 +423,7 @@ public class HomeActivity extends BaseFragmentActivity
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
         switch(_service){
             case HINT:
+                onServiceSelect(Service.SUGGESTION, null);
                 break;
             case NOTIFICATION:
                 addFragmentWithBackStackGlobally(NotificationsFragment.newInstance());

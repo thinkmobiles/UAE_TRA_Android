@@ -133,7 +133,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
 
     @Override
     protected void onImageGet(Uri _uri) {
-
+        ivAddAttachment.setImageResource(R.drawable.ic_check);
     }
 
     @Override

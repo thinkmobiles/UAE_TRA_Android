@@ -33,7 +33,7 @@ import static com.uae.tra_smart_services.global.HeaderStaticService.NOTIFICATION
 import static com.uae.tra_smart_services.global.HeaderStaticService.SEARCH;
 
 /**
- * Created by Vitaliy on 13/08/2015.
+ * Created by Mikazme on 13/08/2015.
  */
 public class HexagonHomeFragment extends BaseFragment implements OnServiceSelected, OnButtonClickListener {
 

@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
     android:layout_width="match_parent"
-    android:paddingTop="?attr/actionBarSize"
     android:layout_height="match_parent"
-    android:background="@color/hex_authorization_background_color"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/hex_authorization_background_color"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="?spamHistory"
+        tools:ignore="ContentDescription"/>
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:paddingTop="?attr/actionBarSize"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.uae.tra_smart_services.customviews.ServiceHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/serviceInfoBackground"
-            app:headerIconSrc="@drawable/ic_edit"
-            app:headerTitle="@string/service_domain_check"/>
-
         <LinearLayout
-            android:id="@+id/llSignInFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvDomainStrValue_FDCH"
+            <!--<com.uae.tra_smart_services.customviews.ServiceHeader-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="?attr/serviceInfoBackground"-->
+                <!--app:headerIconSrc="@drawable/ic_edit"-->
+                <!--app:headerTitle="@string/service_domain_check"/>-->
+
+            <LinearLayout
+                android:id="@+id/llSignInFields"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="40dp"
-                android:layout_marginStart="40dp"
-                android:background="@drawable/background_domain_info"
-                android:padding="8dp"
-                android:textAlignment="center"
-                android:textColor="@color/hex_black_color"
-                android:textSize="18sp"
-                tools:text="google.com"/>
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/tvDomainAvail_FDCH"
-                style="@style/UserAuthorizationDataEditTextField"
-                android:text="@string/str_domain_available"
-                android:textColor="@color/hex_primary_green"
-                android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/tvDomainStrValue_FDCH"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:background="@drawable/background_domain_info"
+                    android:padding="8dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/hex_black_color"
+                    android:textSize="18sp"
+                    tools:text="google.com"/>
 
+                <TextView
+                    android:id="@+id/tvDomainAvail_FDCH"
+                    style="@style/UserAuthorizationDataEditTextField"
+                    android:text="@string/str_domain_available"
+                    android:gravity="center"
+                    android:textColor="@color/hex_primary_green"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
         </LinearLayout>
-
-        <!--<include
-            layout="@layout/layout_domain_service_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>-->
-
-        <com.uae.tra_smart_services.customviews.DomainServiceRatingView
-            android:id="@+id/llDomainServiceRatingView"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</FrameLayout>

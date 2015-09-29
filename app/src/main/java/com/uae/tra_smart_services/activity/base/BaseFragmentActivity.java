@@ -11,7 +11,7 @@ import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 
 /**
- * Created by Vitaliy on 22/07/2015.
+ * Created by Mikazme on 22/07/2015.
  */
 public abstract class BaseFragmentActivity extends BaseActivity{
 

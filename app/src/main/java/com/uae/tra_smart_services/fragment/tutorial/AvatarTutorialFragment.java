@@ -14,7 +14,7 @@ import com.uae.tra_smart_services.customviews.HexagonalHeader;
 import com.uae.tra_smart_services.customviews.tutorial.AvatarTipView;
 
 /**
- * Created by Vitaliy on 21/09/2015.
+ * Created by Mikazme on 21/09/2015.
  */
 public class AvatarTutorialFragment extends Fragment {
 

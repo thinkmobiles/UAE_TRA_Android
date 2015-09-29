@@ -1,151 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
     android:layout_width="match_parent"
-    android:paddingTop="?attr/actionBarSize"
     android:layout_height="match_parent"
-    tools:ignore="HardcodedText,RtlSymmetry">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.percent.PercentRelativeLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="?spamHistory"
+        tools:ignore="ContentDescription"/>
 
-        <com.uae.tra_smart_services.customviews.ServiceHeader
-            android:id="@+id/shHeader_FCAS"
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:paddingTop="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        tools:ignore="HardcodedText,RtlSymmetry">
+
+        <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="?attr/serviceInfoBackground"
-            app:headerIconSrc="@drawable/ic_edit"
-            app:headerTitle="@string/service_complain_about_provider"/>
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
 
-        <LinearLayout
-            android:id="@+id/llTitleContainer_FCAS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/shHeader_FCAS"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/background_service_item"
-            android:orientation="horizontal"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            app:layout_widthPercent="90%">
+            <LinearLayout
+                android:id="@+id/llTitleContainer_FCAS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-            <EditText
-                android:id="@+id/etComplainTitle_FCAS"
-                android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/etComplainTitle_FCAS"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:hint="@string/complain_title"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="?attr/colorPrimary"
+                    android:textSize="18sp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"/>
+
+                <ImageView
+                    android:id="@+id/ivAddAttachment_FCAS"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="Add attachment"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_action_attachment"/>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/vComplainTitleDivider_FCAS"
+                android:layout_width="match_parent"
+                android:layout_below="@id/llTitleContainer_FCAS"
+                android:layout_marginBottom="8dp"
+                android:layout_height="1dp"
+                android:background="?attr/colorPrimary"/>
+
+            <Spinner
+                android:id="@+id/sProviderSpinner_FCAS"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="@string/complain_title"
-                android:singleLine="true"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"/>
+                android:layout_below="@id/vComplainTitleDivider_FCAS"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/transparent"/>
 
-            <ImageView
-                android:id="@+id/ivAddAttachment_FCAS"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackground"
-                android:contentDescription="Add attachment"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_action_attachment"/>
-
-        </LinearLayout>
-
-        <Spinner
-            android:id="@+id/sProviderSpinner_FCAS"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_below="@id/llTitleContainer_FCAS"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/transparent"
-            app:layout_widthPercent="90%"/>
-
-        <LinearLayout
-            android:id="@+id/llProviderContainer_FCAS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/llTitleContainer_FCAS"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/background_service_item"
-            android:orientation="horizontal"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:visibility="gone"
-            app:layout_widthPercent="90%">
-
-            <TextView
-                android:id="@+id/tvServiceProvider_FCAS"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:freezesText="true"
-                android:gravity="center_vertical"
-                android:hint="@string/service_provider"
+            <LinearLayout
+                android:id="@+id/llProviderContainer_FCAS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llTitleContainer_FCAS"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/background_service_item"
+                android:orientation="horizontal"
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"/>
+                android:visibility="gone"
+                app:layout_widthPercent="90%">
 
-            <ImageView
-                android:id="@+id/ivNextItem_FCAS"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:contentDescription="Show providers"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_action_next_item"/>
+                <TextView
+                    android:id="@+id/tvServiceProvider_FCAS"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:freezesText="true"
+                    android:gravity="center_vertical"
+                    android:hint="@string/service_provider"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/ivNextItem_FCAS"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="Show providers"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_action_next_item"/>
 
-        <EditText
-            android:id="@+id/etReferenceNumber_FCAS"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_below="@id/sProviderSpinner_FCAS"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/background_service_item"
-            android:gravity="center_vertical"
-            android:hint="@string/reference_number"
-            android:inputType="number"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            app:layout_widthPercent="90%"/>
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/etDescription_FCAS"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:minHeight="48dp"
-            android:layout_below="@id/etReferenceNumber_FCAS"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/background_service_item"
-            android:gravity="center_vertical"
-            android:hint="@string/description"
-            android:inputType="textAutoCorrect|textMultiLine"
-            android:padding="8dp"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            app:layout_widthPercent="90%"/>
+            <EditText
+                android:id="@+id/etReferenceNumber_FCAS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_below="@id/sProviderSpinner_FCAS"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:hint="@string/reference_number"
+                android:inputType="number"
+                android:gravity="center_vertical"
+                android:background="@null"
+                android:singleLine="true"
+                android:textColor="?attr/colorPrimary"
+                android:textColorHint="?attr/colorPrimary"
+                android:textSize="18sp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"/>
 
-    </android.support.percent.PercentRelativeLayout>
-</ScrollView>
+            <View
+                android:id="@+id/vReferenceNumberDivider_FCAS"
+                android:layout_width="match_parent"
+                android:layout_below="@id/etReferenceNumber_FCAS"
+                android:layout_height="1dp"
+                android:background="?attr/colorPrimary"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/etDescription_FCAS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_below="@id/vReferenceNumberDivider_FCAS"
+                android:layout_centerHorizontal="true"
+                android:hint="@string/description"
+                android:inputType="text"
+                android:gravity="center_vertical"
+                android:background="@null"
+                android:singleLine="true"
+                android:textColor="?attr/colorPrimary"
+                android:textColorHint="?attr/colorPrimary"
+                android:textSize="18sp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"/>
+
+
+            <View
+                android:id="@+id/vNumberOfSpammerDivider_FRSS"
+                android:layout_width="match_parent"
+                android:layout_below="@id/etDescription_FCAS"
+                android:layout_height="1dp"
+                android:background="?attr/colorPrimary"
+                android:layout_marginBottom="8dp"/>
+
+        </android.support.percent.PercentRelativeLayout>
+    </ScrollView>
+</FrameLayout>

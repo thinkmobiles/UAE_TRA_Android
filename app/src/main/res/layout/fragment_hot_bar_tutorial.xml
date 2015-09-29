@@ -42,8 +42,8 @@
         app:linePointerColor="@android:color/white"
         app:tipTextColor="@android:color/white"
         app:viewPointerColor="@android:color/white"
-        app:tipText="@string/lorem_ipsum_tutorial"
-        app:titleText="HOT BAR/QUICK ACCESS LINKS"
+        app:tipText="@string/tutorial_hot_bar_text"
+        app:titleText="@string/tutorial_hot_bar_title"
         app:tutorialTipType="avatar"/>
 
 </RelativeLayout>

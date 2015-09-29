@@ -15,7 +15,7 @@ import com.uae.tra_smart_services.adapter.TutorialPagerAdapter;
 import com.viewpagerindicator.CirclePageIndicator;
 
 /**
- * Created by Vitaliy on 24/09/2015.
+ * Created by Mikazme on 24/09/2015.
  */
 public class TutorialContainerFragment extends Fragment implements OnClickListener {
 

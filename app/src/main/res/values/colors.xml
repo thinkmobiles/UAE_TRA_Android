@@ -31,6 +31,8 @@
 
     <color name="hex_color_asdasddark_gray">#505050</color>
 
+    <color name="avatar_background">#FF455560</color>
+
     <color name="hex_color_yellow">#fffffa00</color>
     <color name="hex_color_purple">#ffce00ff</color>
 

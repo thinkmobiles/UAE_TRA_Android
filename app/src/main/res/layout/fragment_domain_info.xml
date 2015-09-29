@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,9 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:scaleX="-1"
-        android:scaleY="-1"
-        android:src="?mainBackground"/>
+        android:src="?attr/userProfileBackground"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,12 +24,12 @@
             android:orientation="vertical">
 
 
-            <com.uae.tra_smart_services.customviews.ServiceHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/serviceInfoBackground"
-                app:headerIconSrc="@drawable/ic_edit"
-                app:headerTitle="@string/service_domain_check"/>
+            <!--<com.uae.tra_smart_services.customviews.ServiceHeader-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="?attr/serviceInfoBackground"-->
+                <!--app:headerIconSrc="@drawable/ic_edit"-->
+                <!--app:headerTitle="@string/service_domain_check"/>-->
 
             <LinearLayout
                 android:id="@+id/llSignInFields"

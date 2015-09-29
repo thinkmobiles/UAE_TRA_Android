@@ -23,7 +23,6 @@
             <EditText
                 android:id="@+id/etEmail_FRP"
                 style="@style/AuthorizationFields"
-                android:drawableStart="@drawable/ic_username"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding"
                 android:hint="@string/login_username_hint"
                 android:inputType="textPersonName" />
@@ -33,7 +32,6 @@
             <EditText
                 android:id="@+id/etPassword_FR"
                 style="@style/AuthorizationFields"
-                android:drawableStart="@drawable/ic_pass"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding"
                 android:hint="@string/str_password"
                 android:inputType="textPassword" />

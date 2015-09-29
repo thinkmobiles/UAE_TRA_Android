@@ -13,7 +13,7 @@ import com.uae.tra_smart_services.customviews.HexagonalButtonsLayout;
 import com.uae.tra_smart_services.customviews.tutorial.HotBarTipView;
 
 /**
- * Created by Vitaliy on 23/09/2015.
+ * Created by Mikazme on 23/09/2015.
  */
 public class HotBarTutorialFragment extends Fragment {
 

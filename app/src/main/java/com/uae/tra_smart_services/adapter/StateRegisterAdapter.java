@@ -12,7 +12,7 @@ import com.uae.tra_smart_services.util.ImageUtils;
 import java.util.List;
 
 /**
- * Created by Vitaliy on 15/09/2015.
+ * Created by Mikazme on 15/09/2015.
  */
 public class StateRegisterAdapter extends android.widget.BaseAdapter {
 

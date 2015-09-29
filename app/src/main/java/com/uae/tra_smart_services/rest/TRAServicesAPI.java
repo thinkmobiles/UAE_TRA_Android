@@ -30,7 +30,6 @@ import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ABOUT_T
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ENQUIRIES_SERVICE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.HELP_SALIM_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGIN_URL;
-import static com.uae.tra_smart_services.global.ServerConstants.RESTORE_PASS_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGOUT_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_CHECK_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_DEVICE_BRAND;
@@ -40,6 +39,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_START_
 import static com.uae.tra_smart_services.global.ServerConstants.POOR_COVERAGE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.RATING_SERVICE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.REGISTER_URL;
+import static com.uae.tra_smart_services.global.ServerConstants.RESTORE_PASS_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SEARCH_DEVICE_BY_BRAND_NAME_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SEARCH_DEVICE_BY_IMEI_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SEND_SUGGESTION_URL;
@@ -47,7 +47,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.SMS_SPAM_BLOCK_U
 import static com.uae.tra_smart_services.global.ServerConstants.SMS_SPAM_REPORT_URL;
 
 /**
- * Created by Vitaliy on 13/08/2015.
+ * Created by Mikazme on 13/08/2015.
  */
 public interface TRAServicesAPI {
 

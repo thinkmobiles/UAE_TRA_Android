@@ -22,7 +22,6 @@
                 style="@style/AuthorizationFields"
                 android:hint="@string/hint_first_name"
                 android:inputType="textEmailAddress"
-                android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -32,7 +31,6 @@
                 style="@style/AuthorizationFields"
                 android:hint="@string/hint_last_name"
                 android:inputType="textEmailAddress"
-                android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -42,7 +40,6 @@
                 style="@style/AuthorizationFields"
                 android:hint="@string/hint_emirates_id"
                 android:inputType="number|text"
-                android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -52,35 +49,15 @@
                 style="@style/AuthorizationFields"
                 android:hint="@string/hint_username"
                 android:inputType="textEmailAddress"
-                android:drawableStart="@drawable/ic_username"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding"/>
 
             <View style="@style/AuthorizationFieldsSeparator" />
-
-            <!--<EditText-->
-                <!--android:id="@+id/etAddress_FR"-->
-                <!--style="@style/AuthorizationFields"-->
-                <!--android:hint="@string/hint_address"-->
-                <!--android:inputType="textEmailAddress"-->
-                <!--android:drawableStart="@drawable/ic_mail"-->
-                <!--android:drawablePadding="@dimen/dp_transparent_fields_padding"  />-->
-
-            <!--<View style="@style/AuthorizationFieldsSeparator" />-->
-
-            <!--<Spinner-->
-                <!--android:id="@+id/spState_FR"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@null"/>-->
-
-            <!--<View style="@style/AuthorizationFieldsSeparator" />-->
 
             <EditText
                 android:id="@+id/etPhone_FR"
                 style="@style/AuthorizationFields"
                 android:hint="@string/str_phone"
                 android:inputType="text"
-                android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -90,7 +67,6 @@
                 style="@style/AuthorizationFields"
                 android:hint="@string/str_email"
                 android:inputType="textEmailAddress"
-                android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -101,7 +77,6 @@
                 style="@style/AuthorizationFields"
                 android:hint="@string/str_password"
                 android:inputType="textPassword"
-                android:drawableStart="@drawable/ic_pass"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -111,7 +86,6 @@
                 style="@style/AuthorizationFields"
                 android:hint="@string/hint_confirm_password"
                 android:inputType="textPassword"
-                android:drawableStart="@drawable/ic_pass"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding" />
 
             <View style="@style/AuthorizationFieldsSeparator" />
