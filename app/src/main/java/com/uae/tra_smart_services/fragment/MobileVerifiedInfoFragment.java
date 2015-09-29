@@ -19,7 +19,6 @@ public class MobileVerifiedInfoFragment extends BaseFragment {
 
     private static final String SELECTED_DEVICE_KEY = "SELECTED_DEVICE_KEY";
 
-    private ImageView ivLogo;
     private TextView tvApprovedDevice;
 
     private ArrayList<SearchDeviceResponseModel> mApprovedDevices;
@@ -46,8 +45,6 @@ public class MobileVerifiedInfoFragment extends BaseFragment {
     @Override
     protected void initViews() {
         super.initViews();
-        ivLogo = findView(R.id.ivLogo_FDA);
-        ivLogo.setImageDrawable(ImageUtils.getFilteredDrawable(getActivity(), R.drawable.logo));
         tvApprovedDevice = findView(R.id.tvApprovedDevice_FADR);
     }
 
