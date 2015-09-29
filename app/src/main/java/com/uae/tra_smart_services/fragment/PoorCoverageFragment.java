@@ -384,7 +384,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
                     if(isDialog){
                         showMessage(R.string.str_success, R.string.str_data_has_been_sent);
                     } else {
-                        dissmissLoaderOverlay(getString(R.string.str_data_has_been_sent));
+                        changeLoaderOverlay_Success(getString(R.string.str_data_has_been_sent));
                     }
                     break;
                 case 400:

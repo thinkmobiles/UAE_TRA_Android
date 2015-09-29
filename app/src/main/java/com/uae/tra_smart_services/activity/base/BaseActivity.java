@@ -38,8 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setApplicationTheme();
-        setApplicationFontSize();
         setApplicationLanguage();
+        setApplicationFontSize();
         super.onCreate(savedInstanceState);
     }
 
@@ -72,7 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
                 .getDefaultSharedPreferences(this)
                 .getFloat(BaseCustomSwitcher.Type.FONT.toString(), 1f);
         Configuration config = getResources().getConfiguration();
-        config.fontScale = mFontSize;
+        config.fontScale = (!mLanguage.equals("ar")) ? mFontSize : (float) (mFontSize * 0.85);
         getResources().updateConfiguration(config, null);
     }
 

@@ -148,6 +148,23 @@
     <string name="str_dummy_info_hub_list_item_title">Title</string>
 
     <!--                ServiceInfoFragment             -->
+الخيل والليل والبيداء تعرفني والسيف والرمح والقرطاس و القلمصحبت في الفلوات الوحش منفردا حتى تعجب مني القور و الأكم
+ يا من يعز علينا ان نفارقهم وجداننا كل شيء بعدكم عدم
+ ما كان أخلقنا منكم بتكرمة لو ان أمركم من أمرنا أمم
+ إن كان سركم ما قال حاسدنا فما لجرح إذا أرضاكم ألم
+و بيننا لو رعيتم ذاك معرفة غن المعارف في اهل النهى ذمم    </string>
+    <string name="str_dummy_info_hub_list_item_date">اقرأ المزيد</string>
+    <string name="str_dummy_info_hub_list_item_title">قصيدة ابو الطيب المتنبي</string>
+    <string name="operator_number">رقم مشغل الخدمة</string>
+    <string name="service_provider">مقدم الخدمة</string>
+    <string name="number_of_spammer">رقم المرسل غير المرغوب</string>
+    <string name="description">شرح</string>
+    <string name="complain_title">عنوان الشكوى</string>
+    <string name="str_insert_imei_hint">Insert IMEI Manually</string>
+    <string name="str_location">الموقع</string>
+    <string name="str_skip">تجاوز</string>
+    <string name="fragment_favorites_empty_favorites">لم تقم باختيار خدمة ضمن\nقائمة الخدمات المفضلة.</string>
+    <string name="fragment_favorites_add_service">إضافة خدمة</string>
     <string name="fragment_service_info_service_info">عن الخدمة</string>
     <string name="fragment_service_info_required_documents">الوثائق المطلوبة</string>
     <string name="fragment_service_info_terms_and_conditions">Terms &amp; Conditions</string>

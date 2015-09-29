@@ -61,7 +61,6 @@
                     android:textColor="@color/hex_primary_green"
                     android:textSize="20sp"/>
 
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-</FrameLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -73,8 +73,9 @@
     </style>
 
     <style name="TabBarButtonStyle">
-        <item name="android:paddingTop">@dimen/dp_dashboard_tab_padding</item>
-        <item name="android:paddingStart">@dimen/dp_dashboard_tab_padding</item>
+        <item name="android:paddingTop">@dimen/dp_dashboard_tab_top_padding</item>
+        <item name="android:paddingStart">@dimen/dp_dashboard_tab_side_padding</item>
+        <item name="android:paddingEnd">@dimen/dp_dashboard_tab_side_padding</item>
         <item name="android:drawablePadding">@dimen/dp_dashboard_tab_drawable_padding</item>
         <item name="android:button">@null</item>
         <item name="android:layout_width">0dp</item>

@@ -9,7 +9,6 @@
     android:layoutDirection="locale"
     android:orientation="horizontal"
     android:gravity="center_vertical">
-    <!--android:paddingRight="@dimen/dp_dashboard_tab_padding"-->
 
     <RadioButton
         android:id="@+id/rbHome_BNRG"
