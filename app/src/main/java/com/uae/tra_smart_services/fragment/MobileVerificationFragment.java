@@ -177,6 +177,4 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     public interface OnDeviceVerifyiedListener {
         void onDeviceVerifyied(final SearchDeviceResponseModel.List _device);
     }
-
-
 }

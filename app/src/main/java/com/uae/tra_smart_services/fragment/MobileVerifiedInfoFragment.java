@@ -24,8 +24,8 @@ public class MobileVerifiedInfoFragment extends BaseFragment {
 
     private ArrayList<SearchDeviceResponseModel> mApprovedDevices;
 
-    public static DeviceApprovalFragment newInstance(final SearchDeviceResponseModel.List _device) {
-        DeviceApprovalFragment fragment = new DeviceApprovalFragment();
+    public static MobileVerifiedInfoFragment newInstance(final SearchDeviceResponseModel.List _device) {
+        MobileVerifiedInfoFragment fragment = new MobileVerifiedInfoFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(SELECTED_DEVICE_KEY, _device);
         fragment.setArguments(args);
@@ -63,6 +63,6 @@ public class MobileVerifiedInfoFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_device_approval;
+        return R.layout.fragment_mobile_verification_result;
     }
 }
