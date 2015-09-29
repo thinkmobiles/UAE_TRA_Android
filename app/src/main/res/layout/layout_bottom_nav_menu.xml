@@ -13,7 +13,6 @@
     <RadioButton
         android:id="@+id/rbHome_BNRG"
         style="@style/TabBarButtonStyle"
-        android:checked="true"
         android:drawableTop="@drawable/ic_home"
         android:singleLine="true"
         android:text="@string/str_home"/>

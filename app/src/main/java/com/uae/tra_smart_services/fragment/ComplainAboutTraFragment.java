@@ -20,6 +20,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutTRAServiceRequest;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import retrofit.client.Response;
 
@@ -89,7 +90,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
 
     @Override
     protected void onImageGet(Uri _uri) {
-        ivAddAttachment.setImageResource(R.drawable.ic_check);
+        ivAddAttachment.setImageDrawable(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_check, R.attr.authorizationDrawableColors));
         mImageUri = _uri;
     }
 

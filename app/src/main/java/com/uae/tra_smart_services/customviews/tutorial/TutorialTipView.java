@@ -103,11 +103,13 @@ public abstract class TutorialTipView extends View {
 
     private void initPaint() {
         mTitleTextPaint = new TextPaint();
+        mTitleTextPaint.setAntiAlias(true);
         mTitleTextPaint.setTextSize(mTitleTextSize);
         mTitleTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
         mTitleTextPaint.setColor(mTextColor);
 
         mTipTextPaint = new TextPaint();
+        mTipTextPaint.setAntiAlias(true);
         mTipTextPaint.setTextSize(mTipTextSize);
         mTipTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
         mTipTextPaint.setColor(mTextColor);
@@ -118,12 +120,14 @@ public abstract class TutorialTipView extends View {
         mViewPointerPaint.setColor(mViewPointerColor);
 
         mLinePointerPaint = new Paint();
+        mLinePointerPaint.setAntiAlias(true);
         mLinePointerPaint.setStyle(Paint.Style.STROKE);
         mLinePointerPaint.setColor(mLineColor);
         mLinePointerPaint.setStrokeWidth(mLineWidth);
         mLinePointerPaint.setStrokeCap(Paint.Cap.ROUND);
 
         mTitleBorderPaint = new Paint();
+        mTitleBorderPaint.setAntiAlias(true);
         mTitleBorderPaint.setStyle(Paint.Style.STROKE);
         mTitleBorderPaint.setColor(mTitleBorderColor);
         mTitleBorderPaint.setStrokeWidth(mTitleBorderWidth);
