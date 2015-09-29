@@ -424,7 +424,7 @@ public class HomeActivity extends BaseFragmentActivity
     @Override
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
         switch(_service){
-            case HINT:
+            case INNOVATIONS:
                 onServiceSelect(Service.SUGGESTION, null);
                 break;
             case NOTIFICATION:

@@ -28,7 +28,7 @@ import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.Stat
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.POOR_COVERAGE_SERVICE;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.SMS_SPAM_SERVICE;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.VERIFICATION_SERVICE;
-import static com.uae.tra_smart_services.global.HeaderStaticService.HINT;
+import static com.uae.tra_smart_services.global.HeaderStaticService.INNOVATIONS;
 import static com.uae.tra_smart_services.global.HeaderStaticService.NOTIFICATION;
 import static com.uae.tra_smart_services.global.HeaderStaticService.SEARCH;
 
@@ -238,8 +238,8 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
     public void onHexagonButtonClick(@HexagonButton final int _hexagonButton) {
         if(NOTIFICATION.equals(_hexagonButton)){
             mHeaderStaticServiceSelectedListener.onHeaderStaticServiceSelected(NOTIFICATION);
-        } else if(HINT.equals(_hexagonButton)){
-            mHeaderStaticServiceSelectedListener.onHeaderStaticServiceSelected(HINT);
+        } else if(INNOVATIONS.equals(_hexagonButton)){
+            mHeaderStaticServiceSelectedListener.onHeaderStaticServiceSelected(INNOVATIONS);
         } else if(SEARCH.equals(_hexagonButton)){
             mHeaderStaticServiceSelectedListener.onHeaderStaticServiceSelected(SEARCH);
         }

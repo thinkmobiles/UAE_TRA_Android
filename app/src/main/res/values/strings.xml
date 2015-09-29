@@ -365,8 +365,14 @@
 
     <string name="fragment_approved_devices_no_results">There are no approved\ndevices were found</string>
 
-    <string name="str_enter_imei">Enter the IMEI of the mobil phone to be verified</string>
+    <string name="str_enter_imei">Enter the IMEI of the mobile phone to be verified</string>
     <string name="str_where_find_imei">Where to find the IMEI code on your phone?</string>
     <string name="str_send_imei">SEND IMEI CODE</string>
+
+    <string name="str_innovations">Innovations</string>
+    <string name="str_title">Title</string>
+    <string name="str_message">Message</string>
+    <string name="str_type_your_message_here">Type your message here</string>
+
 
 </resources>
