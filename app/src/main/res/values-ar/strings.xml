@@ -39,7 +39,6 @@
     <!--            Sign in button               -->
     <string name="str_login">تسجيل الدخول</string>
     <!--            Sign in button               -->
-    <string name="str_skip">تجاوز</string>
     <!--            Register button               -->
     <string name="str_register">تسجيل</string>
     <!--            Restore button               -->
@@ -144,15 +143,13 @@
         \r\n\r
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
     </string>
-    <string name="str_dummy_info_hub_list_item_date">08/09/2015</string>
-    <string name="str_dummy_info_hub_list_item_title">Title</string>
 
     <!--                ServiceInfoFragment             -->
-الخيل والليل والبيداء تعرفني والسيف والرمح والقرطاس و القلمصحبت في الفلوات الوحش منفردا حتى تعجب مني القور و الأكم
- يا من يعز علينا ان نفارقهم وجداننا كل شيء بعدكم عدم
- ما كان أخلقنا منكم بتكرمة لو ان أمركم من أمرنا أمم
- إن كان سركم ما قال حاسدنا فما لجرح إذا أرضاكم ألم
-و بيننا لو رعيتم ذاك معرفة غن المعارف في اهل النهى ذمم    </string>
+<!--الخيل والليل والبيداء تعرفني والسيف والرمح والقرطاس و القلمصحبت في الفلوات الوحش منفردا حتى تعجب مني القور و الأكم-->
+ <!--يا من يعز علينا ان نفارقهم وجداننا كل شيء بعدكم عدم-->
+ <!--ما كان أخلقنا منكم بتكرمة لو ان أمركم من أمرنا أمم-->
+ <!--إن كان سركم ما قال حاسدنا فما لجرح إذا أرضاكم ألم-->
+<!--و بيننا لو رعيتم ذاك معرفة غن المعارف في اهل النهى ذمم    </string>-->
     <string name="str_dummy_info_hub_list_item_date">اقرأ المزيد</string>
     <string name="str_dummy_info_hub_list_item_title">قصيدة ابو الطيب المتنبي</string>
     <string name="operator_number">رقم مشغل الخدمة</string>
@@ -161,7 +158,6 @@
     <string name="description">شرح</string>
     <string name="complain_title">عنوان الشكوى</string>
     <string name="str_insert_imei_hint">Insert IMEI Manually</string>
-    <string name="str_location">الموقع</string>
     <string name="str_skip">تجاوز</string>
     <string name="fragment_favorites_empty_favorites">لم تقم باختيار خدمة ضمن\nقائمة الخدمات المفضلة.</string>
     <string name="fragment_favorites_add_service">إضافة خدمة</string>
@@ -174,16 +170,8 @@
     <string name="fragment_service_info_contact_in_charge">المسؤول المباشر عن الخدمة</string>
 
     <!--                FavoritesFragment               -->
-    <string name="fragment_favorites_empty_favorites">You have not selected a TRA\nservice as part of your\nFavorites list yet.</string>
-    <string name="fragment_favorites_add_service">إضافة خدمة</string>
 
     <!--                Services                    -->
-    <string name="operator_number">Operator Number</string>
-    <string name="service_provider">Service Provider</string>
-    <string name="number_of_spammer">Spammer Number</string>
-    <string name="description">Description</string>
-    <string name="complain_title">Complaint Title</string>
-    <string name="reference_number">Reference Number</string>
     <string name="content_description_add_attachment">Add Attachment</string>
     <string name="approved_device_information">Approved Device Information</string>
     <string name="insert_imei_hint">Device IMEI</string>
