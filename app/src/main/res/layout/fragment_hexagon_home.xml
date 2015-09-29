@@ -36,8 +36,8 @@
             android:layout_below="@+id/hblHexagonalButtons_FHH"
             android:layoutDirection="locale"
             android:overScrollMode="never"
-            android:paddingEnd="7dp"
-            android:paddingStart="7dp"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
             tools:listitem="@layout/recycler_service_item"/>
 
         <com.uae.tra_smart_services.customviews.HexagonalButtonsLayout

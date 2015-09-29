@@ -390,7 +390,7 @@ public class HexagonalButtonsLayout extends View {
             TextPaint mTextPaint = new TextPaint();
             mTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress - mTextSizeDifference);
             mTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
-            mTextPaint.setColor(0xFFF68F1E);
+            mTextPaint.setColor(ImageUtils.isBlackAndWhiteMode(getContext()) ? Color.BLACK : 0xFFF68F1E);
             StaticLayout mTextLayout = new StaticLayout(getResources().getString(R.string.hexagon_button_spam), mTextPaint,
                     (int) (mTriangleHeight * 1.5), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
 
