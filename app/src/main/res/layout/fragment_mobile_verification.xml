@@ -90,7 +90,7 @@
                     android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"/>
-                    <!--android:background="@android:color/white"-->
+
                 <View style="@style/AuthorizationFieldsSeparator"
                     android:background="?attr/homePageHeaderBackground"
                     android:layout_alignBottom="@id/etImeiNumber_FMV"
