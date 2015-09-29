@@ -2,12 +2,7 @@ package com.uae.tra_smart_services.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -16,7 +11,6 @@ import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.LoaderView;
-import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.util.ImageUtils;
@@ -25,6 +19,8 @@ import com.uae.tra_smart_services.util.ImageUtils;
  * Created by Andrey Korneychuk on 21.09.15.
  */
 public class LoaderFragment extends BaseFragment implements View.OnClickListener, Loader {
+
+    public static final String TAG = LoaderFragment.class.getName();
 
     private static final String MSG = "message";
 

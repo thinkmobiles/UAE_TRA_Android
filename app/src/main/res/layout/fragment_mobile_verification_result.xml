@@ -34,12 +34,12 @@
         android:layout_height="match_parent"
         android:overScrollMode="never"
         android:scrollbars="none"
+        android:padding="20dp"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/textView3">
 
         <TextView
             tools:text="@string/fragment_about_tra_html"
-            android:layout_marginTop="10dp"
             android:id="@+id/tvApprovedDevice_FADR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

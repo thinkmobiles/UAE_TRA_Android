@@ -2,22 +2,22 @@ package com.uae.tra_smart_services.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.PendingRequestListener;
+import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.adapter.DevicesListAdapter;
+import com.uae.tra_smart_services.adapter.BrandsListAdapter;
+import com.uae.tra_smart_services.adapter.BrandsListAdapter.OnBrandSelectListener;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByBrandRequest;
@@ -28,16 +28,22 @@ import java.util.List;
 /**
  * Created by mobimaks on 11.08.2015.
  */
-public final class ApprovedDevicesFragment extends BaseServiceFragment implements OnItemClickListener, OnQueryTextListener {
+public final class ApprovedDevicesFragment extends BaseServiceFragment implements OnQueryTextListener, OnBrandSelectListener {
 
     private static final String KEY_SEARCH_DEVICE_BY_BRAND_REQUEST = "SEARCH_DEVICE_BY_BRAND_REQUEST";
+    private static final String KEY_SELECTED_BRAND_LOGO = "SELECTED_BRAND_LOGO";
 
-    private ListView lvDevices;
+    private RecyclerView rvBrands;
     private SearchView svSearchView;
 
-    private DevicesListAdapter mAdapter;
+    private BrandsListAdapter mAdapter;
+    private LinearLayoutManager mLinearLayoutManager;
     private OnDeviceSelectListener mSelectListener;
     private RequestResponseListener mRequestListener;
+    private SearchByBrandRequest mSearchByBrandRequest;
+
+    @DrawableRes
+    private int mSelectedBrandLogoRes;
 
     public static ApprovedDevicesFragment newInstance() {
         return new ApprovedDevicesFragment();
@@ -55,19 +61,21 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        if (savedInstanceState != null) {
+            mSelectedBrandLogoRes = savedInstanceState.getInt(KEY_SELECTED_BRAND_LOGO);
+        }
     }
 
     @Override
     protected void initViews() {
         super.initViews();
-        lvDevices = findView(R.id.lvDevices_FAD);
+        rvBrands = findView(R.id.rvBrands_FAD);
     }
 
     @Override
     protected void initListeners() {
         super.initListeners();
         mRequestListener = new RequestResponseListener();
-        lvDevices.setOnItemClickListener(this);
     }
 
     @Override
@@ -77,16 +85,26 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
     }
 
     private void initDevicesList() {
-        List<String> stubData = new ArrayList<>();
-        stubData.add("Apple");
-        stubData.add("Samsung");
-        stubData.add("BlackBerry");
-        stubData.add("Nokia");
-        stubData.add("HTC");
-        stubData.add("All devices");
+        //region Init stub data list
+        final String[] stubBrandsData = {"HTC", "Samsung", "Nokia", "Huawei", "Apple"};
+        final int[] stubBrandsLogos = {R.drawable.ic_htc, R.drawable.ic_samsung, R.drawable.ic_nokia, R.drawable.ic_huaw, R.drawable.ic_iphone};
 
-        mAdapter = new DevicesListAdapter(getActivity(), stubData);
-        lvDevices.setAdapter(mAdapter);
+        List<BrandItem> stubData = new ArrayList<>();
+        for (int i = 0; i < stubBrandsData.length; i++) {
+            BrandItem item = new BrandItem();
+            item.mName = stubBrandsData[i];
+            item.mBrandImageRes = R.drawable.nexus_5x;
+            item.mBrandLogoRes = stubBrandsLogos[i];
+            stubData.add(item);
+        }
+        //endregion
+
+        mAdapter = new BrandsListAdapter(getActivity(), stubData);
+        rvBrands.setAdapter(mAdapter);
+        mAdapter.setOnBrandSelectListener(this);
+
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        rvBrands.setLayoutManager(mLinearLayoutManager);
     }
 
     @Override
@@ -98,20 +116,16 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
     }
 
     @Override
-    protected int getTitle() {
-        return R.string.approved_devices;
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
-//        getSpiceManager().getFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
-        getSpiceManager().addListenerIfPending(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, mRequestListener);
+        Log.d("DeviceBrand", "onStart");
+        getSpiceManager().getFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestListener);
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
         mAdapter.getFilter().filter(query);
+        hideKeyboard(getView());
         return true;
     }
 
@@ -120,14 +134,71 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
         mAdapter.getFilter().filter(newText);
         return true;
     }
-    SearchByBrandRequest request;
+
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onStop() {
+        Log.d("DeviceBrand", "onStop");
+        super.onStop();
+    }
+
+    @Override
+    public void onBrandSelect(final BrandItem _item) {
         if (mSelectListener != null) {
-            String selectedBrand = mAdapter.getItem(position);
-            request = new SearchByBrandRequest(selectedBrand, 0, 100);
+            hideKeyboard(getView());
+            mSelectedBrandLogoRes = _item.mBrandLogoRes;
+            mSearchByBrandRequest = new SearchByBrandRequest(_item.mName, 0, 100);
             showLoaderOverlay(getString(R.string.str_loading), this);
-            getSpiceManager().execute(request, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
+            getSpiceManager().execute(mSearchByBrandRequest, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
+        }
+    }
+
+    @Override
+    public void onLoadingCanceled() {
+        if (getSpiceManager().isStarted()) {
+            getSpiceManager().cancel(mSearchByBrandRequest);
+            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle _outState) {
+        _outState.putInt(KEY_SELECTED_BRAND_LOGO, mSelectedBrandLogoRes);
+        super.onSaveInstanceState(_outState);
+    }
+
+    private class RequestResponseListener implements RequestListener<SearchDeviceResponseModel.List> {
+
+        @Override
+        public void onRequestSuccess(SearchDeviceResponseModel.List result) {
+            Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
+
+            Log.d("DeviceBrand", "onRequestSuccess");
+            Log.d("DeviceBrand", "isStarted() " + getSpiceManager().isStarted());
+            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST);
+
+            if (isAdded()) {
+                dissmissLoaderDialog();
+                Log.d("DeviceBrand", "isStarted() " + getSpiceManager().isStarted());
+                if (result != null) {
+                    if (result.isEmpty()) {
+                        dissmissLoaderOverlay(getString(R.string.fragment_approved_devices_no_results));
+                        Log.d("DeviceBrand", "isStarted() " + getSpiceManager().isStarted());
+                        return;
+                    } else if (mSelectListener != null) {
+                        dissmissLoaderOverlay(ApprovedDevicesFragment.this);
+                        mSelectListener.onDeviceSelect(mSelectedBrandLogoRes, result);
+                        return;
+                    }
+                }
+                dissmissLoaderOverlay(ApprovedDevicesFragment.this);
+            }
+        }
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Log.d("DeviceBrand", "onRequestFailure");
+            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST);
+            processError(spiceException);
         }
     }
 
@@ -137,38 +208,18 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
         super.onDetach();
     }
 
-    @Override
-    public void onLoadingCanceled() {
-        if(getSpiceManager().isStarted()){
-            getSpiceManager().cancel(request);
-        }
+    public final class BrandItem {
+
+        @DrawableRes
+        public int mBrandImageRes, mBrandLogoRes;
+
+        public String mName;
+
     }
 
-    private class RequestResponseListener implements PendingRequestListener<SearchDeviceResponseModel.List> {
-
-        @Override
-        public void onRequestNotFound() {
-            Log.d(getClass().getSimpleName(), "Request Not Found. isAdded: " + isAdded());
-        }
-
-        @Override
-        public void onRequestSuccess(SearchDeviceResponseModel.List result) {
-            Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
-            if (isAdded()) {
-                dissmissLoaderDialog();
-                dissmissLoaderOverlay(ApprovedDevicesFragment.this);
-                if (result != null && mSelectListener!=null) {
-                    mSelectListener.onDeviceSelect(result);
-                }
-            }
-            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST);
-        }
-
-        @Override
-        public void onRequestFailure(SpiceException spiceException) {
-            processError(spiceException);
-            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST);
-        }
+    @Override
+    protected int getTitle() {
+        return R.string.approved_devices;
     }
 
     @Override
@@ -177,6 +228,6 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
     }
 
     public interface OnDeviceSelectListener {
-        void onDeviceSelect(final SearchDeviceResponseModel.List _device);
+        void onDeviceSelect(final @DrawableRes int _selectedBrandLogoRes, final SearchDeviceResponseModel.List _device);
     }
 }

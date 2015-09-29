@@ -267,8 +267,8 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onDeviceSelect(final SearchDeviceResponseModel.List _device) {
-        replaceFragmentWithBackStack(DeviceApprovalFragment.newInstance(_device));
+    public void onDeviceSelect(int _selectedBrandLogoRes, final SearchDeviceResponseModel.List _device) {
+        replaceFragmentWithBackStack(DeviceApprovalFragment.newInstance(_selectedBrandLogoRes, _device));
     }
 
     @Override

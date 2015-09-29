@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:paddingBottom="10dp"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp"
+    tools:ignore="RtlSymmetry">
+
+    <Space
+        android:id="@+id/sStartOffset_LID"
+        android:layout_width="16dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:visibility="gone"/>
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvDeviceImage_LID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/sStartOffset_LID"
+        app:hexagonBorderColor="#55636e"
+        app:hexagonBorderSize="1dp"
+        app:hexagonSideSize="40dp"
+        app:hexagonSrc="@drawable/nexus_5x"/>
+
+    <LinearLayout
+        android:id="@+id/llDetailsContainer_LID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/hvDeviceImage_LID"
+        android:layout_alignTop="@id/hvDeviceImage_LID"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/hvDeviceImage_LID"
+        android:orientation="vertical"
+        tools:background="@color/hex_toolbar_blue">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:id="@+id/tvTitle_LID"
+            android:singleLine="true"
+            android:textColor="#55636e"
+            android:textSize="16sp"
+            tools:text="HTC ChaCha HTC ChaCha HTC ChaCha "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:id="@+id/tvDescription_LID"
+            android:lines="3"
+            android:textColor="#a6a6a6"
+            tools:text="2G Network GSM 850 / 900/ 1800 / 1900 3G Network HSDPA 900 / 2100 SIM 2G Network GSM 850 / 900/ 1800 / 1900 3G Network HSDPA 900 / 2100 SIM"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_alignStart="@id/llDetailsContainer_LID"
+        android:layout_below="@id/hvDeviceImage_LID"
+        android:background="@color/hex_color_middle_gray"/>
+
+</RelativeLayout>
