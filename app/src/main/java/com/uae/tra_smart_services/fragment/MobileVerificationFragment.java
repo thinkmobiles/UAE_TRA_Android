@@ -35,7 +35,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     private ImageView ivCameraBtn;
     private EditText etImeiNumber;
     private RequestResponseListener mRequestListener;
-    private ApprovedDevicesFragment.OnDeviceSelectListener mSelectListener;
+    private OnDeviceVerifyiedListener mSelectListener;
     private HexagonView hvSendImeiCode;
 
     public static MobileVerificationFragment newInstance() {
@@ -45,7 +45,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
-        mSelectListener = (ApprovedDevicesFragment.OnDeviceSelectListener) _activity;
+        mSelectListener = (OnDeviceVerifyiedListener) _activity;
     }
 
     @Override
@@ -157,7 +157,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
                 dissmissLoaderDialog();
                 dissmissLoaderOverlay(MobileVerificationFragment.this);
                 if (result != null) {
-                    mSelectListener.onDeviceSelect(result);
+                    mSelectListener.onDeviceVerifyied(result);
                 }
             }
             getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);
@@ -172,6 +172,10 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
 
     private boolean isCameraAvailable() {
         return getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
+
+    public interface OnDeviceVerifyiedListener {
+        void onDeviceVerifyied(final SearchDeviceResponseModel.List _device);
     }
 
 
