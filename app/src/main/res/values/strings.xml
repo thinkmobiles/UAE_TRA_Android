@@ -63,8 +63,8 @@
     <string name="str_settings">Settings</string>
     <string name="fragment_service_list_title">TRA Services</string>
     <string name="complain">Complaint</string>
-    <string name="approved_devices">Approved Devices</string>
-    <string name="device_approval">Device Approval</string>
+    <string name="approved_devices">LIST OF DEVICES</string>
+    <string name="device_approval">VERIFICATION</string>
     <!--               Home screens                -->
 
     <string-array name="languages">
@@ -298,7 +298,7 @@
     <string name="str_no">no</string>
 
     <string name="str_put_search_phrase">Type Your search phrase here</string>
-    <string name="str_no_search_result">There are no search\nresult where found</string>
+    <string name="str_no_search_result">There are no search\nresult were found</string>
     <string name="str_are_you_looking_for">ARE YOU LOOKING FOR</string>
 
     <string name="str_enquires_title">Enquires Title</string>
@@ -354,5 +354,7 @@
     <string name="lorem_ipsum_tutorial">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\\'s standard dummy text ever since the 1500s...</string>
     <string name="app_tutorial_screens">App Tutorial Screens</string>
     <string name="activate_tutorial">Activates the tutorials screens</string>
+
+    <string name="fragment_approved_devices_no_results">There are no approved\ndevices were found</string>
 
 </resources>

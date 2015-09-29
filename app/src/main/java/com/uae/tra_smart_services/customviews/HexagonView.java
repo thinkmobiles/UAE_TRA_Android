@@ -40,9 +40,9 @@ public final class HexagonView extends View implements Target {
     private Paint mPaint, mShadowPaint, mTextPaint;
     private Rect mHexagonRect, mTextRect;
     private Drawable mSrcDrawable;
-    private
+
     @DrawableRes
-    int mSrcRes;
+    private int mSrcRes;
     private String mText;
     private double mHexagonSide, mHexagonInnerRadius;
     private float mBorderWidth, mTextSize;

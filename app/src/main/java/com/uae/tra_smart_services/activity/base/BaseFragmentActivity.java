@@ -2,20 +2,45 @@ package com.uae.tra_smart_services.activity.base;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.view.inputmethod.InputMethodManager;
 
+import com.octo.android.robospice.SpiceManager;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.interfaces.SpiceLoader;
+import com.uae.tra_smart_services.rest.TRARestService;
 
 /**
  * Created by Vitaliy on 22/07/2015.
  */
-public abstract class BaseFragmentActivity extends BaseActivity{
+public abstract class BaseFragmentActivity extends BaseActivity implements SpiceLoader {
 
     private InputMethodManager mInputMethodManager;
+    private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
+
+
+    @CallSuper
+    @Override
+    public void onStart() {
+        super.onStart();
+        spiceManager.start(this);
+    }
+
+    @CallSuper
+    @Override
+    public void onStop() {
+        spiceManager.shouldStop();
+        super.onStop();
+    }
+
+    @Override
+    public final SpiceManager getSpiceManager() {
+        return spiceManager;
+    }
 
     @IdRes
     protected abstract int getContainerId();

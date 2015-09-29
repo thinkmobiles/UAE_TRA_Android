@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="?attr/selectableItemBackground"
+    tools:ignore="RtlSymmetry">
+
+    <Space
+        android:id="@+id/sStartOffset_LIB"
+        android:layout_width="16dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:visibility="gone"/>
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvBrandImage_LIB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/sStartOffset_LIB"
+        app:hexagonBorderColor="?colorPrimary"
+        app:hexagonBorderSize="1dp"
+        app:hexagonSideSize="40dp"
+        app:hexagonSrc="@drawable/nexus_5x"/>
+
+    <ImageView
+        android:id="@+id/ivBrandLogo_LIB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/hvBrandImage_LIB"
+        android:layout_alignTop="@id/hvBrandImage_LIB"
+        android:layout_marginEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/hvBrandImage_LIB"
+        android:scaleType="centerInside"
+        android:src="@drawable/nexus_logo"
+        tools:ignore="ContentDescription"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_alignStart="@id/ivBrandLogo_LIB"
+        android:layout_below="@id/hvBrandImage_LIB"
+        android:background="@color/hex_color_middle_gray"/>
+
+</RelativeLayout>

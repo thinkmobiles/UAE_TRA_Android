@@ -9,6 +9,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,8 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.interfaces.SpiceLoader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
-import com.uae.tra_smart_services.rest.TRARestService;
 import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
 
 import java.net.HttpURLConnection;
@@ -39,11 +40,11 @@ import retrofit.RetrofitError;
 public abstract class BaseFragment extends Fragment implements Loader.Dismiss, Loader.BackButton {
 
     private View rootView;
-    private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
     private InputMethodManager mInputMethodManager;
 
     protected ToolbarTitleManager toolbarTitleManager;
     protected ThemaDefiner mThemaDefiner;
+    protected SpiceLoader mSpiceLoader;
     private Loader loader;
 
     @Override
@@ -52,9 +53,10 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         try {
             toolbarTitleManager = (ToolbarTitleManager) _activity;
             mThemaDefiner = (ThemaDefiner) _activity;
+            mSpiceLoader = (SpiceLoader) _activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(_activity.toString()
-                    + " must implement ProgressDialogManager and ErrorHandler and ThemaDefiner and Loader");
+                    + " must implement ProgressDialogManager, ErrorHandler, ThemaDefiner, Loader and SpiceLoader");
         }
     }
 
@@ -105,21 +107,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         return toolbarTitleManager;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        spiceManager.start(getActivity());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (spiceManager.isStarted()) {
-            spiceManager.shouldStop();
-        }
-    }
-
-    protected final void showLoaderDialog(){
+    protected final void showLoaderDialog() {
         showLoaderDialog("Loading...", null);
     }
 
@@ -128,6 +116,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     }
 
     protected final boolean dissmissLoaderDialog(){
+        Log.d("DeviceBrand", "dissmissLoaderDialog");
         ProgressDialog dialog = findFragmentByTag(ProgressDialog.TAG);
         if (dialog != null) {
             dialog.dismiss();
@@ -144,11 +133,12 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         return isLoaded;
     }
 
-    protected final void showLoaderOverlay(String _title, Loader.Cancelled _callBack){
+    protected final void showLoaderOverlay(String _title, Loader.Cancelled _callBack) {
+        Log.d("DeviceBrand", "showLoaderOverlay");
         getFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, (Fragment) (loader = LoaderFragment.newInstance(_title, _callBack)))
+                .add(R.id.rlGlobalContainer_AH, (Fragment) (loader = LoaderFragment.newInstance(_title, _callBack)), LoaderFragment.TAG)
                 .commit();
     }
 
@@ -164,8 +154,9 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         }
     }
 
-    protected final void dissmissLoaderOverlay(Loader.Dismiss _afterDissmiss){
-        if(loader != null){
+    protected final void dissmissLoaderOverlay(Loader.Dismiss _afterDissmiss) {
+        Log.d("DeviceBrand", "dissmissLoaderOverlay");
+        if (loader != null) {
             loader.dissmissLoading(_afterDissmiss);
         }
     }
@@ -178,12 +169,14 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
 
     @Override
     public void onLoadingDismissed() {
-        getFragmentManager().popBackStackImmediate();
+        if (getFragmentManager().findFragmentByTag(LoaderFragment.TAG) != null) {
+            getFragmentManager().popBackStackImmediate();
+        }
     }
 
     @Override
     public void onBackButtonPressed(LoaderView.State _currentState) {
-        onLoadingDismissed();
+        getFragmentManager().popBackStackImmediate();
     }
 
     protected final void processError(final SpiceException _exception) {
@@ -227,7 +220,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     }
 
     protected final SpiceManager getSpiceManager() {
-        return spiceManager;
+        return mSpiceLoader.getSpiceManager();
     }
 
     protected final void hideKeyboard(View view) {
