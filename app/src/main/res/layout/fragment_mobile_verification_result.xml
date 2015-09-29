@@ -26,16 +26,20 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView3" />
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:overScrollMode="never"
         android:scrollbars="none"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/textView3">
 
         <TextView
+            tools:text="@string/fragment_about_tra_html"
+            android:layout_marginTop="10dp"
             android:id="@+id/tvApprovedDevice_FADR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
