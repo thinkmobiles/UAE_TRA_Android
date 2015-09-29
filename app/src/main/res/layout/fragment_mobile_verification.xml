@@ -1,45 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingEnd="16dp"
-    android:paddingStart="16dp"
-    android:paddingTop="8dp"
-    android:background="?android:windowBackground">
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/ivBackground_FS"
         android:layout_width="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:paddingTop="?attr/actionBarSize"
+        android:src="?attr/userProfileBackground"
+        tools:ignore="ContentDescription"/>
 
-        <ImageView
-            android:id="@+id/ivCameraBtn_FMV"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentEnd="true"
-            android:background="?attr/selectableItemBackground"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_action_camera"/>
+    <LinearLayout
+        android:paddingTop="?attr/actionBarSize"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/etImeiNumber_FMV"
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/ivCameraBtn_FMV"
-            android:background="@android:color/white"
-            android:gravity="center_vertical"
-            android:hint="@string/insert_imei_hint"
-            android:inputType="number"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"/>
+            android:layout_height="0dp"
+            android:layout_weight="1.5">
 
-    </RelativeLayout>
+            <com.uae.tra_smart_services.customviews.HexagonView
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:hexagonBorderColor="?attr/homePageHeaderBackground"
+                app:hexagonBorderSize="3dp"
+                app:hexagonSideSize="48dp"
+                app:hexagonSrc="@drawable/ic_mobile"
+                app:hexagonSrcTintColor="?attr/homePageHeaderBackground"/>
+
+            <TextView
+                android:text="@string/str_enter_imei"
+                android:textSize="16sp"
+                android:layout_margin="10dp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_below="@+id/linearLayout"
+            android:layout_centerHorizontal="true">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white">
+
+                    <ImageView
+                        android:id="@+id/ivCameraBtn_FMV"
+                        android:layout_centerInParent="true"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_action_camera"/>
+
+                    <EditText
+                        android:id="@+id/etImeiNumber_FMV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:layout_centerInParent="@id/ivCameraBtn_FMV"
+                        android:layout_toStartOf="@id/ivCameraBtn_FMV"
+                        android:gravity="center_vertical"
+                        android:hint="@string/str_insert_imei_hint"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="@android:color/background_dark"
+                        android:textColorHint="?attr/authorizationTextColors"
+                        android:background="@android:color/transparent"
+                        android:textSize="18sp"/>
+
+                    <View style="@style/AuthorizationFieldsSeparator"
+                        android:background="?attr/homePageHeaderBackground"
+                        android:layout_alignBottom="@id/etImeiNumber_FMV"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+
+                <TextView
+                    android:text="@string/str_where_find_imei"
+                    android:textSize="14sp"
+                    android:textColor="#707d7a"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_centerHorizontal="true">
+
+            <com.uae.tra_smart_services.customviews.HexagonView
+                android:layout_gravity="center"
+                android:id="@+id/hvSendImeiCode_FMV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:hexagonBorderColor="#00CC66"
+                app:hexagonBorderSize="3dp"
+                app:hexagonSideSize="35dp"
+                app:hexagonSrcTintColor="#00CC66"
+                app:hexagonSrc="@drawable/ic_check_ver_grn"/>
+
+            <TextView
+                android:text="@string/str_send_imei"
+                android:textColor="#00CC66"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

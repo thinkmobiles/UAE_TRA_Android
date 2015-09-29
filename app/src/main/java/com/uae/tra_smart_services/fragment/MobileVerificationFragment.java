@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -19,6 +16,7 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.ScannerActivity;
+import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.C;
@@ -37,7 +35,8 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     private ImageView ivCameraBtn;
     private EditText etImeiNumber;
     private RequestResponseListener mRequestListener;
-    private ApprovedDevicesFragment.OnDeviceSelectListener mSelectListener;
+    private OnDeviceVerifyiedListener mSelectListener;
+    private HexagonView hvSendImeiCode;
 
     public static MobileVerificationFragment newInstance() {
         return new MobileVerificationFragment();
@@ -46,13 +45,23 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
-        mSelectListener = (ApprovedDevicesFragment.OnDeviceSelectListener) _activity;
+        mSelectListener = (OnDeviceVerifyiedListener) _activity;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(false);
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.str_mobile_verification;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_mobile_verification;
     }
 
     @Override
@@ -60,6 +69,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         super.initViews();
         ivCameraBtn = findView(R.id.ivCameraBtn_FMV);
         etImeiNumber = findView(R.id.etImeiNumber_FMV);
+        hvSendImeiCode = findView(R.id.hvSendImeiCode_FMV);
     }
 
     @Override
@@ -67,12 +77,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         super.initListeners();
         mRequestListener = new RequestResponseListener();
         ivCameraBtn.setOnClickListener(this);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_send, menu);
+        hvSendImeiCode.setOnClickListener(this);
     }
 
     @Override
@@ -82,19 +87,6 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         getSpiceManager().addListenerIfPending(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, mRequestListener);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_send) {
-            hideKeyboard(etImeiNumber);
-            if (isImeiValid()) {
-                searchDeviceByImei();
-            } else {
-                Toast.makeText(getActivity(), "Please set IMEI code", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
     private SearchByImeiRequest mRequest;
     private void searchDeviceByImei() {
         mRequest = new SearchByImeiRequest(etImeiNumber.getText().toString());
@@ -122,10 +114,19 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
 
     @Override
     public void onClick(final View _view) {
-        if (isCameraAvailable()) {
-            startScanner();
+        if (_view.getId() == R.id.hvSendImeiCode_FMV){
+            hideKeyboard(etImeiNumber);
+            if (isImeiValid()) {
+                searchDeviceByImei();
+            } else {
+                Toast.makeText(getActivity(), "Please set IMEI code", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(getActivity(), getString(R.string.str_camera_is_not_available), Toast.LENGTH_SHORT).show();
+            if (isCameraAvailable()) {
+                startScanner();
+            } else {
+                Toast.makeText(getActivity(), getString(R.string.str_camera_is_not_available), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -156,7 +157,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
                 dissmissLoaderDialog();
                 dissmissLoaderOverlay(MobileVerificationFragment.this);
                 if (result != null) {
-                    mSelectListener.onDeviceSelect(result);
+                    mSelectListener.onDeviceVerifyied(result);
                 }
             }
             getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);
@@ -173,13 +174,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         return getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
 
-    @Override
-    protected int getTitle() {
-        return R.string.str_mobile_verification;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_mobile_verification;
+    public interface OnDeviceVerifyiedListener {
+        void onDeviceVerifyied(final SearchDeviceResponseModel.List _device);
     }
 }

@@ -52,16 +52,10 @@
 
         </LinearLayout>
 
-        <!--<include
-            layout="@layout/layout_domain_service_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>-->
-
-        <com.uae.tra_smart_services.customviews.DomainServiceRatingView
+        <!--<com.uae.tra_smart_services.customviews.DomainServiceRatingView
             android:id="@+id/llDomainServiceRatingView"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"/>-->
     </LinearLayout>
 </ScrollView>

@@ -40,6 +40,7 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectLi
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
+import com.uae.tra_smart_services.fragment.MobileVerifiedInfoFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
 import com.uae.tra_smart_services.fragment.ResetPasswordFragment;
@@ -85,7 +86,8 @@ public class HomeActivity extends BaseFragmentActivity
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
         OnOpenUserProfileClickListener, OnUserProfileClickListener, OnHeaderStaticServiceSelectedListener,
-        OnOpenAboutTraClickListener, OnReportSpamServiceSelectListener, OnAddToSpamClickListener, OnActivateTutorialListener {
+        OnOpenAboutTraClickListener, OnReportSpamServiceSelectListener, OnAddToSpamClickListener,
+        OnActivateTutorialListener, MobileVerificationFragment.OnDeviceVerifyiedListener {
 
     private static final String TAG = "HomeActivity";
     protected static final int REQUEST_CHECK_SETTINGS = 1000;
@@ -438,5 +440,10 @@ public class HomeActivity extends BaseFragmentActivity
         replaceFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
         bottomNavRadios.check(R.id.rbHome_BNRG);
         showTutorial();
+    }
+
+    @Override
+    public void onDeviceVerifyied(SearchDeviceResponseModel.List _device) {
+        replaceFragmentWithBackStack(MobileVerifiedInfoFragment.newInstance(_device));
     }
 }

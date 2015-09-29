@@ -70,7 +70,7 @@
     <string name="number_of_spammer">رقم المرسل غير المرغوب</string>
     <string name="description">شرح</string>
     <string name="complain_title">عنوان الشكوى</string>
-    <string name="insert_imei_hint">Insert IMEI Manually</string>
+    <string name="str_insert_imei_hint">Insert IMEI Manually</string>
     <string name="str_location">الموقع</string>
     <string name="str_skip">تجاوز</string>
     <string name="fragment_favorites_empty_favorites">لم تقم باختيار خدمة ضمن\nقائمة الخدمات المفضلة.</string>
