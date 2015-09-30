@@ -82,7 +82,7 @@ import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import java.util.List;
 
 /**
- * Created by Andrey Korneychuk on 23.07.15.
+ * Created by ak-buffalo on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
         implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,

@@ -21,7 +21,7 @@ import com.uae.tra_smart_services.util.LayoutDirectionUtils;
 import retrofit.client.Response;
 
 /**
- * Created by Andrey Korneychuk on 22.07.15.
+ * Created by ak-buffalo on 22.07.15.
  */
 public class RestorePasswordFragment extends BaseAuthorizationFragment implements Button.OnClickListener, AlertDialogFragment.OnOkListener{
 

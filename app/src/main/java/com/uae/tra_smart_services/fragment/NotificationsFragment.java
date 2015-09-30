@@ -10,7 +10,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 
 /**
- * Created by Andrey Korneychuk on 9/9/2015.
+ * Created by ak-buffalo on 9/9/2015.
  */
 public class NotificationsFragment extends BaseFragment implements View.OnClickListener, View.OnTouchListener {
 

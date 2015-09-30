@@ -13,13 +13,10 @@ import com.google.gson.internal.LinkedHashTreeMap;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Andrey Korneychuk on 23.07.15.
+ * Created by ak-buffalo on 23.07.15.
  */
 public class FontSizeSwitcherView extends BaseCustomSwitcher implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 

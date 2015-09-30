@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by Andrey Korneychuk on 7/26/15.
+ * Created by ak-buffalo on 7/26/15.
  */
 public class SeparatorFactory extends AbstractViewFactory<View, Separator> {
 	public SeparatorFactory(Context context) {

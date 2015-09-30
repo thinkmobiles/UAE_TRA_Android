@@ -1,18 +1,16 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 
 /**
- * Created by Andrey Korneychuk on 29.09.15.
+ * Created by ak-buffalo on 29.09.15.
  */
 
 public class MobileVerifiedInfoFragment extends BaseFragment {

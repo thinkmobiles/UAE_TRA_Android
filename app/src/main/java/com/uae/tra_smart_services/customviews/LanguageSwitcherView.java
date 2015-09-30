@@ -3,22 +3,16 @@ package com.uae.tra_smart_services.customviews;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.baseentities.BaseCustomSwitcher;
-import com.uae.tra_smart_services.entities.ButtonFactory;
-import com.uae.tra_smart_services.entities.SeparatorFactory;
 
 import java.util.Locale;
-import java.util.Map;
-
-import static com.uae.tra_smart_services.global.H.parseXmlToMap;
 
 /**
- * Created by Andrey Korneychuk on 24.07.15.
+ * Created by ak-buffalo on 24.07.15.
  */
 public class LanguageSwitcherView extends BaseCustomSwitcher implements View.OnClickListener {
     private TextView mAcitveLang, enLang, arLang;

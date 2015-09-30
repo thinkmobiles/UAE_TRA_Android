@@ -6,7 +6,7 @@ import com.uae.tra_smart_services.rest.model.request.RestorePasswordRequestModel
 import retrofit.client.Response;
 
 /**
- * Created by Andrey Korneychuk on 18.09.15.
+ * Created by ak-buffalo on 18.09.15.
  */
 public class RestorePasswordRequest extends BaseRequest<Response, TRAServicesAPI> {
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Andrey Korneychuk on 09.09.15.
+ * Created by ak-buffalo on 09.09.15.
  */
 public class SearchResult {
 

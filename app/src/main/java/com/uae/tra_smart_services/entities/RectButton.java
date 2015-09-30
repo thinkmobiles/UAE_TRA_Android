@@ -1,14 +1,12 @@
 package com.uae.tra_smart_services.entities;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.view.View;
 
 /**
- * Created by Andrey Korneychuk on 29.07.15.
+ * Created by ak-buffalo on 29.07.15.
  */
 public class RectButton {
     public boolean isSelected;

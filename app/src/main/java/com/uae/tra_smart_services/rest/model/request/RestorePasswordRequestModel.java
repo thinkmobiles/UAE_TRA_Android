@@ -1,7 +1,7 @@
 package com.uae.tra_smart_services.rest.model.request;
 
 /**
- * Created by Andrey Korneychuk on 18.09.15.
+ * Created by ak-buffalo on 18.09.15.
  */
 
 public class RestorePasswordRequestModel {
