@@ -13,31 +13,35 @@
     <RadioButton
         android:id="@+id/rbHome_BNRG"
         style="@style/TabBarButtonStyle"
-        android:checked="true"
         android:drawableTop="@drawable/ic_home"
+        android:singleLine="true"
         android:text="@string/str_home"/>
 
     <RadioButton
         android:id="@+id/rbFavorites_BNRG"
         style="@style/TabBarButtonStyle"
         android:drawableTop="@drawable/ic_favorites"
+        android:singleLine="true"
         android:text="@string/str_favorites"/>
 
     <RadioButton
         android:id="@+id/rbInfoHub_BNRG"
         style="@style/TabBarButtonStyle"
         android:drawableTop="@drawable/ic_info"
+        android:singleLine="true"
         android:text="@string/str_info_hub"/>
 
     <RadioButton
         android:id="@+id/rbInquiries_BNRG"
         style="@style/TabBarButtonStyle"
         android:drawableTop="@drawable/ic_inq"
+        android:singleLine="true"
         android:text="@string/str_inquiries"/>
 
     <RadioButton
         android:id="@+id/rbSettings_BNRG"
         style="@style/TabBarButtonStyle"
         android:drawableTop="@drawable/ic_settings"
+        android:singleLine="true"
         android:text="@string/str_settings"/>
 </RadioGroup>

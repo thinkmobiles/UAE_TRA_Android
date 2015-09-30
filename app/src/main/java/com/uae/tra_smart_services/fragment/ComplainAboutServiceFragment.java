@@ -20,6 +20,7 @@ import com.uae.tra_smart_services.adapter.ServiceProviderAdapter;
 import com.uae.tra_smart_services.fragment.base.AttachmentFragment;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutServiceRequest;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import retrofit.client.Response;
 
@@ -132,7 +133,7 @@ public final class ComplainAboutServiceFragment extends AttachmentFragment
 
     @Override
     protected void onImageGet(Uri _uri) {
-        ivAddAttachment.setImageResource(R.drawable.ic_check);
+        ivAddAttachment.setImageDrawable(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_check, R.attr.authorizationDrawableColors));
     }
 
     @Override
