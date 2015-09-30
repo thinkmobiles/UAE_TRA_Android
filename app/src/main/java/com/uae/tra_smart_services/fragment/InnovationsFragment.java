@@ -20,6 +20,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.AttachmentFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
  * Created by and on 29.09.15.
@@ -150,7 +151,7 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
 
     @Override
     protected void onImageGet(Uri _uri) {
-        ivAddAttachment.setImageResource(R.drawable.ic_check);
+        ivAddAttachment.setImageDrawable(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_check, R.attr.authorizationDrawableColors));
     }
 
     @Override
