@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
+    app:layout_widthPercent="20%"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    android:gravity="center_horizontal"
+    app:layout_marginLeftPercent="2%"
+    app:layout_marginRightPercent="2%"
     android:id="@+id/llContainer"
     android:orientation="vertical"
     android:paddingTop="10dp">
@@ -15,17 +16,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        app:hexagonSideSize="40dp"
+        android:layout_centerHorizontal="true"
         app:hexagonBorderSize="1dp"
         app:hexagonBorderColor="#c8c7c6"/>
 
     <TextView
         android:id="@+id/textView"
+        android:layout_below="@id/hvHexagonView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:gravity="top|center"
         android:textSize="12sp"
         android:maxLines="3"
         android:minLines="3"
         android:text="Element"/>
-</LinearLayout>
+</android.support.percent.PercentRelativeLayout >

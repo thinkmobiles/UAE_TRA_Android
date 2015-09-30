@@ -18,12 +18,12 @@ package com.uae.tra_smart_services.adapter;
 
 
 import android.content.Context;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
@@ -49,7 +49,7 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
         private final HexagonView hvHexagonView;
-        private final LinearLayout container;
+        private final PercentRelativeLayout container;
         private final View rootView;
 
         public ViewHolder(View v) {
@@ -67,7 +67,7 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
             rootView = v;
             textView = (TextView) v.findViewById(R.id.textView);
             hvHexagonView = (HexagonView) v.findViewById(R.id.hvHexagonView);
-            container = (LinearLayout) v.findViewById(R.id.llContainer);
+            container = (PercentRelativeLayout) v.findViewById(R.id.llContainer);
         }
 
         public View getContainer() {

@@ -145,7 +145,7 @@
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
     </string>
     <string name="str_dummy_info_hub_list_item_date">08/09/2015</string>
-    <string name="str_dummy_info_hub_list_item_title">Title</string>
+    <string name="str_dummy_info_hub_list_item_title">Title Title Title Title Title</string>
 
     <!--                ServiceInfoFragment             -->
     <string name="fragment_service_info_service_info">About the Service</string>
@@ -350,7 +350,8 @@
     <string name="str_back_to_dashboard">BACK TO DASHBOARD</string>
     <string name="str_cancel_request">CANCEL REQUEST</string>
     <string name="str_give_us_moment">Give us a moment while processing request</string>
-    <string name="str_reuqest_has_been_sent">Your Request has been successfully sent and you will receive an SMS reply shortly</string>
+    <string name="str_reuqest_has_been_sent_and_you_will_receive_sms">Your Request has been successfully sent and you will receive an SMS reply shortly</string>
+    <string name="str_reuqest_has_been_sent">Your Request has been successfully sent</string>
     <string name="str_reuqest_has_been_failed">Your Request has been failed</string>
     <string name="str_reuqest_has_been_cancelled">Your Request has been cancelled</string>
     <string name="lorem_ipsum_tutorial">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\\'s standard dummy text ever since the 1500s...</string>
@@ -365,8 +366,14 @@
 
     <string name="fragment_approved_devices_no_results">There are no approved\ndevices were found</string>
 
-    <string name="str_enter_imei">Enter the IMEI of the mobil phone to be verified</string>
+    <string name="str_enter_imei">Enter the IMEI of the mobile phone to be verified</string>
     <string name="str_where_find_imei">Where to find the IMEI code on your phone?</string>
     <string name="str_send_imei">SEND IMEI CODE</string>
+
+    <string name="str_innovations">Innovations</string>
+    <string name="str_title">Title</string>
+    <string name="str_message">Message</string>
+    <string name="str_type_your_message_here">Type your message here</string>
+
 
 </resources>

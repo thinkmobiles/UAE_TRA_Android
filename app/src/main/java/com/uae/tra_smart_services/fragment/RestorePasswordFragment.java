@@ -16,7 +16,7 @@ import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.RestorePasswordRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.RestorePasswordRequest;
-import com.uae.tra_smart_services.util.ImageUtils;
+import com.uae.tra_smart_services.util.LayoutDirectionUtils;
 
 import retrofit.client.Response;
 
@@ -80,7 +80,7 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment implement
     @Override
     protected void initViews() {
         etEmail = findView(R.id.etEmail_FRP);
-        etEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_mail, R.attr.authorizationDrawableColors), null, null, null);
+        LayoutDirectionUtils.setDrawableStart(getActivity(), etEmail, R.drawable.ic_mail);
         btnDoRestorePass = findView(R.id.btnDoRestorePass_FRP);
     }
 
