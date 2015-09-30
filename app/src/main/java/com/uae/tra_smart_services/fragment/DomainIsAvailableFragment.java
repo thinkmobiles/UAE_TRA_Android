@@ -14,6 +14,7 @@ import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
  * Created by ak-buffalo on 14.08.15.
@@ -35,16 +36,19 @@ public class DomainIsAvailableFragment extends BaseFragment implements DomainSer
         ((TextView) findView(R.id.tvDomainStrValue_FDCH)).setText(getArguments().getString(C.DOMAIN_INFO));
         TextView statustext = findView(R.id.tvDomainAvail_FDCH);
         String status = getArguments().getString(C.DOMAIN_STATUS, "");
+        
         @StringRes int availabilityTextRes;
         @ColorRes int availabilityColorRes;
         switch (status) {
             case ServerConstants.AVAILABLE:
                 availabilityTextRes = R.string.str_domain_available;
-                availabilityColorRes = R.color.hex_primary_green;
+                availabilityColorRes = ImageUtils.isBlackAndWhiteMode(getActivity()) ?
+                        R.color.hex_black_color : R.color.hex_primary_green;
                 break;
             case ServerConstants.NOT_AVAILABLE:
                 availabilityTextRes = R.string.str_domain_not_available;
-                availabilityColorRes = R.color.hex_primary_red;
+                availabilityColorRes = ImageUtils.isBlackAndWhiteMode(getActivity()) ?
+                        R.color.hex_black_color : R.color.hex_primary_red;
                 break;
             default:
                 availabilityTextRes = R.string.str_domain_no_information;

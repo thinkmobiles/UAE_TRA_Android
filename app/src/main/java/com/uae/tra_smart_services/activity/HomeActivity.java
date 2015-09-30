@@ -209,8 +209,7 @@ public class HomeActivity extends BaseFragmentActivity
 
         switch (_requestCode) {
             case C.REQUEST_CODE_LOGIN:
-                if (_resultCode == C.LOGIN_SUCCESS) {//TODO: remove when server ok
-//                    Toast.makeText(this, "Fix code when server will be ok. Current status: " + (_resultCode == C.LOGIN_SUCCESS ? "OK" : "FAIL"), Toast.LENGTH_LONG).show();
+                if (_resultCode == C.LOGIN_SUCCESS) {
                     final Enum fragmentType = (Enum) _data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
                     openFragmentAfterLogin(fragmentType);
                 }

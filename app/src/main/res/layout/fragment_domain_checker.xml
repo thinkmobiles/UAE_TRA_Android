@@ -14,6 +14,7 @@
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -52,29 +53,42 @@
                 <View style="@style/AuthorizationFieldsSeparator"/>
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/llSignInActions"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
 
                 <Button
                     android:id="@+id/btnAvail_FDCH"
-                    style="@style/AuthorizationButtons"
-                    android:layout_width="0dp"
+                    android:text="@string/str_availabilty"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/str_availabilty"/>
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/space_FDCH"
+                    android:padding="8dp"
+                    android:textColor="@color/hex_text_color_white"
+                    android:background="?attr/authorizationButtonsBackground"
+                    android:textSize="@dimen/sp_authorization_button_text_size"/>
+
+                <Space
+                    android:id="@+id/space_FDCH"
+                    android:layout_width="16dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/btnWhoIs_FDCH"
-                    style="@style/AuthorizationButtons"
-                    android:layout_width="0dp"
+                    android:text="@string/str_whois"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/str_whois"/>
+                    android:padding="8dp"
+                    android:layout_toEndOf="@id/space_FDCH"
+                    android:textColor="@color/hex_text_color_white"
+                    android:background="?attr/authorizationButtonsBackground"
+                    android:textSize="@dimen/sp_authorization_button_text_size"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>
