@@ -1,7 +1,6 @@
 package com.uae.tra_smart_services.fragment.user_profile;
 
 import android.app.Activity;
-import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.entities.UserProfile;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.rest.robo_requests.LogoutRequest;
 import com.uae.tra_smart_services.util.PreferenceManager;
 
@@ -121,7 +119,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         @Override
         public void onRequestSuccess(final Response _result) {
             TRAApplication.setIsLoggedIn(false);
-            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean(C.IS_LOGGED_IN, false).apply();
+            PreferenceManager.setLoggedIn(getActivity(), false);
 
             if (isAdded()) {
                 loaderDialogDismiss();
