@@ -23,14 +23,12 @@ import com.uae.tra_smart_services.fragment.AddServiceFragment;
 import com.uae.tra_smart_services.fragment.AddServiceFragment.OnFavoriteServicesSelectedListener;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment;
 import com.uae.tra_smart_services.fragment.ApprovedDevicesFragment.OnDeviceSelectListener;
-import com.uae.tra_smart_services.fragment.ChangePasswordFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutServiceFragment;
 import com.uae.tra_smart_services.fragment.ComplainAboutTraFragment;
 import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.DomainInfoFragment;
 import com.uae.tra_smart_services.fragment.DomainIsAvailableFragment;
-import com.uae.tra_smart_services.fragment.EditUserProfileFragment;
 import com.uae.tra_smart_services.fragment.EnquiriesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment.OnFavoritesEventListener;
@@ -46,7 +44,6 @@ import com.uae.tra_smart_services.fragment.MobileVerificationFragment.OnDeviceVe
 import com.uae.tra_smart_services.fragment.MobileVerifiedInfoFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
-import com.uae.tra_smart_services.fragment.ResetPasswordFragment;
 import com.uae.tra_smart_services.fragment.SearchFragment;
 import com.uae.tra_smart_services.fragment.ServiceInfoFragment;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
@@ -56,9 +53,6 @@ import com.uae.tra_smart_services.fragment.SmsReportFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
 import com.uae.tra_smart_services.fragment.SpeedTestFragment;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
-import com.uae.tra_smart_services.fragment.UserProfileFragment;
-import com.uae.tra_smart_services.fragment.UserProfileFragment.OnUserProfileClickListener;
-import com.uae.tra_smart_services.fragment.UserProfileFragment.UserProfileAction;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.spam.ReportSmsSpamFragment;
 import com.uae.tra_smart_services.fragment.spam.ReportSpamFragment;
@@ -69,6 +63,12 @@ import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment;
 import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment.OnAddToSpamClickListener;
 import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment.SpamType;
 import com.uae.tra_smart_services.fragment.tutorial.TutorialContainerFragment;
+import com.uae.tra_smart_services.fragment.user_profile.ChangePasswordFragment;
+import com.uae.tra_smart_services.fragment.user_profile.EditUserProfileFragment;
+import com.uae.tra_smart_services.fragment.user_profile.ResetPasswordFragment;
+import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment;
+import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment.OnUserProfileClickListener;
+import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment.UserProfileAction;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
@@ -82,7 +82,7 @@ import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import java.util.List;
 
 /**
- * Created by Andrey Korneychuk on 23.07.15.
+ * Created by ak-buffalo on 23.07.15.
  */
 public class HomeActivity extends BaseFragmentActivity
         implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
@@ -94,6 +94,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     private static final String KEY_CHECKED_TAB_ID = "CHECKED_TAB_ID";
     private static final String KEY_PREVIOUS_CHECKED_TAB_ID = "PREVIOUS_CHECKED_TAB_ID";
+    private static final String KEY_SETTINGS_CHANGE_PROCESSED = "SETTINGS_CHANGE_PROCESSED";
 
     private static final String TAG = "HomeActivity";
     protected static final int REQUEST_CHECK_SETTINGS = 1000;
@@ -103,6 +104,8 @@ public class HomeActivity extends BaseFragmentActivity
 
     @IdRes
     private int mCheckedTabId, mPreviousCheckedTabId;
+
+    private boolean mSettingsChangeProcessed;
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
@@ -114,6 +117,7 @@ public class HomeActivity extends BaseFragmentActivity
         if (_savedInstanceState != null) {
             mCheckedTabId = _savedInstanceState.getInt(KEY_CHECKED_TAB_ID);
             mPreviousCheckedTabId = _savedInstanceState.getInt(KEY_PREVIOUS_CHECKED_TAB_ID);
+            mSettingsChangeProcessed = _savedInstanceState.getBoolean(KEY_SETTINGS_CHANGE_PROCESSED);
         }
 
         mToolbar = findView(R.id.toolbar);
@@ -122,8 +126,8 @@ public class HomeActivity extends BaseFragmentActivity
         bottomNavRadios = findView(R.id.rgBottomNavRadio_AH);
         bottomNavRadios.setOnCheckedChangeListener(this);
 
-        if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)) {
-            replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
+        if (!mSettingsChangeProcessed && getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)) {
+            mSettingsChangeProcessed = true;
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             bottomNavRadios.check(R.id.rbHome_BNRG);
@@ -370,7 +374,7 @@ public class HomeActivity extends BaseFragmentActivity
         }
         mPreviousCheckedTabId = 0;
 
-        Log.d(getClass().getSimpleName() + "log", "onCheckedChanged: new check");
+        Log.d(getClass().getSimpleName() + "log", "onCheckedChanged: new check " + getResources().getResourceEntryName(checkedId));
 
         switch (checkedId) {
             case R.id.rbHome_BNRG:
@@ -488,7 +492,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
-        switch(_service){
+        switch (_service) {
             case INNOVATIONS:
 //                onServiceSelect(Service.SUGGESTION, null);
                 replaceFragmentWithBackStack(InnovationsFragment.newInstance());
@@ -517,6 +521,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     protected void onSaveInstanceState(final Bundle _outState) {
+        _outState.putBoolean(KEY_SETTINGS_CHANGE_PROCESSED, mSettingsChangeProcessed);
         _outState.putInt(KEY_CHECKED_TAB_ID, mCheckedTabId);
         _outState.putInt(KEY_PREVIOUS_CHECKED_TAB_ID, mPreviousCheckedTabId);
         super.onSaveInstanceState(_outState);

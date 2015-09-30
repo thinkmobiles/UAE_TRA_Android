@@ -11,17 +11,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.SearchRecyclerViewAdapter;
 import com.uae.tra_smart_services.entities.SearchResult;
+import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.Service;
-import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 
 /**
- * Created by Andrey Korneychuk on 09.09.15.
+ * Created by ak-buffalo on 09.09.15.
  */
 public class SearchFragment extends BaseFragment
         implements SearchRecyclerViewAdapter.OnSearchResultItemClickListener, TextWatcher, View.OnTouchListener, View.OnClickListener {

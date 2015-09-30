@@ -83,4 +83,14 @@
 
     <attr name="sendImeiCodeColor" format="reference|color"/>
 
+    <attr name="userAvatarBackground" format="color"/>
+
+    <attr name="profileControllerCancelColor" format="color"/>
+
+    <attr name="profileControllerResetColor" format="color"/>
+
+    <attr name="profileControllerSaveColor" format="color"/>
+
+    <attr name="passwordVisibilityToggleBackground" format="reference"/>
+
 </resources>

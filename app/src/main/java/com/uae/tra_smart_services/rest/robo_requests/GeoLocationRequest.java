@@ -9,7 +9,7 @@ import com.uae.tra_smart_services.rest.TRAServicesAPI;
 import java.util.List;
 
 /**
- * Created by Andrey Korneychuk on 17.08.15.
+ * Created by ak-buffalo on 17.08.15.
  */
 public class GeoLocationRequest extends BaseRequest<Address, TRAServicesAPI>  {
     private Geocoder mGeoCoder;

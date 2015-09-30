@@ -3,7 +3,7 @@ package com.uae.tra_smart_services.entities;
 import android.content.Context;
 
 /**
- * Created by Andrey Korneychuk on 7/26/15.
+ * Created by ak-buffalo on 7/26/15.
  */
 public class Separator {
 

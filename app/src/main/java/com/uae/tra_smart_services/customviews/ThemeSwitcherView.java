@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.drawable.GradientDrawable;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -25,7 +23,7 @@ import java.util.Map;
 import static com.uae.tra_smart_services.global.H.parseXmlToMap;
 
 /**
- * Created by Andrey Korneychuk on 27.07.15.
+ * Created by ak-buffalo on 27.07.15.
  */
 public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouchListener {
 

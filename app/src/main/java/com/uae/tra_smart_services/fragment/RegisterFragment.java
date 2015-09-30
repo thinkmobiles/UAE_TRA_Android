@@ -26,7 +26,7 @@ import com.uae.tra_smart_services.util.TRAPatterns;
 import retrofit.client.Response;
 
 /**
- * Created by Andrey Korneychuk on 22.07.15.
+ * Created by ak-buffalo on 22.07.15.
  */
 public class RegisterFragment extends BaseAuthorizationFragment implements View.OnClickListener {
 

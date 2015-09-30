@@ -6,7 +6,7 @@ import android.view.View;
 import com.uae.tra_smart_services.interfaces.ViewFactory;
 
 /**
- * Created by Andrey Korneychuk on 7/26/15.
+ * Created by ak-buffalo on 7/26/15.
  */
 public abstract class AbstractViewFactory<T extends View,K> implements ViewFactory<T,K> {
 	protected Context mContext;

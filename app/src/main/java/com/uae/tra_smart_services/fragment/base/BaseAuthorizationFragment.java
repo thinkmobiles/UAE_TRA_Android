@@ -3,7 +3,7 @@ package com.uae.tra_smart_services.fragment.base;
 import android.app.Activity;
 
 /**
- * Created by Andrey Korneychuk on 22.07.15.
+ * Created by ak-buffalo on 22.07.15.
  */
 public abstract class BaseAuthorizationFragment extends BaseServiceFragment{
     protected AuthorizationActionsListener actionsListener;

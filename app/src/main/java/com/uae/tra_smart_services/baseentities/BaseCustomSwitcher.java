@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import com.uae.tra_smart_services.interfaces.SettingsChangeListener;
 
 /**
- * Created by Andrey Korneychuk on 24.07.15.
+ * Created by ak-buffalo on 24.07.15.
  */
 public abstract class BaseCustomSwitcher extends LinearLayout{
 

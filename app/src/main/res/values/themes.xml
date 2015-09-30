@@ -27,6 +27,11 @@
         <item name="spamHistoryTintColor">@color/hex_color_dark_gray</item>
         <item name="deleteIcon">@drawable/background_delete</item>
         <item name="sendImeiCodeColor">@color/hex_sendImeiCodeColor_green</item>
+        <item name="userAvatarBackground">@color/avatar_background</item>
+        <item name="profileControllerCancelColor">#d43f3f</item>
+        <item name="profileControllerResetColor">#717d84</item>
+        <item name="profileControllerSaveColor">#3cbb4b</item>
+        <item name="passwordVisibilityToggleBackground">@drawable/background_user_profile_password_toggle</item>
     </style>
 
     <style name="AppThemeOrange" parent="BaseAppTheme">
@@ -128,6 +133,12 @@
         <item name="reportWebTintColor">@android:color/black</item>
         <item name="spamHistoryTintColor">@android:color/black</item>
         <item name="deleteIcon">@drawable/background_delete_black</item>
+        <item name="userAvatarBackground">@android:color/black</item>
+        <item name="profileControllerCancelColor">@android:color/black</item>
+        <item name="profileControllerResetColor">@android:color/black</item>
+        <item name="profileControllerSaveColor">@android:color/black</item>
+        <item name="passwordVisibilityToggleBackground">@drawable/background_user_profile_password_toggle_black</item>
+
 
         <item name="sendImeiCodeColor">@color/hex_sendImeiCodeColor_gray</item>
         <!--<item name="hexagonLoaderBackground">@drawable/loader_bg_orange</item>-->

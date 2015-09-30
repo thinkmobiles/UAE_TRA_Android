@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.graphics.Path;
 import android.support.annotation.XmlRes;
 import android.util.Log;
 
@@ -16,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by Andrey Korneychuk on 28.07.15.
+ * Created by ak-buffalo on 28.07.15.
  *
  * Helper class collect all necessary methods
  */

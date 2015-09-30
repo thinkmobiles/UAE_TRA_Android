@@ -23,7 +23,7 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 
 /**
- * Created by Andrey Korneychuk on 22.07.15.
+ * Created by ak-buffalo on 22.07.15.
  */
 public class AuthorizationActivity extends BaseFragmentActivity
         implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {

@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/hvCancel_LPC"
             android:layout_gravity="center_horizontal"
-            app:hexagonBorderColor="#d43f3f"
+            app:hexagonBorderColor="?profileControllerCancelColor"
+            app:hexagonSrcTintColor="?profileControllerCancelColor"
             app:hexagonBorderSize="1dp"
             app:hexagonSideSize="36dp"
             app:hexagonSrc="@drawable/ic_cancel"/>
@@ -33,7 +34,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:text="@string/fragment_edit_user_profile_cancel"
-            android:textColor="#d43f3f"/>
+            android:textColor="?profileControllerCancelColor"/>
 
     </LinearLayout>
 
@@ -49,7 +50,8 @@
             android:id="@+id/hvReset_LPC"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            app:hexagonBorderColor="#717d84"
+            app:hexagonBorderColor="?profileControllerResetColor"
+            app:hexagonSrcTintColor="?profileControllerResetColor"
             app:hexagonBorderSize="1dp"
             app:hexagonSideSize="36dp"
             app:hexagonSrc="@drawable/ic_reset"/>
@@ -61,7 +63,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:text="@string/fragment_edit_user_profile_reset"
-            android:textColor="#717d84"/>
+            android:textColor="?profileControllerResetColor"/>
 
     </LinearLayout>
 
@@ -77,7 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:id="@+id/hvConfirm_LPC"
-            app:hexagonBorderColor="#3cbb4b"
+            app:hexagonBorderColor="?profileControllerSaveColor"
+            app:hexagonSrcTintColor="?profileControllerSaveColor"
             app:hexagonBorderSize="1dp"
             app:hexagonSideSize="36dp"
             app:hexagonSrc="@drawable/ic_confirm"/>
@@ -89,7 +92,7 @@
             android:layout_marginTop="8dp"
             android:maxLength="12"
             android:text="@string/fragment_edit_user_profile_confirm"
-            android:textColor="#3cbb4b"/>
+            android:textColor="?profileControllerSaveColor"/>
 
     </LinearLayout>
 

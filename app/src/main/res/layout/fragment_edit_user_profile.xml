@@ -31,7 +31,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
                 app:hexagonSrc="@drawable/ic_user_placeholder"
-                app:hexagonBackgroundColor="@color/avatar_background"
+                app:hexagonBackgroundColor="?userAvatarBackground"
                 app:hexagonBorderColor="@android:color/white"
                 app:hexagonBorderSize="2dp"
                 app:hexagonSideSize="48dp"/>

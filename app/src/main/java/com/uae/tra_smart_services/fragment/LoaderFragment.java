@@ -16,7 +16,7 @@ import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
- * Created by Andrey Korneychuk on 21.09.15.
+ * Created by ak-buffalo on 21.09.15.
  */
 public class LoaderFragment extends BaseFragment implements View.OnClickListener, Loader {
 

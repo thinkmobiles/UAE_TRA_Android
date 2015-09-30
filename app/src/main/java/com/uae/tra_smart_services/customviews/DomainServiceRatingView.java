@@ -16,7 +16,7 @@ import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel
 import com.uae.tra_smart_services.rest.robo_requests.RatingServiceRequest;
 
 /**
- * Created by Andrey Korneychuk on 14.09.15.
+ * Created by ak-buffalo on 14.09.15.
  */
 public class DomainServiceRatingView extends RelativeLayout implements RadioGroup.OnCheckedChangeListener{
 

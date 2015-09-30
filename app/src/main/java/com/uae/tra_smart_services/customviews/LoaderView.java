@@ -20,7 +20,7 @@ import android.view.animation.DecelerateInterpolator;
 import com.uae.tra_smart_services.R;
 
 /**
- * Created by Andrey Korneychuk on 21.09.15.
+ * Created by ak-buffalo on 21.09.15.
  */
 
 public class LoaderView extends View {
