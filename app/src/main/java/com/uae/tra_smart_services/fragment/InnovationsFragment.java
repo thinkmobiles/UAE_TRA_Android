@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.AttachmentFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 
 /**
  * Created by and on 29.09.15.
@@ -32,6 +35,7 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
     private SwitchCompat swType;
     private TextView tvPublic, tvPrivate;
 
+
     @Override
     protected int getTitle() {
         return R.string.str_innovations;
@@ -45,6 +49,8 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
     @Override
     public void onLoadingCanceled() {
         // Not implemented yet
+        //HACK:
+        dissmissLoaderOverlay(getString(R.string.str_cancel_request));
     }
 
     public static InnovationsFragment newInstance() {
@@ -53,6 +59,11 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
         InnovationsFragment fragment = new InnovationsFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Activity _activity) {
+        super.onAttach(_activity);
     }
 
     @Override
@@ -124,6 +135,17 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
     @Override
     protected void sendComplain() {
         showLoaderOverlay(getString(R.string.str_sending), this);
+        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+            @Override
+            public void onBackButtonPressed(LoaderView.State _currentState) {
+                if(_currentState == LoaderView.State.CANCELLED){
+                    getFragmentManager().popBackStack();
+                } else {
+                    getFragmentManager().popBackStack();
+                    getFragmentManager().popBackStack();
+                }
+            }
+        });
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
