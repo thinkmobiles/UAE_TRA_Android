@@ -36,11 +36,13 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.SingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.SingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.LocationType;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
 import com.uae.tra_smart_services.rest.robo_requests.PoorCoverageRequest;
@@ -276,6 +278,15 @@ public class PoorCoverageFragment extends BaseServiceFragment
         }
 
         showLoaderOverlay(getString(R.string.str_sending), this);
+        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+            @Override
+            public void onBackButtonPressed(LoaderView.State _currentState) {
+                getFragmentManager().popBackStack();
+                if(_currentState != LoaderView.State.CANCELLED){
+                    getFragmentManager().popBackStack();
+                }
+            }
+        });
         getSpiceManager().execute(
                 mPoorCoverageRequest = new PoorCoverageRequest(
                         mLocationModel

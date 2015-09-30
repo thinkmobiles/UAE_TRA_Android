@@ -19,6 +19,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.BrandsListAdapter;
 import com.uae.tra_smart_services.adapter.BrandsListAdapter.OnBrandSelectListener;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByBrandRequest;
 
@@ -169,28 +170,23 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
     private class RequestResponseListener implements RequestListener<SearchDeviceResponseModel.List> {
 
         @Override
-        public void onRequestSuccess(SearchDeviceResponseModel.List result) {
-            Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
-
-            Log.d("DeviceBrand", "onRequestSuccess");
-            Log.d("DeviceBrand", "isStarted() " + getSpiceManager().isStarted());
+        public void onRequestSuccess(final SearchDeviceResponseModel.List result) {
             getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST);
 
             if (isAdded()) {
-                dissmissLoaderDialog();
-                Log.d("DeviceBrand", "isStarted() " + getSpiceManager().isStarted());
                 if (result != null) {
                     if (result.isEmpty()) {
                         dissmissLoaderOverlay(getString(R.string.fragment_approved_devices_no_results));
-                        Log.d("DeviceBrand", "isStarted() " + getSpiceManager().isStarted());
-                        return;
                     } else if (mSelectListener != null) {
-                        dissmissLoaderOverlay(ApprovedDevicesFragment.this);
-                        mSelectListener.onDeviceSelect(mSelectedBrandLogoRes, result);
-                        return;
+                        dissmissLoaderOverlay(new Loader.Dismiss() {
+                            @Override
+                            public void onLoadingDismissed() {
+                                getFragmentManager().popBackStack();
+                                mSelectListener.onDeviceSelect(mSelectedBrandLogoRes, result);
+                            }
+                        });
                     }
                 }
-                dissmissLoaderOverlay(ApprovedDevicesFragment.this);
             }
         }
 

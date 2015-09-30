@@ -13,7 +13,9 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.SpamServiceProviderAdapter;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
@@ -78,6 +80,15 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
     private void validateAndSendData() {
         if (validateData()) {
             showLoaderOverlay(getString(R.string.str_sending), this);
+            setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+                @Override
+                public void onBackButtonPressed(LoaderView.State _currentState) {
+                    getFragmentManager().popBackStack();
+                    if (_currentState != LoaderView.State.CANCELLED) {
+                        getFragmentManager().popBackStack();
+                    }
+                }
+            });
             mSmsReportRequest = new SmsReportRequest(
                     new SmsReportRequestModel(
                             etNumberOfSpammer.getText().toString(),
@@ -126,13 +137,10 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
             if (isAdded()) {
-                dissmissLoaderDialog();
-                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent_and_you_will_receive_sms));
-                getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_SMS_SPAM_REQUEST);
                 if (smsSpamReportResponse != null) {
-                    showMessage(R.string.str_success, R.string.str_report_has_been_sent);
-                    getFragmentManager().popBackStackImmediate();
                     SmsUtils.sendBlockSms(getActivity(), etNumberOfSpammer.getText().toString());
+                    getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_SMS_SPAM_REQUEST);
+                    changeLoaderOverlay_Success(getString(R.string.str_reuqest_has_been_sent_and_you_will_receive_sms));
                 }
             }
         }
