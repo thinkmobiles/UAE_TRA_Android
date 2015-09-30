@@ -64,19 +64,19 @@ public final class ProfileController extends LinearLayout implements OnClickList
         if (mButtonClickListener != null) {
             switch (v.getId()) {
                 case R.id.hvCancel_LPC:
-                    mButtonClickListener.onControllerButtonClick(BUTTON_CANCEL);
+                    mButtonClickListener.onControllerButtonClick(v, BUTTON_CANCEL);
                     break;
                 case R.id.hvReset_LPC:
-                    mButtonClickListener.onControllerButtonClick(BUTTON_RESET);
+                    mButtonClickListener.onControllerButtonClick(v, BUTTON_RESET);
                     break;
                 case R.id.hvConfirm_LPC:
-                    mButtonClickListener.onControllerButtonClick(BUTTON_CONFIRM);
+                    mButtonClickListener.onControllerButtonClick(v, BUTTON_CONFIRM);
                     break;
             }
         }
     }
 
     public interface OnControllerButtonClickListener {
-        void onControllerButtonClick(@ControllerButton final int _buttonId);
+        void onControllerButtonClick(final View _view, @ControllerButton final int _buttonId);
     }
 }

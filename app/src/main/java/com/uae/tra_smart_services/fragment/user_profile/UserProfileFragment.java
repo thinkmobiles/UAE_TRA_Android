@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment.user_profile;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,8 +14,10 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.entities.UserProfile;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.rest.robo_requests.LogoutRequest;
+import com.uae.tra_smart_services.util.PreferenceManager;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -76,6 +79,13 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         llChangePassword.setOnClickListener(this);
 //        llResetPassword.setOnClickListener(this);
         llLogout.setOnClickListener(this);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        final UserProfile profile = PreferenceManager.getSavedUserProfile(getActivity());
+        tvUsername.setText(profile.firstName + " " + profile.lastName);
     }
 
     @Override
