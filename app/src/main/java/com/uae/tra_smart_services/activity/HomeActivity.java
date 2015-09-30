@@ -4,6 +4,7 @@ import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -89,11 +90,17 @@ public class HomeActivity extends BaseFragmentActivity
         OnOpenAboutTraClickListener, OnReportSpamServiceSelectListener, OnAddToSpamClickListener,
         OnActivateTutorialListener, MobileVerificationFragment.OnDeviceVerifyiedListener {
 
+    private static final String KEY_CHECKED_TAB_ID = "CHECKED_TAB_ID";
+    private static final String KEY_PREVIOUS_CHECKED_TAB_ID = "PREVIOUS_CHECKED_TAB_ID";
+
     private static final String TAG = "HomeActivity";
     protected static final int REQUEST_CHECK_SETTINGS = 1000;
 
     private Toolbar mToolbar;
     private RadioGroup bottomNavRadios;
+
+    @IdRes
+    private int mCheckedTabId, mPreviousCheckedTabId;
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
@@ -101,6 +108,11 @@ public class HomeActivity extends BaseFragmentActivity
 
         super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        if (_savedInstanceState != null) {
+            mCheckedTabId = _savedInstanceState.getInt(KEY_CHECKED_TAB_ID);
+            mPreviousCheckedTabId = _savedInstanceState.getInt(KEY_PREVIOUS_CHECKED_TAB_ID);
+        }
 
         mToolbar = findView(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -112,7 +124,7 @@ public class HomeActivity extends BaseFragmentActivity
             replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
-            addFragmentWithOutBackStack(HexagonHomeFragment.newInstance());
+            bottomNavRadios.check(R.id.rbHome_BNRG);
             showTutorialIfNeed();
         }
 
@@ -150,54 +162,63 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public <T> void onServiceSelect(final Service _service, @Nullable T _data) {
+        onServiceSelect(_service, _data, true);
+    }
+
+    public <T> void onServiceSelect(final Service _service, @Nullable T _data, final boolean _useBackStack) {
         switch (_service) {
             case DOMAIN_CHECK:
-                replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
+                replaceFragment(DomainCheckerFragment.newInstance(), _useBackStack);
                 break;
             case DOMAIN_CHECK_INFO:
-                replaceFragmentWithBackStack(DomainInfoFragment.newInstance((DomainInfoCheckResponseModel) _data));
+                replaceFragment(DomainInfoFragment.newInstance((DomainInfoCheckResponseModel) _data), _useBackStack);
                 break;
             case DOMAIN_CHECK_AVAILABILITY:
-                replaceFragmentWithBackStack(DomainIsAvailableFragment.newInstance((DomainAvailabilityCheckResponseModel) _data));
+                replaceFragment(DomainIsAvailableFragment.newInstance((DomainAvailabilityCheckResponseModel) _data), _useBackStack);
                 break;
             case COMPLAIN_ABOUT_PROVIDER:
-                openFragmentIfAuthorized(ComplainAboutServiceFragment.newInstance(), _service);
+                openFragmentIfAuthorized(ComplainAboutServiceFragment.newInstance(), _service, _useBackStack);
                 break;
             case ENQUIRIES:
-                openFragmentIfAuthorized(EnquiriesFragment.newInstance(), _service);
+                openFragmentIfAuthorized(EnquiriesFragment.newInstance(), _service, _useBackStack);
                 break;
             case COMPLAINT_ABOUT_TRA:
-                openFragmentIfAuthorized(ComplainAboutTraFragment.newInstance(), _service);
+                openFragmentIfAuthorized(ComplainAboutTraFragment.newInstance(), _service, _useBackStack);
                 break;
             case SUGGESTION:
-                openFragmentIfAuthorized(SuggestionFragment.newInstance(), _service);
+                openFragmentIfAuthorized(SuggestionFragment.newInstance(), _service, _useBackStack);
                 break;
 //            case HELP_SALIM:
-//                replaceFragmentWithBackStack(HelpSalemFragment.newInstance());
+//                replaceFragment(HelpSalemFragment.newInstance(), _useBackStack);
 //                break;
             case APPROVED_DEVICES:
-                replaceFragmentWithBackStack(ApprovedDevicesFragment.newInstance());
+                replaceFragment(ApprovedDevicesFragment.newInstance(), _useBackStack);
                 break;
             case SMS_SPAM:
-                replaceFragmentWithBackStack(ReportSpamFragment.newInstance());
+                replaceFragment(ReportSpamFragment.newInstance(), _useBackStack);
                 break;
             case MOBILE_VERIFICATION:
-                replaceFragmentWithBackStack(MobileVerificationFragment.newInstance());
+                replaceFragment(MobileVerificationFragment.newInstance(), _useBackStack);
                 break;
             case POOR_COVERAGE:
-                replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
+                replaceFragment(PoorCoverageFragment.newInstance(), _useBackStack);
                 break;
             case INTERNET_SPEEDTEST:
-                replaceFragmentWithBackStack(SpeedTestFragment.newInstance());
+                replaceFragment(SpeedTestFragment.newInstance(), _useBackStack);
                 break;
         }
     }
 
     private void openFragmentIfAuthorized(final BaseFragment _fragment, final Enum _service) {
+        openFragmentIfAuthorized(_fragment, _service, true);
+    }
+
+    private void openFragmentIfAuthorized(final BaseFragment _fragment, final Enum _service, final boolean _useBackStack) {
         if (TRAApplication.isLoggedIn()) {
-            replaceFragmentWithBackStack(_fragment);
+            replaceFragment(_fragment, _useBackStack);
         } else {
             Intent intent = AuthorizationActivity.getStartForResultIntent(this, _service);
+            intent.putExtra(C.USE_BACK_STACK, _useBackStack);
             startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
         }
     }
@@ -208,11 +229,7 @@ public class HomeActivity extends BaseFragmentActivity
 
         switch (_requestCode) {
             case C.REQUEST_CODE_LOGIN:
-                if (_resultCode == C.LOGIN_SUCCESS) {//TODO: remove when server ok
-//                    Toast.makeText(this, "Fix code when server will be ok. Current status: " + (_resultCode == C.LOGIN_SUCCESS ? "OK" : "FAIL"), Toast.LENGTH_LONG).show();
-                    final Enum fragmentType = (Enum) _data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
-                    openFragmentAfterLogin(fragmentType);
-                }
+                handleLoginResult(_resultCode, _data);
                 break;
             case REQUEST_CHECK_SETTINGS:
                 Log.i(TAG, "User agreed to make required location settings changes.");
@@ -223,27 +240,46 @@ public class HomeActivity extends BaseFragmentActivity
         }
     }
 
-    private void openFragmentAfterLogin(final Enum _fragmentType) {
-        if (_fragmentType instanceof Service) {
-            onServiceSelect((Service) _fragmentType, null);
-        } else if (_fragmentType instanceof FragmentType) {
-            openFragmentAfterLogin((FragmentType) _fragmentType);
+    private void handleLoginResult(int _resultCode, Intent _data) {
+        final boolean uncheckTabIfNotLogged = _data.getBooleanExtra(C.UNCHECK_TAB_IF_NOT_LOGGED_IN, false);
+        if (_resultCode == C.LOGIN_SUCCESS) {
+            final Enum fragmentType = (Enum) _data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
+            final boolean useBackStack = _data.getBooleanExtra(C.USE_BACK_STACK, true);
+            if (uncheckTabIfNotLogged) {
+                mPreviousCheckedTabId = 0;
+                clearBackStack();
+            }
+            openFragmentAfterLogin(fragmentType, useBackStack);
+        } else if (uncheckTabIfNotLogged) {
+            bottomNavRadios.check(mPreviousCheckedTabId);
+            mPreviousCheckedTabId = 0;
         }
     }
 
-    private void openFragmentAfterLogin(final FragmentType _fragmentType) {
+    private void openFragmentAfterLogin(final Enum _fragmentType, final boolean _useBackStack) {
+        if (_fragmentType instanceof Service) {
+            onServiceSelect((Service) _fragmentType, null, _useBackStack);
+        } else if (_fragmentType instanceof FragmentType) {
+            openFragmentAfterLogin((FragmentType) _fragmentType, _useBackStack);
+        }
+    }
+
+    private void openFragmentAfterLogin(final FragmentType _fragmentType, final boolean _useBackStack) {
         switch (_fragmentType) {
             case USER_PROFILE:
-                replaceFragmentWithBackStack(UserProfileFragment.newInstance());
+                replaceFragment(UserProfileFragment.newInstance(), _useBackStack);
                 break;
             case REPORT_SMS_SPAM:
-                replaceFragmentWithBackStack(ReportSmsSpamFragment.newInstance());
+                replaceFragment(ReportSmsSpamFragment.newInstance(), _useBackStack);
                 break;
             case REPORT_WEB_SPAM:
-                replaceFragmentWithBackStack(ReportWebSpamFragment.newInstance());
+                replaceFragment(ReportWebSpamFragment.newInstance(), _useBackStack);
                 break;
             case SPAM_REPORT_HISTORY:
-                replaceFragmentWithBackStack(SpamHistoryFragment.newInstance());
+                replaceFragment(SpamHistoryFragment.newInstance(), _useBackStack);
+                break;
+            case ENQUIRIES:
+                replaceFragment(EnquiriesFragment.newInstance(), _useBackStack);
                 break;
         }
     }
@@ -320,6 +356,20 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        Log.d(getClass().getSimpleName() + "log", "onCheckedChanged");
+
+        if (mCheckedTabId == checkedId) {
+            Log.d(getClass().getSimpleName() + "log", "onCheckedChanged mCheckedTabId");
+            return;
+        } else if (mPreviousCheckedTabId == checkedId) {
+            Log.d(getClass().getSimpleName() + "log", "onCheckedChanged mPreviousCheckedTabId");
+            mCheckedTabId = checkedId;
+            return;
+        }
+        mPreviousCheckedTabId = 0;
+
+        Log.d(getClass().getSimpleName() + "log", "onCheckedChanged: new check");
+
         switch (checkedId) {
             case R.id.rbHome_BNRG:
                 clearBackStack();
@@ -334,13 +384,26 @@ public class HomeActivity extends BaseFragmentActivity
                 replaceFragmentWithOutBackStack(InfoHubFragment.newInstance());
                 break;
             case R.id.rbInquiries_BNRG:
-                clearBackStack();
-                replaceFragmentWithOutBackStack(EnquiriesFragment.newInstance());
+                openEnquiriesIfAuthorized(false);
                 break;
             case R.id.rbSettings_BNRG:
                 clearBackStack();
                 replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
                 break;
+        }
+        mCheckedTabId = checkedId;
+    }
+
+    private void openEnquiriesIfAuthorized(final boolean _useBackStack) {
+        if (TRAApplication.isLoggedIn()) {
+            clearBackStack();
+            replaceFragment(EnquiriesFragment.newInstance(), _useBackStack);
+        } else {
+            mPreviousCheckedTabId = mCheckedTabId;
+            Intent intent = AuthorizationActivity.getStartForResultIntent(this, FragmentType.ENQUIRIES);
+            intent.putExtra(C.USE_BACK_STACK, _useBackStack);
+            intent.putExtra(C.UNCHECK_TAB_IF_NOT_LOGGED_IN, true);
+            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
         }
     }
 
@@ -423,7 +486,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
-        switch(_service){
+        switch (_service) {
             case HINT:
                 onServiceSelect(Service.SUGGESTION, null);
                 break;
@@ -447,5 +510,12 @@ public class HomeActivity extends BaseFragmentActivity
     @Override
     public void onDeviceVerifyied(SearchDeviceResponseModel.List _device) {
         replaceFragmentWithBackStack(MobileVerifiedInfoFragment.newInstance(_device));
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle _outState) {
+        _outState.putInt(KEY_CHECKED_TAB_ID, mCheckedTabId);
+        _outState.putInt(KEY_PREVIOUS_CHECKED_TAB_ID, mPreviousCheckedTabId);
+        super.onSaveInstanceState(_outState);
     }
 }

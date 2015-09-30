@@ -60,6 +60,14 @@ public abstract class BaseFragmentActivity extends BaseActivity implements Spice
                 .commit();
     }
 
+    public final void replaceFragment(final @NonNull BaseFragment _fragment, final boolean _useBackstack) {
+        if (_useBackstack) {
+            replaceFragmentWithBackStack(_fragment);
+        } else {
+            replaceFragmentWithOutBackStack(_fragment);
+        }
+    }
+
     public final void replaceFragmentWithBackStack(final @NonNull BaseFragment _fragment) {
         hideKeyboard();
         getFragmentManager()
@@ -91,7 +99,7 @@ public abstract class BaseFragmentActivity extends BaseActivity implements Spice
             mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         }
 //        if (getCurrentFocus() != null) {
-            mInputMethodManager.hideSoftInputFromWindow(findView(getContainerId()).getWindowToken(), 0);
+        mInputMethodManager.hideSoftInputFromWindow(findView(getContainerId()).getWindowToken(), 0);
 //        }
     }
 

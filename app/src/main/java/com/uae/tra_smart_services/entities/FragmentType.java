@@ -7,5 +7,6 @@ public enum FragmentType {
     USER_PROFILE,
     REPORT_SMS_SPAM,
     REPORT_WEB_SPAM,
-    SPAM_REPORT_HISTORY
+    SPAM_REPORT_HISTORY,
+    ENQUIRIES
 }
