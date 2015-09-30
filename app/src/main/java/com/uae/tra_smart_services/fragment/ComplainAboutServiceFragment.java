@@ -17,7 +17,7 @@ import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.adapter.ServiceProviderAdapter;
-import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
+import com.uae.tra_smart_services.fragment.base.AttachmentFragment;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutServiceRequest;
 
@@ -26,7 +26,7 @@ import retrofit.client.Response;
 /**
  * Created by mobimaks on 10.08.2015.
  */
-public final class ComplainAboutServiceFragment extends BaseComplainFragment
+public final class ComplainAboutServiceFragment extends AttachmentFragment
         implements OnClickListener {
 
     protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_ABOUT_SERVICE_REQUEST";
@@ -79,7 +79,6 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     public void onStart() {
         super.onStart();
         getSpiceManager().getFromCache(Response.class, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_RETURNED, mRequestResponseListener);
-//        getSpiceManager().addListenerIfPending(Response.class, KEY_COMPLAIN_REQUEST, mRequestResponseListener);
     }
 
     @Override
@@ -155,7 +154,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
                 dissmissLoaderDialog();
-                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent));
+                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent_and_you_will_receive_sms));
                 getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
                 if (result != null) {
                     showMessage(R.string.str_success, R.string.str_complain_has_been_sent);

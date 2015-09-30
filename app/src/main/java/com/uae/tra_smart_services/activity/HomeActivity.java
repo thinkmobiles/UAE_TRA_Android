@@ -39,6 +39,7 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnOpenUserProfile
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
+import com.uae.tra_smart_services.fragment.InnovationsFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.MobileVerifiedInfoFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
@@ -425,7 +426,8 @@ public class HomeActivity extends BaseFragmentActivity
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
         switch(_service){
             case INNOVATIONS:
-                onServiceSelect(Service.SUGGESTION, null);
+//                onServiceSelect(Service.SUGGESTION, null);
+                replaceFragmentWithBackStack(InnovationsFragment.newInstance());
                 break;
             case NOTIFICATION:
                 addFragmentWithBackStackGlobally(NotificationsFragment.newInstance());

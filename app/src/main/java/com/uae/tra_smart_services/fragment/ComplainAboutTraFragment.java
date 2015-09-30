@@ -17,7 +17,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
-import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
+import com.uae.tra_smart_services.fragment.base.AttachmentFragment;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutTRAServiceRequest;
 
@@ -26,7 +26,7 @@ import retrofit.client.Response;
 /**
  * Created by mobimaks on 11.08.2015.
  */
-public class ComplainAboutTraFragment extends BaseComplainFragment
+public class ComplainAboutTraFragment extends AttachmentFragment
                                     implements OnClickListener, AlertDialogFragment.OnOkListener {
 
     protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_ABOUT_TRA_REQUEST";
@@ -144,7 +144,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
                 boolean dismissed = dissmissLoaderDialog();
-                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent));
+                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent_and_you_will_receive_sms));
                 getSpiceManager().removeDataFromCache(Response.class, getRequestKey());
                 if (result != null) {
                     if(dismissed){
