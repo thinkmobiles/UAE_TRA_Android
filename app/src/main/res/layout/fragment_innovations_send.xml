@@ -172,7 +172,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/vNumberOfSpammerDivider_FRSS"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:background="@android:color/transparent"
                     android:gravity="top"
                     android:hint="@string/str_type_your_message_here"
@@ -180,7 +180,7 @@
                     android:minHeight="128dp"
                     android:textColor="@android:color/black"
                     android:textColorHint="@color/hex_color_middle_gray"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
             </RelativeLayout>
         </ScrollView>
