@@ -73,4 +73,6 @@
 
     <attr name="spamHistory" format="reference"/>
 
+    <attr name="sendImeiCodeColor" format="reference|color"/>
+
 </resources>

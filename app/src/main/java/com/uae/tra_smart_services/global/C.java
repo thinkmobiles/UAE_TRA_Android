@@ -43,4 +43,9 @@ public final class C {
     public static final String FRAGMENT_FOR_REPLACING = "fragment_for_replacing";
 
     public static final String NOT_FIRST_START = "not_first_start";
+
+    public static final String USE_BACK_STACK = "USE_BACK_STACK";
+
+    public static final String UNCHECK_TAB_IF_NOT_LOGGED_IN = "UNCHECK_TAB_IF_NOT_LOGGED_IN";
+
 }

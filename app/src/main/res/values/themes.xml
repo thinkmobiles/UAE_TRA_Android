@@ -22,6 +22,7 @@
         <item name="favoritesBackground">@drawable/favorites_bg</item>
         <item name="reportSpam">@drawable/res_bg_img</item>
         <item name="spamHistory">@drawable/res_bg_img_pol</item>
+        <item name="sendImeiCodeColor">@color/hex_sendImeiCodeColor_green</item>
     </style>
 
     <style name="AppThemeOrange" parent="BaseAppTheme">
@@ -119,7 +120,7 @@
         <item name="userProfileBackground">@drawable/img_bg_gray</item>
         <item name="reportSpam">@drawable/res_bg_img_gray</item>
         <item name="spamHistory">@drawable/res_bg_img_pol_gray</item>
-
+        <item name="sendImeiCodeColor">@color/hex_sendImeiCodeColor_gray</item>
         <!--<item name="hexagonLoaderBackground">@drawable/loader_bg_orange</item>-->
     </style>
 </resources>

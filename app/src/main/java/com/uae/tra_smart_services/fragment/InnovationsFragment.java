@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +33,9 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
     private Button btnSubmit;
     private SwitchCompat swType;
     private TextView tvPublic, tvPrivate;
+    private Context mContext;
+
+    private int color;
 
     @Override
     protected int getTitle() {
@@ -47,7 +51,7 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
     public void onLoadingCanceled() {
         // Not implemented yet
         //HACK:
-        dissmissLoaderOverlay(getString(R.string.str_cancel_request));
+        dissmissLoaderOverlay(mContext.getString(R.string.str_cancel_request));
     }
 
     public static InnovationsFragment newInstance() {
@@ -61,6 +65,7 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
     @Override
     public void onAttach(Activity _activity) {
         super.onAttach(_activity);
+        mContext = _activity;
     }
 
     @Override
@@ -69,7 +74,6 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
         setHasOptionsMenu(false);
     }
 
-    private int color;
     @Override
     protected void initViews() {
         super.initViews();
@@ -82,11 +86,7 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
         swType = findView(R.id.swInnType);
         color = etTitle.getCurrentHintTextColor();
 
-        if(swType.isChecked()){
-            tvPrivate.setTextColor(color);
-        } else {
-            tvPublic.setTextColor(color);
-        }
+        togglePrivacy(swType.isChecked());
     }
 
     @Override
@@ -131,14 +131,12 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
 
     @Override
     protected void sendComplain() {
-        showLoaderOverlay(getString(R.string.str_sending), this);
+        showLoaderOverlay(mContext.getString(R.string.str_sending), this);
         setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
-                if(_currentState == LoaderView.State.CANCELLED){
-                    getFragmentManager().popBackStack();
-                } else {
-                    getFragmentManager().popBackStack();
+                getFragmentManager().popBackStack();
+                if(_currentState != LoaderView.State.CANCELLED){
                     getFragmentManager().popBackStack();
                 }
             }
@@ -146,7 +144,7 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                changeLoaderOverlay_Success(getString(R.string.str_reuqest_has_been_sent));
+                changeLoaderOverlay_Success(mContext.getString(R.string.str_reuqest_has_been_sent));
             }
         }, 2500);
     }
@@ -158,6 +156,10 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        togglePrivacy(isChecked);
+    }
+
+    private void togglePrivacy(boolean isChecked){
         if(isChecked){
             tvPublic.setTextColor(Color.LTGRAY);
             tvPrivate.setTextColor(color);
