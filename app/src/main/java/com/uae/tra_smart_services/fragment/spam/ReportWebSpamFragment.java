@@ -46,7 +46,7 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
                 addFilter(new Filter<String>() {
                     @Override
                     public boolean check(String _data) {
-                        return Patterns.DOMAIN_NAME.matcher(_data).matches();
+                        return Patterns.WEB_URL.matcher(_data).matches();
                     }
                 });
             }

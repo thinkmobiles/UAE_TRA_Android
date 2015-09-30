@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.fragment;
+package com.uae.tra_smart_services.fragment.user_profile;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
