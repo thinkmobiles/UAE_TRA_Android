@@ -69,7 +69,7 @@
                     android:padding="8dp"
                     android:textColor="@color/hex_text_color_white"
                     android:background="?attr/authorizationButtonsBackground"
-                    android:textSize="@dimen/sp_authorization_button_text_size"/>
+                    android:textSize="16sp"/>
 
                 <Space
                     android:id="@+id/space_FDCH"
@@ -86,7 +86,7 @@
                     android:layout_toEndOf="@id/space_FDCH"
                     android:textColor="@color/hex_text_color_white"
                     android:background="?attr/authorizationButtonsBackground"
-                    android:textSize="@dimen/sp_authorization_button_text_size"/>
+                    android:textSize="16sp"/>
 
             </RelativeLayout>
 

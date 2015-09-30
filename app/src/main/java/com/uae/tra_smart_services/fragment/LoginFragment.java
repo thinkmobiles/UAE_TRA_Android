@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
 import com.uae.tra_smart_services.rest.robo_requests.LoginRequest;
 import com.uae.tra_smart_services.util.LayoutDirectionUtils;
@@ -138,6 +140,8 @@ public class LoginFragment extends BaseAuthorizationFragment
         @Override
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean(C.IS_LOGGED_IN, true).apply();
+
             if (isAdded()) {
                 dissmissLoaderDialog();
                 if (result != null && actionsListener != null) {

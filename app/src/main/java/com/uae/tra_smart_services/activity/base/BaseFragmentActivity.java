@@ -9,7 +9,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.octo.android.robospice.SpiceManager;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.SpiceLoader;
 import com.uae.tra_smart_services.rest.TRARestService;
@@ -112,7 +111,6 @@ public abstract class BaseFragmentActivity extends BaseActivity implements Spice
             getSupportFragmentManager().popBackStack();
             hideKeyboard();
         } else {
-            TRAApplication.setIsLoggedIn(false);
             finish();
         }
     }

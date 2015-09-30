@@ -19,9 +19,6 @@ import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.util.ImageUtils;
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
-
 /**
  * Created by ak-buffalo on 22.07.15.
  */
@@ -54,7 +51,6 @@ public class AuthorizationActivity extends BaseFragmentActivity
         ivBackground = findView(R.id.ivBackground_AA);
         ivBackground.setImageDrawable(ImageUtils.getFilteredDrawable(this, R.drawable.bg_authorization));
 
-        CookieHandler.setDefault(new CookieManager());
         mAction = getIntent().getAction();
 
         final Toolbar toolbar = findView(R.id.toolbar);
