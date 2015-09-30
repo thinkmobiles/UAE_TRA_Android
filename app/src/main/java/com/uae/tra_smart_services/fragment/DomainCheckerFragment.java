@@ -102,8 +102,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     public final void onClick(View _view) {
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
-            hideKeyboard(_view);
-            showLoaderOverlay(getString(R.string.str_checking), this);
+            loaderOverlayShow(getString(R.string.str_checking), this);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
                     checkAvailability(domain);
@@ -178,7 +177,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         public void onRequestSuccess(final DomainAvailabilityCheckResponseModel _responseModel) {
             if (_responseModel != null) {
                 _responseModel.domainStrValue = mDomain;
-                dissmissLoaderOverlay(new Loader.Dismiss() {
+                loaderOverlayDismissWithAction(new Loader.Dismiss() {
                     @Override
                     public void onLoadingDismissed() {
                         getFragmentManager().popBackStack();
@@ -186,7 +185,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
                     }
                 });
             } else {
-                dissmissLoaderOverlay(getString(R.string.str_url_not_avail));
+                loaderOverlayCancelled(getString(R.string.str_url_not_avail));
             }
         }
     }
@@ -201,7 +200,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         @Override
         public void onRequestSuccess(final DomainInfoCheckResponseModel _reponseModel) {
             if (!_reponseModel.urlData.equals(ServerConstants.NO_DATA_FOUND)) {
-                dissmissLoaderOverlay(new Loader.Dismiss() {
+                loaderOverlayDismissWithAction(new Loader.Dismiss() {
                     @Override
                     public void onLoadingDismissed() {
                         getFragmentManager().popBackStack();
@@ -210,7 +209,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
                 });
 
             } else {
-                dissmissLoaderOverlay(String.format(getString(R.string.str_url_doesnot_exist), mDomain));
+                loaderOverlayCancelled(String.format(getString(R.string.str_url_doesnot_exist), mDomain));
             }
         }
     }

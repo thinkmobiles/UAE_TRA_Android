@@ -116,7 +116,7 @@ public class LoginFragment extends BaseAuthorizationFragment
         }
 
         hideKeyboard(getView());
-        showLoaderDialog(getString(R.string.str_authenticating), this);
+        loaderDialogShow(getString(R.string.str_authenticating), this);
 
         getSpiceManager().execute(mRequest = new LoginRequest(model), KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
     }
@@ -139,7 +139,7 @@ public class LoginFragment extends BaseAuthorizationFragment
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                dissmissLoaderDialog();
+                loaderDialogDismiss();
                 if (result != null && actionsListener != null) {
                     actionsListener.onLogInSuccess();
                 }

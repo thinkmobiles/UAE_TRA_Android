@@ -277,12 +277,12 @@ public class PoorCoverageFragment extends BaseServiceFragment
             return;
         }
 
-        showLoaderOverlay(getString(R.string.str_sending), this);
-        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayShow(getString(R.string.str_sending), this);
+        loaderOverlayButtonBehaviour(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();
-                if(_currentState != LoaderView.State.CANCELLED){
+                if (_currentState == LoaderView.State.FAILURE || _currentState == LoaderView.State.SUCCESS) {
                     getFragmentManager().popBackStack();
                 }
             }
@@ -389,27 +389,27 @@ public class PoorCoverageFragment extends BaseServiceFragment
 
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
-            boolean isDialog = dissmissLoaderDialog();
+            boolean isDialog = loaderDialogDismiss();
             switch (poorCoverageRequestModel.getStatus()) {
                 case 200:
                     if(isDialog){
                         showMessage(R.string.str_success, R.string.str_data_has_been_sent);
                     } else {
-                        changeLoaderOverlay_Success(getString(R.string.str_data_has_been_sent));
+                        loaderOverlaySuccess(getString(R.string.str_data_has_been_sent));
                     }
                     break;
                 case 400:
                     if(isDialog) {
                         showMessage(R.string.str_error, R.string.str_something_went_wrong);
                     } else {
-                        dissmissLoaderOverlay(getString(R.string.str_something_went_wrong));
+                        loaderOverlayCancelled(getString(R.string.str_something_went_wrong));
                     }
                     break;
                 case 500:
                     if(isDialog) {
                         showMessage(R.string.str_error, R.string.str_request_failed);
                     } else {
-                        dissmissLoaderOverlay(getString(R.string.str_request_failed));
+                        loaderOverlayCancelled(getString(R.string.str_request_failed));
                     }
                     break;
             }

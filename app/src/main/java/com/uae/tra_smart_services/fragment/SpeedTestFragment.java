@@ -46,7 +46,7 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
 
     @Override
     public final void onClick(final View _view) {
-        showLoaderOverlay(getString(R.string.fragment_speed_test_progress), this);
+        loaderOverlayShow(getString(R.string.fragment_speed_test_progress), this);
         mSpeedTestRequest = new SpeedTestRequest();
         getSpiceManager().execute(mSpeedTestRequest, KEY_SPEED_TEST_REQUEST, DurationInMillis.ALWAYS_EXPIRED, this);
     }
@@ -60,7 +60,7 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
     @Override
     public final void onRequestSuccess(final Long _kbPerSecond) {
         if (isAdded()) {
-            dissmissLoaderOverlay(SpeedTestFragment.this);
+            loaderOverlayDismissWithAction(SpeedTestFragment.this);
             if (_kbPerSecond != null) {
                 double mBitPerSecond = _kbPerSecond / 1024f;
                 BigDecimal bd = new BigDecimal(mBitPerSecond);

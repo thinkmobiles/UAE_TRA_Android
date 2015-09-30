@@ -110,7 +110,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
     private void logout() {
         mLogoutRequest = new LogoutRequest();
-        showLoaderDialog();
+        loaderDialogShow();
         getSpiceManager().execute(mLogoutRequest, KEY_LOGOUT_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mLogoutRequestListener);
     }
 
@@ -120,7 +120,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         public void onRequestSuccess(final Response _result) {
             TRAApplication.setIsLoggedIn(false);
             if (isAdded()) {
-                dissmissLoaderDialog();
+                loaderDialogDismiss();
                 getFragmentManager().popBackStackImmediate();
             }
         }

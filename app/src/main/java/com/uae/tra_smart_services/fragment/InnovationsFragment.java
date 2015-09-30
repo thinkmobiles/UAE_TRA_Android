@@ -51,7 +51,7 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
     public void onLoadingCanceled() {
         // Not implemented yet
         //HACK:
-        dissmissLoaderOverlay(mContext.getString(R.string.str_cancel_request));
+        loaderOverlayCancelled(mContext.getString(R.string.str_cancel_request));
     }
 
     public static InnovationsFragment newInstance() {
@@ -131,12 +131,12 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
 
     @Override
     protected void sendComplain() {
-        showLoaderOverlay(mContext.getString(R.string.str_sending), this);
-        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayShow(mContext.getString(R.string.str_sending), this);
+        loaderOverlayButtonBehaviour(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();
-                if(_currentState != LoaderView.State.CANCELLED){
+                if (_currentState == LoaderView.State.FAILURE || _currentState == LoaderView.State.SUCCESS) {
                     getFragmentManager().popBackStack();
                 }
             }
@@ -144,7 +144,7 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                changeLoaderOverlay_Success(mContext.getString(R.string.str_reuqest_has_been_sent));
+                loaderOverlaySuccess(mContext.getString(R.string.str_reuqest_has_been_sent));
             }
         }, 2500);
     }

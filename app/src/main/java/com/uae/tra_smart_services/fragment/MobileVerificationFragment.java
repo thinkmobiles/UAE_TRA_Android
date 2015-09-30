@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -93,12 +92,12 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     private SearchByImeiRequest mRequest;
     private void searchDeviceByImei() {
         mRequest = new SearchByImeiRequest(etImeiNumber.getText().toString());
-        showLoaderOverlay(getString(R.string.str_sending), this);
-        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayShow(getString(R.string.str_sending), this);
+        loaderOverlayButtonBehaviour(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();
-                if(_currentState != LoaderView.State.CANCELLED){
+                if (_currentState == LoaderView.State.FAILURE || _currentState == LoaderView.State.SUCCESS) {
                     getFragmentManager().popBackStack();
                 }
             }
@@ -152,14 +151,14 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
 
         @Override
         public void onRequestNotFound() {
-            dissmissLoaderOverlay(getString(R.string.str_something_went_wrong));
+            loaderOverlayCancelled(getString(R.string.str_something_went_wrong));
         }
 
         @Override
         public void onRequestSuccess(final SearchDeviceResponseModel.List result) {
             if (isAdded()) {
                 if (result != null && result.size() != 0) {
-                    dissmissLoaderOverlay(new Loader.Dismiss() {
+                    loaderOverlayDismissWithAction(new Loader.Dismiss() {
                         @Override
                         public void onLoadingDismissed() {
                             getFragmentManager().popBackStack();
@@ -168,7 +167,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
                         }
                     });
                 } else {
-                    dissmissLoaderOverlay(getString(R.string.str_no_data_found));
+                    loaderOverlayCancelled(getString(R.string.str_no_data_found));
                 }
             }
         }
