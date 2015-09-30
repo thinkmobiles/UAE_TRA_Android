@@ -91,6 +91,8 @@ public class AuthorizationActivity extends BaseFragmentActivity
         if (mAction != null && mAction.equals(C.ACTION_LOGIN)) {
             final Intent data = new Intent();
             data.putExtra(C.FRAGMENT_FOR_REPLACING, getIntent().getSerializableExtra(C.FRAGMENT_FOR_REPLACING));
+            data.putExtra(C.USE_BACK_STACK, getIntent().getBooleanExtra(C.USE_BACK_STACK, false));
+            data.putExtra(C.UNCHECK_TAB_IF_NOT_LOGGED_IN, getIntent().getBooleanExtra(C.UNCHECK_TAB_IF_NOT_LOGGED_IN, false));
             setResult(C.LOGIN_SUCCESS, data);
             finish();
         } else {
@@ -125,6 +127,8 @@ public class AuthorizationActivity extends BaseFragmentActivity
         if (mAction != null && mAction.equals(C.ACTION_LOGIN)) {
             final Intent data = new Intent();
             data.putExtra(C.FRAGMENT_FOR_REPLACING, getIntent().getSerializableExtra(C.FRAGMENT_FOR_REPLACING));
+            data.putExtra(C.USE_BACK_STACK, getIntent().getBooleanExtra(C.USE_BACK_STACK, false));
+            data.putExtra(C.UNCHECK_TAB_IF_NOT_LOGGED_IN, getIntent().getBooleanExtra(C.UNCHECK_TAB_IF_NOT_LOGGED_IN, false));
             setResult(RESULT_CANCELED, data);
         }
         super.onBackPressed();
