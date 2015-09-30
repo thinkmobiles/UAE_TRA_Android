@@ -87,12 +87,12 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
 
     private void collectAndSendToServer() {
         if (validateData()) {
-            showLoaderOverlay(getString(R.string.str_sending), this);
-            setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+            loaderOverlayShow(getString(R.string.str_sending), this);
+            loaderOverlayButtonBehaviour(new Loader.BackButton() {
                 @Override
                 public void onBackButtonPressed(LoaderView.State _currentState) {
                     getFragmentManager().popBackStack();
-                    if (_currentState != LoaderView.State.CANCELLED) {
+                    if (_currentState == LoaderView.State.FAILURE || _currentState == LoaderView.State.SUCCESS) {
                         getFragmentManager().popBackStack();
                     }
                 }
@@ -144,7 +144,7 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
             if (isAdded()) {
                 getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_WEB_SPAM);
                 if (smsSpamReportResponse != null) {
-                    changeLoaderOverlay_Success(getString(R.string.str_reuqest_has_been_sent));
+                    loaderOverlaySuccess(getString(R.string.str_reuqest_has_been_sent));
                 }
             }
         }

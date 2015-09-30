@@ -79,12 +79,12 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
 
     private void validateAndSendData() {
         if (validateData()) {
-            showLoaderOverlay(getString(R.string.str_sending), this);
-            setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+            loaderOverlayShow(getString(R.string.str_sending), this);
+            loaderOverlayButtonBehaviour(new Loader.BackButton() {
                 @Override
                 public void onBackButtonPressed(LoaderView.State _currentState) {
                     getFragmentManager().popBackStack();
-                    if (_currentState != LoaderView.State.CANCELLED) {
+                    if (_currentState == LoaderView.State.FAILURE || _currentState == LoaderView.State.SUCCESS) {
                         getFragmentManager().popBackStack();
                     }
                 }
@@ -140,7 +140,7 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
                 if (smsSpamReportResponse != null) {
                     SmsUtils.sendBlockSms(getActivity(), etNumberOfSpammer.getText().toString());
                     getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_SMS_SPAM_REQUEST);
-                    changeLoaderOverlay_Success(getString(R.string.str_reuqest_has_been_sent_and_you_will_receive_sms));
+                    loaderOverlaySuccess(getString(R.string.str_reuqest_has_been_sent_and_you_will_receive_sms));
                 }
             }
         }

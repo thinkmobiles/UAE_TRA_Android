@@ -111,16 +111,16 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         return toolbarTitleManager;
     }
 
-    protected final void showLoaderDialog() {
-        showLoaderDialog("Loading...", null);
+    protected final void loaderDialogShow() {
+        loaderDialogShow("Loading...", null);
     }
 
-    protected final void showLoaderDialog(String _title, Loader.Cancelled _callBack){
+    protected final void loaderDialogShow(String _title, Loader.Cancelled _callBack){
         ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
     }
 
-    protected final boolean dissmissLoaderDialog(){
-        Log.d("DeviceBrand", "dissmissLoaderDialog");
+    protected final boolean loaderDialogDismiss(){
+        Log.d("DeviceBrand", "loaderDialogDismiss");
         ProgressDialog dialog = findFragmentByTag(ProgressDialog.TAG);
         if (dialog != null) {
             dialog.dismiss();
@@ -130,15 +130,14 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         }
     }
 
-    protected final boolean dissmissLoaderDialog(String _msg){
-        boolean isLoaded = dissmissLoaderDialog();
+    protected final boolean loaderDialogDismiss(String _msg){
+        boolean isLoaded = loaderDialogDismiss();
         if (isLoaded)
             Toast.makeText(getActivity(), _msg, Toast.LENGTH_SHORT).show();
         return isLoaded;
     }
 
-    protected final void showLoaderOverlay(String _title, Loader.Cancelled _callBack) {
-        Log.d("DeviceBrand", "showLoaderOverlay");
+    protected final void loaderOverlayShow(String _title, Loader.Cancelled _callBack) {
         getFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
@@ -146,26 +145,31 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
                 .commit();
     }
 
-    public void changeLoaderOverlay_Success(String _msg){
+    public void loaderOverlaySuccess(String _msg){
         if(loader != null){
             loader.successLoading(_msg);
         }
     }
 
-    public void dissmissLoaderOverlay(String _msg){
+    public void loaderOverlayCancelled(String _msg){
         if(loader != null){
-            loader.dissmissLoading(_msg);
+            loader.cancelLoading(_msg);
         }
     }
 
-    protected final void dissmissLoaderOverlay(Loader.Dismiss _afterDissmiss) {
-        Log.d("DeviceBrand", "dissmissLoaderOverlay");
+    public void loaderOverlayFailed(String _msg){
+        if(loader != null){
+            loader.failedLoading(_msg);
+        }
+    }
+
+    protected final void loaderOverlayDismissWithAction(Loader.Dismiss _afterDissmiss) {
         if (loader != null) {
-            loader.dissmissLoading(_afterDissmiss);
+            loader.dissmissLoadingWithAction(_afterDissmiss);
         }
     }
 
-    protected final void setLoaderOverlayBackButtonBehaviour(Loader.BackButton _backButtonPressed){
+    protected final void loaderOverlayButtonBehaviour(Loader.BackButton _backButtonPressed){
         if(loader != null){
             loader.setBackButtonPressedBehaviour(_backButtonPressed);
         }
@@ -189,13 +193,15 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
             Throwable cause = _exception.getCause();
             if (cause != null && cause instanceof RetrofitError) {
                 errorMessage = processRetrofitError(((RetrofitError) cause));
+                loaderOverlayFailed(errorMessage);
             } else if (_exception instanceof NoNetworkException) {
                 errorMessage = getString(R.string.error_no_network);
+                loaderOverlayFailed(errorMessage);
             } else {
                 errorMessage = _exception.getMessage();
+                loaderOverlayCancelled(errorMessage);
             }
-            dissmissLoaderDialog(errorMessage);
-            dissmissLoaderOverlay(errorMessage);
+            loaderDialogDismiss(errorMessage);
         }
     }
 

@@ -103,7 +103,7 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment implement
         mRestorePasswordRequestModel = new RestorePasswordRequestModel(etEmail.getText().toString());
 
         if (mFilterPool.check(mRestorePasswordRequestModel)) {
-            showLoaderDialog(getString(R.string.str_restoring), this);
+            loaderDialogShow(getString(R.string.str_restoring), this);
             getSpiceManager()
                     .execute(
                             mRestorePasswordRequest = new RestorePasswordRequest(mRestorePasswordRequestModel),
@@ -136,7 +136,7 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment implement
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                dissmissLoaderDialog();
+                loaderDialogDismiss();
                 onRestorePassMessageId = (int) Math.random();
                 showMessage(onRestorePassMessageId, R.string.str_success, R.string.str_restore_pass_mail);
             }

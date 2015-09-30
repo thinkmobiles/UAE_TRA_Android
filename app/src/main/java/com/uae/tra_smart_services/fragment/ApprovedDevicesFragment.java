@@ -148,7 +148,7 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
             hideKeyboard(getView());
             mSelectedBrandLogoRes = _item.mBrandLogoRes;
             mSearchByBrandRequest = new SearchByBrandRequest(_item.mName, 0, 100);
-            showLoaderOverlay(getString(R.string.str_loading), this);
+            loaderOverlayShow(getString(R.string.str_loading), this);
             getSpiceManager().execute(mSearchByBrandRequest, KEY_SEARCH_DEVICE_BY_BRAND_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
         }
     }
@@ -176,9 +176,9 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
             if (isAdded()) {
                 if (result != null) {
                     if (result.isEmpty()) {
-                        dissmissLoaderOverlay(getString(R.string.fragment_approved_devices_no_results));
+                        loaderOverlayCancelled(getString(R.string.fragment_approved_devices_no_results));
                     } else if (mSelectListener != null) {
-                        dissmissLoaderOverlay(new Loader.Dismiss() {
+                        loaderOverlayDismissWithAction(new Loader.Dismiss() {
                             @Override
                             public void onLoadingDismissed() {
                                 getFragmentManager().popBackStack();
