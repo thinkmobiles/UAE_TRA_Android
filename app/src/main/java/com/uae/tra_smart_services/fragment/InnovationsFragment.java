@@ -26,15 +26,11 @@ import com.uae.tra_smart_services.interfaces.Loader;
 
 public class InnovationsFragment extends AttachmentFragment implements View.OnClickListener, Switch.OnCheckedChangeListener{
 
-    private static final int REQUEST_GALLERY_IMAGE_CODE = 1;
-    private static final int REQUEST_CAMERA_PHOTO_CODE = 2;
-
     private EditText etTitle, etMessageDescription;
     private ImageView ivAddAttachment;
     private Button btnSubmit;
     private SwitchCompat swType;
     private TextView tvPublic, tvPrivate;
-
 
     @Override
     protected int getTitle() {
@@ -159,7 +155,6 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
         ivAddAttachment.setImageResource(R.drawable.ic_check);
     }
 
-    boolean isPublic = true;
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked){
