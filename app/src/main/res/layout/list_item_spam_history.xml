@@ -13,11 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginEnd="16dp"
-        app:hexagonBorderColor="?attr/colorPrimary"
+        app:hexagonBorderColor="?colorPrimary"
         app:hexagonBorderSize="2dp"
         app:hexagonSideSize="44dp"
         app:hexagonSrc="@drawable/ic_mail"
-        app:hexagonSrcTintColor="?attr/colorPrimary"/>
+        app:hexagonSrcTintColor="?colorPrimary"/>
 
     <TextView
         android:id="@+id/tvTitle_LISH"
@@ -39,9 +39,9 @@
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/tvTitle_LISH"
-        android:scaleType="centerInside"
+        android:scaleType="center"
         android:background="?attr/selectableItemBackground"
-        android:src="@drawable/ic_del"/>
+        android:src="?deleteIcon"/>
 
     <TextView
         android:id="@+id/tvDescription_LISH"

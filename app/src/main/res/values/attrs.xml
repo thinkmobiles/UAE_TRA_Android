@@ -73,4 +73,12 @@
 
     <attr name="spamHistory" format="reference"/>
 
+    <attr name="reportSmsTintColor" format="color"/>
+
+    <attr name="reportWebTintColor" format="color"/>
+
+    <attr name="spamHistoryTintColor" format="color"/>
+
+    <attr name="deleteIcon" format="reference"/>
+
 </resources>

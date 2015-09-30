@@ -8,49 +8,48 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:src="?spamHistory"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="?spamHistory"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_widthPercent="95%"
-        android:orientation="vertical"
         android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
         android:paddingTop="?attr/actionBarSize"
+        app:layout_widthPercent="95%"
         tools:paddingTop="0dp">
 
         <RadioGroup
-            android:id="@+id/rgSpamHistoryTabs_FRSH"
+            android:id="@+id/rgSpamHistoryTabs_FSH"
             android:layout_width="match_parent"
-            android:layoutDirection="ltr"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layoutDirection="ltr"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rbSmsSpam_FRSH"
+                android:id="@+id/rbSmsSpam_FSH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@null"
-                android:checked="true"
                 android:drawableStart="@drawable/background_radio_button_sms_history"
-                android:gravity="center"
-                android:minHeight="48dp"/>
+                android:minHeight="48dp"
+                tools:checked="true"/>
 
             <RadioButton
-                android:id="@+id/rbWebSpam_FRSH"
+                android:id="@+id/rbWebSpam_FSH"
                 android:layout_width="wrap_content"
-                android:clickable="false"
                 android:layout_height="wrap_content"
                 android:button="@null"
-                android:drawableEnd="@drawable/background_radio_button_web_history"/>
+                android:drawableEnd="@drawable/background_radio_button_web_history"
+                android:minHeight="48dp"/>
 
         </RadioGroup>
 
         <LinearLayout
-            android:id="@+id/llAddToSpam_FRSH"
+            android:id="@+id/llAddToSpam_FSH"
             android:layout_width="match_parent"
             android:layout_height="?attr/listPreferredItemHeightLarge"
             android:gravity="center"
@@ -69,7 +68,7 @@
                 android:layout_height="wrap_content"/>
 
             <com.uae.tra_smart_services.customviews.HexagonView
-                android:id="@+id/hvIcon_FRSH"
+                android:id="@+id/hvIcon_FSH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:hexagonBackgroundColor="@android:color/white"
@@ -81,11 +80,13 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvSpamHistory_FRSH"
+        <FrameLayout
+            android:id="@+id/flSpamHistoryContainer_FSH"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            tools:background="#aaaa"
             tools:listitem="@layout/list_item_spam_history"/>
 
     </LinearLayout>
+
 </android.support.percent.PercentFrameLayout>

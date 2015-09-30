@@ -42,6 +42,7 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSe
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
 import com.uae.tra_smart_services.fragment.InnovationsFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
+import com.uae.tra_smart_services.fragment.MobileVerificationFragment.OnDeviceVerifiedListener;
 import com.uae.tra_smart_services.fragment.MobileVerifiedInfoFragment;
 import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
@@ -89,7 +90,7 @@ public class HomeActivity extends BaseFragmentActivity
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
         OnOpenUserProfileClickListener, OnUserProfileClickListener, OnHeaderStaticServiceSelectedListener,
         OnOpenAboutTraClickListener, OnReportSpamServiceSelectListener, OnAddToSpamClickListener,
-        OnActivateTutorialListener, MobileVerificationFragment.OnDeviceVerifyiedListener {
+        OnActivateTutorialListener, OnDeviceVerifiedListener {
 
     private static final String KEY_CHECKED_TAB_ID = "CHECKED_TAB_ID";
     private static final String KEY_PREVIOUS_CHECKED_TAB_ID = "PREVIOUS_CHECKED_TAB_ID";
@@ -347,10 +348,10 @@ public class HomeActivity extends BaseFragmentActivity
                 openFragmentIfAuthorized(ReportSmsSpamFragment.newInstance(), FragmentType.REPORT_SMS_SPAM);
                 break;
             case ReportSpamFragment.SPAM_OPTION_REPORT_WEB:
-                replaceFragmentWithBackStack(ReportWebSpamFragment.newInstance());
+                openFragmentIfAuthorized(ReportWebSpamFragment.newInstance(), FragmentType.REPORT_WEB_SPAM);
                 break;
             case ReportSpamFragment.SPAM_OPTION_REPORT_HISTORY:
-                replaceFragmentWithBackStack(SpamHistoryFragment.newInstance());
+                openFragmentIfAuthorized(SpamHistoryFragment.newInstance(), FragmentType.SPAM_REPORT_HISTORY);
                 break;
         }
     }
@@ -510,7 +511,7 @@ public class HomeActivity extends BaseFragmentActivity
     }
 
     @Override
-    public void onDeviceVerifyied(SearchDeviceResponseModel.List _device) {
+    public void onDeviceVerified(SearchDeviceResponseModel.List _device) {
         replaceFragmentWithBackStack(MobileVerifiedInfoFragment.newInstance(_device));
     }
 
