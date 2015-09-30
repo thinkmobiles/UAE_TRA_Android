@@ -11,9 +11,11 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
@@ -86,6 +88,15 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
     private void collectAndSendToServer() {
         if (validateData()) {
             showLoaderOverlay(getString(R.string.str_sending), this);
+            setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+                @Override
+                public void onBackButtonPressed(LoaderView.State _currentState) {
+                    getFragmentManager().popBackStack();
+                    if (_currentState != LoaderView.State.CANCELLED) {
+                        getFragmentManager().popBackStack();
+                    }
+                }
+            });
             HelpSalimModel helpSalimModel = new HelpSalimModel(
                     etUrl.getText().toString(),
                     etDescription.getText().toString());
@@ -131,12 +142,9 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
         @Override
         public void onRequestSuccess(Response smsSpamReportResponse) {
             if (isAdded()) {
-                dissmissLoaderDialog();
-                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent_and_you_will_receive_sms));
                 getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_WEB_SPAM);
                 if (smsSpamReportResponse != null) {
-                    showMessage(R.string.str_success, R.string.str_report_has_been_sent);
-                    getFragmentManager().popBackStackImmediate();
+                    changeLoaderOverlay_Success(getString(R.string.str_reuqest_has_been_sent));
                 }
             }
         }

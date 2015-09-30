@@ -17,7 +17,9 @@ import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.adapter.ServiceProviderAdapter;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.AttachmentFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutServiceRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
@@ -92,6 +94,15 @@ public final class ComplainAboutServiceFragment extends AttachmentFragment
         mComplainAboutServiceRequest = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
 
         showLoaderOverlay(getString(R.string.str_sending), this);
+        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+            @Override
+            public void onBackButtonPressed(LoaderView.State _currentState) {
+                getFragmentManager().popBackStack();
+                if (_currentState != LoaderView.State.CANCELLED) {
+                    getFragmentManager().popBackStack();
+                }
+            }
+        });
 
         getSpiceManager().execute(mComplainAboutServiceRequest, KEY_COMPLAIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestResponseListener);
     }
@@ -154,13 +165,11 @@ public final class ComplainAboutServiceFragment extends AttachmentFragment
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                dissmissLoaderDialog();
-                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent_and_you_will_receive_sms));
+                changeLoaderOverlay_Success(getString(R.string.str_complain_has_been_sent));
                 getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
-                if (result != null) {
-                    showMessage(R.string.str_success, R.string.str_complain_has_been_sent);
-                    getFragmentManager().popBackStackImmediate();
-                }
+//                if (result != null) {
+//                    getFragmentManager().popBackStackImmediate();
+//                }
             }
         }
 

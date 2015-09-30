@@ -102,6 +102,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     public final void onClick(View _view) {
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
+            hideKeyboard(_view);
             showLoaderOverlay(getString(R.string.str_checking), this);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
@@ -174,18 +175,18 @@ public class DomainCheckerFragment extends BaseServiceFragment
         }
 
         @Override
-        public void onRequestSuccess(DomainAvailabilityCheckResponseModel _responseModel) {
+        public void onRequestSuccess(final DomainAvailabilityCheckResponseModel _responseModel) {
             if (_responseModel != null) {
                 _responseModel.domainStrValue = mDomain;
-                dissmissLoaderDialog();
-                dissmissLoaderOverlay(DomainCheckerFragment.this);
-                mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_AVAILABILITY, _responseModel);
+                dissmissLoaderOverlay(new Loader.Dismiss() {
+                    @Override
+                    public void onLoadingDismissed() {
+                        getFragmentManager().popBackStack();
+                        mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_AVAILABILITY, _responseModel);
+                    }
+                });
             } else {
-                if(dissmissLoaderDialog()){
-                    showMessage(R.string.str_error, R.string.str_something_went_wrong);
-                } else {
-                    dissmissLoaderOverlay(getString(R.string.str_url_not_avail));
-                }
+                dissmissLoaderOverlay(getString(R.string.str_url_not_avail));
             }
         }
     }
@@ -198,17 +199,18 @@ public class DomainCheckerFragment extends BaseServiceFragment
         }
 
         @Override
-        public void onRequestSuccess(DomainInfoCheckResponseModel _reponseModel) {
+        public void onRequestSuccess(final DomainInfoCheckResponseModel _reponseModel) {
             if (!_reponseModel.urlData.equals(ServerConstants.NO_DATA_FOUND)) {
-                dissmissLoaderDialog();
-                dissmissLoaderOverlay(DomainCheckerFragment.this);
-                mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_INFO, _reponseModel);
+                dissmissLoaderOverlay(new Loader.Dismiss() {
+                    @Override
+                    public void onLoadingDismissed() {
+                        getFragmentManager().popBackStack();
+                        mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_INFO, _reponseModel);
+                    }
+                });
+
             } else {
-                if(dissmissLoaderDialog()) {
-                    showFormattedMessage(R.string.str_error, R.string.str_url_doesnot_exist, mDomain);
-                } else {
-                    dissmissLoaderOverlay(String.format(getString(R.string.str_url_doesnot_exist), mDomain));
-                }
+                dissmissLoaderOverlay(String.format(getString(R.string.str_url_doesnot_exist), mDomain));
             }
         }
     }
