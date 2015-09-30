@@ -165,7 +165,7 @@
                     android:layout_below="@id/etMessageTitle_FIS"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="4dp"
-                    android:background="?attr/colorPrimary"/>
+                    android:background="#FFFFFF"/>
 
                 <EditText
                     android:id="@+id/etMessageDescription_FIS"
