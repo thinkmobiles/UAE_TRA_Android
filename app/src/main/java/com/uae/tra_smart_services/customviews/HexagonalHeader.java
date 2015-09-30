@@ -37,11 +37,11 @@ import java.util.List;
  */
 public class HexagonalHeader extends View {
 
-    public static final int HEXAGON_BUTTON_HINT = 7;
+    public static final int HEXAGON_BUTTON_INNOVATIONS = 7;
     public static final int HEXAGON_BUTTON_SEARCH = 8;
     public static final int HEXAGON_BUTTON_NOTIFICATION = 15;
 
-    @IntDef({HEXAGON_BUTTON_HINT, HEXAGON_BUTTON_SEARCH, HEXAGON_BUTTON_NOTIFICATION})
+    @IntDef({HEXAGON_BUTTON_INNOVATIONS, HEXAGON_BUTTON_SEARCH, HEXAGON_BUTTON_NOTIFICATION})
     @Retention(RetentionPolicy.SOURCE)
     public @interface HexagonButton {
     }
@@ -280,7 +280,7 @@ public class HexagonalHeader extends View {
     private void initButtons() {
         mHexagons = new HashMap<>();
 
-        mHexagons.put(HEXAGON_BUTTON_HINT, null);
+        mHexagons.put(HEXAGON_BUTTON_INNOVATIONS, null);
         mHexagons.put(HEXAGON_BUTTON_SEARCH, null);
         mHexagons.put(HEXAGON_BUTTON_NOTIFICATION, null);
     }
@@ -293,7 +293,7 @@ public class HexagonalHeader extends View {
 
     private void initDrawables() {
         mDrawables = new HashMap<>();
-        mDrawables.put(HEXAGON_BUTTON_HINT, ContextCompat.getDrawable(getContext(), R.drawable.ic_lamp));
+        mDrawables.put(HEXAGON_BUTTON_INNOVATIONS, ContextCompat.getDrawable(getContext(), R.drawable.ic_lamp));
         mDrawables.put(HEXAGON_BUTTON_SEARCH, ContextCompat.getDrawable(getContext(), R.drawable.ic_search));
         mDrawables.put(HEXAGON_BUTTON_NOTIFICATION, ContextCompat.getDrawable(getContext(), R.drawable.ic_not));
 
@@ -367,7 +367,7 @@ public class HexagonalHeader extends View {
                 currentX += calculateWithCoefficient(mTriangleHeight * 1.5f);
             }
 
-            if (number == HEXAGON_BUTTON_HINT) {
+            if (number == HEXAGON_BUTTON_INNOVATIONS) {
                 currentX -= calculateWithCoefficient(mTriangleHeight * 2 * mAnimationProgress);
             } else if (number == HEXAGON_BUTTON_NOTIFICATION) {
                 currentX -= calculateWithCoefficient(mTriangleHeight * mAnimationProgress);
@@ -502,7 +502,7 @@ public class HexagonalHeader extends View {
                 currentX += calculateWithCoefficient(mTriangleHeight * 1.5f);
             }
 
-            if (number == HEXAGON_BUTTON_HINT) {
+            if (number == HEXAGON_BUTTON_INNOVATIONS) {
                 currentX -= calculateWithCoefficient(mTriangleHeight * 2 * mAnimationProgress);
             } else if (number == HEXAGON_BUTTON_NOTIFICATION) {
                 currentX -= calculateWithCoefficient(mTriangleHeight * mAnimationProgress);
@@ -586,7 +586,7 @@ public class HexagonalHeader extends View {
                 currentX += calculateWithCoefficient(mTriangleHeight * 1.5f);
             }
 
-            if (mPressedButton == HEXAGON_BUTTON_HINT) {
+            if (mPressedButton == HEXAGON_BUTTON_INNOVATIONS) {
                 currentX -= calculateWithCoefficient(mTriangleHeight * 2 * mAnimationProgress);
             } else if (mPressedButton == HEXAGON_BUTTON_NOTIFICATION) {
                 currentX -= calculateWithCoefficient(mTriangleHeight * mAnimationProgress);

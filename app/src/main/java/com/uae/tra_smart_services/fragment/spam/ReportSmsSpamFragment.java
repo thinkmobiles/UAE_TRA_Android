@@ -41,9 +41,9 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
     @Override
     protected void initViews() {
         super.initViews();
-        sProviderSpinner = findView(R.id.sProviderSpinner_FRSS);
-        etNumberOfSpammer = findView(R.id.etNumberOfSpammer_FRSS);
-        etDescription = findView(R.id.etDescription_FRSS);
+        sProviderSpinner = findView(R.id.etTitle_FIS);
+        etNumberOfSpammer = findView(R.id.etMessageTitle_FIS);
+        etDescription = findView(R.id.etMessageDescription_FIS);
 //        btnClose = findView(R.id.btnClose_FRSS);
         btnSubmit = findView(R.id.btnSubmit_FRSS);
     }
@@ -127,7 +127,7 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
             if (isAdded()) {
                 dissmissLoaderDialog();
-                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent));
+                dissmissLoaderOverlay(getString(R.string.str_reuqest_has_been_sent_and_you_will_receive_sms));
                 getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_SMS_SPAM_REQUEST);
                 if (smsSpamReportResponse != null) {
                     showMessage(R.string.str_success, R.string.str_report_has_been_sent);
