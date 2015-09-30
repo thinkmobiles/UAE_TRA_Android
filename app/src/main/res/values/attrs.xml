@@ -81,4 +81,6 @@
 
     <attr name="deleteIcon" format="reference"/>
 
+    <attr name="sendImeiCodeColor" format="reference|color"/>
+
 </resources>

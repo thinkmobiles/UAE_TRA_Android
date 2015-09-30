@@ -26,6 +26,7 @@
         <item name="reportWebTintColor">@color/hex_primary_green</item>
         <item name="spamHistoryTintColor">@color/hex_color_dark_gray</item>
         <item name="deleteIcon">@drawable/background_delete</item>
+        <item name="sendImeiCodeColor">@color/hex_sendImeiCodeColor_green</item>
     </style>
 
     <style name="AppThemeOrange" parent="BaseAppTheme">
@@ -128,6 +129,7 @@
         <item name="spamHistoryTintColor">@android:color/black</item>
         <item name="deleteIcon">@drawable/background_delete_black</item>
 
+        <item name="sendImeiCodeColor">@color/hex_sendImeiCodeColor_gray</item>
         <!--<item name="hexagonLoaderBackground">@drawable/loader_bg_orange</item>-->
     </style>
 </resources>

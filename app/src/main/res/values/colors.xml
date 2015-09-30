@@ -61,4 +61,11 @@
     <color name="fragment_user_profile_divider_color">#e8e8e8</color>
     <color name="fragment_user_profile_text_color_primary">#475762</color>
 
+
+    <color name="hex_sendImeiCodeColor_green">#00CC66</color>
+    <color name="hex_sendImeiCodeColor_gray">#131313</color>
+
+
+
+
 </resources>

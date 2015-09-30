@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +24,7 @@ import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByImeiRequest;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
  * Created by mobimaks on 13.08.2015.
@@ -70,6 +72,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         ivCameraBtn = findView(R.id.ivCameraBtn_FMV);
         etImeiNumber = findView(R.id.etImeiNumber_FMV);
         hvSendImeiCode = findView(R.id.hvSendImeiCode_FMV);
+        hvSendImeiCode.setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getActivity(), ContextCompat.getDrawable(getActivity(), R.drawable.ic_check_ver_grn)));
     }
 
     @Override
