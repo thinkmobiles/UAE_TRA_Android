@@ -143,15 +143,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                app:hexagonBorderColor="#00CC66"
+                app:hexagonBorderColor="?attr/sendImeiCodeColor"
                 app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="35dp"
-                app:hexagonSrcTintColor="#00CC66"
-                app:hexagonSrc="@drawable/ic_check_ver_grn"/>
+                app:hexagonSrcTintColor="?attr/sendImeiCodeColor"/>
 
             <TextView
                 android:text="@string/str_send_imei"
-                android:textColor="#00CC66"
+                android:textColor="?attr/sendImeiCodeColor"
                 android:textSize="16sp"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
