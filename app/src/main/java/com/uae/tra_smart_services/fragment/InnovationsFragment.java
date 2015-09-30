@@ -34,6 +34,8 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
     private TextView tvPublic, tvPrivate;
     private Context mContext;
 
+    private int color;
+
     @Override
     protected int getTitle() {
         return R.string.str_innovations;
@@ -71,7 +73,6 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
         setHasOptionsMenu(false);
     }
 
-    private int color;
     @Override
     protected void initViews() {
         super.initViews();
@@ -84,11 +85,7 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
         swType = findView(R.id.swInnType);
         color = etTitle.getCurrentHintTextColor();
 
-        if(swType.isChecked()){
-            tvPrivate.setTextColor(color);
-        } else {
-            tvPublic.setTextColor(color);
-        }
+        togglePrivacy(swType.isChecked());
     }
 
     @Override
@@ -137,10 +134,8 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
         setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
-                if(_currentState == LoaderView.State.CANCELLED){
-                    getFragmentManager().popBackStack();
-                } else {
-                    getFragmentManager().popBackStack();
+                getFragmentManager().popBackStack();
+                if(_currentState != LoaderView.State.CANCELLED){
                     getFragmentManager().popBackStack();
                 }
             }
@@ -160,6 +155,10 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        togglePrivacy(isChecked);
+    }
+
+    private void togglePrivacy(boolean isChecked){
         if(isChecked){
             tvPublic.setTextColor(Color.LTGRAY);
             tvPrivate.setTextColor(color);
