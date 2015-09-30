@@ -12,13 +12,13 @@ public interface Loader {
 
     void successLoading(String _msg);
 
-    void dissmissLoading(String _msg);
+    void cancelLoading(String _msg);
 
-    void dissmissLoading(Dismiss afterDissmiss);
+    void failedLoading(String _msg);
+
+    void dissmissLoadingWithAction(Dismiss afterDissmiss);
 
     void setBackButtonPressedBehaviour(BackButton backButtonPressed);
-
-    void backButtonPressed();
 
     interface Dismiss {
         void onLoadingDismissed();

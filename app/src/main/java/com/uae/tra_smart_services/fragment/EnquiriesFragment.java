@@ -39,12 +39,12 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         mRequest = new ComplainEnquiriesServiceRequest(traServiceModel, getActivity(), getImageUri());
-        showLoaderOverlay(getString(R.string.str_sending), this);
-        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayShow(getString(R.string.str_sending), this);
+        loaderOverlayButtonBehaviour(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();
-                if (_currentState != LoaderView.State.CANCELLED) {
+                if (_currentState == LoaderView.State.FAILURE || _currentState == LoaderView.State.SUCCESS) {
                     getFragmentManager().popBackStack();
                 }
             }

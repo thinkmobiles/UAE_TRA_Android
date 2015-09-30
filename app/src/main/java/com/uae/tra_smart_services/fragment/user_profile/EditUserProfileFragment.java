@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment.user_profile;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +15,9 @@ import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.customviews.ProfileController;
 import com.uae.tra_smart_services.customviews.ProfileController.ControllerButton;
 import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButtonClickListener;
+import com.uae.tra_smart_services.entities.UserProfile;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.util.PreferenceManager;
 
 /**
  * Created by mobimaks on 08.09.2015.
@@ -57,6 +60,9 @@ public final class EditUserProfileFragment extends BaseFragment
         super.onActivityCreated(_savedInstanceState);
         mStatesAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.states_array, R.layout.spinner_item_emirate);
         mStatesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        if (_savedInstanceState == null) {
+            restoreUserProfile(getActivity());
+        }
     }
 
     @Override
@@ -75,17 +81,35 @@ public final class EditUserProfileFragment extends BaseFragment
     }
 
     @Override
-    public void onControllerButtonClick(@ControllerButton int _buttonId) {
+    public void onControllerButtonClick(final View _view, final @ControllerButton int _buttonId) {
         switch (_buttonId) {
             case ProfileController.BUTTON_CANCEL:
                 getFragmentManager().popBackStack();
                 break;
             case ProfileController.BUTTON_CONFIRM:
+                saveUserProfile(_view.getContext());
                 break;
             case ProfileController.BUTTON_RESET:
-                clearAllFields();
+                restoreUserProfile(_view.getContext());
                 break;
         }
+    }
+
+    private void saveUserProfile(final Context _context) {
+        final UserProfile profile = new UserProfile();
+        profile.firstName = etFirstName.getText().toString();
+        profile.lastName = etLastName.getText().toString();
+        profile.streetAddress = etAddress.getText().toString();
+        profile.phoneNumber = etPhone.getText().toString();
+        PreferenceManager.saveUserProfile(_context, profile);
+    }
+
+    private void restoreUserProfile(final Context _context) {
+        final UserProfile profile = PreferenceManager.getSavedUserProfile(_context);
+        etFirstName.setText(profile.firstName);
+        etLastName.setText(profile.lastName);
+        etAddress.setText(profile.streetAddress);
+        etPhone.setText(profile.phoneNumber);
     }
 
     private void clearAllFields() {

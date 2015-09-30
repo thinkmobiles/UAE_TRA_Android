@@ -117,12 +117,12 @@ public class ComplainAboutTraFragment extends AttachmentFragment
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
-        showLoaderOverlay(getString(R.string.str_sending), this);
-        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayShow(getString(R.string.str_sending), this);
+        loaderOverlayButtonBehaviour(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();
-                if (_currentState != LoaderView.State.CANCELLED) {
+                if (_currentState == LoaderView.State.FAILURE || _currentState == LoaderView.State.SUCCESS) {
                     getFragmentManager().popBackStack();
                 }
             }
@@ -155,7 +155,7 @@ public class ComplainAboutTraFragment extends AttachmentFragment
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                changeLoaderOverlay_Success(getString(R.string.str_complain_has_been_sent));
+                loaderOverlaySuccess(getString(R.string.str_complain_has_been_sent));
                 getSpiceManager().removeDataFromCache(Response.class, getRequestKey());
             }
         }

@@ -79,7 +79,8 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
                 } else if(afterBackButton != null){
                         afterBackButton.onBackButtonPressed(lvLoader.getCurrentState());
                 } else {
-                    backButtonPressed();
+                    toolbarTitleManager.setToolbarVisibility(true);
+                    getFragmentManager().popBackStackImmediate();
                 }
                 break;
         }
@@ -110,12 +111,12 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     public void successLoading(String _msg) {
         lvLoader.startFilling(LoaderView.State.SUCCESS);
         tvLoaderTitleText.setText(_msg);
-        tvBackOrCancelBtn.setTag(LoaderView.State.SUCCESS);
         tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
+        tvBackOrCancelBtn.setTag(LoaderView.State.SUCCESS);
     }
 
     @Override
-    public void dissmissLoading(Dismiss afterDissmiss) {
+    public void dissmissLoadingWithAction(Dismiss afterDissmiss) {
         afterDissmiss.onLoadingDismissed();
     }
 
@@ -125,7 +126,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void dissmissLoading(String _msg) {
+    public void cancelLoading(String _msg) {
         lvLoader.startFilling(LoaderView.State.CANCELLED);
         tvLoaderTitleText.setText(_msg);
         tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
@@ -133,14 +134,17 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void backButtonPressed() {
-        toolbarTitleManager.setToolbarVisibility(true);
-        getFragmentManager().popBackStackImmediate();
+    public void failedLoading(String _msg) {
+        lvLoader.startFilling(LoaderView.State.FAILURE);
+        tvLoaderTitleText.setText(_msg);
+        tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
+        tvBackOrCancelBtn.setTag(LoaderView.State.FAILURE);
     }
 
     private int defineBGColor(View _view){
         Bitmap bitmap = ((BitmapDrawable)_view.getBackground()).getBitmap();
         int pixel = bitmap.getPixel(bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+
         return Color.rgb(Color.red(pixel), Color.green(pixel), Color.blue(pixel));
     }
 }

@@ -93,12 +93,12 @@ public final class ComplainAboutServiceFragment extends AttachmentFragment
         complainModel.description = etDescription.getText().toString();
         mComplainAboutServiceRequest = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
 
-        showLoaderOverlay(getString(R.string.str_sending), this);
-        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayShow(getString(R.string.str_sending), this);
+        loaderOverlayButtonBehaviour(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();
-                if (_currentState != LoaderView.State.CANCELLED) {
+                if (_currentState == LoaderView.State.FAILURE || _currentState == LoaderView.State.SUCCESS) {
                     getFragmentManager().popBackStack();
                 }
             }
@@ -165,7 +165,7 @@ public final class ComplainAboutServiceFragment extends AttachmentFragment
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
             if (isAdded()) {
-                changeLoaderOverlay_Success(getString(R.string.str_complain_has_been_sent));
+                loaderOverlaySuccess(getString(R.string.str_complain_has_been_sent));
                 getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
 //                if (result != null) {
 //                    getFragmentManager().popBackStackImmediate();

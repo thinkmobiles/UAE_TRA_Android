@@ -4,10 +4,7 @@ import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Loader;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.octo.android.robospice.SpiceManager;
@@ -17,7 +14,6 @@ import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
-import com.uae.tra_smart_services.global.H;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 
@@ -112,12 +108,12 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
 
     @Override
     public void preExecuteCall() {
-        showLoaderDialog(getString(R.string.str_sending), null);
+        loaderDialogShow(getString(R.string.str_sending), null);
     }
 
     @Override
     public void postExecuteCall() {
-        dissmissLoaderDialog();
+        loaderDialogDismiss();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment.user_profile;
 
 import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -69,7 +70,7 @@ public class ChangePasswordFragment extends BaseFragment implements OnCheckedCha
     }
 
     @Override
-    public void onControllerButtonClick(@ControllerButton int _buttonId) {
+    public void onControllerButtonClick(final View _view, final @ControllerButton int _buttonId) {
         switch (_buttonId) {
             case ProfileController.BUTTON_CANCEL:
                 getFragmentManager().popBackStack();

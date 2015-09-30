@@ -81,12 +81,12 @@ public class DomainIsAvailableFragment extends BaseFragment implements DomainSer
 
     @Override
     public void preExecuteCall() {
-        showLoaderDialog(getString(R.string.str_sending), null);
+        loaderDialogShow(getString(R.string.str_sending), null);
     }
 
     @Override
     public void postExecuteCall() {
-        dissmissLoaderDialog();
+        loaderDialogDismiss();
     }
 
     @Override

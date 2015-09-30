@@ -10,12 +10,10 @@ import android.widget.Toast;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
-import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SmsReportRequest;
@@ -92,7 +90,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
     private void collectAndSendToServer() {
         if (validateData()) {
 
-            showLoaderDialog(getString(R.string.str_checking), this);
+            loaderDialogShow(getString(R.string.str_checking), this);
 
             getSpiceManager().execute(
                     mSmsReportRequest = new SmsReportRequest(
@@ -140,7 +138,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
 
         @Override
         public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
-            dissmissLoaderDialog();
+            loaderDialogDismiss();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
         }
     }
