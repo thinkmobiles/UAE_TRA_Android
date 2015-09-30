@@ -30,11 +30,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="35dp"
-                app:hexagonSrc="@drawable/ic_mail"
-                app:hexagonSrcTintColor="?attr/colorPrimary"
-                app:hexagonBorderColor="?attr/colorPrimary"
+                app:hexagonBorderColor="?colorPrimary"
                 app:hexagonBorderSize="2dp"
-                app:hexagonSideSize="48dp"/>
+                app:hexagonSideSize="48dp"
+                app:hexagonSrc="@drawable/ic_mail"
+                app:hexagonSrcTintColor="?colorPrimary"/>
 
             <TextView
                 android:id="@+id/tvTitle_FRS"
@@ -56,10 +56,11 @@
                 android:layout_alignLeft="@id/tvTitle_FRS"
                 android:layout_below="@id/tvTitle_FRS"
                 android:layout_marginTop="32dp"
-                app:hexagonSrc="@drawable/ic_report"
-                app:hexagonBorderColor="@color/hex_primary_orange"
+                app:hexagonBorderColor="?reportSmsTintColor"
                 app:hexagonBorderSize="1dp"
-                app:hexagonSideSize="38dp"/>
+                app:hexagonSideSize="38dp"
+                app:hexagonSrc="@drawable/ic_report"
+                app:hexagonSrcTintColor="?reportSmsTintColor"/>
 
             <TextView
                 android:id="@+id/tvReportSms_FRS"
@@ -71,19 +72,20 @@
                 android:gravity="center"
                 android:paddingTop="8dp"
                 android:text="@string/fragment_report_spam_sms"
-                android:textColor="@color/hex_primary_orange"/>
+                android:textColor="?reportSmsTintColor"/>
 
             <com.uae.tra_smart_services.customviews.HexagonView
                 android:id="@+id/hvReportWeb_FRS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@id/tvTitle_FRS"
-                app:hexagonSrc="@drawable/ic_rep_web"
                 android:layout_alignTop="@id/hvReportSms_FRS"
                 android:layout_below="@id/tvTitle_FRS"
-                app:hexagonBorderColor="@color/hex_primary_green"
+                app:hexagonBorderColor="?reportWebTintColor"
                 app:hexagonBorderSize="1dp"
-                app:hexagonSideSize="38dp"/>
+                app:hexagonSideSize="38dp"
+                app:hexagonSrc="@drawable/ic_rep_web"
+                app:hexagonSrcTintColor="?reportWebTintColor"/>
 
             <TextView
                 android:id="@+id/tvReportWeb_FRS"
@@ -95,19 +97,20 @@
                 android:gravity="center"
                 android:paddingTop="8dp"
                 android:text="@string/fragment_report_spam_web"
-                android:textColor="@color/hex_primary_green"/>
+                android:textColor="?reportWebTintColor"/>
 
             <com.uae.tra_smart_services.customviews.HexagonView
                 android:id="@+id/hvReportList_FRS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/hvReportSms_FRS"
-                app:hexagonSrc="@drawable/ic_view"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
-                app:hexagonBorderColor="@color/hex_color_middle_gray"
+                app:hexagonBorderColor="?spamHistoryTintColor"
                 app:hexagonBorderSize="1dp"
-                app:hexagonSideSize="38dp"/>
+                app:hexagonSideSize="38dp"
+                app:hexagonSrc="@drawable/ic_view"
+                app:hexagonSrcTintColor="?spamHistoryTintColor"/>
 
 
             <TextView
@@ -120,7 +123,7 @@
                 android:gravity="center"
                 android:paddingTop="8dp"
                 android:text="@string/fragment_report_spam_history"
-                android:textColor="@color/hex_color_dark_gray"/>
+                android:textColor="?spamHistoryTintColor"/>
 
         </RelativeLayout>
 

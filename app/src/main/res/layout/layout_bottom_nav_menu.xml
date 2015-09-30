@@ -14,6 +14,7 @@
         style="@style/TabBarButtonStyle"
         android:drawableTop="@drawable/ic_home"
         android:singleLine="true"
+        android:text="@string/str_home"
         tools:checked="true"/>
 
     <RadioButton

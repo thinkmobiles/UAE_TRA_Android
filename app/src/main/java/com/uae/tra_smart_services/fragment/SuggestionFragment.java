@@ -6,6 +6,8 @@ import android.widget.EditText;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
+import com.uae.tra_smart_services.customviews.LoaderView;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainSuggestionServiceRequest;
 
@@ -43,6 +45,15 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
         traServiceModel.description = getDescriptionText();
         mComplainSuggestionServiceRequest = new ComplainSuggestionServiceRequest(traServiceModel, getActivity(), getImageUri());
         showLoaderOverlay(getString(R.string.str_sending), this);
+        setLoaderOverlayBackButtonBehaviour(new Loader.BackButton() {
+            @Override
+            public void onBackButtonPressed(LoaderView.State _currentState) {
+                getFragmentManager().popBackStack();
+                if (_currentState != LoaderView.State.CANCELLED) {
+                    getFragmentManager().popBackStack();
+                }
+            }
+        });
         getSpiceManager().execute(mComplainSuggestionServiceRequest, getRequestKey(), DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
     }
 
