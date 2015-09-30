@@ -94,6 +94,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     private static final String KEY_CHECKED_TAB_ID = "CHECKED_TAB_ID";
     private static final String KEY_PREVIOUS_CHECKED_TAB_ID = "PREVIOUS_CHECKED_TAB_ID";
+    private static final String KEY_SETTINGS_CHANGE_PROCESSED = "SETTINGS_CHANGE_PROCESSED";
 
     private static final String TAG = "HomeActivity";
     protected static final int REQUEST_CHECK_SETTINGS = 1000;
@@ -103,6 +104,8 @@ public class HomeActivity extends BaseFragmentActivity
 
     @IdRes
     private int mCheckedTabId, mPreviousCheckedTabId;
+
+    private boolean mSettingsChangeProcessed;
 
     @Override
     public final void onCreate(final Bundle _savedInstanceState) {
@@ -114,6 +117,7 @@ public class HomeActivity extends BaseFragmentActivity
         if (_savedInstanceState != null) {
             mCheckedTabId = _savedInstanceState.getInt(KEY_CHECKED_TAB_ID);
             mPreviousCheckedTabId = _savedInstanceState.getInt(KEY_PREVIOUS_CHECKED_TAB_ID);
+            mSettingsChangeProcessed = _savedInstanceState.getBoolean(KEY_SETTINGS_CHANGE_PROCESSED);
         }
 
         mToolbar = findView(R.id.toolbar);
@@ -122,8 +126,8 @@ public class HomeActivity extends BaseFragmentActivity
         bottomNavRadios = findView(R.id.rgBottomNavRadio_AH);
         bottomNavRadios.setOnCheckedChangeListener(this);
 
-        if (getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)) {
-            replaceFragmentWithOutBackStack(SettingsFragment.newInstance());
+        if (!mSettingsChangeProcessed && getIntent().getBooleanExtra(SettingsFragment.CHANGED, false)) {
+            mSettingsChangeProcessed = true;
             bottomNavRadios.check(R.id.rbSettings_BNRG);
         } else if (getFragmentManager().findFragmentById(getContainerId()) == null) {
             bottomNavRadios.check(R.id.rbHome_BNRG);
@@ -370,7 +374,7 @@ public class HomeActivity extends BaseFragmentActivity
         }
         mPreviousCheckedTabId = 0;
 
-        Log.d(getClass().getSimpleName() + "log", "onCheckedChanged: new check");
+        Log.d(getClass().getSimpleName() + "log", "onCheckedChanged: new check " + getResources().getResourceEntryName(checkedId));
 
         switch (checkedId) {
             case R.id.rbHome_BNRG:
@@ -488,7 +492,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public void onHeaderStaticServiceSelected(HeaderStaticService _service) {
-        switch(_service){
+        switch (_service) {
             case INNOVATIONS:
 //                onServiceSelect(Service.SUGGESTION, null);
                 replaceFragmentWithBackStack(InnovationsFragment.newInstance());
@@ -517,6 +521,7 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     protected void onSaveInstanceState(final Bundle _outState) {
+        _outState.putBoolean(KEY_SETTINGS_CHANGE_PROCESSED, mSettingsChangeProcessed);
         _outState.putInt(KEY_CHECKED_TAB_ID, mCheckedTabId);
         _outState.putInt(KEY_PREVIOUS_CHECKED_TAB_ID, mPreviousCheckedTabId);
         super.onSaveInstanceState(_outState);
