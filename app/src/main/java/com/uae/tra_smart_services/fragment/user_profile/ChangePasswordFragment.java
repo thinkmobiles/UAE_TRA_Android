@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.fragment;
+package com.uae.tra_smart_services.fragment.user_profile;
 
 import android.text.method.PasswordTransformationMethod;
 import android.widget.CompoundButton;

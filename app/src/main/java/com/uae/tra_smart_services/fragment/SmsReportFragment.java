@@ -10,10 +10,12 @@ import android.widget.Toast;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SmsReportRequest;
@@ -91,6 +93,7 @@ public class SmsReportFragment extends BaseServiceFragment implements AlertDialo
         if (validateData()) {
 
             showLoaderDialog(getString(R.string.str_checking), this);
+
             getSpiceManager().execute(
                     mSmsReportRequest = new SmsReportRequest(
                             new SmsReportRequestModel(

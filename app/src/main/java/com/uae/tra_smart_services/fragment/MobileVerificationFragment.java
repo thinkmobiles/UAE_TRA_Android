@@ -98,7 +98,9 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();
-                getFragmentManager().popBackStack();
+                if(_currentState != LoaderView.State.CANCELLED){
+                    getFragmentManager().popBackStack();
+                }
             }
         });
         getSpiceManager().execute(mRequest, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestListener);
@@ -150,20 +152,25 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
 
         @Override
         public void onRequestNotFound() {
-            Log.d(getClass().getSimpleName(), "Request Not Found. isAdded: " + isAdded());
+            dissmissLoaderOverlay(getString(R.string.str_something_went_wrong));
         }
 
         @Override
-        public void onRequestSuccess(SearchDeviceResponseModel.List result) {
-            Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
+        public void onRequestSuccess(final SearchDeviceResponseModel.List result) {
             if (isAdded()) {
-                dissmissLoaderDialog();
-                dissmissLoaderOverlay(MobileVerificationFragment.this);
-                if (result != null) {
-                    mSelectListener.onDeviceVerified(result);
+                if (result != null && result.size() != 0) {
+                    dissmissLoaderOverlay(new Loader.Dismiss() {
+                        @Override
+                        public void onLoadingDismissed() {
+                            getFragmentManager().popBackStack();
+                            mSelectListener.onDeviceVerified(result);
+                            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);
+                        }
+                    });
+                } else {
+                    dissmissLoaderOverlay(getString(R.string.str_no_data_found));
                 }
             }
-            getSpiceManager().removeDataFromCache(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST);
         }
 
         @Override

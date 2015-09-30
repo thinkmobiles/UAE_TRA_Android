@@ -35,7 +35,7 @@ import com.uae.tra_smart_services.interfaces.SettingsChangeListener;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
- * Created by Andrey Korneychuk on 30.07.15.
+ * Created by ak-buffalo on 30.07.15.
  */
 public class SettingsFragment extends BaseHomePageFragment
         implements SettingsChangeListener, OnClickListener, OnOkListener, OnCheckedChangeListener {

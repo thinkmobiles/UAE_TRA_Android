@@ -1,7 +1,6 @@
 package com.uae.tra_smart_services.entities;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -9,7 +8,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 
 /**
- * Created by Andrey Korneychuk on 7/26/15.
+ * Created by ak-buffalo on 7/26/15.
  */
 public class TextViewFactory extends AbstractViewFactory<TextView, LanguageSelector>{
 

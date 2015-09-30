@@ -4,7 +4,7 @@ import android.support.annotation.IdRes;
 import android.view.View;
 
 /**
- * Created by Andrey Korneychuk on 7/26/15.
+ * Created by ak-buffalo on 7/26/15.
  */
 
 public class LanguageSelector{
