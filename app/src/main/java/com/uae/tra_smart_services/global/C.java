@@ -48,4 +48,5 @@ public final class C {
 
     public static final String UNCHECK_TAB_IF_NOT_LOGGED_IN = "UNCHECK_TAB_IF_NOT_LOGGED_IN";
 
+    public static final String IS_LOGGED_IN = "is_logged_in";
 }

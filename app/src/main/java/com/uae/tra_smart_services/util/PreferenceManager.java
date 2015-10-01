@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.uae.tra_smart_services.entities.UserProfile;
+import com.uae.tra_smart_services.global.C;
 
 /**
  * Created by mobimaks on 30.09.2015.
@@ -62,4 +63,7 @@ public final class PreferenceManager {
         return getEditor(KEY_USER_PROFILE_PREFS, _context).clear().commit();
     }
 
+    public static void setLoggedIn(final Context _context, final boolean _isLoggedIn) {
+        getEditor(_context).putBoolean(C.IS_LOGGED_IN, _isLoggedIn).commit();
+    }
 }

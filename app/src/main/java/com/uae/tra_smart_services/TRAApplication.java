@@ -1,8 +1,10 @@
 package com.uae.tra_smart_services;
 
 import android.app.Application;
+import android.preference.PreferenceManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.uae.tra_smart_services.global.C;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -16,7 +18,8 @@ public class TRAApplication extends Application {
     @Override
     public void onCreate() {
         Fabric.with(this, new Crashlytics());
-        isLoggedIn = false;
+        isLoggedIn = PreferenceManager.getDefaultSharedPreferences(this).
+                getBoolean(C.IS_LOGGED_IN, false);
         super.onCreate();
 
 

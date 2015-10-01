@@ -119,6 +119,8 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         @Override
         public void onRequestSuccess(final Response _result) {
             TRAApplication.setIsLoggedIn(false);
+            PreferenceManager.setLoggedIn(getActivity(), false);
+
             if (isAdded()) {
                 loaderDialogDismiss();
                 getFragmentManager().popBackStackImmediate();

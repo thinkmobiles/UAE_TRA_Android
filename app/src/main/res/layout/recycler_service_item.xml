@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    app:layout_widthPercent="20%"
+    app:layout_widthPercent="25%"
     android:layout_height="wrap_content"
     app:layout_marginLeftPercent="2%"
     app:layout_marginRightPercent="2%"
@@ -18,6 +18,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         app:hexagonBorderSize="1dp"
+        app:hexagonSideSize="35dp"
         app:hexagonBorderColor="#c8c7c6"/>
 
     <TextView

@@ -78,7 +78,11 @@ import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.util.PersistentCookieStore;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.util.List;
 
 /**
@@ -113,6 +117,7 @@ public class HomeActivity extends BaseFragmentActivity
 
         super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_home);
+        CookieHandler.setDefault(new CookieManager(new PersistentCookieStore(this), CookiePolicy.ACCEPT_ALL));
 
         if (_savedInstanceState != null) {
             mCheckedTabId = _savedInstanceState.getInt(KEY_CHECKED_TAB_ID);
@@ -445,12 +450,14 @@ public class HomeActivity extends BaseFragmentActivity
 
     @Override
     public final void onOpenUserProfileClick() {
-        if (TRAApplication.isLoggedIn()) {
-            replaceFragmentWithBackStack(UserProfileFragment.newInstance());
-        } else {
-            Intent intent = AuthorizationActivity.getStartForResultIntent(this, FragmentType.USER_PROFILE);
-            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
-        }
+        openFragmentIfAuthorized(UserProfileFragment.newInstance(), FragmentType.USER_PROFILE);
+//        if (TRAApplication.isLoggedIn()) {
+//            replaceFragmentWithBackStack(UserProfileFragment.newInstance());
+//        } else {
+//            Intent intent = AuthorizationActivity.getStartForResultIntent(this, FragmentType.USER_PROFILE);
+//            intent.putExtra(C.USE_BACK_STACK, true);
+//            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
+//        }
     }
 
     @Override

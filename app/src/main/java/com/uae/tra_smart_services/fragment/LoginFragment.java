@@ -17,6 +17,7 @@ import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
 import com.uae.tra_smart_services.rest.robo_requests.LoginRequest;
 import com.uae.tra_smart_services.util.LayoutDirectionUtils;
+import com.uae.tra_smart_services.util.PreferenceManager;
 
 import retrofit.client.Response;
 
@@ -138,6 +139,8 @@ public class LoginFragment extends BaseAuthorizationFragment
         @Override
         public void onRequestSuccess(Response result) {
             Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
+            PreferenceManager.setLoggedIn(getActivity(), true);
+
             if (isAdded()) {
                 loaderDialogDismiss();
                 if (result != null && actionsListener != null) {
