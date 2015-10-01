@@ -64,8 +64,9 @@
 
     <color name="hex_sendImeiCodeColor_green">#00CC66</color>
     <color name="hex_sendImeiCodeColor_gray">#131313</color>
-
-
+    <color name="background_material_light">#d32626</color>
+    <color name="windowBackground">#d93a3a</color>
+    <color name="white">#e61d1d</color>
 
 
 </resources>

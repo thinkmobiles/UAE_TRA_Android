@@ -1,5 +1,9 @@
 <resources>
 
+    <style name="ToolbarTheme" parent="BaseAppTheme">
+        <item name="android:textColorSecondary">@android:color/white</item>
+    </style>
+
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="android:layoutDirection">ltr</item>
     </style>
@@ -122,4 +126,5 @@
     <style name="ImageViewRotationStyle">
         <item name="android:rotationY">0</item>
     </style>
+
 </resources>
