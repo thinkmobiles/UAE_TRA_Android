@@ -376,4 +376,6 @@
     <string name="str_type_your_message_here">Type your message here</string>
     <string name="str_no_data_found">No data found</string>
 
+    <string name="fragment_info_hub_no_pending_transactions">There are no pending transactions.</string>
+
 </resources>

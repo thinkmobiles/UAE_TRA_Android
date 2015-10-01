@@ -9,9 +9,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="?attr/actionBarSize"
+        tools:paddingTop="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"

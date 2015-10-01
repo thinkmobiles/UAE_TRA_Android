@@ -22,6 +22,7 @@
         <RelativeLayout
             android:id="@+id/rlContainerAnnList_FIH"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content">
 
             <TextView
@@ -76,11 +77,22 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:text="@string/fragment_info_hub_no_pending_transactions"
+                android:textSize="18sp"
+                android:layout_below="@+id/tvTransText_FIH"
+                android:layout_centerInParent="true"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:layout_height="match_parent"/>
+
             <android.support.v7.widget.RecyclerView
                 tools:listitem="@layout/list_item_info_hub"
                 android:id="@+id/rvTransactionsList_FIH"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:layout_below="@+id/tvTransText_FIH"/>
         </RelativeLayout>
     </LinearLayout>
