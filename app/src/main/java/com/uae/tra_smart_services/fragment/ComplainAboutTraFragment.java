@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -67,6 +68,8 @@ public class ComplainAboutTraFragment extends AttachmentFragment
         super.initListeners();
         mRequestListener = new RequestResponseListener();
         ivAddAttachment.setOnClickListener(this);
+        etComplainTitle.setOnFocusChangeListener(this);
+        etDescription.setOnFocusChangeListener(this);
     }
 
     @Override
@@ -98,12 +101,12 @@ public class ComplainAboutTraFragment extends AttachmentFragment
 
     @Override
     protected boolean validateData() {
-        boolean titleInvalid = etComplainTitle.getText().toString().isEmpty();
+        boolean titleInvalid = etComplainTitle.getText().toString().trim().isEmpty();
         if (titleInvalid) {
             Toast.makeText(getActivity(), R.string.fragment_complain_no_title, Toast.LENGTH_SHORT).show();
             return false;
         }
-        boolean descriptionInvalid = etDescription.getText().toString().isEmpty();
+        boolean descriptionInvalid = etDescription.getText().toString().trim().isEmpty();
         if (descriptionInvalid) {
             Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
             return false;

@@ -69,6 +69,7 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
         super.initListeners();
 //        btnClose.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
+        etDescription.setOnFocusChangeListener(this);
     }
 
     @Override

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
@@ -37,7 +38,7 @@ import retrofit.RetrofitError;
 /**
  * Created by Mikazme on 22/07/2015.
  */
-public abstract class BaseFragment extends Fragment implements Loader.Dismiss, Loader.BackButton {
+public abstract class BaseFragment extends Fragment implements Loader.Dismiss, Loader.BackButton, View.OnFocusChangeListener {
 
     private View rootView;
     private InputMethodManager mInputMethodManager;
@@ -282,5 +283,13 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
 
     protected final void showFormattedMessage(@StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
         showFormattedMessage(-1, _titleRes, _bodyRes, _replace);
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(!hasFocus){
+            TextView view  = ((TextView)v);
+            view.setText(view.getText().toString().replaceAll(" ", ""));
+        }
     }
 }

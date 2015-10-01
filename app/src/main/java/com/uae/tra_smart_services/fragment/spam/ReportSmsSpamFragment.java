@@ -55,6 +55,8 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
         super.initListeners();
 //        btnClose.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
+        etNumberOfSpammer.setOnFocusChangeListener(this);
+        etDescription.setOnFocusChangeListener(this);
     }
 
     @Override

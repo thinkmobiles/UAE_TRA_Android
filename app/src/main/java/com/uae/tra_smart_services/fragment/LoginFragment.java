@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
+import com.uae.tra_smart_services.BuildConfig;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
@@ -61,8 +62,8 @@ public class LoginFragment extends BaseAuthorizationFragment
 //            btnLogIn.setOnLongClickListener(new View.OnLongClickListener() {
 //                @Override
 //                public boolean onLongClick(View v) {
-//                    etUserName.setText("vitaliy.shuba.trash@gmail.com");
-//                    etPassword.setText("12345678");
+//                    etUserName.setText("tarek001");
+//                    etPassword.setText("qweasd");
 //                    doLogIn();
 //                    return true;
 //                }

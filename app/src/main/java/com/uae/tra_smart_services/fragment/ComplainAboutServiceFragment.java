@@ -76,6 +76,8 @@ public final class ComplainAboutServiceFragment extends AttachmentFragment
         super.initListeners();
         mRequestResponseListener = new RequestResponseListener();
         ivAddAttachment.setOnClickListener(this);
+        etComplainTitle.setOnFocusChangeListener(this);
+        etDescription.setOnFocusChangeListener(this);
     }
 
     @Override
