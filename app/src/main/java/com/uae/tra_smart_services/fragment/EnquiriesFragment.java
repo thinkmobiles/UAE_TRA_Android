@@ -40,7 +40,7 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
         traServiceModel.description = getDescriptionText();
         mRequest = new ComplainEnquiriesServiceRequest(traServiceModel, getActivity(), getImageUri());
         loaderOverlayShow(getString(R.string.str_sending), this);
-        loaderOverlayButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();

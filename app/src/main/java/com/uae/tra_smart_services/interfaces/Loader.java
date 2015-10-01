@@ -18,7 +18,7 @@ public interface Loader {
 
     void dissmissLoadingWithAction(Dismiss afterDissmiss);
 
-    void setBackButtonPressedBehaviour(BackButton backButtonPressed);
+    void setButtonPressedBehavior(BackButton backButtonPressed);
 
     interface Dismiss {
         void onLoadingDismissed();

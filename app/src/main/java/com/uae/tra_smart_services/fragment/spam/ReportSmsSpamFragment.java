@@ -82,7 +82,7 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
     private void validateAndSendData() {
         if (validateData()) {
             loaderOverlayShow(getString(R.string.str_sending), this);
-            loaderOverlayButtonBehaviour(new Loader.BackButton() {
+            loaderOverlayButtonBehavior(new Loader.BackButton() {
                 @Override
                 public void onBackButtonPressed(LoaderView.State _currentState) {
                     getFragmentManager().popBackStack();
