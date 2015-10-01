@@ -3,13 +3,14 @@ package com.uae.tra_smart_services.fragment;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.InfoHubAnnFullListAdapter;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 public class InfoHubAnnouncementsFragment extends BaseFragment
         implements OnInfoHubItemClickListener<InfoHubAnnouncementsListItemModel> {
 
-//    private ImageView ivBackground;
+    //    private ImageView ivBackground;
     private RecyclerView mList;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -73,115 +74,126 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
         mAdapter.getFilter().initFromAdapter(mAdapter);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
     private ArrayList<InfoHubAnnouncementsListItemModel> DUMMY_ANNOUNCEMENTS_LIST;
     public static transient final String ICON_URL = "https://pbs.twimg.com/profile_images/552335001539207168/ToYKIO0y_bigger.jpeg";
 
     @Override
     protected void initData() {
         super.initData();
-        DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<InfoHubAnnouncementsListItemModel>() {
-            {
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("fail"+ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl("fail"+ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-            }
-        };
+        final Resources res = getResources();
+        final TypedArray icons = res.obtainTypedArray(R.array.news_image_url);
+        final TypedArray dates = res.obtainTypedArray(R.array.news_date);
+        final TypedArray titles = res.obtainTypedArray(R.array.news_titles);
+        final TypedArray details = res.obtainTypedArray(R.array.news_details);
+
+        DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            InfoHubAnnouncementsListItemModel model = new InfoHubAnnouncementsListItemModel();
+            model.setIconUrl(icons.getString(i));
+            model.setHeaderImageUrl(model.getIconUrl());
+            model.setDescription(titles.getString(i));
+            model.setFullDescription(details.getString(i));
+            model.setDate(dates.getString(i));
+            DUMMY_ANNOUNCEMENTS_LIST.add(model);
+        }
+
+        icons.recycle();
+        dates.recycle();
+        titles.recycle();
+        details.recycle();
+//        DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<InfoHubAnnouncementsListItemModel>() {
+//            {
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl("fail" + ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl("fail" + ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setHeaderImageUrl("http://www.tra.gov.ae/images/tra-logo.png")
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//            }
+//        };
     }
 
     @Override

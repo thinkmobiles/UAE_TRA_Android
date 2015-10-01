@@ -1,5 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,11 +41,6 @@ public class InfoHubFragment extends BaseFragment
     private InfoHubTransactionsListAdapter mTransactionsListAdapter;
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_info_hub;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -55,25 +52,49 @@ public class InfoHubFragment extends BaseFragment
     @Override
     protected void initData() {
         super.initData();
-        DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<InfoHubAnnouncementsListItemModel>() {
-            {
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubAnnouncementsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-            }
-        };
+
+        final Resources res = getResources();
+        final TypedArray icons = res.obtainTypedArray(R.array.news_image_url);
+        final TypedArray dates = res.obtainTypedArray(R.array.news_date);
+        final TypedArray titles = res.obtainTypedArray(R.array.news_titles);
+        final TypedArray details = res.obtainTypedArray(R.array.news_details);
+
+        DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            InfoHubAnnouncementsListItemModel model = new InfoHubAnnouncementsListItemModel();
+            model.setIconUrl(icons.getString(i));
+            model.setHeaderImageUrl(model.getIconUrl());
+            model.setDescription(titles.getString(i));
+            model.setFullDescription(details.getString(i));
+            model.setDate(dates.getString(i));
+            DUMMY_ANNOUNCEMENTS_LIST.add(model);
+        }
+
+        icons.recycle();
+        dates.recycle();
+        titles.recycle();
+        details.recycle();
+
+//        DUMMY_ANNOUNCEMENTS_LIST = new ArrayList<InfoHubAnnouncementsListItemModel>() {
+//            {
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//                add(new InfoHubAnnouncementsListItemModel()
+//                        .setIconUrl(ICON_URL)
+//                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
+//                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
+//                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+//            }
+//        };
+
         DUMMY_TRANSACTIONS_LIST = new ArrayList<InfoHubTransActionsListItemModel>() {
             {
                 add(new InfoHubTransActionsListItemModel()
@@ -212,18 +233,18 @@ public class InfoHubFragment extends BaseFragment
                         .commit();
             }
         });
-        /*mTransactionsListAdapter.setOnItemClickListener(new OnInfoHubItemClickListener<InfoHubTransActionsListItemModel>() {
-            @Override
-            public void onItemSelected(InfoHubTransActionsListItemModel item) {
-                Bundle args = new Bundle();
-                args.putParcelable(C.INFO_HUB_ANN_DATA, item);
-                getFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.flContainer_AH, InfoHubDetailsFragment.newInstance(args))
-                        .commit();
-            }
-        });*/
+//        mTransactionsListAdapter.setOnItemClickListener(new OnInfoHubItemClickListener<InfoHubTransActionsListItemModel>() {
+//            @Override
+//            public void onItemSelected(InfoHubTransActionsListItemModel item) {
+//                Bundle args = new Bundle();
+//                args.putParcelable(C.INFO_HUB_ANN_DATA, item);
+//                getFragmentManager()
+//                        .beginTransaction()
+//                        .addToBackStack(null)
+//                        .replace(R.id.flContainer_AH, InfoHubDetailsFragment.newInstance(args))
+//                        .commit();
+//            }
+//        });
     }
 
     @Override
@@ -242,5 +263,10 @@ public class InfoHubFragment extends BaseFragment
     @Override
     protected int getTitle() {
         return R.string.str_info_hub_title;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_info_hub;
     }
 }

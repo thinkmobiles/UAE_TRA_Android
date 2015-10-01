@@ -10,4 +10,8 @@ public class UserProfile {
     public String streetAddress;
     public String phoneNumber;
 
+    public String getUserName() {
+        return firstName + " " + lastName;
+    }
+
 }

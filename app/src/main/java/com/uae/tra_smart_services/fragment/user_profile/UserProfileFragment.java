@@ -85,7 +85,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final UserProfile profile = PreferenceManager.getSavedUserProfile(getActivity());
-        tvUsername.setText(profile.firstName + " " + profile.lastName);
+        tvUsername.setText(profile.getUserName());
     }
 
     @Override
