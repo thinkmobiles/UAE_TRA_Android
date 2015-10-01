@@ -95,6 +95,7 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
                     getFragmentManager().popBackStack();
                     if (_currentState == LoaderView.State.FAILURE || _currentState == LoaderView.State.SUCCESS) {
                         getFragmentManager().popBackStack();
+                        getFragmentManager().popBackStack();
                     }
                 }
             });
