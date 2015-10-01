@@ -147,12 +147,18 @@ public final class HexagonView extends View implements Target {
 
         final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         final float widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        final float myWidth = Math.round(2 * mHexagonInnerRadius + mBorderWidth);
+        float myWidth = Math.round(2 * mHexagonInnerRadius + mBorderWidth);
         final float width;
 
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
         } else if (widthMode == MeasureSpec.AT_MOST) {
+//            final double newInner = widthSize / 2;
+//            final double side = (newInner * 2) / Math.sqrt(3);
+//
+//            myWidth = Math.round(2 * newInner + mBorderWidth);
+//            mHexagonInnerRadius = newInner;
+//            mHexagonSide = side;
             width = Math.min(myWidth, widthSize);
         } else {
             width = myWidth;

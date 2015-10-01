@@ -80,7 +80,7 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment implement
     @Override
     protected void initViews() {
         etEmail = findView(R.id.etEmail_FRP);
-        LayoutDirectionUtils.setDrawableStart(getActivity(), etEmail, R.drawable.ic_mail);
+        LayoutDirectionUtils.setDrawableStart(getActivity(), etEmail, R.drawable.ic_spam_sms);
         btnDoRestorePass = findView(R.id.btnDoRestorePass_FRP);
     }
 

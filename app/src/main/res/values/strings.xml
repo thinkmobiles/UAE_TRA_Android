@@ -63,8 +63,8 @@
     <string name="str_settings">Settings</string>
     <string name="fragment_service_list_title">TRA Services</string>
     <string name="complain">Complaint</string>
-    <string name="approved_devices">LIST OF DEVICES</string>
-    <string name="device_approval">VERIFICATION</string>
+    <string name="approved_devices">Approved Devices</string>
+    <string name="device_approval">Device Approval</string>
     <!--               Home screens                -->
 
     <string-array name="languages">
@@ -145,7 +145,7 @@
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
     </string>
     <string name="str_dummy_info_hub_list_item_date">08/09/2015</string>
-    <string name="str_dummy_info_hub_list_item_title">Title Title Title Title Title</string>
+    <string name="str_dummy_info_hub_list_item_title">Title</string>
 
     <!--                ServiceInfoFragment             -->
     <string name="fragment_service_info_service_info">About the Service</string>
@@ -169,7 +169,7 @@
     <string name="reference_number">Reference Number</string>
     <string name="content_description_add_attachment">Add Attachment</string>
     <string name="approved_device_information">Approved Device Information</string>
-    <string name="str_insert_imei_hint">Insert IMEI Manually</string>
+    <string name="insert_imei_hint">Device IMEI</string>
     <string name="hint_set_server_url">Set server url</string>
     <string name="button_change_server">Change server</string>
     <string name="favourite_service_info">Service Info</string>
@@ -300,7 +300,7 @@
     <string name="str_no">no</string>
 
     <string name="str_put_search_phrase">Type Your search phrase here</string>
-    <string name="str_no_search_result">There are no search\nresult were found</string>
+    <string name="str_no_search_result">There are no search\nresult where found</string>
     <string name="str_are_you_looking_for">ARE YOU LOOKING FOR</string>
 
     <string name="str_enquires_title">Enquires Title</string>
@@ -350,13 +350,13 @@
     <string name="str_back_to_dashboard">BACK TO DASHBOARD</string>
     <string name="str_cancel_request">CANCEL REQUEST</string>
     <string name="str_give_us_moment">Give us a moment while processing request</string>
-    <string name="str_reuqest_has_been_sent_and_you_will_receive_sms">Your Request has been successfully sent and you will receive an SMS reply shortly</string>
-    <string name="str_reuqest_has_been_sent">Your Request has been successfully sent</string>
+    <string name="str_reuqest_has_been_sent">Your Request has been successfully sent and you will receive an SMS reply shortly</string>
     <string name="str_reuqest_has_been_failed">Your Request has been failed</string>
     <string name="str_reuqest_has_been_cancelled">Your Request has been cancelled</string>
     <string name="lorem_ipsum_tutorial">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\\'s standard dummy text ever since the 1500s...</string>
     <string name="app_tutorial_screens">App Tutorial Screens</string>
     <string name="activate_tutorial">Activates the tutorials screens</string>
+
     <string name="tutorial_avatar_title">USER PROFILE</string>
     <string name="tutorial_avatar_text">Tap here to log in or edit your profile</string>
     <string name="tutorial_hot_bar_title">QUICK ACCESS LINKS</string>
@@ -375,6 +375,20 @@
     <string name="str_message">Message</string>
     <string name="str_type_your_message_here">Type your message here</string>
     <string name="str_no_data_found">No data found</string>
+
+    <string name="transaction_type_approval">Type Approval</string>
+    <string name="transaction_type_approval_text">Your application for Type Approval has been reviewed by TRA personnel</string>
+    <string name="transaction_type_approval_date">09/30/15</string>
+    <string name="transaction_frequency_spectrum">Frequency Spectrum Authorization</string>
+    <string name="transaction_frequency_spectrum_text">Please download the procedure for Frequency Spectrum Authorization</string>
+    <string name="transaction_frequency_spectrum_date">09/29/15</string>
+    <string name="transaction_domain_renewal">.ae Domain Renewal</string>
+    <string name="transaction_domain_renewal_text">Your application the .ae domain needs to be renewed</string>
+    <string name="transaction_domain_renewal_date">09/28/15</string>
+
+    <string name="transaction_type_approval_new_date">10/03/15</string>
+    <string name="transaction_frequency_spectrum_new_date">10/02/15</string>
+    <string name="transaction_domain_renewal_new_date">10/01/15</string>
 
     <string name="fragment_info_hub_no_pending_transactions">There are no pending transactions.</string>
 

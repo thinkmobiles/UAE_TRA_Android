@@ -86,7 +86,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
 
         etEmail = findView(R.id.etEmail_FRP);
         LayoutDirectionUtils.setDrawableStart(getActivity(), etEmail, R.drawable.ic_mail);
-//        etEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_mail, R.attr.authorizationDrawableColors), null, null, null);
+//        etEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_spam_sms, R.attr.authorizationDrawableColors), null, null, null);
 
 //        acsState = findView(R.id.spState_FR);
     //        acsCountry = findView(R.id.spCountry_FR);

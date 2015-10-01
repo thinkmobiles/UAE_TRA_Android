@@ -88,7 +88,7 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
     private void initDevicesList() {
         //region Init stub data list
         final String[] stubBrandsData = {"HTC", "Samsung", "Nokia", "Huawei", "Apple"};
-        final int[] stubBrandsLogos = {R.drawable.ic_htc, R.drawable.ic_samsung, R.drawable.ic_nokia, R.drawable.ic_huaw, R.drawable.ic_iphone};
+        final int[] stubBrandsLogos = {R.drawable.ic_htc, R.drawable.ic_samsung, R.drawable.ic_nokia, R.drawable.logo_huaw, R.drawable.ic_logo_ap};
 
         List<BrandItem> stubData = new ArrayList<>();
         for (int i = 0; i < stubBrandsData.length; i++) {

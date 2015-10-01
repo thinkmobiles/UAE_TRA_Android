@@ -143,7 +143,7 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
                 if (smsSpamReportResponse != null) {
                     SmsUtils.sendBlockSms(getActivity(), etNumberOfSpammer.getText().toString());
                     getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_SMS_SPAM_REQUEST);
-                    loaderOverlaySuccess(getString(R.string.str_reuqest_has_been_sent_and_you_will_receive_sms));
+                    loaderOverlaySuccess(getString(R.string.str_reuqest_has_been_sent));
                 }
             }
         }

@@ -99,91 +99,40 @@ public class InfoHubFragment extends BaseFragment
             {
                 add(new InfoHubTransActionsListItemModel()
                         .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                        .setTitle(getString(R.string.transaction_type_approval))
+                        .setDescription(getString(R.string.transaction_type_approval_text))
+                        .setFullDescription(getString(R.string.transaction_type_approval_text))
+                        .setDate(getString(R.string.transaction_type_approval_new_date)));
                 add(new InfoHubTransActionsListItemModel()
                         .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                        .setTitle(getString(R.string.transaction_frequency_spectrum))
+                        .setDescription(getString(R.string.transaction_frequency_spectrum_text))
+                        .setFullDescription(getString(R.string.transaction_frequency_spectrum_text))
+                        .setDate(getString(R.string.transaction_frequency_spectrum_new_date)));
                 add(new InfoHubTransActionsListItemModel()
                         .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                        .setTitle(getString(R.string.transaction_domain_renewal))
+                        .setDescription(getString(R.string.transaction_domain_renewal_text))
+                        .setFullDescription(getString(R.string.transaction_domain_renewal_text))
+                        .setDate(getString(R.string.transaction_domain_renewal_new_date)));
                 add(new InfoHubTransActionsListItemModel()
                         .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                        .setTitle(getString(R.string.transaction_type_approval))
+                        .setDescription(getString(R.string.transaction_type_approval_text))
+                        .setFullDescription(getString(R.string.transaction_type_approval_text))
+                        .setDate(getString(R.string.transaction_type_approval_date)));
                 add(new InfoHubTransActionsListItemModel()
                         .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                        .setTitle(getString(R.string.transaction_frequency_spectrum))
+                        .setDescription(getString(R.string.transaction_frequency_spectrum_text))
+                        .setFullDescription(getString(R.string.transaction_frequency_spectrum_text))
+                        .setDate(getString(R.string.transaction_frequency_spectrum_date)));
                 add(new InfoHubTransActionsListItemModel()
                         .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
-                add(new InfoHubTransActionsListItemModel()
-                        .setIconUrl(ICON_URL)
-                        .setTitle(getString(R.string.str_dummy_info_hub_list_item_title, ""))
-                        .setDescription(getString(R.string.str_dummy_info_hub_list_item_descr, ""))
-                        .setFullDescription(getString(R.string.str_dummy_info_hub_list_item_full_descr, ""))
-                        .setDate(getString(R.string.str_dummy_info_hub_list_item_date, "")));
+                        .setTitle(getString(R.string.transaction_domain_renewal))
+                        .setDescription(getString(R.string.transaction_domain_renewal_text))
+                        .setFullDescription(getString(R.string.transaction_domain_renewal_text))
+                        .setDate(getString(R.string.transaction_domain_renewal_date)));
             }
         };
     }

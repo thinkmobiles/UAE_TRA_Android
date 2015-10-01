@@ -33,7 +33,7 @@
                 app:hexagonBorderColor="?colorPrimary"
                 app:hexagonBorderSize="2dp"
                 app:hexagonSideSize="48dp"
-                app:hexagonSrc="@drawable/ic_mail"
+                app:hexagonSrc="@drawable/ic_spam_sms"
                 app:hexagonSrcTintColor="?colorPrimary"/>
 
             <TextView
