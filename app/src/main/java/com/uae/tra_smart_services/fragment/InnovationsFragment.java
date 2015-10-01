@@ -132,7 +132,7 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
     @Override
     protected void sendComplain() {
         loaderOverlayShow(mContext.getString(R.string.str_sending), this);
-        loaderOverlayButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();

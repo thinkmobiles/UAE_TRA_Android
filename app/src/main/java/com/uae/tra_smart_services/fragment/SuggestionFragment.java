@@ -45,7 +45,7 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
         traServiceModel.description = getDescriptionText();
         mComplainSuggestionServiceRequest = new ComplainSuggestionServiceRequest(traServiceModel, getActivity(), getImageUri());
         loaderOverlayShow(getString(R.string.str_sending), this);
-        loaderOverlayButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();

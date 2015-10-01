@@ -170,9 +170,9 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         }
     }
 
-    protected final void loaderOverlayButtonBehaviour(Loader.BackButton _backButtonPressed){
+    protected final void loaderOverlayButtonBehavior(Loader.BackButton _backButtonPressed){
         if(loader != null){
-            loader.setBackButtonPressedBehaviour(_backButtonPressed);
+            loader.setButtonPressedBehavior(_backButtonPressed);
         }
     }
 

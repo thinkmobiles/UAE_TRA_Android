@@ -89,7 +89,7 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
     private void collectAndSendToServer() {
         if (validateData()) {
             loaderOverlayShow(getString(R.string.str_sending), this);
-            loaderOverlayButtonBehaviour(new Loader.BackButton() {
+            loaderOverlayButtonBehavior(new Loader.BackButton() {
                 @Override
                 public void onBackButtonPressed(LoaderView.State _currentState) {
                     getFragmentManager().popBackStack();

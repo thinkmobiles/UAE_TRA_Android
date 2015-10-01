@@ -121,7 +121,7 @@ public class ComplainAboutTraFragment extends AttachmentFragment
         traServiceModel.description = getDescriptionText();
         request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
         loaderOverlayShow(getString(R.string.str_sending), this);
-        loaderOverlayButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();

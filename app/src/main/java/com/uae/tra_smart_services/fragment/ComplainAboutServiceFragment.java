@@ -96,7 +96,7 @@ public final class ComplainAboutServiceFragment extends AttachmentFragment
         mComplainAboutServiceRequest = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
 
         loaderOverlayShow(getString(R.string.str_sending), this);
-        loaderOverlayButtonBehaviour(new Loader.BackButton() {
+        loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();

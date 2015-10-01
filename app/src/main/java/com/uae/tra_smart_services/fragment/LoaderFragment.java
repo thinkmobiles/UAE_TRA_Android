@@ -121,7 +121,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void setBackButtonPressedBehaviour(BackButton _afterBackButton) {
+    public void setButtonPressedBehavior(BackButton _afterBackButton) {
         afterBackButton = _afterBackButton;
     }
 
