@@ -289,7 +289,9 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     public void onFocusChange(View v, boolean hasFocus) {
         if(!hasFocus){
             TextView view  = ((TextView)v);
-            view.setText(view.getText().toString().replaceAll(" ", ""));
+            if (view.getText().toString().trim().isEmpty()) {
+                view.setText(null);
+            }
         }
     }
 }
