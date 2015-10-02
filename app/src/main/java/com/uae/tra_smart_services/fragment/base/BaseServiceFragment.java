@@ -33,7 +33,7 @@ public abstract class BaseServiceFragment extends BaseFragment implements Loader
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_rate) {
             hideKeyboard(getView());
-
+            showRatingDialog();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -47,7 +47,7 @@ public abstract class BaseServiceFragment extends BaseFragment implements Loader
 
     @Override
     public void onRate(int _rate){
-        sendRating(new RatingServiceRequestModel(getServiceName(), _rate));
+        sendRating(new RatingServiceRequestModel(getServiceName(), _rate, "Good service, I like it.     q"));
     }
 
     private void sendRating(RatingServiceRequestModel _model){
@@ -56,9 +56,6 @@ public abstract class BaseServiceFragment extends BaseFragment implements Loader
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
                 getFragmentManager().popBackStack();
-                if(_currentState == LoaderView.State.FAILURE || _currentState == LoaderView.State.SUCCESS){
-
-                }
             }
         });
 
@@ -67,18 +64,17 @@ public abstract class BaseServiceFragment extends BaseFragment implements Loader
                 new RequestListener<RatingServiceResponseModel>() {
                     @Override
                     public void onRequestFailure(SpiceException spiceException) {
-//                        mCallBacks.onRatedError(spiceException);
+                        processError(spiceException);
                     }
 
                     @Override
                     public void onRequestSuccess(RatingServiceResponseModel response) {
                         switch (response.getStatus()) {
                             case 201:
-//                                mCallBacks.onRatedSuccessfully();
-
+                                loaderOverlaySuccess(getString(R.string.str_rating_has_sent));
                                 break;
                             case 400:
-//                                mCallBacks.onRatedUnSuccessfully();
+                                loaderOverlayFailed(getString(R.string.str_something_went_wrong));
                                 break;
                         }
                     }
@@ -88,7 +84,7 @@ public abstract class BaseServiceFragment extends BaseFragment implements Loader
 
     private void showRatingDialog(){
         ServiceRatingDialog.newInstance(this)
-                .setDialogTitle(getString(R.string.str_rating))
+                /*.setDialogTitle(getString(R.string.str_rating))*/
                 .setDialogBody(new ServiceRatingView(getActivity()))
                 .show(getFragmentManager());
     }

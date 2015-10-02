@@ -24,17 +24,11 @@ public class ServiceRatingView extends RelativeLayout implements RadioGroup.OnCh
     public ServiceRatingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         inflate(getContext(), R.layout.layout_service_rating, this);
+        initViews();
     }
 
     public void init(CallBacks _callBacks){
         mCallBacks = _callBacks;
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        inflate(getContext(), R.layout.layout_service_rating, this);
-        initViews();
     }
 
     private void initViews(){

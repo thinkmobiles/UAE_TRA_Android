@@ -59,7 +59,7 @@ public class ServiceRatingDialog  extends DialogFragment implements DialogInterf
         ratingView.init(this);
         AlertDialog.Builder alertBuilder =
                 new AlertDialog.Builder(getActivity(), THEME_HOLO_LIGHT)
-                        .setTitle(mTitle!=null?mTitle:"")
+                        /*.setTitle(mTitle!=null?mTitle:"")*/
                         .setView(ratingView);
         if (mCallBacks instanceof CallBacks){
             alertBuilder.setNegativeButton(getString(R.string.str_cancel), this);
