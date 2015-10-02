@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment.tutorial;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,12 +24,19 @@ public class TutorialContainerFragment extends Fragment implements OnClickListen
     private CirclePageIndicator cpiCirclePageIndicator;
     private ImageView ivCLose;
     private TutorialPagerAdapter mAdapter;
+    private OnTuorialClosedListener mOnTutorialClosedListener;
 
     public static TutorialContainerFragment newInstance() {
         TutorialContainerFragment fragment = new TutorialContainerFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mOnTutorialClosedListener = (OnTuorialClosedListener) activity;
     }
 
     @Nullable
@@ -61,8 +69,13 @@ public class TutorialContainerFragment extends Fragment implements OnClickListen
     public final void onClick(final View _view) {
         switch (_view.getId()) {
             case R.id.ivCLose_FTC:
+                mOnTutorialClosedListener.onTutorialClosed();
                 getFragmentManager().popBackStack();
                 break;
         }
+    }
+
+    public interface OnTuorialClosedListener {
+        void onTutorialClosed();
     }
 }

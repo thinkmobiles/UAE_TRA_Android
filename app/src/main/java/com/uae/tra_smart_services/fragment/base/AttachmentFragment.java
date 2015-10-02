@@ -12,8 +12,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
@@ -30,7 +28,7 @@ import java.util.Date;
 /**
  * Created by mobimaks on 11.08.2015.
  */
-public abstract class AttachmentFragment extends BaseServiceFragment implements OnImageSourceSelectListener, View.OnFocusChangeListener {
+public abstract class AttachmentFragment extends BaseServiceFragment implements OnImageSourceSelectListener {
 
     private static final int REQUEST_GALLERY_IMAGE_CODE = 130;
     private static final int REQUEST_CAMERA_PHOTO_CODE = 131;
@@ -187,13 +185,5 @@ public abstract class AttachmentFragment extends BaseServiceFragment implements 
         final Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         final PackageManager pm = getActivity().getPackageManager();
         return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) && takePictureIntent.resolveActivity(pm) != null;
-    }
-
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        if(!hasFocus){
-            TextView view  = ((TextView)v);
-            view.setText(view.getText().toString().replaceAll(" ", ""));
-        }
     }
 }

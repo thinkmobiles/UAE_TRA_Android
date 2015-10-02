@@ -88,13 +88,14 @@ import java.util.List;
 /**
  * Created by ak-buffalo on 23.07.15.
  */
-public class HomeActivity extends BaseFragmentActivity
-        implements ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
+public class HomeActivity extends BaseFragmentActivity implements //region INTERFACES
+        ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
         OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
         OnOpenUserProfileClickListener, OnUserProfileClickListener, OnHeaderStaticServiceSelectedListener,
         OnOpenAboutTraClickListener, OnReportSpamServiceSelectListener, OnAddToSpamClickListener,
-        OnActivateTutorialListener, OnDeviceVerifiedListener {
+        OnActivateTutorialListener, OnDeviceVerifiedListener, TutorialContainerFragment.OnTuorialClosedListener {
+    //endregion
 
     private static final String KEY_CHECKED_TAB_ID = "CHECKED_TAB_ID";
     private static final String KEY_PREVIOUS_CHECKED_TAB_ID = "PREVIOUS_CHECKED_TAB_ID";
@@ -532,5 +533,10 @@ public class HomeActivity extends BaseFragmentActivity
         _outState.putInt(KEY_CHECKED_TAB_ID, mCheckedTabId);
         _outState.putInt(KEY_PREVIOUS_CHECKED_TAB_ID, mPreviousCheckedTabId);
         super.onSaveInstanceState(_outState);
+    }
+
+    @Override
+    public void onTutorialClosed() {
+        bottomNavRadios.check(R.id.rbSettings_BNRG);
     }
 }
