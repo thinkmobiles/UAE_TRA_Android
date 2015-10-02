@@ -376,6 +376,8 @@
     <string name="str_type_your_message_here">Type your message here</string>
     <string name="str_no_data_found">No data found</string>
 
+    <string name="str_insert_imei_hint">Insert IMEI Manually</string>
+
     <string name="transaction_type_approval">Type Approval</string>
     <string name="transaction_type_approval_text">Your application for Type Approval has been reviewed by TRA personnel</string>
     <string name="transaction_type_approval_date">09/30/15</string>
