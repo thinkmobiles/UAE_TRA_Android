@@ -41,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/hvUserAvatar_FEUP"
+                android:visibility="invisible"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:minHeight="36dp"
@@ -85,6 +86,7 @@
 
             <TextView
                 android:id="@+id/tvAddressHint_FEUP"
+                android:visibility="gone"
                 style="@style/EditUserProfileEditTextHintStyle"
                 android:layout_below="@id/vLastNameDivider_FEUP"
                 android:layout_marginTop="16dp"
@@ -93,16 +95,19 @@
             <EditText
                 android:id="@+id/etAddress_FEUP"
                 style="@style/EditUserProfileEditTextStyle"
+                android:visibility="gone"
                 android:layout_below="@id/tvAddressHint_FEUP"
                 tools:text="Garhoud, Deira"/>
 
             <View
                 android:id="@+id/vAddressDivider_FEUP"
+                android:visibility="gone"
                 style="@style/UserProfileDivider"
                 android:layout_below="@id/etAddress_FEUP"/>
 
             <TextView
                 android:id="@+id/tvPhoneHint_FEUP"
+                android:visibility="gone"
                 style="@style/EditUserProfileEditTextHintStyle"
                 android:layout_below="@id/vAddressDivider_FEUP"
                 android:layout_marginTop="16dp"
@@ -110,6 +115,7 @@
 
             <EditText
                 android:id="@+id/etPhone_FEUP"
+                android:visibility="gone"
                 style="@style/EditUserProfileEditTextStyle"
                 android:layout_below="@id/tvPhoneHint_FEUP"
                 android:inputType="phone"
@@ -117,6 +123,7 @@
 
             <View
                 android:id="@+id/vPhoneDivider_FEUP"
+                android:visibility="gone"
                 style="@style/UserProfileDivider"
                 android:layout_below="@id/etPhone_FEUP"/>
 

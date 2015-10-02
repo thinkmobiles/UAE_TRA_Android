@@ -104,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/hvReportSms_FRS"
+                android:visibility="gone"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
                 app:hexagonBorderColor="?spamHistoryTintColor"
@@ -115,6 +116,7 @@
 
             <TextView
                 android:id="@+id/tvReportList_FRS"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@id/hvReportList_FRS"
