@@ -48,7 +48,6 @@
             android:paddingTop="5dp"
             app:hexTextSize="12dp"
             app:hexagonGapWidth="10dp"
-            app:layout_behavior="com.uae.tra_smart_services.customviews.ScrollingBehaviorTest"
             app:separatorStrokeWidth="2dp"/>
 
     </RelativeLayout>
