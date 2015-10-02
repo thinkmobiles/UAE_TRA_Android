@@ -44,11 +44,6 @@ public class ServiceRatingDialog  extends DialogFragment implements DialogInterf
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public final ServiceRatingDialog setDialogTitle(String _title){
-        mTitle = _title;
-        return this;
-    }
-
     public final ServiceRatingDialog setDialogBody(ServiceRatingView _ratingView){
         ratingView = _ratingView;
         return this;
@@ -59,8 +54,7 @@ public class ServiceRatingDialog  extends DialogFragment implements DialogInterf
         ratingView.init(this);
         AlertDialog.Builder alertBuilder =
                 new AlertDialog.Builder(getActivity(), THEME_HOLO_LIGHT)
-                        /*.setTitle(mTitle!=null?mTitle:"")*/
-                        .setView(ratingView);
+                        .setView(ratingView, 20, 20, 20, 20);
         if (mCallBacks instanceof CallBacks){
             alertBuilder.setNegativeButton(getString(R.string.str_cancel), this);
         }

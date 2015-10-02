@@ -84,7 +84,6 @@ public abstract class BaseServiceFragment extends BaseFragment implements Loader
 
     private void showRatingDialog(){
         ServiceRatingDialog.newInstance(this)
-                /*.setDialogTitle(getString(R.string.str_rating))*/
                 .setDialogBody(new ServiceRatingView(getActivity()))
                 .show(getFragmentManager());
     }
