@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,6 +31,12 @@ public final class SpeedTestFragment extends BaseServiceFragment implements OnCl
 
     public static SpeedTestFragment newInstance() {
         return new SpeedTestFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
