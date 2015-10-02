@@ -81,8 +81,8 @@ public final class SpeedTestFragment extends BaseServiceFragment implements OnCl
 
     @Override
     public final void onLoadingCanceled() {
-        if (mSpeedTestRequest != null) {
-            mSpeedTestRequest.cancel();
+        if (getSpiceManager().isStarted() && mSpeedTestRequest != null) {
+            getSpiceManager().cancel(mSpeedTestRequest);
         }
     }
 

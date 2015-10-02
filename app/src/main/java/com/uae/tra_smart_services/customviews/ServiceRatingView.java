@@ -26,10 +26,7 @@ public class ServiceRatingView extends LinearLayout implements RadioGroup.OnChec
 
     public ServiceRatingView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setOrientation(VERTICAL);
-        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        setGravity(Gravity.CENTER);
-        inflate(getContext(), R.layout.layout_service_rating, this);
+        iniLayout();
         initViews();
     }
 
@@ -37,7 +34,14 @@ public class ServiceRatingView extends LinearLayout implements RadioGroup.OnChec
         mCallBacks = _callBacks;
     }
 
+    private void iniLayout(){
+        setOrientation(VERTICAL);
+        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        setGravity(Gravity.CENTER);
+    }
+
     private void initViews(){
+        inflate(getContext(), R.layout.layout_service_rating, this);
         ratingGroup = (RadioGroup) findViewById(R.id.rgDomainCheckServiceRating_FDCH);
         ratingGroup.setOnCheckedChangeListener(this);
     }

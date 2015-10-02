@@ -20,7 +20,6 @@ import static android.app.AlertDialog.THEME_HOLO_LIGHT;
 
 public class ServiceRatingDialog  extends DialogFragment implements DialogInterface.OnClickListener, ServiceRatingView.CallBacks {
     private CallBacks mCallBacks;
-    private String mTitle;
     private ServiceRatingView ratingView;
 
 
@@ -88,7 +87,6 @@ public class ServiceRatingDialog  extends DialogFragment implements DialogInterf
         dismiss();
         mCallBacks.onRate(_rate);
     }
-
 
     public interface CallBacks{
         void onCancelPressed();
