@@ -92,6 +92,11 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected String getServiceName() {
+        return "SMS Spam Block";
+    }
+
     private SmsBlockRequest mSmsBlockRequest;
 
     private void collectAndSendToServer() {

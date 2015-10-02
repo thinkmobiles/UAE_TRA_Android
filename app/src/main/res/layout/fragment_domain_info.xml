@@ -214,12 +214,6 @@
 
             </LinearLayout>
 
-            <!--<com.uae.tra_smart_services.customviews.DomainServiceRatingView
-                android:id="@+id/llDomainServiceRatingView"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>-->
-
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

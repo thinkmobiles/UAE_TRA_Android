@@ -117,6 +117,11 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
     }
 
     @Override
+    protected String getServiceName() {
+        return "Search Device By BrandName";
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         Log.d("DeviceBrand", "onStart");

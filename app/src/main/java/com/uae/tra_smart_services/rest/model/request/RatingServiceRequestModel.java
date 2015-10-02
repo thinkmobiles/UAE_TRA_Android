@@ -15,6 +15,16 @@ public class RatingServiceRequestModel{
     @Expose
     public String feedback = "";
 
+    public RatingServiceRequestModel(String _serviceName, Integer _rate) {
+        this(_serviceName, _rate, null);
+    }
+
+    public RatingServiceRequestModel(String _serviceName, Integer _rate, String feedback) {
+        serviceName = _serviceName;
+        rate = _rate;
+        feedback = (feedback == null) ? "" : feedback;
+    }
+
     public String getServiceName() {
         return serviceName;
     }

@@ -32,6 +32,7 @@ public class MobileVerifiedInfoFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mApprovedDevices = getArguments().getParcelableArrayList(SELECTED_DEVICE_KEY);
     }
 

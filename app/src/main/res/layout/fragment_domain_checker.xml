@@ -35,6 +35,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:text="tra.gov.ae"
                     android:id="@+id/tvDomainAvail_FDCH"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,6 +90,12 @@
                     android:textSize="16sp"/>
 
             </RelativeLayout>
+
+            <com.uae.tra_smart_services.customviews.ServiceRatingView
+                android:id="@+id/llDomainServiceRatingView"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </ScrollView>

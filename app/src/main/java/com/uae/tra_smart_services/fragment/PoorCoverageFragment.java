@@ -122,6 +122,11 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     @Override
+    protected String getServiceName() {
+        return "complain Poor Coverage";
+    }
+
+    @Override
     protected void initViews() {
         super.initViews();
         etLocation = findView(R.id.etLocation_FPC);

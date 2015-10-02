@@ -168,4 +168,9 @@ public class InnovationsFragment extends AttachmentFragment implements View.OnCl
             tvPublic.setTextColor(color);
         }
     }
+
+    @Override
+    protected String getServiceName() {
+        return "";
+    }
 }

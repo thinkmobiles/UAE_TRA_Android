@@ -15,6 +15,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.SpamServiceProviderAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
@@ -25,7 +26,7 @@ import com.uae.tra_smart_services.util.SmsUtils;
 /**
  * Created by mobimaks on 24.09.2015.
  */
-public class ReportSmsSpamFragment extends BaseFragment implements OnClickListener, Cancelled {
+public class ReportSmsSpamFragment extends BaseServiceFragment implements OnClickListener, Cancelled {
 
     private static final String KEY_REPORT_SMS_SPAM_REQUEST = "REPORT_SMS_SPAM_REQUEST";
 
@@ -38,6 +39,12 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
 
     public static ReportSmsSpamFragment newInstance() {
         return new ReportSmsSpamFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -127,6 +134,11 @@ public class ReportSmsSpamFragment extends BaseFragment implements OnClickListen
         if (getSpiceManager().isStarted() && mSmsReportRequest != null) {
             getSpiceManager().cancel(mSmsReportRequest);
         }
+    }
+
+    @Override
+    protected String getServiceName() {
+        return "SMS Spam Report";
     }
 
     private final class SmsSpamReportResponseListener implements RequestListener<SmsSpamResponseModel> {

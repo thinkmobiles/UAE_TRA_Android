@@ -394,4 +394,7 @@
 
     <string name="fragment_info_hub_no_pending_transactions">There are no pending transactions.</string>
 
+    <string name="str_rate">Rate Service</string>
+    <string name="str_rating">Please Rate Service</string>
+
 </resources>

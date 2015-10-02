@@ -156,6 +156,11 @@ public final class ComplainAboutServiceFragment extends AttachmentFragment
         }
     }
 
+    @Override
+    protected String getServiceName() {
+        return "complain about Service Provider";
+    }
+
     private class RequestResponseListener implements PendingRequestListener<Response> {
 
         @Override

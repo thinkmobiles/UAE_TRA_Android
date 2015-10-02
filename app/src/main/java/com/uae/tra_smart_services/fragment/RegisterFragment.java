@@ -18,6 +18,7 @@ import com.uae.tra_smart_services.adapter.StateRegisterAdapter;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.RegisterModel;
 import com.uae.tra_smart_services.rest.robo_requests.RegisterRequest;
 import com.uae.tra_smart_services.util.LayoutDirectionUtils;
@@ -28,7 +29,7 @@ import retrofit.client.Response;
 /**
  * Created by ak-buffalo on 22.07.15.
  */
-public class RegisterFragment extends BaseAuthorizationFragment implements View.OnClickListener {
+public class RegisterFragment extends BaseAuthorizationFragment implements View.OnClickListener, Loader.Cancelled{
 
     private static final String KEY_REGISTER_REQUEST = "REGISTER_REQUEST";
 
