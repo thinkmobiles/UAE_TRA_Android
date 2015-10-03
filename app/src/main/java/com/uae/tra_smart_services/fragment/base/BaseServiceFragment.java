@@ -12,7 +12,6 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.LoaderView;
-import com.uae.tra_smart_services.customviews.ServiceRatingView;
 import com.uae.tra_smart_services.dialog.ServiceRatingDialog;
 import com.uae.tra_smart_services.dialog.ServiceRatingDialog.CallBacks;
 import com.uae.tra_smart_services.global.Service;
@@ -58,12 +57,20 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
     @CallSuper
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_rate) {
-            hideKeyboard(getView());
-            showRatingDialog();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_show_info:
+                hideKeyboard(getView());
+                if (mOpenServiceInfoListener != null) {
+                    mOpenServiceInfoListener.onOpenServiceInfo(getServiceType());
+                }
+                return true;
+            case R.id.action_rate:
+                hideKeyboard(getView());
+                showRatingDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Nullable
