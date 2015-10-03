@@ -380,5 +380,6 @@
     <string name="transaction_type_approval_new_date">10/03/15</string>
     <string name="transaction_frequency_spectrum_new_date">10/02/15</string>
     <string name="transaction_domain_renewal_new_date">10/01/15</string>
+    <string name="button_rate">Rate</string>
 
 </resources>

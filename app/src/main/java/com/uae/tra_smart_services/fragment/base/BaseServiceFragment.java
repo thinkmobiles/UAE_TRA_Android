@@ -51,41 +51,29 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
         if (getServiceType() != null) {
             inflater.inflate(R.menu.menu_info, menu);
         }
-        inflater.inflate(R.menu.menu_rate, menu);
+        //inflater.inflate(R.menu.menu_rate, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @CallSuper
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_show_info:
-                hideKeyboard(getView());
-                if (mOpenServiceInfoListener != null) {
-                    mOpenServiceInfoListener.onOpenServiceInfo(getServiceType());
-                }
-                return true;
-            case R.id.action_rate:
-                hideKeyboard(getView());
-                showRatingDialog();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.action_rate) {
+            hideKeyboard(getView());
+            showRatingDialog();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Nullable
     protected abstract Service getServiceType();
 
     @Override
-    public void onCancelPressed() {
-        // Unimplemented method
-        // Used exceptionally to specify Cancel button in dialog
-    }
+    public void onRate(int _rate){
+        final String[] rateNames = getResources().getStringArray(R.array.rate_names);
 
-    @Override
-    public void onRate(int _rate) {
-        sendRating(new RatingServiceRequestModel(getServiceName(), _rate, "Good service, I like it.     q"));
+        sendRating(new RatingServiceRequestModel(getServiceName(), _rate, rateNames[_rate - 1]));
     }
 
     private void sendRating(RatingServiceRequestModel _model) {
@@ -107,26 +95,33 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
 
                     @Override
                     public void onRequestSuccess(RatingServiceResponseModel response) {
-                        switch (response.getStatus()) {
-                            case 201:
-                                loaderOverlaySuccess(getString(R.string.str_rating_has_sent));
-                                break;
-                            case 400:
-                                loaderOverlayFailed(getString(R.string.str_something_went_wrong));
-                                break;
-                        }
+//                        switch (response.getStatus()) {
+//                            case 201:
+                        loaderOverlaySuccess(getString(R.string.str_rating_has_sent));
+//                                break;
+//                            case 400:
+//                                loaderOverlayFailed(getString(R.string.str_something_went_wrong));
+//                                break;
+//                        }
                     }
                 }
         );
     }
 
-    private void showRatingDialog() {
+    protected void showRatingDialog(){
+        hideKeyboard(getView());
         ServiceRatingDialog.newInstance(this)
-                .setDialogBody(new ServiceRatingView(getActivity()))
                 .show(getFragmentManager());
     }
 
     protected abstract String getServiceName();
+
+    @Override
+    public void onCancelPressed(){
+        // Unimplemented method
+        // Used exceptionally to specify Cancel button in dialog
+    }
+
 
     @CallSuper
     @Override

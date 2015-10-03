@@ -66,6 +66,12 @@ public class TutorialContainerFragment extends Fragment implements OnClickListen
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        mOnTutorialClosedListener = null;
+    }
+
+    @Override
     public final void onClick(final View _view) {
         switch (_view.getId()) {
             case R.id.ivCLose_FTC:

@@ -396,5 +396,12 @@
 
     <string name="str_rate">Rate Service</string>
     <string name="str_rating_has_sent">Rating has been successfully sent</string>
+    <string name="button_rate">Rate</string>
+
+    <string-array name="rate_names">
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+    </string-array>
 
 </resources>
