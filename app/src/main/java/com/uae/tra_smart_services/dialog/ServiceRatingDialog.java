@@ -7,7 +7,6 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.ServiceRatingView;
@@ -18,7 +17,7 @@ import static android.app.AlertDialog.THEME_HOLO_LIGHT;
  * Created by ak-buffalo on 02.10.15.
  */
 
-public class ServiceRatingDialog  extends DialogFragment implements DialogInterface.OnClickListener, ServiceRatingView.CallBacks {
+public class ServiceRatingDialog extends DialogFragment implements DialogInterface.OnClickListener, ServiceRatingView.CallBacks {
     private CallBacks mCallBacks;
     private ServiceRatingView ratingView;
 
@@ -39,24 +38,15 @@ public class ServiceRatingDialog  extends DialogFragment implements DialogInterf
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    public final ServiceRatingDialog setDialogBody(ServiceRatingView _ratingView){
-        ratingView = _ratingView;
-        return this;
-    }
-
-    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        ratingView = new ServiceRatingView(getActivity());
         ratingView.init(this);
+
         AlertDialog.Builder alertBuilder =
                 new AlertDialog.Builder(getActivity(), THEME_HOLO_LIGHT)
                         .setView(ratingView, 20, 20, 20, 20);
-        if (mCallBacks instanceof CallBacks){
-            alertBuilder.setNegativeButton(getString(R.string.str_cancel), this);
-        }
+
+        alertBuilder.setNegativeButton(getString(R.string.str_cancel), this);
 
         return alertBuilder.create();
     }
@@ -70,22 +60,22 @@ public class ServiceRatingDialog  extends DialogFragment implements DialogInterf
         if (mCallBacks != null) {
             switch (which){
                 case DialogInterface.BUTTON_NEGATIVE:
-                        mCallBacks.onCancelPressed();
+                    mCallBacks.onCancelPressed();
                     break;
             }
         }
     }
 
     @Override
-    public void onDestroy() {
+    public void onDetach() {
+        super.onDetach();
         mCallBacks = null;
-        super.onDestroy();
     }
 
     @Override
     public void onRate(int _rate) {
-        dismiss();
         mCallBacks.onRate(_rate);
+        dismiss();
     }
 
     public interface CallBacks{

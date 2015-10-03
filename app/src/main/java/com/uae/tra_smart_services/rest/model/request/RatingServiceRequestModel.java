@@ -13,16 +13,16 @@ public class RatingServiceRequestModel{
     public Integer rate;
 
     @Expose
-    public String feedback = "";
+    public String feedback;
 
     public RatingServiceRequestModel(String _serviceName, Integer _rate) {
         this(_serviceName, _rate, null);
     }
 
-    public RatingServiceRequestModel(String _serviceName, Integer _rate, String feedback) {
+    public RatingServiceRequestModel(String _serviceName, Integer _rate, String _feedback) {
         serviceName = _serviceName;
         rate = _rate;
-        feedback = (feedback == null) ? "" : feedback;
+        feedback = (_feedback == null) ? "" : _feedback;
     }
 
     public String getServiceName() {

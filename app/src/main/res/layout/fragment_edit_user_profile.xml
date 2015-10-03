@@ -16,13 +16,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:fillViewport="true"
         android:paddingTop="?attr/actionBarSize"
         android:layout_height="match_parent"
         android:overScrollMode="never">
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <com.uae.tra_smart_services.customviews.HexagonView
                 android:id="@+id/hvUserAvatar_FEUP"
@@ -129,6 +130,8 @@
 
             <com.uae.tra_smart_services.customviews.ProfileController
                 android:id="@+id/pcProfileController_FEUP"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/vPhoneDivider_FEUP"
