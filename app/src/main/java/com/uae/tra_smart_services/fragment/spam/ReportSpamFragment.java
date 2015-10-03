@@ -2,13 +2,15 @@ package com.uae.tra_smart_services.fragment.spam;
 
 import android.app.Activity;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.lang.annotation.Retention;
@@ -17,7 +19,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by mobimaks on 23.09.2015.
  */
-public final class ReportSpamFragment extends BaseFragment implements OnClickListener {
+public final class ReportSpamFragment extends BaseServiceFragment implements OnClickListener {
 
     //region @SpamOption declaration
     @IntDef({SPAM_OPTION_REPORT_SMS, SPAM_OPTION_REPORT_WEB, SPAM_OPTION_REPORT_HISTORY})
@@ -101,6 +103,22 @@ public final class ReportSpamFragment extends BaseFragment implements OnClickLis
     public void onDetach() {
         mSpamServiceSelectListener = null;
         super.onDetach();
+    }
+
+    @Nullable
+    @Override
+    protected Service getServiceType() {
+        return Service.REPORT_SPAM;
+    }
+
+    @Override
+    protected String getServiceName() {
+        return "Spam Report";
+    }
+
+    @Override
+    public void onLoadingCanceled() {
+
     }
 
     @Override

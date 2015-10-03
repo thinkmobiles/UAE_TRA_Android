@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment.spam;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Patterns;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,8 +16,8 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
@@ -140,6 +141,12 @@ public class ReportWebSpamFragment extends BaseServiceFragment implements OnClic
         if (getSpiceManager().isStarted() && mHelpSalimRequest != null) {
             getSpiceManager().cancel(mHelpSalimRequest);
         }
+    }
+
+    @Nullable
+    @Override
+    protected Service getServiceType() {
+        return null;
     }
 
     @Override

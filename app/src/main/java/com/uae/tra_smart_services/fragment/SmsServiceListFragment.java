@@ -16,6 +16,7 @@ import com.uae.tra_smart_services.global.SmsService;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
+@Deprecated
 public class SmsServiceListFragment extends BaseFragment implements TextView.OnClickListener {
 
     private TextView tvReportNum, tvBlockNum;
@@ -104,6 +105,7 @@ public class SmsServiceListFragment extends BaseFragment implements TextView.OnC
         super.onDetach();
     }
 
+    @Deprecated
     public interface OnSmsServiceSelectListener {
         void onSmsServiceChildSelect(SmsService _service);
     }

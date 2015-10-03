@@ -200,7 +200,7 @@
     <string name="service_suggestion">اقتراح</string>
     <string name="service_domain_check">تحقق من مزود خدمة</string>
     <string name="service_enquiries">استعلامات</string>
-    <string name="service_sms_spam">SMS Spam Service</string>
+    <string name="service_report_spam">Report Spam Service</string>
     <string name="service_poor_coverage">التغطية</string>
     <string name="service_help_salim">ساعد سالم</string>
     <string name="service_mobile_verification">تحقق من جوال</string>
