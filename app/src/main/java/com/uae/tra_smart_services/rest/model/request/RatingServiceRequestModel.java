@@ -52,9 +52,9 @@ public class RatingServiceRequestModel{
     @Override
     public String toString() {
         return "{"+
-                "serviceName:" + serviceName + ","+
-                "rate:" + rate + ", " +
-                "feedback:" + feedback +
+                    "serviceName:" + serviceName + ","+
+                    "rate:" + rate + ", " +
+                    "feedback:" + feedback +
                 "}";
     }
 }
