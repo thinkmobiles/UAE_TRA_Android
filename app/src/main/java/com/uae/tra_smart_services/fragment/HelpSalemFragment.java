@@ -85,6 +85,12 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected String getServiceName() {
+        return "Help Salim";
+    }
+
     private void collectAndSendToServer(){
         if(validateData()){
             loaderDialogShow(getString(R.string.str_checking), this);

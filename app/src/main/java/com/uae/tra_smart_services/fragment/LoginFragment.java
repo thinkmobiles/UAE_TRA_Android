@@ -15,6 +15,7 @@ import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.BuildConfig;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
 import com.uae.tra_smart_services.rest.robo_requests.LoginRequest;
 import com.uae.tra_smart_services.util.LayoutDirectionUtils;
@@ -26,7 +27,7 @@ import retrofit.client.Response;
  * Created by ak-buffalo on 22.07.15.
  */
 public class LoginFragment extends BaseAuthorizationFragment
-        implements OnClickListener {
+                                                    implements OnClickListener, Loader.Cancelled {
 
     private static final String KEY_LOGIN_REQUEST = "LOGIN_REQUEST";
 

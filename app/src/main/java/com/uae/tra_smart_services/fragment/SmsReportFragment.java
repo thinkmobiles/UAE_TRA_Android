@@ -13,7 +13,9 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
+import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SmsReportRequest;
@@ -21,7 +23,7 @@ import com.uae.tra_smart_services.rest.robo_requests.SmsReportRequest;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class SmsReportFragment extends BaseServiceFragment implements AlertDialogFragment.OnOkListener {
+public class SmsReportFragment extends BaseFragment implements AlertDialogFragment.OnOkListener, Loader.Cancelled {
 
     private EditText etNumberOfSpammer, etDescription;
 

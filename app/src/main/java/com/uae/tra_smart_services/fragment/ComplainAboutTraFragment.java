@@ -146,6 +146,11 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
         // Used exceptionally to specify OK button in dialog
     }
 
+    @Override
+    protected String getServiceName() {
+        return "complain about TRA Service";
+    }
+
     private class RequestResponseListener implements PendingRequestListener<Response> {
 
         @Override

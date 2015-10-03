@@ -52,7 +52,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(false);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -145,6 +145,11 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
             String text = data.getStringExtra(C.KEY_SCANNER_RESULT_TEXT);
             etImeiNumber.setText(text);
         }
+    }
+
+    @Override
+    protected String getServiceName() {
+        return "Search Device By Imei";
     }
 
     private class RequestResponseListener implements PendingRequestListener<SearchDeviceResponseModel.List> {

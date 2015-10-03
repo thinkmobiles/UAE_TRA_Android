@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.robo_requests.SpeedTestRequest;
 
@@ -18,7 +20,7 @@ import java.math.BigDecimal;
 /**
  * Created by mobimaks on 07.09.2015.
  */
-public final class SpeedTestFragment extends BaseFragment implements OnClickListener, Loader.Cancelled, RequestListener<Long> {
+public final class SpeedTestFragment extends BaseServiceFragment implements OnClickListener, Loader.Cancelled, RequestListener<Long> {
 
     private static final String KEY_SPEED_TEST_REQUEST = "SPEED_TEST_REQUEST";
 
@@ -29,6 +31,12 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
 
     public static SpeedTestFragment newInstance() {
         return new SpeedTestFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -73,8 +81,8 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
 
     @Override
     public final void onLoadingCanceled() {
-        if (mSpeedTestRequest != null) {
-            mSpeedTestRequest.cancel();
+        if (getSpiceManager().isStarted() && mSpeedTestRequest != null) {
+            getSpiceManager().cancel(mSpeedTestRequest);
         }
     }
 
@@ -92,5 +100,10 @@ public final class SpeedTestFragment extends BaseFragment implements OnClickList
     @Override
     protected final int getLayoutResource() {
         return R.layout.fragment_speedtest;
+    }
+
+    @Override
+    protected String getServiceName() {
+        return "Internet Spees Service";
     }
 }

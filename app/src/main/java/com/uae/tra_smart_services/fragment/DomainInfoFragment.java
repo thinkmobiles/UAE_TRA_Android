@@ -7,14 +7,10 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.octo.android.robospice.SpiceManager;
-import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
-import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 
 import java.util.HashMap;
@@ -23,7 +19,7 @@ import java.util.Map;
 /**
  * Created by ak-buffalo on 14.08.15.
  */
-public class DomainInfoFragment extends BaseFragment implements DomainServiceRatingView.CallBacks, AlertDialogFragment.OnOkListener, LoaderManager.LoaderCallbacks<Map<String, String>> {
+public class DomainInfoFragment extends BaseFragment implements AlertDialogFragment.OnOkListener, LoaderManager.LoaderCallbacks<Map<String, String>> {
 
     private TextView tvDomainName_FDI;
     private TextView tvRegisterId_FDI;
@@ -31,7 +27,6 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
     private TextView tvStatus_FDI;
     private TextView tvRegContactId_FDI;
     private TextView tvRegContactName_FDI;
-//    private DomainServiceRatingView ratingView;
 
     public static DomainInfoFragment newInstance(DomainInfoCheckResponseModel _domainInfo) {
         Bundle bundle = new Bundle();
@@ -56,8 +51,6 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
         tvStatus_FDI = findView(R.id.tvStatus_FDI);
         tvRegContactId_FDI = findView(R.id.tvRegContactId_FDI);
         tvRegContactName_FDI = findView(R.id.tvRegContactName_FDI);
-//        ratingView = findView(R.id.llDomainServiceRatingView);
-//        ratingView.init(this);
     }
 
     @Override
@@ -94,41 +87,6 @@ public class DomainInfoFragment extends BaseFragment implements DomainServiceRat
     @Override
     public void onLoaderReset(Loader loader) {
         loader.reset();
-    }
-
-    @Override
-    public Service getServiceType() {
-        return Service.DOMAIN_CHECK_INFO;
-    }
-
-    @Override
-    public SpiceManager getPublicSpiceManager() {
-        return getSpiceManager();
-    }
-
-    @Override
-    public void preExecuteCall() {
-        loaderDialogShow(getString(R.string.str_sending), null);
-    }
-
-    @Override
-    public void postExecuteCall() {
-        loaderDialogDismiss();
-    }
-
-    @Override
-    public void onRatedSuccessfully() {
-        showMessage(R.string.str_success, R.string.str_rating_has_been_sent);
-    }
-
-    @Override
-    public void onRatedUnSuccessfully() {
-        showMessage(R.string.str_error, R.string.str_something_went_wrong);
-    }
-
-    @Override
-    public void onRatedError(SpiceException _spiceException) {
-        processError(_spiceException);
     }
 
     private static class DomainDataParser extends AsyncTaskLoader<Map<String, String>>{

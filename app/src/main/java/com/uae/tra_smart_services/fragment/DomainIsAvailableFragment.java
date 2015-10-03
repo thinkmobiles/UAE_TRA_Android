@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.DomainServiceRatingView;
+import com.uae.tra_smart_services.customviews.ServiceRatingView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
@@ -19,7 +19,7 @@ import com.uae.tra_smart_services.util.ImageUtils;
 /**
  * Created by ak-buffalo on 14.08.15.
  */
-public class DomainIsAvailableFragment extends BaseFragment implements DomainServiceRatingView.CallBacks{
+public class DomainIsAvailableFragment extends BaseFragment{
 
     public static DomainIsAvailableFragment newInstance(DomainAvailabilityCheckResponseModel _model) {
         Bundle bundle = new Bundle();
@@ -67,40 +67,5 @@ public class DomainIsAvailableFragment extends BaseFragment implements DomainSer
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_domain_is_available;
-    }
-
-    @Override
-    public Service getServiceType() {
-        return Service.DOMAIN_CHECK_AVAILABILITY;
-    }
-
-    @Override
-    public SpiceManager getPublicSpiceManager() {
-        return getSpiceManager();
-    }
-
-    @Override
-    public void preExecuteCall() {
-        loaderDialogShow(getString(R.string.str_sending), null);
-    }
-
-    @Override
-    public void postExecuteCall() {
-        loaderDialogDismiss();
-    }
-
-    @Override
-    public void onRatedSuccessfully() {
-        showMessage(R.string.str_success, R.string.str_rating_has_been_sent);
-    }
-
-    @Override
-    public void onRatedUnSuccessfully() {
-        showMessage(R.string.str_error, R.string.str_something_went_wrong);
-    }
-
-    @Override
-    public void onRatedError(SpiceException _spiceException) {
-        processError(_spiceException);
     }
 }

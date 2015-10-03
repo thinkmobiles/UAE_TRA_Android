@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment.spam;
 
+import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +16,7 @@ import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
@@ -26,7 +28,7 @@ import retrofit.client.Response;
 /**
  * Created by mobimaks on 24.09.2015.
  */
-public class ReportWebSpamFragment extends BaseFragment implements OnClickListener, Cancelled {
+public class ReportWebSpamFragment extends BaseServiceFragment implements OnClickListener, Cancelled {
 
     private static final String KEY_REPORT_WEB_SPAM = "REPORT_WEB_SPAM";
 
@@ -40,6 +42,12 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
         return new ReportWebSpamFragment();
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+    
     @Override
     protected final void initData() {
         super.initData();
@@ -132,6 +140,11 @@ public class ReportWebSpamFragment extends BaseFragment implements OnClickListen
         if (getSpiceManager().isStarted() && mHelpSalimRequest != null) {
             getSpiceManager().cancel(mHelpSalimRequest);
         }
+    }
+
+    @Override
+    protected String getServiceName() {
+        return "Web report";
     }
 
     private final class HelpSalimRequestListener implements RequestListener<Response> {

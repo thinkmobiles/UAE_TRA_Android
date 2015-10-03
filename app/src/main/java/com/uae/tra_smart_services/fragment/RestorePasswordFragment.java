@@ -14,6 +14,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.RestorePasswordRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.RestorePasswordRequest;
 import com.uae.tra_smart_services.util.LayoutDirectionUtils;
@@ -23,7 +24,8 @@ import retrofit.client.Response;
 /**
  * Created by ak-buffalo on 22.07.15.
  */
-public class RestorePasswordFragment extends BaseAuthorizationFragment implements Button.OnClickListener, AlertDialogFragment.OnOkListener{
+public class RestorePasswordFragment extends BaseAuthorizationFragment
+        implements Button.OnClickListener, AlertDialogFragment.OnOkListener, Loader.Cancelled{
 
     private EditText etEmail;
     private Button btnDoRestorePass;
