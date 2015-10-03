@@ -18,15 +18,15 @@
         tools:background="#20d43f3f">
 
         <com.uae.tra_smart_services.customviews.HexagonView
+            android:id="@+id/hvCancel_LPC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/hvCancel_LPC"
             android:layout_gravity="center_horizontal"
             app:hexagonBorderColor="?profileControllerCancelColor"
-            app:hexagonSrcTintColor="?profileControllerCancelColor"
             app:hexagonBorderSize="1dp"
             app:hexagonSideSize="36dp"
-            app:hexagonSrc="@drawable/ic_cancel"/>
+            app:hexagonSrc="@drawable/ic_cancel"
+            app:hexagonSrcTintColor="?profileControllerCancelColor"/>
 
 
         <TextView
@@ -34,6 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
             android:text="@string/fragment_edit_user_profile_cancel"
             android:textColor="?profileControllerCancelColor"/>
 
@@ -47,15 +50,15 @@
         tools:background="#20717d84">
 
         <com.uae.tra_smart_services.customviews.HexagonView
-            android:layout_width="wrap_content"
             android:id="@+id/hvReset_LPC"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             app:hexagonBorderColor="?profileControllerResetColor"
-            app:hexagonSrcTintColor="?profileControllerResetColor"
             app:hexagonBorderSize="1dp"
             app:hexagonSideSize="36dp"
-            app:hexagonSrc="@drawable/ic_reset"/>
+            app:hexagonSrc="@drawable/ic_reset"
+            app:hexagonSrcTintColor="?profileControllerResetColor"/>
 
 
         <TextView
@@ -63,6 +66,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
             android:text="@string/fragment_edit_user_profile_reset"
             android:textColor="?profileControllerResetColor"/>
 
@@ -76,22 +82,25 @@
         tools:background="#203cbb4b">
 
         <com.uae.tra_smart_services.customviews.HexagonView
+            android:id="@+id/hvConfirm_LPC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/hvConfirm_LPC"
             app:hexagonBorderColor="?profileControllerSaveColor"
-            app:hexagonSrcTintColor="?profileControllerSaveColor"
             app:hexagonBorderSize="1dp"
             app:hexagonSideSize="36dp"
-            app:hexagonSrc="@drawable/ic_confirm"/>
+            app:hexagonSrc="@drawable/ic_confirm"
+            app:hexagonSrcTintColor="?profileControllerSaveColor"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
             android:maxLength="12"
+            android:maxLines="2"
             android:text="@string/fragment_edit_user_profile_confirm"
             android:textColor="?profileControllerSaveColor"/>
 

@@ -27,6 +27,7 @@ import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.interfaces.OpenServiceInfo;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
@@ -223,7 +224,7 @@ public final class FavoritesFragment extends BaseFragment
     public void onServiceInfoClick(int _position) {
         if (mFavoritesEventListener != null) {
             hideKeyboard(getView());
-            mFavoritesEventListener.onOpenServiceInfo(_position, mFavoritesAdapter.getItem(_position));
+            mFavoritesEventListener.onOpenServiceInfo(mFavoritesAdapter.getItem(_position));
         }
         Log.d(getClass().getSimpleName(), "Service info click: " + _position);
     }
@@ -275,10 +276,8 @@ public final class FavoritesFragment extends BaseFragment
         return R.layout.fragment_favorites;
     }
 
-    public interface OnFavoritesEventListener {
+    public interface OnFavoritesEventListener extends OpenServiceInfo {
         void onAddFavoritesClick();
-
-        void onOpenServiceInfo(final int _position, final Service _service);
 
         void onOpenServiceClick(final Service _service);
     }
