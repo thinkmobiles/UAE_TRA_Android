@@ -58,7 +58,7 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mServiceSelectListener != null) {
+                    if (mServiceSelectListener != null && rootView.getTag() != null) {
                         mServiceSelectListener.onServiceSelect((Service) rootView.getTag(), null);
                     }
                 }
@@ -75,9 +75,16 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
         }
 
         public void setData(final Service _service) {
-            hvHexagonView.setHexagonSrcDrawable(_service.getDrawableRes());
-            textView.setText(_service.getTitleRes());
-            rootView.setTag(_service);
+            if (_service != null) {
+                hvHexagonView.setHexagonSrcDrawable(_service.getDrawableRes());
+                textView.setText(_service.getTitleRes());
+                rootView.setTag(_service);
+            } else {
+                hvHexagonView.setBackgroundColor(0xc8c7c6);
+                hvHexagonView.setHexagonSrcDrawable(null);
+                textView.setText(null);
+                hvHexagonView.setTag(null);
+            }
         }
     }
 
@@ -107,7 +114,11 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.setData(mDataSet.get(position));
+        if (position < mDataSet.size()) {
+            viewHolder.setData(mDataSet.get(position));
+        } else {
+            viewHolder.setData(null);
+        }
 
         RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) viewHolder.getContainer().getLayoutParams();
         if (position == 1 || position == 3) {
@@ -125,6 +136,6 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
 
     @Override
     public int getItemCount() {
-        return mDataSet.size();
+        return mDataSet.size() + 30;
     }
 }

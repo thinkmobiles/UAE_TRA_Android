@@ -188,7 +188,7 @@ public class HexagonalButtonsLayout extends View {
         mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_verif)));
         mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_spam)));
         mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_coverage)));
-        mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_internet)));
+        mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_earth)));
     }
 
     @Override
@@ -383,31 +383,75 @@ public class HexagonalButtonsLayout extends View {
     }
 
     private void drawText(final Canvas _canvas) {
-        _canvas.drawText(getResources().getString(R.string.hexagon_button_verification), mCenters.get(0).x,
-                mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
+//        _canvas.drawText(getResources().getString(R.string.hexagon_button_verification), mCenters.get(0).x,
+//                mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
 
-        if (getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
-            TextPaint mTextPaint = new TextPaint();
-            mTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress - mTextSizeDifference);
-            mTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
-            mTextPaint.setColor(ImageUtils.isBlackAndWhiteMode(getContext()) ? Color.BLACK : 0xFFF68F1E);
-            StaticLayout mTextLayout = new StaticLayout(getResources().getString(R.string.hexagon_button_spam), mTextPaint,
-                    (int) (mTriangleHeight * 1.5), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+        drawTextLayout(_canvas, mCenters.get(0), getResources().getString(R.string.hexagon_button_verification),
+                mOrangeTextPaint.getColor());
+//        if (getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+//            TextPaint mTextPaint = new TextPaint();
+//            mTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress - mTextSizeDifference);
+//            mTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
+//            mTextPaint.setColor(ImageUtils.isBlackAndWhiteMode(getContext()) ? Color.BLACK : 0xFFF68F1E);
+//            StaticLayout mTextLayout = new StaticLayout(getResources().getString(R.string.hexagon_button_spam), mTextPaint,
+//                    (int) (mTriangleHeight * 1.5), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+//
+//            _canvas.save();
+//
+//            _canvas.translate(mCenters.get(1).x + calculateWithCoefficient(mTextLayout.getWidth() / 2), mCenters.get(0).y + mRadius / 2 - mTextLayout.getHeight() / 2);
+//            mTextLayout.draw(_canvas);
+//            _canvas.restore();
+//        } else {
+//            _canvas.drawText(getResources().getString(R.string.hexagon_button_spam), mCenters.get(1).x,
+//                    mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
+//        }
 
-            _canvas.save();
+        drawTextLayout(_canvas, mCenters.get(1), getResources().getString(R.string.hexagon_button_spam),
+                mOrangeTextPaint.getColor());
 
-            _canvas.translate(mCenters.get(1).x + calculateWithCoefficient(mTextLayout.getWidth() / 2), mCenters.get(0).y + mRadius / 2 - mTextLayout.getHeight() / 2);
-            mTextLayout.draw(_canvas);
-            _canvas.restore();
-        } else {
-            _canvas.drawText(getResources().getString(R.string.hexagon_button_spam), mCenters.get(1).x,
-                    mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
+//        _canvas.drawText(getResources().getString(R.string.hexagon_button_coverage), mCenters.get(2).x,
+//                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
+
+        drawTextLayout(_canvas, mCenters.get(2), getResources().getString(R.string.hexagon_button_coverage),
+                mWhiteTextPain.getColor());
+//        TextPaint mTextPaint = new TextPaint();
+//        mTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress - mTextSizeDifference);
+//        mTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
+//        mTextPaint.setColor(ImageUtils.isBlackAndWhiteMode(getContext()) ? Color.BLACK : mWhiteTextPain.getColor());
+//
+//        StaticLayout mTextLayout = new StaticLayout(getResources().getString(R.string.hexagon_button_domain_check), mTextPaint,
+//                (int) (mTriangleHeight * 2), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+//
+//        _canvas.save();
+//
+//        _canvas.translate(mCenters.get(3).x - (mTextLayout.getWidth() / 2), mCenters.get(0).y + mRadius / 3  - mTextLayout.getHeight() / 2);
+//        mTextLayout.draw(_canvas);
+//        _canvas.restore();
+        drawTextLayout(_canvas, mCenters.get(3), getResources().getString(R.string.hexagon_button_domain_check), mWhiteTextPain.getColor());
+
+//        _canvas.drawText(getResources().getString(R.string.service_domain_check), mCenters.get(3).x,
+//                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
+    }
+
+    private void drawTextLayout(final Canvas _canvas, final PointF _center, final String _text,
+                                final int _textColor) {
+        float spacingMult = 1.0f;
+        if (getResources().getConfiguration().locale.toString().equals("ar")) {
+            spacingMult = 0.7f;
         }
-        _canvas.drawText(getResources().getString(R.string.hexagon_button_coverage), mCenters.get(2).x,
-                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
 
-        _canvas.drawText(getResources().getString(R.string.hexagon_button_internet), mCenters.get(3).x,
-                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
+        TextPaint mTextPaint = new TextPaint();
+        mTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress);
+        mTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
+        mTextPaint.setColor(ImageUtils.isBlackAndWhiteMode(getContext()) ? Color.BLACK : _textColor);
+        StaticLayout mTextLayout = new StaticLayout(_text, mTextPaint,
+                (int) (mTriangleHeight * 2), Layout.Alignment.ALIGN_CENTER, spacingMult, 0.0f, false);
+
+        _canvas.save();
+
+        _canvas.translate(_center.x - (mTextLayout.getWidth() / 2), _center.y + mRadius / 3 - mTextLayout.getHeight() / 2);
+        mTextLayout.draw(_canvas);
+        _canvas.restore();
     }
 
     @Override
@@ -471,7 +515,7 @@ public class HexagonalButtonsLayout extends View {
         VERIFICATION_SERVICE(0),
         SMS_SPAM_SERVICE(1),
         POOR_COVERAGE_SERVICE(2),
-        INTERNET_SPEED_TEST(3);
+        DOMAIN_CHECK_FRAGMENT(3);
 
         private final Integer value;
 

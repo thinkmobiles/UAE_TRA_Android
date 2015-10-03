@@ -51,7 +51,6 @@ import com.uae.tra_smart_services.fragment.SettingsFragment.OnOpenAboutTraClickL
 import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
-import com.uae.tra_smart_services.fragment.SpeedTestFragment;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.spam.ReportSmsSpamFragment;
@@ -215,9 +214,9 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
             case POOR_COVERAGE:
                 replaceFragment(PoorCoverageFragment.newInstance(), _useBackStack);
                 break;
-            case INTERNET_SPEEDTEST:
-                replaceFragment(SpeedTestFragment.newInstance(), _useBackStack);
-                break;
+//            case INTERNET_SPEEDTEST:
+//                replaceFragment(SpeedTestFragment.newInstance(), _useBackStack);
+//                break;
         }
     }
 
@@ -308,8 +307,8 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
             case POOR_COVERAGE_SERVICE:
                 replaceFragmentWithBackStack(PoorCoverageFragment.newInstance());
                 break;
-            case INTERNET_SPEED_TEST:
-                replaceFragmentWithBackStack(SpeedTestFragment.newInstance());
+            case DOMAIN_CHECK_FRAGMENT:
+                replaceFragmentWithBackStack(DomainCheckerFragment.newInstance());
                 break;
         }
     }
