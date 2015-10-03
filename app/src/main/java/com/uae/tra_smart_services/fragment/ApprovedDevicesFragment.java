@@ -19,6 +19,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.BrandsListAdapter;
 import com.uae.tra_smart_services.adapter.BrandsListAdapter.OnBrandSelectListener;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByBrandRequest;
@@ -216,6 +217,11 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
 
         public String mName;
 
+    }
+
+    @Override
+    protected Service getServiceType() {
+        return Service.APPROVED_DEVICES;
     }
 
     @Override

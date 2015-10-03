@@ -19,6 +19,7 @@ import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.adapter.ServiceProviderAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutServiceRequest;
@@ -188,11 +189,10 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         }
     }
 
-//    @NonNull
-//    @Override
-//    protected Service getServiceType() {
-//        return Service.COMPLAIN_ABOUT_PROVIDER;
-//    }
+    @Override
+    protected Service getServiceType() {
+        return Service.COMPLAIN_ABOUT_PROVIDER;
+    }
 
     @Override
     protected int getTitle() {

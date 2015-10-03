@@ -186,7 +186,7 @@ public enum Service {
         }
 
     },
-    SMS_SPAM {
+    REPORT_SPAM {
         @Override
         protected boolean isStaticMainScreenService() {
             return true;
@@ -195,7 +195,7 @@ public enum Service {
         @Override
         @StringRes
         public int getTitleRes() {
-            return R.string.service_sms_spam;
+            return R.string.service_report_spam;
         }
 
         @Override

@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import com.uae.tra_smart_services.dialog.SingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.global.ServiceProvider;
 import com.uae.tra_smart_services.rest.model.request.SmsBlockRequestModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
@@ -27,6 +29,7 @@ import com.uae.tra_smart_services.rest.robo_requests.SmsBlockRequest;
 /**
  * Created by mobimaks on 13.08.2015.
  */
+@Deprecated
 public final class SmsBlockNumberFragment extends BaseServiceFragment
         implements OnClickListener, OnItemPickListener, AlertDialogFragment.OnOkListener {
 
@@ -190,5 +193,11 @@ public final class SmsBlockNumberFragment extends BaseServiceFragment
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
             getFragmentManager().popBackStack();
         }
+    }
+
+    @Nullable
+    @Override
+    protected Service getServiceType() {
+        return null;
     }
 }

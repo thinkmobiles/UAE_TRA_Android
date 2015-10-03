@@ -201,7 +201,7 @@
     <string name="service_suggestion">Suggestion</string>
     <string name="service_domain_check">Domain Check Service</string>
     <string name="service_enquiries">Enquiries</string>
-    <string name="service_sms_spam">SMS Spam Service</string>
+    <string name="service_report_spam">Report Spam Service</string>
     <string name="service_poor_coverage">Poor Coverage</string>
     <string name="service_help_salim">Help Salim</string>
     <string name="service_mobile_verification">Mobile Verification</string>

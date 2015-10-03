@@ -7,6 +7,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -42,6 +43,7 @@ import com.uae.tra_smart_services.dialog.SingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.SingleChoiceDialog.OnItemPickListener;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.LocationType;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
@@ -443,5 +445,11 @@ public class PoorCoverageFragment extends BaseServiceFragment
             etLocation.setText(userFriendlyAddress);
             sbProgressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Nullable
+    @Override
+    protected Service getServiceType() {
+        return Service.POOR_COVERAGE;
     }
 }

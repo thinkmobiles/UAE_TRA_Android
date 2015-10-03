@@ -51,6 +51,7 @@ import com.uae.tra_smart_services.fragment.SettingsFragment.OnOpenAboutTraClickL
 import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
 import com.uae.tra_smart_services.fragment.SmsReportFragment;
 import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
+import com.uae.tra_smart_services.fragment.SpeedTestFragment;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.spam.ReportSmsSpamFragment;
@@ -71,7 +72,6 @@ import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment.User
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
-import com.uae.tra_smart_services.global.SmsService;
 import com.uae.tra_smart_services.interfaces.OnActivateTutorialListener;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
@@ -89,7 +89,7 @@ import java.util.List;
  */
 public class HomeActivity extends BaseFragmentActivity implements //region INTERFACES
         ToolbarTitleManager, OnServiceSelectListener, OnDeviceSelectListener,
-        OnBackStackChangedListener, OnSmsServiceSelectListener, OnStaticServiceSelectListener,
+        OnBackStackChangedListener, OnStaticServiceSelectListener,
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
         OnOpenUserProfileClickListener, OnUserProfileClickListener, OnHeaderStaticServiceSelectedListener,
         OnOpenAboutTraClickListener, OnReportSpamServiceSelectListener, OnAddToSpamClickListener,
@@ -205,7 +205,7 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
             case APPROVED_DEVICES:
                 replaceFragment(ApprovedDevicesFragment.newInstance(), _useBackStack);
                 break;
-            case SMS_SPAM:
+            case REPORT_SPAM:
                 replaceFragment(ReportSpamFragment.newInstance(), _useBackStack);
                 break;
             case MOBILE_VERIFICATION:
@@ -336,19 +336,19 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
         return R.id.flContainer_AH;
     }
 
-    @Override
-    public void onSmsServiceChildSelect(final SmsService _service) {
-        switch (_service) {
-            case REPORT:
-                // not implement
-                replaceFragmentWithBackStack(SmsReportFragment.newInstance());
-                break;
-            case BLOCK:
-                // not implement
-                replaceFragmentWithBackStack(SmsBlockNumberFragment.newInstance());
-                break;
-        }
-    }
+//    @Override
+//    public void onSmsServiceChildSelect(final SmsService _service) {
+//        switch (_service) {
+//            case REPORT:
+//                // not implement
+//                replaceFragmentWithBackStack(SmsReportFragment.newInstance());
+//                break;
+//            case BLOCK:
+//                // not implement
+//                replaceFragmentWithBackStack(SmsBlockNumberFragment.newInstance());
+//                break;
+//        }
+//    }
 
     @Override
     public final void onReportSpamServiceSelect(@SpamOption int _service) {

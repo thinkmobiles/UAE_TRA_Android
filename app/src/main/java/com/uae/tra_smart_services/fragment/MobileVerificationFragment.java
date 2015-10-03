@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +21,7 @@ import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByImeiRequest;
@@ -145,6 +147,12 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
             String text = data.getStringExtra(C.KEY_SCANNER_RESULT_TEXT);
             etImeiNumber.setText(text);
         }
+    }
+
+    @Nullable
+    @Override
+    protected Service getServiceType() {
+        return Service.MOBILE_VERIFICATION;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -10,8 +11,8 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.robo_requests.SpeedTestRequest;
 
@@ -90,6 +91,12 @@ public final class SpeedTestFragment extends BaseServiceFragment implements OnCl
     public final void onRequestFailure(final SpiceException _spiceException) {
         getSpiceManager().removeDataFromCache(Long.class, KEY_SPEED_TEST_REQUEST);
         processError(_spiceException);
+    }
+
+    @Nullable
+    @Override
+    protected Service getServiceType() {
+        return null;
     }
 
     @Override

@@ -2,20 +2,18 @@ package com.uae.tra_smart_services.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.ServiceRatingView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.global.Service;
@@ -28,7 +26,7 @@ import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
 /**
  * Created by ak-buffalo on 10.08.15.
  */
-public class DomainCheckerFragment extends BaseFragment
+public class DomainCheckerFragment extends BaseServiceFragment
         implements View.OnClickListener, AlertDialogFragment.OnOkListener, Loader.Cancelled{
 
     private Button btnAvail, btnWhoIS;
@@ -214,6 +212,17 @@ public class DomainCheckerFragment extends BaseFragment
                 loaderOverlayCancelled(String.format(getString(R.string.str_url_doesnot_exist), mDomain));
             }
         }
+    }
+
+    @Nullable
+    @Override
+    protected Service getServiceType() {
+        return Service.DOMAIN_CHECK;
+    }
+
+    @Override
+    protected String getServiceName() {
+        return "Domain check";
     }
 }
 

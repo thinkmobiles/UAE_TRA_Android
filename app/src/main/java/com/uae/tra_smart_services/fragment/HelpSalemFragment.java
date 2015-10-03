@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +16,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
 import com.uae.tra_smart_services.rest.robo_requests.HelpSalimRequest;
 
@@ -23,6 +25,7 @@ import retrofit.client.Response;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
+@Deprecated
 public class HelpSalemFragment extends BaseServiceFragment implements AlertDialogFragment.OnOkListener {
 
     private EditText etUrl, etDescription;
@@ -68,6 +71,12 @@ public class HelpSalemFragment extends BaseServiceFragment implements AlertDialo
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_send, menu);
+    }
+
+    @Nullable
+    @Override
+    protected Service getServiceType() {
+        return null;
     }
 
     @Override
