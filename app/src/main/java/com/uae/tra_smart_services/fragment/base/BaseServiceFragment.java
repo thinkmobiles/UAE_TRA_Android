@@ -1,7 +1,5 @@
 package com.uae.tra_smart_services.fragment.base;
 
-import android.view.View;
-
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
@@ -15,8 +13,7 @@ import com.uae.tra_smart_services.rest.robo_requests.RatingServiceRequest;
 /**
  * Created by ak-buffalo on 27.08.15.
  */
-public abstract class BaseServiceFragment extends BaseFragment implements View.OnClickListener,
-        Loader.Cancelled, ServiceRatingDialog.CallBacks {
+public abstract class BaseServiceFragment extends BaseFragment implements Loader.Cancelled, ServiceRatingDialog.CallBacks {
 
 //    @CallSuper
 //    @Override
