@@ -56,6 +56,12 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
         });
         getSpiceManager().execute(mComplainSuggestionServiceRequest, getRequestKey(), DurationInMillis.ALWAYS_EXPIRED, getRequestListener());
     }
+//
+//    @NonNull
+//    @Override
+//    protected Service getServiceType() {
+//        return Service.SUGGESTION;
+//    }
 
     @Override
     protected String getRequestKey() {

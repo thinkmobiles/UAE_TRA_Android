@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -19,7 +18,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
-import com.uae.tra_smart_services.fragment.base.AttachmentFragment;
+import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutTRAServiceRequest;
@@ -30,7 +29,7 @@ import retrofit.client.Response;
 /**
  * Created by mobimaks on 11.08.2015.
  */
-public class ComplainAboutTraFragment extends AttachmentFragment
+public class ComplainAboutTraFragment extends BaseComplainFragment
                                     implements OnClickListener, AlertDialogFragment.OnOkListener {
 
     protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_ABOUT_TRA_REQUEST";
@@ -94,7 +93,7 @@ public class ComplainAboutTraFragment extends AttachmentFragment
     }
 
     @Override
-    protected void onImageGet(Uri _uri) {
+    public void onImageGet(Uri _uri) {
         ivAddAttachment.setImageDrawable(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_check, R.attr.authorizationDrawableColors));
         mImageUri = _uri;
     }
@@ -169,6 +168,12 @@ public class ComplainAboutTraFragment extends AttachmentFragment
             processError(spiceException);
         }
     }
+
+//    @NonNull
+//    @Override
+//    protected Service getServiceType() {
+//        return Service.COMPLAINT_ABOUT_TRA;
+//    }
 
     protected RequestListener<Response> getRequestListener() {
         return mRequestListener;

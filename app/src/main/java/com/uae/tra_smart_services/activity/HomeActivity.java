@@ -477,7 +477,7 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
     }
 
     @Override
-    public void onOpenServiceInfo(int _position, Service _item) {
+    public void onOpenServiceInfo(final Service _item) {
         addFragmentWithBackStackGlobally(ServiceInfoFragment.newInstance(_item));
     }
 

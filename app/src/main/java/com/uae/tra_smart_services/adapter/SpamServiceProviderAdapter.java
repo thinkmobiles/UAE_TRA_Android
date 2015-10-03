@@ -17,7 +17,7 @@ public class SpamServiceProviderAdapter extends ServiceProviderAdapter {
     }
 
     @Override
-    protected ViewHolder getViewHolder(View _view) {
+    protected ViewHolder<ServiceProvider> getViewHolder(View _view) {
         return new ServiceViewHolder(_view);
     }
 
@@ -27,11 +27,11 @@ public class SpamServiceProviderAdapter extends ServiceProviderAdapter {
     }
 
     @Override
-    protected int getDropDownLayoutRes() {
+    protected int getDropdownLayoutRes() {
         return android.R.layout.simple_spinner_dropdown_item;
     }
 
-    protected class ServiceViewHolder extends ViewHolder{
+    protected class ServiceViewHolder extends ViewHolder<ServiceProvider> {
 
         private TextView tvTitle;
 

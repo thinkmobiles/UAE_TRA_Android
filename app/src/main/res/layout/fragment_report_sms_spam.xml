@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content">
 
                 <Spinner
-                    android:id="@+id/etTitle_FIS"
+                    android:id="@+id/sProviderSpinner_FRSS"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_centerHorizontal="true"
@@ -88,7 +88,7 @@
                     android:id="@+id/vProviderSpinnerDivider_FRSS"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@id/etTitle_FIS"
+                    android:layout_below="@id/sProviderSpinner_FRSS"
                     android:layout_centerHorizontal="true"
                     android:background="?attr/colorPrimary"/>
 
@@ -105,7 +105,7 @@
                     app:tintColor="?colorPrimary"/>
 
                 <EditText
-                    android:id="@+id/etMessageTitle_FIS"
+                    android:id="@+id/etNumberOfSpammer_FRSS"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_alignTop="@id/tivAddAttachment_FIS"
@@ -125,13 +125,13 @@
                     android:id="@+id/vNumberOfSpammerDivider_FRSS"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@id/etMessageTitle_FIS"
+                    android:layout_below="@id/etNumberOfSpammer_FRSS"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="4dp"
                     android:background="?attr/colorPrimary"/>
 
                 <EditText
-                    android:id="@+id/etMessageDescription_FIS"
+                    android:id="@+id/etDescription_FRSS"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/vNumberOfSpammerDivider_FRSS"
