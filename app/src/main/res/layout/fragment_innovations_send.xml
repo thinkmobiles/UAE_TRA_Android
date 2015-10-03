@@ -109,6 +109,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
+                    android:singleLine="true"
                     android:background="@android:color/transparent"
                     android:hint="@string/str_title"
                     android:textColor="?attr/colorPrimary"

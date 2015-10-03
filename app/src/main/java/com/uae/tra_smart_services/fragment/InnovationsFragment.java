@@ -26,9 +26,10 @@ import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog;
 import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog.OnImageSourceSelectListener;
 import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
-import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.ImageSource;
 import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
@@ -38,8 +39,8 @@ import java.util.List;
  * Created by and on 29.09.15.
  */
 
-public class InnovationsFragment extends BaseServiceFragment
-        implements OnClickListener, OnCheckedChangeListener, OnImageGetCallback, OnImageSourceSelectListener {
+public class InnovationsFragment extends BaseFragment
+        implements OnClickListener, OnCheckedChangeListener, OnImageGetCallback, OnImageSourceSelectListener, Cancelled {
 
     private EditText etTitle, etMessageDescription;
     private ImageView ivAddAttachment;
@@ -106,7 +107,6 @@ public class InnovationsFragment extends BaseServiceFragment
         if (savedInstanceState != null) {
             mAttachmentManager.onRestoreInstanceState(savedInstanceState);
         }
-
         initInnovationSpinner();
     }
 
@@ -229,15 +229,15 @@ public class InnovationsFragment extends BaseServiceFragment
     }
 
     @Override
-    public void onDestroy() {
-        mAttachmentManager = null;
-        super.onDestroy();
-    }
-
-    @Override
     public void onDetach() {
         mContext = null;
         super.onDetach();
+    }
+
+    @Override
+    public void onDestroy() {
+        mAttachmentManager = null;
+        super.onDestroy();
     }
 
     @Override
