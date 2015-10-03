@@ -12,7 +12,7 @@
         android:scaleType="centerCrop"
         android:src="?reportSpam"/>
 
-    <android.support.percent.PercentRelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
@@ -20,87 +20,81 @@
         app:layout_widthPercent="92%"
         tools:paddingTop="0dp">
 
-        <Space
-            android:id="@+id/sButtonsDivider_FRSS"
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/btnSubmit_FIS"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="12dp"
+            android:background="?authorizationButtonsBackground"
+            android:text="@string/fragment_report_spam_sms_submit"
+            android:textColor="@android:color/white"/>
 
         <RelativeLayout
-            android:layout_alignTop="@+id/vDescriptionDivider_FRSS"
-            android:orientation="horizontal"
+            android:id="@+id/rlInfoController_FIS"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btnSubmit_FIS"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
             <TextView
-                android:text="Public"
-                android:textSize="18sp"
-                android:layout_margin="10dp"
+                android:id="@+id/tvPublic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvPublic" />
+                android:layout_margin="10dp"
+                android:text="Public"
+                android:textSize="18sp"/>
+
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/swInnType"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/tvPrivate"
+                android:layout_alignTop="@+id/tvPrivate"
                 android:layout_toEndOf="@+id/tvPublic"
                 android:minWidth="48dp"
-                android:padding="12dp"
-                android:layout_alignBottom="@+id/tvPrivate"
-                android:layout_alignTop="@+id/tvPrivate" />
+                android:padding="12dp"/>
+
             <TextView
                 android:id="@+id/tvPrivate"
-                android:text="Private"
-                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_alignBaseline="@+id/tvPublic"
                 android:layout_alignBottom="@+id/tvPublic"
-                android:layout_toEndOf="@+id/swInnType" />
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toEndOf="@+id/swInnType"
+                android:text="Private"
+                android:textSize="18sp"/>
 
             <com.uae.tra_smart_services.customviews.ThemedImageView
+                android:id="@+id/view2"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:scaleType="centerInside"
                 app:imageSrc="@drawable/ic_info"
-                app:layout_marginEndPercent="10%"
-                app:tintColor="?colorPrimary"
-                android:id="@+id/view2"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true" />
+                app:tintColor="?colorPrimary"/>
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btnSubmit_FRSS"
-            android:layout_width="wrap_content"
-            app:layout_widthPercent="98%"
-            android:layout_height="48dp"
-            android:layout_alignBottom="@id/sButtonsDivider_FRSS"
-            android:background="?authorizationButtonsBackground"
-            android:text="@string/fragment_report_spam_sms_submit"
-            android:textColor="@android:color/white"
-            tools:ignore="RtlHardcoded"
-            android:layout_centerHorizontal="true"/>
-
         <View
-            android:id="@+id/vDescriptionDivider_FRSS"
+            android:id="@+id/vDescriptionDivider_FIS"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_above="@id/btnSubmit_FRSS"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="50dp"
+            android:layout_above="@id/rlInfoController_FIS"
+            android:layout_marginBottom="4dp"
             android:background="?attr/colorPrimary"/>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="12dp"
-            android:layout_above="@id/vDescriptionDivider_FRSS"
+            android:layout_above="@id/vDescriptionDivider_FIS"
             android:layout_alignParentTop="true"
+            android:layout_marginBottom="12dp"
             android:overScrollMode="never"
             android:scrollbars="none">
 
@@ -110,44 +104,52 @@
 
                 <EditText
                     android:id="@+id/etTitle_FIS"
-                    android:hint="@string/str_title"
-                    android:textColor="?attr/colorPrimary"
-                    android:textColorHint="?attr/colorPrimary"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
-                    android:background="@android:color/transparent"/>
+                    android:singleLine="true"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/str_title"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="?attr/colorPrimary"/>
 
                 <View
-                    android:id="@+id/vProviderSpinnerDivider_FRSS"
+                    android:id="@+id/vTitleDivider_FIS"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@id/etTitle_FIS"
-                    android:layout_centerHorizontal="true"
                     android:background="?attr/colorPrimary"/>
+
+                <Spinner
+                    android:id="@+id/sInnovationSpinner_FIS"
+                    android:layout_width="match_parent"
+                    android:background="@android:color/transparent"
+                    android:layout_height="48dp"
+                    tools:listitem="@layout/spinner_item_spam_service_provider"
+                    android:layout_below="@id/vTitleDivider_FIS"
+                    android:layout_marginTop="12dp"/>
 
                 <com.uae.tra_smart_services.customviews.ThemedImageView
                     android:id="@+id/tivAddAttachment_FIS"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@id/vProviderSpinnerDivider_FRSS"
+                    android:layout_below="@id/sInnovationSpinner_FIS"
                     android:layout_marginTop="12dp"
-                    android:scaleType="centerInside"
-                    app:imageSrc="@drawable/ic_action_attachment"
-                    app:layout_marginEndPercent="10%"
                     android:background="?attr/selectableItemBackground"
+                    android:scaleType="centerInside"
+                    android:visibility="gone"
+                    app:imageSrc="@drawable/ic_action_attachment"
                     app:tintColor="?colorPrimary"/>
 
-                <EditText
-                    android:editable="false"
+                <TextView
                     android:id="@+id/etMessageTitle_FIS"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_alignTop="@id/tivAddAttachment_FIS"
-                    android:layout_below="@id/vProviderSpinnerDivider_FRSS"
+                    android:layout_below="@id/sInnovationSpinner_FIS"
                     android:layout_marginEnd="16dp"
                     android:layout_toStartOf="@id/tivAddAttachment_FIS"
                     android:background="@android:color/transparent"
@@ -156,23 +158,14 @@
                     android:textColor="?attr/colorPrimary"
                     android:textColorHint="?attr/colorPrimary"
                     android:textSize="18sp"
-                    app:layout_marginStartPercent="10%"
+                    android:visibility="gone"
                     tools:ignore="TextFields"/>
-
-                <View
-                    android:id="@+id/vNumberOfSpammerDivider_FRSS"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/etMessageTitle_FIS"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="4dp"
-                    android:background="#FFFFFF"/>
 
                 <EditText
                     android:id="@+id/etMessageDescription_FIS"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/vNumberOfSpammerDivider_FRSS"
+                    android:layout_below="@id/etMessageTitle_FIS"
                     android:layout_marginTop="10dp"
                     android:background="@android:color/transparent"
                     android:gravity="top"
@@ -184,8 +177,9 @@
                     android:textSize="16sp"/>
 
             </RelativeLayout>
+
         </ScrollView>
 
-    </android.support.percent.PercentRelativeLayout>
+    </RelativeLayout>
 
 </android.support.percent.PercentFrameLayout>

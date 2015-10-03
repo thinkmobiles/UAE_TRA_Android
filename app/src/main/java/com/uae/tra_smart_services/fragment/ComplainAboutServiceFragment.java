@@ -18,7 +18,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.adapter.ServiceProviderAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
-import com.uae.tra_smart_services.fragment.base.AttachmentFragment;
+import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutServiceRequest;
@@ -29,7 +29,7 @@ import retrofit.client.Response;
 /**
  * Created by mobimaks on 10.08.2015.
  */
-public final class ComplainAboutServiceFragment extends AttachmentFragment
+public final class ComplainAboutServiceFragment extends BaseComplainFragment
         implements OnClickListener {
 
     protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_ABOUT_SERVICE_REQUEST";
@@ -145,7 +145,7 @@ public final class ComplainAboutServiceFragment extends AttachmentFragment
     }
 
     @Override
-    protected void onImageGet(Uri _uri) {
+    public void onImageGet(Uri _uri) {
         ivAddAttachment.setImageDrawable(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_check, R.attr.authorizationDrawableColors));
     }
 
@@ -187,6 +187,12 @@ public final class ComplainAboutServiceFragment extends AttachmentFragment
             getSpiceManager().removeDataFromCache(Response.class, KEY_COMPLAIN_REQUEST);
         }
     }
+
+//    @NonNull
+//    @Override
+//    protected Service getServiceType() {
+//        return Service.COMPLAIN_ABOUT_PROVIDER;
+//    }
 
     @Override
     protected int getTitle() {

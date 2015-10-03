@@ -64,6 +64,12 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
             getSpiceManager().cancel(mRequest);
         }
     }
+//
+//    @NonNull
+//    @Override
+//    protected Service getServiceType() {
+//        return Service.ENQUIRIES;
+//    }
 
     @Override
     protected String getRequestKey() {

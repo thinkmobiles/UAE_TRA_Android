@@ -59,17 +59,17 @@ public class LoginFragment extends BaseAuthorizationFragment
         tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
         tvForgotPassword = findView(R.id.tvForgotPass_FLI);
 
-//        if (BuildConfig.DEBUG) {
-//            btnLogIn.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    etUserName.setText("tarek001");
-//                    etPassword.setText("qweasd");
-//                    doLogIn();
-//                    return true;
-//                }
-//            });
-//        }
+        if (BuildConfig.DEBUG) {
+            btnLogIn.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    etUserName.setText("tarek001");
+                    etPassword.setText("qweasd");
+                    doLogIn();
+                    return true;
+                }
+            });
+        }
     }
 
     @Override
