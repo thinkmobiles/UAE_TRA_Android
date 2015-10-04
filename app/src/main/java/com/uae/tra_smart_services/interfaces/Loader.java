@@ -24,7 +24,7 @@ public interface Loader {
         void onLoadingDismissed();
     }
 
-    interface Cancelled{
+    interface Cancelled  extends LoaderMarker {
         void onLoadingCanceled();
     }
 

@@ -18,6 +18,7 @@ import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
@@ -102,7 +103,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
             hideKeyboard(_view);
-            loaderOverlayShow(getString(R.string.str_checking), this);
+            loaderOverlayShow(getString(R.string.str_checking), (LoaderMarker) this);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
                     checkAvailability(domain);

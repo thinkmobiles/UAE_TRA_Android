@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
@@ -68,7 +69,7 @@ public class ServiceRatingView extends LinearLayout implements View.OnClickListe
             mCallBacks.onRate(Integer.valueOf(_view.getTag().toString()));
     }
 
-    public interface CallBacks{
+    public interface CallBacks extends LoaderMarker {
         void onRate(int _rate);
     }
 }

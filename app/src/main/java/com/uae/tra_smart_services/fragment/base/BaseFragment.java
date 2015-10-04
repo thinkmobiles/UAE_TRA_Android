@@ -27,6 +27,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.interfaces.SpiceLoader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
@@ -138,7 +139,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         return isLoaded;
     }
 
-    protected final void loaderOverlayShow(String _title, Loader.Cancelled _callBack) {
+    protected final void loaderOverlayShow(String _title, LoaderMarker _callBack) {
         getFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)

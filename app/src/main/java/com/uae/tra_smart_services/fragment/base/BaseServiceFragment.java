@@ -64,10 +64,10 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
                     mOpenServiceInfoListener.onOpenServiceInfo(getServiceType());
                 }
                 return true;
-            case R.id.action_rate:
+            /*case R.id.action_rate:
                 hideKeyboard(getView());
                 showRatingDialog();
-                return true;
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -79,11 +79,12 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
     @Override
     public void onRate(int _rate){
         final String[] rateNames = getResources().getStringArray(R.array.rate_names);
-
+        getFragmentManager().popBackStackImmediate();
         sendRating(new RatingServiceRequestModel(getServiceName(), _rate, rateNames[_rate - 1]));
     }
 
     private void sendRating(RatingServiceRequestModel _model) {
+        /*
         loaderOverlayShow(getString(R.string.str_give_us_moment), BaseServiceFragment.this);
         loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
@@ -91,20 +92,21 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
                 getFragmentManager().popBackStack();
             }
         });
+        */
 
         getSpiceManager().execute(
                 new RatingServiceRequest(_model),
                 new RequestListener<RatingServiceResponseModel>() {
                     @Override
                     public void onRequestFailure(SpiceException spiceException) {
-                        processError(spiceException);
+//                        processError(spiceException);
                     }
 
                     @Override
                     public void onRequestSuccess(RatingServiceResponseModel response) {
 //                        switch (response.getStatus()) {
 //                            case 201:
-                        loaderOverlaySuccess(getString(R.string.str_rating_has_sent));
+//                        loaderOverlaySuccess(getString(R.string.str_rating_has_sent));
 //                                break;
 //                            case 400:
 //                                loaderOverlayFailed(getString(R.string.str_something_went_wrong));
@@ -115,11 +117,13 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
         );
     }
 
+    /*
     protected void showRatingDialog(){
         hideKeyboard(getView());
         ServiceRatingDialog.newInstance(this)
                 .show(getFragmentManager());
     }
+    */
 
     protected abstract String getServiceName();
 

@@ -8,6 +8,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainSuggestionServiceRequest;
 
@@ -44,7 +45,7 @@ public class SuggestionFragment extends ComplainAboutTraFragment {
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         mComplainSuggestionServiceRequest = new ComplainSuggestionServiceRequest(traServiceModel, getActivity(), getImageUri());
-        loaderOverlayShow(getString(R.string.str_sending), this);
+        loaderOverlayShow(getString(R.string.str_sending), (LoaderMarker) this);
         loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
