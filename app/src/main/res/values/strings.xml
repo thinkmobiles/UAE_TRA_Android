@@ -1,54 +1,51 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">UAE TRA</string>
-    <string name="title_activity_splash">SplashActivity</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">UAE TRA</string>
+
     <string name="title_activity_authorization">AuthorizationActivity</string>
 
     <!--                Authorization screens                -->
-    <string name="login_title">Login</string>
     <string name="register_title">Create Account</string>
     <string name="forgot_password_title">Forgot Password</string>
     <string name="error_fill_all_fields">Please fill all fields</string>
 
-    <!--            Username field               -->
-    <string name="str_username">Username</string>
     <!--            Email field               -->
     <string name="str_email">Email</string>
+
     <!--            Language field               -->
-    <string name="str_language">Language</string>
-    <!--            Gender field               -->
-    <string name="str_gender">Gender</string>
+    <string name="str_language">Language Preference</string>
+
     <!--            Font size field               -->
     <string name="str_fontsize">Font Size</string>
+
     <!--            Theme options field               -->
-    <string name="str_themesoptions">Theme Options</string>
+    <string name="str_themesoptions">Color Theme</string>
 
     <string name="str_about_tra">About TRA</string>
     <string name="str_read_more_about_tra">Read more about tra</string>
     <string name="str_change_color_theme">Change color theme</string>
+
     <!--            Black and White mode              -->
     <string name="str_color_impaired">Color Impaired</string>
+
     <!--            Phone field               -->
     <string name="str_phone">Phone</string>
+
     <!--            Password field               -->
     <string name="str_password">Password</string>
+
     <!--            Forgot password field               -->
     <string name="str_forgot_password">Password?</string>
+
     <!--            Sign in button               -->
     <string name="str_login">Login</string>
-    <!--            Sign in button               -->
-    <string name="str_skip">Skip</string>
+
     <!--            Register button               -->
     <string name="str_register">Register</string>
+
     <!--            Restore button               -->
     <string name="str_restore">Restore</string>
-    <string name="str_restore_password">Restore Password</string>
-    <!--            Register now button               -->
-    <string name="str_register_now">Register Now</string>
-    <!--            Logout button               -->
-    <string name="str_logout">Logout</string>
+
 
     <!--                Settings screens                -->
     <!--            Font size switcher               -->
@@ -58,13 +55,12 @@
 
     <!--               Home screens                -->
     <string name="str_home">Home</string>
-    <string name="str_favorites">Favorites</string>
-    <string name="str_inquiries">Inquiries</string>
+    <string name="str_favorites">Favourites</string>
+    <string name="str_inquiries">Enquires</string>
     <string name="str_settings">Settings</string>
-    <string name="fragment_service_list_title">TRA Services</string>
-    <string name="complain">Complaint</string>
+    <string name="complain">Complain About Service Provider</string>
     <string name="approved_devices">Approved Devices</string>
-    <string name="device_approval">Device Approval</string>
+    <string name="device_approval">Result IMEI Code</string>
     <!--               Home screens                -->
 
     <string-array name="languages">
@@ -75,10 +71,10 @@
     <!--            Availability in button               -->
     <string name="str_domain_check">Domain Check</string>
     <string name="str_availabilty">Availability</string>
-    <string name="str_whois">WHOIS Service</string>
+    <string name="str_whois">WHOIS</string>
     <string name="str_location">Location</string>
-    <string name="str_signal_level">Signal Level</string>
-    <string name="str_signal_coverage">Signal Coverage</string>
+    <string name="str_signal_level">Coverage Level</string>
+    <string name="str_signal_coverage">Coverage Level</string>
     <string name="str_enter_url">Enter URL</string>
     <string name="str_report_url">Report Website</string>
     <string name="str_description">Description</string>
@@ -88,7 +84,7 @@
     <string name="str_sms_service_list">SMS Service List</string>
 
     <string name="str_user_name">Jhon</string>
-    <string name="str_insert_domain_name_here">Domain Name (i.e. tra.gov.ae)</string>
+    <string name="str_insert_domain_name_here">Insert Domain Name Here</string>
 
     <!--               Status codes and messages                -->
     <string name="str_success">Success</string>
@@ -102,7 +98,7 @@
     <string name="str_one_empty_space"> </string>
     <string name="str_empty"></string>
     <string name="str_domain_available">Domain is Available</string>
-    <string name="str_domain_not_available">Domain is Not Available</string>
+    <string name="str_domain_not_available">NOT AVAILABLE</string>
     <string name="str_domain_availability">Domain Availability</string>
     <string name="str_domain_no_information">No information</string>
     <string name="str_domain_info">Domain Info</string>
@@ -128,7 +124,7 @@
     <string name="str_location_error_message">Please wait while location is determined or enter address manually.</string>
     <string name="signal_level_error">Please set signal level</string>
 
-    <string name="str_mobile_verification">Mobile verification</string>
+    <string name="str_mobile_verification">Device Verification</string>
     <string name="str_announcements">Announcements</string>
     <string name="str_transactions">Transactions</string>
     <string name="str_see_more">See More</string>
@@ -199,13 +195,13 @@
     <string name="service_complain_about_provider">Complain About Service Provider</string>
     <string name="service_complain_about_tra">Complain About TRA</string>
     <string name="service_suggestion">Suggestion</string>
-    <string name="service_domain_check">Domain Check Service</string>
+    <string name="service_domain_check">Domain Check</string>
     <string name="service_enquiries">Enquiries</string>
-    <string name="service_report_spam">Report Spam Service</string>
+    <string name="service_sms_spam">Spam Report</string>
     <string name="service_poor_coverage">Poor Coverage</string>
     <string name="service_help_salim">Help Salim</string>
-    <string name="service_mobile_verification">Mobile Verification</string>
-    <string name="service_approved_devices">Approved Devices</string>
+    <string name="service_mobile_verification">Device Verification</string>
+    <string name="service_approved_devices">Mobile Brand</string>
 
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
@@ -291,8 +287,8 @@
     <string name="fragment_change_password_new_password">NEW PASSWORD</string>
     <string name="fragment_change_password_retype_new_password">RETYPE NEW PASSWORD</string>
 
-    <string name="fragment_domain_info_title">WHO IS</string>
-    <string name="fragment_domain_availability_title">AVAILABILITY</string>
+    <string name="fragment_domain_info_title">Domain Check</string>
+    <string name="fragment_domain_availability_title">Domain Check</string>
 
     <string name="activity_home_not_logged_in">You are not logged in</string>
 
@@ -304,7 +300,7 @@
     <string name="str_no_search_result">There are no search\nresult where found</string>
     <string name="str_are_you_looking_for">ARE YOU LOOKING FOR</string>
 
-    <string name="str_enquires_title">Enquires Title</string>
+    <string name="str_enquires_title">Title</string>
     <string name="str_suggestion_title">Suggestion Title</string>
     <string name="login_username_hint">Username</string>
 
@@ -335,13 +331,13 @@
     <string name="fragment_report_spam_history">VIEW\nMY LIST</string>
     <string name="fragment_report_spam_cant_send_sms">"Can't send sms. Please, install sms messenger"</string>
 
-    <string name="fragment_report_spam_sms_title">SPAM - SMS</string>
-    <string name="fragment_report_spam_sms_number">Number</string>
+    <string name="fragment_report_spam_sms_title">Spam SMS Report</string>
+    <string name="fragment_report_spam_sms_number">Phone number</string>
     <string name="fragment_report_spam_sms_description_hint">Copy and Paste the SMS here…</string>
     <string name="fragment_report_spam_sms_close">CLOSE</string>
-    <string name="fragment_report_spam_sms_submit">SUBMIT</string>
+    <string name="fragment_report_spam_sms_submit">Report</string>
 
-    <string name="fragment_report_spam_web_title">SPAM - WEBSITE</string>
+    <string name="fragment_report_spam_web_title">Help Salim</string>
     <string name="fragment_report_spam_web_link">Link</string>
     <string name="fragment_report_spam_web_description_hint">Description…</string>
 
@@ -377,7 +373,7 @@
     <string name="str_type_your_message_here">Type your message here</string>
     <string name="str_no_data_found">No data found</string>
 
-    <string name="str_insert_imei_hint">Insert IMEI Manually</string>
+    <string name="str_insert_imei_hint">Enter here</string>
 
     <string name="transaction_type_approval">Type Approval</string>
     <string name="transaction_type_approval_text">Your application for Type Approval has been reviewed by TRA personnel</string>
@@ -394,6 +390,8 @@
     <string name="transaction_domain_renewal_new_date">10/01/15</string>
 
     <string name="fragment_info_hub_no_pending_transactions">There are no pending transactions.</string>
+
+    <string name="service_report_spam">Report Spam Service</string>
 
     <string name="str_rate">Rate Service</string>
     <string name="str_rating_has_sent">Rating has been successfully sent</string>

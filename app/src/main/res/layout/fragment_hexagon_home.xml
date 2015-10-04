@@ -15,15 +15,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layoutDirection="ltr">
+        android:layout_height="match_parent">
 
         <com.uae.tra_smart_services.customviews.HexagonalHeader
             android:id="@+id/hhHeader_FHH"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:layoutDirection="ltr"
             app:buttonColor="?attr/hexagonHeaderButtonColor"
             app:hexColor="#ffffff"
             app:hexPerRow="8"
@@ -36,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/hblHexagonalButtons_FHH"
-            android:layoutDirection="ltr"
             android:overScrollMode="never"
             android:paddingEnd="5dp"
             android:paddingStart="5dp"
@@ -47,7 +44,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hhHeader_FHH"
-            android:layoutDirection="ltr"
             android:paddingTop="5dp"
             app:hexTextSize="12dp"
             app:hexagonGapWidth="10dp"

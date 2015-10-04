@@ -196,7 +196,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
 
     @Override
     protected int getTitle() {
-        return R.string.complain;
+        return R.string.service_complain_about_tra;
     }
 
     @Override

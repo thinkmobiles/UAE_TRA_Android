@@ -4,10 +4,10 @@ import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
 
 import com.uae.tra_smart_services.R;
@@ -166,7 +166,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
         isCollapsed = true;
         mHexagonalHeaderAnimator = ValueAnimator.ofFloat(0f, 1f);
         mHexagonalHeaderAnimator.setDuration(600);
-        mHexagonalHeaderAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mHexagonalHeaderAnimator.setInterpolator(new FastOutSlowInInterpolator());
         mHexagonalHeaderAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -178,7 +178,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
         mHexagonHeaderReverseAnimator = ValueAnimator.ofFloat(1f, 0f);
         mHexagonHeaderReverseAnimator.setDuration(600);
-        mHexagonHeaderReverseAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mHexagonHeaderReverseAnimator.setInterpolator(new FastOutSlowInInterpolator());
         mHexagonHeaderReverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -205,7 +205,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
     @Override
     protected int getTitle() {
-        return R.string.fragment_service_list_title;
+        return 0;
     }
 
     @Override

@@ -6,5 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="?serviceInfoBackground"
+    android:textSize="12sp"
+    app:titleTextAppearance="@style/Toolbar.TitleText"
     app:theme="@style/ToolbarTheme"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>

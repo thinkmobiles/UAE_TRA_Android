@@ -1,6 +1,8 @@
-package com.uae.tra_smart_services.fragment;
+package com.uae.tra_smart_services.fragment.deprecated;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,54 +15,52 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
-import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.interfaces.Loader;
-import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
-import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
-import com.uae.tra_smart_services.rest.robo_requests.SmsReportRequest;
+import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
+import com.uae.tra_smart_services.rest.robo_requests.HelpSalimRequest;
+
+import retrofit.client.Response;
 
 /**
  * Created by ak-buffalo on 11.08.15.
  */
 @Deprecated
-public class SmsReportFragment extends BaseFragment implements AlertDialogFragment.OnOkListener, Loader.Cancelled {
+public class HelpSalemFragment extends BaseServiceFragment implements AlertDialogFragment.OnOkListener {
 
-    private EditText etNumberOfSpammer, etDescription;
+    private EditText etUrl, etDescription;
 
-    private SmsReportRequest mSmsReportRequest;
+    private HelpSalimRequest mHelpSalimRequest;
     private CustomFilterPool<String> filters;
 
-    public static SmsReportFragment newInstance() {
-        return new SmsReportFragment();
+    public static HelpSalemFragment newInstance() {
+        return new HelpSalemFragment();
     }
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_sms_report;
-    }
+    protected int getLayoutResource() {return R.layout.fragment_help_salem;}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
-
     @Override
     protected void initViews() {
         super.initViews();
-        etNumberOfSpammer = findView(R.id.etNumberOfSpammer_FSR);
-        etDescription = findView(R.id.etDescription_FSR);
+        etUrl = findView(R.id.etUrl_FHS);
+        etDescription = findView(R.id.etDescription_FHS);
     }
 
     @Override
-    protected void initData() {
+    protected final void initData() {
         super.initData();
-        filters = new CustomFilterPool<String>() {
+        filters = new CustomFilterPool<String>(){
             {
                 addFilter(new Filter<String>() {
                     @Override
                     public boolean check(String _data) {
-                        return !_data.isEmpty();
+                        return Patterns.DOMAIN_NAME.matcher(_data).matches();
                     }
                 });
             }
@@ -73,42 +73,51 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
         inflater.inflate(R.menu.menu_send, menu);
     }
 
+    @Nullable
+    @Override
+    protected Service getServiceType() {
+        return null;
+    }
+
     @Override
     protected int getTitle() {
-        return R.string.str_sms_report_number;
+        return R.string.str_report_url;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId()){
             case R.id.action_send:
                 hideKeyboard(getView());
                 collectAndSendToServer();
-                return true;
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void collectAndSendToServer() {
-        if (validateData()) {
+    @Override
+    protected String getServiceName() {
+        return "Help Salim";
+    }
 
+    private void collectAndSendToServer(){
+        if(validateData()){
             loaderDialogShow(getString(R.string.str_checking), this);
-
             getSpiceManager().execute(
-                    mSmsReportRequest = new SmsReportRequest(
-                            new SmsReportRequestModel(
-                                    etNumberOfSpammer.getText().toString(),
+                    mHelpSalimRequest = new HelpSalimRequest(
+                            new HelpSalimModel(
+                                    etUrl.getText().toString(),
                                     etDescription.getText().toString()
                             )
                     ),
-                    new SmsSpamReportResponseListener()
+                    new HelpSalimRequestListener()
             );
         }
     }
 
     private boolean validateData() {
-        if (etNumberOfSpammer.getText().toString().isEmpty()) {
-            Toast.makeText(getActivity(), R.string.str_invalid_number, Toast.LENGTH_SHORT).show();
+        if (!filters.check(etUrl.getText().toString())) {
+            Toast.makeText(getActivity(), R.string.str_invalid_url, Toast.LENGTH_SHORT).show();
             return false;
         }
         if (etDescription.getText().toString().isEmpty()) {
@@ -124,14 +133,7 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
         // Used exceptionally to specify OK button in dialog
     }
 
-    @Override
-    public void onLoadingCanceled() {
-        if (getSpiceManager().isStarted() && mSmsReportRequest != null) {
-            getSpiceManager().cancel(mSmsReportRequest);
-        }
-    }
-
-    private final class SmsSpamReportResponseListener implements RequestListener<SmsSpamResponseModel> {
+    private final class HelpSalimRequestListener implements RequestListener<Response> {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
@@ -139,9 +141,17 @@ public class SmsReportFragment extends BaseFragment implements AlertDialogFragme
         }
 
         @Override
-        public void onRequestSuccess(SmsSpamResponseModel smsSpamReportResponse) {
+        public void onRequestSuccess(Response smsSpamReportResponse) {
             loaderDialogDismiss();
             showMessage(R.string.str_success, R.string.str_report_has_been_sent);
+            getFragmentManager().popBackStackImmediate();
+        }
+    }
+
+    @Override
+    public void onLoadingCanceled() {
+        if (getSpiceManager().isStarted() && mHelpSalimRequest != null) {
+            getSpiceManager().cancel(mHelpSalimRequest);
         }
     }
 }
