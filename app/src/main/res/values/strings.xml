@@ -404,4 +404,9 @@
         <item>5</item>
     </string-array>
 
+    <string name="fragment_edit_user_profile_saving">Saving data</string>
+    <string name="fragment_edit_user_profile_success">Your data has been successfully saved</string>
+
+    <string name="fragment_change_password_success">Password has been successfully changed</string>
+
 </resources>

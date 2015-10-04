@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.activity;
 
+import android.app.Fragment;
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,8 +61,10 @@ import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment;
 import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment.OnAddToSpamClickListener;
 import com.uae.tra_smart_services.fragment.spam.SpamHistoryFragment.SpamType;
 import com.uae.tra_smart_services.fragment.tutorial.TutorialContainerFragment;
+import com.uae.tra_smart_services.fragment.tutorial.TutorialContainerFragment.OnTuorialClosedListener;
 import com.uae.tra_smart_services.fragment.user_profile.ChangePasswordFragment;
 import com.uae.tra_smart_services.fragment.user_profile.EditUserProfileFragment;
+import com.uae.tra_smart_services.fragment.user_profile.EditUserProfileFragment.OnUserProfileDataChangeListener;
 import com.uae.tra_smart_services.fragment.user_profile.ResetPasswordFragment;
 import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment;
 import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment.OnUserProfileClickListener;
@@ -74,6 +77,7 @@ import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.util.PersistentCookieStore;
 
 import java.net.CookieHandler;
@@ -90,7 +94,8 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
         OnCheckedChangeListener, OnFavoritesEventListener, OnFavoriteServicesSelectedListener,
         OnOpenUserProfileClickListener, OnUserProfileClickListener, OnHeaderStaticServiceSelectedListener,
         OnOpenAboutTraClickListener, OnReportSpamServiceSelectListener, OnAddToSpamClickListener,
-        OnActivateTutorialListener, OnDeviceVerifiedListener, TutorialContainerFragment.OnTuorialClosedListener {
+        OnActivateTutorialListener, OnDeviceVerifiedListener, OnTuorialClosedListener,
+        OnUserProfileDataChangeListener {
     //endregion
 
     private static final String KEY_CHECKED_TAB_ID = "CHECKED_TAB_ID";
@@ -274,9 +279,6 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
 
     private void openFragmentAfterLogin(final FragmentType _fragmentType, final boolean _useBackStack) {
         switch (_fragmentType) {
-            case USER_PROFILE:
-                replaceFragment(UserProfileFragment.newInstance(), _useBackStack);
-                break;
             case REPORT_SMS_SPAM:
                 replaceFragment(ReportSmsSpamFragment.newInstance(), _useBackStack);
                 break;
@@ -446,22 +448,16 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
     }
 
     @Override
-    public final void onOpenUserProfileClick() {
-        openFragmentIfAuthorized(UserProfileFragment.newInstance(), FragmentType.USER_PROFILE);
-//        if (TRAApplication.isLoggedIn()) {
-//            replaceFragmentWithBackStack(UserProfileFragment.newInstance());
-//        } else {
-//            Intent intent = AuthorizationActivity.getStartForResultIntent(this, FragmentType.USER_PROFILE);
-//            intent.putExtra(C.USE_BACK_STACK, true);
-//            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
-//        }
+    public final void onOpenUserProfileClick(final UserProfileResponseModel _userProfile) {
+        replaceFragmentWithBackStack(UserProfileFragment.newInstance(_userProfile));
+//        openFragmentIfAuthorized(UserProfileFragment.newInstance(), FragmentType.USER_PROFILE);
     }
 
     @Override
-    public final void onUserProfileItemClick(@UserProfileAction int _profileItem) {
+    public final void onUserProfileItemClick(Fragment _fragment, UserProfileResponseModel _userProfile, @UserProfileAction int _profileItem) {
         switch (_profileItem) {
             case UserProfileFragment.USER_PROFILE_EDIT_PROFILE:
-                replaceFragmentWithBackStack(EditUserProfileFragment.newInstance());
+                replaceFragmentWithBackStack(EditUserProfileFragment.newInstance(_fragment, _userProfile));
                 break;
             case UserProfileFragment.USER_PROFILE_CHANGE_PASSWORD:
                 replaceFragmentWithBackStack(ChangePasswordFragment.newInstance());
@@ -469,6 +465,15 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
             case UserProfileFragment.USER_PROFILE_RESET_PASSWORD:
                 replaceFragmentWithBackStack(ResetPasswordFragment.newInstance());
                 break;
+        }
+    }
+
+    @Override
+    public final void onUserProfileDataChange(final UserProfileResponseModel _userProfile) {
+        final Fragment fragment = getFragmentManager().findFragmentById(getContainerId());
+        if (fragment != null && fragment instanceof UserProfileFragment) {
+            final UserProfileFragment userProfileFragment = (UserProfileFragment) fragment;
+            userProfileFragment.updateUserProfileData(_userProfile);
         }
     }
 
@@ -534,5 +539,13 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
     @Override
     public void onTutorialClosed() {
         bottomNavRadios.check(R.id.rbSettings_BNRG);
+    }
+
+    @Override
+    public void onBackPressed() {
+        final BaseFragment fragment = (BaseFragment) getFragmentManager().findFragmentById(getContainerId());
+        if (fragment == null || !fragment.onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 }

@@ -253,6 +253,10 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         return (T) rootView.findViewById(_id);
     }
 
+    public boolean onBackPressed() {
+        return false;
+    }
+
     public interface ThemaDefiner {
         String getThemeStringValue();
     }

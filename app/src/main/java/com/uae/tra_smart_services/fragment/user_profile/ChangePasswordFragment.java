@@ -1,28 +1,44 @@
 package com.uae.tra_smart_services.fragment.user_profile;
 
+import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.octo.android.robospice.persistence.DurationInMillis;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.customviews.ProfileController;
 import com.uae.tra_smart_services.customviews.ProfileController.ControllerButton;
 import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButtonClickListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.interfaces.Loader.BackButton;
+import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
+import com.uae.tra_smart_services.rest.robo_requests.ChangePasswordRequest;
+
+import retrofit.client.Response;
 
 /**
  * Created by mobimaks on 08.09.2015.
  */
 public class ChangePasswordFragment extends BaseFragment implements OnCheckedChangeListener, OnControllerButtonClickListener {
 
+    private static final String KEY_CHANGE_PASSWORD_REQUEST = "CHANGE_PASSWORD_REQUEST";
+
     private HexagonView hvUserAvatar;
     private EditText etOldPassword, etNewPassword, etNewPasswordRetype;
     private ToggleButton tbOldPassword, tgNewPassword, tbNewPasswordRetype;
     private ProfileController pcProfileController;
+
+    private ChangePasswordRequest mChangePasswordRequest;
+    private ChangePasswordRequestListener mChangePasswordRequestListener;
 
     public static ChangePasswordFragment newInstance() {
         return new ChangePasswordFragment();
@@ -51,6 +67,18 @@ public class ChangePasswordFragment extends BaseFragment implements OnCheckedCha
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mChangePasswordRequestListener = new ChangePasswordRequestListener();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getSpiceManager().removeDataFromCache(Response.class, KEY_CHANGE_PASSWORD_REQUEST);
+    }
+
+    @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
             case R.id.tbOldPassword_FCP:
@@ -76,6 +104,9 @@ public class ChangePasswordFragment extends BaseFragment implements OnCheckedCha
                 getFragmentManager().popBackStack();
                 break;
             case ProfileController.BUTTON_CONFIRM:
+                if (validateData()) {
+                    changePassword();
+                }
                 break;
             case ProfileController.BUTTON_RESET:
                 clearAllFields();
@@ -83,10 +114,72 @@ public class ChangePasswordFragment extends BaseFragment implements OnCheckedCha
         }
     }
 
+    private boolean validateData() {
+        final String newPass = etNewPassword.getText().toString().trim();
+        final String newPassRetype = etNewPasswordRetype.getText().toString().trim();
+
+        if (!newPass.equals(newPassRetype)) {
+            Toast.makeText(getActivity(), R.string.error_password_confirm, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (etOldPassword.getText().toString().trim().isEmpty() || newPass.isEmpty() || newPassRetype.isEmpty()) {
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void changePassword() {
+        mChangePasswordRequest = new ChangePasswordRequest(etOldPassword.getText().toString(), etNewPassword.getText().toString());
+
+        hideKeyboard(getView());
+        loaderOverlayShow(getString(R.string.fragment_edit_user_profile_saving), mChangePasswordRequestListener);
+        loaderOverlayButtonBehavior(mChangePasswordRequestListener);
+        getSpiceManager().execute(mChangePasswordRequest, KEY_CHANGE_PASSWORD_REQUEST,
+                DurationInMillis.ALWAYS_EXPIRED, mChangePasswordRequestListener);
+    }
+
     private void clearAllFields() {
         etOldPassword.getText().clear();
         etNewPassword.getText().clear();
         etNewPasswordRetype.getText().clear();
+    }
+
+    private class ChangePasswordRequestListener implements RequestListener<Response>, BackButton, Cancelled {
+
+        private boolean isRequestSuccess;
+
+        @Override
+        public void onRequestSuccess(Response result) {
+            getSpiceManager().removeDataFromCache(Response.class, KEY_CHANGE_PASSWORD_REQUEST);
+            if (isAdded() && result != null) {
+                isRequestSuccess = true;
+                loaderOverlaySuccess(getString(R.string.fragment_change_password_success));
+            }
+        }
+
+        @Override
+        public void onBackButtonPressed(LoaderView.State _currentState) {
+            getFragmentManager().popBackStackImmediate();
+            if (isRequestSuccess) {
+                getFragmentManager().popBackStackImmediate();
+            }
+        }
+
+        @Override
+        public void onLoadingCanceled() {
+            isRequestSuccess = false;
+            if (getSpiceManager().isStarted()) {
+                getSpiceManager().cancel(mChangePasswordRequest);
+                getSpiceManager().removeDataFromCache(Response.class, KEY_CHANGE_PASSWORD_REQUEST);
+            }
+        }
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            getSpiceManager().removeDataFromCache(Response.class, KEY_CHANGE_PASSWORD_REQUEST);
+            processError(spiceException);
+        }
     }
 
     @Override
