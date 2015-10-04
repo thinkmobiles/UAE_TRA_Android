@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -41,6 +41,7 @@ import java.util.List;
 import retrofit.client.Response;
 
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.INTERNET_SPEED_TEST;
+import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.DOMAIN_CHECK_FRAGMENT;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.POOR_COVERAGE_SERVICE;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.SMS_SPAM_SERVICE;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.VERIFICATION_SERVICE;
@@ -145,9 +146,6 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
                     mHexagonalHeader.setAnimationProgress(mAnimationProgress);
                     mHexagonalButtonsLayout.setAnimationProgress(mAnimationProgress);
                 }
-
-
-                Log.d(RECYCLER_TAG, "Scrolled - " + String.valueOf(dy));
             }
         });
         mHexagonalButtonsLayout.setServiceSelectedListener(this);
@@ -187,8 +185,10 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
     @Override
     protected void initData() {
+        isCollapsed = true;
         mHexagonalHeaderAnimator = ValueAnimator.ofFloat(0f, 1f);
         mHexagonalHeaderAnimator.setDuration(600);
+        mHexagonalHeaderAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         mHexagonalHeaderAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -200,6 +200,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
         mHexagonHeaderReverseAnimator = ValueAnimator.ofFloat(1f, 0f);
         mHexagonHeaderReverseAnimator.setDuration(600);
+        mHexagonHeaderReverseAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         mHexagonHeaderReverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -223,7 +224,6 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
     private void initServiceList() {
         mDataSet = new ArrayList<>(Service.getSecondaryServices());
-        mDataSet.addAll(Service.getSecondaryServices());
     }
 
     @Override
@@ -241,8 +241,8 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
             mStaticServiceSelectListener.onStaticServiceSelect(SMS_SPAM_SERVICE);
         } else if (POOR_COVERAGE_SERVICE.isEquals(_id)) {
             mStaticServiceSelectListener.onStaticServiceSelect(POOR_COVERAGE_SERVICE);
-        } else if (INTERNET_SPEED_TEST.isEquals(_id)) {
-            mStaticServiceSelectListener.onStaticServiceSelect(INTERNET_SPEED_TEST);
+        } else if (DOMAIN_CHECK_FRAGMENT.isEquals(_id)) {
+            mStaticServiceSelectListener.onStaticServiceSelect(DOMAIN_CHECK_FRAGMENT);
         }
     }
 

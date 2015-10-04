@@ -179,6 +179,7 @@
     <string name="hexagon_button_spam">رسائل غير مرغوبة</string>
     <string name="hexagon_button_coverage">تغطية</string>
     <string name="hexagon_button_internet">انترنت</string>
+    <string name="hexagon_button_domain_check">تحقق من خدمة</string>
     <string name="fragment_favorites_add_service_done">تم</string>
     <string name="fragment_favorites_add_service_search">بحث</string>
     <string name="fragment_favorites_menu_add">إضافة خدمة</string>

@@ -65,6 +65,10 @@ public enum Service {
         }
     },
     DOMAIN_CHECK {
+        protected boolean isStaticMainScreenService() {
+            return true;
+        }
+
         @Override
         @StringRes
         public int getTitleRes() {
@@ -216,7 +220,8 @@ public enum Service {
             return R.drawable.ic_coverage_gray;
         }
 
-//    }, INTERNET_SPEEDTEST {
+    };
+//    , INTERNET_SPEEDTEST {
 //        @Override
 //        protected boolean isStaticMainScreenService() {
 //            return true;
@@ -231,7 +236,7 @@ public enum Service {
 //        public int getDrawableRes() {
 //            return R.drawable.ic_internet_gray;
 //        }
-    };
+//    };
 
     @DrawableRes
     public int getDrawableRes() {
