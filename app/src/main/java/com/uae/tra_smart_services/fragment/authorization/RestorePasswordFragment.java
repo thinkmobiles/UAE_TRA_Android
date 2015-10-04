@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.fragment;
+package com.uae.tra_smart_services.fragment.authorization;
 
 import android.text.TextUtils;
 import android.util.Log;

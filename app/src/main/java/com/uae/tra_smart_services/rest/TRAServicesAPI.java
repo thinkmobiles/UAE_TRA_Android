@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.rest;
 
+import com.uae.tra_smart_services.rest.model.request.ChangePasswordModel;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
@@ -10,19 +11,23 @@ import com.uae.tra_smart_services.rest.model.request.RegisterModel;
 import com.uae.tra_smart_services.rest.model.request.RestorePasswordRequestModel;
 import com.uae.tra_smart_services.rest.model.request.SmsBlockRequestModel;
 import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
+import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
+import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Query;
 
+import static com.uae.tra_smart_services.global.ServerConstants.CHANGE_PASSWORD;
 import static com.uae.tra_smart_services.global.ServerConstants.CHECK_WHO_IS_AVAILABLE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.CHECK_WHO_IS_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ABOUT_SERVICE_PROVIDER_URL;
@@ -45,6 +50,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.SEARCH_DEVICE_BY
 import static com.uae.tra_smart_services.global.ServerConstants.SEND_SUGGESTION_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SMS_SPAM_BLOCK_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SMS_SPAM_REPORT_URL;
+import static com.uae.tra_smart_services.global.ServerConstants.USER_PROFILE;
 
 /**
  * Created by Mikazme on 13/08/2015.
@@ -64,8 +70,8 @@ public interface TRAServicesAPI {
 
     @GET(SEARCH_DEVICE_BY_BRAND_NAME_URL)
     SearchDeviceResponseModel.List searchDeviceByBrandName(@Query(PARAMETER_DEVICE_BRAND) String _brand,
-                                                 @Query(PARAMETER_START_OFFSET) Integer _start,
-                                                 @Query(PARAMETER_END_LIMIT) Integer _end);
+                                                           @Query(PARAMETER_START_OFFSET) Integer _start,
+                                                           @Query(PARAMETER_END_LIMIT) Integer _end);
 
     @POST(RATING_SERVICE_URL)
     RatingServiceResponseModel ratingService(@Body RatingServiceRequestModel _ratingServiceModel);
@@ -107,4 +113,13 @@ public interface TRAServicesAPI {
 
     @POST(LOGOUT_URL)
     Response logout();
+
+    @GET(USER_PROFILE)
+    UserProfileResponseModel getUserProfile();
+
+    @PUT(USER_PROFILE)
+    UserProfileResponseModel editUserProfile(@Body UserNameModel _userName);
+
+    @PUT(CHANGE_PASSWORD)
+    Response changePassword(@Body ChangePasswordModel _changePasswordModel);
 }

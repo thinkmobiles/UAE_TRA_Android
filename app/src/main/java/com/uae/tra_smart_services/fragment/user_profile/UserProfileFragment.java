@@ -1,8 +1,11 @@
 package com.uae.tra_smart_services.fragment.user_profile;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -14,8 +17,8 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.HexagonView;
-import com.uae.tra_smart_services.entities.UserProfile;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.LogoutRequest;
 import com.uae.tra_smart_services.util.PreferenceManager;
 
@@ -30,6 +33,7 @@ import retrofit.client.Response;
 public final class UserProfileFragment extends BaseFragment implements OnClickListener {
 
     private static final String KEY_LOGOUT_REQUEST = "LOGOUT_REQUEST";
+    private static final String KEY_USER_PROFILE_MODEL = "USER_PROFILE_MODEL";
 
     public static final int USER_PROFILE_EDIT_PROFILE = 0;
     public static final int USER_PROFILE_CHANGE_PASSWORD = 1;
@@ -43,13 +47,20 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
     private HexagonView hvUserAvatar;
     private TextView tvUsername;
-    private LinearLayout llEditProfile, llChangePassword,/* llResetPassword, */llLogout;
+    private LinearLayout llEditProfile, llChangePassword,/* llResetPassword, */
+            llLogout;
+
+    private UserProfileResponseModel mUserProfile;
 
     private OnUserProfileClickListener mProfileClickListener;
     private LogoutRequest mLogoutRequest;
 
-    public static UserProfileFragment newInstance() {
-        return new UserProfileFragment();
+    public static UserProfileFragment newInstance(final UserProfileResponseModel _userProfile) {
+        final UserProfileFragment fragment = new UserProfileFragment();
+        final Bundle args = new Bundle();
+        args.putParcelable(KEY_USER_PROFILE_MODEL, _userProfile);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -57,6 +68,17 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         super.onAttach(_activity);
         if (_activity instanceof OnUserProfileClickListener) {
             mProfileClickListener = (OnUserProfileClickListener) _activity;
+        }
+    }
+
+    @Override
+    public void onCreate(final Bundle _savedInstanceState) {
+        super.onCreate(_savedInstanceState);
+        Log.d("ProfileEditCallback", "UserProfileFragment onCreate");
+        if (_savedInstanceState == null) {
+            mUserProfile = getArguments().getParcelable(KEY_USER_PROFILE_MODEL);
+        } else {
+            mUserProfile = _savedInstanceState.getParcelable(KEY_USER_PROFILE_MODEL);
         }
     }
 
@@ -84,8 +106,19 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final UserProfile profile = PreferenceManager.getSavedUserProfile(getActivity());
-        tvUsername.setText(profile.getUserName());
+//        final UserProfile profile = PreferenceManager.getSavedUserProfile(getActivity());
+//        tvUsername.setText(profile.getUserName());
+
+        if (mUserProfile != null) {
+            tvUsername.setText(mUserProfile.getUsername());
+        }
+        Log.d("ActivityResult", "onActivityCreated");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("ActivityResult", "onActivityResult" + requestCode);
     }
 
     @Override
@@ -93,10 +126,10 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         if (mProfileClickListener != null) {
             switch (_view.getId()) {
                 case R.id.llEditProfile_FUP:
-                    mProfileClickListener.onUserProfileItemClick(USER_PROFILE_EDIT_PROFILE);
+                    mProfileClickListener.onUserProfileItemClick(this, mUserProfile, USER_PROFILE_EDIT_PROFILE);
                     break;
                 case R.id.llChangePassword_FUP:
-                    mProfileClickListener.onUserProfileItemClick(USER_PROFILE_CHANGE_PASSWORD);
+                    mProfileClickListener.onUserProfileItemClick(this, mUserProfile, USER_PROFILE_CHANGE_PASSWORD);
                     break;
 //                case R.id.llResetPassword_FUP:
 //                    mProfileClickListener.onUserProfileItemClick(USER_PROFILE_RESET_PASSWORD);
@@ -134,6 +167,17 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
     };
 
+    public final void updateUserProfileData(final UserProfileResponseModel _userProfile) {
+        Log.d("ProfileEditCallback", "updateUserProfileData");
+        mUserProfile = _userProfile;
+        tvUsername.setText(mUserProfile.getUsername());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(KEY_USER_PROFILE_MODEL, mUserProfile);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onDetach() {
@@ -152,7 +196,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
     }
 
     public interface OnUserProfileClickListener {
-        void onUserProfileItemClick(@UserProfileAction int _profileItem);
+        void onUserProfileItemClick(Fragment _targetFragment, UserProfileResponseModel _userProfile, @UserProfileAction int _profileItem);
     }
 
 }

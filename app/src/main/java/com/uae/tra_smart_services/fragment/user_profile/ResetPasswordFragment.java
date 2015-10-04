@@ -6,6 +6,7 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 /**
  * Created by mobimaks on 08.09.2015.
  */
+@Deprecated
 public class ResetPasswordFragment extends BaseFragment {
 
     public static ResetPasswordFragment newInstance() {

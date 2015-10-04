@@ -63,6 +63,8 @@ public final class ServerConstants {
     public static final String LOGIN_URL = "/crm/signIn";
     public static final String RESTORE_PASS_URL = "/crm/???????"; // Not defined yet
     public static final String LOGOUT_URL = "/crm/signOut";
+    public static final String USER_PROFILE = "/crm/profile";
+    public static final String CHANGE_PASSWORD = "/crm/changePass";
 
     //!!!!!!!!!!!! API PARAMETERS !!!!!!!!!!!!!!!!!!
     public static final String PARAMETER_CHECK_URL = "checkUrl";
