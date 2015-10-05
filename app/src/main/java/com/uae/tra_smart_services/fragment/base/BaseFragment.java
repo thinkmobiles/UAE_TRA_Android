@@ -140,10 +140,14 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     }
 
     protected final void loaderOverlayShow(String _title, LoaderMarker _callBack) {
+        loaderOverlayShow(_title, _callBack, true);
+    }
+
+    protected final void loaderOverlayShow(String _title, LoaderMarker _callBack, boolean _showRating) {
         getFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, (Fragment) (loader = LoaderFragment.newInstance(_title, _callBack)), LoaderFragment.TAG)
+                .add(R.id.rlGlobalContainer_AH, (Fragment) (loader = LoaderFragment.newInstance(_title, _callBack, _showRating)), LoaderFragment.TAG)
                 .commit();
     }
 

@@ -266,7 +266,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
     }
 
     private void loadAndOpenProfile() {
-        loaderOverlayShow(getString(R.string.str_loading), mLoadProfileListener);
+        loaderOverlayShow(getString(R.string.str_loading), mLoadProfileListener, false);
         loaderOverlayButtonBehavior(mLoadProfileListener);
         mUserProfileRequest = new UserProfileRequest();
         getSpiceManager().execute(mUserProfileRequest, KEY_LOAD_USER_PROFILE, DurationInMillis.ALWAYS_EXPIRED, mLoadProfileListener);

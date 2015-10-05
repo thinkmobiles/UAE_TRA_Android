@@ -11,7 +11,10 @@ import android.view.MenuItem;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.ServiceRatingView.CallBacks;
+import com.uae.tra_smart_services.customviews.LoaderFragment.CallBacks;
+import com.uae.tra_smart_services.customviews.LoaderView;
+import com.uae.tra_smart_services.customviews.ServiceRatingView;
+import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.OpenServiceInfo;
@@ -73,9 +76,12 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
     }
 
     @Override
-    public void onRate(int _rate) {
+    public void onRate(int _rate, LoaderView.State _state){
         final String[] rateNames = getResources().getStringArray(R.array.rate_names);
         getFragmentManager().popBackStackImmediate();
+        if(_state == LoaderView.State.SUCCESS || _state == LoaderView.State.FAILURE){
+            getFragmentManager().popBackStackImmediate();
+        }
         sendRating(new RatingServiceRequestModel(getServiceName(), _rate, rateNames[_rate - 1]));
     }
 

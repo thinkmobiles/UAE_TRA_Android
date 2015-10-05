@@ -29,10 +29,16 @@ import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
  */
 public class DomainCheckerFragment extends BaseServiceFragment
         implements View.OnClickListener, AlertDialogFragment.OnOkListener/*, Loader.Cancelled*/{
-
+    /** Views */
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
+    /** Listeners */
     private HexagonHomeFragment.OnServiceSelectListener mServiceSelectListener;
+    /** Requests */
+    private DomainInfoCheckRequest mDomainInfoCheckRequest;
+    private DomainAvailabilityCheckRequest mDomainAvailabilityCheckRequest;
+    /** Entities */
+    private CustomFilterPool<String> filters;
 
     public static DomainCheckerFragment newInstance() {
         return new DomainCheckerFragment();
@@ -75,8 +81,6 @@ public class DomainCheckerFragment extends BaseServiceFragment
         btnWhoIS.setOnClickListener(this);
     }
 
-    private CustomFilterPool<String> filters;
-
     @Override
     protected final void initData() {
         super.initData();
@@ -103,7 +107,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
             hideKeyboard(_view);
-            loaderOverlayShow(getString(R.string.str_checking), this);
+            loaderOverlayShow(getString(R.string.str_checking), this, false);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
                     checkAvailability(domain);
@@ -116,7 +120,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
             showMessage(R.string.str_error, R.string.str_invalid_url);
         }
     }
-    private DomainAvailabilityCheckRequest mDomainAvailabilityCheckRequest;
+
     private void checkAvailability(String _domain) {
         mDomainAvailabilityCheckRequest = new DomainAvailabilityCheckRequest(_domain);
         getSpiceManager()
@@ -126,7 +130,6 @@ public class DomainCheckerFragment extends BaseServiceFragment
                 );
     }
 
-    private DomainInfoCheckRequest mDomainInfoCheckRequest;
     private void checkWhoIs(String _domain) {
         mDomainInfoCheckRequest = new DomainInfoCheckRequest(_domain);
         getSpiceManager()
@@ -208,7 +211,6 @@ public class DomainCheckerFragment extends BaseServiceFragment
                         mServiceSelectListener.onServiceSelect(Service.DOMAIN_CHECK_INFO, _reponseModel);
                     }
                 });
-
             } else {
                 loaderOverlayCancelled(String.format(getString(R.string.str_url_doesnot_exist), mDomain));
             }
