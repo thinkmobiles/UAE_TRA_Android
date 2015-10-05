@@ -15,10 +15,10 @@
 
         <LinearLayout
             android:id="@+id/llSignInFields"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/etEmail_FRP"
@@ -28,77 +28,20 @@
                 android:hint="@string/login_username_hint"
                 android:inputType="textPersonName" />
 
-            <View style="@style/AuthorizationFieldsSeparator" />
+            <ProgressBar
+                android:id="@+id/pbProgress"
+                style="@android:style/Widget.ProgressBar.Large"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
 
-            <EditText
-                android:id="@+id/etPassword_FR"
-                style="@style/AuthorizationFields"
-                android:drawableStart="@drawable/ic_pass"
-                android:drawablePadding="@dimen/dp_transparent_fields_padding"
-                android:hint="@string/str_password"
-                android:inputType="textPassword" />
-
-            <View style="@style/AuthorizationFieldsSeparator" />
         </LinearLayout>
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/llSignInActions"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/btnRestorePassword_FLI"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@id/llSignInFields"-->
-                <!--android:autoLink="all"-->
-                <!--android:gravity="center"-->
-                <!--android:padding="@dimen/dp_forgot_pass_static_text_padding"-->
-                <!--android:text="@string/str_forgot_password"-->
-                <!--android:textColor="@color/hex_auth_static_text_color"-->
-                <!--android:textSize="@dimen/sp_authorization_button_text_size" />-->
-
-            <Button
-                android:id="@+id/btnDoRestorePass_FRP"
-                style="@style/AuthorizationButtons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/str_login"/>
-
-
-        <View style="@style/AuthorizationFieldsSeparator"
-              android:layout_marginTop="20dp"/>
-
-        <LinearLayout
+        <Button
+            android:id="@+id/btnDoRestorePass_FRP"
+            style="@style/AuthorizationButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvForgotPass_FLI"
-                style="@style/AuthorizationTextViews"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/str_forgot_password"/>
-
-            <View style="@style/AuthorizationFieldsSeparatorVertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:id="@+id/tvRegisterNow_FLI"
-                style="@style/AuthorizationTextViews"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/str_register" />
-
-        </LinearLayout>
-
-        <!--</LinearLayout>-->
+            android:text="@string/str_login"/>
 
     </LinearLayout>
 </ScrollView>

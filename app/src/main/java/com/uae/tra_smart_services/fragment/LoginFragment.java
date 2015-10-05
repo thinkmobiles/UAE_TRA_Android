@@ -56,8 +56,8 @@ public class LoginFragment extends BaseAuthorizationFragment
         etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_pass, R.attr.authorizationDrawableColors), null, null, null);
         // Actions
         btnLogIn = findView(R.id.btnDoRestorePass_FRP);
-        tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
-        tvForgotPassword = findView(R.id.tvForgotPass_FLI);
+//        tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
+//        tvForgotPassword = findView(R.id.tvForgotPass_FLI);
 
         if (BuildConfig.DEBUG) {
             btnLogIn.setOnLongClickListener(new View.OnLongClickListener() {
@@ -92,12 +92,12 @@ public class LoginFragment extends BaseAuthorizationFragment
             case R.id.btnDoRestorePass_FRP:
                 doLogIn();
                 break;
-            case R.id.tvRegisterNow_FLI:
+            /*case R.id.tvRegisterNow_FLI:
                 actionsListener.onOpenRegisterScreen();
                 break;
             case R.id.tvForgotPass_FLI:
                     actionsListener.onOpenRestorePassScreen();
-                break;
+                break;*/
         }
     }
 
