@@ -103,7 +103,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
             hideKeyboard(_view);
-            loaderOverlayShow(getString(R.string.str_checking), this);
+            loaderOverlayShow(getString(R.string.str_checking), this, false);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
                     checkAvailability(domain);
