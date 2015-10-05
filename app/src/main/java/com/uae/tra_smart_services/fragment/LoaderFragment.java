@@ -20,7 +20,7 @@ import com.uae.tra_smart_services.util.ImageUtils;
 /**
  * Created by ak-buffalo on 21.09.15.
  */
-public class LoaderFragment extends BaseFragment implements View.OnClickListener, Loader {
+public class LoaderFragment extends BaseFragment implements View.OnClickListener, Loader, ServiceRatingView.CallBacks {
     /** Constants */
     public static final String TAG = LoaderFragment.class.getName();
     private static final String MSG = "message";
@@ -32,7 +32,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     private BackButton afterBackButton;
     /** Listeners */
     private static Loader.Cancelled mOnLoadingListener;
-    private static ServiceRatingView.CallBacks mRatingCallbacks;
+    private static LoaderFragment.CallBacks mRatingCallbacks;
 
     public static LoaderFragment newInstance(String _msg, LoaderMarker _listener) {
         Bundle args = new Bundle();
@@ -40,8 +40,8 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         if(_listener instanceof Loader.Cancelled) {
             mOnLoadingListener = (Loader.Cancelled) _listener;
         }
-        if(_listener instanceof ServiceRatingView.CallBacks) {
-            mRatingCallbacks = (ServiceRatingView.CallBacks) _listener;
+        if(_listener instanceof LoaderFragment.CallBacks) {
+            mRatingCallbacks = (LoaderFragment.CallBacks) _listener;
         }
         LoaderFragment fragment = new LoaderFragment();
         fragment.setArguments(args);
@@ -64,7 +64,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         lvLoader.setTag(bgColor);
         tvLoaderTitleText = findView(R.id.tvLoaderTitleText);
         srvRating = findView(R.id.srvRating_FL);
-        srvRating.init(mRatingCallbacks);
+        srvRating.init(this);
         tvBackOrCancelBtn = findView(R.id.tvLoaderBackButton);
     }
 
@@ -155,6 +155,15 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         int pixel = bitmap.getPixel(bitmap.getWidth() / 2, bitmap.getHeight() / 2);
 
         return Color.rgb(Color.red(pixel), Color.green(pixel), Color.blue(pixel));
+    }
+
+    @Override
+    public void onRate(int _rate) {
+        mRatingCallbacks.onRate(_rate, lvLoader.getCurrentState());
+    }
+
+    public interface CallBacks extends LoaderMarker {
+        void onRate(int _rate, LoaderView.State _state);
     }
 
     @Override

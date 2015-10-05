@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.customviews.ServiceRatingView;
+import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.OpenServiceInfo;
@@ -22,7 +24,7 @@ import com.uae.tra_smart_services.rest.robo_requests.RatingServiceRequest;
 /**
  * Created by ak-buffalo on 27.08.15.
  */
-public abstract class BaseServiceFragment extends BaseFragment implements Cancelled, ServiceRatingView.CallBacks {
+public abstract class BaseServiceFragment extends BaseFragment implements Cancelled, LoaderFragment.CallBacks {
 
     private OpenServiceInfo mOpenServiceInfoListener;
 
@@ -69,9 +71,12 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
     protected abstract Service getServiceType();
 
     @Override
-    public void onRate(int _rate){
+    public void onRate(int _rate, LoaderView.State _state){
         final String[] rateNames = getResources().getStringArray(R.array.rate_names);
         getFragmentManager().popBackStackImmediate();
+        if(_state == LoaderView.State.SUCCESS || _state == LoaderView.State.FAILURE){
+            getFragmentManager().popBackStackImmediate();
+        }
         sendRating(new RatingServiceRequestModel(getServiceName(), _rate, rateNames[_rate - 1]));
     }
 
