@@ -32,6 +32,7 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.ImageSource;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.Arrays;
@@ -205,7 +206,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     }
 
     private void sendComplain() {
-        loaderOverlayShow(mContext.getString(R.string.str_sending), this);
+        loaderOverlayShow(mContext.getString(R.string.str_sending), (LoaderMarker) this);
         loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {

@@ -410,6 +410,8 @@
 
     <string name="fragment_change_password_success">Password has been successfully changed</string>
 
+    <string name="rating_view_title">Choose Rating</string>
+
     <string name="fragment_innovation_idea_title">Innovative Ideas for</string>
 
     <string-array name="fragment_innovation_ideas">
