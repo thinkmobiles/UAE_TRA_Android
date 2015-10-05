@@ -100,6 +100,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:paddingTop="8dp"
                 android:layout_height="wrap_content">
 
                 <EditText
@@ -107,37 +108,75 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
-                    android:singleLine="true"
                     android:background="@android:color/transparent"
                     android:hint="@string/str_title"
+                    android:singleLine="true"
                     android:textColor="?attr/colorPrimary"
                     android:textColorHint="?attr/colorPrimary"/>
 
                 <View
                     android:id="@+id/vTitleDivider_FIS"
                     android:layout_width="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
                     android:layout_height="1dp"
                     android:layout_below="@id/etTitle_FIS"
                     android:background="?attr/colorPrimary"/>
 
-                <Spinner
-                    android:id="@+id/sInnovationSpinner_FIS"
-                    android:layout_width="match_parent"
-                    android:background="@android:color/transparent"
+                <com.uae.tra_smart_services.customviews.ThemedImageView
+                    android:id="@+id/tivArrowIcon_FIS"
+                    android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    tools:listitem="@layout/spinner_item_spam_service_provider"
+                    android:paddingStart="8dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/vTitleDivider_FIS"
-                    android:layout_marginTop="12dp"/>
+                    android:scaleType="center"
+                    app:imageSrc="@drawable/ic_profile_arrow_down"
+                    app:tintColor="?attr/colorPrimary"/>
+
+                <Spinner
+                    android:id="@+id/sInnovateIdea_FIS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/tivArrowIcon_FIS"
+                    android:layout_alignTop="@id/tivArrowIcon_FIS"
+                    android:layout_toStartOf="@id/tivArrowIcon_FIS"
+                    android:background="@android:color/transparent"
+                    android:visibility="invisible"
+                    tools:listitem="@layout/spinner_item_spam_service_provider"/>
+
+                <TextView
+                    android:id="@+id/tvInnovativeIdea_FIS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/tivArrowIcon_FIS"
+                    android:layout_alignTop="@id/tivArrowIcon_FIS"
+                    android:layout_toStartOf="@id/tivArrowIcon_FIS"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="@string/fragment_innovation_idea_title"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="18sp"
+                    android:visibility="visible"
+                    tools:listitem="@layout/spinner_item_spam_service_provider"/>
+
+                <View
+                    android:id="@+id/vInnovativeIdeaDivider_FIS"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/tvInnovativeIdea_FIS"
+                    android:background="?attr/colorPrimary"/>
 
                 <com.uae.tra_smart_services.customviews.ThemedImageView
                     android:id="@+id/tivAddAttachment_FIS"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@id/sInnovationSpinner_FIS"
-                    android:layout_marginTop="12dp"
+                    android:layout_below="@id/vInnovativeIdeaDivider_FIS"
                     android:background="?attr/selectableItemBackground"
                     android:scaleType="centerInside"
                     android:visibility="gone"
@@ -149,7 +188,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_alignTop="@id/tivAddAttachment_FIS"
-                    android:layout_below="@id/sInnovationSpinner_FIS"
+                    android:layout_below="@id/vInnovativeIdeaDivider_FIS"
                     android:layout_marginEnd="16dp"
                     android:layout_toStartOf="@id/tivAddAttachment_FIS"
                     android:background="@android:color/transparent"

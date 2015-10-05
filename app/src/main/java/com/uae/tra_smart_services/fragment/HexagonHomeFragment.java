@@ -40,7 +40,6 @@ import java.util.List;
 
 import retrofit.client.Response;
 
-import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.INTERNET_SPEED_TEST;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.DOMAIN_CHECK_FRAGMENT;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.POOR_COVERAGE_SERVICE;
 import static com.uae.tra_smart_services.customviews.HexagonalButtonsLayout.StaticService.SMS_SPAM_SERVICE;

@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -20,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.adapter.InnovationSpinnerAdapter;
+import com.uae.tra_smart_services.adapter.InnovationIdeaAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog;
 import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog.OnImageSourceSelectListener;
@@ -32,15 +34,17 @@ import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.util.ImageUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Created by and on 29.09.15.
  */
 
-public class InnovationsFragment extends BaseFragment
-        implements OnClickListener, OnCheckedChangeListener, OnImageGetCallback, OnImageSourceSelectListener, Cancelled {
+public class InnovationsFragment extends BaseFragment implements //region Interfaces
+        OnClickListener, OnCheckedChangeListener, OnImageGetCallback,
+        OnImageSourceSelectListener, Cancelled, OnItemSelectedListener {//endregion
+
+    private static final String KEY_IS_SPINNER_CLICKED = "IS_SPINNER_CLICKED";
 
     private EditText etTitle, etMessageDescription;
     private ImageView ivAddAttachment;
@@ -49,10 +53,14 @@ public class InnovationsFragment extends BaseFragment
     private TextView tvPublic, tvPrivate;
     private Spinner sInnovationSpinner;
     private Context mContext;
+    private TextView tvInnovativeIdea;
 
     private int color;
 
     private AttachmentManager mAttachmentManager;
+    private InnovationIdeaAdapter mIdeasAdapter;
+
+    private boolean mIsSpinnerClicked, mIsUserClick;
 
     @Override
     public void onLoadingCanceled() {
@@ -75,6 +83,10 @@ public class InnovationsFragment extends BaseFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAttachmentManager = new AttachmentManager(getActivity(), this);
+
+        if (savedInstanceState != null) {
+            mIsSpinnerClicked = savedInstanceState.getBoolean(KEY_IS_SPINNER_CLICKED);
+        }
     }
 
     @Override
@@ -87,7 +99,8 @@ public class InnovationsFragment extends BaseFragment
         tvPublic = findView(R.id.tvPublic);
         tvPrivate = findView(R.id.tvPrivate);
         swType = findView(R.id.swInnType);
-        sInnovationSpinner = findView(R.id.sInnovationSpinner_FIS);
+        sInnovationSpinner = findView(R.id.sInnovateIdea_FIS);
+        tvInnovativeIdea = findView(R.id.tvInnovativeIdea_FIS);
         color = etTitle.getCurrentHintTextColor();
 
         togglePrivacy(swType.isChecked());
@@ -99,6 +112,9 @@ public class InnovationsFragment extends BaseFragment
         ivAddAttachment.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         swType.setOnCheckedChangeListener(this);
+        tvInnovativeIdea.setOnClickListener(this);
+        sInnovationSpinner.setOnItemSelectedListener(this);
+        findView(R.id.tivArrowIcon_FIS).setOnClickListener(this);
     }
 
     @Override
@@ -107,17 +123,13 @@ public class InnovationsFragment extends BaseFragment
         if (savedInstanceState != null) {
             mAttachmentManager.onRestoreInstanceState(savedInstanceState);
         }
-        initInnovationSpinner();
+        initInnovationIdeaSpinner();
     }
 
-    private void initInnovationSpinner() {
-        final List<String> stubData = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            stubData.add("Item " + (i + 1));
-        }
-
-        InnovationSpinnerAdapter stubAdapter = new InnovationSpinnerAdapter(getActivity(), stubData);
-        sInnovationSpinner.setAdapter(stubAdapter);
+    private void initInnovationIdeaSpinner() {
+        final String[] ideas = getResources().getStringArray(R.array.fragment_innovation_ideas);
+        mIdeasAdapter = new InnovationIdeaAdapter(getActivity(), Arrays.asList(ideas));
+        sInnovationSpinner.setAdapter(mIdeasAdapter);
     }
 
     @Override
@@ -138,7 +150,16 @@ public class InnovationsFragment extends BaseFragment
                     sendComplain();
                 }
                 break;
+            case R.id.tvInnovativeIdea_FIS:
+            case R.id.tivArrowIcon_FIS:
+                openInnovateIdeasSpinner();
+                break;
         }
+    }
+
+    private void openInnovateIdeasSpinner() {
+        mIsUserClick = true;
+        sInnovationSpinner.performClick();
     }
 
     protected void openImagePicker() {
@@ -203,12 +224,26 @@ public class InnovationsFragment extends BaseFragment
     }
 
     @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (mIsUserClick || mIsSpinnerClicked) {
+            tvInnovativeIdea.setVisibility(View.INVISIBLE);
+            sInnovationSpinner.setVisibility(View.VISIBLE);
+            mIsSpinnerClicked = true;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    @Override
     public void onImageGet(Uri _uri) {
         ivAddAttachment.setImageDrawable(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_check, R.attr.authorizationDrawableColors));
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(KEY_IS_SPINNER_CLICKED, mIsSpinnerClicked);
         mAttachmentManager.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }

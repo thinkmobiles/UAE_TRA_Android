@@ -21,10 +21,12 @@
 
     <Space
         android:layout_width="16dp"
+        android:id="@+id/sSpace_SISSP"
         android:layout_height="match_parent"/>
 
     <com.uae.tra_smart_services.customviews.ThemedImageView
         android:layout_width="wrap_content"
+        android:id="@+id/tivArrowIcon_SISSP"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
         app:imageSrc="@drawable/ic_spam_arrow"
