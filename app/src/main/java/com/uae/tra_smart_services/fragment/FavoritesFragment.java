@@ -18,26 +18,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 
-import com.octo.android.robospice.persistence.DurationInMillis;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.FavoritesAdapter;
 import com.uae.tra_smart_services.adapter.FavoritesAdapter.OnFavoriteClickListener;
 import com.uae.tra_smart_services.customviews.DragFrameLayout;
 import com.uae.tra_smart_services.customviews.DragFrameLayout.OnItemDeleteListener;
 import com.uae.tra_smart_services.customviews.HexagonView;
-import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
-import com.uae.tra_smart_services.interfaces.Loader.BackButton;
-import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
-import com.uae.tra_smart_services.interfaces.Loader.Dismiss;
 import com.uae.tra_smart_services.interfaces.OpenServiceInfo;
-import com.uae.tra_smart_services.rest.model.response.ServiceInfoResponse;
-import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
-import com.uae.tra_smart_services.rest.robo_requests.ServiceInfoRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
@@ -49,9 +39,6 @@ import java.util.List;
 public final class FavoritesFragment extends BaseFragment
         implements OnFavoriteClickListener, OnItemDeleteListener, OnClickListener, OnQueryTextListener {
 
-    private static final String KEY_SERVICE_INFO_REQUEST = "SERVICE_INFO_REQUEST" + FavoritesFragment.class.getSimpleName() ;
-    private static final String KEY_SERVICE_INFO_MODEL = "SERVICE_INFO_MODEL";
-
     private DragFrameLayout dflContainer;
     private RecyclerView rvFavoritesList;
     private RelativeLayout rlEmptyContainer;
@@ -62,10 +49,6 @@ public final class FavoritesFragment extends BaseFragment
     private LinearLayoutManager mLinearLayoutManager;
 
     private OnFavoritesEventListener mFavoritesEventListener;
-
-    private ServiceInfoRequestListener mInfoRequestListener;
-    private ServiceInfoRequest mServiceInfoRequest;
-    private ServiceInfoResponse mServiceInfo;
 
     public static FavoritesFragment newInstance() {
         return new FavoritesFragment();
@@ -83,10 +66,6 @@ public final class FavoritesFragment extends BaseFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-        if (savedInstanceState != null) {
-            mServiceInfo = savedInstanceState.getParcelable(KEY_SERVICE_INFO_MODEL);
-        }
     }
 
     @Override
@@ -248,24 +227,15 @@ public final class FavoritesFragment extends BaseFragment
         if (mFavoritesEventListener != null) {
             hideKeyboard(getView());
             final Service service = mFavoritesAdapter.getItem(_position);
-            loadServiceInfo(service);
+            openServiceInfoIfCan(service);
         }
         Log.d(getClass().getSimpleName(), "Service info click: " + _position);
     }
 
-    private void loadServiceInfo(final Service service) {
-        final String serviceName;
-        if (mServiceInfo != null && mFavoritesEventListener != null) {
-            mFavoritesEventListener.onOpenServiceInfo(mServiceInfo);
-        } else if ((serviceName = service.getServiceName()) != null) {
-
-            loaderOverlayShow(getString(R.string.str_loading), mInfoRequestListener);
-            loaderOverlayButtonBehavior(mInfoRequestListener);
-
-            mServiceInfoRequest = new ServiceInfoRequest(serviceName, getResources().getConfiguration().locale.toString());
-
-            getSpiceManager().execute(mServiceInfoRequest, KEY_SERVICE_INFO_REQUEST,
-                    DurationInMillis.ALWAYS_EXPIRED, mInfoRequestListener);
+    private void openServiceInfoIfCan(final Service service) {
+        final String serviceName = service.getServiceName();
+        if (serviceName != null && mFavoritesEventListener != null) {
+            mFavoritesEventListener.onOpenServiceInfo(serviceName);
         }
     }
 
@@ -303,51 +273,6 @@ public final class FavoritesFragment extends BaseFragment
         } else {
             rlEmptyContainer.setVisibility(View.INVISIBLE);
             rvFavoritesList.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(KEY_SERVICE_INFO_MODEL, mServiceInfo);
-        super.onSaveInstanceState(outState);
-    }
-
-    private class ServiceInfoRequestListener implements RequestListener<ServiceInfoResponse>, BackButton, Cancelled, Dismiss {
-
-        @Override
-        public void onRequestSuccess(ServiceInfoResponse result) {
-            getSpiceManager().removeDataFromCache(ServiceInfoResponse.class, KEY_SERVICE_INFO_REQUEST);
-            if (isAdded() && result != null) {
-                mServiceInfo = result;
-                loaderOverlayDismissWithAction(this);
-            }
-        }
-
-        @Override
-        public void onBackButtonPressed(LoaderView.State _currentState) {
-            getFragmentManager().popBackStack();
-        }
-
-        @Override
-        public void onLoadingCanceled() {
-            if (getSpiceManager().isStarted()) {
-                getSpiceManager().cancel(mServiceInfoRequest);
-                getSpiceManager().removeDataFromCache(UserProfileResponseModel.class, KEY_SERVICE_INFO_REQUEST);
-            }
-        }
-
-        @Override
-        public void onLoadingDismissed() {
-            getFragmentManager().popBackStack();
-            if (mFavoritesEventListener != null) {
-                mFavoritesEventListener.onOpenServiceInfo(mServiceInfo);
-            }
-        }
-
-        @Override
-        public void onRequestFailure(SpiceException spiceException) {
-            getSpiceManager().removeDataFromCache(UserProfileResponseModel.class, KEY_SERVICE_INFO_REQUEST);
-            processError(spiceException);
         }
     }
 

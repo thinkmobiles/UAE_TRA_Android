@@ -166,7 +166,7 @@ public enum Service {
         @Override
         @DrawableRes
         public final int getDrawableRes() {
-            return R.drawable.ic_lock;
+            return R.drawable.ic_mob_br;
         }
 
         @Override

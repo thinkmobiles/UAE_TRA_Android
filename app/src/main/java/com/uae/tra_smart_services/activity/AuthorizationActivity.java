@@ -14,7 +14,7 @@ import com.uae.tra_smart_services.activity.base.BaseFragmentActivity;
 import com.uae.tra_smart_services.fragment.authorization.LoginFragment;
 import com.uae.tra_smart_services.fragment.authorization.RegisterFragment;
 import com.uae.tra_smart_services.fragment.authorization.RestorePasswordFragment;
-import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
+import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment.AuthorizationActionsListener;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.util.ImageUtils;
@@ -23,7 +23,7 @@ import com.uae.tra_smart_services.util.ImageUtils;
  * Created by ak-buffalo on 22.07.15.
  */
 public class AuthorizationActivity extends BaseFragmentActivity
-        implements BaseAuthorizationFragment.AuthorizationActionsListener, ToolbarTitleManager {
+        implements AuthorizationActionsListener, ToolbarTitleManager {
 
     private String mAction;
     private ImageView ivLogo, ivBackground;
@@ -144,6 +144,11 @@ public class AuthorizationActivity extends BaseFragmentActivity
     @Override
     protected int getContainerId() {
         return R.id.flContainer_AA;
+    }
+
+    @Override
+    protected int getGlobalContainerId() {
+        return getContainerId();
     }
 
     @Override

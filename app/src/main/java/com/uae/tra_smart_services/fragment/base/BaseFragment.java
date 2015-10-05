@@ -114,7 +114,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     }
 
     protected final void loaderDialogShow() {
-        loaderDialogShow("Loading...", null);
+        loaderDialogShow(getString(R.string.str_loading), null);
     }
 
     protected final void loaderDialogShow(String _title, Loader.Cancelled _callBack){

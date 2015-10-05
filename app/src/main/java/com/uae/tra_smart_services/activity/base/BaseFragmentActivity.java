@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.view.inputmethod.InputMethodManager;
 
 import com.octo.android.robospice.SpiceManager;
-import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.SpiceLoader;
 import com.uae.tra_smart_services.rest.TRARestService;
@@ -48,9 +47,12 @@ public abstract class BaseFragmentActivity extends BaseActivity implements Spice
         getFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, _fragment)
+                .add(getGlobalContainerId(), _fragment)
                 .commit();
     }
+
+    @IdRes
+    protected abstract int getGlobalContainerId();
 
     protected final void addFragmentWithOutBackStack(final @NonNull BaseFragment _fragment) {
         getFragmentManager()
@@ -81,6 +83,14 @@ public abstract class BaseFragmentActivity extends BaseActivity implements Spice
         getFragmentManager()
                 .beginTransaction()
                 .replace(getContainerId(), _fragment)
+                .commit();
+    }
+
+    protected final void replaceFragmentWithBackStackGlobally(final @NonNull BaseFragment _fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .add(getGlobalContainerId(), _fragment)
                 .commit();
     }
 

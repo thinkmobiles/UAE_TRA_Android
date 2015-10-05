@@ -5,6 +5,7 @@ import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -43,7 +44,9 @@ import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment.OnDeviceVerifiedListener;
 import com.uae.tra_smart_services.fragment.MobileVerifiedInfoFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
+import com.uae.tra_smart_services.fragment.ServiceInfoDetailsFragment;
 import com.uae.tra_smart_services.fragment.ServiceInfoFragment;
+import com.uae.tra_smart_services.fragment.ServiceInfoFragment.OnOpenServiceInfoDetailsListener;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SettingsFragment.OnOpenAboutTraClickListener;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
@@ -69,6 +72,7 @@ import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment;
 import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment.OnUserProfileClickListener;
 import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment.UserProfileAction;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.global.C.ServiceName;
 import com.uae.tra_smart_services.global.HeaderStaticService;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.OnActivateTutorialListener;
@@ -76,7 +80,6 @@ import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
-import com.uae.tra_smart_services.rest.model.response.ServiceInfoResponse;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.util.PersistentCookieStore;
 
@@ -95,7 +98,7 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
         OnOpenUserProfileClickListener, OnUserProfileClickListener, OnHeaderStaticServiceSelectedListener,
         OnOpenAboutTraClickListener, OnReportSpamServiceSelectListener, OnAddToSpamClickListener,
         OnActivateTutorialListener, OnDeviceVerifiedListener, OnTuorialClosedListener,
-        OnUserProfileDataChangeListener {
+        OnUserProfileDataChangeListener, OnOpenServiceInfoDetailsListener {
     //endregion
 
     private static final String KEY_CHECKED_TAB_ID = "CHECKED_TAB_ID";
@@ -335,6 +338,11 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
         return R.id.flContainer_AH;
     }
 
+    @Override
+    protected int getGlobalContainerId() {
+        return R.id.rlGlobalContainer_AH;
+    }
+
 //    @Override
 //    public void onSmsServiceChildSelect(final SmsService _service) {
 //        switch (_service) {
@@ -478,8 +486,13 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
     }
 
     @Override
-    public void onOpenServiceInfo(final ServiceInfoResponse _infoResponsetem) {
-        addFragmentWithBackStackGlobally(ServiceInfoFragment.newInstance(Service.APPROVED_DEVICES));//TODO
+    public void onOpenServiceInfo(final @ServiceName String _serviceName) {
+        addFragmentWithBackStackGlobally(ServiceInfoFragment.newInstance(_serviceName));
+    }
+
+    @Override
+    public void onOpenServiceInfoDetails(final @DrawableRes int _iconSrc, final String _serviceInfo) {
+        replaceFragmentWithBackStackGlobally(ServiceInfoDetailsFragment.newInstance(_iconSrc, _serviceInfo));
     }
 
     @Override

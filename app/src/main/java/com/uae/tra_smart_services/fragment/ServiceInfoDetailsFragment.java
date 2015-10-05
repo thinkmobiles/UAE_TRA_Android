@@ -1,12 +1,11 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,8 +17,7 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 /**
  * Created by Mikazme on 21/08/2015.
  */
-public class ServiceInfoDetailsFragment extends BaseFragment implements View.OnTouchListener,
-        View.OnClickListener {
+public class ServiceInfoDetailsFragment extends BaseFragment implements OnTouchListener, OnClickListener {
 
     private static final String HEX_ICON_RES = "hexagon_icon_res";
     private static final String DESCRIPTION = "description";
@@ -28,13 +26,14 @@ public class ServiceInfoDetailsFragment extends BaseFragment implements View.OnT
     private ImageView ivCloseInfo;
     private TextView tvServiceInfoContent;
     private HexagonView hvServiceInfoIcon;
-    private Drawable mServiceInfoIconDrawable;
+
+    private int mServiceInfoIconDrawableRes;
     private String mServiceInfoContent;
 
-    public static ServiceInfoDetailsFragment newInstance(@DrawableRes int _hexagonSrc, @StringRes int _text) {
+    public static ServiceInfoDetailsFragment newInstance(@DrawableRes int _hexagonSrc, String _text) {
         Bundle args = new Bundle();
         args.putInt(HEX_ICON_RES, _hexagonSrc);
-        args.putInt(DESCRIPTION, _text);
+        args.putString(DESCRIPTION, _text);
         ServiceInfoDetailsFragment fragment = new ServiceInfoDetailsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -43,8 +42,8 @@ public class ServiceInfoDetailsFragment extends BaseFragment implements View.OnT
     @Override
     protected void initData() {
         super.initData();
-        mServiceInfoIconDrawable = ContextCompat.getDrawable(getActivity(), getArguments().getInt(HEX_ICON_RES));
-        mServiceInfoContent = getResources().getString(getArguments().getInt(DESCRIPTION));
+        mServiceInfoIconDrawableRes = getArguments().getInt(HEX_ICON_RES);
+        mServiceInfoContent = getArguments().getString(DESCRIPTION);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ServiceInfoDetailsFragment extends BaseFragment implements View.OnT
         tvServiceInfoContent = findView(R.id.tvServiceInfoContent_FSID);
         tvServiceInfoContent.setText(mServiceInfoContent);
         hvServiceInfoIcon = findView(R.id.hvServiceInfoIcon_FSID);
-        hvServiceInfoIcon.setHexagonSrcDrawable(mServiceInfoIconDrawable);
+        hvServiceInfoIcon.setHexagonSrcDrawable(mServiceInfoIconDrawableRes);
         ivCloseInfo = findView(R.id.ivCloseInfo_FSID);
     }
 

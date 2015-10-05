@@ -8,37 +8,23 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.LoaderView;
-import com.uae.tra_smart_services.customviews.ServiceRatingView;
+import com.uae.tra_smart_services.customviews.ServiceRatingView.CallBacks;
 import com.uae.tra_smart_services.global.Service;
-import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
-import com.uae.tra_smart_services.interfaces.Loader.Dismiss;
 import com.uae.tra_smart_services.interfaces.OpenServiceInfo;
 import com.uae.tra_smart_services.rest.model.request.RatingServiceRequestModel;
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
-import com.uae.tra_smart_services.rest.model.response.ServiceInfoResponse;
-import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.RatingServiceRequest;
-import com.uae.tra_smart_services.rest.robo_requests.ServiceInfoRequest;
 
 /**
  * Created by ak-buffalo on 27.08.15.
  */
-public abstract class BaseServiceFragment extends BaseFragment implements Cancelled, ServiceRatingView.CallBacks {
-
-    private static final String KEY_SERVICE_INFO_REQUEST = "SERVICE_INFO_REQUEST" + BaseServiceFragment.class.getSimpleName() ;
-    private static final String KEY_SERVICE_INFO_MODEL = "SERVICE_INFO_MODEL";
+public abstract class BaseServiceFragment extends BaseFragment implements Cancelled, CallBacks {
 
     private OpenServiceInfo mOpenServiceInfoListener;
-
-    private ServiceInfoRequestListener mInfoRequestListener;
-    private ServiceInfoRequest mServiceInfoRequest;
-    private ServiceInfoResponse mServiceInfo;
 
     @CallSuper
     @Override
@@ -53,9 +39,6 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (savedInstanceState != null) {
-            mServiceInfo = savedInstanceState.getParcelable(KEY_SERVICE_INFO_MODEL);
-        }
     }
 
     @CallSuper
@@ -73,41 +56,20 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
         switch (item.getItemId()) {
             case R.id.action_show_info:
                 hideKeyboard(getView());
-                loadServiceInfo();
+                openServiceInfoIfCan();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void loadServiceInfo() {
+    private void openServiceInfoIfCan() {
         final Service service;
         final String serviceName;
-        if (mServiceInfo != null && mOpenServiceInfoListener != null) {
-            mOpenServiceInfoListener.onOpenServiceInfo(mServiceInfo);
-        } else if ((service = getServiceType()) != null && (serviceName = service.getServiceName()) != null) {
-
-            loaderOverlayShow(getString(R.string.str_loading), mInfoRequestListener);
-            loaderOverlayButtonBehavior(mInfoRequestListener);
-
-            mServiceInfoRequest = new ServiceInfoRequest(serviceName, getResources().getConfiguration().locale.toString());
-
-            getSpiceManager().execute(mServiceInfoRequest, KEY_SERVICE_INFO_REQUEST,
-                    DurationInMillis.ALWAYS_EXPIRED, mInfoRequestListener);
+        if ((service = getServiceType()) != null && (serviceName = service.getServiceName()) != null
+                && mOpenServiceInfoListener != null) {
+            mOpenServiceInfoListener.onOpenServiceInfo(serviceName);
         }
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mInfoRequestListener = new ServiceInfoRequestListener();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        getSpiceManager().getFromCache(ServiceInfoResponse.class, KEY_SERVICE_INFO_REQUEST,
-                DurationInMillis.ALWAYS_RETURNED, mInfoRequestListener);
     }
 
     @Override
@@ -134,56 +96,11 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
         );
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(KEY_SERVICE_INFO_MODEL, mServiceInfo);
-        super.onSaveInstanceState(outState);
-    }
-
     @CallSuper
     @Override
     public void onDetach() {
         mOpenServiceInfoListener = null;
         super.onDetach();
-    }
-
-    private class ServiceInfoRequestListener implements RequestListener<ServiceInfoResponse>, BackButton, Cancelled, Dismiss {
-
-        @Override
-        public void onRequestSuccess(ServiceInfoResponse result) {
-            getSpiceManager().removeDataFromCache(ServiceInfoResponse.class, KEY_SERVICE_INFO_REQUEST);
-            if (isAdded() && result != null) {
-                mServiceInfo = result;
-                loaderOverlayDismissWithAction(this);
-            }
-        }
-
-        @Override
-        public void onBackButtonPressed(LoaderView.State _currentState) {
-            getFragmentManager().popBackStack();
-        }
-
-        @Override
-        public void onLoadingCanceled() {
-            if (getSpiceManager().isStarted()) {
-                getSpiceManager().cancel(mServiceInfoRequest);
-                getSpiceManager().removeDataFromCache(UserProfileResponseModel.class, KEY_SERVICE_INFO_REQUEST);
-            }
-        }
-
-        @Override
-        public void onLoadingDismissed() {
-            getFragmentManager().popBackStack();
-            if (mOpenServiceInfoListener != null) {
-                mOpenServiceInfoListener.onOpenServiceInfo(mServiceInfo);
-            }
-        }
-
-        @Override
-        public void onRequestFailure(SpiceException spiceException) {
-            getSpiceManager().removeDataFromCache(UserProfileResponseModel.class, KEY_SERVICE_INFO_REQUEST);
-            processError(spiceException);
-        }
     }
 
     @Nullable
