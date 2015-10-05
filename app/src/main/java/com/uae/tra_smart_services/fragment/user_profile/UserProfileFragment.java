@@ -47,8 +47,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
     private HexagonView hvUserAvatar;
     private TextView tvUsername;
-    private LinearLayout llEditProfile, llChangePassword,/* llResetPassword, */
-            llLogout;
+    private LinearLayout llEditProfile, llChangePassword, llLogout /* llResetPassword, */ ;
 
     private UserProfileResponseModel mUserProfile;
 

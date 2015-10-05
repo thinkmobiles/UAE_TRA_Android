@@ -134,7 +134,7 @@ public class ChangePasswordFragment extends BaseFragment implements OnCheckedCha
         mChangePasswordRequest = new ChangePasswordRequest(etOldPassword.getText().toString(), etNewPassword.getText().toString());
 
         hideKeyboard(getView());
-        loaderOverlayShow(getString(R.string.fragment_edit_user_profile_saving), (LoaderMarker) mChangePasswordRequestListener);
+        loaderOverlayShow(getString(R.string.fragment_edit_user_profile_saving), mChangePasswordRequestListener, false);
         loaderOverlayButtonBehavior(mChangePasswordRequestListener);
         getSpiceManager().execute(mChangePasswordRequest, KEY_CHANGE_PASSWORD_REQUEST,
                 DurationInMillis.ALWAYS_EXPIRED, mChangePasswordRequestListener);

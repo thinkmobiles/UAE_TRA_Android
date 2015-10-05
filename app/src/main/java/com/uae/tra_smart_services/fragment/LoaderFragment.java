@@ -24,6 +24,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     /** Constants */
     public static final String TAG = LoaderFragment.class.getName();
     private static final String MSG = "message";
+    private static final String SHOW_RATING = "show_rating";
     /** Views */
     private LoaderView lvLoader;
     private ServiceRatingView srvRating;
@@ -34,9 +35,10 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     private static Loader.Cancelled mOnLoadingListener;
     private static LoaderFragment.CallBacks mRatingCallbacks;
 
-    public static LoaderFragment newInstance(String _msg, LoaderMarker _listener) {
+    public static LoaderFragment newInstance(String _msg, LoaderMarker _listener, boolean _showRating) {
         Bundle args = new Bundle();
         args.putString(MSG, _msg);
+        args.putBoolean(SHOW_RATING, _showRating);
         if(_listener instanceof Loader.Cancelled) {
             mOnLoadingListener = (Loader.Cancelled) _listener;
         }
@@ -118,7 +120,9 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         tvLoaderTitleText.setText(_msg);
         tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
         tvBackOrCancelBtn.setTag(LoaderView.State.SUCCESS);
-        srvRating.setVisibility(View.VISIBLE);
+        if(getArguments().getBoolean(SHOW_RATING)){
+            srvRating.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -137,7 +141,9 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         tvLoaderTitleText.setText(_msg);
         tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
         tvBackOrCancelBtn.setTag(LoaderView.State.CANCELLED);
-        srvRating.setVisibility(View.VISIBLE);
+        if(getArguments().getBoolean(SHOW_RATING)){
+            srvRating.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -146,7 +152,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         tvLoaderTitleText.setText(_msg);
         tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
         tvBackOrCancelBtn.setTag(LoaderView.State.FAILURE);
-        if(_hasToShowRating)
+        if(getArguments().getBoolean(SHOW_RATING) && _hasToShowRating)
             srvRating.setVisibility(View.VISIBLE);
     }
 
