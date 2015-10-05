@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * Created by mobimaks on 03.10.2015.
  */
-public class InnovationSpinnerAdapter extends BaseSpinnerAdapter<String> {//TODO: rename class
+public class InnovationIdeaAdapter extends BaseSpinnerAdapter<String> {
 
-    public InnovationSpinnerAdapter(Context _context, List<String> _data) {
+    public InnovationIdeaAdapter(Context _context, List<String> _data) {
         super(_context, _data);
     }
 
@@ -44,6 +44,8 @@ public class InnovationSpinnerAdapter extends BaseSpinnerAdapter<String> {//TODO
         public InnovationViewHolder(final View _view) {
             super(_view);
             tvTitle = (TextView) _view.findViewById(R.id.tvTitle_SISSP);
+            _view.findViewById(R.id.sSpace_SISSP).setVisibility(View.GONE);
+            _view.findViewById(R.id.tivArrowIcon_SISSP).setVisibility(View.GONE);
         }
 
         @Override

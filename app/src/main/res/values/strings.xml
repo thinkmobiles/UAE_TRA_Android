@@ -412,4 +412,15 @@
 
     <string name="rating_view_title">Choose Rating</string>
 
+    <string name="fragment_innovation_idea_title">Innovative Ideas for</string>
+
+    <string-array name="fragment_innovation_ideas">
+        <item>Customer Happiness</item>
+        <item>Employee Satisfaction</item>
+        <item>TRA Service Improvement</item>
+        <item>Reducing cost &amp; increasing Revenue</item>
+        <item>Raising TRA Institutional Reputation</item>
+        <item>Futurology Studies</item>
+    </string-array>
+
 </resources>
