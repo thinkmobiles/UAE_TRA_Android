@@ -331,7 +331,7 @@
     <string name="fragment_report_spam_title">SPAM</string>
     <string name="fragment_report_spam_hint">Report SMS or Websites\nas Spam to TRA</string>
     <string name="fragment_report_spam_sms">REPORT\nSMS</string>
-    <string name="fragment_report_spam_web">REPORT\nWEB</string>
+    <string name="fragment_report_spam_web">HELP\nSALIM</string>
     <string name="fragment_report_spam_history">VIEW\nMY LIST</string>
     <string name="fragment_report_spam_cant_send_sms">"Can't send sms. Please, install sms messenger"</string>
 

@@ -65,6 +65,7 @@ public final class ServerConstants {
     public static final String LOGOUT_URL = "/crm/signOut";
     public static final String USER_PROFILE = "/crm/profile";
     public static final String CHANGE_PASSWORD = "/crm/changePass";
+    public static final String SERVICE_INFO = "/service/about";
 
     //!!!!!!!!!!!! API PARAMETERS !!!!!!!!!!!!!!!!!!
     public static final String PARAMETER_CHECK_URL = "checkUrl";
@@ -72,6 +73,8 @@ public final class ServerConstants {
     public static final String PARAMETER_DEVICE_BRAND = "brand";
     public static final String PARAMETER_START_OFFSET = "start";
     public static final String PARAMETER_END_LIMIT = "end";
+    public static final String PARAMETER_SERVICE_NAME = "name";
+    public static final String PARAMETER_LANGUAGE = "lang";
 
     //!!!!!!!!!!!! SERVER RESPONSES !!!!!!!!!!!!!!!!!
     public static final String AVAILABLE = "Available";

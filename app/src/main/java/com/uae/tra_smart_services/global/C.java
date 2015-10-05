@@ -1,5 +1,10 @@
 package com.uae.tra_smart_services.global;
 
+import android.support.annotation.StringDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * Created by mobimaks on 13.08.2015.
  */
@@ -36,6 +41,7 @@ public final class C {
     public static final String IS_CANCELABLE = "isCancelabel";
 
     public static final String TITLE = "title";
+
     public static final String KEY_FAVORITE_SERVICES = "FAVORITE_SERVICES";
 
     public static final String FAVORITE_SERVICES_DELIMITER = ",";
@@ -49,4 +55,31 @@ public final class C {
     public static final String UNCHECK_TAB_IF_NOT_LOGGED_IN = "UNCHECK_TAB_IF_NOT_LOGGED_IN";
 
     public static final String IS_LOGGED_IN = "is_logged_in";
+
+    //region Service names const
+    @StringDef({
+            COVERAGE,
+            COMPLAIN_ABOUT_TRA,
+            COMPLAIN_ABOUT_SERVICE_PROVIDER,
+            SUGGESTION,
+            ENQUIRIES,
+            SPAM_REPORT,
+            MOBILE_BRAND,
+            VERIFICATION,
+            DOMAIN_CHECK})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ServiceName {
+    }
+
+    public static final String COVERAGE = "coverage";
+    public static final String COMPLAIN_ABOUT_TRA = "complain about tra";
+    public static final String COMPLAIN_ABOUT_SERVICE_PROVIDER = "complain about service provider";
+    public static final String SUGGESTION = "suggestion";
+    public static final String ENQUIRIES = "enquiries";
+    public static final String SPAM_REPORT = "spam report";
+    public static final String MOBILE_BRAND = "mobile brand";
+    public static final String VERIFICATION = "verification";
+    public static final String DOMAIN_CHECK = "domain check";
+    //endregion
+
 }

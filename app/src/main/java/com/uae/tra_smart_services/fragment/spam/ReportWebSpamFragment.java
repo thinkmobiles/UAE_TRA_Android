@@ -139,6 +139,7 @@ public class ReportWebSpamFragment extends BaseServiceFragment implements OnClic
 
     @Override
     public void onLoadingCanceled() {
+        getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_WEB_SPAM);
         if (getSpiceManager().isStarted() && mHelpSalimRequest != null) {
             getSpiceManager().cancel(mHelpSalimRequest);
         }
@@ -159,13 +160,14 @@ public class ReportWebSpamFragment extends BaseServiceFragment implements OnClic
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
+            getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_WEB_SPAM);
             processError(spiceException);
         }
 
         @Override
         public void onRequestSuccess(Response smsSpamReportResponse) {
+            getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_WEB_SPAM);
             if (isAdded()) {
-                getSpiceManager().removeDataFromCache(SmsSpamResponseModel.class, KEY_REPORT_WEB_SPAM);
                 if (smsSpamReportResponse != null) {
                     loaderOverlaySuccess(getString(R.string.str_reuqest_has_been_sent));
                 }

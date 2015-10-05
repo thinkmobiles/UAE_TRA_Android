@@ -16,6 +16,7 @@ import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckRes
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.rest.model.response.ServiceInfoResponse;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 
@@ -40,6 +41,8 @@ import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_CHECK_
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_DEVICE_BRAND;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_END_LIMIT;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_IMEI;
+import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_LANGUAGE;
+import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_SERVICE_NAME;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_START_OFFSET;
 import static com.uae.tra_smart_services.global.ServerConstants.POOR_COVERAGE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.RATING_SERVICE_URL;
@@ -48,6 +51,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.RESTORE_PASS_URL
 import static com.uae.tra_smart_services.global.ServerConstants.SEARCH_DEVICE_BY_BRAND_NAME_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SEARCH_DEVICE_BY_IMEI_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SEND_SUGGESTION_URL;
+import static com.uae.tra_smart_services.global.ServerConstants.SERVICE_INFO;
 import static com.uae.tra_smart_services.global.ServerConstants.SMS_SPAM_BLOCK_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.SMS_SPAM_REPORT_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.USER_PROFILE;
@@ -122,4 +126,9 @@ public interface TRAServicesAPI {
 
     @PUT(CHANGE_PASSWORD)
     Response changePassword(@Body ChangePasswordModel _changePasswordModel);
+
+    @GET(SERVICE_INFO)
+    ServiceInfoResponse getServiceInfo(@Query(PARAMETER_SERVICE_NAME) String _serviceName,
+                                       @Query(PARAMETER_LANGUAGE) String _language);
+
 }

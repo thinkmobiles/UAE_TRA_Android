@@ -1,10 +1,10 @@
 package com.uae.tra_smart_services.interfaces;
 
-import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.rest.model.response.ServiceInfoResponse;
 
 /**
  * Created by mobimaks on 02.10.2015.
  */
 public interface OpenServiceInfo {
-    void onOpenServiceInfo(final Service _service);
+    void onOpenServiceInfo(final ServiceInfoResponse _serviceInfo);
 }

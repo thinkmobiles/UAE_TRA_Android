@@ -330,7 +330,7 @@
     <string name="fragment_report_spam_title">رسائل غير مرغوبة</string>
     <string name="fragment_report_spam_hint">شكوى للهيئة على\nرسالة غير مرغوبة أو موقع إنترنت</string>
     <string name="fragment_report_spam_sms">شكوى على\nرسالة غير مرغوبة</string>
-    <string name="fragment_report_spam_web">شكوى على\nموقع انترنت</string>
+    <string name="fragment_report_spam_web">HELP\nSALIM</string>
     <string name="fragment_report_spam_history">عرض\n القائمة الخاصة</string>
     <string name="fragment_report_spam_cant_send_sms">"Can't send sms. Please, install sms messenger"</string>
 

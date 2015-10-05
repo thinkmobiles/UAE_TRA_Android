@@ -83,7 +83,7 @@ public class ServiceInfoFragment extends BaseFragment implements View.OnClickLis
                 hexagonSrc = ((HexagonView) _view).getHexagonSrc();
                 getFragmentManager().beginTransaction()
                         .addToBackStack(null)
-                        .replace(R.id.rlGlobalContainer_AH, ServiceInfoDetailsFragment.newInstance(hexagonSrc, mServiceType.getInfoAboutService()))
+                        .replace(R.id.rlGlobalContainer_AH, ServiceInfoDetailsFragment.newInstance(hexagonSrc, R.string.app_name))//TODO: fix mServiceType.getServiceName()))
                         .commit();
                 break;
         }

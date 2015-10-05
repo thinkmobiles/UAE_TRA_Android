@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.fragment;
+package com.uae.tra_smart_services.fragment.hexagon_fragment;
 
 import android.app.Activity;
 import android.content.Context;

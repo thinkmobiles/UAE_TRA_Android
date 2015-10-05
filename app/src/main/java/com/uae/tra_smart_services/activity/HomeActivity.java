@@ -39,22 +39,18 @@ import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnOpenUserProfile
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnServiceSelectListener;
 import com.uae.tra_smart_services.fragment.HexagonHomeFragment.OnStaticServiceSelectListener;
 import com.uae.tra_smart_services.fragment.InfoHubFragment;
-import com.uae.tra_smart_services.fragment.InnovationsFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment;
 import com.uae.tra_smart_services.fragment.MobileVerificationFragment.OnDeviceVerifiedListener;
 import com.uae.tra_smart_services.fragment.MobileVerifiedInfoFragment;
-import com.uae.tra_smart_services.fragment.NotificationsFragment;
 import com.uae.tra_smart_services.fragment.PoorCoverageFragment;
-import com.uae.tra_smart_services.fragment.SearchFragment;
 import com.uae.tra_smart_services.fragment.ServiceInfoFragment;
 import com.uae.tra_smart_services.fragment.SettingsFragment;
 import com.uae.tra_smart_services.fragment.SettingsFragment.OnOpenAboutTraClickListener;
-import com.uae.tra_smart_services.fragment.SmsBlockNumberFragment;
-import com.uae.tra_smart_services.fragment.SmsReportFragment;
-import com.uae.tra_smart_services.fragment.SmsServiceListFragment.OnSmsServiceSelectListener;
-import com.uae.tra_smart_services.fragment.SpeedTestFragment;
 import com.uae.tra_smart_services.fragment.SuggestionFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.hexagon_fragment.InnovationsFragment;
+import com.uae.tra_smart_services.fragment.hexagon_fragment.NotificationsFragment;
+import com.uae.tra_smart_services.fragment.hexagon_fragment.SearchFragment;
 import com.uae.tra_smart_services.fragment.spam.ReportSmsSpamFragment;
 import com.uae.tra_smart_services.fragment.spam.ReportSpamFragment;
 import com.uae.tra_smart_services.fragment.spam.ReportSpamFragment.OnReportSpamServiceSelectListener;
@@ -80,6 +76,7 @@ import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
+import com.uae.tra_smart_services.rest.model.response.ServiceInfoResponse;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.util.PersistentCookieStore;
 
@@ -481,8 +478,8 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
     }
 
     @Override
-    public void onOpenServiceInfo(final Service _item) {
-        addFragmentWithBackStackGlobally(ServiceInfoFragment.newInstance(_item));
+    public void onOpenServiceInfo(final ServiceInfoResponse _infoResponsetem) {
+        addFragmentWithBackStackGlobally(ServiceInfoFragment.newInstance(Service.APPROVED_DEVICES));//TODO
     }
 
     @Override
