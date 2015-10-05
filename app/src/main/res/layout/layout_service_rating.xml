@@ -6,7 +6,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/str_choose_rating"
+        android:text="@string/rating_view_title"
         android:textColor="@color/hex_text_color_white"
         android:textSize="16sp"/>
 
@@ -24,6 +24,7 @@
             android:layout_marginEnd="20dp"
             android:button="@null"
             android:tint="?attr/rating_bad_color"
+            android:src="@drawable/btn_bad_line"
             android:tag="1"/>
 
         <ImageView
@@ -35,6 +36,7 @@
             android:button="@null"
             android:background="@android:color/transparent"
             android:tint="?attr/rating_neut_color"
+            android:src="@drawable/btn_neut_line"
             android:tag="2"/>
 
         <ImageView
@@ -45,6 +47,7 @@
             android:layout_marginStart="20dp"
             android:button="@null"
             android:tint="?attr/rating_good_color"
+            android:src="@drawable/btn_good_line"
             android:tag="3"/>
 
     </LinearLayout>
