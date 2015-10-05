@@ -20,8 +20,10 @@ import com.uae.tra_smart_services.customviews.ProfileController;
 import com.uae.tra_smart_services.customviews.ProfileController.ControllerButton;
 import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButtonClickListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.ChangeUserNameRequest;
@@ -147,7 +149,7 @@ public final class EditUserProfileFragment extends BaseFragment
         mChangeUserNameRequest = new ChangeUserNameRequest(profile);
 
         hideKeyboard(getView());
-        loaderOverlayShow(getString(R.string.fragment_edit_user_profile_saving), mUserProfileRequestListener);
+        loaderOverlayShow(getString(R.string.fragment_edit_user_profile_saving), (LoaderMarker) mUserProfileRequestListener);
         loaderOverlayButtonBehavior(mUserProfileRequestListener);
         getSpiceManager().execute(mChangeUserNameRequest, KEY_EDIT_PROFILE_REQUEST,
                 DurationInMillis.ALWAYS_EXPIRED, mUserProfileRequestListener);

@@ -21,6 +21,7 @@ import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutServiceRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
@@ -96,7 +97,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         complainModel.description = etDescription.getText().toString();
         mComplainAboutServiceRequest = new ComplainAboutServiceRequest(complainModel, getActivity(), getImageUri());
 
-        loaderOverlayShow(getString(R.string.str_sending), this);
+        loaderOverlayShow(getString(R.string.str_sending), (LoaderMarker) this);
         loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {

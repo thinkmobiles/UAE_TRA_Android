@@ -1,6 +1,4 @@
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginTop="15dp">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/textView2"
@@ -8,49 +6,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:text="CHOSE RATING"
-        android:textColor="?attr/colorPrimary"
-        android:textSize="18sp"/>
+        android:text="@string/rating_view_title"
+        android:textColor="@color/hex_text_color_white"
+        android:textSize="16sp"/>
 
-    <RadioGroup
+    <LinearLayout
         android:id="@+id/rgDomainCheckServiceRating_FDCH"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <RadioButton
+        <ImageView
             android:id="@+id/rbDomainCheckRating_1_FDC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="20dp"
             android:button="@null"
-            android:drawableTop="@drawable/ic_rating_bad"
+            android:tint="?attr/rating_bad_color"
+            android:src="@drawable/btn_bad_line"
             android:tag="1"/>
 
-        <RadioButton
+        <ImageView
+            android:id="@+id/rbDomainCheckRating_2_FDC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:button="@null"
+            android:background="@android:color/transparent"
+            android:tint="?attr/rating_neut_color"
+            android:src="@drawable/btn_neut_line"
+            android:tag="2"/>
+
+        <ImageView
             android:id="@+id/rbDomainCheckRating_3_FDC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp"
-            android:button="@null"
             android:background="@android:color/transparent"
-            android:drawableTop="@drawable/ic_rating_neutral"
-            android:tag="2"/>
-
-        <RadioButton
-            android:id="@+id/rbDomainCheckRating_5_FDC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="20dp"
             android:button="@null"
-            android:drawableTop="@drawable/ic_rating_good"
+            android:tint="?attr/rating_good_color"
+            android:src="@drawable/btn_good_line"
             android:tag="3"/>
 
-    </RadioGroup>
+    </LinearLayout>
 
 </merge>

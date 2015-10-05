@@ -21,6 +21,7 @@ import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButt
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.robo_requests.ChangePasswordRequest;
 
 import retrofit.client.Response;
@@ -133,7 +134,7 @@ public class ChangePasswordFragment extends BaseFragment implements OnCheckedCha
         mChangePasswordRequest = new ChangePasswordRequest(etOldPassword.getText().toString(), etNewPassword.getText().toString());
 
         hideKeyboard(getView());
-        loaderOverlayShow(getString(R.string.fragment_edit_user_profile_saving), mChangePasswordRequestListener);
+        loaderOverlayShow(getString(R.string.fragment_edit_user_profile_saving), (LoaderMarker) mChangePasswordRequestListener);
         loaderOverlayButtonBehavior(mChangePasswordRequestListener);
         getSpiceManager().execute(mChangePasswordRequest, KEY_CHANGE_PASSWORD_REQUEST,
                 DurationInMillis.ALWAYS_EXPIRED, mChangePasswordRequestListener);

@@ -14,7 +14,7 @@ public interface Loader {
 
     void cancelLoading(String _msg);
 
-    void failedLoading(String _msg);
+    void failedLoading(String _msg, boolean _hasToShowRating);
 
     void dissmissLoadingWithAction(Dismiss afterDissmiss);
 
@@ -24,7 +24,7 @@ public interface Loader {
         void onLoadingDismissed();
     }
 
-    interface Cancelled{
+    interface Cancelled  extends LoaderMarker {
         void onLoadingCanceled();
     }
 

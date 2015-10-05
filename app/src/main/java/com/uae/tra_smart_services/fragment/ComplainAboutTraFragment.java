@@ -21,6 +21,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutTRAServiceRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
@@ -120,7 +121,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
         request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
-        loaderOverlayShow(getString(R.string.str_sending), this);
+        loaderOverlayShow(getString(R.string.str_sending), (LoaderMarker) this);
         loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {

@@ -407,4 +407,6 @@
 
     <string name="fragment_change_password_success">Password has been successfully changed</string>
 
+    <string name="rating_view_title">Choose Rating</string>
+
 </resources>

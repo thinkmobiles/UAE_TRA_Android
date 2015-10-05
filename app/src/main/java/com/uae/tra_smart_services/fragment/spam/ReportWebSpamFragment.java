@@ -20,6 +20,7 @@ import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.HelpSalimRequest;
@@ -97,7 +98,7 @@ public class ReportWebSpamFragment extends BaseServiceFragment implements OnClic
 
     private void collectAndSendToServer() {
         if (validateData()) {
-            loaderOverlayShow(getString(R.string.str_sending), this);
+            loaderOverlayShow(getString(R.string.str_sending), (LoaderMarker) this);
             loaderOverlayButtonBehavior(new Loader.BackButton() {
                 @Override
                 public void onBackButtonPressed(LoaderView.State _currentState) {

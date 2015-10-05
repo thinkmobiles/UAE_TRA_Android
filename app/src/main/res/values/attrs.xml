@@ -91,6 +91,13 @@
 
     <attr name="profileControllerSaveColor" format="color"/>
 
-    <attr name="passwordVisibilityToggleBackground" format="reference"/>
+    <attr name="passwordVisibilityToggleBackground" format="reference"/>\
+
+    <attr name="rating_bad_color" format="reference|color"/>
+
+    <attr name="rating_neut_color" format="reference|color"/>
+
+    <attr name="rating_good_color" format="reference|color"/>
+
 
 </resources>
