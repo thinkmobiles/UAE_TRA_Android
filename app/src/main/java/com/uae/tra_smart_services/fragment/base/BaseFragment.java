@@ -159,9 +159,9 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         }
     }
 
-    public void loaderOverlayFailed(String _msg){
+    public void loaderOverlayFailed(String _msg, boolean _hasToShowRating){
         if(loader != null){
-            loader.failedLoading(_msg);
+            loader.failedLoading(_msg, _hasToShowRating);
         }
     }
 
@@ -195,10 +195,10 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
             Throwable cause = _exception.getCause();
             if (cause != null && cause instanceof RetrofitError) {
                 errorMessage = processRetrofitError(((RetrofitError) cause));
-                loaderOverlayFailed(errorMessage);
+                loaderOverlayFailed(errorMessage, true);
             } else if (_exception instanceof NoNetworkException) {
                 errorMessage = getString(R.string.error_no_network);
-                loaderOverlayFailed(errorMessage);
+                loaderOverlayFailed(errorMessage, false);
             } else {
                 errorMessage = _exception.getMessage();
                 loaderOverlayCancelled(errorMessage);

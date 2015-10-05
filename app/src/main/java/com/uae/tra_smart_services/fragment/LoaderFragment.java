@@ -141,12 +141,13 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void failedLoading(String _msg) {
+    public void failedLoading(String _msg, boolean _hasToShowRating) {
         lvLoader.startFilling(LoaderView.State.FAILURE);
         tvLoaderTitleText.setText(_msg);
         tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
         tvBackOrCancelBtn.setTag(LoaderView.State.FAILURE);
-        srvRating.setVisibility(View.VISIBLE);
+        if(_hasToShowRating)
+            srvRating.setVisibility(View.VISIBLE);
     }
 
     private int defineBGColor(View _view){
