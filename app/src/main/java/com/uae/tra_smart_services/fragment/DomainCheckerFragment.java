@@ -28,7 +28,7 @@ import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
  * Created by ak-buffalo on 10.08.15.
  */
 public class DomainCheckerFragment extends BaseServiceFragment
-        implements View.OnClickListener, AlertDialogFragment.OnOkListener, Loader.Cancelled{
+        implements View.OnClickListener, AlertDialogFragment.OnOkListener/*, Loader.Cancelled*/{
 
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
@@ -103,7 +103,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
             hideKeyboard(_view);
-            loaderOverlayShow(getString(R.string.str_checking), (LoaderMarker) this);
+            loaderOverlayShow(getString(R.string.str_checking), this);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
                     checkAvailability(domain);

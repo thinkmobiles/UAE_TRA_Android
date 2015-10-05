@@ -1,5 +1,4 @@
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/textView2"
@@ -7,10 +6,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:text="CHOSE RATING"
+        android:text="@string/str_choose_rating"
         android:textColor="@color/hex_text_color_white"
-        android:textSize="18sp"/>
+        android:textSize="16sp"/>
 
     <LinearLayout
         android:id="@+id/rgDomainCheckServiceRating_FDCH"

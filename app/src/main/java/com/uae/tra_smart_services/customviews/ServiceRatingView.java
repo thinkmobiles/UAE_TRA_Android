@@ -49,6 +49,7 @@ public class ServiceRatingView extends LinearLayout implements View.OnClickListe
 
     private void initViews(){
         inflate(getContext(), R.layout.layout_service_rating, this);
+
         rbBad = (ImageView) findViewById(R.id.rbDomainCheckRating_1_FDC);
         rbBad.setImageDrawable(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.btn_bad_line)));
         rbNeut = (ImageView) findViewById(R.id.rbDomainCheckRating_2_FDC);

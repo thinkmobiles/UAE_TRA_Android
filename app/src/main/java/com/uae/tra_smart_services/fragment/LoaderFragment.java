@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,7 +13,6 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.customviews.ServiceRatingView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.util.ImageUtils;
@@ -23,36 +21,32 @@ import com.uae.tra_smart_services.util.ImageUtils;
  * Created by ak-buffalo on 21.09.15.
  */
 public class LoaderFragment extends BaseFragment implements View.OnClickListener, Loader {
-
+    /** Constants */
     public static final String TAG = LoaderFragment.class.getName();
-
     private static final String MSG = "message";
-
+    /** Views */
     private LoaderView lvLoader;
     private ServiceRatingView srvRating;
     private TextView tvBackOrCancelBtn, tvLoaderTitleText;
     private RelativeLayout rlFragmentContainer;
-    private static Loader.Cancelled mOnLoadingListener;
     private BackButton afterBackButton;
-    private static ServiceRatingView.CallBacks ratingCallbacks;
-    private static LoaderMarker CALL_BACKS;
+    /** Listeners */
+    private static Loader.Cancelled mOnLoadingListener;
+    private static ServiceRatingView.CallBacks mRatingCallbacks;
 
     public static LoaderFragment newInstance(String _msg, LoaderMarker _listener) {
         Bundle args = new Bundle();
         args.putString(MSG, _msg);
-        /*mOnLoadingListener = (Loader.Cancelled) _listener;
-        ratingCallbacks = (ServiceRatingView.CallBacks) _listener;*/
-        CALL_BACKS = _listener;
+        if(_listener instanceof Loader.Cancelled) {
+            mOnLoadingListener = (Loader.Cancelled) _listener;
+        }
+        if(_listener instanceof ServiceRatingView.CallBacks) {
+            mRatingCallbacks = (ServiceRatingView.CallBacks) _listener;
+        }
         LoaderFragment fragment = new LoaderFragment();
         fragment.setArguments(args);
         return fragment;
     }
-
-    @Override
-    protected int getTitle() { return 0; }
-
-    @Override
-    protected int getLayoutResource() { return R.layout.fragment_loader; }
 
     @Override
     protected void setToolbarVisibility() { toolbarTitleManager.setToolbarVisibility(true); }
@@ -70,7 +64,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         lvLoader.setTag(bgColor);
         tvLoaderTitleText = findView(R.id.tvLoaderTitleText);
         srvRating = findView(R.id.srvRating_FL);
-        srvRating.init((ServiceRatingView.CallBacks) CALL_BACKS);
+        srvRating.init(mRatingCallbacks);
         tvBackOrCancelBtn = findView(R.id.tvLoaderBackButton);
     }
 
@@ -86,9 +80,9 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         switch (v.getId()){
             case R.id.tvLoaderBackButton:
                 if(v.getTag() == LoaderView.State.PROCESSING && mOnLoadingListener != null){
-                    ((Loader.Cancelled) CALL_BACKS).onLoadingCanceled();
+                    mOnLoadingListener.onLoadingCanceled();
                 } else if(afterBackButton != null){
-                        afterBackButton.onBackButtonPressed(lvLoader.getCurrentState());
+                    afterBackButton.onBackButtonPressed(lvLoader.getCurrentState());
                 } else {
                     toolbarTitleManager.setToolbarVisibility(true);
                     getFragmentManager().popBackStackImmediate();
@@ -124,6 +118,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         tvLoaderTitleText.setText(_msg);
         tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
         tvBackOrCancelBtn.setTag(LoaderView.State.SUCCESS);
+        srvRating.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -142,6 +137,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         tvLoaderTitleText.setText(_msg);
         tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
         tvBackOrCancelBtn.setTag(LoaderView.State.CANCELLED);
+        srvRating.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -150,6 +146,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         tvLoaderTitleText.setText(_msg);
         tvBackOrCancelBtn.setText(R.string.str_back_to_dashboard);
         tvBackOrCancelBtn.setTag(LoaderView.State.FAILURE);
+        srvRating.setVisibility(View.VISIBLE);
     }
 
     private int defineBGColor(View _view){
@@ -158,4 +155,10 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
 
         return Color.rgb(Color.red(pixel), Color.green(pixel), Color.blue(pixel));
     }
+
+    @Override
+    protected int getTitle() { return 0; }
+
+    @Override
+    protected int getLayoutResource() { return R.layout.fragment_loader; }
 }

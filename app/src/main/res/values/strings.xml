@@ -410,4 +410,6 @@
 
     <string name="fragment_change_password_success">Password has been successfully changed</string>
 
+    <string name="str_choose_rating">Choose Rating</string>
+
 </resources>

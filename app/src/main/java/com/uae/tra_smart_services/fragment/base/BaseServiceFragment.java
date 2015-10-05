@@ -11,11 +11,8 @@ import android.view.MenuItem;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.LoaderView;
-import com.uae.tra_smart_services.dialog.ServiceRatingDialog;
-import com.uae.tra_smart_services.dialog.ServiceRatingDialog.CallBacks;
+import com.uae.tra_smart_services.customviews.ServiceRatingView;
 import com.uae.tra_smart_services.global.Service;
-import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.OpenServiceInfo;
 import com.uae.tra_smart_services.rest.model.request.RatingServiceRequestModel;
@@ -25,7 +22,7 @@ import com.uae.tra_smart_services.rest.robo_requests.RatingServiceRequest;
 /**
  * Created by ak-buffalo on 27.08.15.
  */
-public abstract class BaseServiceFragment extends BaseFragment implements Cancelled, CallBacks {
+public abstract class BaseServiceFragment extends BaseFragment implements Cancelled, ServiceRatingView.CallBacks {
 
     private OpenServiceInfo mOpenServiceInfoListener;
 
@@ -127,12 +124,11 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
 
     protected abstract String getServiceName();
 
-    @Override
+    /*@Override
     public void onCancelPressed(){
         // Unimplemented method
         // Used exceptionally to specify Cancel button in dialog
-    }
-
+    }*/
 
     @CallSuper
     @Override
@@ -140,5 +136,4 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
         mOpenServiceInfoListener = null;
         super.onDetach();
     }
-
 }
