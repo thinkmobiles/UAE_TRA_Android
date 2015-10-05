@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 
 import java.util.Collections;
@@ -16,12 +19,16 @@ import rx.Observable;
 import rx.Observer;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.android.widget.OnTextChangeEvent;
+import rx.android.widget.WidgetObservable;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.functions.Func6;
 import rx.schedulers.Schedulers;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by and on 15.09.15.
@@ -30,43 +37,28 @@ import rx.schedulers.Schedulers;
 public class TestActivity extends Activity {
 
     private SurfaceViewLayout customLayout;
+
+    private EditText etUsername;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         customLayout = new SurfaceViewLayout(this);
-        setContentView(customLayout);
+        setContentView(R.layout.fragment_login);
+        etUsername = (EditText) findViewById(R.id.etEmail_FRP);
 
-        Observable<String> sentenceObservable = Observable.from(new String[]{"b", "e", "d", "c", "a", "f"});
-        sentenceObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<String, String>() {
-                    @Override
-                    public String call(String s) {
-                        Log.e("map() - " + Thread.currentThread().getName(), s);
-                        return s.toUpperCase() + " ";
-                    }
-                })
-                .toSortedList(new Func2<String, String, Integer>() {
-                    @Override
-                    public Integer call(String s, String s2) {
-                        return s.compareTo(s2);
-                    }
-                })
-                .map(new Func1<List<String>, String>() {
-                    @Override
-                    public String call(List<String> strings) {
-                        Collections.reverse(strings);
-                        return strings.toString();
-                    }
-                })
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        EventBus.getDefault().post(s);
-                        Log.e("subscribe() - " + Thread.currentThread().getName(), s);
-                    }
-                });
+        final BehaviorSubject<String> mNameObservable = BehaviorSubject.create();
+
+        WidgetObservable.text(etUsername).doOnNext(new Action1<OnTextChangeEvent>() {
+            @Override
+            public void call(OnTextChangeEvent onTextChangeEvent) {
+                Toast.makeText(getApplicationContext(), onTextChangeEvent.text(), Toast.LENGTH_SHORT).show();
+            }
+        }).subscribe(new Action1<OnTextChangeEvent>() {
+            @Override
+            public void call(OnTextChangeEvent onTextChangeEvent) {
+                mNameObservable.onNext(onTextChangeEvent.text().toString());
+            }
+        });
     }
 
     @Override
