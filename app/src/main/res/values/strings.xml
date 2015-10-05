@@ -1,5 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-
     <string name="app_name">UAE TRA</string>
 
     <string name="title_activity_authorization">AuthorizationActivity</string>
@@ -59,7 +58,7 @@
     <string name="str_inquiries">Enquires</string>
     <string name="str_settings">Settings</string>
     <string name="complain">Complain About Service Provider</string>
-    <string name="approved_devices">Approved Devices</string>
+    <string name="approved_devices">List Of Mobile Brands</string>
     <string name="device_approval">Result IMEI Code</string>
     <!--               Home screens                -->
 
@@ -161,7 +160,7 @@
     <string name="service_provider">Service Provider</string>
     <string name="number_of_spammer">Spammer Number</string>
     <string name="description">Description</string>
-    <string name="complain_title">Complaint Title</string>
+    <string name="complain_title">Title</string>
     <string name="reference_number">Reference Number</string>
     <string name="content_description_add_attachment">Add Attachment</string>
     <string name="approved_device_information">Approved Device Information</string>
@@ -172,7 +171,7 @@
     <string name="favourite_remove">Remove</string>
     <string name="federal_authority">Federal Authority</string>
     <string name="hexagon_button_verification">Verification</string>
-    <string name="hexagon_button_spam">Spam</string>
+    <string name="hexagon_button_spam">Spam Report</string>
     <string name="hexagon_button_coverage">Coverage</string>
     <string name="hexagon_button_internet">Internet</string>
     <string name="hexagon_button_domain_check">Domain Check</string>
@@ -301,7 +300,7 @@
     <string name="str_are_you_looking_for">ARE YOU LOOKING FOR</string>
 
     <string name="str_enquires_title">Title</string>
-    <string name="str_suggestion_title">Suggestion Title</string>
+    <string name="str_suggestion_title">Title</string>
     <string name="login_username_hint">Username</string>
 
     <string name="fragment_about_tra_html"><![CDATA[
@@ -357,9 +356,9 @@
     <string name="tutorial_avatar_title">USER PROFILE</string>
     <string name="tutorial_avatar_text">Tap here to log in or edit your profile</string>
     <string name="tutorial_hot_bar_title">QUICK ACCESS LINKS</string>
-    <string name="tutorial_hot_bar_text">Quick access to top popular links</string>
+    <string name="tutorial_hot_bar_text">You can access our popular services here</string>
     <string name="tutorial_tab_bar_title">MAIN MENU</string>
-    <string name="tutorial_tab_bar_text">You can reach your favorite services, news and change settings from here</string>
+    <string name="tutorial_tab_bar_text">You can reach your favourite services, news and change settings from here</string>
 
     <string name="fragment_approved_devices_no_results">There are no approved\ndevices were found</string>
 

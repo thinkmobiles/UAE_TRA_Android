@@ -123,9 +123,9 @@
     <string name="str_info_hub_title">معلومات</string>
     <string name="str_info_hub_announcements">الأخبار</string>
     <string name="str_info_hub_announcement_details">التفاصيل</string>
-    <string name="str_location_is_not_defined">Could not determine location. Please enter your location manually.</string>
+    <string name="str_location_is_not_defined">لا يمكن تحديد الموقع. يرجى كتابة الموقع.</string>
     <string name="str_location_error">ادخل الموقع</string>
-    <string name="str_location_error_message">Please wait while location is determined or enter address manually.</string>
+    <string name="str_location_error_message">يرجى الانتظار ريثما يتم تحديد الموقع.</string>
     <string name="signal_level_error">يرجى تحديد مستوى الإشارة</string>
 
     <string name="str_mobile_verification">تحقق من الجوال</string>
@@ -173,13 +173,12 @@
     <string name="hint_set_server_url">Set server url</string>
     <string name="button_change_server">Change server</string>
     <string name="favourite_service_info">معلومات عن الخدمة</string>
-    <string name="favourite_remove">ازالة</string>
+    <string name="favourite_remove">إزالة</string>
     <string name="federal_authority">هيئة اتحادية</string>
     <string name="hexagon_button_verification">تحقق</string>
     <string name="hexagon_button_spam">رسائل غير مرغوبة</string>
-    <string name="hexagon_button_coverage">تغطية</string>
+    <string name="hexagon_button_coverage">التغطية</string>
     <string name="hexagon_button_internet">انترنت</string>
-    <string name="hexagon_button_domain_check">تحقق من خدمة</string>
     <string name="fragment_favorites_add_service_done">تم</string>
     <string name="fragment_favorites_add_service_search">بحث</string>
     <string name="fragment_favorites_menu_add">إضافة خدمة</string>
@@ -199,13 +198,13 @@
     <string name="service_complain_about_provider">شكوى على مزود خدمة</string>
     <string name="service_complain_about_tra">شكوى على الهيئة</string>
     <string name="service_suggestion">اقتراح</string>
-    <string name="service_domain_check">تحقق من مزود خدمة</string>
-    <string name="service_enquiries">استعلامات</string>
-    <string name="service_report_spam">Report Spam Service</string>
+    <string name="service_domain_check">تحقق من نطاق</string>
+    <string name="service_enquiries">استفسارات</string>
+    <string name="service_sms_spam">SMS Spam Service</string>
     <string name="service_poor_coverage">التغطية</string>
     <string name="service_help_salim">ساعد سالم</string>
     <string name="service_mobile_verification">تحقق من جوال</string>
-    <string name="service_approved_devices">الإجهزة المعتمدة</string>
+    <string name="service_approved_devices">الأجهزة المعتمدة</string>
 
     <string name="hint_first_name">الاسم</string>
     <string name="hint_last_name">اللقب</string>
@@ -324,7 +323,7 @@
     <string name="str__service_info__about_service__default">@string/str_dummy_info_hub_list_item_full_descr</string>
     <string name="str__service_info__about_service__complain_about_service_provider">You can file a complaint or put remarks about your telecom service provider</string>
     <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
-    <string name="release_version_label">رقم الاصدار</string>
+    <string name="release_version_label">رقم الإصدار</string>
     <string name="error_valid_emid">يرجى ادخال رقم هوية امارات صالح</string>
 
     <string name="fragment_report_spam_title">رسائل غير مرغوبة</string>
@@ -332,13 +331,13 @@
     <string name="fragment_report_spam_sms">شكوى على\nرسالة غير مرغوبة</string>
     <string name="fragment_report_spam_web">شكوى على\nموقع انترنت</string>
     <string name="fragment_report_spam_history">عرض\n القائمة الخاصة</string>
-    <string name="fragment_report_spam_cant_send_sms">"Can't send sms. Please, install sms messenger"</string>
+    <string name="fragment_report_spam_cant_send_sms">"لا يمكن إرسال الرسالة النصية."</string>
 
     <string name="fragment_report_spam_sms_title">رسائل غير مرغوبة</string>
-    <string name="fragment_report_spam_sms_number">رقم</string>
-    <string name="fragment_report_spam_sms_description_hint">انسخ و ألصق الرسالة هنا...</string>
+    <string name="fragment_report_spam_sms_number">رقم أو اسم المرسل الغير مرغوب</string>
+    <string name="fragment_report_spam_sms_description_hint">شرح</string>
     <string name="fragment_report_spam_sms_close">اغلاق</string>
-    <string name="fragment_report_spam_sms_submit">ارسال</string>
+    <string name="fragment_report_spam_sms_submit">إرسال</string>
 
     <string name="fragment_report_spam_web_title">ساعد سالم</string>
     <string name="fragment_report_spam_web_link">رابط</string>
@@ -350,23 +349,23 @@
     <string name="str_back_to_dashboard">عودة إلى الرئيسية</string>
     <string name="str_cancel_request">إلغاء الطلب</string>
     <string name="str_give_us_moment">لحظات من فضلك...</string>
-    <string name="str_reuqest_has_been_sent">Your Request has been successfully sent and you will receive an SMS reply shortly</string>
+    <string name="str_reuqest_has_been_sent">تم إتمام الطلب بنجاح</string>
     <string name="str_reuqest_has_been_failed">لم يتم الطلب</string>
     <string name="str_reuqest_has_been_cancelled">تم إلغاء الطلب</string>
-    <string name="lorem_ipsum_tutorial">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\\'s standard dummy text ever since the 1500s...</string>
+    <string name="lorem_ipsum_tutorial"></string>
     <string name="app_tutorial_screens">شاشات المساعدة</string>
     <string name="activate_tutorial">تفعيل شاشات المساعدة</string>
 
 
-    <string name="str_insert_imei_hint">Insert IMEI Manually</string>
+    <string name="str_insert_imei_hint">أدخل رقم IMEI يدوياً</string>
 
 
-    <string name="tutorial_avatar_title">USER PROFILE</string>
-    <string name="tutorial_avatar_text">Tap here to log in or edit your profile</string>
-    <string name="tutorial_hot_bar_title">QUICK ACCESS LINKS</string>
-    <string name="tutorial_hot_bar_text">Quick access to top popular links</string>
-    <string name="tutorial_tab_bar_title">MAIN MENU</string>
-    <string name="tutorial_tab_bar_text">You can reach your favorite services, news and change settings from here</string>
+    <string name="tutorial_avatar_title">الملف الشخصي</string>
+    <string name="tutorial_avatar_text">اضغط هنا للدخول إلى أو لتعديل ملفك الشخصي</string>
+    <string name="tutorial_hot_bar_title">روابط للوصول السريع</string>
+    <string name="tutorial_hot_bar_text">تتيح لك الوصول المباشر للخدمات الأكثر طلباً</string>
+    <string name="tutorial_tab_bar_title">القائمة الرئيسية</string>
+    <string name="tutorial_tab_bar_text">تمكنك من الوصول للخدمات المفضلة، الأخبار و الإعدادات</string>
 
     <string name="transaction_type_approval">Type Approval</string>
     <string name="transaction_type_approval_text">Your application for Type Approval has been reviewed by TRA personnel</string>
@@ -381,6 +380,9 @@
     <string name="transaction_type_approval_new_date">10/03/15</string>
     <string name="transaction_frequency_spectrum_new_date">10/02/15</string>
     <string name="transaction_domain_renewal_new_date">10/01/15</string>
+
+    <string name="service_report_spam">Report Spam Service</string>
+
     <string name="button_rate">Rate</string>
 
     <string name="fragment_edit_user_profile_saving">Saving data</string>

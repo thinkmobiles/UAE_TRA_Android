@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
@@ -74,12 +73,9 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
     private UserProfileRequest mUserProfileRequest;
 
-    private ValueAnimator mHexagonalHeaderAnimator, mHexagonButtonsAnimator, mHexagonHeaderReverseAnimator,
-            mHexagonButtonsReverseAnimator;
-    private AnimatorSet mAnimatorSet, mReverseAnimator;
+    private ValueAnimator mHexagonalHeaderAnimator, mHexagonHeaderReverseAnimator;
 
     private boolean isCollapsed = false;
-    private boolean isAnimating = false;
     private boolean isScrollUp = false;
 
     private float mAnimationProgress = 0f;
@@ -107,6 +103,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
         mRecyclerView = findView(R.id.rvServices_FHH);
         mHexagonalButtonsLayout = findView(R.id.hblHexagonalButtons_FHH);
         mHexagonalHeader = findView(R.id.hhHeader_FHH);
+        mAnimationProgress = 0f;
     }
 
     @Override
