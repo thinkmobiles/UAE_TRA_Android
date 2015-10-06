@@ -37,6 +37,11 @@ public class InnovationIdeaAdapter extends BaseSpinnerAdapter<String> {
         return new InnovationDropdownViewHolder(_view);
     }
 
+    @Override
+    public int getCount() {
+        return super.getCount() - 1;
+    }
+
     protected class InnovationViewHolder extends ViewHolder<String> {
 
         private TextView tvTitle;
@@ -49,7 +54,7 @@ public class InnovationIdeaAdapter extends BaseSpinnerAdapter<String> {
         }
 
         @Override
-        public void setData(final String _data) {
+        public void setData(int _position, final String _data) {
             tvTitle.setText(_data);
         }
     }
@@ -65,7 +70,7 @@ public class InnovationIdeaAdapter extends BaseSpinnerAdapter<String> {
         }
 
         @Override
-        public void setData(final String _data) {
+        public void setData(final int _position, final String _data) {
             tvTitle.setText(_data);
         }
     }

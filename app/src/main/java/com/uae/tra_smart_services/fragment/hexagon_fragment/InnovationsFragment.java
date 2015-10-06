@@ -35,7 +35,9 @@ import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.util.ImageUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by and on 29.09.15.
@@ -46,6 +48,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         OnImageSourceSelectListener, Cancelled, OnItemSelectedListener {//endregion
 
     private static final String KEY_IS_SPINNER_CLICKED = "IS_SPINNER_CLICKED";
+    private static final String KEY_SELECTED_IDEA_POSITION = "SELECTED_IDEA_POSITION";
 
     private EditText etTitle, etMessageDescription;
     private ImageView ivAddAttachment;
@@ -62,6 +65,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     private InnovationIdeaAdapter mIdeasAdapter;
 
     private boolean mIsSpinnerClicked, mIsUserClick;
+    private int mSelectedIdeaPosition;
 
     @Override
     public void onLoadingCanceled() {
@@ -87,6 +91,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
 
         if (savedInstanceState != null) {
             mIsSpinnerClicked = savedInstanceState.getBoolean(KEY_IS_SPINNER_CLICKED);
+            mSelectedIdeaPosition = savedInstanceState.getInt(KEY_SELECTED_IDEA_POSITION);
         }
     }
 
@@ -129,8 +134,14 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
 
     private void initInnovationIdeaSpinner() {
         final String[] ideas = getResources().getStringArray(R.array.fragment_innovation_ideas);
-        mIdeasAdapter = new InnovationIdeaAdapter(getActivity(), Arrays.asList(ideas));
+        List<String> ideasList = new ArrayList<>(Arrays.asList(ideas));
+        ideasList.add(getString(R.string.fragment_innovation_idea_title));
+        mIdeasAdapter = new InnovationIdeaAdapter(getActivity(), ideasList);
         sInnovationSpinner.setAdapter(mIdeasAdapter);
+        if (!mIsSpinnerClicked) {
+            mSelectedIdeaPosition = mIdeasAdapter.getCount();
+        }
+        sInnovationSpinner.setSelection(mSelectedIdeaPosition);
     }
 
     @Override
@@ -227,6 +238,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (mIsUserClick || mIsSpinnerClicked) {
+            mSelectedIdeaPosition = position;
             tvInnovativeIdea.setVisibility(View.INVISIBLE);
             sInnovationSpinner.setVisibility(View.VISIBLE);
             mIsSpinnerClicked = true;
@@ -244,6 +256,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_SELECTED_IDEA_POSITION, mSelectedIdeaPosition);
         outState.putBoolean(KEY_IS_SPINNER_CLICKED, mIsSpinnerClicked);
         mAttachmentManager.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);

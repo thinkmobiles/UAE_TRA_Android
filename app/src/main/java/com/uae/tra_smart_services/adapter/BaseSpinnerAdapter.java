@@ -35,7 +35,7 @@ public abstract class BaseSpinnerAdapter<T> extends android.widget.BaseAdapter {
         } else {
             holder = (ViewHolder<T>) _convertView.getTag();
         }
-        holder.setData(getItem(_position));
+        holder.setData(_position, getItem(_position));
         return _convertView;
     }
 
@@ -48,7 +48,7 @@ public abstract class BaseSpinnerAdapter<T> extends android.widget.BaseAdapter {
         } else {
             holder = (ViewHolder<T>) _convertView.getTag();
         }
-        holder.setData(getItem(_position));
+        holder.setData(_position, getItem(_position));
         return _convertView;
     }
 
@@ -83,7 +83,7 @@ public abstract class BaseSpinnerAdapter<T> extends android.widget.BaseAdapter {
             _view.setTag(this);
         }
 
-        public abstract void setData(final T _data);
+        public abstract void setData(int _position, final T _data);
 
     }
 

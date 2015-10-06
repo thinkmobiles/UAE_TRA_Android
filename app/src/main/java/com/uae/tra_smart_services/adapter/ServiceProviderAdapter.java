@@ -46,7 +46,7 @@ public class ServiceProviderAdapter extends BaseSpinnerAdapter<ServiceProvider> 
             tvTitle = (TextView) _view;
         }
 
-        public void setData(final ServiceProvider _provider) {
+        public void setData(int _position, final ServiceProvider _provider) {
             tvTitle.setText(_provider.getTitleRes());
         }
 
