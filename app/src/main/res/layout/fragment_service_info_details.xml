@@ -43,6 +43,7 @@
                 android:id="@+id/tvServiceInfoContent_FSID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
                 android:layout_marginTop="30dp"
                 android:scrollbars="none"
                 android:text="@string/str_dummy_info_hub_list_item_full_descr"

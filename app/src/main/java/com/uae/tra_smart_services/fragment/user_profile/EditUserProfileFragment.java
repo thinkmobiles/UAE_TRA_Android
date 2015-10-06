@@ -149,7 +149,7 @@ public final class EditUserProfileFragment extends BaseFragment
         mChangeUserNameRequest = new ChangeUserNameRequest(profile);
 
         hideKeyboard(getView());
-        loaderOverlayShow(getString(R.string.fragment_edit_user_profile_saving), (LoaderMarker) mUserProfileRequestListener);
+        loaderOverlayShow(getString(R.string.fragment_edit_user_profile_saving), mUserProfileRequestListener, false);
         loaderOverlayButtonBehavior(mUserProfileRequestListener);
         getSpiceManager().execute(mChangeUserNameRequest, KEY_EDIT_PROFILE_REQUEST,
                 DurationInMillis.ALWAYS_EXPIRED, mUserProfileRequestListener);

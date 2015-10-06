@@ -384,6 +384,18 @@
     <string name="service_report_spam">Report Spam Service</string>
 
     <string name="button_rate">Rate</string>
+    <string name="fragment_change_password_success">Password has been successfully changed</string>
+
+    <string name="fragment_innovation_idea_title">أفكار ابتكارية تساهم بـ</string>
+
+    <string-array name="fragment_innovation_ideas">
+        <item>اسعاد المتعاملين</item>
+        <item>رضا الموظفين</item>
+        <item>تطوير خدمات الهيئة</item>
+        <item>زيادة الإيرادات وترشيد النفقات</item>
+        <item>رفع صورة الهيئة وسمعتها المؤسسية</item>
+        <item>استشراف المستقبل</item>
+    </string-array>
 
     <string name="fragment_edit_user_profile_saving">جاري حفظ البيانات…</string>
     <string name="fragment_edit_user_profile_success">تم حفظ البيانات بنجاح</string>

@@ -11,7 +11,8 @@ import android.view.MenuItem;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.ServiceRatingView;
+import com.uae.tra_smart_services.customviews.LoaderView;
+import com.uae.tra_smart_services.fragment.LoaderFragment.CallBacks;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.OpenServiceInfo;
@@ -22,7 +23,7 @@ import com.uae.tra_smart_services.rest.robo_requests.RatingServiceRequest;
 /**
  * Created by ak-buffalo on 27.08.15.
  */
-public abstract class BaseServiceFragment extends BaseFragment implements Cancelled, ServiceRatingView.CallBacks {
+public abstract class BaseServiceFragment extends BaseFragment implements Cancelled, CallBacks {
 
     private OpenServiceInfo mOpenServiceInfoListener;
 
@@ -56,22 +57,29 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
         switch (item.getItemId()) {
             case R.id.action_show_info:
                 hideKeyboard(getView());
-                if (mOpenServiceInfoListener != null) {
-                    mOpenServiceInfoListener.onOpenServiceInfo(getServiceType());
-                }
+                openServiceInfoIfCan();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Nullable
-    protected abstract Service getServiceType();
+    private void openServiceInfoIfCan() {
+        final Service service;
+        final String serviceName;
+        if ((service = getServiceType()) != null && (serviceName = service.getServiceName()) != null
+                && mOpenServiceInfoListener != null) {
+            mOpenServiceInfoListener.onOpenServiceInfo(serviceName);
+        }
+    }
 
     @Override
-    public void onRate(int _rate){
+    public void onRate(int _rate, LoaderView.State _state){
         final String[] rateNames = getResources().getStringArray(R.array.rate_names);
         getFragmentManager().popBackStackImmediate();
+        if(_state == LoaderView.State.SUCCESS || _state == LoaderView.State.FAILURE){
+            getFragmentManager().popBackStackImmediate();
+        }
         sendRating(new RatingServiceRequestModel(getServiceName(), _rate, rateNames[_rate - 1]));
     }
 
@@ -92,12 +100,15 @@ public abstract class BaseServiceFragment extends BaseFragment implements Cancel
         );
     }
 
-    protected abstract String getServiceName();
-
     @CallSuper
     @Override
     public void onDetach() {
         mOpenServiceInfoListener = null;
         super.onDetach();
     }
+
+    @Nullable
+    protected abstract Service getServiceType();
+
+    protected abstract String getServiceName();
 }

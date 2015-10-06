@@ -28,6 +28,7 @@ import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.deprecated.BaseHomePageFragment;
+import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.interfaces.OnActivateTutorialListener;
@@ -37,7 +38,7 @@ import com.uae.tra_smart_services.util.ImageUtils;
 /**
  * Created by ak-buffalo on 30.07.15.
  */
-public class SettingsFragment extends BaseHomePageFragment
+public class SettingsFragment extends BaseFragment
         implements SettingsChangeListener, OnClickListener, OnOkListener, OnCheckedChangeListener {
 
     public static final String CHANGED = "changed";

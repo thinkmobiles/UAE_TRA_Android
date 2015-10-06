@@ -326,7 +326,7 @@
     <string name="fragment_report_spam_title">SPAM</string>
     <string name="fragment_report_spam_hint">Report SMS or Websites\nas Spam to TRA</string>
     <string name="fragment_report_spam_sms">REPORT\nSMS</string>
-    <string name="fragment_report_spam_web">REPORT\nWEB</string>
+    <string name="fragment_report_spam_web">HELP\nSALIM</string>
     <string name="fragment_report_spam_history">VIEW\nMY LIST</string>
     <string name="fragment_report_spam_cant_send_sms">"Can't send sms. Please, install sms messenger"</string>
 
@@ -408,5 +408,16 @@
     <string name="fragment_change_password_success">Password has been successfully changed</string>
 
     <string name="rating_view_title">Choose Rating</string>
+
+    <string name="fragment_innovation_idea_title">Innovative Ideas for</string>
+
+    <string-array name="fragment_innovation_ideas">
+        <item>Customer Happiness</item>
+        <item>Employee Satisfaction</item>
+        <item>TRA Service Improvement</item>
+        <item>Reducing cost &amp; increasing Revenue</item>
+        <item>Raising TRA Institutional Reputation</item>
+        <item>Futurology Studies</item>
+    </string-array>
 
 </resources>

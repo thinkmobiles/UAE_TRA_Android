@@ -183,6 +183,7 @@ public final class FavoritesFragment extends BaseFragment
             return true;
         }
         return super.onOptionsItemSelected(item);
+
     }
 
     @Override
@@ -202,6 +203,7 @@ public final class FavoritesFragment extends BaseFragment
     public void onClick(View v) {
         if (v.getId() == R.id.hvPlusBtn) {
             onAddServiceClick();
+
         }
     }
 
@@ -224,9 +226,17 @@ public final class FavoritesFragment extends BaseFragment
     public void onServiceInfoClick(int _position) {
         if (mFavoritesEventListener != null) {
             hideKeyboard(getView());
-            mFavoritesEventListener.onOpenServiceInfo(mFavoritesAdapter.getItem(_position));
+            final Service service = mFavoritesAdapter.getItem(_position);
+            openServiceInfoIfCan(service);
         }
         Log.d(getClass().getSimpleName(), "Service info click: " + _position);
+    }
+
+    private void openServiceInfoIfCan(final Service service) {
+        final String serviceName = service.getServiceName();
+        if (serviceName != null && mFavoritesEventListener != null) {
+            mFavoritesEventListener.onOpenServiceInfo(serviceName);
+        }
     }
 
     @Override

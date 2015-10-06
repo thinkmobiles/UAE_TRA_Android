@@ -2,9 +2,11 @@ package com.uae.tra_smart_services.global;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.global.C.ServiceName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +29,8 @@ public enum Service {
         }
 
         @Override
-        @StringRes
-        public int getInfoAboutService() {
-            return R.string.str__service_info__about_service__complain_about_service_provider;
+        public String getServiceName() {
+            return C.COMPLAIN_ABOUT_SERVICE_PROVIDER;
         }
     },
     COMPLAINT_ABOUT_TRA {
@@ -43,6 +44,11 @@ public enum Service {
         @DrawableRes
         public final int getDrawableRes() {
             return R.drawable.ic_chat;
+        }
+
+        @Override
+        public String getServiceName() {
+            return C.COMPLAIN_ABOUT_TRA;
         }
     },
     SUGGESTION {
@@ -59,9 +65,8 @@ public enum Service {
         }
 
         @Override
-        @StringRes
-        public int getInfoAboutService() {
-            return R.string.str__service_info__about_service__suggestion;
+        public String getServiceName() {
+            return C.SUGGESTION;
         }
     },
     DOMAIN_CHECK {
@@ -79,6 +84,12 @@ public enum Service {
         @DrawableRes
         public final int getDrawableRes() {
             return R.drawable.ic_glb;
+        }
+
+        @Nullable
+        @Override
+        public String getServiceName() {
+            return C.DOMAIN_CHECK;
         }
     },
     DOMAIN_CHECK_INFO {
@@ -139,6 +150,11 @@ public enum Service {
         public final int getDrawableRes() {
             return R.drawable.ic_play;
         }
+
+        @Override
+        public String getServiceName() {
+            return C.ENQUIRIES;
+        }
     },
     APPROVED_DEVICES {
         @Override
@@ -150,11 +166,15 @@ public enum Service {
         @Override
         @DrawableRes
         public final int getDrawableRes() {
-            return R.drawable.ic_lock;
+            return R.drawable.ic_mob_br;
         }
 
+        @Override
+        public String getServiceName() {
+            return C.MOBILE_BRAND;
+        }
     },
-//    HELP_SALIM {
+    //    HELP_SALIM {
 //        @Override
 //        @StringRes
 //        public int getTitleRes() {
@@ -185,6 +205,10 @@ public enum Service {
             return R.drawable.ic_verif_gray;
         }
 
+        @Override
+        public String getServiceName() {
+            return C.VERIFICATION;
+        }
     },
     REPORT_SPAM {
         @Override
@@ -201,6 +225,12 @@ public enum Service {
         @Override
         public int getDrawableRes() {
             return R.drawable.ic_spam_gray;
+        }
+
+        @Nullable
+        @Override
+        public String getServiceName() {
+            return C.SPAM_REPORT;
         }
     },
     POOR_COVERAGE {
@@ -220,6 +250,10 @@ public enum Service {
             return R.drawable.ic_coverage_gray;
         }
 
+        @Override
+        public String getServiceName() {
+            return C.COVERAGE;
+        }
     };
 //    , INTERNET_SPEEDTEST {
 //        @Override
@@ -246,9 +280,10 @@ public enum Service {
     @StringRes
     public abstract int getTitleRes();
 
-    @StringRes
-    public int getInfoAboutService() {
-        return R.string.str__service_info__about_service__default;
+    @ServiceName
+    @Nullable
+    public String getServiceName() {
+        return null;
     }
 
     protected boolean isMainScreenService() {
