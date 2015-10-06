@@ -32,21 +32,10 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment
     private CustomFilterPool<RestorePasswordRequestModel> mFilterPool;
     private RestorePasswordRequestModel mRestorePasswordRequestModel;
     private RestorePasswordRequest mRestorePasswordRequest;
-    private Response result;
     private int onRestorePassMessageId;
 
     public static RestorePasswordFragment newInstance() {
         return new RestorePasswordFragment();
-    }
-
-    @Override
-    protected int getTitle() {
-        return R.string.forgot_password_title;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_restore_pass;
     }
 
     @Override
@@ -130,23 +119,34 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment
     private class RestorePasswordRequestListener implements PendingRequestListener<Response> {
 
         @Override
-        public void onRequestNotFound() {
-
-        }
+        public void onRequestNotFound() { /* Not implemented */}
 
         @Override
         public void onRequestSuccess(Response result) {
-            Log.d(getClass().getSimpleName(), "Success. isAdded: " + isAdded());
+            onRestorePassMessageId = (int) Math.random();
             if (isAdded()) {
                 loaderDialogDismiss();
-                onRestorePassMessageId = (int) Math.random();
                 showMessage(onRestorePassMessageId, R.string.str_success, R.string.str_restore_pass_mail);
             }
         }
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
+            onRestorePassMessageId = (int) Math.random();
+            if (isAdded()) {
+                loaderDialogDismiss();
+            }
             processError(spiceException);
         }
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.forgot_password_title;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_restore_pass;
     }
 }
