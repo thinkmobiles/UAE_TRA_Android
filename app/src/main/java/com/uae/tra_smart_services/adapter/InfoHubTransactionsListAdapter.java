@@ -38,6 +38,15 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
         mSize = mDataSet.size() + 1;
     }
 
+    public void stopLoading() {
+        mSize--;
+        notifyItemRemoved(mDataSet.size());
+    }
+
+    public boolean isEmpty() {
+        return mDataSet.isEmpty();
+    }
+
     public void addAll(final ArrayList<GetTransactionResponseModel> _transactionResponses) {
         mDataSet.addAll(_transactionResponses);
         if (!_transactionResponses.isEmpty()) {

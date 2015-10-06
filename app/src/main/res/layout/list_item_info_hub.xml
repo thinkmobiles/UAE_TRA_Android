@@ -13,10 +13,10 @@
         android:layout_margin="5dp"
         android:layout_gravity="start"
         android:layout_marginBottom="2dp"
-        app:hexagonSideSize="45dp"
-        app:hexagonSrc="@android:color/white"
-        app:hexagonBorderSize="2dp"
-        app:hexagonBorderColor="#000000"/>
+        app:hexagonSideSize="40dp"
+        app:hexagonSrc="@drawable/ic_form"
+        app:hexagonBorderSize="1dp"
+        app:hexagonBorderColor="?attr/colorPrimary"/>
 
     <TextView
         android:id="@+id/hvTitle_LIHLI"

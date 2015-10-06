@@ -8,5 +8,6 @@ public enum FragmentType {
     REPORT_SMS_SPAM,
     REPORT_WEB_SPAM,
     SPAM_REPORT_HISTORY,
-    ENQUIRIES
+    ENQUIRIES,
+    INFO_HUB
 }

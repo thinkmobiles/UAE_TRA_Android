@@ -3,6 +3,7 @@ package com.uae.tra_smart_services.fragment.base;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
@@ -22,6 +23,8 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.exception.NoNetworkException;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.TRAApplication;
+import com.uae.tra_smart_services.activity.HomeActivity;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
@@ -199,7 +202,8 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
             Throwable cause = _exception.getCause();
             if (cause != null && cause instanceof RetrofitError) {
                 errorMessage = processRetrofitError(((RetrofitError) cause));
-                loaderOverlayFailed(errorMessage, true);
+                if (errorMessage != null)
+                    loaderOverlayFailed(errorMessage, true);
             } else if (_exception instanceof NoNetworkException) {
                 errorMessage = getString(R.string.error_no_network);
                 loaderOverlayFailed(errorMessage, false);
@@ -221,6 +225,13 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
             case HTTP:
                 if (_error.getResponse().getStatus() == HttpURLConnection.HTTP_INTERNAL_ERROR) {
                     return getString(R.string.error_server);
+                } else if (_error.getResponse().getStatus() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    TRAApplication.setIsLoggedIn(false);
+                    com.uae.tra_smart_services.util.PreferenceManager.setLoggedIn(getActivity(), false);
+                    final Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                    return null;
                 }
                 try {
                     ErrorResponseModel errorResponse = (ErrorResponseModel) _error.getBodyAs(ErrorResponseModel.class);
