@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Vitaliy on 05/10/2015.
  */
-public class TransactionResponse {
+public class GetTransactionResponseModel {
     public String title;
     public String type;
     public String traSubmitDatetime;
@@ -17,7 +17,7 @@ public class TransactionResponse {
     public String description;
 
     @SuppressWarnings("serial")
-    public static class List extends ArrayList<TransactionResponse> {
+    public static class List extends ArrayList<GetTransactionResponseModel> {
     }
 
 }

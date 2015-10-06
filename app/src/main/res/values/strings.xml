@@ -241,6 +241,7 @@
     <string name="fragment_complain_no_service_provider">Please select service provider</string>
     <string name="fragment_complain_no_reference_number">Please set reference number</string>
     <string name="fragment_complain_no_description">Please provide description</string>
+    <string name="fragment_complain_no_selected_item">Please select innovatime idea</string>
 
     <string name="fragment_complain_about_service_du">DU</string>
     <string name="fragment_complain_about_service_etisalat">Etisalat</string>
@@ -420,4 +421,5 @@
         <item>Futurology Studies</item>
     </string-array>
 
+    <string name="innovations_fill_data_correctly">Please fill fields correctly</string>
 </resources>

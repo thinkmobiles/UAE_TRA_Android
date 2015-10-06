@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.InnovationIdeaAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
@@ -28,24 +30,31 @@ import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog;
 import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog.OnImageSourceSelectListener;
 import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
+import com.uae.tra_smart_services.entities.CustomFilterPool;
+import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.spam.ReportSmsSpamFragment;
 import com.uae.tra_smart_services.global.ImageSource;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
+import com.uae.tra_smart_services.rest.model.request.PostInnovationRequestModel;
+import com.uae.tra_smart_services.rest.robo_requests.PostInnovationRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import retrofit.client.Response;
+
 /**
  * Created by and on 29.09.15.
  */
 
 public class InnovationsFragment extends BaseFragment implements //region Interfaces
-        OnClickListener, OnCheckedChangeListener, OnImageGetCallback,
-        OnImageSourceSelectListener, Cancelled, OnItemSelectedListener {//endregion
+        OnClickListener, OnImageGetCallback, OnImageSourceSelectListener,
+        Cancelled, OnItemSelectedListener /*,OnCheckedChangeListener*/ {//endregion
 
     private static final String KEY_IS_SPINNER_CLICKED = "IS_SPINNER_CLICKED";
     private static final String KEY_SELECTED_IDEA_POSITION = "SELECTED_IDEA_POSITION";
@@ -63,15 +72,16 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
 
     private AttachmentManager mAttachmentManager;
     private InnovationIdeaAdapter mIdeasAdapter;
+    private PostInnovationRequest mRequest;
 
-    private boolean mIsSpinnerClicked, mIsUserClick;
+    private boolean mIsSpinnerClicked, mIsUserClick, nothingSelected;
     private int mSelectedIdeaPosition;
 
     @Override
     public void onLoadingCanceled() {
-        // Not implemented yet
-        //HACK:
-        loaderOverlayCancelled(mContext.getString(R.string.str_cancel_request));
+        if(getSpiceManager().isStarted() && mRequest!=null){
+            getSpiceManager().cancel(mRequest);
+        }
     }
 
     public static InnovationsFragment newInstance() {
@@ -102,14 +112,14 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         etTitle = findView(R.id.etTitle_FIS);
         etMessageDescription = findView(R.id.etMessageDescription_FIS);
         btnSubmit = findView(R.id.btnSubmit_FIS);
-        tvPublic = findView(R.id.tvPublic);
-        tvPrivate = findView(R.id.tvPrivate);
-        swType = findView(R.id.swInnType);
         sInnovationSpinner = findView(R.id.sInnovateIdea_FIS);
         tvInnovativeIdea = findView(R.id.tvInnovativeIdea_FIS);
-        color = etTitle.getCurrentHintTextColor();
 
-        togglePrivacy(swType.isChecked());
+//        color = etTitle.getCurrentHintTextColor();
+//        tvPublic = findView(R.id.tvPublic);
+//        tvPrivate = findView(R.id.tvPrivate);
+//        swType = findView(R.id.swInnType);
+//        togglePrivacy(swType.isChecked());
     }
 
     @Override
@@ -117,10 +127,12 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         super.initListeners();
         ivAddAttachment.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
-        swType.setOnCheckedChangeListener(this);
+        etTitle.setOnFocusChangeListener(this);
+        etMessageDescription.setOnFocusChangeListener(this);
         tvInnovativeIdea.setOnClickListener(this);
         sInnovationSpinner.setOnItemSelectedListener(this);
         findView(R.id.tivArrowIcon_FIS).setOnClickListener(this);
+//        swType.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -154,9 +166,9 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     public void onClick(View v) {
         hideKeyboard(v);
         switch (v.getId()) {
-            case R.id.tivAddAttachment_FIS:
+            /*case R.id.tivAddAttachment_FIS:
                 openImagePicker();
-                break;
+                break;*/
             case R.id.btnSubmit_FIS:
                 if (validateData()) {
                     sendComplain();
@@ -174,7 +186,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         sInnovationSpinner.performClick();
     }
 
-    protected void openImagePicker() {
+    /*protected void openImagePicker() {
         final boolean isGalleryAvailable = mAttachmentManager.isGalleryPickAvailable();
         final boolean canGetPhoto = mAttachmentManager.canGetCameraPicture();
         if (isGalleryAvailable && canGetPhoto) {
@@ -186,7 +198,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         } else {
             Toast.makeText(getActivity(), R.string.fragment_complain_about_service_no_camera_and_app, Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     @Override
     public void onImageSourceSelect(ImageSource _source) {
@@ -201,15 +213,20 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     }
 
     private boolean validateData() {
-        boolean titleInvalid = etTitle.getText().toString().isEmpty();
+        boolean titleInvalid = etTitle.getText().toString().trim().isEmpty();
         if (titleInvalid) {
             Toast.makeText(getActivity(), R.string.fragment_complain_no_title, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        boolean messageInvalid = etMessageDescription.getText().toString().isEmpty();
+        boolean messageInvalid = etMessageDescription.getText().toString().trim().isEmpty();
         if (messageInvalid) {
             Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(nothingSelected){
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_selected_item, Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -217,7 +234,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     }
 
     private void sendComplain() {
-        loaderOverlayShow(mContext.getString(R.string.str_sending), (LoaderMarker) this);
+        loaderOverlayShow(mContext.getString(R.string.str_sending), this, false);
         loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override
             public void onBackButtonPressed(LoaderView.State _currentState) {
@@ -227,12 +244,23 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
                 }
             }
         });
-        new Handler().postDelayed(new Runnable() {
+
+        PostInnovationRequestModel model = new PostInnovationRequestModel(){
+            {
+                title = etTitle.getText().toString();
+                message = etMessageDescription.getText().toString();
+                type = String.valueOf(sInnovationSpinner.getSelectedItemPosition() + 1);
+            }
+        };
+
+        getSpiceManager().execute(mRequest = new PostInnovationRequest(model), new PostInnovationRequestListener());
+
+        /*new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 loaderOverlaySuccess(mContext.getString(R.string.str_reuqest_has_been_sent));
             }
-        }, 2500);
+        }, 2500);*/
     }
 
     @Override
@@ -242,12 +270,14 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
             tvInnovativeIdea.setVisibility(View.INVISIBLE);
             sInnovationSpinner.setVisibility(View.VISIBLE);
             mIsSpinnerClicked = true;
+            nothingSelected = false;
+        } else {
+            nothingSelected = true;
         }
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-    }
+    public void onNothingSelected(AdapterView<?> parent) { }
 
     @Override
     public void onImageGet(Uri _uri) {
@@ -262,7 +292,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         super.onSaveInstanceState(outState);
     }
 
-    @Override
+    /*@Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         togglePrivacy(isChecked);
     }
@@ -275,7 +305,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
             tvPrivate.setTextColor(Color.LTGRAY);
             tvPublic.setTextColor(color);
         }
-    }
+    }*/
 
     @Override
     public void onDetach() {
@@ -289,6 +319,19 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         super.onDestroy();
     }
 
+    private class PostInnovationRequestListener implements RequestListener<Response>{
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            processError(spiceException);
+        }
+
+        @Override
+        public void onRequestSuccess(Response response) {
+            loaderOverlaySuccess(getString(R.string.str_rating_has_sent));
+        }
+    }
+
     @Override
     protected int getTitle() {
         return R.string.str_innovations;
@@ -298,5 +341,4 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     protected int getLayoutResource() {
         return R.layout.fragment_innovations_send;
     }
-
 }
