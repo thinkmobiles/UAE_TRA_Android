@@ -131,8 +131,8 @@ public interface TRAServicesAPI {
 
     @GET(GET_TRANSACTIONS)
     TransactionResponse.List getTransactions(@Query("page") final int _page,
-                                             @Query("count") final int _count,
-                                             @Query("orderAsc") final int _asc);
+                                             @Query("count") final int _count);
+//                                             @Query("orderAsc") final int _asc);
 
     @GET(SERVICE_INFO)
     ServiceInfoResponse getServiceInfo(@Query(PARAMETER_SERVICE_NAME) String _serviceName,

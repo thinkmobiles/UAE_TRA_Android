@@ -10,15 +10,15 @@ public class GetTransactionsRequest extends BaseRequest<TransactionResponse.List
 
     private int mPage, mCount, mAsc;
 
-    public GetTransactionsRequest(final int _page, final int _count, final int _asc) {
+    public GetTransactionsRequest(final int _page, final int _count) {
         super(TransactionResponse.List.class, TRAServicesAPI.class);
         mPage = _page;
         mCount = _count;
-        mAsc = _asc;
+//        mAsc = _asc;
     }
 
     @Override
     public TransactionResponse.List loadDataFromNetwork() throws Exception {
-        return getService().getTransactions(mPage, mCount, mAsc);
+        return getService().getTransactions(mPage, mCount);
     }
 }

@@ -23,10 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/sStartOffset_LID"
-        app:hexagonBorderColor="#55636e"
+        app:hexagonBorderColor="?attr/colorPrimary"
         app:hexagonBorderSize="1dp"
         app:hexagonSideSize="40dp"
-        app:hexagonSrc="@drawable/nexus_5x"/>
+        app:hexagonSrc="@drawable/ic_mobile"
+        app:hexagonSrcTintColor="?attr/colorPrimary"/>
 
     <LinearLayout
         android:id="@+id/llDetailsContainer_LID"

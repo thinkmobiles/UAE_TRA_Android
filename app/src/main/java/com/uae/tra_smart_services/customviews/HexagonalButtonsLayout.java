@@ -427,7 +427,7 @@ public class HexagonalButtonsLayout extends View {
 //        _canvas.translate(mCenters.get(3).x - (mTextLayout.getWidth() / 2), mCenters.get(0).y + mRadius / 3  - mTextLayout.getHeight() / 2);
 //        mTextLayout.draw(_canvas);
 //        _canvas.restore();
-        drawTextLayout(_canvas, mCenters.get(3), getResources().getString(R.string.hexagon_button_domain_check), mWhiteTextPain.getColor());
+        drawTextLayout(_canvas, mCenters.get(3), getResources().getString(R.string.str_domain_check), mWhiteTextPain.getColor());
 
 //        _canvas.drawText(getResources().getString(R.string.service_domain_check), mCenters.get(3).x,
 //                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);

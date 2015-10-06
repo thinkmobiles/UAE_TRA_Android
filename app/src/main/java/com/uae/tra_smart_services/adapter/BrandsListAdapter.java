@@ -133,7 +133,7 @@ public class BrandsListAdapter extends Adapter<ViewHolder> implements Filterable
 
         protected final void setData(int position, @NonNull BrandItem data) {
             sStartOffset.setVisibility(position % 2 == 0 ? View.GONE : View.INVISIBLE);
-            hvBrandImage.setHexagonSrcDrawable(data.mBrandImageRes);
+//            hvBrandImage.setHexagonSrcDrawable(data.mBrandImageRes);
             ivBrandLogo.setImageResource(data.mBrandLogoRes);
         }
 

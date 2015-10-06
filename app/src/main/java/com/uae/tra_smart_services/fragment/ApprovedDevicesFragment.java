@@ -21,7 +21,6 @@ import com.uae.tra_smart_services.adapter.BrandsListAdapter.OnBrandSelectListene
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
-import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByBrandRequest;
 
@@ -90,7 +89,7 @@ public final class ApprovedDevicesFragment extends BaseServiceFragment implement
     private void initDevicesList() {
         //region Init stub data list
         final String[] stubBrandsData = {"HTC", "Samsung", "Nokia", "Huawei", "Apple"};
-        final int[] stubBrandsLogos = {R.drawable.ic_htc, R.drawable.ic_samsung, R.drawable.ic_nokia, R.drawable.logo_huaw, R.drawable.ic_logo_ap};
+        final int[] stubBrandsLogos = {R.drawable.ic_htc, R.drawable.ic_samsung, R.drawable.ic_nokia, R.drawable.logo_huaw, R.drawable.ic_apple};
 
         List<BrandItem> stubData = new ArrayList<>();
         for (int i = 0; i < stubBrandsData.length; i++) {

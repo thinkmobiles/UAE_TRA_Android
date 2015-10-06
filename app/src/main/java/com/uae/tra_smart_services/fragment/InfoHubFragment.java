@@ -75,7 +75,7 @@ public class InfoHubFragment extends BaseFragment implements EndlessScrollListen
     }
 
     private void startLoading(final int _page) {
-        final GetTransactionsRequest request = new GetTransactionsRequest(_page, DEFAULT_LIMIT, 0);
+        final GetTransactionsRequest request = new GetTransactionsRequest(_page, DEFAULT_LIMIT);
         getSpiceManager().execute(request, mTransactionsListener);
     }
 
