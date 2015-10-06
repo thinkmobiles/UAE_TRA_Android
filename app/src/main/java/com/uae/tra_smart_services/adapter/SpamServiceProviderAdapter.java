@@ -41,7 +41,7 @@ public class SpamServiceProviderAdapter extends ServiceProviderAdapter {
         }
 
         @Override
-        public void setData(ServiceProvider _provider) {
+        public void setData(int _position, ServiceProvider _provider) {
             tvTitle.setText(_provider.getTitleRes());
         }
     }
