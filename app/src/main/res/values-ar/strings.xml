@@ -400,5 +400,6 @@
     <string name="fragment_edit_user_profile_success">تم حفظ البيانات بنجاح</string>
 
     <string name="fragment_change_password_success">تم تغيير كلمة المرور بنجاح</string>
+    <string name="attachment_manager_delete">Delete attachment</string>
     <string name="fragment_innovations_provide_title">Please provide innovation title</string>
 </resources>

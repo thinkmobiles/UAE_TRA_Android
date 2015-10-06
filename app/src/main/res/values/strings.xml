@@ -420,6 +420,8 @@
         <item>Futurology Studies</item>
     </string-array>
 
+    <string name="innovations_fill_data_correctly">Please fill fields correctly</string>
+    <string name="attachment_manager_delete">Delete attachment</string>
     <string name="innovation_has_sent">Innovation has been successfully sent</string>
     <string name="str_not_found">Not Found</string>
     <string name="fragment_innovations_no_selected_item">Please select innovative idea</string>

@@ -7,7 +7,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -18,13 +17,13 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.adapter.ServiceProviderAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
+import com.uae.tra_smart_services.customviews.ThemedImageView;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutServiceRequest;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 import retrofit.client.Response;
 
@@ -37,7 +36,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_ABOUT_SERVICE_REQUEST";
 
     private Spinner sProviderSpinner;
-    private ImageView ivAddAttachment;
+    private ThemedImageView tivAddAttachment;
     private EditText etComplainTitle, etReferenceNumber, etDescription;
 
     private ComplainAboutServiceRequest mComplainAboutServiceRequest;
@@ -60,7 +59,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     protected void initViews() {
         super.initViews();
         initSpinner();
-        ivAddAttachment = findView(R.id.ivAddAttachment_FCAS);
+        tivAddAttachment = findView(R.id.tivAddAttachment_FCAS);
 
         etComplainTitle = findView(R.id.etComplainTitle_FCAS);
         etReferenceNumber = findView(R.id.etReferenceNumber_FCAS);
@@ -77,7 +76,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     protected void initListeners() {
         super.initListeners();
         mRequestResponseListener = new RequestResponseListener();
-        ivAddAttachment.setOnClickListener(this);
+        tivAddAttachment.setOnClickListener(this);
         etComplainTitle.setOnFocusChangeListener(this);
         etDescription.setOnFocusChangeListener(this);
     }
@@ -140,15 +139,20 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     public void onClick(View v) {
         hideKeyboard(v);
         switch (v.getId()) {
-            case R.id.ivAddAttachment_FCAS:
+            case R.id.tivAddAttachment_FCAS:
                 openImagePicker();
                 break;
         }
     }
 
     @Override
-    public void onImageGet(Uri _uri) {
-        ivAddAttachment.setImageDrawable(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_check, R.attr.authorizationDrawableColors));
+    public void onAttachmentGet(Uri _uri) {
+        tivAddAttachment.setImageResource(R.drawable.ic_check);
+    }
+
+    @Override
+    protected void onAttachmentDeleted() {
+        tivAddAttachment.setImageResource(R.drawable.ic_action_attachment);
     }
 
     @Override

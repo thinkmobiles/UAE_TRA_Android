@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -49,7 +50,7 @@ public final class AttachmentManager {
         mPhotoFilePath = _savedInstanceState.getString(CAMERA_PHOTO_FILE_PATH_KEY);
         mImageUri = _savedInstanceState.getParcelable(SELECTED_IMAGE_URI_KEY);
         if (mImageUri != null) {
-            mImageGetCallback.onImageGet(mImageUri);
+            mImageGetCallback.onAttachmentGet(mImageUri);
         }
     }
 
@@ -64,14 +65,14 @@ public final class AttachmentManager {
                 final File photoFile = new File(mPhotoFilePath);
                 if (resultCode == Activity.RESULT_OK) {
                     mImageUri = Uri.fromFile(photoFile);
-                    mImageGetCallback.onImageGet(mImageUri);
+                    mImageGetCallback.onAttachmentGet(mImageUri);
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     photoFile.delete();
                 }
             }
         } else if (requestCode == REQUEST_GALLERY_IMAGE_CODE && resultCode == Activity.RESULT_OK) {
             mImageUri = data.getData();
-            mImageGetCallback.onImageGet(mImageUri);
+            mImageGetCallback.onAttachmentGet(mImageUri);
         }
     }
 
@@ -104,6 +105,7 @@ public final class AttachmentManager {
         }
     }
 
+    @Nullable
     public final Uri getImageUri() {
         return mImageUri;
     }
@@ -119,8 +121,13 @@ public final class AttachmentManager {
                 && takePictureIntent.resolveActivity(mPackageManager) != null;
     }
 
+    public void clearAttachment(){
+        mPhotoFilePath = null;
+        mImageUri = null;
+    }
+
     public interface OnImageGetCallback {
-        void onImageGet(final Uri _imageUri);
+        void onAttachmentGet(final Uri _imageUri);
     }
 
 }

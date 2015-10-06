@@ -3,6 +3,7 @@ package com.uae.tra_smart_services.rest.robo_requests;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 
 import com.uae.tra_smart_services.rest.TRAServicesAPI;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
@@ -23,7 +24,7 @@ public class ComplainSuggestionServiceRequest extends BaseRequest<Response, TRAS
 
     public ComplainSuggestionServiceRequest(final ComplainTRAServiceModel _complainTRAServiceModel,
                                             final Context _context,
-                                            final Uri _imageUri) {
+                                            @Nullable final Uri _imageUri) {
 
         super(Response.class, TRAServicesAPI.class);
         mComplainTRAServiceModel = _complainTRAServiceModel;
@@ -34,7 +35,9 @@ public class ComplainSuggestionServiceRequest extends BaseRequest<Response, TRAS
     @Override
     public Response loadDataFromNetwork() throws Exception {
         try {
-            mComplainTRAServiceModel.attachment = ImageUtils.imageToBase64(mContentResolver, mImageUri);
+            if (mImageUri != null) {
+                mComplainTRAServiceModel.attachment = ImageUtils.imageToBase64(mContentResolver, mImageUri);
+            }
             return getService().sendSuggestion(mComplainTRAServiceModel);
         } catch (IOException e) {
             throw new Exception("Can't load image from device");
