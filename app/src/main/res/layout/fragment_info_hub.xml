@@ -80,6 +80,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:text="@string/fragment_info_hub_no_pending_transactions"
+                android:visibility="gone"
                 android:textSize="18sp"
                 android:layout_below="@+id/tvTransText_FIH"
                 android:layout_centerInParent="true"
@@ -94,6 +95,14 @@
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 android:layout_below="@+id/tvTransText_FIH"/>
+
+            <ProgressBar
+                android:id="@+id/pbLoadingTransactions_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tvTransText_FIH"
+                android:layout_centerInParent="true"
+                android:visibility="visible"/>
         </RelativeLayout>
     </LinearLayout>
 

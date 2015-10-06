@@ -6,6 +6,7 @@
         android:padding="10dp"
         android:id="@+id/tvArabicLang_LS"
         android:tag="ar"
+        android:singleLine="true"
         android:background="?attr/homePageHeaderBackground"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -20,6 +21,7 @@
         android:background="?attr/homePageHeaderBackground"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:singleLine="true"
         android:text="@string/lang_en" />
 
 </merge>

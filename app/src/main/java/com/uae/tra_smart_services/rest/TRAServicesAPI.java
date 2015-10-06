@@ -17,6 +17,7 @@ import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseMod
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
+import com.uae.tra_smart_services.rest.model.response.TransactionResponse;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 
 import retrofit.client.Response;
@@ -33,6 +34,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.CHECK_WHO_IS_URL
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ABOUT_SERVICE_PROVIDER_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ABOUT_TRA_SERVICE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ENQUIRIES_SERVICE_URL;
+import static com.uae.tra_smart_services.global.ServerConstants.GET_TRANSACTIONS;
 import static com.uae.tra_smart_services.global.ServerConstants.HELP_SALIM_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGIN_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGOUT_URL;
@@ -122,4 +124,9 @@ public interface TRAServicesAPI {
 
     @PUT(CHANGE_PASSWORD)
     Response changePassword(@Body ChangePasswordModel _changePasswordModel);
+
+    @GET(GET_TRANSACTIONS)
+    TransactionResponse.List getTransactions(@Query("page") final int _page,
+                                             @Query("count") final int _count,
+                                             @Query("orderAsc") final int _asc);
 }

@@ -37,14 +37,19 @@
                 <TextView
                     android:id="@+id/tvLanguage_FS"
                     style="@style/UserSettingsStaticText"
-                    android:text="@string/str_language"/>
+                    android:layout_width="0dp"
+                    android:text="@string/str_language"
+                    android:layout_weight="4"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
 
                 <com.uae.tra_smart_services.customviews.LanguageSwitcherView
                     android:id="@+id/cvLangSwitch"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
-                    tools:contex=".SettingsActivity"/>
+                    tools:contex=".SettingsActivity"
+                    android:layout_weight="3"/>
 
             </LinearLayout>
 

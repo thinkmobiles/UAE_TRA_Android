@@ -8,7 +8,6 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.LinearLayout;
 
 import com.uae.tra_smart_services.R;
@@ -157,21 +156,23 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
                 handled = true;
                 break;
             case MotionEvent.ACTION_MOVE:
-                handled = false;
+                handled = true;
                 break;
 
             case MotionEvent.ACTION_UP:
-                if (SystemClock.elapsedRealtime() - mTouchDownTime <= ViewConfiguration.getTapTimeout()) {
+//                if (SystemClock.elapsedRealtime() - mTouchDownTime <= ViewConfiguration.getTapTimeout()) {
                     return handleClick(event.getX(), event.getY());
-                }
-                break;
+//                }
+//                break;
         }
         return handled;
     }
 
     private boolean handleClick(float dX, float dY) {
+        boolean somethingInArea = false;
         for (RectButton point : points) {
             if (isInArea(point, dX, dY)) {
+                somethingInArea = true;
                 if (point == mSelectedCircle) {
                     return false;
                 }
@@ -179,10 +180,17 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
                 point.isSelected = true;
                 point.setPaintStyle(Paint.Style.STROKE);
                 mSettingsChangeListener.onSettingsChanged(this, point.colorThema);
-            } else {
-                point.isSelected = false;
             }
         }
+
+        if (somethingInArea) {
+            for (RectButton point : points) {
+                if (!isInArea(point, dX, dY)) {
+                    point.isSelected = false;
+                }
+            }
+        }
+
         invalidate();
         return true;
     }

@@ -6,14 +6,14 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
-import com.uae.tra_smart_services.rest.model.response.InfoHubTransActionsListItemModel;
+import com.uae.tra_smart_services.rest.model.response.TransactionResponse;
 
 import java.util.ArrayList;
 
@@ -22,27 +22,46 @@ import java.util.ArrayList;
  */
 public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHubTransactionsListAdapter.ViewHolder> {
 
-    private ArrayList<InfoHubTransActionsListItemModel> mDataSet;
+    public static final int VIEW_TYPE_TRANSACTION = 0;
+    public static final int VIEW_TYPE_LOADER = 1;
+
+    private ArrayList<TransactionResponse> mDataSet;
     private Context mContext;
     private OnInfoHubItemClickListener onItemClickListener;
     private float mMarginOffset = 0;
+    private boolean mLoadingFinished = false;
+    private int mSize;
 
-    public InfoHubTransactionsListAdapter(Context _context, ArrayList<InfoHubTransActionsListItemModel> _dataSet){
+    public InfoHubTransactionsListAdapter(Context _context) {
         mContext = _context;
-        mDataSet = _dataSet;
+        mDataSet = new ArrayList<>();
+        mSize = mDataSet.size() + 1;
     }
 
-    public void add(int position, InfoHubTransActionsListItemModel item) {
+    public void addAll(final ArrayList<TransactionResponse> _transactionResponses) {
+        mDataSet.addAll(_transactionResponses);
+        if (!_transactionResponses.isEmpty()) {
+            mSize = mDataSet.size() + 1;
+            notifyItemRangeInserted(mDataSet.size() - _transactionResponses.size(), _transactionResponses.size());
+        } else {
+            mSize--;
+            notifyItemRemoved(mDataSet.size());
+        }
+    }
+
+    public void add(int position, TransactionResponse item) {
         mDataSet.add(position, item);
         notifyItemInserted(position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private final HexagonView hexagonView;
-        private final TextView title;
-        private final TextView description;
-        private final TextView date;
-        private final RelativeLayout container;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private HexagonView hexagonView;
+        private TextView title;
+        private TextView description;
+        private TextView date;
+        private RelativeLayout container;
+        private ProgressBar progressBar;
+        private boolean isProgress;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -51,7 +70,7 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onItemSelected((InfoHubTransActionsListItemModel) container.getTag());
+                        onItemClickListener.onItemSelected((TransactionResponse) container.getTag());
                     }
                 }
             });
@@ -62,43 +81,75 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
             date = (TextView) itemView.findViewById(R.id.hvDate_LIHLI);
         }
 
-        public void setData(InfoHubTransActionsListItemModel _model){
-            Picasso.with(mContext).load(_model.getIconUrl()).into(hexagonView);
-            title.setText(_model.getTitle());
-            description.setText(_model.getDescription());
-            date.setText(_model.getDate());
+        public ViewHolder(View view, boolean _isProgress) {
+            super(view);
+            isProgress = _isProgress;
+            progressBar = (ProgressBar) view;
+            progressBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+
+        public void setData(TransactionResponse _model) {
+//            Picasso.with(mContext).load(_model.getIconUrl()).into(hexagonView);
+            title.setText(_model.title);
+            description.setText(_model.description);
+            date.setText(_model.modifiedDatetime);
             container.setTag(_model);
         }
 
-        public View getContainer(){
+        public void setLoaderVisibility() {
+            progressBar.setVisibility(mLoadingFinished ? View.GONE : View.VISIBLE);
+        }
+
+        public View getContainer() {
             return container;
         }
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position < mDataSet.size()) {
+            return VIEW_TYPE_TRANSACTION;
+        } else {
+            return VIEW_TYPE_LOADER;
+        }
+    }
+
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub, parent, false);
-        return new ViewHolder(view);
+        switch (viewType) {
+            default:
+            case VIEW_TYPE_TRANSACTION:
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub, parent, false);
+                return new ViewHolder(view);
+            case VIEW_TYPE_LOADER:
+                return new ViewHolder(new ProgressBar(parent.getContext()), true);
+        }
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setData(mDataSet.get(position));
-        if (position % 2 != 0) {
-            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.getContainer().getLayoutParams();
-            final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, mContext.getResources().getDisplayMetrics());
-            layoutParams.setMarginStart((int) mMarginOffset + margin);
-            holder.getContainer().setLayoutParams(layoutParams);
+        if (position < mDataSet.size()) {
+            holder.setData(mDataSet.get(position));
+
+            if (position % 2 != 0) {
+                RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.getContainer().getLayoutParams();
+                final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, mContext.getResources().getDisplayMetrics());
+                layoutParams.setMarginStart((int) mMarginOffset + margin);
+                holder.getContainer().setLayoutParams(layoutParams);
+            } else {
+                RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.getContainer().getLayoutParams();
+                layoutParams.setMarginStart((int) mMarginOffset);
+                holder.getContainer().setLayoutParams(layoutParams);
+            }
         } else {
-            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.getContainer().getLayoutParams();
-            layoutParams.setMarginStart((int) mMarginOffset);
-            holder.getContainer().setLayoutParams(layoutParams);
+            holder.setLoaderVisibility();
         }
     }
 
     @Override
     public int getItemCount() {
-        return mDataSet.size();
+        return mSize;
     }
 
     public final void setOnItemClickListener(final OnInfoHubItemClickListener _onItemClickListener) {
