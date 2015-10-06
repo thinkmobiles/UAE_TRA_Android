@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">UAE TRA</string>
 
-    <string name="title_activity_authorization">AuthorizationActivity</string>
+    <string name="title_activity_authorization">Authorization</string>
 
     <!--                Authorization screens                -->
     <string name="register_title">Create Account</string>
@@ -21,7 +21,7 @@
     <string name="str_themesoptions">Color Theme</string>
 
     <string name="str_about_tra">About TRA</string>
-    <string name="str_read_more_about_tra">Read more about tra</string>
+    <string name="str_read_more_about_tra">Read more about TRA</string>
     <string name="str_change_color_theme">Change color theme</string>
 
     <!--            Black and White mode              -->
@@ -57,7 +57,7 @@
     <string name="str_favorites">Favourites</string>
     <string name="str_inquiries">Enquires</string>
     <string name="str_settings">Settings</string>
-    <string name="complain">Complain About Service Provider</string>
+    <string name="complain">Complain about Service Provider</string>
     <string name="approved_devices">List Of Mobile Brands</string>
     <string name="device_approval">Result IMEI Code</string>
     <!--               Home screens                -->
@@ -191,8 +191,8 @@
         <item>Very Strong</item>
     </string-array>
 
-    <string name="service_complain_about_provider">Complain About Service Provider</string>
-    <string name="service_complain_about_tra">Complain About TRA</string>
+    <string name="service_complain_about_provider">Complain about Service Provider</string>
+    <string name="service_complain_about_tra">Complain about TRA</string>
     <string name="service_suggestion">Suggestion</string>
     <string name="service_domain_check">Domain Check</string>
     <string name="service_enquiries">Enquiries</string>
@@ -242,7 +242,7 @@
     <string name="fragment_complain_no_reference_number">Please set reference number</string>
     <string name="fragment_complain_no_description">Please provide description</string>
 
-    <string name="fragment_complain_about_service_du">DU</string>
+    <string name="fragment_complain_about_service_du">Du</string>
     <string name="fragment_complain_about_service_etisalat">Etisalat</string>
     <string name="fragment_complain_about_service_yahsat">Yahsat</string>
 
@@ -321,7 +321,7 @@
     <string name="str__service_info__about_service__complain_about_service_provider">You can file a complaint or put remarks about your telecom service provider</string>
     <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
     <string name="release_version_label">Release Version</string>
-    <string name="error_valid_emid">Please enter valid emirates id</string>
+    <string name="error_valid_emid">Please enter valid Emirates ID</string>
 
     <string name="fragment_report_spam_title">SPAM</string>
     <string name="fragment_report_spam_hint">Report SMS or Websites\nas Spam to TRA</string>
@@ -363,7 +363,7 @@
     <string name="fragment_approved_devices_no_results">There are no approved\ndevices were found</string>
 
     <string name="str_enter_imei">Enter the IMEI of the mobile phone to be verified</string>
-    <string name="str_where_find_imei">Where to find the IMEI code on your phone?</string>
+    <string name="str_where_find_imei"></string>
     <string name="str_send_imei">SEND IMEI CODE</string>
 
     <string name="str_innovations">Innovations</string>
@@ -415,17 +415,19 @@
         <item>Customer Happiness</item>
         <item>Employee Satisfaction</item>
         <item>TRA Service Improvement</item>
-        <item>Reducing cost &amp; increasing Revenue</item>
+        <item>Reducing Cost &amp; Increasing Revenue</item>
         <item>Raising TRA Institutional Reputation</item>
-        <item>Futurology Studies</item>
+        <item>Futuristic Idea</item>
     </string-array>
+
+    <string name="innovation_has_sent">Your innovative idea has been successfully sent</string>
+    <string name="fragment_innovations_no_selected_item">Please complete all required fields</string>
+    <string name="fragment_innovations_provide_title">Please provide a title</string>
+
 
     <string name="innovations_fill_data_correctly">Please fill fields correctly</string>
     <string name="attachment_manager_delete">Delete attachment</string>
-    <string name="innovation_has_sent">Innovation has been successfully sent</string>
     <string name="str_not_found">Not Found</string>
-    <string name="fragment_innovations_no_selected_item">Please select innovative idea</string>
-    <string name="fragment_innovations_provide_title">Please provide innovation title</string>
     <string name="enter_valid_imei_code">Please enter valid IMEI code</string>
 
 </resources>
