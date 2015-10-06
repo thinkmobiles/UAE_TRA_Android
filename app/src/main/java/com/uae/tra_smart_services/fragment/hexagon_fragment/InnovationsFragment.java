@@ -23,10 +23,12 @@ import com.uae.tra_smart_services.adapter.InnovationIdeaAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.customviews.ThemedImageView;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
+import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog.OnImageSourceSelectListener;
 import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
+import com.uae.tra_smart_services.global.ImageSource;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.PostInnovationRequestModel;
@@ -209,7 +211,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     private boolean validateData() {
         boolean titleInvalid = etTitle.getText().toString().trim().isEmpty();
         if (titleInvalid) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_title, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.fragment_innovations_provide_title, Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -220,7 +222,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         }
 
         if(nothingSelected){
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_selected_item, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.fragment_innovations_no_selected_item, Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -239,13 +241,10 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
             }
         });
 
-        PostInnovationRequestModel model = new PostInnovationRequestModel(){
-            {
-                title = etTitle.getText().toString();
-                message = etMessageDescription.getText().toString();
-                type = String.valueOf(sInnovationSpinner.getSelectedItemPosition() + 1);
-            }
-        };
+        PostInnovationRequestModel model = new PostInnovationRequestModel();
+        model.title = etTitle.getText().toString();
+        model.message = etMessageDescription.getText().toString();
+        model.type = String.valueOf(sInnovationSpinner.getSelectedItemPosition() + 1);
 
         getSpiceManager().execute(mRequest = new PostInnovationRequest(model), new PostInnovationRequestListener());
 
@@ -322,7 +321,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
 
         @Override
         public void onRequestSuccess(Response response) {
-            loaderOverlaySuccess(getString(R.string.str_rating_has_sent));
+            loaderOverlaySuccess(getString(R.string.innovation_has_sent));
         }
     }
 

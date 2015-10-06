@@ -241,7 +241,6 @@
     <string name="fragment_complain_no_service_provider">Please select service provider</string>
     <string name="fragment_complain_no_reference_number">Please set reference number</string>
     <string name="fragment_complain_no_description">Please provide description</string>
-    <string name="fragment_complain_no_selected_item">Please select innovatime idea</string>
 
     <string name="fragment_complain_about_service_du">DU</string>
     <string name="fragment_complain_about_service_etisalat">Etisalat</string>
@@ -423,4 +422,8 @@
 
     <string name="innovations_fill_data_correctly">Please fill fields correctly</string>
     <string name="attachment_manager_delete">Delete attachment</string>
+    <string name="innovation_has_sent">Innovation has been successfully sent</string>
+    <string name="fragment_innovations_no_selected_item">Please select innovative idea</string>
+    <string name="fragment_innovations_provide_title">Please provide innovation title</string>
+
 </resources>
