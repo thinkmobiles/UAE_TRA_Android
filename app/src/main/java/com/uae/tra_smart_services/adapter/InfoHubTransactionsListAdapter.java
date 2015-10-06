@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
-import com.uae.tra_smart_services.rest.model.response.TransactionResponse;
+import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
     public static final int VIEW_TYPE_TRANSACTION = 0;
     public static final int VIEW_TYPE_LOADER = 1;
 
-    private ArrayList<TransactionResponse> mDataSet;
+    private ArrayList<GetTransactionResponseModel> mDataSet;
     private Context mContext;
     private OnInfoHubItemClickListener onItemClickListener;
     private float mMarginOffset = 0;
@@ -47,7 +47,7 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
         return mDataSet.isEmpty();
     }
 
-    public void addAll(final ArrayList<TransactionResponse> _transactionResponses) {
+    public void addAll(final ArrayList<GetTransactionResponseModel> _transactionResponses) {
         mDataSet.addAll(_transactionResponses);
         if (!_transactionResponses.isEmpty()) {
             mSize = mDataSet.size() + 1;
@@ -58,7 +58,7 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
         }
     }
 
-    public void add(int position, TransactionResponse item) {
+    public void add(int position, GetTransactionResponseModel item) {
         mDataSet.add(position, item);
         notifyItemInserted(position);
     }
@@ -79,7 +79,7 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onItemSelected((TransactionResponse) container.getTag());
+                        onItemClickListener.onItemSelected((GetTransactionResponseModel) container.getTag());
                     }
                 }
             });
@@ -98,7 +98,7 @@ public class InfoHubTransactionsListAdapter extends RecyclerView.Adapter<InfoHub
                     ViewGroup.LayoutParams.WRAP_CONTENT));
         }
 
-        public void setData(TransactionResponse _model) {
+        public void setData(GetTransactionResponseModel _model) {
 //            Picasso.with(mContext).load(_model.getIconUrl()).into(hexagonView);
             title.setText(_model.title);
             description.setText(_model.description);

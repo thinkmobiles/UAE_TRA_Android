@@ -12,7 +12,7 @@ import com.octo.android.robospice.request.listener.PendingRequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.InfoHubTransactionsListAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.rest.model.response.TransactionResponse;
+import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.GetTransactionsRequest;
 import com.uae.tra_smart_services.util.EndlessScrollListener;
 
@@ -106,7 +106,7 @@ public class InfoHubFragment extends BaseFragment implements EndlessScrollListen
         startLoading(_page);
     }
 
-    private class TransactionsResponseListener implements PendingRequestListener<TransactionResponse.List> {
+    private class TransactionsResponseListener implements PendingRequestListener<GetTransactionResponseModel.List> {
 
         @Override
         public void onRequestNotFound() {
@@ -125,7 +125,7 @@ public class InfoHubFragment extends BaseFragment implements EndlessScrollListen
         }
 
         @Override
-        public void onRequestSuccess(TransactionResponse.List result) {
+        public void onRequestSuccess(GetTransactionResponseModel.List result) {
             mTransactionsListAdapter.addAll(result);
 
             if (mTransactionsListAdapter.isEmpty()) {
