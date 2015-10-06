@@ -14,7 +14,7 @@ public class GetTransactionsRequest extends BaseRequest<GetTransactionResponseMo
         super(GetTransactionResponseModel.List.class, TRAServicesAPI.class);
         mPage = _page;
         mCount = _count;
-        mAsc = _asc;
+//        mAsc = _asc;
     }
 
     @Override

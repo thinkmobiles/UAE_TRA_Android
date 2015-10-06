@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.fragment.tutorial;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.TutorialPagerAdapter;
+import com.uae.tra_smart_services.global.C;
 import com.viewpagerindicator.CirclePageIndicator;
 
 /**
@@ -25,6 +27,7 @@ public class TutorialContainerFragment extends Fragment implements OnClickListen
     private ImageView ivCLose;
     private TutorialPagerAdapter mAdapter;
     private OnTuorialClosedListener mOnTutorialClosedListener;
+    private boolean isFirstStart = false;
 
     public static TutorialContainerFragment newInstance() {
         TutorialContainerFragment fragment = new TutorialContainerFragment();
@@ -43,6 +46,12 @@ public class TutorialContainerFragment extends Fragment implements OnClickListen
     @Override
     public View onCreateView(final LayoutInflater _inflater, final ViewGroup _viewGroup, final Bundle _savedInstanceState) {
         final View view = _inflater.inflate(R.layout.fragment_tutorial_container, _viewGroup, false);
+
+        if (!PreferenceManager.getDefaultSharedPreferences(getActivity()).contains(C.NOT_FIRST_START)) {
+            isFirstStart = true;
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().
+                    putBoolean(C.NOT_FIRST_START, true).apply();
+        }
 
         initViews(view);
         initListeners();
@@ -75,7 +84,8 @@ public class TutorialContainerFragment extends Fragment implements OnClickListen
     public final void onClick(final View _view) {
         switch (_view.getId()) {
             case R.id.ivCLose_FTC:
-                mOnTutorialClosedListener.onTutorialClosed();
+                if (!isFirstStart)
+                    mOnTutorialClosedListener.onTutorialClosed();
                 getFragmentManager().popBackStack();
                 break;
         }

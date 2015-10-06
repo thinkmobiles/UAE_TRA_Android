@@ -149,8 +149,6 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
 
     private void showTutorialIfNeed() {
         if (!PreferenceManager.getDefaultSharedPreferences(this).contains(C.NOT_FIRST_START)) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit().
-                    putBoolean(C.NOT_FIRST_START, true).apply();
             showTutorial();
         }
     }
@@ -294,6 +292,9 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
             case ENQUIRIES:
                 replaceFragment(EnquiriesFragment.newInstance(), _useBackStack);
                 break;
+            case INFO_HUB:
+                replaceFragment(InfoHubFragment.newInstance(), _useBackStack);
+                break;
         }
     }
 
@@ -398,8 +399,7 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
                 replaceFragmentWithOutBackStack(FavoritesFragment.newInstance());
                 break;
             case R.id.rbInfoHub_BNRG:
-                clearBackStack();
-                replaceFragmentWithOutBackStack(InfoHubFragment.newInstance());
+                openInfoHubIfAuthorized(false);
                 break;
             case R.id.rbInquiries_BNRG:
                 openEnquiriesIfAuthorized(false);
@@ -419,6 +419,19 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
         } else {
             mPreviousCheckedTabId = mCheckedTabId;
             Intent intent = AuthorizationActivity.getStartForResultIntent(this, FragmentType.ENQUIRIES);
+            intent.putExtra(C.USE_BACK_STACK, _useBackStack);
+            intent.putExtra(C.UNCHECK_TAB_IF_NOT_LOGGED_IN, true);
+            startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
+        }
+    }
+
+    private void openInfoHubIfAuthorized(final boolean _useBackStack) {
+        if (TRAApplication.isLoggedIn()) {
+            clearBackStack();
+            replaceFragment(InfoHubFragment.newInstance(), _useBackStack);
+        } else {
+            mPreviousCheckedTabId = mCheckedTabId;
+            Intent intent = AuthorizationActivity.getStartForResultIntent(this, FragmentType.INFO_HUB);
             intent.putExtra(C.USE_BACK_STACK, _useBackStack);
             intent.putExtra(C.UNCHECK_TAB_IF_NOT_LOGGED_IN, true);
             startActivityForResult(intent, C.REQUEST_CODE_LOGIN);

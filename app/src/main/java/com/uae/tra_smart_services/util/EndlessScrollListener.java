@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
  */
 public class EndlessScrollListener extends RecyclerView.OnScrollListener {
 
-    private final int VISIBLE_TRESHOLD= 5;
+    private final int VISIBLE_TRESHOLD= 8;
     private int mPreviousTotal = 0;
     private boolean mLoading = true;
     private int mFirstVisibleItem, mVisibleItemCount, mTotalItemCount;

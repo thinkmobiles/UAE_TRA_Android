@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
@@ -26,6 +27,7 @@ public class InfoHubFragment extends BaseFragment implements EndlessScrollListen
     //    private ImageView ivBackground;
     private ProgressBar pbLoadingTransactions;
     private RecyclerView mTransactionsList;
+    private TextView tvNoTransactions;
     private LinearLayoutManager mTransactionsLayoutManager;
     private InfoHubTransactionsListAdapter mTransactionsListAdapter;
     private TransactionsResponseListener mTransactionsListener;
@@ -48,6 +50,7 @@ public class InfoHubFragment extends BaseFragment implements EndlessScrollListen
     protected void initViews() {
         super.initViews();
         pbLoadingTransactions = findView(R.id.pbLoadingTransactions_FIH);
+        tvNoTransactions = findView(R.id.tvNoPendingTransactions_FIH);
         initTransactionsList();
     }
 
@@ -75,7 +78,7 @@ public class InfoHubFragment extends BaseFragment implements EndlessScrollListen
     }
 
     private void startLoading(final int _page) {
-        final GetTransactionsRequest request = new GetTransactionsRequest(_page, DEFAULT_LIMIT, 0);
+        final GetTransactionsRequest request = new GetTransactionsRequest(_page, DEFAULT_LIMIT);
         getSpiceManager().execute(request, mTransactionsListener);
     }
 
@@ -113,12 +116,23 @@ public class InfoHubFragment extends BaseFragment implements EndlessScrollListen
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             processError(spiceException);
+            mTransactionsListAdapter.stopLoading();
+            if (mTransactionsListAdapter.isEmpty()) {
+                pbLoadingTransactions.setVisibility(View.GONE);
+                mTransactionsList.setVisibility(View.GONE);
+                tvNoTransactions.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override
         public void onRequestSuccess(GetTransactionResponseModel.List result) {
             mTransactionsListAdapter.addAll(result);
-            if (View.VISIBLE != mTransactionsList.getVisibility()) {
+
+            if (mTransactionsListAdapter.isEmpty()) {
+                pbLoadingTransactions.setVisibility(View.GONE);
+                mTransactionsList.setVisibility(View.GONE);
+                tvNoTransactions.setVisibility(View.VISIBLE);
+            } else if (View.VISIBLE != mTransactionsList.getVisibility()) {
                 mTransactionsList.setVisibility(View.VISIBLE);
                 pbLoadingTransactions.setVisibility(View.GONE);
             }

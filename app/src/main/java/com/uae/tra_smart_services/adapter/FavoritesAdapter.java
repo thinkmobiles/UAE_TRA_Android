@@ -10,9 +10,11 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -213,12 +215,15 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
         }
     }
 
-    protected class ItemViewHolder extends ViewHolder implements OnClickListener, OnLongClickListener {
+    protected class ItemViewHolder extends ViewHolder implements OnClickListener, OnLongClickListener, OnTouchListener {
+
+        private final int LONG_CLICK_DELAY = 150;
 
         private final View rootView;
         private final View rlItemContainer;
         private final HexagonView hvIcon;
         private final TextView tvTitle, tvServiceInfo, tvRemove;
+        private LongClickRunnable mLongClickRunnable;
 
         public ItemViewHolder(final View _itemView) {
             super(_itemView);
@@ -231,7 +236,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
 
             rlItemContainer.setOnClickListener(this);
             tvServiceInfo.setOnClickListener(this);
-            tvRemove.setOnLongClickListener(this);
+            tvRemove.setOnTouchListener(this);
         }
 
         public final void setData(final Service _item, final int _position) {
@@ -266,6 +271,42 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
             }
             return true;
         }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    mLongClickRunnable = new LongClickRunnable();
+                    v.postDelayed(mLongClickRunnable, LONG_CLICK_DELAY);
+                    return true;
+                case MotionEvent.ACTION_CANCEL:
+                    mLongClickRunnable.setTouchLoss(true);
+                    return false;
+                case MotionEvent.ACTION_UP:
+                    mLongClickRunnable.setTouchLoss(true);
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        private final class LongClickRunnable implements Runnable {
+
+            private boolean mIsTouchLoss;
+
+            public void setTouchLoss(boolean _isTouchLoss) {
+                mIsTouchLoss = _isTouchLoss;
+            }
+
+            @Override
+            public void run() {
+                if (!mIsTouchLoss && mFavoriteClickListener != null) {
+                    mFavoriteClickListener.onRemoveLongClick(tvRemove, getAdapterPosition());
+                }
+            }
+        }
+
     }
 
     protected class HeaderViewHolder extends ViewHolder implements OnClickListener {

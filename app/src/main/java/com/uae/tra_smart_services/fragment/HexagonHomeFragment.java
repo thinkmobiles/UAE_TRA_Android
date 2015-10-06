@@ -127,9 +127,13 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
                 isScrollUp = dy > 0;
 
+//                if (Math.abs(dy) < 15) return;
+
+//                Log.d(RECYCLER_TAG, "Scroll = dy = "  + dy);
+
                 if (!mHexagonalHeaderAnimator.isRunning() && !mHexagonHeaderReverseAnimator.isRunning()
                         && ((mAnimationProgress < 1f && dy > 0) || (mAnimationProgress > 0f && dy < 0))) {
-                    mAnimationProgress += dy * 0.001f;
+                    mAnimationProgress += dy * 0.005f;
 
                     if (mAnimationProgress >= 1f) {
                         mAnimationProgress = 1f;

@@ -131,13 +131,13 @@ public interface TRAServicesAPI {
     @PUT(CHANGE_PASSWORD)
     Response changePassword(@Body ChangePasswordModel _changePasswordModel);
 
-    @GET(GET_TRANSACTIONS)
-    GetTransactionResponseModel.List getTransactions(@Query("page") final int _page,
-                                             @Query("count") final int _count,
-                                             @Query("orderAsc") final int _asc);
     @POST(POST_INNOVATION)
     Response postInnovation(@Body PostInnovationRequestModel _model);
 
+    @GET(GET_TRANSACTIONS)
+    GetTransactionResponseModel.List getTransactions(@Query("page") final int _page,
+                                             @Query("count") final int _count);
+//                                             @Query("orderAsc") final int _asc);
     @GET(SERVICE_INFO)
     ServiceInfoResponse getServiceInfo(@Query(PARAMETER_SERVICE_NAME) String _serviceName,
                                        @Query(PARAMETER_LANGUAGE) String _language);
