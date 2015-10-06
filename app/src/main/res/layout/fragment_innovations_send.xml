@@ -149,18 +149,16 @@
                     android:id="@+id/tvInnovativeIdea_FIS"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="48dp"
                     android:layout_alignBottom="@id/tivArrowIcon_FIS"
                     android:layout_alignTop="@id/tivArrowIcon_FIS"
                     android:layout_toStartOf="@id/tivArrowIcon_FIS"
-                    android:background="@android:color/transparent"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="@string/fragment_innovation_idea_title"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="18sp"
-                    android:visibility="visible"
-                    tools:listitem="@layout/spinner_item_spam_service_provider"/>
+                    android:textSize="18sp"/>
 
                 <View
                     android:id="@+id/vInnovativeIdeaDivider_FIS"
