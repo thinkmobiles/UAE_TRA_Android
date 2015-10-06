@@ -3,20 +3,15 @@ package com.uae.tra_smart_services.fragment.hexagon_fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,21 +21,16 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.InnovationIdeaAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
-import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog;
-import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog.OnImageSourceSelectListener;
+import com.uae.tra_smart_services.customviews.ThemedImageView;
+import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
 import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
-import com.uae.tra_smart_services.entities.CustomFilterPool;
-import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.fragment.spam.ReportSmsSpamFragment;
-import com.uae.tra_smart_services.global.ImageSource;
+import com.uae.tra_smart_services.global.AttachmentOption;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
-import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.PostInnovationRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.PostInnovationRequest;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +50,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     private static final String KEY_SELECTED_IDEA_POSITION = "SELECTED_IDEA_POSITION";
 
     private EditText etTitle, etMessageDescription;
-    private ImageView ivAddAttachment;
+    private ThemedImageView tivAddAttachment;
     private Button btnSubmit;
     private SwitchCompat swType;
     private TextView tvPublic, tvPrivate;
@@ -108,7 +98,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     @Override
     protected void initViews() {
         super.initViews();
-        ivAddAttachment = findView(R.id.tivAddAttachment_FIS);
+        tivAddAttachment = findView(R.id.tivAddAttachment_FIS);
         etTitle = findView(R.id.etTitle_FIS);
         etMessageDescription = findView(R.id.etMessageDescription_FIS);
         btnSubmit = findView(R.id.btnSubmit_FIS);
@@ -125,7 +115,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     @Override
     protected void initListeners() {
         super.initListeners();
-        ivAddAttachment.setOnClickListener(this);
+        tivAddAttachment.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         etTitle.setOnFocusChangeListener(this);
         etMessageDescription.setOnFocusChangeListener(this);
@@ -190,7 +180,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         final boolean isGalleryAvailable = mAttachmentManager.isGalleryPickAvailable();
         final boolean canGetPhoto = mAttachmentManager.canGetCameraPicture();
         if (isGalleryAvailable && canGetPhoto) {
-            ImageSourcePickerDialog.newInstance(this).show(getFragmentManager());
+            AttachmentPickerDialog.newInstance(this).show(getFragmentManager());
         } else if (isGalleryAvailable) {
             mAttachmentManager.openGallery(this);
         } else if (canGetPhoto) {
@@ -201,13 +191,17 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     }*/
 
     @Override
-    public void onImageSourceSelect(ImageSource _source) {
-        switch (_source) {
+    public void onImageSourceSelect(AttachmentOption _option) {
+        switch (_option) {
             case GALLERY:
                 mAttachmentManager.openGallery(this);
                 break;
             case CAMERA:
                 mAttachmentManager.openCamera(this);
+                break;
+            case DELETE_ATTACHMENT:
+                mAttachmentManager.clearAttachment();
+                tivAddAttachment.setImageResource(R.drawable.ic_action_attachment);
                 break;
         }
     }
@@ -280,8 +274,8 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     public void onNothingSelected(AdapterView<?> parent) { }
 
     @Override
-    public void onImageGet(Uri _uri) {
-        ivAddAttachment.setImageDrawable(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_check, R.attr.authorizationDrawableColors));
+    public void onAttachmentGet(Uri _uri) {
+        tivAddAttachment.setImageResource(R.drawable.ic_check);
     }
 
     @Override

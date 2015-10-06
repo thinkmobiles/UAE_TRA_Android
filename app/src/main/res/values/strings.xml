@@ -422,4 +422,5 @@
     </string-array>
 
     <string name="innovations_fill_data_correctly">Please fill fields correctly</string>
+    <string name="attachment_manager_delete">Delete attachment</string>
 </resources>

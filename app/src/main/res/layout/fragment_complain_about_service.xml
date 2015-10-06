@@ -54,14 +54,15 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"/>
 
-                <ImageView
-                    android:id="@+id/ivAddAttachment_FCAS"
+                <com.uae.tra_smart_services.customviews.ThemedImageView
+                    android:id="@+id/tivAddAttachment_FCAS"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="?attr/selectableItemBackground"
                     android:contentDescription="Add attachment"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_action_attachment"/>
+                    app:tintColor="?attr/colorPrimary"
+                    app:imageSrc="@drawable/ic_action_attachment"/>
 
             </LinearLayout>
 

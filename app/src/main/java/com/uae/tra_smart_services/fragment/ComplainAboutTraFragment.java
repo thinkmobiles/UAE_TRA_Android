@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -17,6 +16,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.LoaderView;
+import com.uae.tra_smart_services.customviews.ThemedImageView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
 import com.uae.tra_smart_services.global.Service;
@@ -24,7 +24,6 @@ import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutTRAServiceRequest;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 import retrofit.client.Response;
 
@@ -36,11 +35,10 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
 
     protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_ABOUT_TRA_REQUEST";
 
-    private ImageView ivAddAttachment;
+    private ThemedImageView tivAddAttachment;
     private EditText etComplainTitle, etDescription;
 
     private ComplainAboutTRAServiceRequest request;
-    private Uri mImageUri;
     private RequestResponseListener mRequestListener;
 
     public static ComplainAboutTraFragment newInstance() {
@@ -58,7 +56,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     @Override
     protected void initViews() {
         super.initViews();
-        ivAddAttachment = findView(R.id.ivAddAttachment_FCAT);
+        tivAddAttachment = findView(R.id.tivAddAttachment_FCAT);
 
         etComplainTitle = findView(R.id.etComplainTitle_FCAT);
         etDescription = findView(R.id.etDescription_FCAT);
@@ -68,7 +66,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     protected void initListeners() {
         super.initListeners();
         mRequestListener = new RequestResponseListener();
-        ivAddAttachment.setOnClickListener(this);
+        tivAddAttachment.setOnClickListener(this);
         etComplainTitle.setOnFocusChangeListener(this);
         etDescription.setOnFocusChangeListener(this);
     }
@@ -88,16 +86,20 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     public void onClick(View v) {
         hideKeyboard(v);
         switch (v.getId()) {
-            case R.id.ivAddAttachment_FCAT:
+            case R.id.tivAddAttachment_FCAT:
                 openImagePicker();
                 break;
         }
     }
 
     @Override
-    public void onImageGet(Uri _uri) {
-        ivAddAttachment.setImageDrawable(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_check, R.attr.authorizationDrawableColors));
-        mImageUri = _uri;
+    public void onAttachmentGet(Uri _uri) {
+        tivAddAttachment.setImageResource(R.drawable.ic_check);
+    }
+
+    @Override
+    protected void onAttachmentDeleted() {
+        tivAddAttachment.setImageResource(R.drawable.ic_action_attachment);
     }
 
     @Override
@@ -120,7 +122,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
         ComplainTRAServiceModel traServiceModel = new ComplainTRAServiceModel();
         traServiceModel.title = getTitleText();
         traServiceModel.description = getDescriptionText();
-        request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), mImageUri);
+        request = new ComplainAboutTRAServiceRequest(traServiceModel, getActivity(), getImageUri());
         loaderOverlayShow(getString(R.string.str_sending), (LoaderMarker) this);
         loaderOverlayButtonBehavior(new Loader.BackButton() {
             @Override

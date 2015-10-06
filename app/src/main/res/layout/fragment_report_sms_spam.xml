@@ -93,7 +93,7 @@
                     android:background="?attr/colorPrimary"/>
 
                 <com.uae.tra_smart_services.customviews.ThemedImageView
-                    android:id="@+id/tivAddAttachment_FIS"
+                    android:id="@+id/tivPhoneIcon_FRSS"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_alignParentEnd="true"
@@ -108,10 +108,10 @@
                     android:id="@+id/etNumberOfSpammer_FRSS"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_alignTop="@id/tivAddAttachment_FIS"
+                    android:layout_alignTop="@id/tivPhoneIcon_FRSS"
                     android:layout_below="@id/vProviderSpinnerDivider_FRSS"
                     android:layout_marginEnd="16dp"
-                    android:layout_toStartOf="@id/tivAddAttachment_FIS"
+                    android:layout_toStartOf="@id/tivPhoneIcon_FRSS"
                     android:background="@android:color/transparent"
                     android:hint="@string/fragment_report_spam_sms_number"
                     android:singleLine="true"
