@@ -426,5 +426,6 @@
     <string name="str_not_found">Not Found</string>
     <string name="fragment_innovations_no_selected_item">Please select innovative idea</string>
     <string name="fragment_innovations_provide_title">Please provide innovation title</string>
+    <string name="enter_valid_imei_code">Please enter valid IMEI code</string>
 
 </resources>

@@ -115,7 +115,8 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     }
 
     private boolean isImeiValid() {
-        return !etImeiNumber.getText().toString().isEmpty();// TODO: Add IMEI check
+        return !etImeiNumber.getText().toString().isEmpty() &&
+                etImeiNumber.getText().toString().length() == 15;// TODO: Add IMEI check
     }
 
     @Override
@@ -125,7 +126,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
             if (isImeiValid()) {
                 searchDeviceByImei();
             } else {
-                Toast.makeText(getActivity(), "Please set IMEI code", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.enter_valid_imei_code, Toast.LENGTH_SHORT).show();
             }
         } else {
             if (isCameraAvailable()) {
