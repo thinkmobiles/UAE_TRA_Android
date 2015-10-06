@@ -30,7 +30,6 @@
             android:background="?authorizationButtonsBackground"
             android:text="@string/fragment_report_spam_sms_submit"
             android:textColor="@android:color/white"/>
-
         <RelativeLayout
             android:id="@+id/rlInfoController_FIS"
             android:layout_width="match_parent"
@@ -38,7 +37,7 @@
             android:layout_above="@id/btnSubmit_FIS"
             android:orientation="horizontal"
             android:visibility="gone">
-
+        <!--
             <TextView
                 android:id="@+id/tvPublic"
                 android:layout_width="wrap_content"
@@ -79,6 +78,7 @@
                 app:imageSrc="@drawable/ic_info"
                 app:tintColor="?colorPrimary"/>
 
+        -->
         </RelativeLayout>
 
         <View
