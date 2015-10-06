@@ -3,18 +3,14 @@ package com.uae.tra_smart_services.fragment.hexagon_fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -26,18 +22,13 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.InnovationIdeaAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
-import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog;
 import com.uae.tra_smart_services.dialog.ImageSourcePickerDialog.OnImageSourceSelectListener;
 import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
-import com.uae.tra_smart_services.entities.CustomFilterPool;
-import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.fragment.spam.ReportSmsSpamFragment;
 import com.uae.tra_smart_services.global.ImageSource;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
-import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.PostInnovationRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.PostInnovationRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
@@ -215,7 +206,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     private boolean validateData() {
         boolean titleInvalid = etTitle.getText().toString().trim().isEmpty();
         if (titleInvalid) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_title, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.fragment_innovations_provide_title, Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -226,7 +217,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         }
 
         if(nothingSelected){
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_selected_item, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.fragment_innovations_no_selected_item, Toast.LENGTH_SHORT).show();
             return false;
         }
 
