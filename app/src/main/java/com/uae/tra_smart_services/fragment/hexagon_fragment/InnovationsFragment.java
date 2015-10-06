@@ -245,13 +245,10 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
             }
         });
 
-        PostInnovationRequestModel model = new PostInnovationRequestModel(){
-            {
-                title = etTitle.getText().toString();
-                message = etMessageDescription.getText().toString();
-                type = String.valueOf(sInnovationSpinner.getSelectedItemPosition() + 1);
-            }
-        };
+        PostInnovationRequestModel model = new PostInnovationRequestModel();
+        model.title = etTitle.getText().toString();
+        model.message = etMessageDescription.getText().toString();
+        model.type = String.valueOf(sInnovationSpinner.getSelectedItemPosition() + 1);
 
         getSpiceManager().execute(mRequest = new PostInnovationRequest(model), new PostInnovationRequestListener());
 
@@ -328,7 +325,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
 
         @Override
         public void onRequestSuccess(Response response) {
-            loaderOverlaySuccess(getString(R.string.str_rating_has_sent));
+            loaderOverlaySuccess(getString(R.string.innovation_has_sent));
         }
     }
 

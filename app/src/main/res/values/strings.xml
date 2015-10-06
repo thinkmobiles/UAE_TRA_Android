@@ -422,4 +422,6 @@
     </string-array>
 
     <string name="innovations_fill_data_correctly">Please fill fields correctly</string>
+    <string name="innovation_has_sent">Innovation has been successfully sent</string>
+
 </resources>

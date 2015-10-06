@@ -138,7 +138,6 @@ public interface TRAServicesAPI {
     @POST(POST_INNOVATION)
     Response postInnovation(@Body PostInnovationRequestModel _model);
 
-
     @GET(SERVICE_INFO)
     ServiceInfoResponse getServiceInfo(@Query(PARAMETER_SERVICE_NAME) String _serviceName,
                                        @Query(PARAMETER_LANGUAGE) String _language);
