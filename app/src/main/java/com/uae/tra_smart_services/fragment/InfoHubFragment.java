@@ -155,6 +155,7 @@ public class InfoHubFragment extends BaseFragment implements OnLoadMore, OnQuery
         Log.i("SearchI", "onMenuItemActionCollapse");
         mTransactionsList.addOnScrollListener(mEndlessScrollListener);
         if (!mIsAllTransactionDownloaded) {
+            loadMore(mEndlessScrollListener.getPage());
             mTransactionsListAdapter.startLoading();
         }
         return true;
@@ -172,6 +173,7 @@ public class InfoHubFragment extends BaseFragment implements OnLoadMore, OnQuery
 
     @Override
     public void loadMore(int _page) {
+        Log.i("SearchI", "load more " + _page);
         startLoading(_page);
     }
 

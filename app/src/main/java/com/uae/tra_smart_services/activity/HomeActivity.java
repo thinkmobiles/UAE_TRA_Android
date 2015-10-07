@@ -295,6 +295,9 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
             case INFO_HUB:
                 replaceFragment(InfoHubFragment.newInstance(), _useBackStack);
                 break;
+            case INNOVATIONS:
+                replaceFragment(InnovationsFragment.newInstance(), _useBackStack);
+                break;
         }
     }
 
@@ -530,7 +533,7 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
         switch (_service) {
             case INNOVATIONS:
 //                onServiceSelect(Service.SUGGESTION, null);
-                replaceFragmentWithBackStack(InnovationsFragment.newInstance());
+                openFragmentIfAuthorized(InnovationsFragment.newInstance(), FragmentType.INNOVATIONS);
                 break;
             case NOTIFICATION:
                 addFragmentWithBackStackGlobally(NotificationsFragment.newInstance());

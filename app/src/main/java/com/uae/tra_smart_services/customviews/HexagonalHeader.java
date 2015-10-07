@@ -133,7 +133,7 @@ public class HexagonalHeader extends View {
         calculateButtonsPath();
         measureDrawableBounds();
         requestLayout();
-        invalidate();
+//        invalidate();
     }
 
     public final PointF getAvatarCenter() {

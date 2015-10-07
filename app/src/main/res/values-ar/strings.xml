@@ -419,10 +419,10 @@
     <string name="authorization_invalid_emirates_id">Invalid Emirates ID</string>
     <string name="authorization_invalid_phone_number">Invalid Phone Number</string>
     <string name="authorization_invalid_username_start_char">Username should not start with digit</string>
-    <string name="authorization_invalid_username_short">Username is too short</string>
-    <string name="authorization_invalid_username_long">Username is too long</string>
-    <string name="authorization_invalid_password_short">Password is too short</string>
-    <string name="authorization_invalid_password_long">Password is too long</string>
-    <string name="authorization_invalid_email_format">Wrong email format</string>
+    <string name="authorization_invalid_username_short">اسم المستخدم يجب أن يتكون من ثلاثة محارف على الأقل</string>
+    <string name="authorization_invalid_username_long">اسم المستخدم يجب أن لا تتكون من أكثر من أثنين و ثلاثين محرفاً</string>
+    <string name="authorization_invalid_password_short">كلمة المرور قصيرة. يجب أن تحتوي على ثمانية محرف على الأقل</string>
+    <string name="authorization_invalid_password_long">كلمة المرور يجب أن لا تتجاوز أثنين و ثلاثين محرفاً.</string>
+    <string name="authorization_invalid_email_format">اسم المستخدم يجب أن يبدأ بحرف</string>
 
 </resources>

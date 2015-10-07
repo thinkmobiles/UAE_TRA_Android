@@ -80,6 +80,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
     private boolean isScrollUp = false;
 
     private float mAnimationProgress = 0f;
+    private Integer mPreviousDy;
 
     public static HexagonHomeFragment newInstance() {
         return new HexagonHomeFragment();
@@ -126,6 +127,13 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
+                if (mPreviousDy != null && ((mPreviousDy < 0 && dy > 0) || (mPreviousDy > 0 && dy < 0))) {
+                    mPreviousDy = dy;
+                    return;
+                } else {
+                    mPreviousDy = dy;
+                }
+
                 isScrollUp = dy > 0;
 
                 if (Math.abs(dy) < 7) return;
@@ -134,7 +142,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
 
                 if (!mHexagonalHeaderAnimator.isRunning() && !mHexagonHeaderReverseAnimator.isRunning()
                         && ((mAnimationProgress < 1f && dy > 0) || (mAnimationProgress > 0f && dy < 0))) {
-                    mAnimationProgress += dy * 0.005f;
+                    mAnimationProgress += dy * 0.0065f;
 
                     if (mAnimationProgress >= 1f) {
                         mAnimationProgress = 1f;
