@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -302,6 +303,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
             @Override
             public void run() {
                 if (!mIsTouchLoss && mFavoriteClickListener != null) {
+                    tvRemove.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                     mFavoriteClickListener.onRemoveLongClick(tvRemove, getAdapterPosition());
                 }
             }
