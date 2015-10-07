@@ -196,9 +196,7 @@
     <string name="service_suggestion">Suggestion</string>
     <string name="service_domain_check">Domain Check</string>
     <string name="service_enquiries">Enquiries</string>
-    <string name="service_sms_spam">Spam Report</string>
     <string name="service_poor_coverage">Poor Coverage</string>
-    <string name="service_help_salim">Help Salim</string>
     <string name="service_mobile_verification">Device Verification</string>
     <string name="service_approved_devices">Mobile Brand</string>
 
@@ -207,8 +205,6 @@
     <string name="hint_emirates_id">784-YYYY-NNNNNNN-C</string>
     <string name="hint_username">Username</string>
     <string name="hint_confirm_password">Confirm Password</string>
-    <string name="hint_address">Address</string>
-    <string name="hint_landline">Landline</string>
     <string name="error_valid_email">Please enter valid email address</string>
     <string name="error_valid_phone">Please enter valid phone number</string>
     <string name="error_password_confirm">Password and confirm password must be same</string>
@@ -217,25 +213,8 @@
     <string name="error_conversion_error">Server returned wrong format of data</string>
     <string name="error_server">Server error occurred</string>
 
-    <!--            RegisterFragment            -->
-    <string-array name="countries_array">
-        <item>--Select--</item>
-        <item>Dubai</item>
-    </string-array>
-
     <string name="lang_en">English</string>
     <string name="lang_ar">العربية</string>
-
-    <string-array name="states_array">
-        <!--<item>&#45;&#45;Select&#45;&#45;</item>-->
-        <item>Abu Dhabi</item>
-        <item>Ajman</item>
-        <item>Dubai</item>
-        <item>Fujairah</item>
-        <item>Ras al-Khaimah</item>
-        <item>Sharjah</item>
-        <item>Umm al-Quwain</item>
-    </string-array>
 
     <string name="fragment_complain_no_title">Please provide complaint title</string>
     <string name="fragment_complain_no_service_provider">Please select service provider</string>
@@ -244,7 +223,6 @@
 
     <string name="fragment_complain_about_service_du">Du</string>
     <string name="fragment_complain_about_service_etisalat">Etisalat</string>
-    <string name="fragment_complain_about_service_yahsat">Yahsat</string>
 
     <string name="fragment_poor_coverage_location_type_auto">Automatically</string>
     <string name="fragment_poor_coverage_location_type_manual">Enter your location</string>
@@ -262,14 +240,12 @@
     <string name="fragment_user_profile_title">User Profile</string>
     <string name="fragment_user_profile_edit_profile">Edit Profile</string>
     <string name="fragment_user_profile_change_password">Change Password</string>
-    <string name="fragment_user_profile_reset_password">Reset Password</string>
     <string name="fragment_user_profile_logout">Logout from your Account</string>
 
     <string name="fragment_edit_user_profile_change_photo">CHANGE PHOTO</string>
     <string name="fragment_edit_user_profile_first_name">FIRST NAME</string>
     <string name="fragment_edit_user_profile_last_name">LAST NAME</string>
     <string name="fragment_edit_user_profile_address">STREET ADDRESS</string>
-    <string name="fragment_edit_user_profile_emirate">EMIRATE</string>
     <string name="fragment_edit_user_profile_number">CONTACT NUMBER</string>
     <string name="fragment_edit_user_profile_cancel" tools:ignore="ButtonCase">CANCEL</string>
     <string name="fragment_edit_user_profile_reset">RESET</string>
@@ -317,9 +293,6 @@
 </ul>
     ]]></string>
 
-    <string name="str__service_info__about_service__default">@string/str_dummy_info_hub_list_item_full_descr</string>
-    <string name="str__service_info__about_service__complain_about_service_provider">You can file a complaint or put remarks about your telecom service provider</string>
-    <string name="str__service_info__about_service__suggestion">This service involves submitting a suggestion to TRA</string>
     <string name="release_version_label">Release Version</string>
     <string name="error_valid_emid">Please enter valid Emirates ID</string>
 
@@ -333,7 +306,6 @@
     <string name="fragment_report_spam_sms_title">Spam SMS Report</string>
     <string name="fragment_report_spam_sms_number">Phone number</string>
     <string name="fragment_report_spam_sms_description_hint">Copy and Paste the SMS here…</string>
-    <string name="fragment_report_spam_sms_close">CLOSE</string>
     <string name="fragment_report_spam_sms_submit">Report</string>
 
     <string name="fragment_report_spam_web_title">Help Salim</string>
@@ -347,9 +319,6 @@
     <string name="str_cancel_request">CANCEL REQUEST</string>
     <string name="str_give_us_moment">Give us a moment while processing request</string>
     <string name="str_reuqest_has_been_sent">Your Request has been successfully sent and you will receive an SMS reply shortly</string>
-    <string name="str_reuqest_has_been_failed">Your Request has been failed</string>
-    <string name="str_reuqest_has_been_cancelled">Your Request has been cancelled</string>
-    <string name="lorem_ipsum_tutorial">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\\'s standard dummy text ever since the 1500s...</string>
     <string name="app_tutorial_screens">App Tutorial Screens</string>
     <string name="activate_tutorial">Activates the tutorials screens</string>
 
@@ -363,7 +332,6 @@
     <string name="fragment_approved_devices_no_results">There are no approved\ndevices were found</string>
 
     <string name="str_enter_imei">Enter the IMEI of the mobile phone to be verified</string>
-    <string name="str_where_find_imei"></string>
     <string name="str_send_imei">SEND IMEI CODE</string>
 
     <string name="str_innovations">Innovations</string>
@@ -374,27 +342,12 @@
 
     <string name="str_insert_imei_hint">Enter here</string>
 
-    <string name="transaction_type_approval">Type Approval</string>
-    <string name="transaction_type_approval_text">Your application for Type Approval has been reviewed by TRA personnel</string>
-    <string name="transaction_type_approval_date">09/30/15</string>
-    <string name="transaction_frequency_spectrum">Frequency Spectrum Authorization</string>
-    <string name="transaction_frequency_spectrum_text">Please download the procedure for Frequency Spectrum Authorization</string>
-    <string name="transaction_frequency_spectrum_date">09/29/15</string>
-    <string name="transaction_domain_renewal">.ae Domain Renewal</string>
-    <string name="transaction_domain_renewal_text">Your application the .ae domain needs to be renewed</string>
-    <string name="transaction_domain_renewal_date">09/28/15</string>
-
-    <string name="transaction_type_approval_new_date">10/03/15</string>
-    <string name="transaction_frequency_spectrum_new_date">10/02/15</string>
-    <string name="transaction_domain_renewal_new_date">10/01/15</string>
 
     <string name="fragment_info_hub_no_pending_transactions">There are no pending transactions.</string>
 
     <string name="service_report_spam">Report Spam Service</string>
 
     <string name="str_rate">Rate Service</string>
-    <string name="str_rating_has_sent">Rating has been successfully sent</string>
-    <string name="button_rate">Rate</string>
 
     <string-array name="rate_names">
         <item>1</item>
@@ -424,21 +377,18 @@
     <string name="fragment_innovations_no_selected_item">Please complete all required fields</string>
     <string name="fragment_innovations_provide_title">Please provide a title</string>
 
-
-    <string name="innovations_fill_data_correctly">Please fill fields correctly</string>
     <string name="attachment_manager_delete">Delete attachment</string>
-    <string name="str_not_found">Not Found</string>
     <string name="enter_valid_imei_code">Please enter valid IMEI code</string>
     <string name="authorization_invalid_login_or_pass">Invalid login or password</string>
     <string name="authorization_invalid_first_name">Invalid First Name</string>
     <string name="authorization_invalid_last_name">Invalid Last Name</string>
     <string name="authorization_invalid_emirates_id">Invalid Emirates ID</string>
     <string name="authorization_invalid_phone_number">Invalid Phone Number</string>
-    <string name="authorization_invalid_username_start_char">Username should not start with digit</string>
-    <string name="authorization_invalid_username_short">Username is too short</string>
-    <string name="authorization_invalid_username_long">Username is too long</string>
-    <string name="authorization_invalid_password_short">Password is too short</string>
-    <string name="authorization_invalid_password_long">Password is too long</string>
+    <string name="authorization_invalid_username_start_char">Username must start with a letter</string>
+    <string name="authorization_invalid_username_short">Username is too short. It must be at least three characters</string>
+    <string name="authorization_invalid_username_long">Username is too long. It must be less than thirty-two characters</string>
+    <string name="authorization_invalid_password_short">Password is too short. It must contain at least eight characters.</string>
+    <string name="authorization_invalid_password_long">Password is too long. It must contain less than thirty-two characters</string>
     <string name="authorization_invalid_email_format">Wrong email format</string>
 
 </resources>

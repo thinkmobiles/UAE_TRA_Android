@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,10 +15,12 @@ import android.widget.TextView;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.LogoutRequest;
 import com.uae.tra_smart_services.util.PreferenceManager;
@@ -91,6 +94,11 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         llChangePassword = findView(R.id.llChangePassword_FUP);
 //        llResetPassword = findView(R.id.llResetPassword_FUP);
         llLogout = findView(R.id.llLogout_FUP);
+
+        if (!TextUtils.isEmpty(mUserProfile.avatar)) {
+            Picasso.with(getActivity()).load(ServerConstants.BASE_URL + mUserProfile.avatar).
+                    into(hvUserAvatar);
+        }
     }
 
     @Override

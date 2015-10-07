@@ -11,6 +11,8 @@ import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 public class UserProfileResponseModel extends UserNameModel {
 
     @Expose
+    public String avatar;
+    @Expose
     public String error;
 
     @Override
@@ -24,6 +26,7 @@ public class UserProfileResponseModel extends UserNameModel {
         dest.writeString(this.email);
         dest.writeString(this.mobile);
         dest.writeString(this.error);
+        dest.writeString(this.avatar);
     }
 
     public UserProfileResponseModel() {
@@ -34,6 +37,7 @@ public class UserProfileResponseModel extends UserNameModel {
         this.email = in.readString();
         this.mobile = in.readString();
         this.error = in.readString();
+        this.avatar = in.readString();
     }
 
     public static final Creator<UserProfileResponseModel> CREATOR = new Creator<UserProfileResponseModel>() {

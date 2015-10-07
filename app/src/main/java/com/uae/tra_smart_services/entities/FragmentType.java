@@ -9,5 +9,6 @@ public enum FragmentType {
     REPORT_WEB_SPAM,
     SPAM_REPORT_HISTORY,
     ENQUIRIES,
-    INFO_HUB
+    INFO_HUB,
+    INNOVATIONS
 }
