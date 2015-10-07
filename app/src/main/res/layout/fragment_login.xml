@@ -59,7 +59,7 @@
                 <!--android:textSize="@dimen/sp_authorization_button_text_size" />-->
 
             <Button
-                android:id="@+id/btnDoRestorePass_FRP"
+                android:id="@+id/btnLogin_FRP"
                 style="@style/AuthorizationButtons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

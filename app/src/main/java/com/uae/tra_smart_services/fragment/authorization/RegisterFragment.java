@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -26,12 +27,18 @@ import com.uae.tra_smart_services.util.TRAPatterns;
 
 import retrofit.client.Response;
 
+import static com.uae.tra_smart_services.global.C.MAX_PASSWORD_LENGTH;
+import static com.uae.tra_smart_services.global.C.MAX_USERNAME_LENGTH;
+import static com.uae.tra_smart_services.global.C.MIN_PASSWORD_LENGTH;
+import static com.uae.tra_smart_services.global.C.MIN_USERNAME_LENGTH;
+
 /**
  * Created by ak-buffalo on 22.07.15.
  */
-public class RegisterFragment extends BaseAuthorizationFragment implements View.OnClickListener, Loader.Cancelled{
+public class RegisterFragment extends BaseAuthorizationFragment implements View.OnClickListener, Loader.Cancelled {
 
     private static final String KEY_REGISTER_REQUEST = "REGISTER_REQUEST";
+    private static final int MIN_PHONE_LENGTH = 4;
 
     private EditText etUserName, etPhone, etPassword, etConfirmPassword, etFirstName,
             etLastName, etEmiratesId, etEmail;
@@ -90,7 +97,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
 //        etEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(ImageUtils.getFilteredDrawableByTheme(getActivity(), R.drawable.ic_spam_sms, R.attr.authorizationDrawableColors), null, null, null);
 
 //        acsState = findView(R.id.spState_FR);
-    //        acsCountry = findView(R.id.spCountry_FR);
+        //        acsCountry = findView(R.id.spCountry_FR);
         // Actions
         tvRegister = findView(R.id.tvRegister_FLI);
     }
@@ -124,11 +131,77 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
 
     @Override
     public void onClick(View _v) {
+        hideKeyboard(getView());
         switch (_v.getId()) {
             case R.id.tvRegister_FLI:
-                doRegistration();
+                if (validateData()) {
+                    doRegistration();
+                }
                 break;
         }
+    }
+
+    private boolean validateData() {
+        //region Validate first and last name
+        final String firstName = etFirstName.getText().toString().trim();
+        if (firstName.isEmpty() || TextUtils.isDigitsOnly(firstName)) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        final String lastName = etLastName.getText().toString().trim();
+        if (firstName.isEmpty() || TextUtils.isDigitsOnly(lastName)) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //endregion
+        //region Validate Emirates ID
+        final String emiratesID = etEmiratesId.getText().toString().trim();
+        if (emiratesID.isEmpty() || !TRAPatterns.EMIRATES_ID.matcher(emiratesID).matches()) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_emirates_id, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //endregion
+        //region Validate username
+        final String userName = etUserName.getText().toString().trim();
+        if (userName.length() < MIN_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_username_short, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (userName.length() > MAX_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_username_long, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!Character.isLetter(userName.charAt(0))) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_username_start_char, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //endregion
+        //region Validate phone number
+        final String phoneNumber = etPhone.getText().toString().trim();
+        if (phoneNumber.length() < MIN_PHONE_LENGTH || !Patterns.PHONE.matcher(phoneNumber).matches()) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_phone_number, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //endregion
+        //region Validate account credentials
+        final String email = etEmail.getText().toString().trim();
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_email_format, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        final String password = etPassword.getText().toString().trim();
+        if (password.length() < MIN_PASSWORD_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_password_short, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (password.length() > MAX_PASSWORD_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_password_long, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        final String confirmPassword = etConfirmPassword.getText().toString().trim();
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(getActivity(), R.string.error_password_confirm, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //endregion
+        return true;
     }
 
     private void doRegistration() {
@@ -151,7 +224,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
 
     @Override
     public void onLoadingCanceled() {
-        if(getSpiceManager().isStarted() && mRegisterRequest!=null){
+        if (getSpiceManager().isStarted() && mRegisterRequest != null) {
             getSpiceManager().cancel(mRegisterRequest);
         }
     }
@@ -227,7 +300,7 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
                 addFilter(new Filter<RegisterModel>() {
                     @Override
                     public boolean check(RegisterModel _data) {
-                        if(!TRAPatterns.EMIRATES_ID.matcher(_data.emiratesId).matches()) {
+                        if (!TRAPatterns.EMIRATES_ID.matcher(_data.emiratesId).matches()) {
                             showMessage(0, R.string.str_error, R.string.error_valid_emid);
                             etEmiratesId.setError(getString(R.string.error_valid_emid));
                             etEmiratesId.requestFocus();

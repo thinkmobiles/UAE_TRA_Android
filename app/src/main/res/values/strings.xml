@@ -429,5 +429,16 @@
     <string name="attachment_manager_delete">Delete attachment</string>
     <string name="str_not_found">Not Found</string>
     <string name="enter_valid_imei_code">Please enter valid IMEI code</string>
+    <string name="authorization_invalid_login_or_pass">Invalid login or password</string>
+    <string name="authorization_invalid_first_name">Invalid First Name</string>
+    <string name="authorization_invalid_last_name">Invalid Last Name</string>
+    <string name="authorization_invalid_emirates_id">Invalid Emirates ID</string>
+    <string name="authorization_invalid_phone_number">Invalid Phone Number</string>
+    <string name="authorization_invalid_username_start_char">Username should not start with digit</string>
+    <string name="authorization_invalid_username_short">Username is too short</string>
+    <string name="authorization_invalid_username_long">Username is too long</string>
+    <string name="authorization_invalid_password_short">Password is too short</string>
+    <string name="authorization_invalid_password_long">Password is too long</string>
+    <string name="authorization_invalid_email_format">Wrong email format</string>
 
 </resources>

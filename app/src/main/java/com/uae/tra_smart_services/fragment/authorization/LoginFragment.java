@@ -1,6 +1,5 @@
 package com.uae.tra_smart_services.fragment.authorization;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
-import com.uae.tra_smart_services.BuildConfig;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
@@ -23,11 +21,16 @@ import com.uae.tra_smart_services.util.PreferenceManager;
 
 import retrofit.client.Response;
 
+import static com.uae.tra_smart_services.global.C.MAX_PASSWORD_LENGTH;
+import static com.uae.tra_smart_services.global.C.MAX_USERNAME_LENGTH;
+import static com.uae.tra_smart_services.global.C.MIN_PASSWORD_LENGTH;
+import static com.uae.tra_smart_services.global.C.MIN_USERNAME_LENGTH;
+
 /**
  * Created by ak-buffalo on 22.07.15.
  */
 public class LoginFragment extends BaseAuthorizationFragment
-                                                    implements OnClickListener, Loader.Cancelled {
+        implements OnClickListener, Loader.Cancelled {
 
     private static final String KEY_LOGIN_REQUEST = "LOGIN_REQUEST";
 
@@ -55,7 +58,7 @@ public class LoginFragment extends BaseAuthorizationFragment
         LayoutDirectionUtils.setDrawableStart(getActivity(), etPassword, R.drawable.ic_pass);
 
         // Actions
-        btnLogIn = findView(R.id.btnDoRestorePass_FRP);
+        btnLogIn = findView(R.id.btnLogin_FRP);
         tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
         tvForgotPassword = findView(R.id.tvForgotPass_FLI);
 
@@ -87,38 +90,54 @@ public class LoginFragment extends BaseAuthorizationFragment
     }
 
     @Override
-    public final void onClick(final View _v) {
-        switch (_v.getId()) {
-            case R.id.btnDoRestorePass_FRP:
-                doLogIn();
-                break;
-            case R.id.tvRegisterNow_FLI:
-                actionsListener.onOpenRegisterScreen();
-                break;
-            case R.id.tvForgotPass_FLI:
-                    actionsListener.onOpenRestorePassScreen();
-                break;
-        }
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         getSpiceManager().addListenerIfPending(Response.class, KEY_LOGIN_REQUEST, mRequestLoginListener);
     }
 
+    @Override
+    public final void onClick(final View _v) {
+        hideKeyboard(getView());
+        switch (_v.getId()) {
+            case R.id.btnLogin_FRP:
+                if (validateData()) {
+                    doLogIn();
+                }
+                break;
+            case R.id.tvRegisterNow_FLI:
+                actionsListener.onOpenRegisterScreen();
+                break;
+            case R.id.tvForgotPass_FLI:
+                actionsListener.onOpenRestorePassScreen();
+                break;
+        }
+    }
+
+    private boolean validateData() {
+        final String userName = etUserName.getText().toString().trim();
+        if (userName.length() < MIN_USERNAME_LENGTH || userName.length() > MAX_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_login_or_pass, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!Character.isLetter(userName.charAt(0))) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_login_or_pass, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        final String password = etPassword.getText().toString().trim();
+        if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_login_or_pass, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     private LoginRequest mRequest;
+
     private void doLogIn() {
         LoginModel model = new LoginModel();
         model.login = etUserName.getText().toString();
         model.pass = etPassword.getText().toString();
 
-        if (TextUtils.isEmpty(model.login) || TextUtils.isEmpty(model.pass)) {
-            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        hideKeyboard(getView());
         loaderDialogShow(getString(R.string.str_authenticating), this);
 
         getSpiceManager().execute(mRequest = new LoginRequest(model), KEY_LOGIN_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mRequestLoginListener);
@@ -126,7 +145,7 @@ public class LoginFragment extends BaseAuthorizationFragment
 
     @Override
     public void onLoadingCanceled() {
-        if(getSpiceManager().isStarted() && mRequest!=null){
+        if (getSpiceManager().isStarted() && mRequest != null) {
             getSpiceManager().cancel(mRequest);
         }
     }
