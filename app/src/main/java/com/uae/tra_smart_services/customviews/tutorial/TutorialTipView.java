@@ -41,9 +41,7 @@ public abstract class TutorialTipView extends View {
     protected float mTitleRectMargin;
     protected String mTitleText;
     protected String mTipText;
-    protected View mDependView;
     protected PointF[] mCenterPoints;
-    protected PointF mStartSidePoint, mEndSidePoint;
     //endregion
 
     //region COLORS
@@ -140,17 +138,8 @@ public abstract class TutorialTipView extends View {
 
     //region PUBLIC METHODS
 
-    public final void setDependView(final View _dependView) {
-        mDependView = _dependView;
-    }
-
     public void setCenterPoints(final PointF[] _centerPoints) {
         mCenterPoints = _centerPoints;
-    }
-
-    public final void setSidePoints(final PointF _startPoint, final PointF _endPoint) {
-        mStartSidePoint = _startPoint;
-        mEndSidePoint = _endPoint;
     }
 
     //endregion
@@ -159,24 +148,9 @@ public abstract class TutorialTipView extends View {
 
     @Override
     protected final void onMeasure(final int _widthMeasureSpec, final int _heightMeasureSpec) {
-        final int myHeight;
-        final int width;
-        final int height;
-
-        final int heightMode = MeasureSpec.getMode(_heightMeasureSpec);
-        final int widthMode = MeasureSpec.getMode(_widthMeasureSpec);
         final int widthSize = MeasureSpec.getSize(_widthMeasureSpec);
         final int heightSize = MeasureSpec.getSize(_heightMeasureSpec);
 
-        width = widthSize;
-
-//        if (heightMode == MeasureSpec.EXACTLY) {
-//            height = heightSize;
-//        } else if (heightMode == MeasureSpec.AT_MOST) {
-//            height = Math.min(myHeight, heightSize);
-//        } else {
-//            height = myHeight;
-//        }
         setMeasuredDimension(widthSize, heightSize);
     }
     //endregion

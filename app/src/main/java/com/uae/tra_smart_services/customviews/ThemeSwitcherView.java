@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -145,33 +144,26 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         }
     }
 
-    private long mTouchDownTime;
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         boolean handled = false;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mTouchDownTime = SystemClock.elapsedRealtime();
                 handled = true;
                 break;
             case MotionEvent.ACTION_MOVE:
                 handled = true;
                 break;
-
             case MotionEvent.ACTION_UP:
-//                if (SystemClock.elapsedRealtime() - mTouchDownTime <= ViewConfiguration.getTapTimeout()) {
-                    return handleClick(event.getX(), event.getY());
-//                }
-//                break;
+                return handleClick(event.getX());
         }
         return handled;
     }
 
-    private boolean handleClick(float dX, float dY) {
+    private boolean handleClick(float dX) {
         boolean somethingInArea = false;
         for (RectButton point : points) {
-            if (isInArea(point, dX, dY)) {
+            if (isInArea(point, dX)) {
                 somethingInArea = true;
                 if (point == mSelectedCircle) {
                     return false;
@@ -185,7 +177,7 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
 
         if (somethingInArea) {
             for (RectButton point : points) {
-                if (!isInArea(point, dX, dY)) {
+                if (!isInArea(point, dX)) {
                     point.isSelected = false;
                 }
             }
@@ -195,7 +187,7 @@ public class ThemeSwitcherView extends BaseCustomSwitcher implements View.OnTouc
         return true;
     }
 
-    private boolean isInArea(RectButton point, float x, float y) {
+    private boolean isInArea(RectButton point, float x) {
         float halfSector = Float.valueOf(getWidth()) / points.size() / 2;
         return x >= point.dX - halfSector && x <= point.dX + halfSector;
     }

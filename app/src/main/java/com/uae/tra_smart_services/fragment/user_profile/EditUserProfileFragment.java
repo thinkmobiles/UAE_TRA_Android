@@ -1,7 +1,6 @@
 package com.uae.tra_smart_services.fragment.user_profile;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -20,10 +19,8 @@ import com.uae.tra_smart_services.customviews.ProfileController;
 import com.uae.tra_smart_services.customviews.ProfileController.ControllerButton;
 import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButtonClickListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
-import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.ChangeUserNameRequest;
@@ -49,7 +46,7 @@ public final class EditUserProfileFragment extends BaseFragment
     private EditUserProfileRequestListener mUserProfileRequestListener;
     private ChangeUserNameRequest mChangeUserNameRequest;
 
-    public static EditUserProfileFragment newInstance(Fragment _targetFragment, @NonNull final UserProfileResponseModel _userProfile) {
+    public static EditUserProfileFragment newInstance(@NonNull final UserProfileResponseModel _userProfile) {
         final EditUserProfileFragment fragment = new EditUserProfileFragment();
         final Bundle args = new Bundle();
         args.putParcelable(KEY_USER_PROFILE_MODEL, _userProfile);

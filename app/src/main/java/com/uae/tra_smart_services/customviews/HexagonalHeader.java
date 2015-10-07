@@ -137,7 +137,6 @@ public class HexagonalHeader extends View {
     }
 
     public final PointF getAvatarCenter() {
-        final float avatarTriangleHeight = mTriangleHeight * mAvatarRadiusCoefficient;
         final float radius = mRadius * mAvatarRadiusCoefficient;
 
         final float centerY = getPaddingTop() + radius + mHexagonAvatarBorderWidth / 2;

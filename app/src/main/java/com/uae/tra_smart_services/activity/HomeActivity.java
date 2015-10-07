@@ -481,7 +481,7 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
     public final void onUserProfileItemClick(Fragment _fragment, UserProfileResponseModel _userProfile, @UserProfileAction int _profileItem) {
         switch (_profileItem) {
             case UserProfileFragment.USER_PROFILE_EDIT_PROFILE:
-                replaceFragmentWithBackStack(EditUserProfileFragment.newInstance(_fragment, _userProfile));
+                replaceFragmentWithBackStack(EditUserProfileFragment.newInstance(_userProfile));
                 break;
             case UserProfileFragment.USER_PROFILE_CHANGE_PASSWORD:
                 replaceFragmentWithBackStack(ChangePasswordFragment.newInstance());
