@@ -8,7 +8,7 @@ public final class ServerConstants {
     private ServerConstants() {
     }
 
-
+    public static final int TIMEOUT = 20;//seconds
     public static final String BASE_URL1 = "http://mobws.tra.gov.ae/";
     public static final String BASE_URL2 = "http://185.54.19.249:80";
     public static final String BASE_URL3 = "http://192.168.120.40:80";
@@ -77,6 +77,9 @@ public final class ServerConstants {
     public static final String PARAMETER_END_LIMIT = "end";
     public static final String PARAMETER_SERVICE_NAME = "name";
     public static final String PARAMETER_LANGUAGE = "lang";
+    public static final String PARAMETER_PAGE = "page";
+    public static final String PARAMETER_COUNT = "count";
+    public static final String PARAMETER_SEARCH = "search";
 
     //!!!!!!!!!!!! SERVER RESPONSES !!!!!!!!!!!!!!!!!
     public static final String AVAILABLE = "Available";

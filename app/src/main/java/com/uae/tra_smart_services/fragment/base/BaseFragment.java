@@ -3,7 +3,6 @@ package com.uae.tra_smart_services.fragment.base;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
@@ -20,24 +19,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
-import com.octo.android.robospice.exception.NoNetworkException;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.TRAApplication;
-import com.uae.tra_smart_services.activity.HomeActivity;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
+import com.uae.tra_smart_services.entities.NetworkErrorHandler;
 import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.interfaces.SpiceLoader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
-import com.uae.tra_smart_services.rest.model.response.ErrorResponseModel;
-
-import java.net.HttpURLConnection;
-
-import retrofit.RetrofitError;
 
 /**
  * Created by Mikazme on 22/07/2015.
@@ -135,7 +127,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         }
     }
 
-    protected final boolean loaderDialogDismiss(String _msg){
+    public final boolean loaderDialogDismiss(String _msg){
         boolean isLoaded = loaderDialogDismiss();
         if (isLoaded)
             Toast.makeText(getActivity(), _msg, Toast.LENGTH_SHORT).show();
@@ -197,53 +189,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     }
 
     protected final void processError(final SpiceException _exception) {
-        if (isAdded()) {
-            String errorMessage;
-            Throwable cause = _exception.getCause();
-            if (cause != null && cause instanceof RetrofitError) {
-                errorMessage = processRetrofitError(((RetrofitError) cause));
-                if (errorMessage != null)
-                    loaderOverlayFailed(errorMessage, true);
-            } else if (_exception instanceof NoNetworkException) {
-                errorMessage = getString(R.string.error_no_network);
-                loaderOverlayFailed(errorMessage, false);
-            } else {
-                errorMessage = _exception.getMessage();
-                loaderOverlayCancelled(errorMessage);
-            }
-            loaderDialogDismiss(errorMessage);
-        }
-    }
-
-    private String processRetrofitError(final RetrofitError _error) {
-        switch (_error.getKind()) {
-            case NETWORK:
-                return getString(R.string.error_no_network);
-            case CONVERSION:
-                //TODO: change this on production, added just to see when developing
-                return getString(R.string.error_conversion_error);
-            case HTTP:
-                if (_error.getResponse().getStatus() == HttpURLConnection.HTTP_INTERNAL_ERROR) {
-                    return getString(R.string.error_server);
-                } else if (_error.getResponse().getStatus() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                    TRAApplication.setIsLoggedIn(false);
-                    com.uae.tra_smart_services.util.PreferenceManager.setLoggedIn(getActivity(), false);
-                    final Intent intent = new Intent(getActivity(), HomeActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                    return null;
-                }
-                try {
-                    ErrorResponseModel errorResponse = (ErrorResponseModel) _error.getBodyAs(ErrorResponseModel.class);
-                    return errorResponse.error;
-                } catch (RuntimeException _exc) {
-                    _exc.printStackTrace();
-                    return getString(R.string.error_server);
-                }
-            default:
-            case UNEXPECTED:
-                return getString(R.string.str_something_went_wrong);
-        }
+        NetworkErrorHandler.processError(this, _exception);
     }
 
     protected final SpiceManager getSpiceManager() {

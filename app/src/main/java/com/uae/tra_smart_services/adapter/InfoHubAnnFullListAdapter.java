@@ -59,10 +59,10 @@ public class InfoHubAnnFullListAdapter extends RecyclerView.Adapter<InfoHubAnnFu
                     }
                 }
             });
-            hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIHLI);
-            title = (TextView) itemView.findViewById(R.id.hvTitle_LIHLI);
-            description = (TextView) itemView.findViewById(R.id.hvDescr_LIHLI);
-            date = (TextView) itemView.findViewById(R.id.hvDate_LIHLI);
+            hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIIHA);
+            title = (TextView) itemView.findViewById(R.id.hvTitle_LIIHA);
+            description = (TextView) itemView.findViewById(R.id.hvDescr_LIIHA);
+            date = (TextView) itemView.findViewById(R.id.hvDate_LIIHA);
         }
 
         public void setData(InfoHubAnnouncementsListItemModel _model){
@@ -80,7 +80,7 @@ public class InfoHubAnnFullListAdapter extends RecyclerView.Adapter<InfoHubAnnFu
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub_announsments, parent, false);
         return new ViewHolder(view);
     }
 

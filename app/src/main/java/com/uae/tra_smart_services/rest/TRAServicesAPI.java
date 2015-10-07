@@ -15,11 +15,11 @@ import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
+import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel.List;
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.ServiceInfoResponse;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
-import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 
 import retrofit.client.Response;
@@ -41,10 +41,13 @@ import static com.uae.tra_smart_services.global.ServerConstants.HELP_SALIM_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGIN_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGOUT_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_CHECK_URL;
+import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_COUNT;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_DEVICE_BRAND;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_END_LIMIT;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_IMEI;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_LANGUAGE;
+import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_PAGE;
+import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_SEARCH;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_SERVICE_NAME;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_START_OFFSET;
 import static com.uae.tra_smart_services.global.ServerConstants.POOR_COVERAGE_URL;
@@ -135,9 +138,15 @@ public interface TRAServicesAPI {
     Response postInnovation(@Body PostInnovationRequestModel _model);
 
     @GET(GET_TRANSACTIONS)
-    GetTransactionResponseModel.List getTransactions(@Query("page") final int _page,
-                                             @Query("count") final int _count);
-//                                             @Query("orderAsc") final int _asc);
+    List getTransactions(@Query(PARAMETER_PAGE) final int _page,
+                         @Query(PARAMETER_COUNT) final int _count);
+//                         @Query("orderAsc") final int _asc);
+
+    @GET(GET_TRANSACTIONS)
+    List searchTransactions(@Query(PARAMETER_PAGE) final int _page,
+                            @Query(PARAMETER_COUNT) final int _count,
+                            @Query(PARAMETER_SEARCH) final String _query);
+
     @GET(SERVICE_INFO)
     ServiceInfoResponse getServiceInfo(@Query(PARAMETER_SERVICE_NAME) String _serviceName,
                                        @Query(PARAMETER_LANGUAGE) String _language);
