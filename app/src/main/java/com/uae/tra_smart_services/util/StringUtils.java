@@ -5,13 +5,14 @@ package com.uae.tra_smart_services.util;
  */
 public final class StringUtils {
 
-    private StringUtils() {}
+    private StringUtils() {
+    }
 
-    public static boolean isAllLetters(String name) {
+    public static boolean isAllLettersOrWhiteSpace(String name) {
         char[] chars = name.toCharArray();
 
         for (char c : chars) {
-            if(!Character.isLetter(c)) {
+            if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
                 return false;
             }
         }

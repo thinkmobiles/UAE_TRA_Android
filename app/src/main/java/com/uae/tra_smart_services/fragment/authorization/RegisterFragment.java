@@ -158,11 +158,11 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
             return false;
         }
 
-        if (!StringUtils.isAllLetters(firstName)) {
+        if (!StringUtils.isAllLettersOrWhiteSpace(firstName)) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!StringUtils.isAllLetters(lastName)) {
+        if (!StringUtils.isAllLettersOrWhiteSpace(lastName)) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, Toast.LENGTH_SHORT).show();
             return false;
         }

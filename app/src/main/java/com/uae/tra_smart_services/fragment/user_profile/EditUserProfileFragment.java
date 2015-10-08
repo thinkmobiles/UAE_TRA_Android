@@ -34,7 +34,6 @@ import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.ChangeUserProfileRequest;
 import com.uae.tra_smart_services.rest.robo_requests.ImageFromUriRequest;
-import com.uae.tra_smart_services.rest.robo_requests.ChangeUserNameRequest;
 import com.uae.tra_smart_services.util.StringUtils;
 
 import retrofit.client.Response;
@@ -224,11 +223,11 @@ public final class EditUserProfileFragment extends BaseFragment
             return false;
         }
 
-        if (!StringUtils.isAllLetters(firstName)) {
+        if (!StringUtils.isAllLettersOrWhiteSpace(firstName)) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!StringUtils.isAllLetters(lastName)) {
+        if (!StringUtils.isAllLettersOrWhiteSpace(lastName)) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, Toast.LENGTH_SHORT).show();
             return false;
         }
