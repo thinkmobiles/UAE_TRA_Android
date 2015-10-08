@@ -63,16 +63,6 @@ public class ServiceInfoDetailsFragment extends BaseFragment implements OnTouchL
     }
 
     @Override
-    protected final int getTitle() {
-        return 0;
-    }
-
-    @Override
-    protected final int getLayoutResource() {
-        return R.layout.fragment_service_info_details;
-    }
-
-    @Override
     public final boolean onTouch(final View _view, final MotionEvent _event) {
         return true;
     }
@@ -84,5 +74,15 @@ public class ServiceInfoDetailsFragment extends BaseFragment implements OnTouchL
                 getFragmentManager().popBackStack();
                 break;
         }
+    }
+
+    @Override
+    protected final int getTitle() {
+        return 0;
+    }
+
+    @Override
+    protected final int getLayoutResource() {
+        return R.layout.fragment_service_info_details;
     }
 }

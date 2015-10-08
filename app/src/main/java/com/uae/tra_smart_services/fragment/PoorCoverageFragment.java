@@ -92,16 +92,6 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_poor_coverage;
-    }
-
-    @Override
-    protected int getTitle() {
-        return R.string.str_signal_coverage;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -125,15 +115,11 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     @Override
-    protected String getServiceName() {
-        return "complain Poor Coverage";
-    }
-
-    @Override
     protected void initViews() {
         super.initViews();
         etLocation = findView(R.id.etLocation_FPC);
         etLocation.clearFocus();
+        setCapitalizeTextWatcher(etLocation);
         sbPoorCoverage = findView(R.id.sbPoorCoverage_FPC);
         sbProgressBar = findView(R.id.pbFindLoc_FPC);
         tvSignalLevel = findView(R.id.tvSignalLevel_FPC);
@@ -448,9 +434,24 @@ public class PoorCoverageFragment extends BaseServiceFragment
         }
     }
 
+    @Override
+    protected String getServiceName() {
+        return "complain Poor Coverage";
+    }
+
     @Nullable
     @Override
     protected Service getServiceType() {
         return Service.POOR_COVERAGE;
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.str_signal_coverage;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_poor_coverage;
     }
 }

@@ -47,16 +47,6 @@ public class NotificationsFragment extends BaseFragment implements View.OnClickL
     }
 
     @Override
-    protected int getTitle() {
-        return 0;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_notification;
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ivNotificationListClose_FN:
@@ -73,5 +63,15 @@ public class NotificationsFragment extends BaseFragment implements View.OnClickL
     @Override
      protected void setToolbarVisibility() {
         toolbarTitleManager.setToolbarVisibility(false);
+    }
+
+    @Override
+    protected int getTitle() {
+        return 0;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_notification;
     }
 }

@@ -35,7 +35,6 @@ public class ServiceInfoFragment extends BaseFragment implements View.OnClickLis
             hvServicePackage, hvProcessingTime, hvServiceFees, hvContactInCharge;
     private RelativeLayout rlFragmentContainer;
 
-
     private String mServiceName;
     private ServiceInfoRequestListener mInfoRequestListener;
     private ServiceInfoRequest mServiceInfoRequest;
@@ -203,6 +202,15 @@ public class ServiceInfoFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
+    public final boolean onTouch(final View _view, final MotionEvent _event) {
+        return true;
+    }
+
+    public interface OnOpenServiceInfoDetailsListener {
+        void onOpenServiceInfoDetails(final @DrawableRes int _iconSrc, final String _serviceInfo);
+    }
+
+    @Override
     protected final int getTitle() {
         return 0;
     }
@@ -210,14 +218,5 @@ public class ServiceInfoFragment extends BaseFragment implements View.OnClickLis
     @Override
     protected final int getLayoutResource() {
         return R.layout.fragment_service_info;
-    }
-
-    @Override
-    public final boolean onTouch(final View _view, final MotionEvent _event) {
-        return true;
-    }
-
-    public interface OnOpenServiceInfoDetailsListener {
-        void onOpenServiceInfoDetails(final @DrawableRes int _iconSrc, final String _serviceInfo);
     }
 }

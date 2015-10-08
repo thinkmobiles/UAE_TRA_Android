@@ -100,7 +100,9 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         super.initViews();
         tivAddAttachment = findView(R.id.tivAddAttachment_FIS);
         etTitle = findView(R.id.etTitle_FIS);
+        setCapitalizeTextWatcher(etTitle);
         etMessageDescription = findView(R.id.etMessageDescription_FIS);
+        setCapitalizeTextWatcher(etMessageDescription);
         btnSubmit = findView(R.id.btnSubmit_FIS);
         sInnovationSpinner = findView(R.id.sInnovateIdea_FIS);
         tvInnovativeIdea = findView(R.id.tvInnovativeIdea_FIS);

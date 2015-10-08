@@ -55,6 +55,7 @@ public class ReportSmsSpamFragment extends BaseServiceFragment implements OnClic
         sProviderSpinner = findView(R.id.sProviderSpinner_FRSS);
         etNumberOfSpammer = findView(R.id.etNumberOfSpammer_FRSS);
         etDescription = findView(R.id.etDescription_FRSS);
+        setCapitalizeTextWatcher(etDescription);
 //        btnClose = findView(R.id.btnClose_FRSS);
         btnSubmit = findView(R.id.btnSubmit_FRSS);
     }

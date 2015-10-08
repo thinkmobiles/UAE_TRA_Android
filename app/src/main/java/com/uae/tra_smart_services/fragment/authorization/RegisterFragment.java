@@ -74,8 +74,10 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         etConfirmPassword = findView(R.id.etConfirmPassword_FR);
         LayoutDirectionUtils.setDrawableStart(getActivity(), etConfirmPassword, R.drawable.ic_pass);
         etFirstName = findView(R.id.etFirstName_FR);
+        setCapitalizeTextWatcher(etFirstName);
         LayoutDirectionUtils.setDrawableStart(getActivity(), etFirstName, R.drawable.ic_username);
         etLastName = findView(R.id.etLastName_FR);
+        setCapitalizeTextWatcher(etLastName);
         LayoutDirectionUtils.setDrawableStart(getActivity(), etLastName, R.drawable.ic_username);
         etEmiratesId = findView(R.id.etEmiratesID_FR);
         LayoutDirectionUtils.setDrawableStart(getActivity(), etEmiratesId, R.drawable.ic_id);
