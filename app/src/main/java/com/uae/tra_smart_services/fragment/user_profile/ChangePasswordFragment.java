@@ -21,7 +21,6 @@ import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButt
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
-import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.robo_requests.ChangePasswordRequest;
 
 import retrofit.client.Response;
@@ -116,17 +115,20 @@ public class ChangePasswordFragment extends BaseFragment implements OnCheckedCha
     }
 
     private boolean validateData() {
+        final String oldPass = etOldPassword.getText().toString().trim();
         final String newPass = etNewPassword.getText().toString().trim();
         final String newPassRetype = etNewPasswordRetype.getText().toString().trim();
+
+        if (oldPass.isEmpty() || newPass.isEmpty() || newPassRetype.isEmpty()) {
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         if (!newPass.equals(newPassRetype)) {
             Toast.makeText(getActivity(), R.string.error_password_confirm, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (etOldPassword.getText().toString().trim().isEmpty() || newPass.isEmpty() || newPassRetype.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
-            return false;
-        }
+
         return true;
     }
 

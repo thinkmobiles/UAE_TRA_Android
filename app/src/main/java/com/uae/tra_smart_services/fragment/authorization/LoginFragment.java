@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.PendingRequestListener;
+import com.uae.tra_smart_services.BuildConfig;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
 import com.uae.tra_smart_services.interfaces.Loader;
@@ -62,17 +63,17 @@ public class LoginFragment extends BaseAuthorizationFragment
         tvRegisterNow = findView(R.id.tvRegisterNow_FLI);
         tvForgotPassword = findView(R.id.tvForgotPass_FLI);
 
-        /*if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             btnLogIn.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    etUserName.setText("ak-buffalo");
-                    etPassword.setText("LQM83XVFB");
+                    etUserName.setText("w");
+                    etPassword.setText("w");
                     doLogIn();
                     return true;
                 }
             });
-        }*/
+        }
     }
 
     @Override

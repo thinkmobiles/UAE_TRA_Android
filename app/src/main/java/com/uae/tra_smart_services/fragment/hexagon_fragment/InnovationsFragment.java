@@ -106,12 +106,6 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         btnSubmit = findView(R.id.btnSubmit_FIS);
         sInnovationSpinner = findView(R.id.sInnovateIdea_FIS);
         tvInnovativeIdea = findView(R.id.tvInnovativeIdea_FIS);
-
-//        color = etTitle.getCurrentHintTextColor();
-//        tvPublic = findView(R.id.tvPublic);
-//        tvPrivate = findView(R.id.tvPrivate);
-//        swType = findView(R.id.swInnType);
-//        togglePrivacy(swType.isChecked());
     }
 
     @Override
@@ -124,7 +118,6 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         tvInnovativeIdea.setOnClickListener(this);
         sInnovationSpinner.setOnItemSelectedListener(this);
         findView(R.id.tivArrowIcon_FIS).setOnClickListener(this);
-//        swType.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -209,15 +202,9 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     }
 
     private boolean validateData() {
-        boolean titleInvalid = etTitle.getText().toString().trim().isEmpty();
-        if (titleInvalid) {
-            Toast.makeText(getActivity(), R.string.fragment_innovations_provide_title, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        boolean messageInvalid = etMessageDescription.getText().toString().trim().isEmpty();
-        if (messageInvalid) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
+        if (etTitle.getText().toString().trim().isEmpty() ||
+                etMessageDescription.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
             return false;
         }
 

@@ -34,8 +34,13 @@ import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.ChangeUserProfileRequest;
 import com.uae.tra_smart_services.rest.robo_requests.ImageFromUriRequest;
+import com.uae.tra_smart_services.rest.robo_requests.ChangeUserNameRequest;
+import com.uae.tra_smart_services.util.StringUtils;
 
 import retrofit.client.Response;
+
+import static com.uae.tra_smart_services.global.C.MAX_USERNAME_LENGTH;
+import static com.uae.tra_smart_services.global.C.MIN_USERNAME_LENGTH;
 
 /**
  * Created by mobimaks on 08.09.2015.
@@ -194,9 +199,37 @@ public final class EditUserProfileFragment extends BaseFragment
     }
 
     private boolean validateData() {
-        if (etFirstName.getText().toString().trim().isEmpty() ||
-                etLastName.getText().toString().trim().isEmpty()) {
+        final String firstName = etFirstName.getText().toString().trim();
+        final String lastName = etLastName.getText().toString().trim();
+
+
+        if (firstName.isEmpty() || lastName.isEmpty()) {
             Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (firstName.length() < MIN_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_short, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (firstName.length() > MAX_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_long, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (lastName.length() < MIN_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_short, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (lastName.length() > MAX_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_long, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!StringUtils.isAllLetters(firstName)) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!StringUtils.isAllLetters(lastName)) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

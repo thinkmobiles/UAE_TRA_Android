@@ -5,6 +5,7 @@ import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderMode
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
 import com.uae.tra_smart_services.rest.model.request.LoginModel;
+import com.uae.tra_smart_services.rest.model.request.LogoutRequestModel;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.model.request.PostInnovationRequestModel;
 import com.uae.tra_smart_services.rest.model.request.RatingServiceRequestModel;
@@ -123,7 +124,7 @@ public interface TRAServicesAPI {
     Response restorePassword(@Body RestorePasswordRequestModel _loginModel);
 
     @POST(LOGOUT_URL)
-    Response logout();
+    Response logout(@Body LogoutRequestModel _req);
 
     @GET(USER_PROFILE)
     UserProfileResponseModel getUserProfile();

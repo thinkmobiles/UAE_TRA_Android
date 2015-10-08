@@ -24,6 +24,7 @@ import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.robo_requests.ComplainAboutServiceRequest;
+import com.uae.tra_smart_services.util.TRAPatterns;
 
 import retrofit.client.Response;
 
@@ -114,24 +115,23 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
 
     @Override
     protected boolean validateData() {
-        boolean titleInvalid = etComplainTitle.getText().toString().isEmpty();
-        if (titleInvalid) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_title, Toast.LENGTH_SHORT).show();
+        final String title = etComplainTitle.getText().toString();
+        final String phone = etReferenceNumber.getText().toString();
+        final String description = etDescription.getText().toString();
+
+        if (title.isEmpty() || phone.isEmpty() || description.isEmpty()) {
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
             return false;
         }
-//        boolean serviceProviderSelected = !tvServiceProvider.getSpannedText().toString().isEmpty();
-//        if (!serviceProviderSelected) {
-//            Toast.makeText(getActivity(), R.string.fragment_complain_no_service_provider, Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-        boolean numberInvalid = !Patterns.PHONE.matcher(etReferenceNumber.getText().toString()).matches();
+
+        if (phone.length() < TRAPatterns.MIN_PHONE_NUMBER_LENGTH) {
+            Toast.makeText(getActivity(), R.string.phone_number_is_too_short, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        boolean numberInvalid = !Patterns.PHONE.matcher(phone).matches();
         if (numberInvalid) {
             Toast.makeText(getActivity(), R.string.fragment_complain_no_reference_number, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        boolean descriptionInvalid = etDescription.getText().toString().isEmpty();
-        if (descriptionInvalid) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

@@ -67,7 +67,6 @@ import com.uae.tra_smart_services.fragment.tutorial.TutorialContainerFragment.On
 import com.uae.tra_smart_services.fragment.user_profile.ChangePasswordFragment;
 import com.uae.tra_smart_services.fragment.user_profile.EditUserProfileFragment;
 import com.uae.tra_smart_services.fragment.user_profile.EditUserProfileFragment.OnUserProfileDataChangeListener;
-import com.uae.tra_smart_services.fragment.user_profile.ResetPasswordFragment;
 import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment;
 import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment.OnUserProfileClickListener;
 import com.uae.tra_smart_services.fragment.user_profile.UserProfileFragment.UserProfileAction;
@@ -485,9 +484,6 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
                 break;
             case UserProfileFragment.USER_PROFILE_CHANGE_PASSWORD:
                 replaceFragmentWithBackStack(ChangePasswordFragment.newInstance());
-                break;
-            case UserProfileFragment.USER_PROFILE_RESET_PASSWORD:
-                replaceFragmentWithBackStack(ResetPasswordFragment.newInstance());
                 break;
         }
     }

@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.rest.robo_requests;
 
 import com.uae.tra_smart_services.rest.TRAServicesAPI;
+import com.uae.tra_smart_services.rest.model.request.LogoutRequestModel;
 
 import retrofit.client.Response;
 
@@ -9,12 +10,15 @@ import retrofit.client.Response;
  */
 public class LogoutRequest extends BaseRequest<Response, TRAServicesAPI> {
 
-    public LogoutRequest() {
+    private LogoutRequestModel mModel;
+
+    public LogoutRequest(final LogoutRequestModel _model) {
         super(Response.class, TRAServicesAPI.class);
+        mModel = _model;
     }
 
     @Override
     public Response loadDataFromNetwork() throws Exception {
-        return getService().logout();
+        return getService().logout(mModel);
     }
 }
