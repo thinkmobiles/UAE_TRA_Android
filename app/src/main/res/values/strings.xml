@@ -54,7 +54,7 @@
 
     <!--               Home screens                -->
     <string name="str_home">Home</string>
-    <string name="str_favorites">Favourites</string>
+    <string name="str_favorites">Favorites</string>
     <string name="str_inquiries">Enquires</string>
     <string name="str_settings">Settings</string>
     <string name="complain">Complain about Service Provider</string>
@@ -327,7 +327,7 @@
     <string name="tutorial_hot_bar_title">QUICK ACCESS LINKS</string>
     <string name="tutorial_hot_bar_text">You can access our popular services here</string>
     <string name="tutorial_tab_bar_title">MAIN MENU</string>
-    <string name="tutorial_tab_bar_text">You can reach your favourite services, news and change settings from here</string>
+    <string name="tutorial_tab_bar_text">You can reach your favorite services, news and change settings from here</string>
 
     <string name="fragment_approved_devices_no_results">There are no approved\ndevices were found</string>
 
