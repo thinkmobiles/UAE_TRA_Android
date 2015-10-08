@@ -156,6 +156,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
         @Override
         public void onRequestSuccess(final Response _result) {
+            Picasso.with(getActivity()).invalidate(mUserProfile.getImageUrl());
             TRAApplication.setIsLoggedIn(false);
             PreferenceManager.setLoggedIn(getActivity(), false);
 
@@ -175,7 +176,21 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
     public final void updateUserProfileData(final UserProfileResponseModel _userProfile) {
         Log.d("ProfileEditCallback", "updateUserProfileData");
         mUserProfile = _userProfile;
-        tvUsername.setText(mUserProfile.getUsername());
+        showUserProfile(_userProfile);
+    }
+
+    private void showUserProfile(final UserProfileResponseModel _userProfile){
+        initUserAvatar(_userProfile);
+        tvUsername.setText(_userProfile.getUsername());
+    }
+
+    private void initUserAvatar(final UserProfileResponseModel _userProfile) {
+        if (_userProfile.getImageUrl().isEmpty()) {
+            hvUserAvatar.setScaleType(HexagonView.INSIDE_CROP);
+            hvUserAvatar.setHexagonSrcDrawable(R.drawable.ic_user_placeholder);
+        } else {
+            Picasso.with(getActivity()).load(_userProfile.getImageUrl()).into(hvUserAvatar);
+        }
     }
 
     @Override

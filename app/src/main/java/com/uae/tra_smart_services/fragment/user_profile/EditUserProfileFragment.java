@@ -1,8 +1,12 @@
 package com.uae.tra_smart_services.fragment.user_profile;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -12,18 +16,24 @@ import android.widget.Toast;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.customviews.ProfileController;
 import com.uae.tra_smart_services.customviews.ProfileController.ControllerButton;
 import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButtonClickListener;
+import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
+import com.uae.tra_smart_services.entities.AttachmentManager;
+import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.AttachmentOption;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
-import com.uae.tra_smart_services.rest.robo_requests.ChangeUserNameRequest;
+import com.uae.tra_smart_services.rest.robo_requests.ChangeUserProfileRequest;
+import com.uae.tra_smart_services.rest.robo_requests.ImageFromUriRequest;
 
 import retrofit.client.Response;
 
@@ -31,7 +41,7 @@ import retrofit.client.Response;
  * Created by mobimaks on 08.09.2015.
  */
 public final class EditUserProfileFragment extends BaseFragment
-        implements OnClickListener, OnControllerButtonClickListener {
+        implements OnClickListener, OnControllerButtonClickListener, OnImageGetCallback, OnImageSourceSelectListener {
 
     private static final String KEY_USER_PROFILE_MODEL = "USER_PROFILE_MODEL";
     private static final String KEY_EDIT_PROFILE_REQUEST = "EDIT_PROFILE_REQUEST";
@@ -39,12 +49,15 @@ public final class EditUserProfileFragment extends BaseFragment
     private HexagonView hvUserAvatar;
     private TextView tvChangePhoto;
     private EditText etFirstName, etLastName, etAddress, etPhone;
+
+    private AttachmentManager mAttachmentManager;
     private ProfileController pcProfileController;
+    private Uri mImageUri;
 
     private UserProfileResponseModel mUserProfile;
     private OnUserProfileDataChangeListener mProfileDataChangeListener;
     private EditUserProfileRequestListener mUserProfileRequestListener;
-    private ChangeUserNameRequest mChangeUserNameRequest;
+    private ChangeUserProfileRequest mChangeUserNameRequest;
 
     public static EditUserProfileFragment newInstance(@NonNull final UserProfileResponseModel _userProfile) {
         final EditUserProfileFragment fragment = new EditUserProfileFragment();
@@ -71,6 +84,7 @@ public final class EditUserProfileFragment extends BaseFragment
         } else {
             mUserProfile = _savedInstanceState.getParcelable(KEY_USER_PROFILE_MODEL);
         }
+        mAttachmentManager = new AttachmentManager(getActivity(), this);
     }
 
     @Override
@@ -93,11 +107,13 @@ public final class EditUserProfileFragment extends BaseFragment
     }
 
     @Override
-    public void onActivityCreated(final Bundle _savedInstanceState) {
+    public void onActivityCreated(final @Nullable Bundle _savedInstanceState) {
         super.onActivityCreated(_savedInstanceState);
         mUserProfileRequestListener = new EditUserProfileRequestListener();
         if (_savedInstanceState == null) {
-            setUserProfile(mUserProfile);
+            showUserProfile(mUserProfile);
+        } else {
+            mAttachmentManager.onRestoreInstanceState(_savedInstanceState);
         }
     }
 
@@ -109,8 +125,55 @@ public final class EditUserProfileFragment extends BaseFragment
     }
 
     @Override
-    public final void onClick(final View _view) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mAttachmentManager.onActivityResult(requestCode, resultCode, data);
+    }
 
+    @Override
+    public final void onClick(final View _view) {
+        switch (_view.getId()) {
+            case R.id.tvChangePhoto_FEUP:
+                openImagePicker();
+                break;
+        }
+    }
+
+    private void openImagePicker() {
+        mAttachmentManager.openDefaultPicker(getActivity(), this);
+    }
+
+    @Override
+    public final void onImageSourceSelect(AttachmentOption _option) {
+        switch (_option) {
+            case GALLERY:
+                mAttachmentManager.openGallery(this);
+                break;
+            case CAMERA:
+                mAttachmentManager.openCamera(this);
+                break;
+            case DELETE_ATTACHMENT:
+                mAttachmentManager.clearAttachment();
+                initUserAvatar(mUserProfile);
+                break;
+        }
+    }
+
+    private void initUserAvatar(final UserProfileResponseModel _userProfile) {
+        if (_userProfile.getImageUrl().isEmpty()) {
+            hvUserAvatar.postScaleType(HexagonView.INSIDE_CROP);
+            hvUserAvatar.setHexagonSrcDrawable(R.drawable.ic_user_placeholder);
+        } else {
+            Picasso.with(getActivity()).load(_userProfile.getImageUrl()).into(hvUserAvatar);
+        }
+    }
+
+    @Override
+    public void onAttachmentGet(@NonNull final Uri _imageUri) {
+        mImageUri = _imageUri;
+        loaderDialogShow();
+        ImageFromUriRequest imageFromUriRequest = new ImageFromUriRequest(getActivity(), _imageUri);
+        getSpiceManager().execute(imageFromUriRequest, new ImageFromUriListener());
     }
 
     @Override
@@ -143,7 +206,8 @@ public final class EditUserProfileFragment extends BaseFragment
         final UserNameModel profile = new UserNameModel();
         profile.firstName = etFirstName.getText().toString();
         profile.lastName = etLastName.getText().toString();
-        mChangeUserNameRequest = new ChangeUserNameRequest(profile);
+        profile.imageUri = mImageUri;
+        mChangeUserNameRequest = new ChangeUserProfileRequest(getActivity(), profile);
 
         hideKeyboard(getView());
         loaderOverlayShow(getString(R.string.fragment_edit_user_profile_saving), mUserProfileRequestListener, false);
@@ -156,16 +220,20 @@ public final class EditUserProfileFragment extends BaseFragment
         etFirstName.setText(mUserProfile.firstName);
         etLastName.setText(mUserProfile.lastName);
         etPhone.setText(mUserProfile.mobile);
+        mAttachmentManager.clearAttachment();
+        initUserAvatar(mUserProfile);
     }
 
-    private void setUserProfile(final UserProfileResponseModel _userProfile) {
+    private void showUserProfile(final UserProfileResponseModel _userProfile) {
         etFirstName.setText(_userProfile.firstName);
         etLastName.setText(_userProfile.lastName);
         etPhone.setText(_userProfile.mobile);
+        initUserAvatar(_userProfile);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        mAttachmentManager.onSaveInstanceState(outState);
         outState.putParcelable(KEY_USER_PROFILE_MODEL, mUserProfile);
         super.onSaveInstanceState(outState);
     }
@@ -196,6 +264,7 @@ public final class EditUserProfileFragment extends BaseFragment
             getSpiceManager().removeDataFromCache(UserProfileResponseModel.class, KEY_EDIT_PROFILE_REQUEST);
             if (isAdded() && result != null) {
                 mUserProfile = result;
+                Picasso.with(getActivity()).invalidate(mUserProfile.getImageUrl());
                 isRequestSuccess = true;
                 loaderOverlaySuccess(getString(R.string.fragment_edit_user_profile_success));
             }
@@ -222,6 +291,25 @@ public final class EditUserProfileFragment extends BaseFragment
         public void onRequestFailure(SpiceException spiceException) {
             getSpiceManager().removeDataFromCache(Response.class, KEY_EDIT_PROFILE_REQUEST);
             processError(spiceException);
+        }
+
+    }
+
+    private class ImageFromUriListener implements RequestListener<Drawable> {
+
+        @Override
+        public void onRequestSuccess(Drawable result) {
+            if (isAdded()) {
+                loaderDialogDismiss();
+                hvUserAvatar.postScaleType(HexagonView.CENTER_CROP);
+                hvUserAvatar.setHexagonSrcDrawable(result);
+            }
+        }
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            mAttachmentManager.clearAttachment();
+            loaderDialogDismiss(getString(R.string.fragment_edit_profile_image_error));
         }
 
     }

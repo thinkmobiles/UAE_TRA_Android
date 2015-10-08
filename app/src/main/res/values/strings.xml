@@ -391,4 +391,6 @@
     <string name="authorization_invalid_password_long">Password is too long. It must contain less than thirty-two characters</string>
     <string name="authorization_invalid_email_format">Wrong email format</string>
 
+    <string name="fragment_edit_profile_image_error">"Can't load image"</string>
+
 </resources>

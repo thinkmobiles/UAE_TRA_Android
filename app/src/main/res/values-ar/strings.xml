@@ -381,4 +381,5 @@
     <string name="authorization_invalid_password_long">كلمة المرور يجب أن لا تتجاوز أثنين و ثلاثين محرفاً.</string>
     <string name="authorization_invalid_email_format">اسم المستخدم يجب أن يبدأ بحرف</string>
 
+    <string name="fragment_edit_profile_image_error">"Can't load image"</string>
 </resources>

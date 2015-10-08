@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.rest.model.request;
 
+import android.net.Uri;
 import android.os.Parcel;
 
 import com.google.gson.annotations.Expose;
@@ -10,6 +11,8 @@ import com.uae.tra_smart_services.rest.model.base.BaseUserModel;
  * Created by mobimaks on 03.10.2015.
  */
 public class UserNameModel extends BaseUserModel {
+
+    public Uri imageUri;
 
     @Expose
     @SerializedName("image")

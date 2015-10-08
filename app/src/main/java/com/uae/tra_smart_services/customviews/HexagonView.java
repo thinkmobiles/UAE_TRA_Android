@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntDef;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
@@ -26,6 +27,9 @@ import com.squareup.picasso.Target;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.util.ImageUtils;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 
 /**
  * Created by mobimaks on 02.08.2015.
@@ -36,6 +40,16 @@ public final class HexagonView extends View implements Target {
     private final int DEFAULT_HEXAGON_RADIUS = Math.round(30 * getResources().getDisplayMetrics().density);
     private final int HEXAGON_BORDER_COUNT = 6;
 
+    //region Scale type
+    @IntDef({INSIDE_CROP, CENTER_CROP})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ScaleType {
+    }
+
+    public static final int INSIDE_CROP = 0;
+    public static final int CENTER_CROP = 1;
+    //endregion
+
     private final Path mPath;
     private Paint mPaint, mShadowPaint, mTextPaint;
     private Rect mHexagonRect, mTextRect;
@@ -43,6 +57,8 @@ public final class HexagonView extends View implements Target {
 
     @DrawableRes
     private int mSrcRes;
+    private int mScaleType;
+
     private String mText;
     private double mHexagonSide, mHexagonInnerRadius;
     private float mBorderWidth, mTextSize;
@@ -70,6 +86,7 @@ public final class HexagonView extends View implements Target {
             mSrcDrawable = a.getDrawable(R.styleable.HexagonView_hexagonSrc);
             mSrcRes = a.getResourceId(R.styleable.HexagonView_hexagonSrc, R.drawable.authorization_logo);
             mText = a.getString(R.styleable.HexagonView_hexagonText);
+            mScaleType = a.getInt(R.styleable.HexagonView_scaleType, INSIDE_CROP);
         } finally {
             a.recycle();
         }
@@ -125,6 +142,15 @@ public final class HexagonView extends View implements Target {
     public final void setHexagonSrcDrawable(final Drawable _backgroundDrawable) {
         mSrcDrawable = _backgroundDrawable;
         tintDrawableIfNeed();
+        invalidate();
+    }
+
+    public void postScaleType(@ScaleType int _scaleType) {
+        mScaleType = _scaleType;
+    }
+
+    public void setScaleType(@ScaleType int _scaleType) {
+        postScaleType(_scaleType);
         invalidate();
     }
 
@@ -222,6 +248,14 @@ public final class HexagonView extends View implements Target {
     }
 
     private void drawSrc(final Canvas _canvas, final Drawable _drawable) {
+        if (mScaleType == INSIDE_CROP) {
+            drawInsideCropImage(_canvas, _drawable);
+        } else if (mScaleType == CENTER_CROP) {
+            drawCenterCropImage(_canvas, _drawable);
+        }
+    }
+
+    private void drawInsideCropImage(final Canvas _canvas, final Drawable _drawable) {
         int drawableWidth = _drawable.getIntrinsicWidth(), drawableHeight = _drawable.getIntrinsicHeight();
         int canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
 
@@ -254,6 +288,30 @@ public final class HexagonView extends View implements Target {
         }
     }
 
+    private void drawCenterCropImage(Canvas _canvas, Drawable _drawable) {
+        float drawableWidth = _drawable.getIntrinsicWidth(), drawableHeight = _drawable.getIntrinsicHeight();
+        float canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
+
+        final float scale;
+        final float offsetX, offsetY;
+        if (drawableWidth < drawableHeight) {
+            scale = canvasWidth / drawableWidth;
+            offsetX = 0;
+            offsetY = (canvasHeight - (drawableHeight * scale)) / 2;
+        } else {
+            scale = canvasHeight / drawableHeight;
+            offsetX = (canvasWidth - (drawableWidth * scale)) / 2;
+            offsetY = 0;
+        }
+        _drawable.setBounds(0, 0, Math.round(drawableWidth), Math.round(drawableHeight));
+
+        _canvas.save();
+        _canvas.scale(scale, scale);
+        _canvas.translate(Math.round(offsetX), Math.round(offsetY));
+        _drawable.draw(_canvas);
+        _canvas.restore();
+    }
+
     private void drawText(final Canvas _canvas) {
         mTextPaint.getTextBounds(mText, 0, mText.length(), mTextRect);
         float y = (_canvas.getHeight() + mTextRect.height()) / 2f - mTextRect.bottom;
@@ -262,6 +320,7 @@ public final class HexagonView extends View implements Target {
 
     @Override
     public final void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+        postScaleType(CENTER_CROP);
         final LayerDrawable layerDrawable = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.layerlist_infohub_icon);
         layerDrawable.setDrawableByLayerId(R.id.lli_infohub_icon_background, new ColorDrawable(Color.MAGENTA));
         layerDrawable.setDrawableByLayerId(R.id.lli_infohub_icon_front, new BitmapDrawable(getResources(), bitmap));

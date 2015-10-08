@@ -18,5 +18,9 @@
         <attr name="hexagonLoaderPeriod" format="integer"/>
         <attr name="hexagonFillingPeriod" format="integer"/>
         <attr name="hexagonStatusPeriod" format="integer"/>
+        <attr name="scaleType" format="enum">
+            <enum name="cropInside" value="0"/>
+            <enum name="centerCrop" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>

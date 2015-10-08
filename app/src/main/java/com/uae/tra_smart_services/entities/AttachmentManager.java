@@ -14,12 +14,17 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.dialog.AttachmentPickerDialog;
+import com.uae.tra_smart_services.global.AttachmentOption;
 import com.uae.tra_smart_services.util.IntentUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mobimaks on 02.10.2015.
@@ -121,13 +126,44 @@ public final class AttachmentManager {
                 && takePictureIntent.resolveActivity(mPackageManager) != null;
     }
 
-    public void clearAttachment(){
+    public void clearAttachment() {
         mPhotoFilePath = null;
         mImageUri = null;
     }
 
+    public final void openDefaultPicker(@NonNull Context _context, @NonNull Fragment _fragment) {
+        final boolean isGalleryAvailable = isGalleryPickAvailable();
+        final boolean canGetPhoto = canGetCameraPicture();
+        final boolean needDeleteOption = getImageUri() != null;
+        final List<AttachmentOption> options = new ArrayList<>();
+
+        if (isGalleryAvailable) {
+            options.add(AttachmentOption.GALLERY);
+        }
+        if (canGetPhoto) {
+            options.add(AttachmentOption.CAMERA);
+        }
+        if (needDeleteOption) {
+            options.add(AttachmentOption.DELETE_ATTACHMENT);
+        }
+
+        if (options.size() > 1) {
+            AttachmentOption[] optionsArray = new AttachmentOption[options.size()];
+            options.toArray(optionsArray);
+            AttachmentPickerDialog.newInstance(_fragment, optionsArray).show(_fragment.getFragmentManager());
+        } else if (options.size() == 1) {
+            if (isGalleryAvailable) {
+                openGallery(_fragment);
+            } else if (canGetPhoto) {
+                openCamera(_fragment);
+            }
+        } else {
+            Toast.makeText(_context, R.string.fragment_complain_about_service_no_camera_and_app, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public interface OnImageGetCallback {
-        void onAttachmentGet(final Uri _imageUri);
+        void onAttachmentGet(final @NonNull Uri _imageUri);
     }
 
 }

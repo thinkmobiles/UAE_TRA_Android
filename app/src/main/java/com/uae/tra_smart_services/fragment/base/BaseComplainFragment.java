@@ -8,17 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.dialog.AttachmentPickerDialog;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
 import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.global.AttachmentOption;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by mobimaks on 11.08.2015.
@@ -90,38 +85,11 @@ public abstract class BaseComplainFragment extends BaseServiceFragment implement
     }
 
     protected void openImagePicker() {
-        final boolean isGalleryAvailable = mAttachmentManager.isGalleryPickAvailable();
-        final boolean canGetPhoto = mAttachmentManager.canGetCameraPicture();
-        final boolean needDeleteOption = getImageUri() != null;
-        final List<AttachmentOption> options = new ArrayList<>();
-
-        if (isGalleryAvailable) {
-            options.add(AttachmentOption.GALLERY);
-        }
-        if (canGetPhoto) {
-            options.add(AttachmentOption.CAMERA);
-        }
-        if (needDeleteOption) {
-            options.add(AttachmentOption.DELETE_ATTACHMENT);
-        }
-
-        if (options.size() > 1) {
-            AttachmentOption[] optionsArray = new AttachmentOption[options.size()];
-            options.toArray(optionsArray);
-            AttachmentPickerDialog.newInstance(this, optionsArray).show(getFragmentManager());
-        } else if (options.size() == 1) {
-            if (isGalleryAvailable) {
-                mAttachmentManager.openGallery(this);
-            } else if (canGetPhoto) {
-                mAttachmentManager.openCamera(this);
-            }
-        } else {
-            Toast.makeText(getActivity(), R.string.fragment_complain_about_service_no_camera_and_app, Toast.LENGTH_SHORT).show();
-        }
+        mAttachmentManager.openDefaultPicker(getActivity(), this);
     }
 
     @Override
-    public void onImageSourceSelect(AttachmentOption _option) {
+    public final void onImageSourceSelect(AttachmentOption _option) {
         switch (_option) {
             case GALLERY:
                 mAttachmentManager.openGallery(this);
