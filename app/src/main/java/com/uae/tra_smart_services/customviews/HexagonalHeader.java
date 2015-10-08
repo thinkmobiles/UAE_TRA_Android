@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,6 +11,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
@@ -23,6 +25,8 @@ import android.util.LayoutDirection;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.util.HexagonUtils;
 
@@ -35,7 +39,7 @@ import java.util.List;
 /**
  * Created by Mikazme on 01/08/2015.
  */
-public class HexagonalHeader extends View {
+public class HexagonalHeader extends View implements Target {
 
     public static final int HEXAGON_BUTTON_INNOVATIONS = 7;
     public static final int HEXAGON_BUTTON_SEARCH = 8;
@@ -46,11 +50,19 @@ public class HexagonalHeader extends View {
     public @interface HexagonButton {
     }
 
+    @IntDef({SCALE_TYPE_FIT_CENTER, SCALE_TYPE_CENTER_CROP})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ScaleType {
+    }
+
     public static final int TUTORIAL_TYPE_NONE = 0;
     public static final int TUTORIAL_TYPE_AVATAR = 1;
     public static final int TUTORIAL_TYPE_INNOVATIONS = 2;
     public static final int TUTORIAL_TYPE_SEARCH = 3;
     public static final int TUTORIAL_TYPE_NOTIFICATIONS = 4;
+
+    public static final int SCALE_TYPE_FIT_CENTER = 0;
+    public static final int SCALE_TYPE_CENTER_CROP = 1;
 
     private Path mHexagonPath;
     private Path mSecondRowHexagonPath;
@@ -77,6 +89,8 @@ public class HexagonalHeader extends View {
     private int mAvatarPlaceholderBackground;
     private int mHexagonPerRow;
     private int mRowCount;
+    @ScaleType
+    private int mScaleType = SCALE_TYPE_FIT_CENTER;
     private float mHexagonAvatarBorderWidth;
     private float mHexagonStrokeWidth;
     private float mTriangleHeight;
@@ -697,26 +711,26 @@ public class HexagonalHeader extends View {
         final float centerY = getPaddingTop() + radius + mHexagonAvatarBorderWidth / 2;
         final float centerX = calculateDependsOnDirection(getPaddingStart() + mHexagonStrokeWidth / 2 + 2.5f * mTriangleHeight);
 
-        float drawableWidth = mAvatarPlaceholder.getMinimumWidth();
-        float drawableHeight = mAvatarPlaceholder.getMinimumHeight();
+        int drawableWidth = mAvatarPlaceholder.getMinimumWidth();
+        int drawableHeight = mAvatarPlaceholder.getMinimumHeight();
 
-        if (drawableWidth < avatarTriangleHeight * 2 && drawableHeight < radius * 2) {
+
+        if (mScaleType == SCALE_TYPE_FIT_CENTER) {
             mAvatarPlaceholder.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
                     (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
         } else {
-            final float dependDimen;
-            final float dependParam;
-            if (drawableHeight > drawableWidth) {
-                dependDimen = drawableWidth;
-                dependParam = avatarTriangleHeight * 2;
-            } else {
-                dependDimen = drawableHeight;
-                dependParam = radius * 2;
-            }
-            final float coef = dependParam / dependDimen;
+            int vwidth = (int) (avatarTriangleHeight * 2);
+            int vheight = (int) (radius * 2);
 
-            drawableWidth *= coef;
-            drawableHeight *= coef;
+            float scale;
+            if (drawableWidth * vheight > vwidth * drawableHeight) {
+                scale = (float) vheight / (float) drawableHeight;
+            } else {
+                scale = (float) vwidth / (float) drawableWidth;
+            }
+
+            drawableWidth *= scale;
+            drawableHeight *= scale;
 
             mAvatarPlaceholder.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
                     (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
@@ -798,6 +812,30 @@ public class HexagonalHeader extends View {
     private int getRowNumber(final int _hexagon) {
         return (int) Math.floor((_hexagon - 1) / mHexagonPerRow);
     }
+
+
+
+    @Override
+    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+        mScaleType = SCALE_TYPE_CENTER_CROP;
+        mAvatarPlaceholder = new BitmapDrawable(getResources(), bitmap);
+        invalidate();
+    }
+
+    @Override
+    public void onBitmapFailed(Drawable errorDrawable) {
+        mScaleType = SCALE_TYPE_FIT_CENTER;
+        mAvatarPlaceholder = errorDrawable;
+        invalidate();
+    }
+
+    @Override
+    public void onPrepareLoad(Drawable placeHolderDrawable) {
+        mScaleType = SCALE_TYPE_FIT_CENTER;
+        mAvatarPlaceholder = placeHolderDrawable;
+        invalidate();
+    }
+
 
     public interface OnButtonClickListener {
         void onAvatarButtonClick();

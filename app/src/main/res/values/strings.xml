@@ -207,7 +207,7 @@
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="error_valid_email">Please enter valid email address</string>
     <string name="error_valid_phone">Please enter valid phone number</string>
-    <string name="error_password_confirm">Password and confirm password must be same</string>
+    <string name="error_password_confirm">New Password and Confirm Password do not match. Please correct them and try again</string>
     <string name="error_select_state">Please select your state</string>
     <string name="error_no_network">Network is not available. Please check your internet connection</string>
     <string name="error_conversion_error">Server returned wrong format of data</string>
@@ -374,7 +374,7 @@
     </string-array>
 
     <string name="innovation_has_sent">Your innovative idea has been successfully sent</string>
-    <string name="fragment_innovations_no_selected_item">Please complete all required fields</string>
+    <string name="fragment_innovations_no_selected_item">Please choose the Innovative idea</string>
     <string name="fragment_innovations_provide_title">Please provide a title</string>
 
     <string name="attachment_manager_delete">Delete attachment</string>
@@ -387,6 +387,10 @@
     <string name="authorization_invalid_username_start_char">Username must start with a letter</string>
     <string name="authorization_invalid_username_short">Username is too short. It must be at least three characters</string>
     <string name="authorization_invalid_username_long">Username is too long. It must be less than thirty-two characters</string>
+    <string name="authorization_invalid_firstname_short">First name is too short. It must be at least three characters</string>
+    <string name="authorization_invalid_firstname_long">First name is too long. It must be less than thirty-two characters</string>
+    <string name="authorization_invalid_lastname_short">Last name is too short. It must be at least three characters</string>
+    <string name="authorization_invalid_lastname_long">Last name is too long. It must be less than thirty-two characters</string>
     <string name="authorization_invalid_password_short">Password is too short. It must contain at least eight characters.</string>
     <string name="authorization_invalid_password_long">Password is too long. It must contain less than thirty-two characters</string>
     <string name="authorization_invalid_email_format">Incorrect email format</string>

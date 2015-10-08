@@ -23,6 +23,7 @@ import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.RegisterModel;
 import com.uae.tra_smart_services.rest.robo_requests.RegisterRequest;
 import com.uae.tra_smart_services.util.LayoutDirectionUtils;
+import com.uae.tra_smart_services.util.StringUtils;
 import com.uae.tra_smart_services.util.TRAPatterns;
 
 import retrofit.client.Response;
@@ -141,11 +142,27 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
             return false;
         }
 
-        if (TextUtils.isDigitsOnly(firstName)) {
+        if (firstName.length() < MIN_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_short, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (firstName.length() > MAX_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_long, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (lastName.length() < MIN_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_short, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (lastName.length() > MAX_USERNAME_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_long, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (StringUtils.isAllLetters(firstName)) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (TextUtils.isDigitsOnly(lastName)) {
+        if (StringUtils.isAllLetters(lastName)) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, Toast.LENGTH_SHORT).show();
             return false;
         }

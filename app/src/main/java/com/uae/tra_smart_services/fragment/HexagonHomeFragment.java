@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.activity.AuthorizationActivity;
@@ -28,6 +29,7 @@ import com.uae.tra_smart_services.entities.FragmentType;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.HeaderStaticService;
+import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
@@ -223,6 +225,10 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Picasso.with(getActivity()).load(ServerConstants.BASE_URL + "/crm/profileImage").
+                skipMemoryCache().error(R.drawable.ic_user_placeholder).
+                placeholder(R.drawable.ic_user_placeholder).into(mHexagonalHeader);
+
         mLoadProfileListener = new LoadProfileListener();
 
         initServiceList();
