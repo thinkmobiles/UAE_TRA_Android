@@ -368,18 +368,23 @@
     <string name="innovation_has_sent">تم الإرسال بنجاح</string>
     <string name="fragment_innovations_no_selected_item">يرجى استكمال جميع الحقول</string>
     <string name="fragment_innovations_provide_title">يرجى ادخال عنوان الفكرة</string>
-    <string name="enter_valid_imei_code">Please enter valid IMEI code</string>
-    <string name="authorization_invalid_login_or_pass">Invalid login or password</string>
-    <string name="authorization_invalid_first_name">Invalid First Name</string>
-    <string name="authorization_invalid_last_name">Invalid Last Name</string>
-    <string name="authorization_invalid_emirates_id">Invalid Emirates ID</string>
-    <string name="authorization_invalid_phone_number">Invalid Phone Number</string>
-    <string name="authorization_invalid_username_start_char">Username should not start with digit</string>
+    <string name="enter_valid_imei_code">يرجى ادخال رقم IMEI صالح</string>
+    <string name="authorization_invalid_login_or_pass">اسم المستخدم أو كلمة المرور غير صحيحة</string>
+    <string name="authorization_invalid_first_name">يرجى كتابة الاسم</string>
+    <string name="authorization_invalid_last_name">يرجى كتابة اللقب</string>
+    <string name="authorization_invalid_emirates_id">هوية الإمارات غير صحيحة</string>
+    <string name="authorization_invalid_phone_number">رقم الهاتف غير صحيح</string>
+    <string name="authorization_invalid_username_start_char">اسم المستخدم يجب أن يبدأ بحرف</string>
     <string name="authorization_invalid_username_short">اسم المستخدم يجب أن يتكون من ثلاثة محارف على الأقل</string>
     <string name="authorization_invalid_username_long">اسم المستخدم يجب أن لا تتكون من أكثر من أثنين و ثلاثين محرفاً</string>
     <string name="authorization_invalid_password_short">كلمة المرور قصيرة. يجب أن تحتوي على ثمانية محرف على الأقل</string>
     <string name="authorization_invalid_password_long">كلمة المرور يجب أن لا تتجاوز أثنين و ثلاثين محرفاً.</string>
     <string name="authorization_invalid_email_format">اسم المستخدم يجب أن يبدأ بحرف</string>
+    <string name="attachment_manager_delete">Delete attachment</string>
     <string name="phone_number_is_too_short">Phone number is too short</string>
+    <string name="authorization_invalid_firstname_short">First name is too short. It must be at least three characters</string>
+    <string name="authorization_invalid_firstname_long">First name is too long. It must be less than thirty-two characters</string>
+    <string name="authorization_invalid_lastname_short">Last name is too short. It must be at least three characters</string>
+    <string name="authorization_invalid_lastname_long">Last name is too long. It must be less than thirty-two characters</string>
 
 </resources>

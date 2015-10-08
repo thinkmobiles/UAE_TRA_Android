@@ -138,6 +138,12 @@ public final class EditUserProfileFragment extends BaseFragment
         final String firstName = etFirstName.getText().toString().trim();
         final String lastName = etLastName.getText().toString().trim();
 
+
+        if (firstName.isEmpty() || lastName.isEmpty()) {
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         if (firstName.length() < MIN_USERNAME_LENGTH) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_short, Toast.LENGTH_SHORT).show();
             return false;
@@ -154,17 +160,12 @@ public final class EditUserProfileFragment extends BaseFragment
             return false;
         }
 
-        if (StringUtils.isAllLetters(firstName)) {
+        if (!StringUtils.isAllLetters(firstName)) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (StringUtils.isAllLetters(lastName)) {
+        if (!StringUtils.isAllLetters(lastName)) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (firstName.isEmpty() || lastName.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
