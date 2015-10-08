@@ -20,7 +20,6 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.LogoutRequest;
 import com.uae.tra_smart_services.util.PreferenceManager;
@@ -50,7 +49,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
     private HexagonView hvUserAvatar;
     private TextView tvUsername;
-    private LinearLayout llEditProfile, llChangePassword, llLogout /* llResetPassword, */ ;
+    private LinearLayout llEditProfile, llChangePassword, llLogout /* llResetPassword, */;
 
     private UserProfileResponseModel mUserProfile;
 
@@ -95,9 +94,8 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 //        llResetPassword = findView(R.id.llResetPassword_FUP);
         llLogout = findView(R.id.llLogout_FUP);
 
-        if (!TextUtils.isEmpty(mUserProfile.avatar)) {
-            Picasso.with(getActivity()).load(ServerConstants.BASE_URL + mUserProfile.avatar).
-                    into(hvUserAvatar);
+        if (!TextUtils.isEmpty(mUserProfile.getImageUrl())) {
+            Picasso.with(getActivity()).load(mUserProfile.getImageUrl()).into(hvUserAvatar);
         }
     }
 
