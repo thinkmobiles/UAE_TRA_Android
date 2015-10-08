@@ -58,7 +58,9 @@ public class EnquiriesFragment extends ComplainAboutTraFragment {
     @Override
     protected void initViews() {
         super.initViews();
-        ((EditText)findView(R.id.etComplainTitle_FCAT)).setHint(getString(R.string.str_enquires_title));
+        etTitle = findView(R.id.etComplainTitle_FCAT);
+        etTitle.setHint(getString(R.string.str_enquires_title));
+        setCapitalizeTextWatcher(etTitle);
     }
 
     @Override

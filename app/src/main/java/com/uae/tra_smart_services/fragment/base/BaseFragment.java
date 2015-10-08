@@ -9,12 +9,15 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,8 @@ import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.interfaces.SpiceLoader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 /**
  * Created by Mikazme on 22/07/2015.
@@ -259,5 +264,47 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
                 view.setText(null);
             }
         }
+    }
+
+    protected static void setCapitalizeTextWatcher(final EditText editText) {
+        final TextWatcher textWatcher = new TextWatcher() {
+
+            int mStart = 0;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {/*Unimplemented*/}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mStart = start + count;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String capitalizedText = WordUtils.capitalize(editText.getText().toString());
+                if (!capitalizedText.equals(editText.getText().toString())) {
+                    editText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            editText.setSelection(mStart);
+                            editText.removeTextChangedListener(this);
+                        }
+                    });
+                    editText.setText(capitalizedText);
+                }
+            }
+        };
+
+        editText.addTextChangedListener(textWatcher);
     }
 }

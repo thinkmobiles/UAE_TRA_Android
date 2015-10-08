@@ -70,6 +70,7 @@ public class ReportWebSpamFragment extends BaseServiceFragment implements OnClic
         super.initViews();
         etUrl = findView(R.id.etUrlOfSpammer_FRWS);
         etDescription = findView(R.id.etDescription_FRWS);
+        setCapitalizeTextWatcher(etDescription);
 //        btnClose = findView(R.id.btnClose_FRWS);
         btnSubmit = findView(R.id.btnSubmit_FRWS);
     }

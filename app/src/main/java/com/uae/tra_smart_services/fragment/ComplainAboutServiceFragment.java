@@ -63,8 +63,10 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         tivAddAttachment = findView(R.id.tivAddAttachment_FCAS);
 
         etComplainTitle = findView(R.id.etComplainTitle_FCAS);
+        setCapitalizeTextWatcher(etComplainTitle);
         etReferenceNumber = findView(R.id.etReferenceNumber_FCAS);
         etDescription = findView(R.id.etDescription_FCAS);
+        setCapitalizeTextWatcher(etDescription);
     }
 
     private void initSpinner() {

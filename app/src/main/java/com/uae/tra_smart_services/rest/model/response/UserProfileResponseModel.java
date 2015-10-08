@@ -3,17 +3,25 @@ package com.uae.tra_smart_services.rest.model.response;
 import android.os.Parcel;
 
 import com.google.gson.annotations.Expose;
-import com.uae.tra_smart_services.rest.model.request.UserNameModel;
+import com.google.gson.annotations.SerializedName;
+import com.uae.tra_smart_services.global.ServerConstants;
+import com.uae.tra_smart_services.rest.model.base.BaseUserModel;
 
 /**
  * Created by mobimaks on 03.10.2015.
  */
-public class UserProfileResponseModel extends UserNameModel {
+public class UserProfileResponseModel extends BaseUserModel {
 
     @Expose
-    public String avatar;
-    @Expose
-    public String error;
+    @SerializedName("image")
+    public String imageUrl;
+
+    public String getImageUrl() {
+        if (imageUrl == null) {
+            return "";
+        }
+        return ServerConstants.BASE_URL + imageUrl;
+    }
 
     @Override
     public int describeContents() {
@@ -23,10 +31,7 @@ public class UserProfileResponseModel extends UserNameModel {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.email);
-        dest.writeString(this.mobile);
-        dest.writeString(this.error);
-        dest.writeString(this.avatar);
+        dest.writeString(this.imageUrl);
     }
 
     public UserProfileResponseModel() {
@@ -34,10 +39,7 @@ public class UserProfileResponseModel extends UserNameModel {
 
     protected UserProfileResponseModel(Parcel in) {
         super(in);
-        this.email = in.readString();
-        this.mobile = in.readString();
-        this.error = in.readString();
-        this.avatar = in.readString();
+        this.imageUrl = in.readString();
     }
 
     public static final Creator<UserProfileResponseModel> CREATOR = new Creator<UserProfileResponseModel>() {

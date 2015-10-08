@@ -50,7 +50,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
     private HexagonView hvUserAvatar;
     private TextView tvUsername;
-    private LinearLayout llEditProfile, llChangePassword, llLogout /* llResetPassword, */ ;
+    private LinearLayout llEditProfile, llChangePassword, llLogout /* llResetPassword, */;
 
     private UserProfileResponseModel mUserProfile;
 
@@ -93,9 +93,8 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         llChangePassword = findView(R.id.llChangePassword_FUP);
         llLogout = findView(R.id.llLogout_FUP);
 
-        if (!TextUtils.isEmpty(mUserProfile.avatar)) {
-            Picasso.with(getActivity()).load(ServerConstants.BASE_URL + mUserProfile.avatar).
-                    into(hvUserAvatar);
+        if (!TextUtils.isEmpty(mUserProfile.getImageUrl())) {
+            Picasso.with(getActivity()).load(mUserProfile.getImageUrl()).into(hvUserAvatar);
         }
     }
 

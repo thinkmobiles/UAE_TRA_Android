@@ -59,7 +59,9 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
         tivAddAttachment = findView(R.id.tivAddAttachment_FCAT);
 
         etComplainTitle = findView(R.id.etComplainTitle_FCAT);
+        setCapitalizeTextWatcher(etComplainTitle);
         etDescription = findView(R.id.etDescription_FCAT);
+        setCapitalizeTextWatcher(etDescription);
     }
 
     @Override

@@ -1,13 +1,8 @@
 package com.uae.tra_smart_services.rest;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
-
 import com.octo.android.robospice.retrofit.RetrofitGsonSpiceService;
 import com.squareup.okhttp.OkHttpClient;
 import com.uae.tra_smart_services.BuildConfig;
-import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
 
 import java.util.concurrent.TimeUnit;
@@ -38,10 +33,6 @@ public class TRARestService extends RetrofitGsonSpiceService {
 
     @Override
     protected String getServerUrl() {
-        if (TextUtils.isEmpty(ServerConstants.BASE_URL)) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            ServerConstants.BASE_URL = prefs.getString(C.KEY_BASE_URL, ServerConstants.BASE_URL1);
-        }
         return ServerConstants.BASE_URL;
     }
 }

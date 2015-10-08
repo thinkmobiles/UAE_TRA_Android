@@ -58,16 +58,6 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     }
 
     @Override
-    protected int getTitle() {
-        return R.string.str_mobile_verification;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_mobile_verification;
-    }
-
-    @Override
     protected void initViews() {
         super.initViews();
         ivCameraBtn = findView(R.id.ivCameraBtn_FMV);
@@ -199,5 +189,15 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
 
     public interface OnDeviceVerifiedListener {
         void onDeviceVerified(final SearchDeviceResponseModel.List _device);
+    }
+
+    @Override
+    protected int getTitle() {
+        return R.string.str_mobile_verification;
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_mobile_verification;
     }
 }

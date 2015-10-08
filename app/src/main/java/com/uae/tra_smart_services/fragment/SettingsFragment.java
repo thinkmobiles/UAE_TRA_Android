@@ -247,6 +247,10 @@ public class SettingsFragment extends BaseFragment
         // Used exceptionally to specify OK button in dialog
     }
 
+    public interface OnOpenAboutTraClickListener {
+        void onOpenAboutTraClick();
+    }
+
     @Override
     protected int getTitle() {
         return R.string.str_settings;
@@ -255,9 +259,5 @@ public class SettingsFragment extends BaseFragment
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_settings;
-    }
-
-    public interface OnOpenAboutTraClickListener {
-        void onOpenAboutTraClick();
     }
 }

@@ -1,49 +1,19 @@
 package com.uae.tra_smart_services.rest.model.request;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.uae.tra_smart_services.entities.UserProfile;
+import com.uae.tra_smart_services.rest.model.base.BaseUserModel;
 
 /**
  * Created by mobimaks on 03.10.2015.
  */
-public class UserNameModel implements Parcelable {
+public class UserNameModel extends BaseUserModel {
 
     @Expose
-    @SerializedName("first")
-    public String firstName;
-
-    @Expose
-    @SerializedName("last")
-    public String lastName;
-
-    @Expose
-    @SerializedName("email")
-    public String email;
-
-    @Expose
-    @SerializedName("mobile")
-    public String mobile;
-
-    public UserNameModel() {
-    }
-
-    public UserNameModel(String _firstName, String _lastName) {
-        firstName = _firstName;
-        lastName = _lastName;
-    }
-
-    public UserNameModel(UserProfile _userProfile) {
-        firstName = _userProfile.firstName;
-        lastName = _userProfile.lastName;
-    }
-
-    public final String getUsername(){
-        return firstName + " " + lastName;
-    }
+    @SerializedName("image")
+    public String imageBase64;
 
     @Override
     public int describeContents() {
@@ -52,16 +22,19 @@ public class UserNameModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.firstName);
-        dest.writeString(this.lastName);
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.imageBase64);
+    }
+
+    public UserNameModel() {
     }
 
     protected UserNameModel(Parcel in) {
-        this.firstName = in.readString();
-        this.lastName = in.readString();
+        super(in);
+        this.imageBase64 = in.readString();
     }
 
-    public static final Parcelable.Creator<UserNameModel> CREATOR = new Parcelable.Creator<UserNameModel>() {
+    public static final Creator<UserNameModel> CREATOR = new Creator<UserNameModel>() {
         public UserNameModel createFromParcel(Parcel source) {
             return new UserNameModel(source);
         }

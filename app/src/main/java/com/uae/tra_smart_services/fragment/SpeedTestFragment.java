@@ -93,6 +93,11 @@ public final class SpeedTestFragment extends BaseServiceFragment implements OnCl
         processError(_spiceException);
     }
 
+    @Override
+    protected String getServiceName() {
+        return "Internet Spees Service";
+    }
+
     @Nullable
     @Override
     protected Service getServiceType() {
@@ -107,10 +112,5 @@ public final class SpeedTestFragment extends BaseServiceFragment implements OnCl
     @Override
     protected final int getLayoutResource() {
         return R.layout.fragment_speedtest;
-    }
-
-    @Override
-    protected String getServiceName() {
-        return "Internet Spees Service";
     }
 }
