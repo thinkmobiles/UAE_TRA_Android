@@ -7,4 +7,6 @@ import java.util.regex.Pattern;
  */
 public class TRAPatterns {
     public static final Pattern EMIRATES_ID = Pattern.compile("^[0-9]{3}[-][0-9]{4}[-][0-9]{7}[-][0-9]$");
+
+    public static final int MIN_PHONE_NUMBER_LENGTH = 4;
 }

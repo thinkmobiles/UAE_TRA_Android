@@ -21,7 +21,7 @@
                 android:id="@+id/etFirstName_FR"
                 style="@style/AuthorizationFields"
                 android:hint="@string/hint_first_name"
-                android:inputType="textEmailAddress"
+                android:inputType="textCapSentences"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -30,7 +30,7 @@
                 android:id="@+id/etLastName_FR"
                 style="@style/AuthorizationFields"
                 android:hint="@string/hint_last_name"
-                android:inputType="textEmailAddress"
+                android:inputType="textPersonName"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />
@@ -57,7 +57,7 @@
                 android:id="@+id/etPhone_FR"
                 style="@style/AuthorizationFields"
                 android:hint="@string/str_phone"
-                android:inputType="text"
+                android:inputType="number"
                 android:drawablePadding="@dimen/dp_transparent_fields_padding"  />
 
             <View style="@style/AuthorizationFieldsSeparator" />

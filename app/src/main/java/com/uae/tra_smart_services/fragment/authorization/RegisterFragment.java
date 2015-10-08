@@ -124,25 +124,37 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
     private boolean validateData() {
         //region Validate first and last name
         final String firstName = etFirstName.getText().toString().trim();
-        if (firstName.isEmpty() || TextUtils.isDigitsOnly(firstName)) {
+        final String lastName = etLastName.getText().toString().trim();
+        final String emiratesID = etEmiratesId.getText().toString().trim();
+        final String userName = etUserName.getText().toString().trim();
+        final String phoneNumber = etPhone.getText().toString().trim();
+        final String email = etEmail.getText().toString().trim();
+        final String password = etPassword.getText().toString().trim();
+        final String confirmPassword = etConfirmPassword.getText().toString().trim();
+
+        if (firstName.isEmpty() || lastName.isEmpty() || emiratesID.isEmpty() ||
+                userName.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() ||
+                password.isEmpty() || confirmPassword.isEmpty()) {
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (TextUtils.isDigitsOnly(firstName)) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, Toast.LENGTH_SHORT).show();
             return false;
         }
-        final String lastName = etLastName.getText().toString().trim();
-        if (firstName.isEmpty() || TextUtils.isDigitsOnly(lastName)) {
+        if (TextUtils.isDigitsOnly(lastName)) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, Toast.LENGTH_SHORT).show();
             return false;
         }
         //endregion
         //region Validate Emirates ID
-        final String emiratesID = etEmiratesId.getText().toString().trim();
         if (emiratesID.isEmpty() || !TRAPatterns.EMIRATES_ID.matcher(emiratesID).matches()) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_emirates_id, Toast.LENGTH_SHORT).show();
             return false;
         }
         //endregion
         //region Validate username
-        final String userName = etUserName.getText().toString().trim();
         if (userName.length() < MIN_USERNAME_LENGTH) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_username_short, Toast.LENGTH_SHORT).show();
             return false;
@@ -155,19 +167,16 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         }
         //endregion
         //region Validate phone number
-        final String phoneNumber = etPhone.getText().toString().trim();
         if (phoneNumber.length() < MIN_PHONE_LENGTH || !Patterns.PHONE.matcher(phoneNumber).matches()) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_phone_number, Toast.LENGTH_SHORT).show();
             return false;
         }
         //endregion
         //region Validate account credentials
-        final String email = etEmail.getText().toString().trim();
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_email_format, Toast.LENGTH_SHORT).show();
             return false;
         }
-        final String password = etPassword.getText().toString().trim();
         if (password.length() < MIN_PASSWORD_LENGTH) {
             Toast.makeText(getActivity(), R.string.authorization_invalid_password_short, Toast.LENGTH_SHORT).show();
             return false;
@@ -175,7 +184,6 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
             Toast.makeText(getActivity(), R.string.authorization_invalid_password_long, Toast.LENGTH_SHORT).show();
             return false;
         }
-        final String confirmPassword = etConfirmPassword.getText().toString().trim();
         if (!password.equals(confirmPassword)) {
             Toast.makeText(getActivity(), R.string.error_password_confirm, Toast.LENGTH_SHORT).show();
             return false;

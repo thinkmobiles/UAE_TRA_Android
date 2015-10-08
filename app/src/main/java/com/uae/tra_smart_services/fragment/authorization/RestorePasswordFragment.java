@@ -1,7 +1,6 @@
 package com.uae.tra_smart_services.fragment.authorization;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -57,7 +56,7 @@ public class RestorePasswordFragment extends BaseAuthorizationFragment
                     @Override
                     public boolean check(RestorePasswordRequestModel _data) {
                         if (!Patterns.EMAIL_ADDRESS.matcher(_data.getEmail()).matches()) {
-                            etEmail.setError(getString(R.string.error_valid_email));
+                            etEmail.setError(getString(R.string.authorization_invalid_email_format));
                             etEmail.requestFocus();
                             return false;
                         }

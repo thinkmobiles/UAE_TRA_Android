@@ -380,5 +380,6 @@
     <string name="authorization_invalid_password_short">كلمة المرور قصيرة. يجب أن تحتوي على ثمانية محرف على الأقل</string>
     <string name="authorization_invalid_password_long">كلمة المرور يجب أن لا تتجاوز أثنين و ثلاثين محرفاً.</string>
     <string name="authorization_invalid_email_format">اسم المستخدم يجب أن يبدأ بحرف</string>
+    <string name="phone_number_is_too_short">Phone number is too short</string>
 
 </resources>

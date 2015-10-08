@@ -104,14 +104,11 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
 
     @Override
     protected boolean validateData() {
-        boolean titleInvalid = etComplainTitle.getText().toString().trim().isEmpty();
-        if (titleInvalid) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_title, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        boolean descriptionInvalid = etDescription.getText().toString().trim().isEmpty();
-        if (descriptionInvalid) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
+        final String title = etComplainTitle.getText().toString().trim();
+        final String description = etDescription.getText().toString().trim();
+
+        if (title.isEmpty() || description.isEmpty()) {
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

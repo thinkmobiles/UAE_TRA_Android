@@ -18,7 +18,6 @@ import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
-import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
@@ -95,7 +94,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
                 addFilter(new Filter<String>() {
                     @Override
                     public boolean check(String _data) {
-                        return Patterns.DOMAIN_NAME.matcher(_data).matches();
+                        return Patterns.WEB_URL.matcher(_data).matches();
                     }
                 });
             }

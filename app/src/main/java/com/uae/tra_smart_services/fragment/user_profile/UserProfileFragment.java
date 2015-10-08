@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -21,6 +20,7 @@ import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.ServerConstants;
+import com.uae.tra_smart_services.rest.model.request.LogoutRequestModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.LogoutRequest;
 import com.uae.tra_smart_services.util.PreferenceManager;
@@ -76,7 +76,6 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
     @Override
     public void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
-        Log.d("ProfileEditCallback", "UserProfileFragment onCreate");
         if (_savedInstanceState == null) {
             mUserProfile = getArguments().getParcelable(KEY_USER_PROFILE_MODEL);
         } else {
@@ -92,7 +91,6 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
         llEditProfile = findView(R.id.llEditProfile_FUP);
         llChangePassword = findView(R.id.llChangePassword_FUP);
-//        llResetPassword = findView(R.id.llResetPassword_FUP);
         llLogout = findView(R.id.llLogout_FUP);
 
         if (!TextUtils.isEmpty(mUserProfile.avatar)) {
@@ -106,26 +104,20 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         super.initListeners();
         llEditProfile.setOnClickListener(this);
         llChangePassword.setOnClickListener(this);
-//        llResetPassword.setOnClickListener(this);
         llLogout.setOnClickListener(this);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        final UserProfile profile = PreferenceManager.getSavedUserProfile(getActivity());
-//        tvUsername.setText(profile.getUserName());
-
         if (mUserProfile != null) {
             tvUsername.setText(mUserProfile.getUsername());
         }
-        Log.d("ActivityResult", "onActivityCreated");
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("ActivityResult", "onActivityResult" + requestCode);
     }
 
     @Override
@@ -138,9 +130,6 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
                 case R.id.llChangePassword_FUP:
                     mProfileClickListener.onUserProfileItemClick(this, mUserProfile, USER_PROFILE_CHANGE_PASSWORD);
                     break;
-//                case R.id.llResetPassword_FUP:
-//                    mProfileClickListener.onUserProfileItemClick(USER_PROFILE_RESET_PASSWORD);
-//                    break;
                 case R.id.llLogout_FUP:
                     logout();
                     break;
@@ -149,7 +138,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
     }
 
     private void logout() {
-        mLogoutRequest = new LogoutRequest();
+        mLogoutRequest = new LogoutRequest(new LogoutRequestModel());
         loaderDialogShow();
         getSpiceManager().execute(mLogoutRequest, KEY_LOGOUT_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mLogoutRequestListener);
     }
@@ -175,7 +164,6 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
     };
 
     public final void updateUserProfileData(final UserProfileResponseModel _userProfile) {
-        Log.d("ProfileEditCallback", "updateUserProfileData");
         mUserProfile = _userProfile;
         tvUsername.setText(mUserProfile.getUsername());
     }

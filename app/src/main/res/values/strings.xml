@@ -6,7 +6,7 @@
     <!--                Authorization screens                -->
     <string name="register_title">Create Account</string>
     <string name="forgot_password_title">Forgot Password</string>
-    <string name="error_fill_all_fields">Please fill all fields</string>
+    <string name="error_fill_all_fields">Please enter fill the fields with necessary information. All the fields should be filled with required data</string>
 
     <!--            Email field               -->
     <string name="str_email">Email</string>
@@ -90,7 +90,7 @@
     <string name="str_error">Error</string>
     <string name="str_url_not_avail">The domain %s is not available</string>
     <string name="str_url_doesnot_exist">The %s does not exist</string>
-    <string name="str_invalid_url">Please enter a valid URL</string>
+    <string name="str_invalid_url">Incorrect URL Format</string>
     <string name="str_invalid_number">Please enter a valid number</string>
     <string name="str_ok">OK</string>
     <string name="str_cancel">Cancel</string>
@@ -218,7 +218,7 @@
 
     <string name="fragment_complain_no_title">Please provide complaint title</string>
     <string name="fragment_complain_no_service_provider">Please select service provider</string>
-    <string name="fragment_complain_no_reference_number">Please set reference number</string>
+    <string name="fragment_complain_no_reference_number">Invalid phone number</string>
     <string name="fragment_complain_no_description">Please provide description</string>
 
     <string name="fragment_complain_about_service_du">Du</string>
@@ -378,10 +378,10 @@
     <string name="fragment_innovations_provide_title">Please provide a title</string>
 
     <string name="attachment_manager_delete">Delete attachment</string>
-    <string name="enter_valid_imei_code">Please enter valid IMEI code</string>
+    <string name="enter_valid_imei_code">IMEI must contain 15 digits</string>
     <string name="authorization_invalid_login_or_pass">Invalid login or password</string>
-    <string name="authorization_invalid_first_name">Invalid First Name</string>
-    <string name="authorization_invalid_last_name">Invalid Last Name</string>
+    <string name="authorization_invalid_first_name">Invalid First Name. First name cannot contain digits</string>
+    <string name="authorization_invalid_last_name">Invalid Last Name. Last name cannot contain digits</string>
     <string name="authorization_invalid_emirates_id">Invalid Emirates ID</string>
     <string name="authorization_invalid_phone_number">Invalid Phone Number</string>
     <string name="authorization_invalid_username_start_char">Username must start with a letter</string>
@@ -389,6 +389,7 @@
     <string name="authorization_invalid_username_long">Username is too long. It must be less than thirty-two characters</string>
     <string name="authorization_invalid_password_short">Password is too short. It must contain at least eight characters.</string>
     <string name="authorization_invalid_password_long">Password is too long. It must contain less than thirty-two characters</string>
-    <string name="authorization_invalid_email_format">Wrong email format</string>
+    <string name="authorization_invalid_email_format">Incorrect email format</string>
+    <string name="phone_number_is_too_short">Phone number is too short</string>
 
 </resources>
