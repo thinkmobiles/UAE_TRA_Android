@@ -2,7 +2,6 @@ package com.uae.tra_smart_services.fragment.user_profile;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,7 +32,6 @@ import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.ChangeUserProfileRequest;
-import com.uae.tra_smart_services.rest.robo_requests.ImageFromUriRequest;
 import com.uae.tra_smart_services.util.StringUtils;
 
 import retrofit.client.Response;
@@ -175,9 +173,7 @@ public final class EditUserProfileFragment extends BaseFragment
     @Override
     public void onAttachmentGet(@NonNull final Uri _imageUri) {
         mImageUri = _imageUri;
-        loaderDialogShow();
-        ImageFromUriRequest imageFromUriRequest = new ImageFromUriRequest(getActivity(), _imageUri);
-        getSpiceManager().execute(imageFromUriRequest, new ImageFromUriListener());
+        Picasso.with(getActivity()).load(mImageUri).into(hvUserAvatar);
     }
 
     @Override
@@ -323,25 +319,6 @@ public final class EditUserProfileFragment extends BaseFragment
         public void onRequestFailure(SpiceException spiceException) {
             getSpiceManager().removeDataFromCache(Response.class, KEY_EDIT_PROFILE_REQUEST);
             processError(spiceException);
-        }
-
-    }
-
-    private class ImageFromUriListener implements RequestListener<Drawable> {
-
-        @Override
-        public void onRequestSuccess(Drawable result) {
-            if (isAdded()) {
-                loaderDialogDismiss();
-                hvUserAvatar.postScaleType(HexagonView.CENTER_CROP);
-                hvUserAvatar.setHexagonSrcDrawable(result);
-            }
-        }
-
-        @Override
-        public void onRequestFailure(SpiceException spiceException) {
-            mAttachmentManager.clearAttachment();
-            loaderDialogDismiss(getString(R.string.fragment_edit_profile_image_error));
         }
 
     }
