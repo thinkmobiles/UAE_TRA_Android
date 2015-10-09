@@ -3,8 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp"
     android:background="#ff00">
 
     <ImageView
@@ -13,4 +11,15 @@
         android:rotation="90"
         android:scaleType="fitXY"
         android:src="@drawable/pic_test"/>
+
+    <com.uae.tra_smart_services.customviews.CutterContainer
+        android:id="@+id/ccContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.uae.tra_smart_services.customviews.HexagonCutterView
+            android:id="@+id/hvCutter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.uae.tra_smart_services.customviews.CutterContainer>
+
 </FrameLayout>

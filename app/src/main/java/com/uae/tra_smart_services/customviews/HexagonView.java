@@ -173,6 +173,7 @@ public final class HexagonView extends View implements Target {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+
         double section = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
 
         mPath.reset();
