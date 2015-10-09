@@ -21,10 +21,16 @@ public enum AttachmentOption {
             return R.string.fragment_complain_about_service_gallery;
         }
     },
+    ATTACHMENT{
+        @Override
+        public int getTitleRes() {
+            return R.string.app_name;
+        }
+    },
     DELETE_ATTACHMENT {
         @Override
         public int getTitleRes() {
-            return R.string.attachment_manager_delete;
+            return R.string.attachment_manager_delete_attachment;
         }
     };
 

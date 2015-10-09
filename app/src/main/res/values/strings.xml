@@ -376,7 +376,7 @@
     <string name="innovation_has_sent">Your innovative idea has been successfully sent</string>
     <string name="fragment_innovations_no_selected_item">Please choose the Innovative idea</string>
     <string name="fragment_innovations_provide_title">Please provide a title</string>
-    <string name="attachment_manager_delete">Delete attachment</string>
+    <string name="attachment_manager_delete_attachment">Delete attachment</string>
     <string name="enter_valid_imei_code">IMEI must contain 15 digits</string>
     <string name="authorization_invalid_login_or_pass">Invalid login or password</string>
     <string name="authorization_invalid_first_name">Invalid First Name. First name cannot contain digits</string>
@@ -396,5 +396,6 @@
     <string name="phone_number_is_too_short">Phone number is too short</string>
 
     <string name="fragment_edit_profile_image_error">"Can't load image"</string>
+    <string name="attachment_manager_delete_image">Delete image</string>
 
 </resources>
