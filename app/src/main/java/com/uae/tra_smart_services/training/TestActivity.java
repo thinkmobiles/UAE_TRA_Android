@@ -40,70 +40,10 @@ import rx.subjects.BehaviorSubject;
 
 public class TestActivity extends Activity {
 
-    private SurfaceViewLayout customLayout;
-
-    private EditText etUsername;
-    private Button btnSubmit;
-    private ProgressBar pbProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        customLayout = new SurfaceViewLayout(this);
-        setContentView(R.layout.fragment_login);
-        etUsername = (EditText) findViewById(R.id.etEmail_FRP);
-        btnSubmit = (Button) findViewById(R.id.btnDoRestorePass_FRP);
-        pbProgress = (ProgressBar) findViewById(R.id.pbProgress);
+        setContentView(R.layout.layout_cutter);
 
-        final BehaviorSubject<String> mNameObservable = BehaviorSubject.create();
-
-        WidgetObservable
-            .text(etUsername)
-            .filter(new Func1<OnTextChangeEvent, Boolean>() {
-                @Override
-                public Boolean call(OnTextChangeEvent onTextChangeEvent) {
-                    return onTextChangeEvent.text().length() > 3;
-                }
-            })
-            .doOnNext(new Action1<OnTextChangeEvent>() {
-                @Override
-                public void call(OnTextChangeEvent onTextChangeEvent) {
-                    btnSubmit.setEnabled(false);
-                    pbProgress.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getApplicationContext(), onTextChangeEvent.text(), Toast.LENGTH_SHORT).show();
-                }
-            })
-            .subscribe(new Action1<OnTextChangeEvent>() {
-                @Override
-                public void call(OnTextChangeEvent onTextChangeEvent) {
-                    mNameObservable.onNext(onTextChangeEvent.text().toString());
-                }
-            });
-
-        mNameObservable
-            .subscribe(new Action1<String>() {
-                @Override
-                public void call(String s) {
-
-                }
-            });
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        customLayout.pause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        customLayout.resume();
-    }
-
-
-    public interface Server{
-        Observable<JsonObject> findUser(String _name);
-        Observable<JsonObject> addUser(String _name);
     }
 }
