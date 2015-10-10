@@ -13,7 +13,7 @@ import android.view.View;
  * Created by and on 09.10.15.
  */
 
-public class HexagonCutterView extends View/* implements View.OnTouchListener */{
+public class HexagonCutterView extends View {
     private final int HEXAGON_BORDER_COUNT = 6;
 
     private final Path mPath = new Path();
@@ -28,7 +28,6 @@ public class HexagonCutterView extends View/* implements View.OnTouchListener */
         super(context, attrs);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         init();
-//        setOnTouchListener(this);
     }
 
     private void init(){
@@ -49,7 +48,6 @@ public class HexagonCutterView extends View/* implements View.OnTouchListener */
         super.onSizeChanged(w, h, oldw, oldh);
 
         double section = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
-
 
         int mCenterWidth = w / 2;
         int mCenterHeight = h / 2;
