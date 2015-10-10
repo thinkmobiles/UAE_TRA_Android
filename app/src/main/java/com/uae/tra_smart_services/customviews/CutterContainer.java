@@ -52,12 +52,25 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener{
         setMeasuredDimension(400, 400);
     }
     private int width, height;
+    private int parentWidth, parentHeight;
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(width = w, height = h, oldw, oldh);
         initPaints();
         initContainerPath();
         initScalatorsPath();
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        if(changed && mCutter != null){
+            mCutter.layout(l, t, r, b);
+            parent = (FrameLayout) getParent();
+            parentWidth = parent.getWidth();
+            parentHeight = parent.getHeight();
+//            setTranslationX((parentWidth + width) / 2);
+//            setTranslationY((parentHeight + height) / 2);
+        }
     }
 
     private void initPaints(){
@@ -91,14 +104,6 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener{
         mRBScalatorArea[2] = new PointF(width, height - 50);
         mRBScalatorPath.lineTo(mRBScalatorArea[2].x, mRBScalatorArea[2].y);
         mRBScalatorPath.close();
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if(changed && mCutter != null){
-            mCutter.layout(l, t, r, b);
-        }
-        parent = (FrameLayout) getParent();
     }
 
     @Override
@@ -187,8 +192,11 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener{
                     } else {
                         return;
                     }
-                    setScaleX(scaleX);
-                    setScaleY(scaleY);
+                    if(getWidth() <= parent.getWidth() && getWidth() < parent.getWidth() / 3){
+                        layout(0, 0, (int) (getWidth() * scaleX), (int) (getHeight() * scaleX));
+                    }
+//                    setScaleX(scaleX);
+//                    setScaleY(scaleY);
                 break;
             }
             case UP:{

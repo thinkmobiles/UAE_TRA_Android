@@ -14,14 +14,10 @@
 
     <com.uae.tra_smart_services.customviews.CutterContainer
         android:id="@+id/ccContainer"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <com.uae.tra_smart_services.customviews.HexagonCutterView
             android:id="@+id/hvCutter"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.uae.tra_smart_services.customviews.CutterContainer>
