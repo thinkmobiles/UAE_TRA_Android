@@ -139,6 +139,8 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
                     downX = _event.getX();
                     downY = _event.getY();
                     pressed = Pressed.HEX;
+                } else {
+                    pressed = Pressed.NOTHING;
                 }
 
                 return true;
@@ -171,7 +173,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
 //            layout(left, top, right, bottom);
         }
         if(_event.getRawY() - downY >= 0 && _event.getRawY() + (getHeight() - downY) <= parent.getHeight()){
-            float transitionY = -downY + _event.getRawY();
+            float transitionY = -downY + _event.getRawY() - 50;
             setTranslationY(lastTransitionY = transitionY);
 //            layout(left, (int) (top + transitionY), right, (int) (bottom + transitionY));
 //            layout(left, top, right, bottom);
@@ -222,7 +224,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     }
 
     private enum Pressed {
-        DOWN(-1), HEX(0), UP(1);
+        DOWN(-1), HEX(0), UP(1), NOTHING(Integer.MAX_VALUE);
 
         private int dir;
         Pressed(int _dir){

@@ -12,10 +12,12 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.PathShape;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.widget.ImageView;
 
 import com.uae.tra_smart_services.R;
@@ -34,11 +36,21 @@ public class TestActivity extends Activity {
         setContentView(R.layout.layout_cutter);
         background = (ImageView) findViewById(R.id.cutted_image);
 
-        Bitmap bitmapMaster = BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
-//        loadGrayBitmap(bitmapMaster);
-        highlightImage(background, bitmapMaster);
-    }
 
+//        loadGrayBitmap(bitmapMaster);
+//        highlightImage(background, R.drawable.pic_test);
+//        asdasdasd();
+        Bitmap bitmapMaster = BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
+        Bitmap bmOut = Bitmap.createBitmap(bitmapMaster.getWidth(), bitmapMaster.getHeight(), Bitmap.Config.ARGB_8888);
+        // setup canvas for painting
+        Canvas canvas = new Canvas(bmOut);
+        canvas.drawColor(Color.WHITE);
+        BitmapDrawable bd = (BitmapDrawable) getResources().getDrawable(R.drawable.pic_test);
+        Bitmap bm = bd.getBitmap();
+        Paint paint = new Paint();
+        paint.setAlpha(60);                             //you can set your transparent value here
+        canvas.drawBitmap(bm, 0, 0, paint);
+    }
 
     private void loadGrayBitmap(Bitmap bitmapMaster) {
 //        if (bitmapMaster != null) {
@@ -105,9 +117,10 @@ public class TestActivity extends Activity {
 //        background.invalidate();
     }
 
-    public void highlightImage(ImageView _imageView, Bitmap _src) {
+    public void highlightImage(ImageView _imageView, @IdRes int _idFrom) {
+        Bitmap bitmapMaster = BitmapFactory.decodeResource(getResources(), _idFrom);
         // create new bitmap, which will be painted and becomes result image
-        Bitmap bmOut = Bitmap.createBitmap(_src.getWidth() + 96, _src.getHeight() + 96, Bitmap.Config.ARGB_8888);
+        Bitmap bmOut = Bitmap.createBitmap(bitmapMaster.getWidth(), bitmapMaster.getHeight(), Bitmap.Config.ARGB_8888);
         // setup canvas for painting
         Canvas canvas = new Canvas(bmOut);
         // setup default color
@@ -117,19 +130,36 @@ public class TestActivity extends Activity {
         ptBlur.setMaskFilter(new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL));
         int[] offsetXY = new int[2];
         // capture alpha into a bitmap
-        Bitmap bmAlpha = _src.extractAlpha(ptBlur, offsetXY);
+        Bitmap bmAlpha = bitmapMaster.extractAlpha(ptBlur, offsetXY);
         // create a color paint
         Paint ptAlphaColor = new Paint();
-        ptAlphaColor.setColor(0xFFFFFFFF);
+        ptAlphaColor.setColor(0xFF333333);
         // paint color for captured alpha region (bitmap)
         canvas.drawBitmap(bmAlpha, offsetXY[0], offsetXY[1], ptAlphaColor);
         // free memory
         bmAlpha.recycle();
 
         // paint the image source
-        canvas.drawBitmap(_src, 0, 0, null);
+        canvas.drawBitmap(bitmapMaster, 0, 0, null);
 
         // return out final image
         _imageView.setImageBitmap(bmOut);
+    }
+
+
+    private void asdasdasd(){
+
+        Paint mMaskPaint;
+        mMaskPaint = new Paint();
+        mMaskPaint.setColor(0xFF0000);
+        mMaskPaint.setAlpha(128);
+        Bitmap
+        mMaskBitmap = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888);
+        mMaskBitmap.eraseColor(Color.TRANSPARENT);
+        Canvas
+        mMaskCanvas = new Canvas(mMaskBitmap);
+        mMaskCanvas.drawCircle(64, 64, 10, mMaskPaint);
+
+        background.setImageBitmap(mMaskBitmap);
     }
 }
