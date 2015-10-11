@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<AbsoluteLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,7 +8,6 @@
         android:id="@+id/cutted_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:rotation="90"
         android:scaleType="fitXY"
         android:src="@drawable/pic_test"/>
 
@@ -22,4 +21,4 @@
             android:layout_height="match_parent" />
     </com.uae.tra_smart_services.customviews.CutterContainer>
 
-</FrameLayout>
+</AbsoluteLayout>

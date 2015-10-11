@@ -35,7 +35,8 @@ public class TestActivity extends Activity {
         background = (ImageView) findViewById(R.id.cutted_image);
 
         Bitmap bitmapMaster = BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
-        loadGrayBitmap(bitmapMaster);
+//        loadGrayBitmap(bitmapMaster);
+        highlightImage(background, bitmapMaster);
     }
 
 
@@ -73,9 +74,9 @@ public class TestActivity extends Activity {
             Canvas canvasResult = new Canvas(bitmapResult);
 
             final Paint maskPaint = new Paint();
-            maskPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-//            maskPaint.setColor(Color.TRANSPARENT);
-//            maskPaint.setStyle(Paint.Style.FILL);
+            maskPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
+            maskPaint.setColor(Color.TRANSPARENT);
+            maskPaint.setStyle(Paint.Style.FILL);
 
             canvasResult.drawBitmap(mImage, 0, 0, null);
             canvasResult.drawCircle(w, h, 150, maskPaint);
@@ -102,5 +103,33 @@ public class TestActivity extends Activity {
 
 //        background.setImageBitmap(result);
 //        background.invalidate();
+    }
+
+    public void highlightImage(ImageView _imageView, Bitmap _src) {
+        // create new bitmap, which will be painted and becomes result image
+        Bitmap bmOut = Bitmap.createBitmap(_src.getWidth() + 96, _src.getHeight() + 96, Bitmap.Config.ARGB_8888);
+        // setup canvas for painting
+        Canvas canvas = new Canvas(bmOut);
+        // setup default color
+        canvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        // create a blur paint for capturing alpha
+        Paint ptBlur = new Paint();
+        ptBlur.setMaskFilter(new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL));
+        int[] offsetXY = new int[2];
+        // capture alpha into a bitmap
+        Bitmap bmAlpha = _src.extractAlpha(ptBlur, offsetXY);
+        // create a color paint
+        Paint ptAlphaColor = new Paint();
+        ptAlphaColor.setColor(0xFFFFFFFF);
+        // paint color for captured alpha region (bitmap)
+        canvas.drawBitmap(bmAlpha, offsetXY[0], offsetXY[1], ptAlphaColor);
+        // free memory
+        bmAlpha.recycle();
+
+        // paint the image source
+        canvas.drawBitmap(_src, 0, 0, null);
+
+        // return out final image
+        _imageView.setImageBitmap(bmOut);
     }
 }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsoluteLayout;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     private final Path mRBScalatorPath = new Path();
     private PointF[] mLTScalatorArea = new PointF[3];
     private PointF[] mRBScalatorArea = new PointF[3];
-    private FrameLayout parent;
+    private AbsoluteLayout parent;
     private HexagonCutterView mCutter;
 
     public CutterContainer(Context context) { this(context, null); }
@@ -62,20 +63,20 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(width = w, height = h, oldw, oldh);
+        initPaints();
+        initContainerPath();
+        initScalatorsPath();
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if(changed && mCutter != null){
             mCutter.layout(left = l, top = t, right = r, bottom = b);
-            parent = (FrameLayout) getParent();
+            parent = (AbsoluteLayout) getParent();
             parentWidth = parent.getWidth();
             parentHeight = parent.getHeight();
-            initPaints();
-            initContainerPath();
-            initScalatorsPath();
-            setTranslationX((parentWidth - width) / 2);
-            setTranslationY((parentHeight - height) / 2);
+            setTranslationX(/*lastTransitionX = */(parentWidth - width) / 2);
+            setTranslationY(/*lastTransitionY = */(parentHeight - height) / 2);
         }
     }
 
@@ -115,7 +116,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawPath(mLTScalatorPath, mBorderPaint);
+//        canvas.drawPath(mLTScalatorPath, mBorderPaint);
         canvas.drawPath(mRBScalatorPath, mBorderPaint);
     }
 
@@ -160,17 +161,18 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
         }
     }
     Rect rect = new Rect();
+    float lastTransitionX, lastTransitionY;
     private void moveContainer(MotionEvent _event) {
         getHitRect(rect);
         if(_event.getRawX() - downX >= 0 && _event.getRawX() + (getWidth() - downX) <= parent.getWidth()){
             float transitionX = -downX + _event.getRawX();
-            setTranslationX(transitionX);
+            setTranslationX(lastTransitionX = transitionX);
 //            layout((int) (left + transitionX), top, (int) (right + transitionX), bottom);
 //            layout(left, top, right, bottom);
         }
         if(_event.getRawY() - downY >= 0 && _event.getRawY() + (getHeight() - downY) <= parent.getHeight()){
             float transitionY = -downY + _event.getRawY();
-            setTranslationY(transitionY);
+            setTranslationY(lastTransitionY = transitionY);
 //            layout(left, (int) (top + transitionY), right, (int) (bottom + transitionY));
 //            layout(left, top, right, bottom);
         }
@@ -215,6 +217,8 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
                 break;
             }
         }
+        setTranslationX(lastTransitionX);
+        setTranslationY(lastTransitionY);
     }
 
     private enum Pressed {
