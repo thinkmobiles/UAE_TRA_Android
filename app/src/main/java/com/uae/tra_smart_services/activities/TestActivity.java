@@ -37,19 +37,11 @@ public class TestActivity extends Activity {
         background = (ImageView) findViewById(R.id.cutted_image);
 
 
-//        loadGrayBitmap(bitmapMaster);
-//        highlightImage(background, R.drawable.pic_test);
-//        asdasdasd();
         Bitmap bitmapMaster = BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
         Bitmap bmOut = Bitmap.createBitmap(bitmapMaster.getWidth(), bitmapMaster.getHeight(), Bitmap.Config.ARGB_8888);
-        // setup canvas for painting
         Canvas canvas = new Canvas(bmOut);
-        canvas.drawColor(Color.WHITE);
-        BitmapDrawable bd = (BitmapDrawable) getResources().getDrawable(R.drawable.pic_test);
-        Bitmap bm = bd.getBitmap();
-        Paint paint = new Paint();
-        paint.setAlpha(60);                             //you can set your transparent value here
-        canvas.drawBitmap(bm, 0, 0, paint);
+        canvas.drawBitmap(bitmapMaster, 0, 0, new Paint());
+
     }
 
     private void loadGrayBitmap(Bitmap bitmapMaster) {

@@ -128,7 +128,6 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
         final PointF clickPoint = new PointF(_event.getX(), _event.getY());
         switch (_event.getAction()){
             case MotionEvent.ACTION_DOWN:
-//                Log.e("DOWN  ", "X:" + _event.getRawX() + ", Y:" + _event.getRawY());
                 downX = _event.getRawX();
                 downY = _event.getRawY();
                 if (HexagonUtils.pointInPolygon(clickPoint, mRBScalatorArea)){
@@ -137,12 +136,13 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
                     pressed = Pressed.UP;
                 } else if(mCutter != null && HexagonUtils.pointInPolygon(clickPoint, mCutter.getPoints())){
                     downX = _event.getX();
-                    downY = _event.getY();
+                    downY = _event.getY() + 50;
                     pressed = Pressed.HEX;
                 } else {
                     pressed = Pressed.NOTHING;
                 }
 
+                Log.e("MOVE", "RAW_X:" + _event.getRawX() + ", RAW_Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
                 return true;
 
             case MotionEvent.ACTION_MOVE:
@@ -173,12 +173,12 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
 //            layout(left, top, right, bottom);
         }
         if(_event.getRawY() - downY >= 0 && _event.getRawY() + (getHeight() - downY) <= parent.getHeight()){
-            float transitionY = -downY + _event.getRawY() - 50;
+            float transitionY = -downY + _event.getRawY();
             setTranslationY(lastTransitionY = transitionY);
 //            layout(left, (int) (top + transitionY), right, (int) (bottom + transitionY));
 //            layout(left, top, right, bottom);
         }
-//        Log.e("MOVE", "X:" + _event.getRawX() + ", Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
+        Log.e("MOVE", "RAW_X:" + _event.getRawX() + ", RAW_Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
     }
 
     float scaleX = 1, scaleY = 1;
