@@ -16,6 +16,9 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AttachmentOptionsAdapter;
 import com.uae.tra_smart_services.global.AttachmentOption;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static android.app.AlertDialog.THEME_HOLO_LIGHT;
 
 /**
@@ -26,7 +29,7 @@ public class AttachmentPickerDialog extends DialogFragment implements OnItemClic
     private static final String KEY_ATTACHMENT_OPTIONS = "ATTACHMENT_OPTIONS";
 
     private OnImageSourceSelectListener mSelectListener;
-    private AttachmentOption[] mAttachmentOptions;
+    private List<AttachmentOption> mAttachmentOptions;
     private ListView mOptionsList;
 
     public static AttachmentPickerDialog newInstance(final @NonNull Fragment targetFragment,
@@ -46,7 +49,7 @@ public class AttachmentPickerDialog extends DialogFragment implements OnItemClic
         if (targetFragment instanceof OnImageSourceSelectListener) {
             mSelectListener = (OnImageSourceSelectListener) targetFragment;
         }
-        mAttachmentOptions = (AttachmentOption[]) getArguments().getSerializable(KEY_ATTACHMENT_OPTIONS);
+        mAttachmentOptions = Arrays.asList((AttachmentOption[]) getArguments().getSerializable(KEY_ATTACHMENT_OPTIONS));
     }
 
     @Override

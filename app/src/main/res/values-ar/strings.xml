@@ -380,7 +380,7 @@
     <string name="authorization_invalid_password_short">كلمة المرور قصيرة. يجب أن تحتوي على ثمانية محرف على الأقل</string>
     <string name="authorization_invalid_password_long">كلمة المرور يجب أن لا تتجاوز أثنين و ثلاثين محرفاً.</string>
     <string name="authorization_invalid_email_format">اسم المستخدم يجب أن يبدأ بحرف</string>
-    <string name="attachment_manager_delete">Delete attachment</string>
+    <string name="attachment_manager_delete_attachment">Delete attachment</string>
     <string name="phone_number_is_too_short">Phone number is too short</string>
     <string name="authorization_invalid_firstname_short">First name is too short. It must be at least three characters</string>
     <string name="authorization_invalid_firstname_long">First name is too long. It must be less than thirty-two characters</string>
@@ -388,4 +388,6 @@
     <string name="authorization_invalid_lastname_long">Last name is too long. It must be less than thirty-two characters</string>
 
     <string name="fragment_edit_profile_image_error">"Can't load image"</string>
+    <string name="attachment_manager_delete_image">Delete image</string>
+    <string name="fragment_domain_checker_hint">Only for .ae domains</string>
 </resources>

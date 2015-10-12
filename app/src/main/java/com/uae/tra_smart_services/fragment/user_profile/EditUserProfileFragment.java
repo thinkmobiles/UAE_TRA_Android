@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -25,6 +27,7 @@ import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButt
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
 import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
+import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
@@ -173,6 +176,9 @@ public final class EditUserProfileFragment extends BaseFragment
     @Override
     public void onAttachmentGet(@NonNull final Uri _imageUri) {
         mImageUri = _imageUri;
+        Glide.with(getActivity())
+                .load(mImageUri)
+                .into((Target) new HexagonViewTarget(hvUserAvatar));
 //        Target target = new Target() {
 //            @Override
 //            public void onBitmapLoaded(Bitmap _bitmap, Picasso.LoadedFrom from) {
@@ -227,8 +233,6 @@ public final class EditUserProfileFragment extends BaseFragment
 //            }
 //        };
 //        hvUserAvatar.setTag(target);
-
-        Picasso.with(getActivity()).load(mImageUri).into(hvUserAvatar);
     }
 
     @Override
