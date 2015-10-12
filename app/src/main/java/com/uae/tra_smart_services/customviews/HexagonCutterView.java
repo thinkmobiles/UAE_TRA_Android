@@ -68,4 +68,8 @@ public class HexagonCutterView extends View {
     public PointF[] getPoints(){
         return mPoints;
     }
+
+    public Path getPath(){
+        return mPath;
+    }
 }

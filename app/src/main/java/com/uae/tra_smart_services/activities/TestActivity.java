@@ -27,6 +27,7 @@ import android.view.ViewTreeObserver;
 import android.widget.AbsoluteLayout;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.CutterContainer;
@@ -40,6 +41,7 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
     ImageView background;
     CutterContainer ccContainer;
     FrameLayout alMainContainer;
+    TextView doCrop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,8 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
         background = (ImageView) findViewById(R.id.cutted_image);
         ccContainer = (CutterContainer) findViewById(R.id.ccContainer);
         ccContainer.setAreaChangeHandler(this);
+        doCrop = (TextView) findViewById(R.id.doCrop);
+        doCrop.setOnClickListener(this);
     }
 
     public Bitmap makeTransparent(Bitmap src, int value) {
@@ -94,11 +98,35 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
     @Override
     public void onClick(View _view) {
         if(_view.getId() == R.id.doCrop){
-
+            doCropImage(ccContainer.getCutterPath());
         }
     }
 
-    private void doCropImage(){
+    private void doCropImage(Path _cropperPath){
+        Bitmap obmp = BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
+        Bitmap resultImg = Bitmap.createBitmap(obmp.getWidth(), obmp.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap maskImg = Bitmap.createBitmap(obmp.getWidth(), obmp.getHeight(), Bitmap.Config.ARGB_8888);
 
+        Canvas mCanvas = new Canvas(resultImg);
+        Canvas maskCanvas = new Canvas(maskImg);
+
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.FILL);;
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+
+//        Path path = new Path();
+//        path.moveTo(view.mx,view.my);
+//        path.lineTo(view.x1,view.y1);
+//        path.lineTo(view.x2,view.y2 );
+//        path.lineTo(view.x3,view.y3);
+//        path.lineTo(view.x4,view.y4);
+//        path.close();
+
+        maskCanvas.drawPath(_cropperPath, paint);
+        mCanvas.drawBitmap(obmp, 0, 0, null);
+        mCanvas.drawBitmap(maskImg, 0, 0, paint);
+
+        background.setImageBitmap(resultImg);
     }
 }

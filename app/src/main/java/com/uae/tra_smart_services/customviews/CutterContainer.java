@@ -92,6 +92,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     }
 
     private void initContainerPath(){
+        mBorderPath.reset();
         mBorderPath.moveTo(0, 0);
         mBorderPath.lineTo(width, 0);
         mBorderPath.lineTo(width, height);
@@ -234,6 +235,10 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
         Pressed(int _dir){
             dir = _dir;
         }
+    }
+
+    public Path getCutterPath(){
+        return mCutter.getPath();
     }
 
 
