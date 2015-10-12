@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
@@ -139,8 +138,6 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
                 isScrollUp = dy > 0;
 
                 if (Math.abs(dy) < 7) return;
-
-                Log.d(RECYCLER_TAG, "Scroll = dy = " + dy);
 
                 if (!mHexagonalHeaderAnimator.isRunning() && !mHexagonHeaderReverseAnimator.isRunning()
                         && ((mAnimationProgress < 1f && dy > 0) || (mAnimationProgress > 0f && dy < 0))) {
