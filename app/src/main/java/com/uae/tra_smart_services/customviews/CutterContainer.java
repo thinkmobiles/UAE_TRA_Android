@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsoluteLayout;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -76,12 +75,18 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
             parentHeight = parent.getHeight();
             setTranslationX((parentWidth - width) / 2);
             setTranslationY((parentHeight - height) / 2);
+            mAreaChangeHandler.onContainerAreaChanged(
+                    getWidth(),
+                    getHeight(),
+                    (lastTransitionX == 0) ? (parentWidth - width) / 2 : lastTransitionX,
+                    (lastTransitionY == 0) ? (parentHeight - height) / 2 : lastTransitionY
+            );
         }
     }
 
     private void initPaints(){
         mBorderPaint.setAntiAlias(true);
-        mBorderPaint.setColor(Color.DKGRAY);
+        mBorderPaint.setColor(Color.WHITE);
         mBorderPaint.setStrokeWidth(5);
         mBorderPaint.setStyle(Paint.Style.FILL_AND_STROKE);
     }
@@ -177,6 +182,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
 //            layout(left, top, right, bottom);
         }
         Log.e("MOVE", "RAW_X:" + _event.getRawX() + ", RAW_Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
+        mAreaChangeHandler.onContainerAreaChanged(getWidth(), getHeight(), getTranslationX(), getTranslationY());
     }
 
     float scaleX = 1, scaleY = 1;
@@ -230,8 +236,13 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
         }
     }
 
+
+    private OnCutterChanged mAreaChangeHandler;
+    public void setAreaChangeHandler(OnCutterChanged _handler){
+        mAreaChangeHandler = _handler;
+    }
+
     public interface OnCutterChanged {
-        void onContainerAreaChanged(Path _containerPath);
-        void onCutterPathChanged(Path _cutterPath);
+        void onContainerAreaChanged(int _width, int _height, float _offsetX, float _offsetY);
     }
 }
