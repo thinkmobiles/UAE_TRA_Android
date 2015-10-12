@@ -178,8 +178,8 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
 //        startActivity(intent);
 
 
-        int width = (int) (ccContainer.getWidth() * 0.9);
-        int heght = (int) (ccContainer.getHeight() * 0.9);
+        int width = (int) (ccContainer.getWidth());
+        int heght = (int) (ccContainer.getHeight());
 
         Bitmap bitmap1=Bitmap.createBitmap(width, heght, Bitmap.Config.ARGB_8888);
         Bitmap bitmap2=BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
@@ -192,7 +192,7 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
         paint.setAntiAlias(true);
 
 //        Path mPath=new Path();
-        PointF[] mPoints = new PointF[6];
+        /*PointF[] mPoints = new PointF[6];
         double section = 2.0 * Math.PI / 6;
 
         int mCenterWidth = width / 2;
@@ -207,12 +207,12 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
             mPoints[i] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(section * -i)), (float) (mCenterHeight - mHexagonSide * Math.cos(section * -i)));
             _cropperPath.lineTo(mPoints[i].x, mPoints[i].y);
         }
-        _cropperPath.close();
+        _cropperPath.close();*/
 
         canvas.drawPath(_cropperPath, paint);
 
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap2, -_offsetX, -_offsetY, paint);
+        canvas.drawBitmap(bitmap2, -_offsetX * 2, -_offsetY * 2, paint);
 
         HexagonView hexView = (HexagonView)findViewById(R.id.hvIcon_LIIHA);
         hexView.setScaleType(HexagonView.CENTER_CROP);

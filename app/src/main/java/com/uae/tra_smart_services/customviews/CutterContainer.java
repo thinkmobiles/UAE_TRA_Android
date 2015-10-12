@@ -73,13 +73,13 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
             parent = (FrameLayout) getParent();
             parentWidth = parent.getWidth();
             parentHeight = parent.getHeight();
-            setTranslationX((parentWidth - width) / 2);
-            setTranslationY((parentHeight - height) / 2);
+            setX((parentWidth - width) / 2);
+            setY((parentHeight - height) / 2);
             mAreaChangeHandler.onContainerAreaChanged(
                     getWidth(),
                     getHeight(),
-                    (lastTransitionX == 0) ? (parentWidth - width) / 2 : lastTransitionX,
-                    (lastTransitionY == 0) ? (parentHeight - height) / 2 : lastTransitionY
+                    (lastTransitionX == 0) ? getX() : lastTransitionX,
+                    (lastTransitionY == 0) ? getY() : lastTransitionY
             );
         }
     }
@@ -174,18 +174,18 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
         getHitRect(rect);
         if(_event.getRawX() - downX >= 0 && _event.getRawX() + (getWidth() - downX) <= parent.getWidth()){
             float transitionX = -downX + _event.getRawX();
-            setTranslationX(lastTransitionX = transitionX);
+            setX(lastTransitionX = transitionX);
 //            layout((int) (left + transitionX), top, (int) (right + transitionX), bottom);
 //            layout(left, top, right, bottom);
         }
         if(_event.getRawY() - downY >= 0 && _event.getRawY() + (getHeight() - downY) <= parent.getHeight() - 120){
             float transitionY = -downY + _event.getRawY();
-            setTranslationY(lastTransitionY = transitionY);
+            setY(lastTransitionY = transitionY);
 //            layout(left, (int) (top + transitionY), right, (int) (bottom + transitionY));
 //            layout(left, top, right, bottom);
         }
         Log.e("MOVE", "RAW_X:" + _event.getRawX() + ", RAW_Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
-        mAreaChangeHandler.onContainerAreaChanged(getWidth(), getHeight(), getTranslationX(), getTranslationY());
+        mAreaChangeHandler.onContainerAreaChanged(getWidth(), getHeight(), getX(), getY());
     }
 
     float scaleX = 1, scaleY = 1;
@@ -226,8 +226,8 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
                 break;
             }
         }
-        setTranslationX((lastTransitionX == 0) ? (parentWidth - width) / 2 : lastTransitionX);
-        setTranslationY((lastTransitionY == 0) ? (parentHeight - height) / 2 : lastTransitionY);
+        setX((lastTransitionX == 0) ? (parentWidth - width) / 2 : lastTransitionX);
+        setY((lastTransitionY == 0) ? (parentHeight - height) / 2 : lastTransitionY);
     }
 
     private enum Pressed {
