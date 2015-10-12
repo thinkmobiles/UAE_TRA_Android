@@ -56,7 +56,6 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(400, 400);
-//        mCutter.measure(400, 400);
     }
     private int width, height;
     private int parentWidth, parentHeight;
@@ -75,8 +74,8 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
             parent = (FrameLayout) getParent();
             parentWidth = parent.getWidth();
             parentHeight = parent.getHeight();
-            setTranslationX(/*lastTransitionX = */(parentWidth - width) / 2);
-            setTranslationY(/*lastTransitionY = */(parentHeight - height) / 2);
+            setTranslationX((parentWidth - width) / 2);
+            setTranslationY((parentHeight - height) / 2);
         }
     }
 
@@ -116,7 +115,6 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        canvas.drawPath(mLTScalatorPath, mBorderPaint);
         canvas.drawPath(mRBScalatorPath, mBorderPaint);
     }
 
