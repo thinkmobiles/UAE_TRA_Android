@@ -32,7 +32,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     private final Path mRBScalatorPath = new Path();
     private PointF[] mLTScalatorArea = new PointF[3];
     private PointF[] mRBScalatorArea = new PointF[3];
-    private AbsoluteLayout parent;
+    private FrameLayout parent;
     private HexagonCutterView mCutter;
 
     public CutterContainer(Context context) { this(context, null); }
@@ -72,7 +72,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if(changed && mCutter != null){
             mCutter.layout(left = l, top = t, right = r, bottom = b);
-            parent = (AbsoluteLayout) getParent();
+            parent = (FrameLayout) getParent();
             parentWidth = parent.getWidth();
             parentHeight = parent.getHeight();
             setTranslationX(/*lastTransitionX = */(parentWidth - width) / 2);
@@ -219,8 +219,8 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
                 break;
             }
         }
-        setTranslationX(lastTransitionX);
-        setTranslationY(lastTransitionY);
+        setTranslationX((lastTransitionX == 0) ? (parentWidth - width) / 2 : lastTransitionX);
+        setTranslationY((lastTransitionY == 0) ? (parentHeight - height) / 2 : lastTransitionY);
     }
 
     private enum Pressed {

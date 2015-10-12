@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alMainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,4 +27,4 @@
             android:layout_height="match_parent" />
     </com.uae.tra_smart_services.customviews.CutterContainer>
 
-</AbsoluteLayout>
+</FrameLayout>
