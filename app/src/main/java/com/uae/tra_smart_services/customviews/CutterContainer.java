@@ -101,6 +101,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     }
 
     private void initScalatorsPath(){
+        mLTScalatorPath.reset();
         mLTScalatorArea[0] = new PointF(0,0);
         mLTScalatorPath.moveTo(mLTScalatorArea[0].x, mLTScalatorArea[0].y);
         mLTScalatorArea[1] = new PointF(70, 0);
@@ -109,6 +110,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
         mLTScalatorPath.lineTo(mLTScalatorArea[2].x, mLTScalatorArea[2].y);
         mLTScalatorPath.close();
 
+        mRBScalatorPath.reset();
         mRBScalatorArea[0] = new PointF(width, height);
         mRBScalatorPath.moveTo(mRBScalatorArea[0].x, mRBScalatorArea[0].y);
         mRBScalatorArea[1] = new PointF(width - 70, height);
