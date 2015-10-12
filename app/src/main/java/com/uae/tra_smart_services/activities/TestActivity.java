@@ -51,58 +51,16 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_test);
-        int w = 560;
-        int h = 560;
+//        setContentView(R.layout.layout_test);
 
-        Bitmap bitmap1=Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        Bitmap bitmap2=BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
-
-        Bitmap resultingImage=Bitmap.createBitmap(w, h, bitmap1.getConfig());
-
-        Canvas canvas = new Canvas(resultingImage);
-
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-
-        Path mPath=new Path();
-        PointF[] mPoints = new PointF[6];
-        double section = 2.0 * Math.PI / 6;
-
-        int mCenterWidth = w / 2;
-        int mCenterHeight = h / 2;
-
-        int mHexagonSide = w / 2;
-
-        mPath.reset();
-        mPoints[0] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(0)), (float) (mCenterHeight - mHexagonSide * Math.cos(0)));
-        mPath.moveTo(mPoints[0].x, mPoints[0].y);
-        for (int i = 1; i < 6; i++) {
-            mPoints[i] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(section * -i)), (float) (mCenterHeight - mHexagonSide * Math.cos(section * -i)));
-            mPath.lineTo(mPoints[i].x, mPoints[i].y);
-        }
-        mPath.close();
-
-        canvas.drawPath(mPath, paint);
-
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap2, -300, -300, paint);
-
-
-        ImageView view = (ImageView)findViewById(R.id.testImage);
-        view.setImageBitmap(resultingImage);
-        HexagonView hexView = (HexagonView)findViewById(R.id.hvIcon_LIIHA);
-        hexView.setScaleType(HexagonView.CENTER_CROP);
-        hexView.setHexagonSrcDrawable(new BitmapDrawable(resultingImage));
-        setContentView(new SampleView(this));
-        /*setContentView(R.layout.layout_cutter);
+        setContentView(R.layout.layout_cutter);
         alMainContainer = (FrameLayout) findViewById(R.id.alMainContainer);
         background = (ImageView) findViewById(R.id.cutted_image);
         ccContainer = (CutterContainer) findViewById(R.id.ccContainer);
         ccContainer.setAreaChangeHandler(this);
         doCrop = (TextView) findViewById(R.id.doCrop);
         doCrop.setOnClickListener(this);
-        hvIcon_LIIHA = (HexagonView) findViewById(R.id.hvIcon_LIIHA);*/
+        hvIcon_LIIHA = (HexagonView) findViewById(R.id.hvIcon_LIIHA);
     }
 
     public Bitmap makeTransparent(Bitmap src, int value) {
@@ -162,37 +120,37 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
 
 
 
-        int mainContainerWidth = alMainContainer.getWidth();
-        int mainContainerHeight = alMainContainer.getHeight();
-        int cutterContainerWidth = ccContainer.getWidth();
-        int cutterContainerHeiht = ccContainer.getHeight();
-        int cutterWidth = (int) (ccContainer.getCutter().getWidth());
-        int cutterHeight = (int) (ccContainer.getCutter().getHeight());
-        Bitmap original = BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
-        Bitmap result = Bitmap.createBitmap(cutterContainerWidth, cutterContainerHeiht, Bitmap.Config.ARGB_8888);
-        Canvas mCanvas = new Canvas(result);
-        Bitmap result_2 = Bitmap.createBitmap(cutterContainerWidth, cutterContainerHeiht, Bitmap.Config.ARGB_8888);
-        Canvas mCanvas_2 = new Canvas(result_2);
-
-        Paint mFillArePaint = new Paint();
-        mFillArePaint.setAntiAlias(true);
-        mFillArePaint.setColor(Color.BLACK);
-        mFillArePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mCanvas_2.drawPath(_cropperPath, mFillArePaint);
-
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-        mCanvas.drawBitmap(original, 0, 0, null);
-        mCanvas.drawBitmap(result_2, 0, 0, paint);
-        paint.setXfermode(null);
-
-        background.setVisibility(View.INVISIBLE);
-        ccContainer.setVisibility(View.INVISIBLE);
-        alMainContainer.setBackgroundColor(Color.GRAY);
-
-        hvIcon_LIIHA.setVisibility(View.VISIBLE);
-        hvIcon_LIIHA.setScaleType(HexagonView.CENTER_CROP);
-        hvIcon_LIIHA.setHexagonSrcDrawable(new BitmapDrawable(result));
+//        int mainContainerWidth = alMainContainer.getWidth();
+//        int mainContainerHeight = alMainContainer.getHeight();
+//        int cutterContainerWidth = ccContainer.getWidth();
+//        int cutterContainerHeiht = ccContainer.getHeight();
+//        int cutterWidth = (int) (ccContainer.getCutter().getWidth());
+//        int cutterHeight = (int) (ccContainer.getCutter().getHeight());
+//        Bitmap original = BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
+//        Bitmap result = Bitmap.createBitmap(cutterContainerWidth, cutterContainerHeiht, Bitmap.Config.ARGB_8888);
+//        Canvas mCanvas = new Canvas(result);
+//        Bitmap result_2 = Bitmap.createBitmap(cutterContainerWidth, cutterContainerHeiht, Bitmap.Config.ARGB_8888);
+//        Canvas mCanvas_2 = new Canvas(result_2);
+//
+//        Paint mFillArePaint = new Paint();
+//        mFillArePaint.setAntiAlias(true);
+//        mFillArePaint.setColor(Color.BLACK);
+//        mFillArePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+//        mCanvas_2.drawPath(_cropperPath, mFillArePaint);
+//
+//        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+//        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+//        mCanvas.drawBitmap(original, 0, 0, null);
+//        mCanvas.drawBitmap(result_2, 0, 0, paint);
+//        paint.setXfermode(null);
+//
+//        background.setVisibility(View.INVISIBLE);
+//        ccContainer.setVisibility(View.INVISIBLE);
+//        alMainContainer.setBackgroundColor(Color.GRAY);
+//
+//        hvIcon_LIIHA.setVisibility(View.VISIBLE);
+//        hvIcon_LIIHA.setScaleType(HexagonView.CENTER_CROP);
+//        hvIcon_LIIHA.setHexagonSrcDrawable(new BitmapDrawable(result));
 
 
 //        background.setImageBitmap(result);
@@ -218,43 +176,46 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
 //        Intent intent = new Intent(this, ResultActivity.class);
 //        intent.putExtra("picture", food);
 //        startActivity(intent);
-    }
 
-    private void reCalculateCutterPath(Path _cropperPath, float _offsetX, float _offsetY){
+
+        int width = (int) (ccContainer.getWidth() * 0.9);
+        int heght = (int) (ccContainer.getHeight() * 0.9);
+
+        Bitmap bitmap1=Bitmap.createBitmap(width, heght, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap2=BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
+
+        Bitmap resultingImage=Bitmap.createBitmap(width, heght, bitmap1.getConfig());
+
+        Canvas canvas = new Canvas(resultingImage);
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+
+//        Path mPath=new Path();
+        PointF[] mPoints = new PointF[6];
+        double section = 2.0 * Math.PI / 6;
+
+        int mCenterWidth = width / 2;
+        int mCenterHeight = heght / 2;
+
+        int mHexagonSide = width / 2;
+
         _cropperPath.reset();
-        PointF[] mPoints = ccContainer.getCutter().getPoints();
-        _cropperPath.moveTo(mPoints[0].x + _offsetX, mPoints[0].y + _offsetY);
+        mPoints[0] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(0)), (float) (mCenterHeight - mHexagonSide * Math.cos(0)));
+        _cropperPath.moveTo(mPoints[0].x, mPoints[0].y);
         for (int i = 1; i < 6; i++) {
-            _cropperPath.lineTo(mPoints[i].x + _offsetX, mPoints[i].y + _offsetY);
+            mPoints[i] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(section * -i)), (float) (mCenterHeight - mHexagonSide * Math.cos(section * -i)));
+            _cropperPath.lineTo(mPoints[i].x, mPoints[i].y);
         }
         _cropperPath.close();
-    }
 
-    private static class SampleView extends View {
+        canvas.drawPath(_cropperPath, paint);
 
-        // CONSTRUCTOR
-        public SampleView(Context context) {
-            super(context);
-            setFocusable(true);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap2, -_offsetX, -_offsetY, paint);
 
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            Paint paint = new Paint();
-
-            canvas.drawColor(Color.YELLOW);
-
-
-            // you need to insert a image flower_blue into res/drawable folder
-            paint.setFilterBitmap(true);
-            Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(), R.drawable.images);
-
-            Bitmap croppedBmp = Bitmap.createBitmap(
-                    bitmapOrg, 0, 0, bitmapOrg.getWidth() * 3 / 4, bitmapOrg.getHeight() * 3 / 4);
-            int h = bitmapOrg.getHeight();
-            canvas.drawBitmap(bitmapOrg, 20, 20, paint);
-            canvas.drawBitmap(croppedBmp, 20, 20 + h + 30, paint);
-        }
+        HexagonView hexView = (HexagonView)findViewById(R.id.hvIcon_LIIHA);
+        hexView.setScaleType(HexagonView.CENTER_CROP);
+        hexView.setHexagonSrcDrawable(new BitmapDrawable(resultingImage));
     }
 }
