@@ -178,7 +178,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
 //            layout((int) (left + transitionX), top, (int) (right + transitionX), bottom);
 //            layout(left, top, right, bottom);
         }
-        if(_event.getRawY() - downY >= 0 && _event.getRawY() + (getHeight() - downY) <= parent.getHeight()){
+        if(_event.getRawY() - downY >= 0 && _event.getRawY() + (getHeight() - downY) <= parent.getHeight() - 120){
             float transitionY = -downY + _event.getRawY();
             setTranslationY(lastTransitionY = transitionY);
 //            layout(left, (int) (top + transitionY), right, (int) (bottom + transitionY));
@@ -243,6 +243,9 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
         return mCutter.getPath();
     }
 
+    public HexagonCutterView getCutter(){
+        return mCutter;
+    }
 
     private OnCutterChanged mAreaChangeHandler;
     public void setAreaChangeHandler(OnCutterChanged _handler){

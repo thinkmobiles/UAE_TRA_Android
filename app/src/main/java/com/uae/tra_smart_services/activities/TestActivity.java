@@ -3,6 +3,7 @@ package com.uae.tra_smart_services.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
@@ -10,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
@@ -31,6 +33,9 @@ import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.CutterContainer;
+import com.uae.tra_smart_services.customviews.HexagonView;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by and on 15.09.15.
@@ -42,6 +47,7 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
     CutterContainer ccContainer;
     FrameLayout alMainContainer;
     TextView doCrop;
+    HexagonView hvIcon_LIIHA;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +58,7 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
         ccContainer.setAreaChangeHandler(this);
         doCrop = (TextView) findViewById(R.id.doCrop);
         doCrop.setOnClickListener(this);
+        hvIcon_LIIHA = (HexagonView) findViewById(R.id.hvIcon_LIIHA);
     }
 
     public Bitmap makeTransparent(Bitmap src, int value) {
@@ -91,42 +98,91 @@ public class TestActivity extends Activity implements CutterContainer.OnCutterCh
 
         canvas.drawBitmap(mask, _offsetX, _offsetY, paint);
         mask.recycle();
-
+        mOffsetX = _offsetX;
+        mOffsetY = _offsetY;
         background.setImageBitmap(bitmap);
     }
-
+    float mOffsetX, mOffsetY;
     @Override
     public void onClick(View _view) {
         if(_view.getId() == R.id.doCrop){
-            doCropImage(ccContainer.getCutterPath());
+            doCropImage(ccContainer.getCutterPath(), mOffsetX, mOffsetY);
         }
     }
 
-    private void doCropImage(Path _cropperPath){
-        Bitmap obmp = BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
-        Bitmap resultImg = Bitmap.createBitmap(obmp.getWidth(), obmp.getHeight(), Bitmap.Config.ARGB_8888);
-        Bitmap maskImg = Bitmap.createBitmap(obmp.getWidth(), obmp.getHeight(), Bitmap.Config.ARGB_8888);
+    private void doCropImage(Path _cropperPath, float _offsetX, float _offsetY){
+//        reCalculateCutterPath(_cropperPath, _offsetX, _offsetY);
 
-        Canvas mCanvas = new Canvas(resultImg);
-        Canvas maskCanvas = new Canvas(maskImg);
+
+
+
+
+
+        int mainContainerWidth = alMainContainer.getWidth();
+        int mainContainerHeight = alMainContainer.getHeight();
+        int cutterContainerWidth = ccContainer.getWidth();
+        int cutterContainerHeiht = ccContainer.getHeight();
+        int cutterWidth = (int) (ccContainer.getCutter().getWidth());
+        int cutterHeight = (int) (ccContainer.getCutter().getHeight());
+        Bitmap original = BitmapFactory.decodeResource(getResources(), R.drawable.pic_test);
+        Bitmap result = Bitmap.createBitmap(cutterContainerWidth, cutterContainerHeiht, Bitmap.Config.ARGB_8888);
+        Canvas mCanvas = new Canvas(result);
+        Bitmap result_2 = Bitmap.createBitmap(cutterContainerWidth, cutterContainerHeiht, Bitmap.Config.ARGB_8888);
+        Canvas mCanvas_2 = new Canvas(result_2);
+
+        Paint mFillArePaint = new Paint();
+        mFillArePaint.setAntiAlias(true);
+        mFillArePaint.setColor(Color.BLACK);
+        mFillArePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mCanvas_2.drawPath(_cropperPath, mFillArePaint);
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.FILL);;
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        mCanvas.drawBitmap(original, 0, 0, null);
+        mCanvas.drawBitmap(result_2, 0, 0, paint);
+        paint.setXfermode(null);
 
-//        Path path = new Path();
-//        path.moveTo(view.mx,view.my);
-//        path.lineTo(view.x1,view.y1);
-//        path.lineTo(view.x2,view.y2 );
-//        path.lineTo(view.x3,view.y3);
-//        path.lineTo(view.x4,view.y4);
-//        path.close();
+        background.setVisibility(View.INVISIBLE);
+        ccContainer.setVisibility(View.INVISIBLE);
+        alMainContainer.setBackgroundColor(Color.GRAY);
 
-        maskCanvas.drawPath(_cropperPath, paint);
-        mCanvas.drawBitmap(obmp, 0, 0, null);
-        mCanvas.drawBitmap(maskImg, 0, 0, paint);
+        hvIcon_LIIHA.setVisibility(View.VISIBLE);
+        hvIcon_LIIHA.setScaleType(HexagonView.CENTER_CROP);
+        hvIcon_LIIHA.setHexagonSrcDrawable(new BitmapDrawable(result));
 
-        background.setImageBitmap(resultImg);
+        http://android.okhelp.cz/crop-cropped-cut-bitmap-image-pictures-android-example/
+//        background.setImageBitmap(result);
+//        background.setTranslationX(100);
+//        background.setTranslationY(200);
+//        background.setScaleType(ImageView.ScaleType.CENTER);
+//        background.setBackgroundColor(Color.GREEN);
+//        alMainContainer.setBackgroundColor(Color.RED);
+
+
+//        Intent intent = new Intent(this, ResultActivity.class);
+//        intent.putExtra("asdasd", result);
+//        startActivity(intent);
+
+
+//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.f1);
+
+
+
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        result.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//        byte[] food = stream.toByteArray();
+//        Intent intent = new Intent(this, ResultActivity.class);
+//        intent.putExtra("picture", food);
+//        startActivity(intent);
+    }
+
+    private void reCalculateCutterPath(Path _cropperPath, float _offsetX, float _offsetY){
+        _cropperPath.reset();
+        PointF[] mPoints = ccContainer.getCutter().getPoints();
+        _cropperPath.moveTo(mPoints[0].x + _offsetX, mPoints[0].y + _offsetY);
+        for (int i = 1; i < 6; i++) {
+            _cropperPath.lineTo(mPoints[i].x + _offsetX, mPoints[i].y + _offsetY);
+        }
+        _cropperPath.close();
     }
 }
