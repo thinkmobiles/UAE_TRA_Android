@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.customviews.ProfileController;
 import com.uae.tra_smart_services.customviews.ProfileController.ControllerButton;
 import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButtonClickListener;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
 import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
@@ -32,6 +34,7 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
+import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
 import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.ChangeUserProfileRequest;
@@ -46,7 +49,8 @@ import static com.uae.tra_smart_services.global.C.MIN_USERNAME_LENGTH;
  * Created by mobimaks on 08.09.2015.
  */
 public final class EditUserProfileFragment extends BaseFragment
-        implements OnClickListener, OnControllerButtonClickListener, OnImageGetCallback, OnImageSourceSelectListener {
+        implements OnClickListener, OnControllerButtonClickListener, OnImageGetCallback,
+        OnOpenPermissionExplanationDialogListener, OnImageSourceSelectListener, OnOkListener {
 
     private static final String KEY_USER_PROFILE_MODEL = "USER_PROFILE_MODEL";
     private static final String KEY_EDIT_PROFILE_REQUEST = "EDIT_PROFILE_REQUEST";
@@ -89,7 +93,7 @@ public final class EditUserProfileFragment extends BaseFragment
         } else {
             mUserProfile = _savedInstanceState.getParcelable(KEY_USER_PROFILE_MODEL);
         }
-        mAttachmentManager = new AttachmentManager(getActivity(), this);
+        mAttachmentManager = new AttachmentManager(getActivity(), this, this);
     }
 
     @Override
@@ -155,13 +159,31 @@ public final class EditUserProfileFragment extends BaseFragment
                 mAttachmentManager.openGallery(this);
                 break;
             case CAMERA:
-                mAttachmentManager.openCamera(this);
+                mAttachmentManager.tryOpenCamera(this);
                 break;
             case DELETE_ATTACHMENT:
                 mAttachmentManager.clearAttachment();
                 initUserAvatar(mUserProfile);
                 break;
         }
+    }
+
+    @CallSuper
+    @Override
+    public void onRequestPermissionsResult(int _requestCode, @NonNull String[] _permissions, @NonNull int[] _grantResults) {
+        if (!mAttachmentManager.onRequestPermissionsResult(this, _requestCode, _permissions, _grantResults)) {
+            super.onRequestPermissionsResult(_requestCode, _permissions, _grantResults);
+        }
+    }
+
+    @Override
+    public void onOpenPermissionExplanationDialog(final String _explanation) {
+        showMessage(_explanation);
+    }
+
+    @Override
+    public final void onOkPressed(int _messageId) {
+        mAttachmentManager.onConfirmPermissionExplanationDialog(this);
     }
 
     private void initUserAvatar(final UserProfileResponseModel _userProfile) {

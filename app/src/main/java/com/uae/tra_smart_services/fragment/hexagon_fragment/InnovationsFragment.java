@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +24,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.InnovationIdeaAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.customviews.ThemedImageView;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
 import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
@@ -29,6 +32,7 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
+import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
 import com.uae.tra_smart_services.rest.model.request.PostInnovationRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.PostInnovationRequest;
 
@@ -43,8 +47,8 @@ import retrofit.client.Response;
  */
 
 public class InnovationsFragment extends BaseFragment implements //region Interfaces
-        OnClickListener, OnImageGetCallback, OnImageSourceSelectListener,
-        Cancelled, OnItemSelectedListener /*,OnCheckedChangeListener*/ {//endregion
+        OnClickListener, OnImageGetCallback, OnOpenPermissionExplanationDialogListener, OnImageSourceSelectListener,
+        Cancelled, OnItemSelectedListener, OnOkListener /*,OnCheckedChangeListener*/ {//endregion
 
     private static final String KEY_IS_SPINNER_CLICKED = "IS_SPINNER_CLICKED";
     private static final String KEY_SELECTED_IDEA_POSITION = "SELECTED_IDEA_POSITION";
@@ -69,7 +73,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
 
     @Override
     public void onLoadingCanceled() {
-        if(getSpiceManager().isStarted() && mRequest!=null){
+        if (getSpiceManager().isStarted() && mRequest != null) {
             getSpiceManager().cancel(mRequest);
         }
     }
@@ -87,7 +91,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAttachmentManager = new AttachmentManager(getActivity(), this);
+        mAttachmentManager = new AttachmentManager(getActivity(), this, this);
 
         if (savedInstanceState != null) {
             mIsSpinnerClicked = savedInstanceState.getBoolean(KEY_IS_SPINNER_CLICKED);
@@ -179,7 +183,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         } else if (isGalleryAvailable) {
             mAttachmentManager.openGallery(this);
         } else if (canGetPhoto) {
-            mAttachmentManager.openCamera(this);
+            mAttachmentManager.tryOpenCamera(this);
         } else {
             Toast.makeText(getActivity(), R.string.fragment_complain_about_service_no_camera_and_app, Toast.LENGTH_SHORT).show();
         }
@@ -192,13 +196,31 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
                 mAttachmentManager.openGallery(this);
                 break;
             case CAMERA:
-                mAttachmentManager.openCamera(this);
+                mAttachmentManager.tryOpenCamera(this);
                 break;
             case DELETE_ATTACHMENT:
                 mAttachmentManager.clearAttachment();
                 tivAddAttachment.setImageResource(R.drawable.ic_action_attachment);
                 break;
         }
+    }
+
+    @CallSuper
+    @Override
+    public void onRequestPermissionsResult(int _requestCode, @NonNull String[] _permissions, @NonNull int[] _grantResults) {
+        if (!mAttachmentManager.onRequestPermissionsResult(this, _requestCode, _permissions, _grantResults)) {
+            super.onRequestPermissionsResult(_requestCode, _permissions, _grantResults);
+        }
+    }
+
+    @Override
+    public void onOpenPermissionExplanationDialog(final String _explanation) {
+        showMessage(_explanation);
+    }
+
+    @Override
+    public final void onOkPressed(int _messageId) {
+        mAttachmentManager.onConfirmPermissionExplanationDialog(this);
     }
 
     private boolean validateData() {
@@ -208,7 +230,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
             return false;
         }
 
-        if(nothingSelected){
+        if (nothingSelected) {
             Toast.makeText(getActivity(), R.string.fragment_innovations_no_selected_item, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -257,10 +279,11 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) { }
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 
     @Override
-    public void onAttachmentGet(Uri _uri) {
+    public void onAttachmentGet(@NonNull Uri _uri) {
         tivAddAttachment.setImageResource(R.drawable.ic_check);
     }
 
@@ -299,7 +322,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
         super.onDestroy();
     }
 
-    private class PostInnovationRequestListener implements RequestListener<Response>{
+    private class PostInnovationRequestListener implements RequestListener<Response> {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {

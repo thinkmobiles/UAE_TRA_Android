@@ -22,7 +22,7 @@ android {
     defaultConfig {
         applicationId "com.uae.tra_smart_services"
         minSdkVersion 17
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.41.8"
     }

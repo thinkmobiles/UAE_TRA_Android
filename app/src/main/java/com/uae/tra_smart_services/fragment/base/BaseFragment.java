@@ -117,11 +117,11 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         loaderDialogShow(getString(R.string.str_loading), null);
     }
 
-    protected final void loaderDialogShow(String _title, Loader.Cancelled _callBack){
+    protected final void loaderDialogShow(String _title, Loader.Cancelled _callBack) {
         ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
     }
 
-    protected final boolean loaderDialogDismiss(){
+    protected final boolean loaderDialogDismiss() {
         Log.d("DeviceBrand", "loaderDialogDismiss");
         ProgressDialog dialog = findFragmentByTag(ProgressDialog.TAG);
         if (dialog != null) {
@@ -132,7 +132,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         }
     }
 
-    public final boolean loaderDialogDismiss(String _msg){
+    public final boolean loaderDialogDismiss(String _msg) {
         boolean isLoaded = loaderDialogDismiss();
         if (isLoaded)
             Toast.makeText(getActivity(), _msg, Toast.LENGTH_SHORT).show();
@@ -151,20 +151,20 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
                 .commit();
     }
 
-    public void loaderOverlaySuccess(String _msg){
-        if(loader != null){
+    public void loaderOverlaySuccess(String _msg) {
+        if (loader != null) {
             loader.successLoading(_msg);
         }
     }
 
-    public void loaderOverlayCancelled(String _msg){
-        if(loader != null){
+    public void loaderOverlayCancelled(String _msg) {
+        if (loader != null) {
             loader.cancelLoading(_msg);
         }
     }
 
-    public void loaderOverlayFailed(String _msg, boolean _hasToShowRating){
-        if(loader != null){
+    public void loaderOverlayFailed(String _msg, boolean _hasToShowRating) {
+        if (loader != null) {
             loader.failedLoading(_msg, _hasToShowRating);
         }
     }
@@ -175,8 +175,8 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         }
     }
 
-    protected final void loaderOverlayButtonBehavior(Loader.BackButton _backButtonPressed){
-        if(loader != null){
+    protected final void loaderOverlayButtonBehavior(Loader.BackButton _backButtonPressed) {
+        if (loader != null) {
             loader.setButtonPressedBehavior(_backButtonPressed);
         }
     }
@@ -208,11 +208,11 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     @LayoutRes
     protected abstract int getLayoutResource();
 
-    protected final <F extends Fragment> F findFragmentById(final @IdRes int _id){
+    protected final <F extends Fragment> F findFragmentById(final @IdRes int _id) {
         return (F) getFragmentManager().findFragmentById(_id);
     }
 
-    protected final <F extends Fragment> F findFragmentByTag(final String _tag){
+    protected final <F extends Fragment> F findFragmentByTag(final String _tag) {
         return (F) getFragmentManager().findFragmentByTag(_tag);
     }
 
@@ -228,13 +228,8 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         String getThemeStringValue();
     }
 
-    protected final void showMessage(int messageId, @StringRes int _titleRes, @StringRes int _bodyRes){
-        AlertDialogFragment.newInstance(this)
-                .setMessageId(messageId)
-                .setDialogTitle(getString(_titleRes))
-                .setDialogBody(
-                        getString(_bodyRes)
-                )
+    protected final void showMessage(int messageId, @StringRes int _titleRes, @StringRes int _bodyRes) {
+        AlertDialogFragment.newInstance(this, messageId, _titleRes, _bodyRes)
                 .show(getFragmentManager());
     }
 
@@ -242,24 +237,23 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         showMessage(-1, _titleRes, _bodyRes);
     }
 
-    protected final void showFormattedMessage(int messageId, @StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
-        AlertDialogFragment.newInstance(this)
-                .setMessageId(messageId)
-                .setDialogTitle(getString(_titleRes))
-                .setDialogBody(
-                        String.format(getString(_bodyRes), _replace)
-                )
+    protected final void showMessage(int messageId, String _title, String _body) {
+        AlertDialogFragment.newInstance(this, messageId, _title, _body)
                 .show(getFragmentManager());
     }
 
-    protected final void showFormattedMessage(@StringRes int _titleRes, @StringRes int _bodyRes, String _replace){
-        showFormattedMessage(-1, _titleRes, _bodyRes, _replace);
+    protected final void showMessage(String _title, String _body) {
+        showMessage(-1, _title, _body);
+    }
+
+    protected final void showMessage(String _body) {
+        showMessage(-1, "", _body);
     }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        if(!hasFocus){
-            TextView view  = ((TextView)v);
+        if (!hasFocus) {
+            TextView view = ((TextView) v);
             if (view.getText().toString().trim().isEmpty()) {
                 view.setText(null);
             }

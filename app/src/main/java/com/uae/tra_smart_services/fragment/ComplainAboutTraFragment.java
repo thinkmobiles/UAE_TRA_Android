@@ -31,7 +31,7 @@ import retrofit.client.Response;
  * Created by mobimaks on 11.08.2015.
  */
 public class ComplainAboutTraFragment extends BaseComplainFragment
-                                    implements OnClickListener, AlertDialogFragment.OnOkListener {
+        implements OnClickListener, AlertDialogFragment.OnOkListener {
 
     protected static final String KEY_COMPLAIN_REQUEST = "COMPLAIN_ABOUT_TRA_REQUEST";
 
@@ -80,7 +80,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
 //        getSpiceManager().addListenerIfPending(Response.class, getRequestKey(), mRequestListener);
     }
 
-    protected String getRequestKey(){
+    protected String getRequestKey() {
         return KEY_COMPLAIN_REQUEST;
     }
 
@@ -95,7 +95,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     }
 
     @Override
-    public void onAttachmentGet(Uri _uri) {
+    public void onAttachmentGet(@NonNull Uri _uri) {
         tivAddAttachment.setImageResource(R.drawable.ic_check);
     }
 
@@ -137,16 +137,10 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
 
     @Override
     public void onLoadingCanceled() {
-        if(getSpiceManager().isStarted()){
+        if (getSpiceManager().isStarted()) {
             getSpiceManager().removeDataFromCache(Response.class, getRequestKey());
             getSpiceManager().cancel(request);
         }
-    }
-
-    @Override
-    public void onOkPressed(final int _mMessageId) {
-        // Unimplemented method
-        // Used exceptionally to specify OK button in dialog
     }
 
     @Override

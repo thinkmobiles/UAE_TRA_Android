@@ -1,12 +1,15 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,17 +44,22 @@ import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.SingleChoiceDialog;
 import com.uae.tra_smart_services.dialog.SingleChoiceDialog.OnItemPickListener;
+import com.uae.tra_smart_services.entities.Permission;
+import com.uae.tra_smart_services.entities.PermissionManager;
+import com.uae.tra_smart_services.entities.PermissionManager.OnPermissionRequestSuccessListener;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.LocationType;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
-import com.uae.tra_smart_services.interfaces.LoaderMarker;
+import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
 import com.uae.tra_smart_services.rest.robo_requests.PoorCoverageRequest;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit.client.Response;
@@ -59,18 +67,28 @@ import retrofit.client.Response;
 /**
  * Created by ak-buffalo on 11.08.15.
  */
-public class PoorCoverageFragment extends BaseServiceFragment
-        implements OnOkListener, OnItemPickListener,
+public class PoorCoverageFragment extends BaseServiceFragment implements //region INTERFACES
+        OnOkListener, OnItemPickListener,
         ConnectionCallbacks, OnConnectionFailedListener,
-        OnSeekBarChangeListener, OnClickListener, ResultCallback<LocationSettingsResult>, LocationListener {
+        OnSeekBarChangeListener, OnClickListener, ResultCallback<LocationSettingsResult>,
+        LocationListener, OnPermissionRequestSuccessListener, OnOpenPermissionExplanationDialogListener {
+    //endregion
 
-    /** CONSTANTS */
+    //region CONSTANTS
     private static final String TAG = "PoorCoverageFragment";
     private static final int REQUEST_CHECK_SETTINGS = 1000;
     private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
     private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+    private static final int LOCATION_PERMISSION_REQUEST = 0;
+    private static final List<Permission> LOCATION_PERMISSION_LIST = new ArrayList<>();
 
-    /** MEMBERS */
+    static {
+        LOCATION_PERMISSION_LIST.add(
+                new Permission(Manifest.permission.ACCESS_FINE_LOCATION, R.string.fragment_poor_coverage_location_permission_explanation));
+    }
+    //endregion
+
+    //region MEMBERS
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private LocationSettingsRequest mLocationSettingsRequest;
@@ -80,12 +98,16 @@ public class PoorCoverageFragment extends BaseServiceFragment
     private PoorCoverageRequest mPoorCoverageRequest;
     private PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
 
-    /** VIEWS */
+    private PermissionManager mLocationPermissionManager;
+    //endregion
+
+    //region VIEWS
     private SingleChoiceDialog locationTypeChooser;
     private TextView tvSignalLevel;
     private EditText etLocation;
     private SeekBar sbPoorCoverage;
     private ProgressBar sbProgressBar;
+    //endregion
 
     public static PoorCoverageFragment newInstance() {
         return new PoorCoverageFragment();
@@ -95,6 +117,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mLocationPermissionManager = new PermissionManager(getActivity(), LOCATION_PERMISSION_LIST, this);
     }
 
     @Override
@@ -129,6 +152,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
     @Override
     protected void initListeners() {
         super.initListeners();
+        mLocationPermissionManager.setRequestSuccessListener(this);
         etLocation.setOnClickListener(this);
         sbPoorCoverage.setOnSeekBarChangeListener(this);
         etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -152,17 +176,51 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            mLocationPermissionManager.onRestoreInstanceState(savedInstanceState);
+        }
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
-        if(mGoogleApiClient != null){
+        if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
         }
     }
 
     @Override
+    public final void onOpenPermissionExplanationDialog(String _explanation) {
+        showMessage(_explanation);
+    }
+
+    @Override
+    public final void onOkPressed(final int _mMessageId) {
+        mLocationPermissionManager.onConfirmPermissionExplanationDialog(this, LOCATION_PERMISSION_REQUEST);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int _requestCode, @NonNull String[] _permissions, @NonNull int[] _grantResults) {
+        if (_requestCode == LOCATION_PERMISSION_REQUEST) {
+            if (!mLocationPermissionManager.onRequestPermissionsResult(this, _permissions, _grantResults)) {
+                super.onRequestPermissionsResult(_requestCode, _permissions, _grantResults);
+            }
+        } else {
+            super.onRequestPermissionsResult(_requestCode, _permissions, _grantResults);
+        }
+    }
+
+    @Override
+    public final void onPermissionRequestSuccess(Fragment _fragment) {
+        checkLocationSettings();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-        if(mGoogleApiClient != null){
+        if (mGoogleApiClient != null) {
             mGoogleApiClient.disconnect();
         }
     }
@@ -170,7 +228,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
                     case Activity.RESULT_OK:
@@ -211,6 +269,7 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     protected void checkLocationSettings() {
+        sbProgressBar.setVisibility(View.VISIBLE);
         PendingResult<LocationSettingsResult> result =
                 LocationServices.SettingsApi.checkLocationSettings(
                         mGoogleApiClient,
@@ -331,24 +390,31 @@ public class PoorCoverageFragment extends BaseServiceFragment
     }
 
     @Override
-    public void onOkPressed(final int _mMessageId) {
-        // Unimplemented method
-        // Used exceptionally to specify OK button in dialog
-    }
-
-    @Override
     public void onItemPicked(int _dialogItem) {
         switch (LocationType.values()[_dialogItem]) {
             case AUTO:
                 hideKeyboard(tvSignalLevel);
-                sbProgressBar.setVisibility(View.VISIBLE);
-                checkLocationSettings();
+                checkLocationSettingsIfPermissionGranted();
                 break;
             case MANUAL:
                 etLocation.requestFocus();
                 etLocation.setText(getString(R.string.str_empty));
                 break;
         }
+    }
+
+    private void checkLocationSettingsIfPermissionGranted() {
+        if (mLocationPermissionManager.isAllPermissionsChecked()) {
+            checkLocationSettings();
+        } else {
+            mLocationPermissionManager.requestUncheckedPermissions(this, LOCATION_PERMISSION_REQUEST);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        mLocationPermissionManager.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -374,6 +440,12 @@ public class PoorCoverageFragment extends BaseServiceFragment
         }
     }
 
+    @Override
+    public void onDestroy() {
+        mLocationPermissionManager = null;
+        super.onDestroy();
+    }
+
     private class PoorCoverageRequestListener implements RequestListener<Response> {
 
         @Override
@@ -386,21 +458,21 @@ public class PoorCoverageFragment extends BaseServiceFragment
             boolean isDialog = loaderDialogDismiss();
             switch (poorCoverageRequestModel.getStatus()) {
                 case 200:
-                    if(isDialog){
+                    if (isDialog) {
                         showMessage(R.string.str_success, R.string.str_data_has_been_sent);
                     } else {
                         loaderOverlaySuccess(getString(R.string.str_data_has_been_sent));
                     }
                     break;
                 case 400:
-                    if(isDialog) {
+                    if (isDialog) {
                         showMessage(R.string.str_error, R.string.str_something_went_wrong);
                     } else {
                         loaderOverlayCancelled(getString(R.string.str_something_went_wrong));
                     }
                     break;
                 case 500:
-                    if(isDialog) {
+                    if (isDialog) {
                         showMessage(R.string.str_error, R.string.str_request_failed);
                     } else {
                         loaderOverlayCancelled(getString(R.string.str_request_failed));

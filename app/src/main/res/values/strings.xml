@@ -399,4 +399,10 @@
     <string name="attachment_manager_delete_image">Delete image</string>
     <string name="fragment_domain_checker_hint">Only for .ae domains</string>
 
+    <string name="fragment_mobile_verification_camera_permission_explanation">Camera access is required to display the camera preview.</string>
+    <string name="attachment_manager_storage_permission_explanation">Storage access is required to create photo.</string>
+    <string name="fragment_poor_coverage_location_permission_explanation">Location access is required to detect your location.</string>
+    <string name="attachment_permission_denied">Permission request was denied.</string>
+
+
 </resources>
