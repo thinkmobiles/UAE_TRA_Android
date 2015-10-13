@@ -1,11 +1,15 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -19,27 +23,47 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.activity.ScannerActivity;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.customviews.LoaderView;
+import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
+import com.uae.tra_smart_services.entities.Permission;
+import com.uae.tra_smart_services.entities.PermissionManager;
+import com.uae.tra_smart_services.entities.PermissionManager.OnPermissionRequestSuccessListener;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByImeiRequest;
 import com.uae.tra_smart_services.util.ImageUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by mobimaks on 13.08.2015.
  */
-public class MobileVerificationFragment extends BaseServiceFragment implements OnClickListener {
+public class MobileVerificationFragment extends BaseServiceFragment
+        implements OnClickListener, OnOpenPermissionExplanationDialogListener, OnOkListener, OnPermissionRequestSuccessListener {
 
     private static final String KEY_SEARCH_DEVICE_BY_IMEI_REQUEST = "SEARCH_DEVICE_BY_IMEI_REQUEST";
     private static final int CODE_SCANNER_REQUEST = 1;
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 0;
+    private static final List<Permission> SCAN_IMEI_PERMISSIONS_LIST = new ArrayList<>(1);
 
+    static {
+        SCAN_IMEI_PERMISSIONS_LIST.add(
+                new Permission(Manifest.permission.CAMERA, R.string.fragment_mobile_verification_camera_permission_explanation));
+    }
+
+    private HexagonView hvSendImeiCode;
     private ImageView ivCameraBtn;
     private EditText etImeiNumber;
-    private RequestResponseListener mRequestListener;
+
     private OnDeviceVerifiedListener mSelectListener;
-    private HexagonView hvSendImeiCode;
+    private RequestResponseListener mRequestListener;
+    private SearchByImeiRequest mRequest;
+
+    private PermissionManager mCameraPermissionManager;
 
     public static MobileVerificationFragment newInstance() {
         return new MobileVerificationFragment();
@@ -55,6 +79,7 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mCameraPermissionManager = new PermissionManager(getActivity(), SCAN_IMEI_PERMISSIONS_LIST, this);
     }
 
     @Override
@@ -72,6 +97,16 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         mRequestListener = new RequestResponseListener();
         ivCameraBtn.setOnClickListener(this);
         hvSendImeiCode.setOnClickListener(this);
+
+        mCameraPermissionManager.setRequestSuccessListener(this);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            mCameraPermissionManager.onRestoreInstanceState(savedInstanceState);
+        }
     }
 
     @Override
@@ -81,7 +116,6 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         getSpiceManager().addListenerIfPending(SearchDeviceResponseModel.List.class, KEY_SEARCH_DEVICE_BY_IMEI_REQUEST, mRequestListener);
     }
 
-    private SearchByImeiRequest mRequest;
     private void searchDeviceByImei() {
         mRequest = new SearchByImeiRequest(etImeiNumber.getText().toString());
         loaderOverlayShow(getString(R.string.str_sending), this);
@@ -99,19 +133,19 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
 
     @Override
     public void onLoadingCanceled() {
-        if(getSpiceManager().isStarted() && mRequest!=null){
+        if (getSpiceManager().isStarted() && mRequest != null) {
             getSpiceManager().cancel(mRequest);
         }
     }
 
     private boolean isImeiValid() {
-        return !etImeiNumber.getText().toString().isEmpty() &&
-                etImeiNumber.getText().toString().length() == 15;// TODO: Add IMEI check
+        final String imeiText = etImeiNumber.getText().toString();
+        return imeiText.length() == 15 && TextUtils.isDigitsOnly(imeiText);// TODO: Add IMEI check
     }
 
     @Override
     public void onClick(final View _view) {
-        if (_view.getId() == R.id.hvSendImeiCode_FMV){
+        if (_view.getId() == R.id.hvSendImeiCode_FMV) {
             hideKeyboard(etImeiNumber);
             if (isImeiValid()) {
                 searchDeviceByImei();
@@ -119,12 +153,46 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
                 Toast.makeText(getActivity(), R.string.enter_valid_imei_code, Toast.LENGTH_SHORT).show();
             }
         } else {
-            if (isCameraAvailable()) {
+            openImeiScannerIfCan();
+        }
+    }
+
+    private void openImeiScannerIfCan() {
+        if (isCameraAvailable()) {
+            if (mCameraPermissionManager.isAllPermissionsChecked()) {
                 startScanner();
             } else {
-                Toast.makeText(getActivity(), getString(R.string.str_camera_is_not_available), Toast.LENGTH_SHORT).show();
+                mCameraPermissionManager.requestUncheckedPermissions(this, CAMERA_PERMISSION_REQUEST_CODE);
             }
+        } else {
+            Toast.makeText(getActivity(), getString(R.string.str_camera_is_not_available), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public final void onOpenPermissionExplanationDialog(String _explanation) {
+        showMessage(_explanation);
+    }
+
+    @Override
+    public final void onOkPressed(int _messageId) {
+        mCameraPermissionManager.onConfirmPermissionExplanationDialog(this, CAMERA_PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] _permissions, @NonNull int[] _grantResults) {
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (!mCameraPermissionManager.onRequestPermissionsResult(this, _permissions, _grantResults)) {
+                super.onRequestPermissionsResult(requestCode, _permissions, _grantResults);
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, _permissions, _grantResults);
+        }
+    }
+
+    @Override
+    public final void onPermissionRequestSuccess(Fragment _fragment) {
+        startScanner();
     }
 
     private void startScanner() {
@@ -140,15 +208,16 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
         }
     }
 
-    @Nullable
     @Override
-    protected Service getServiceType() {
-        return Service.MOBILE_VERIFICATION;
+    public void onSaveInstanceState(Bundle outState) {
+        mCameraPermissionManager.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
-    protected String getServiceName() {
-        return "Search Device By Imei";
+    public void onDestroy() {
+        mCameraPermissionManager = null;
+        super.onDestroy();
     }
 
     private class RequestResponseListener implements PendingRequestListener<SearchDeviceResponseModel.List> {
@@ -189,6 +258,17 @@ public class MobileVerificationFragment extends BaseServiceFragment implements O
 
     public interface OnDeviceVerifiedListener {
         void onDeviceVerified(final SearchDeviceResponseModel.List _device);
+    }
+
+    @Nullable
+    @Override
+    protected Service getServiceType() {
+        return Service.MOBILE_VERIFICATION;
+    }
+
+    @Override
+    protected String getServiceName() {
+        return "Search Device By Imei";
     }
 
     @Override

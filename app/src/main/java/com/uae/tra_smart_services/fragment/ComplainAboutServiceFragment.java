@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -148,7 +149,7 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
     }
 
     @Override
-    public void onAttachmentGet(Uri _uri) {
+    public void onAttachmentGet(@NonNull Uri _uri) {
         tivAddAttachment.setImageResource(R.drawable.ic_check);
     }
 
