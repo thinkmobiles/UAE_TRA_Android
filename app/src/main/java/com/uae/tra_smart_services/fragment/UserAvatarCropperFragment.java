@@ -139,7 +139,7 @@ public class UserAvatarCropperFragment extends BaseFragment implements View.OnCl
         canvas.drawPath(_cropperPath, paint);
 
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap2, -_offsetX * 2, -_offsetY * 2, paint);
+        canvas.drawBitmap(bitmap2, (int) (-_offsetX * 1.5), (int) (-_offsetY * 1.5), paint);
 
         C.TEMP_USER_IMG = new BitmapDrawable(resultingImage);
 
