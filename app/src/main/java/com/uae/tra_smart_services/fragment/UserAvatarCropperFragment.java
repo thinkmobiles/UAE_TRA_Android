@@ -144,8 +144,6 @@ public class UserAvatarCropperFragment extends BaseFragment
         return transBitmap;
     }
 
-
-
     private Bitmap convertAnotherDrawableToBitmap(Drawable _res){
         Bitmap mutableBitmap = Bitmap.createBitmap(_res.getIntrinsicWidth(), _res.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(mutableBitmap);
