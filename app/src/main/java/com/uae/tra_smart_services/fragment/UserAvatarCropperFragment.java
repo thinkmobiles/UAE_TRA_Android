@@ -27,45 +27,54 @@ import com.uae.tra_smart_services.global.C;
 /**
  * Created by AndreyKorneychuk on 10/13/2015.
  */
-public class UserAvatarCropperFragment extends BaseFragment implements View.OnClickListener, CutterContainer.OnCutterChanged {
+public class UserAvatarCropperFragment extends BaseFragment
+        implements View.OnClickListener, CutterContainer.OnCutterChanged, View.OnTouchListener {
+
+    private ImageView background;
+    private CutterContainer ccContainer;
+    private FrameLayout alMainContainer;
+    private TextView doCrop;
+    private Bitmap originBitmap;
+    private float mOffsetX, mOffsetY;
+
     public static UserAvatarCropperFragment newInstance() {
-        
-        Bundle args = new Bundle();
-        
-        UserAvatarCropperFragment fragment = new UserAvatarCropperFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-    
-    
-    @Override
-    protected int getTitle() {
-        return 0;
+        return new UserAvatarCropperFragment();
     }
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.layout_cutter;
+    protected int getTitle() { return 0; }
+
+    @Override
+    protected int getLayoutResource() { return R.layout.layout_cutter; }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+        alMainContainer = findView(R.id.alMainContainer);
+        background = findView(R.id.cutted_image);
+        ccContainer = findView(R.id.ccContainer);
+        doCrop = findView(R.id.doCrop);
+        alMainContainer.setBackground(C.TEMP_USER_IMG);
+        originBitmap = convertAnotherDrawableToBitmap(C.TEMP_USER_IMG);
     }
 
-    ImageView background;
-    CutterContainer ccContainer;
-    FrameLayout alMainContainer;
-    TextView doCrop;
-    HexagonView hvIcon_LIIHA;
-    Bitmap originBitmap;
-
-    public Bitmap makeTransparent(Bitmap src, int value) {
-        int width = src.getWidth();
-        int height = src.getHeight();
-        Bitmap transBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(transBitmap);
-        canvas.drawARGB(0, 0, 0, 0);
-        final Paint paint = new Paint();
-        paint.setAlpha(value);
-        canvas.drawBitmap(src, 0, 0, paint);
-        return transBitmap;
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+        alMainContainer.setOnTouchListener(this);
+        ccContainer.setAreaChangeHandler(this);
+        doCrop.setOnClickListener(this);
     }
+
+    @Override
+    public void onClick(View _view) {
+        if(_view.getId() == R.id.doCrop){
+            doCropImage(ccContainer.getCutterPath(), mOffsetX, mOffsetY);
+        }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) { return true; }
 
     @Override
     public void onContainerAreaChanged(int _width, int _height, float _offsetX, float _offsetY) {
@@ -97,14 +106,6 @@ public class UserAvatarCropperFragment extends BaseFragment implements View.OnCl
         background.setImageBitmap(bitmap);
     }
 
-    float mOffsetX, mOffsetY;
-    @Override
-    public void onClick(View _view) {
-        if(_view.getId() == R.id.doCrop){
-            doCropImage(ccContainer.getCutterPath(), mOffsetX, mOffsetY);
-        }
-    }
-
     private void doCropImage(Path _cropperPath, float _offsetX, float _offsetY){
         int width = (int) (ccContainer.getWidth());
         int heght = (int) (ccContainer.getHeight());
@@ -112,7 +113,7 @@ public class UserAvatarCropperFragment extends BaseFragment implements View.OnCl
         Bitmap bitmap1 = Bitmap.createBitmap(width, heght, Bitmap.Config.ARGB_8888);
         Bitmap bitmap2 = originBitmap;
 
-        Bitmap resultingImage=Bitmap.createBitmap(width, heght, bitmap1.getConfig());
+        Bitmap resultingImage = Bitmap.createBitmap(width, heght, bitmap1.getConfig());
 
         Canvas canvas = new Canvas(resultingImage);
 
@@ -131,26 +132,18 @@ public class UserAvatarCropperFragment extends BaseFragment implements View.OnCl
         getFragmentManager().popBackStack();
     }
 
-    @Override
-    protected void initViews() {
-        super.initViews();
-
-        alMainContainer = (FrameLayout) findView(R.id.alMainContainer);
-        alMainContainer.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-        background = (ImageView) findView(R.id.cutted_image);
-        ccContainer = (CutterContainer) findView(R.id.ccContainer);
-        ccContainer.setAreaChangeHandler(this);
-        doCrop = (TextView) findView(R.id.doCrop);
-        doCrop.setOnClickListener(this);
-        hvIcon_LIIHA = (HexagonView) findView(R.id.hvIcon_LIIHA);
-        alMainContainer.setBackground(C.TEMP_USER_IMG);
-        originBitmap = convertAnotherDrawableToBitmap(C.TEMP_USER_IMG);
+    public Bitmap makeTransparent(Bitmap src, int value) {
+        int width = src.getWidth();
+        int height = src.getHeight();
+        Bitmap transBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(transBitmap);
+        canvas.drawARGB(0, 0, 0, 0);
+        final Paint paint = new Paint();
+        paint.setAlpha(value);
+        canvas.drawBitmap(src, 0, 0, paint);
+        return transBitmap;
     }
+
 
 
     private Bitmap convertAnotherDrawableToBitmap(Drawable _res){
