@@ -255,10 +255,10 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
                         .findFragmentById(R.id.flContainer_AH)
                         .onActivityResult(_requestCode, _resultCode, _data);
                 break;
-            case 10000:
+            /*case 10000:
                     HexagonalHeader hexagonalHeader = (HexagonalHeader) findViewById(R.id.hhHeader_FHH);
                     hexagonalHeader.onBitmapLoaded((Bitmap) _data.getParcelableExtra("cropped_bitmap"), null);
-                break;
+                break;*/
         }
     }
 

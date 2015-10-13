@@ -1,8 +1,11 @@
 package com.uae.tra_smart_services.fragment.user_profile;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -38,8 +41,10 @@ import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSel
 import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.entities.HexagonViewTarget;
+import com.uae.tra_smart_services.fragment.UserAvatarCropperFragment;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.UserNameModel;
@@ -48,6 +53,10 @@ import com.uae.tra_smart_services.rest.robo_requests.ChangeUserProfileRequest;
 import com.uae.tra_smart_services.util.StringUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import retrofit.client.Response;
 
@@ -144,7 +153,12 @@ public final class EditUserProfileFragment extends BaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mAttachmentManager.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == FRAGMENT_CODE && resultCode == Activity.RESULT_OK) {
+            hvUserAvatar.postScaleType(HexagonView.CENTER_CROP);
+            hvUserAvatar.setHexagonSrcDrawable(C.TEMP_USER_IMG);
+        } else {
+            mAttachmentManager.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
@@ -192,7 +206,7 @@ public final class EditUserProfileFragment extends BaseFragment
                 .load(mImageUri)
                 .into((Target) new HexagonViewTarget(hvUserAvatar));
     }
-
+    int FRAGMENT_CODE = 10001;
     class MyHexTarget extends HexagonViewTarget{
 
         public MyHexTarget(HexagonView _view) {
@@ -202,13 +216,27 @@ public final class EditUserProfileFragment extends BaseFragment
         @Override
         public void onResourceReady(Drawable resource, GlideAnimation<? super Drawable> glideAnimation) {
             Intent intent = new Intent(getActivity(), UserImageCutterActivity.class);
-            intent.putExtra("cropped_bitmap", ((BitmapDrawable) resource).getBitmap());
-            startActivityForResult(intent, 10000);
+
+//            Bitmap mutableBitmap = Bitmap.createBitmap(resource.getIntrinsicWidth(), resource.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+//            Canvas canvas = new Canvas(mutableBitmap);
+//            resource.setBounds(0, 0, resource.getIntrinsicWidth(), resource.getIntrinsicHeight());
+//            resource.draw(canvas);
+//
+//            intent.putExtra("not_cropped_bitmap", mutableBitmap);
+            C.TEMP_USER_IMG = resource;
+            Fragment avatarCutterFragment = UserAvatarCropperFragment.newInstance();
+            avatarCutterFragment.setTargetFragment(EditUserProfileFragment.this, FRAGMENT_CODE);
+            getFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .add(R.id.rlGlobalContainer_AH, avatarCutterFragment)
+                    .commit();
         }
     }
 
     @Override
     public void moveToCutterActivity(@NonNull Uri _imageUri) {
+        mImageUri = _imageUri;
         Glide.with(getActivity())
                 .load(mImageUri)
                 .into((Target) new MyHexTarget(hvUserAvatar));

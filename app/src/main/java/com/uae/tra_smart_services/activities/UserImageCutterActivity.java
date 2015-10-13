@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.CutterContainer;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.global.C;
 
 import java.io.ByteArrayOutputStream;
 
@@ -61,6 +62,8 @@ public class UserImageCutterActivity extends Activity implements CutterContainer
         doCrop = (TextView) findViewById(R.id.doCrop);
         doCrop.setOnClickListener(this);
         hvIcon_LIIHA = (HexagonView) findViewById(R.id.hvIcon_LIIHA);
+        Bitmap bitmap = getIntent().getParcelableExtra("not_cropped_bitmap");
+        alMainContainer.setBackground(C.TEMP_USER_IMG);
     }
 
     public Bitmap makeTransparent(Bitmap src, int value) {

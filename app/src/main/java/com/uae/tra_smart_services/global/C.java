@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.global;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.StringDef;
 
 import java.lang.annotation.Retention;
@@ -87,4 +88,6 @@ public final class C {
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final int MAX_PASSWORD_LENGTH = 32;
 
+
+    public static Drawable TEMP_USER_IMG;
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -262,6 +263,11 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     @Override
     public void onAttachmentGet(Uri _uri) {
         tivAddAttachment.setImageResource(R.drawable.ic_check);
+    }
+
+    @Override
+    public void moveToCutterActivity(@NonNull Uri _imageUri) {
+
     }
 
     @Override
