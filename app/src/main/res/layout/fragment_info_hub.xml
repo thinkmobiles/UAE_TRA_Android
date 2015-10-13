@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivBackground_FIH"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="?attr/favoritesBackground"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        tools:layout_marginTop="0dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rlContainerAnnList_FIH"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvAnnText_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/str_announcements"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvSeeMorebAnn_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:padding="10dp"
+                android:text="@string/str_see_more"
+                android:textColor="@drawable/selector_simple_triggerable_textview"
+                android:textSize="14sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                tools:listitem="@layout/list_item_info_hub_second"
+                android:id="@+id/rvInfoHubListPrev_FIH"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:layout_below="@+id/tvAnnText_FIH"
+                android:layout_marginTop="5dp"
+                android:scrollbars="horizontal"/>
+        </RelativeLayout>
+
+        <View
+            style="@style/ListViewItemSeparator"
+            android:layout_alignEnd="@+id/textView2"
+            android:layout_alignStart="@+id/tvSeeMoreInfoHubAnn_FIH"
+            android:layout_below="@+id/hvIcon_LIHLI"
+            android:layout_marginStart="5dp"/>
+
+        <RelativeLayout
+            android:id="@+id/rlContainerTransactionsList_FIH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvTransText_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/str_transactions"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvNoPendingTransactions_FIH"
+                android:layout_width="match_parent"
+                android:text="@string/fragment_info_hub_no_pending_transactions"
+                android:visibility="gone"
+                android:textSize="18sp"
+                android:layout_below="@+id/tvTransText_FIH"
+                android:layout_centerInParent="true"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.RecyclerView
+                tools:listitem="@layout/list_item_info_hub"
+                android:id="@+id/rvTransactionsList_FIH"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:layout_below="@+id/tvTransText_FIH"/>
+
+            <ProgressBar
+                android:id="@+id/pbLoadingTransactions_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tvTransText_FIH"
+                android:layout_centerInParent="true"
+                android:visibility="visible"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</FrameLayout>

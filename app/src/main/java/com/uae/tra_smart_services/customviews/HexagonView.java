@@ -22,7 +22,10 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -31,7 +34,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by mobimaks on 02.08.2015.
  */
-public final class HexagonView extends View {
+public final class HexagonView extends View implements Target {
 
     private final int DEFAULT_TEXT_SIZE = Math.round(14 * getResources().getDisplayMetrics().density);
     private final int DEFAULT_HEXAGON_RADIUS = Math.round(30 * getResources().getDisplayMetrics().density);
@@ -81,7 +84,7 @@ public final class HexagonView extends View {
             mSrcTintColor = a.getColor(R.styleable.HexagonView_hexagonSrcTintColor, Color.TRANSPARENT);
             mBackgroundColor = a.getColor(R.styleable.HexagonView_hexagonBackgroundColor, Color.TRANSPARENT);
             mSrcDrawable = a.getDrawable(R.styleable.HexagonView_hexagonSrc);
-            mSrcRes = a.getResourceId(R.styleable.HexagonView_hexagonSrc, R.drawable.ic_temp_left_field_icon);
+            mSrcRes = a.getResourceId(R.styleable.HexagonView_hexagonSrc, R.drawable.authorization_logo);
             mText = a.getString(R.styleable.HexagonView_hexagonText);
             mScaleType = a.getInt(R.styleable.HexagonView_scaleType, INSIDE_CROP);
         } finally {
@@ -315,4 +318,20 @@ public final class HexagonView extends View {
         _canvas.drawText(mText, _canvas.getWidth() / 2, y, mTextPaint);
     }
 
+    @Override
+    public final void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+        postScaleType(CENTER_CROP);
+        final LayerDrawable layerDrawable = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.layerlist_infohub_icon);
+        layerDrawable.setDrawableByLayerId(R.id.lli_infohub_icon_background, new ColorDrawable(Color.MAGENTA));
+        layerDrawable.setDrawableByLayerId(R.id.lli_infohub_icon_front, new BitmapDrawable(getResources(), bitmap));
+        setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getContext(), layerDrawable));
+    }
+
+    @Override
+    public final void onBitmapFailed(Drawable errorDrawable) {
+    }
+
+    @Override
+    public final void onPrepareLoad(Drawable placeHolderDrawable) {
+    }
 }

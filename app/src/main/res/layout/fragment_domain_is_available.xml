@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="?spamHistory"
+        tools:ignore="ContentDescription"/>
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="?attr/actionBarSize">
+
+            <LinearLayout
+                android:id="@+id/llSignInFields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDomainStrValue_FDCH"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:background="@drawable/background_domain_info"
+                    android:padding="8dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/hex_black_color"
+                    android:textSize="18sp"
+                    tools:text="google.com"/>
+
+                <TextView
+                    android:id="@+id/tvDomainAvail_FDCH"
+                    style="@style/UserAuthorizationDataEditTextField"
+                    android:gravity="center"
+                    android:text="@string/str_domain_available"
+                    android:textColor="@color/hex_primary_green"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

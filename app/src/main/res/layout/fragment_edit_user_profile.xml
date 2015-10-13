@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="SmallSp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="?attr/userProfileBackground"
+        tools:ignore="ContentDescription"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:paddingTop="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.uae.tra_smart_services.customviews.HexagonView
+                android:id="@+id/hvUserAvatar_FEUP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dp"
+                app:hexagonSrc="@drawable/ic_user_placeholder"
+                app:hexagonBackgroundColor="?userAvatarBackground"
+                app:hexagonBorderColor="@android:color/white"
+                app:hexagonBorderSize="2dp"
+                app:hexagonSideSize="48dp"/>
+
+            <TextView
+                android:id="@+id/tvChangePhoto_FEUP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hvUserAvatar_FEUP"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:minHeight="36dp"
+                android:text="@string/fragment_edit_user_profile_change_photo"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/tvFirstNameHint_FEUP"
+                style="@style/EditUserProfileEditTextHintStyle"
+                android:layout_below="@id/tvChangePhoto_FEUP"
+                android:text="@string/fragment_edit_user_profile_first_name"/>
+
+            <EditText
+                android:id="@+id/etFirstName_FEUP"
+                style="@style/EditUserProfileEditTextStyle"
+                android:layout_below="@id/tvFirstNameHint_FEUP"
+                tools:text="Maher"/>
+
+            <View
+                android:id="@+id/vFirstNameDivider_FEUP"
+                style="@style/UserProfileDivider"
+                android:layout_below="@id/etFirstName_FEUP"/>
+
+            <TextView
+                android:id="@+id/tvLastNameHint_FEUP"
+                style="@style/EditUserProfileEditTextHintStyle"
+                android:layout_below="@id/vFirstNameDivider_FEUP"
+                android:layout_marginTop="16dp"
+                android:text="@string/fragment_edit_user_profile_last_name"/>
+
+            <EditText
+                android:id="@+id/etLastName_FEUP"
+                style="@style/EditUserProfileEditTextStyle"
+                android:layout_below="@id/tvLastNameHint_FEUP"
+                tools:text="Al Mulla"/>
+
+            <View
+                android:id="@+id/vLastNameDivider_FEUP"
+                style="@style/UserProfileDivider"
+                android:layout_below="@id/etLastName_FEUP"/>
+
+            <TextView
+                android:id="@+id/tvAddressHint_FEUP"
+                android:visibility="gone"
+                style="@style/EditUserProfileEditTextHintStyle"
+                android:layout_below="@id/vLastNameDivider_FEUP"
+                android:layout_marginTop="16dp"
+                android:text="@string/fragment_edit_user_profile_address"/>
+
+            <EditText
+                android:id="@+id/etAddress_FEUP"
+                style="@style/EditUserProfileEditTextStyle"
+                android:visibility="gone"
+                android:layout_below="@id/tvAddressHint_FEUP"
+                tools:text="Garhoud, Deira"/>
+
+            <View
+                android:id="@+id/vAddressDivider_FEUP"
+                android:visibility="gone"
+                style="@style/UserProfileDivider"
+                android:layout_below="@id/etAddress_FEUP"/>
+
+            <TextView
+                android:id="@+id/tvPhoneHint_FEUP"
+                android:visibility="gone"
+                style="@style/EditUserProfileEditTextHintStyle"
+                android:layout_below="@id/vAddressDivider_FEUP"
+                android:layout_marginTop="16dp"
+                android:text="@string/fragment_edit_user_profile_number"/>
+
+            <EditText
+                android:id="@+id/etPhone_FEUP"
+                android:visibility="gone"
+                style="@style/EditUserProfileEditTextStyle"
+                android:layout_below="@id/tvPhoneHint_FEUP"
+                android:inputType="phone"
+                tools:text="+97 55 784 1298"/>
+
+            <View
+                android:id="@+id/vPhoneDivider_FEUP"
+                android:visibility="gone"
+                style="@style/UserProfileDivider"
+                android:layout_below="@id/etPhone_FEUP"/>
+
+            <com.uae.tra_smart_services.customviews.ProfileController
+                android:id="@+id/pcProfileController_FEUP"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vPhoneDivider_FEUP"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"/>
+
+            <!--app:layout_widthPercent="90%"/>-->
+
+        </android.support.percent.PercentRelativeLayout>
+
+    </ScrollView>
+</FrameLayout>

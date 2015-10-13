@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvRating1_LRV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/rating_odd_hexagon_margin_top"
+        android:clickable="true"
+        app:hexagonBorderColor="@android:color/darker_gray"
+        app:hexagonBorderSize="@dimen/rating_hexagon_border_size"
+        app:hexagonSideSize="@dimen/rating_hexagon_side"
+        app:hexagonText="1"
+        app:hexagonTextSize="@dimen/rating_hexagon_text_size"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvRating2_LRV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:hexagonBorderColor="@color/hex_primary_orange"
+        app:hexagonBorderSize="@dimen/rating_hexagon_border_size"
+        app:hexagonSideSize="@dimen/rating_hexagon_side"
+        app:hexagonText="2"
+        app:hexagonTextSize="@dimen/rating_hexagon_text_size"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvRating3_LRV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/rating_odd_hexagon_margin_top"
+        app:hexagonBorderColor="@color/hex_primary_orange"
+        app:hexagonBorderSize="@dimen/rating_hexagon_border_size"
+        app:hexagonSideSize="@dimen/rating_hexagon_side"
+        app:hexagonText="3"
+        app:hexagonTextSize="@dimen/rating_hexagon_text_size"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvRating4_LRV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:hexagonBorderColor="@color/hex_dark_green"
+        app:hexagonBorderSize="@dimen/rating_hexagon_border_size"
+        app:hexagonSideSize="@dimen/rating_hexagon_side"
+        app:hexagonText="4"
+        app:hexagonTextSize="@dimen/rating_hexagon_text_size"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvRating5_LRV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/rating_odd_hexagon_margin_top"
+        app:hexagonBorderColor="@color/hex_dark_green"
+        app:hexagonBorderSize="@dimen/rating_hexagon_border_size"
+        app:hexagonSideSize="@dimen/rating_hexagon_side"
+        app:hexagonText="5"
+        app:hexagonTextSize="@dimen/rating_hexagon_text_size"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+</LinearLayout>

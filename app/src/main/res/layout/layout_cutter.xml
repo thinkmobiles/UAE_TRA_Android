@@ -33,10 +33,10 @@
         android:singleLine="true"
         android:layout_gravity="right|bottom"
         android:padding="15dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="60dp" />
 
-    <com.uae.tra_smart_services.customviews.HexagonView
+    <!--<com.uae.tra_smart_services.customviews.HexagonView
         android:id="@+id/hvIcon_LIIHA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,6 +45,6 @@
         app:hexagonSideSize="60dp"
         app:hexagonSrc="@drawable/ic_temp_left_field_icon"
         app:hexagonBorderSize="3dp"
-        app:hexagonBorderColor="?attr/colorPrimary"/>
+        app:hexagonBorderColor="?attr/colorPrimary"/>-->
 
 </FrameLayout>

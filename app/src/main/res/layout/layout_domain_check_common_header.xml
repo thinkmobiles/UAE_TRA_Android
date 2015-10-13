@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    android:id="@+id/ivLogo_FDC"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/hex_primary_orange"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="15dp"
+    android:paddingTop="15dp"
+    tools:src="@drawable/ic_edit">
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvIcon_LIHLI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:hexagonBorderColor="@color/hex_text_color_white"
+        app:hexagonBorderSize="2dp"
+        app:hexagonSideSize="45dp"
+        app:hexagonSrc="@drawable/ic_edit"/>
+
+    <TextView
+        android:id="@+id/tvTitle_LIHLI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="@color/hex_text_color_white"
+        android:textSize="18sp"
+        tools:text="Domain Check Service"/>
+
+</merge>

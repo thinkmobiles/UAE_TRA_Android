@@ -1,3 +1,4 @@
+/.idea/inspectionProfiles/Project_Default.xml
 .gradle
 /local.properties
 /.idea/workspace.xml
@@ -17,5 +18,15 @@
 .idea/misc.xml
 .idea/modules.xml
 .idea/scopes/scope_settings.xml
+/viewpadeindicator/build
 .idea/vcs.xml
 *.iml
+.idea/gradle.xml
+
+
+app/.idea/
+app/gradle/
+app/gradlew
+app/gradlew.bat
+app/local.properties
+

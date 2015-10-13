@@ -1,0 +1,392 @@
+<resources  xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">UAE TRA</string>
+    <string name="title_activity_splash"></string>
+
+    <string name="hello_world"></string>
+    <string name="action_settings">الإعدادات</string>
+    <string name="title_activity_authorization">تسجيل الدخول</string>
+
+    <!--                Authorization screens                -->
+    <string name="login_title">تسجيل الدخول</string>
+    <string name="register_title">إنشاء حساب</string>
+    <string name="forgot_password_title">نسيت كلمة المرور</string>
+    <string name="error_fill_all_fields">يرجى ملئ جميع الحقول</string>
+
+    <!--            Username field               -->
+    <string name="str_username">اسم المستخدم</string>
+    <!--            Email field               -->
+    <string name="str_email">البريد الإلكتروني</string>
+    <!--            Language field               -->
+    <string name="str_language">اللغة</string>
+    <!--            Gender field               -->
+    <string name="str_gender">النوع</string>
+    <!--            Font size field               -->
+    <string name="str_fontsize">حجم الخط</string>
+    <!--            Theme options field               -->
+    <string name="str_themesoptions">الألوان</string>
+
+    <string name="str_about_tra">عن الهيئة</string>
+    <string name="str_read_more_about_tra">اقرأ المزيد عن الهيئة</string>
+    <string name="str_change_color_theme">تغيير الألوان</string>
+    <!--            Black and White mode              -->
+    <string name="str_color_impaired">بدون ألوان</string>
+    <!--            Phone field               -->
+    <string name="str_phone">الجوال</string>
+    <!--            Password field               -->
+    <string name="str_password">كلمة المرور</string>
+    <!--            Forgot password field               -->
+    <string name="str_forgot_password">نسيت كلمة المرور</string>
+    <!--            Sign in button               -->
+    <string name="str_login">تسجيل الدخول</string>
+    <!--            Sign in button               -->
+    <string name="str_skip">تجاوز</string>
+    <!--            Register button               -->
+    <string name="str_register">تسجيل</string>
+    <!--            Restore button               -->
+    <string name="str_restore">استعادة</string>
+    <string name="str_restore_password">استعادة كلمة المرور</string>
+    <!--            Register now button               -->
+    <string name="str_register_now">سجل الآن</string>
+    <!--            Logout button               -->
+    <string name="str_logout">تسجيل الخروج</string>
+
+    <!--                Settings screens                -->
+    <!--            Font size switcher               -->
+    <string name="str_small">صغير</string>
+    <string name="str_medium">وسط</string>
+    <string name="str_large">كبير</string>
+
+    <!--               Home screens                -->
+    <string name="str_home">الرئيسية</string>
+    <string name="str_favorites">المفضلة</string>
+    <string name="str_inquiries">استفسارات</string>
+    <string name="str_settings">إعدادات</string>
+    <string name="fragment_service_list_title">خدمات الهيئة</string>
+    <string name="complain">شكوى</string>
+    <string name="approved_devices">الأجهزة المعتمدة</string>
+    <string name="device_approval">الأجهزة المعتمدة</string>
+    <!--               Home screens                -->
+
+    <string-array name="languages">
+        <item>English</item>
+        <item>العربية</item>
+    </string-array>
+
+    <!--            Availability in button               -->
+    <string name="str_domain_check">تحقق من نطاق</string>
+    <string name="str_availabilty">توفر النطاق</string>
+    <string name="str_whois">خدمة WHOIS</string>
+    <string name="str_location">الموقع</string>
+    <string name="str_signal_level">مستوى الإشارة</string>
+    <string name="str_signal_coverage">تغطية الإشارة</string>
+    <string name="str_enter_url">ادخل عنوان رابط</string>
+    <string name="str_report_url">ساعد سالم</string>
+    <string name="str_description">شرح</string>
+    <string name="str_number_of_spammer">رقم المرسل الغير مرغوب</string>
+    <string name="str_sms_report_number">شكوى على رقم SMS</string>
+    <string name="str_sms_block_number">حجب رقم</string>
+    <string name="str_sms_service_list">خدمات الرسائل</string>
+
+    <string name="str_user_name"></string>
+    <string name="str_insert_domain_name_here">اسم نطاق (مثلاً tra.gov.ae)</string>
+
+    <!--               Status codes and messages                -->
+    <string name="str_success">تم</string>
+    <string name="str_error">خطأ</string>
+    <string name="str_url_not_avail">النطاق %s غير متوفر</string>
+    <string name="str_url_doesnot_exist">الرابط %s غير موجود</string>
+    <string name="str_invalid_url">يرجى ادخال رابط صحيح</string>
+    <string name="str_invalid_number">يرجى ادخال رقم صحيح</string>
+    <string name="str_ok">موافق</string>
+    <string name="str_cancel">إلغاء</string>
+    <string name="str_one_empty_space"> </string>
+    <string name="str_empty"></string>
+    <string name="str_domain_available">النطاق متوفر</string>
+    <string name="str_domain_not_available">النطاق غير متوفر</string>
+    <string name="str_domain_availability">توفر النطاق</string>
+    <string name="str_domain_no_information">لاتوجد معلومات</string>
+    <string name="str_domain_info">معلومات عن النطاق</string>
+    <string name="str_request_failed">يرجى المحاولة لاحقاً</string>
+    <string name="str_something_went_wrong">يرجى المحاولة لاحقاً</string>
+    <string name="str_registering">جاري التسجيل...</string>
+    <string name="str_checking">جاري التحقق</string>
+    <string name="str_sending">جاري الإرسال...</string>
+    <string name="str_restoring">يرجى الانتظار...</string>
+    <string name="str_loading">جاري التحميل...</string>
+    <string name="str_authenticating">يتم التحقق...</string>
+    <string name="str_restore_pass_mail">سوف نرسل لك رسالة بالبريد الإلكتروني</string>
+    <string name="str_report_has_been_sent">تم الإرسال. شكراً لك.</string>
+    <string name="str_data_has_been_sent">تم الإرسال. شكراً لك.</string>
+    <string name="str_rating_has_been_sent">تم الإرسال. شكراً لك.</string>
+    <string name="str_complain_has_been_sent">تم الإرسال. شكراً لك.</string>
+    <string name="str_info_hub">معلومات</string>
+    <string name="str_info_hub_title">معلومات</string>
+    <string name="str_info_hub_announcements">الأخبار</string>
+    <string name="str_info_hub_announcement_details">التفاصيل</string>
+    <string name="str_location_is_not_defined">لا يمكن تحديد الموقع. يرجى كتابة الموقع.</string>
+    <string name="str_location_error">ادخل الموقع</string>
+    <string name="str_location_error_message">يرجى الانتظار ريثما يتم تحديد الموقع.</string>
+    <string name="signal_level_error">يرجى تحديد مستوى الإشارة</string>
+
+    <string name="str_mobile_verification">تحقق من الجوال</string>
+    <string name="str_announcements">أخبار</string>
+    <string name="str_transactions">معاملات</string>
+    <string name="str_see_more">اقرأ المزيد</string>
+    <string name="str_select_service_provider">اختر مزود الخدمة</string>
+    <string name="str_select_location_type">اختر نوع الموقع</string>
+    <string name="str_camera_is_not_available">الكميرا غير مفعلة</string>
+
+    <string name="str_dummy_info_hub_list_item_descr">
+
+    </string>
+    <string name="str_dummy_info_hub_list_item_full_descr">
+
+    </string>
+    <string name="str_dummy_info_hub_list_item_date">08/09/2015</string>
+    <string name="str_dummy_info_hub_list_item_title">Title</string>
+
+    <!--                ServiceInfoFragment             -->
+    <string name="fragment_service_info_service_info">عن الخدمة</string>
+    <string name="fragment_service_info_required_documents">الوثائق المطلوبة</string>
+    <string name="fragment_service_info_terms_and_conditions">الشروط و الأحكام</string>
+    <string name="fragment_service_info_service_package">باقة الخدمة</string>
+    <string name="fragment_service_info_processing_time">زمن تقديم الخدمة</string>
+    <string name="fragment_service_info_service_fees">رسوم الخدمة</string>
+    <string name="fragment_service_info_contact_in_charge">المسؤول المباشر عن الخدمة</string>
+
+    <!--                FavoritesFragment               -->
+    <string name="fragment_favorites_empty_favorites">لم تقم بعد باختيار\n خدمة ضمن قائمة الخدمات المفضلة لديك.</string>
+    <string name="fragment_favorites_add_service">إضافة خدمة</string>
+
+    <!--                Services                    -->
+    <string name="operator_number">رقم مزود الخدمة</string>
+    <string name="service_provider">مزود الخدمة</string>
+    <string name="number_of_spammer">رقم المرسل الغير مرغوب</string>
+    <string name="description">الشرح</string>
+    <string name="complain_title">العنوان</string>
+    <string name="reference_number">الرقم المرجعي</string>
+    <string name="content_description_add_attachment">إضافة ملف ملحق</string>
+    <string name="approved_device_information">معلومات عن الأجهزة المعتمدة</string>
+    <string name="insert_imei_hint">رقم IMEI</string>
+    <string name="hint_set_server_url">Set server url</string>
+    <string name="button_change_server">Change server</string>
+    <string name="favourite_service_info">معلومات عن الخدمة</string>
+    <string name="favourite_remove">إزالة</string>
+    <string name="federal_authority">هيئة اتحادية</string>
+    <string name="hexagon_button_verification">تحقق</string>
+    <string name="hexagon_button_spam">رسائل غير مرغوبة</string>
+    <string name="hexagon_button_coverage">التغطية</string>
+    <string name="hexagon_button_internet">انترنت</string>
+    <string name="fragment_favorites_add_service_done">تم</string>
+    <string name="fragment_favorites_add_service_search">بحث</string>
+    <string name="fragment_favorites_menu_add">إضافة خدمة</string>
+
+
+
+
+    <!--                PoorCoverageFragment            -->
+    <string-array name="fragment_poor_coverage_signal_levels">
+        <item>ضعيفة جداً</item>
+        <item>ضعيفة</item>
+        <item>جيدة</item>
+        <item>قوية</item>
+        <item>قوية جداً</item>
+    </string-array>
+
+    <string name="service_complain_about_provider">شكوى على مزود خدمة</string>
+    <string name="service_complain_about_tra">شكوى على الهيئة</string>
+    <string name="service_suggestion">اقتراح</string>
+    <string name="service_domain_check">تحقق من نطاق</string>
+    <string name="service_enquiries">استفسارات</string>
+    <string name="service_poor_coverage">التغطية</string>
+    <string name="service_mobile_verification">تحقق من جوال</string>
+    <string name="service_approved_devices">الأجهزة المعتمدة</string>
+
+    <string name="hint_first_name">الاسم</string>
+    <string name="hint_last_name">اللقب</string>
+    <string name="hint_emirates_id">784-YYYY-NNNNNNN-C</string>
+    <string name="hint_username">اسم المستخدم</string>
+    <string name="hint_confirm_password">تأكيد كلمة المرور</string>
+    <string name="error_valid_email">يرجى ادخال عنوان بريد إلكتروني صحيح</string>
+    <string name="error_valid_phone">يرجى ادخال رقم هاتف صحيح</string>
+    <string name="error_password_confirm">يجب أن تتطابق كلمة المرور مع تأكيدها</string>
+    <string name="error_select_state">اختر الإمارة</string>
+    <string name="error_no_network">لا يوجد اتصال بالإنترنت. يرجى التحقق من الاتصال و المحاولة من جديد</string>
+    <string name="error_conversion_error">لايمكن اتمام الطلب. يرجى المحاولة لاحقاً</string>
+    <string name="error_server">لايمكن اتمام الطلب. يرجى المحاولة لاحقاً</string>
+
+
+    <string name="lang_en">English</string>
+    <string name="lang_ar">العربية</string>
+
+    <string name="fragment_complain_no_title">يرجى ادخال العنوان</string>
+    <string name="fragment_complain_no_service_provider">يرجى اختيار مزود الخدمة</string>
+    <string name="fragment_complain_no_reference_number">يرجى ادخال الرقم المرجعي</string>
+    <string name="fragment_complain_no_description">يرجى كتابة شرح</string>
+
+    <string name="fragment_complain_about_service_du">دو</string>
+    <string name="fragment_complain_about_service_etisalat">اتصالات</string>
+
+    <string name="fragment_poor_coverage_location_type_auto">آلياً</string>
+    <string name="fragment_poor_coverage_location_type_manual">اكتب عنوان الموقع</string>
+
+    <string name="fragment_complain_about_service_no_camera_and_app">الكاميرا أو معرض الصور غير متوفر</string>
+    <string name="fragment_complain_about_service_take_image_from">حمل الصورة من...</string>
+    <string name="fragment_complain_about_service_camera">كاميرا</string>
+    <string name="fragment_complain_about_service_gallery">معرض الصور</string>
+
+    <string name="fragment_speed_test_title">قياس سرعة الاتصال بالإنترنت</string>
+    <string name="fragment_speed_test_result">سرعة الإتصال: %s ميغابت/ثانية</string>
+    <string name="fragment_speed_test_progress">قياس السرعة...</string>
+    <string name="fragment_speed_test_run">بدء قياس السرعة</string>
+
+    <string name="fragment_user_profile_title">الملف الشخصي</string>
+    <string name="fragment_user_profile_edit_profile">تعديل الملف الشخصي</string>
+    <string name="fragment_user_profile_change_password">تغيير كلمة المرور</string>
+    <string name="fragment_user_profile_logout">تسجيل الخروج</string>
+
+    <string name="fragment_edit_user_profile_change_photo">تغيير الصورة</string>
+    <string name="fragment_edit_user_profile_first_name">الاسم</string>
+    <string name="fragment_edit_user_profile_last_name">اللقب</string>
+    <string name="fragment_edit_user_profile_address">العنوان</string>
+    <string name="fragment_edit_user_profile_number">رقم الاتصال</string>
+    <string name="fragment_edit_user_profile_cancel" tools:ignore="ButtonCase">إلغاء</string>
+    <string name="fragment_edit_user_profile_reset">استعادة</string>
+    <string name="fragment_edit_user_profile_confirm">حفظ التغييرات</string>
+
+
+    <string name="fragment_reset_password_reset_title">استعادة كلمة المرور</string>
+    <string name="fragment_reset_password_reset_info">لتغيير كلمة المرور، يرجى ادخال عنوان بريدك الالكتروني وسوف نرسل لك رسالة.</string>
+    <string name="fragment_reset_password_email">البريد الإلكتروني</string>
+    <string name="fragment_reset_password_retype_email">تأكيد البريد الإلكتروني</string>
+
+    <string name="fragment_change_password_change_title">تغيير كلمة المرور</string>
+    <string name="fragment_change_password_old_password">كلمة المرور القديمة</string>
+    <string name="fragment_change_password_new_password">كلمة المرور الجديدة</string>
+    <string name="fragment_change_password_retype_new_password">إعادة كلمة المرور</string>
+
+    <string name="fragment_domain_info_title">خدمة WHOIS</string>
+    <string name="fragment_domain_availability_title">توفر النطاق</string>
+
+    <string name="activity_home_not_logged_in">لقد قمت بتسجيل الدخول</string>
+
+    <string name="str_you_have_notification">لديك %s إخطارات</string>
+    <string name="str_no_notifications">لا يوجد لك اخطارات حالياً</string>
+    <string name="str_no">لا</string>
+
+    <string name="str_put_search_phrase">اكتب ماتود البحث عنه هنا</string>
+    <string name="str_no_search_result">لاتوجد نتائج للبحث</string>
+    <string name="str_are_you_looking_for">هل تبحث عن</string>
+
+    <string name="str_enquires_title">عنوان الاستفسار</string>
+    <string name="str_suggestion_title">عنوان الاقتراح</string>
+    <string name="login_username_hint">اسم المستخدم</string>
+
+    <string name="fragment_about_tra_html"><![CDATA[<div dir="rtl">
+            <p>تأسست الهيئة العامة لتنظيم قطاع الاتصالات في دولة الإمارات العربية المتحدة طبقاً لمرسوم القانون الاتحادي رقم 3 لسنة 2003 (قانون الإتصالات)، في شأن تنظيم قطاع الاتصالات في الدولة؛ ومنذ تأسيسها، تخطت الهيئة التوقعات من خلال إنجاز الأهداف المرسومة لها في وقت قياسي.</p>
+<p>وتستمد الهيئة أهدافها من قانون قطاع الاتصالات ولائحته التنفيذية والسياسة العليا لقطاع الاتصالات. وتتلخص هذه الأهداف بضمان تأمين خدمات الاتصالات في جميع أنحاء الدولة، وإنجاز تحسين الخدمات بما يتعلق بالنوعية والتنوع، وضمان نوعية الخدمات بما يتطابق مع شروط الرخصة من قبل المرخصين، وتشجيع خدمات الاتصالات وتقنية المعلومات في الدولة، والترويج لقطاع الاتصالات ، وتطويره بالدولة من خلال التدريب والتنمية وتأسيس مؤسسات تدريبية ذات صلة بالقطاع، بالإضافه إلى إيجاد الحلول للخلافات التي قد تطرأ بين المشغلين المرخصين، وتأسيس وتطبيق إطار للسياسات والتنظيمات، والترويج للتكنولوجيا الحديثة، والمساهمة في تطوير الموارد البشرية في الدولة، وتشجيع البحوت والتطوير، بما يضمن لدولة الإمارات العربية المتحدة دوراً اقليمياً متقدماً في مجال الريادة في قطاع الإتصالات وتكنولوجيا المعلومات</p>
+<p>عُهد إلى الهيئة العديد من المسؤوليات المرتبطة بقطاع الاتصالات ونظم المعلومات داخل وخارج دولة الإمارات. كما أن الهيئة مسؤولة كذلك عن تمثيل الدولة في العديد من المحافل الدولية، حيث تم انتخابها لمقعد في مجلس الاتحاد الدولي للاتصالات التابع لمنظمة الأمم المتحدة للأعوام 2006-2010 ، وهي عضو في الشبكة العربية لهيئات تنظيم الاتصالات (آرنت) والمجموعة العربية لإدارة الطيف الترددي والمكتب الفني في مجلس التعاون لدول الخليج العربية. ومن الأهداف التي تسعى الهيئة لتحقيقها عند ممارسة الإختصاصات المقررة لها وفقاً لأحكام القانون إلى تحقيق ما يلي:</p>
+<ul>
+<li>تأمين وصول خدمات الإتصالات لجميع أنحاء الدولة بما يكفل تلبية احتياجات الراغبين في الإستفادة من هذه الخدمات.</li>
+<li>الارتقاء بمستوى الخدمة التي يقدمها قطاع الاتصالات بما يحقق صالح المشتركين</li>
+<li>تقيد المرخص لهم بمعايير الجودة في الأداء والإلتزام بالشروط المحددة في التراخيص الممنوحة لهم.</li>
+<li>تشجيع وتطوير وتنمية صناعة الاتصالات ونظم المعلومات في الدولة.</li>
+<li>العمل على تطوير وتحديث نظام الاتصالات في الدولة عن طريق التدريب والتأهيل وإنشاء مؤسسات التعليم ذات العلاقة، والحصول على أحدث الأجهزة والمعدات والتسهيلات التي توصلت إليها تقنية الاتصالات</li>
+</ul>
+    ]]></string>
+
+    <string name="release_version_label">رقم الإصدار</string>
+    <string name="error_valid_emid">يرجى ادخال رقم هوية امارات صالح</string>
+
+    <string name="fragment_report_spam_title">رسائل غير مرغوبة</string>
+    <string name="fragment_report_spam_hint">شكوى للهيئة على\nرسالة غير مرغوبة أو موقع إنترنت</string>
+    <string name="fragment_report_spam_sms">شكوى على\nرسالة غير مرغوبة</string>
+    <string name="fragment_report_spam_web">شكوى على\nموقع انترنت</string>
+    <string name="fragment_report_spam_history">عرض\n القائمة الخاصة</string>
+    <string name="fragment_report_spam_cant_send_sms">"لا يمكن إرسال الرسالة النصية."</string>
+
+    <string name="fragment_report_spam_sms_title">رسائل غير مرغوبة</string>
+    <string name="fragment_report_spam_sms_number">رقم أو اسم المرسل الغير مرغوب</string>
+    <string name="fragment_report_spam_sms_description_hint">شرح</string>
+    <string name="fragment_report_spam_sms_submit">إرسال</string>
+
+    <string name="fragment_report_spam_web_title">ساعد سالم</string>
+    <string name="fragment_report_spam_web_link">رابط</string>
+    <string name="fragment_report_spam_web_description_hint">شرح...</string>
+
+    <string name="fragment_report_history_title">القائمة</string>
+    <string name="fragment_report_history_add_to_spam">إضافة إلى الرسائل الغير مرغوبة</string>
+
+    <string name="str_back_to_dashboard">عودة إلى الرئيسية</string>
+    <string name="str_cancel_request">إلغاء الطلب</string>
+    <string name="str_give_us_moment">لحظات من فضلك...</string>
+    <string name="str_reuqest_has_been_sent">تم إتمام الطلب بنجاح</string>
+    <string name="app_tutorial_screens">شاشات المساعدة</string>
+    <string name="activate_tutorial">تفعيل شاشات المساعدة</string>
+
+    <string name="fragment_approved_devices_no_results">There are no approved\ndevices were found</string>
+
+    <string name="str_enter_imei">أدخل رقم IMEI للجهاز المراد التحقق منه</string>
+    <string name="str_send_imei">أرسل</string>
+
+    <string name="str_innovations">مركز الإبداع والابتكار</string>
+    <string name="str_title">العنوان</string>
+    <string name="str_message">الرسالة</string>
+    <string name="str_type_your_message_here">اكتب رسالتك هنا</string>
+    <string name="str_no_data_found">لا توجد بيانات</string>
+    <string name="str_insert_imei_hint">أدخل رقم IMEI يدوياً</string>
+
+
+    <string name="tutorial_avatar_title">الملف الشخصي</string>
+    <string name="tutorial_avatar_text">اضغط هنا للدخول إلى أو لتعديل ملفك الشخصي</string>
+    <string name="tutorial_hot_bar_title">روابط للوصول السريع</string>
+    <string name="tutorial_hot_bar_text">تتيح لك الوصول المباشر للخدمات الأكثر طلباً</string>
+    <string name="tutorial_tab_bar_title">القائمة الرئيسية</string>
+    <string name="tutorial_tab_bar_text">تمكنك من الوصول للخدمات المفضلة، الأخبار و الإعدادات</string>
+
+
+
+    <string name="service_report_spam">الرسائل الغير مرغوبة</string>
+
+
+    <string name="fragment_innovation_idea_title">أفكار ابتكارية تساهم بـ</string>
+
+    <string-array name="fragment_innovation_ideas">
+        <item>إسعاد المتعاملين</item>
+        <item>رضا الموظفين</item>
+        <item>تطوير خدمات الهيئة</item>
+        <item>زيادة الإيرادات وترشيد النفقات</item>
+        <item>رفع صورة الهيئة وسمعتها المؤسسية</item>
+        <item>استشراف المستقبل</item>
+    </string-array>
+
+    <string name="fragment_edit_user_profile_saving">جاري حفظ البيانات…</string>
+    <string name="fragment_edit_user_profile_success">تم حفظ البيانات بنجاح</string>
+
+    <string name="fragment_change_password_success">تم تغيير كلمة المرور بنجاح</string>
+
+    <string name="innovation_has_sent">تم الإرسال بنجاح</string>
+    <string name="fragment_innovations_no_selected_item">يرجى استكمال جميع الحقول</string>
+    <string name="fragment_innovations_provide_title">يرجى ادخال عنوان الفكرة</string>
+    <string name="enter_valid_imei_code">يرجى ادخال رقم IMEI صالح</string>
+    <string name="authorization_invalid_login_or_pass">اسم المستخدم أو كلمة المرور غير صحيحة</string>
+    <string name="authorization_invalid_first_name">يرجى كتابة الاسم</string>
+    <string name="authorization_invalid_last_name">يرجى كتابة اللقب</string>
+    <string name="authorization_invalid_emirates_id">هوية الإمارات غير صحيحة</string>
+    <string name="authorization_invalid_phone_number">رقم الهاتف غير صحيح</string>
+    <string name="authorization_invalid_username_start_char">اسم المستخدم يجب أن يبدأ بحرف</string>
+    <string name="authorization_invalid_username_short">اسم المستخدم يجب أن يتكون من ثلاثة محارف على الأقل</string>
+    <string name="authorization_invalid_username_long">اسم المستخدم يجب أن لا تتكون من أكثر من أثنين و ثلاثين محرفاً</string>
+    <string name="authorization_invalid_password_short">كلمة المرور قصيرة. يجب أن تحتوي على ثمانية محرف على الأقل</string>
+    <string name="authorization_invalid_password_long">كلمة المرور يجب أن لا تتجاوز أثنين و ثلاثين محرفاً.</string>
+    <string name="authorization_invalid_email_format">اسم المستخدم يجب أن يبدأ بحرف</string>
+    <string name="attachment_manager_delete_attachment">Delete attachment</string>
+    <string name="phone_number_is_too_short">Phone number is too short</string>
+    <string name="authorization_invalid_firstname_short">First name is too short. It must be at least three characters</string>
+    <string name="authorization_invalid_firstname_long">First name is too long. It must be less than thirty-two characters</string>
+    <string name="authorization_invalid_lastname_short">Last name is too short. It must be at least three characters</string>
+    <string name="authorization_invalid_lastname_long">Last name is too long. It must be less than thirty-two characters</string>
+
+    <string name="fragment_edit_profile_image_error">"Can't load image"</string>
+    <string name="attachment_manager_delete_image">Delete image</string>
+</resources>

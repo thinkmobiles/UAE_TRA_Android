@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:baselineAligned="false"
+    android:gravity="top">
+    <!--tools:showIn="@layout/fragment_edit_user_profile">-->
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        tools:background="#20d43f3f">
+
+        <com.uae.tra_smart_services.customviews.HexagonView
+            android:id="@+id/hvCancel_LPC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:hexagonBorderColor="?profileControllerCancelColor"
+            app:hexagonBorderSize="1dp"
+            app:hexagonSideSize="36dp"
+            app:hexagonSrc="@drawable/ic_cancel"
+            app:hexagonSrcTintColor="?profileControllerCancelColor"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@string/fragment_edit_user_profile_cancel"
+            android:textColor="?profileControllerCancelColor"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        tools:background="#20717d84">
+
+        <com.uae.tra_smart_services.customviews.HexagonView
+            android:id="@+id/hvReset_LPC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:hexagonBorderColor="?profileControllerResetColor"
+            app:hexagonBorderSize="1dp"
+            app:hexagonSideSize="36dp"
+            app:hexagonSrc="@drawable/ic_reset"
+            app:hexagonSrcTintColor="?profileControllerResetColor"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@string/fragment_edit_user_profile_reset"
+            android:textColor="?profileControllerResetColor"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        tools:background="#203cbb4b">
+
+        <com.uae.tra_smart_services.customviews.HexagonView
+            android:id="@+id/hvConfirm_LPC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:hexagonBorderColor="?profileControllerSaveColor"
+            app:hexagonBorderSize="1dp"
+            app:hexagonSideSize="36dp"
+            app:hexagonSrc="@drawable/ic_confirm"
+            app:hexagonSrcTintColor="?profileControllerSaveColor"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLength="12"
+            android:maxLines="2"
+            android:text="@string/fragment_edit_user_profile_confirm"
+            android:textColor="?profileControllerSaveColor"/>
+
+    </LinearLayout>
+
+</LinearLayout>

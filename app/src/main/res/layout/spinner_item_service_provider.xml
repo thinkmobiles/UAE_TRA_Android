@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:background="?attr/spinnerItemThemedBackground"
+    android:gravity="start|center_vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:textColor="@android:color/white"
+    android:textSize="16sp"
+    android:orientation="vertical"
+    tools:text="ETISALAT SERVICE PROVIDER"/>

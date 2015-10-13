@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivBackground_FHH"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="?mainBackground"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.uae.tra_smart_services.customviews.HexagonalHeader
+            android:id="@+id/hhHeader_FHH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            app:buttonColor="?attr/hexagonHeaderButtonColor"
+            app:hexColor="#ffffff"
+            app:hexPerRow="8"
+            app:hexagonRowCount="2"
+            app:hexagonStrokeWidth="2dp"
+            app:pressedColor="?attr/hexagonHeaderButtonPressedColor"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvServices_FHH"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/hblHexagonalButtons_FHH"
+            android:overScrollMode="never"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            tools:listitem="@layout/recycler_service_item"/>
+
+        <com.uae.tra_smart_services.customviews.HexagonalButtonsLayout
+            android:id="@+id/hblHexagonalButtons_FHH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hhHeader_FHH"
+            android:paddingTop="5dp"
+            app:hexTextSize="12dp"
+            app:hexagonGapWidth="10dp"
+            app:separatorStrokeWidth="2dp"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

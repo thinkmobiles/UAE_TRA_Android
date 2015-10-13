@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="?reportSpam"/>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="?attr/actionBarSize"
+        app:layout_widthPercent="92%"
+        tools:paddingTop="0dp">
+
+        <Space
+            android:id="@+id/sButtonsDivider_FRSS"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"/>
+
+        <!--<Button-->
+            <!--android:id="@+id/btnClose_FRSS"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_alignBottom="@id/sButtonsDivider_FRSS"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_toLeftOf="@id/sButtonsDivider_FRSS"-->
+            <!--android:background="@drawable/background_spam_close_btn"-->
+            <!--android:text="@string/fragment_report_spam_sms_close"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--tools:ignore="RtlHardcoded"/>-->
+
+        <Button
+            android:id="@+id/btnSubmit_FRSS"
+            android:layout_width="wrap_content"
+            app:layout_widthPercent="60%"
+            android:layout_height="48dp"
+            android:layout_alignBottom="@id/sButtonsDivider_FRSS"
+            android:background="?authorizationButtonsBackground"
+            android:text="@string/fragment_report_spam_sms_submit"
+            android:textColor="@android:color/white"
+            tools:ignore="RtlHardcoded"
+            android:layout_centerHorizontal="true"/>
+
+        <View
+            android:id="@+id/vDescriptionDivider_FRSS"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@id/btnSubmit_FRSS"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/colorPrimary"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:layout_above="@id/vDescriptionDivider_FRSS"
+            android:layout_alignParentTop="true"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/sProviderSpinner_FRSS"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
+                    tools:listitem="@layout/spinner_item_spam_service_provider"/>
+
+                <View
+                    android:id="@+id/vProviderSpinnerDivider_FRSS"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/sProviderSpinner_FRSS"
+                    android:layout_centerHorizontal="true"
+                    android:background="?attr/colorPrimary"/>
+
+                <com.uae.tra_smart_services.customviews.ThemedImageView
+                    android:id="@+id/tivPhoneIcon_FRSS"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/vProviderSpinnerDivider_FRSS"
+                    android:layout_marginTop="12dp"
+                    android:scaleType="centerInside"
+                    app:imageSrc="@drawable/ic_phone"
+                    app:layout_marginEndPercent="10%"
+                    app:tintColor="?colorPrimary"/>
+
+                <EditText
+                    android:id="@+id/etNumberOfSpammer_FRSS"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_alignTop="@id/tivPhoneIcon_FRSS"
+                    android:layout_below="@id/vProviderSpinnerDivider_FRSS"
+                    android:layout_marginEnd="16dp"
+                    android:layout_toStartOf="@id/tivPhoneIcon_FRSS"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/fragment_report_spam_sms_number"
+                    android:singleLine="true"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="?attr/colorPrimary"
+                    android:textSize="18sp"
+                    app:layout_marginStartPercent="10%"
+                    tools:ignore="TextFields"/>
+
+                <View
+                    android:id="@+id/vNumberOfSpammerDivider_FRSS"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/etNumberOfSpammer_FRSS"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="4dp"
+                    android:background="?attr/colorPrimary"/>
+
+                <EditText
+                    android:id="@+id/etDescription_FRSS"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/vNumberOfSpammerDivider_FRSS"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="@string/fragment_report_spam_sms_description_hint"
+                    android:inputType="textAutoCorrect|textMultiLine"
+                    android:minHeight="128dp"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="@color/hex_color_middle_gray"
+                    android:textSize="18sp"/>
+
+            </RelativeLayout>
+        </ScrollView>
+
+    </android.support.percent.PercentRelativeLayout>
+
+</android.support.percent.PercentFrameLayout>

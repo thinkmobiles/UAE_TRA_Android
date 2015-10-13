@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HexagonalHeader">
+        <attr name="hexPerRow" format="integer"/>
+        <attr name="hexagonRowCount" format="integer"/>
+        <attr name="hexColor" format="color"/>
+        <attr name="buttonColor" format="color"/>
+        <attr name="pressedColor" format="color"/>
+        <attr name="hexagonStrokeWidth" format="dimension"/>
+        <attr name="avatarPlaceholderBackground" format="color"/>
+        <attr name="tutorialType" format="enum">
+            <enum name="none" value="0"/>
+            <enum name="avatar" value="1"/>
+            <enum name="innovate" value="2"/>
+            <enum name="search" value="3"/>
+            <enum name="notification" value="4"/>
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    tools:ignore="HardcodedText,RtlSymmetry">
+
+    <!--<EditText-->
+        <!--android:id="@+id/etOperatorNumber_FBSN"-->
+        <!--style="@style/UserAuthorizationDataEditTextField"-->
+        <!--android:background="@null"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:hint="@string/operator_number"-->
+        <!--android:inputType="phone"-->
+        <!--android:singleLine="true"-->
+        <!--android:textColor="@android:color/black"/>-->
+
+    <!--<View-->
+        <!--android:id="@+id/vOperatorNumberDivider_FBSN"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_below="@id/etOperatorNumber_FBSN"-->
+        <!--android:background="@android:drawable/divider_horizontal_textfield"/>-->
+
+    <TextView
+        android:id="@+id/tvServiceProvider_FBSN"
+        style="@style/UserAuthorizationDataEditTextField"
+        android:background="@null"
+        android:freezesText="true"
+        android:gravity="center_vertical"
+        android:hint="@string/service_provider"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"/>
+
+    <View
+        android:id="@+id/vServiceProviderDivider_FBSN"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tvServiceProvider_FBSN"
+        android:background="@android:drawable/divider_horizontal_textfield"/>
+
+    <EditText
+        android:id="@+id/etReferenceNumber_FBSN"
+        style="@style/UserAuthorizationDataEditTextField"
+        android:layout_below="@id/vServiceProviderDivider_FBSN"
+        android:background="@null"
+        android:hint="@string/number_of_spammer"
+        android:inputType="phone"
+        android:singleLine="true"
+        android:textColor="@android:color/black"/>
+
+    <View
+        android:id="@+id/vReferenceNumberDivider_FBSN"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/etReferenceNumber_FBSN"
+        android:background="@android:drawable/divider_horizontal_textfield"/>
+
+    <EditText
+        android:id="@+id/etDescription_FBSN"
+        style="@style/UserAuthorizationDataEditTextField"
+        android:layout_height="match_parent"
+        android:layout_below="@id/vReferenceNumberDivider_FBSN"
+        android:background="@null"
+        android:gravity="start|top"
+        android:hint="@string/description"
+        android:inputType="textAutoCorrect|textMultiLine"
+        android:textColor="@android:color/black"/>
+
+</RelativeLayout>

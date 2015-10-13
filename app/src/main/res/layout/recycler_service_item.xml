@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/llContainer"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvHexagonView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        app:hexagonBorderSize="1dp"
+        app:hexagonSideSize="35dp"
+        app:hexagonBorderColor="#c8c7c6"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_below="@id/hvHexagonView"
+        android:layout_width="wrap_content"
+        android:layout_height="42sp"
+        android:layout_centerHorizontal="true"
+        android:gravity="top|center"
+        android:textSize="12sp"
+        android:lines="3"/>
+</android.support.percent.PercentRelativeLayout >

@@ -1,25 +1,32 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/hex_primary_orange</item>
-
-        <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/hex_dark_orange</item>
-        <item name="android:textColorPrimary">@color/hex_text_color_white</item>
-
-        <!-- colorAccent is used as the default value for colorControlActivated,
-             which is used to tint widgets -->
-        <item name="colorAccent">@color/hex_color_accent</item>
+    <style name="ToolbarTheme" parent="BaseAppTheme">
+        <item name="android:textColorSecondary">@android:color/white</item>
     </style>
 
-    <!--            AuthorizationActivity               -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:layoutDirection">ltr</item>
+    </style>
+
     <style name="AuthorizationFieldsSeparator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_authorization_fields_separator_height</item>
-        <item name="android:layout_marginLeft">@dimen/dp_authorization_fields_separator_margin</item>
-        <item name="android:layout_marginRight">@dimen/dp_authorization_fields_separator_margin</item>
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <style name="AuthorizationFieldsSeparatorVertical">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/dp_authorization_fields_separator_height</item>
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <style name="ListViewItemSeparator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_authorization_fields_separator_height</item>
         <item name="android:background">@color/hex_auth_fields_separator_color</item>
     </style>
 
@@ -28,22 +35,100 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">@dimen/dp_transparent_fields_padding</item>
         <item name="android:background">@color/hex_authorization_background_color</item>
-        <item name="android:textColor">@color/hex_auth_fields_text_color</item>
-        <item name="android:textColorHint">@drawable/secector_fields_hint_color</item>
-        <item name="android:drawablePadding">@dimen/dp_edittext_drawable_padding</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="TransparentWhiteButton">
-        <item name="android:background">@drawable/selector_authorization_button</item>
-        <item name="android:textSize">@dimen/dp_authorization_button_text_size</item>
-        <item name="android:textColor">@color/hex_primary_orange</item>
-    </style>
-
-    <style name="BlurButtonStyle" parent="TransparentWhiteButton">
-        <item name="android:layout_marginLeft">@dimen/dp_button_margin</item>
-        <item name="android:layout_marginRight">@dimen/dp_button_margin</item>
+    <style name="AuthorizationFields">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/dp_transparent_fields_padding</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">?attr/authorizationTextColors</item>
+        <item name="android:textColorHint">?attr/authorizationTextColors</item>
+    </style>
+
+    <style name="UserSettingsStaticText">
+        <item name="android:textSize">@dimen/sp_settings_static_text_size</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">start|center</item>
+        <item name="android:padding">@dimen/dp_transparent_fields_padding</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+
+    <style name="BlurButtonStyle">
+        <item name="android:layout_marginStart">@dimen/dp_button_margin</item>
+        <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
+        <item name="android:layout_marginEnd">@dimen/dp_button_margin</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="AuthorizationButtons" parent="BlurButtonStyle">
+        <item name="android:textColor">@color/hex_text_color_white</item>
+        <item name="android:background">?attr/authorizationButtonsBackground</item>
+    </style>
+
+    <style name="AuthorizationTextViews">
+        <item name="android:textSize">@dimen/sp_authorization_button_text_size</item>
+        <item name="android:textColor">?attr/authorizationTextColors</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TabBarButtonStyle">
+        <item name="android:paddingTop">@dimen/dp_dashboard_tab_top_padding</item>
+        <item name="android:paddingStart">@dimen/dp_dashboard_tab_side_padding</item>
+        <item name="android:paddingEnd">@dimen/dp_dashboard_tab_side_padding</item>
+        <item name="android:drawablePadding">@dimen/dp_dashboard_tab_drawable_padding</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/globalButtonSelector</item>
+    </style>
+
+    <style name="UserProfileDivider">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@color/fragment_user_profile_divider_color</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="layout_widthPercent">90%</item>
+    </style>
+
+    <style name="EditUserProfileEditTextHintStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#b9b9b9</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textSize">10sp</item>
+        <item name="layout_widthPercent">90%</item>
+    </style>
+
+    <style name="EditUserProfileEditTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:inputType">textCapWords</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/fragment_user_profile_text_color_primary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="layout_widthPercent">90%</item>
+    </style>
+
+    <style name="SeekBarStyle">
+        <item name="android:layoutDirection">ltr</item>
+    </style>
+
+    <style name="ImageViewRotationStyle">
+        <item name="android:rotationY">0</item>
     </style>
 
 </resources>

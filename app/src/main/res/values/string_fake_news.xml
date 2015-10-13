@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="news_image_url">
+        <item>"http://www.tra.gov.ae/images/default.jpg"</item>
+        <item>"http://www.tra.gov.ae/files/news/thumb_20150928060247-IMG_7234_.jpg"</item>
+        <item>"http://www.tra.gov.ae/images/default.jpg"</item>
+        <item>"http://www.tra.gov.ae/files/news/thumb_20150927102751-2.jpg"</item>
+        <item>"http://www.tra.gov.ae/files/news/thumb_20150922105047-Untitled.png"</item>
+        <item>"http://www.tra.gov.ae/files/news/thumb_20150920093246-DG.png"</item>
+        <item>"http://www.tra.gov.ae/files/news/thumb_20150920073719-Total%20Number%20of%20Domain%20Names%20in%20Register.jpg"</item>
+        <item>"http://www.tra.gov.ae/images/default.jpg"</item>
+        <item>"http://www.tra.gov.ae/files/news/thumb_20150903052043-DSC_5049.jpg"</item>
+        <item>"http://www.tra.gov.ae/files/news/thumb_20150901071203-CoDI%20Mobile%20Security-min.JPG"</item>
+    </array>
+
+    <array name="news_date">
+        <item>"29/09/15"</item>
+        <item>"28/09/15"</item>
+        <item>"28/09/15"</item>
+        <item>"27/09/15"</item>
+        <item>"22/09/15"</item>
+        <item>"20/09/15"</item>
+        <item>"16/09/15"</item>
+        <item>"08/09/15"</item>
+        <item>"02/09/15"</item>
+        <item>"01/09/15"</item>
+    </array>
+
+    <array name="news_titles">
+        <item>"TRA hosts the 11th Business Continuity Management Forum for the Telecommunications Sector"</item>
+        <item>"UAE TRA conducts a workshop for FTA’s employees"</item>
+        <item>"UAE mGovernment Tweets in Hindi"</item>
+        <item>"TRA hosts and chairs the 37th Permanent Committee for Telecommunications and Information meeting"</item>
+        <item>"TRA Supports the Integration of People with Special Needs into Society"</item>
+        <item>"UAE TRA signs MOU with TRAI to strengthen Telecommunications and ICT collaboration"</item>
+        <item>"TRA’s (.ae) domain registration reaches more than 164,000"</item>
+        <item>"TANMIA successfully completes its linking process to the UAE FEDnet"</item>
+        <item>"TRA hosts a series of introductory mGovernment workshops"</item>
+        <item>"TRA’s CoDI hosts mobile applications security training session to help enhance Information Security skills in the UAE"</item>
+    </array>
+
+    <array name="news_details">
+        <item>"The General Authority for Regulating the Telecommunications sector (TRA) hosted the 11th edition of the Business Continuity Management Forum for the Telecommunications Sector today at the TRA Dubai headquarters. Attending the event were representatives from the Emirates Telecommunications Corporation – Etisalat, Emirates Integrated Telecommunication Company – du, National Emergency Crisis and Disasters Management Authority (NCEMA), Professional Communication Corporation “Nedaa”, Al Yah Satellite Communications Company – “Yahsat”, The Emirates Center for Strategic Studies and Research and Rabdan Academy and Skyline University College.
+
+            The forum serves as an important interactive platform for the exchange of operative, academic and scientific expertise between the various parties involved, on a number of important issues and strategic topics. This includes the adoption of a set of mechanisms and alternative plans that provide necessary support to the integrated emergency management system and ensure the continued functioning of the Telecommunications sector in various circumstances.
+
+            "Maintaining the highest quality standards within the Telecommunications sector is a strategic objective for us. We stress here on the importance of coordination and cooperation between the various parties within the telecommunications sector in the state, which ensures the highest level of readiness to cope with the rapid changes taking place in the sector, thus providing the best services to customers," said H.E Eng. Majed Sultan Al Mesmar, Acting Director General of TRA.
+
+            The Telecommunications sector in the UAE has a great reputation from both a regional and global level. This has been achieved through the tireless efforts and hard work of all parties concerned as well as the working groups related to this area. This is a great incentive to maintain our position in one of the most dynamic sectors in the state,” he added.
+
+            “The provision of a sustainable environment and integrated infrastructure is one of the most significant themes and pillars of our vision. This is essential with regards to the quality of the Telecommunications sector, which is currently one of the important indicators to measure the level of development, progress and procedure. The TRA functions under this vision, which constitutes a curriculum and roadmaps leading us to achieve our ultimate goal of strengthening the position of the UAE in the world’s ICT sector,”
+
+            The forum aims to provide an opportunity for authorized licensees to share their experiences and views that serve the public’s interest while enhancing the stability of the UAE ICT sector. It is also gives access to the best practices in the field of business continuity management, on a regional and global scale.
+
+            The Business Continuity Management Forum for the Telecommunications Sector was established to ensure that authorized licensees have a correct and mutual understanding of the required roles in case of any emergency. Initially occurring on October 6, 2011, concerned academic establishments and specialized companies are invited to participate and showcase their experiences to provide a fully comprehensive and unified vision of the sector’s key developments."</item>
+        <item>"The General Authority for Regulating the Telecommunications Sector (TRA) conducted a workshop for the Federal Transport Authority – Land &amp; Maritime (FTA) employees. The workshop’s agenda entailed demonstrating the latest technology used in registering and licensing ships and boats in UAE.
+
+            This workshop comes in line with TRA’s strategy to develop and enhance the Federal Authorities’ caliber and empower them to contribute effectively in elevating the country’s competitiveness. The workshop attendees shared thoughts about ways to improve cooperation between both entities. Enhancing the quality and methodology of providing services was also another discussion topic. The workshop also demonstrated the new system to register ships’ wireless distress signals that work on a satellite frequency of 406 MHz. The new system will accelerate the process of responding to distress signals coming from ships and boats contributing immensely in saving lives and properties.
+
+            It is noteworthy to mention that the new system will take part in elevating UAE’s competitiveness and enhancing its worldwide rank in maritime services.
+
+            In this context, H.E. Majed Sultan Al Mesmar, TRA Deputy Director General for Telecommunications Sector said: “Our wise leadership’s directives and our vision laid the foundation for TRA’s strategy that aims at empowering governmental entities in their journey toward making UAE the best in the world by 2021. Customer satisfaction is the heart of all the strategies we formulate and the efforts we exert, that is why, our workshops always showcase ways to enhance and improve services to cater to our customers’ needs in an efficient manner. This workshop affirms TRA’s keenness on coordinating with various governmental entities to advance the services provided by different sectors aiming to achieve customer happiness not only satisfaction”.
+
+            The workshop’s program encompassed a tour in TRA’s customer service center to demonstrate the best practices and tools used in facilitating the services provided to customers. "</item>
+        <item>"The General Authority for Regulating the Telecommunications Sector (TRA) has recently announced that UAE mGovernment added Hindi as a language of communication through its official Twitter account with the aim to elevate public engagement and open more communication channels, in addition to raising awareness among various public sectors about the mGovernement’s concept and services.
+
+            H.E. Hamad Obaid Al Mansoori, UAE TRA Director General said: “This initiative reflects UAE government’s respect to its residents’ diverse cultures and civilizations. It also emphasizes the government’s keenness on interacting with the people and hearing their voices through different social media platforms. This comes in the context of the eParticipation process implemented by the mGovernment. The eParticipation extends over three phases as it commences with providing information, then opening the door for receiving feedback, reaching  the third stage which is using the public’s views in the decision making process to enhance the services and promote mGovernment’s online presence”.
+
+            The Indian community is the largest in UAE, and its working in numerous sectors marking the majority of customers using the mGovernment’s services.
+
+            The 14th of September marked the first Hindi tweet’s birth. The tweet was highly welcomed by mGovernment’s followers as they sensed government’s respect for their cultures and its keenness to open more communication channels with them. mGovernment joined Twitter in January  2011 and succeeded in attracting more than 200,000 followers. It is this commitment to leadership that qualified UAE to stand 13th globally in eParticipation index and to be amongst the top 50 performers in the world in eParticipation, as per the UN E-Government Survey Report.
+
+            TRA prides itself for supporting the mGovernment’s initiative that was kicked off by His Highness Sheikh Mohammed Bin Rashid Al Maktoum, Vice-President and Prime Minister of the UAE and Ruler of Dubai with the aim of providing government services round the clock through mobile phones, smart devices and kiosks
+
+            In order to guarantee premium implementation of the initiative, TRA created the roadmap including significant milestones and technical, administrative, economic, regulatory, and awareness aspects. TRA is exerting immense effort to empower mGovernment and elevate its performance."</item>
+        <item>"The 37th meeting of the Arab League Permanent Committee for Telecommunications and Information was held at the headquarters of the General Authority for Regulating the Telecommunications Sector (TRA). Engineer Nasser Bin Hammad, TRA’s Senior Manager of International Affairs chaired the meeting that was attended by  eleven Arab states namely; Egypt, Kingdom of Saudi Arabia, Jordan, Palestine, Tunisia, Bahrain, Sudan, Kuwait, in addition to representatives of the International Telecommunication Union Arab Regional Office and the Arab League Secretary General.
+
+            The meeting’s agenda entailed presenting many worksheets related to various significant topics and to the decision-making mechanism in the Arab League Permanent Committee. The meeting also witnessed a discussion about communicating with the International Telecommunication Union (ITU) and other organizations through forming bilateral partnerships with other regional groups, in addition to supporting Palestine in the Telecommunication sector and other issues related to the internet governance and encouraging youth working in the Telecommunication sector. Additionally, the meeting aims at utilizing technology to enable people with special needs to practice their basic right of interacting with the society.
+
+            In this context, H.E. Hamad Obaid Al Mansoori, UAE TRA Director General said, “We express our confidence in the vital role that all the committees falling under the Arab league are playing. We also acknowledge the exceptional effort exerted by the Arab League Permanent Committee to improve this dynamic sector. Hosting the meeting affirms TRA’s commitment to supporting any Arab joint effort aiming to support all Arabic projects that are proposed regionally, locally, and internationally”.
+
+
+
+            “We stress on the prominence of these meetings as they represent an ideal platform that facilitates communication between various Arab ICT departments.  It is also marks an opportunity for us to exchange knowledge and experience about a vital sector that is rapidly developing and changing. We are all aware of the ICT’s direct impact on our lives, and it is our responsibility to overcome the challenges facing this sector and elevate the quality of service provided to its customers in the Arab World” H.E. added.
+
+
+
+            The meeting’s worksheets revolved around main vital topics namely; Arab League Permanent Committee’s working methodology, the aspects related to the Technical Permanent Committee and especially the one mentioned in article seven stating that heading the Committee should be for four years at least and should not be limited to countries that chaired the ICT Ministerial Council’s sessions before. This recommendation requires amending the main system of the ICT Ministerial Council and the attestation of the Arab League’s council. The new recommendation states that the committee should have a president and two vice-presidents who will be chosen during the first committee meeting.
+
+            Driven by its keenness on driving constant development to the committee, UAE delegation proposed this recommendation as it has proven that teamwork functions more efficiently in the committee. This recommendation will grant TRA the opportunity to develop the committee’s working mechanism and strategy, in addition enhancing its productivity reaching the desired level. Moreover, it will enable TRA to reinforce the leading role that UAE is playing in the Telecommunication sector in the Arab world.
+
+            The UAE participating delegation presented a worksheet that encompassed a road map for the final review on World Summit for Telecommunications and Technology after 10 years of its commencement. The attendees expressed appreciation for this paper as it showcased the details of the final review of the Technological summit that will end by the December 2015 and this review’s results will be submitted to a high- level meeting at the United Nations. The delegation also presented another paper that discussed the importance of issuing a decision to form a temporary working group from the council to oversee the tasks and organization structure of the permanent committee.  The UAE delegation’s fourth worksheet comprised a detailed explanation about the bilateral partnership and the MOU signed between the Arab league, represented by the council, and the other regional ministerial groups in the Telecommunication sector.
+
+            It is noteworthy to mention that TRA hosted and chaired this meeting for three times from 2011 to 2013."</item>
+        <item>"Driven by its corporate social responsibility and keenness on fortifying the solidarity values in the society, the General Authority for Regulating the Telecommunications Sector (TRA) has recently unveiled supporting the projects launched by Al Nour Center for Care and Rehabilitation for Special Needs and Rashid Pediatrics Therapy Center that aim at renovating and equipping new school classes for special needs.
+
+
+
+            H.E. Saeed Al Suwaidi, TRA Deputy Director General for Support Services said: “Social solidarity is an integral part of our culture and heritage, accordingly, UAE is striving to set a model in social responsibility. This sponsorship represents the heart of our culture as the builder of our renaissance and the founder of the union, Sheikh Zayed bin Sultan Al Nahayan, may God have mercy on his soul, said that "The abatement of disability is everyone\'s responsibility". TRA believes that special needs are a vital social fabric and our corporate social responsibility commits us to secure their integration in the educational system”.
+
+
+
+            TRA sponsors Al Noor center for Care and Rehabilitation in building new school classes and equipping them with modern-day technology to empower the integration of special needs into society and assist them in being a productive workforce that contributes to the welfare and prosperity of UAE. Moreover, TRA supports Rashid Paediatric Therapy Centre’s project “My Class” which also targets building equipped classes for special needs to open the doors for students who are on the waiting list to join and receive the quality education that Rashid center is providing.
+
+
+
+            TRA affirms it keenness on cooperating with all entities to create a healthy environment for special needs and develop their skills in a way that enables them to interact and integrate with the society. TRA believes that special needs are gifted with special skills and that these kids will shine and benefit the society only when provided the right support and encouragement.
+
+
+
+            TRA’s initiatives are guided by a CSR strategy that seeks driving more sustainable development to UAE and enriching peoples’ lives. This year, TRA promoted various ranging community engagement activities with focus on children, as it supported the “Autism Week” organized by Emirates Autism Center in order to raise awareness and shed the light on the importance of the society, companies, and institutions’ involvement in supporting autism. Additionally, TRA revived “Zayed Humanitarian Day” through organizing and hosting a series of humanitarian and charitable initiatives that reflect the authenticity and genuineness of the Emirati culture. Moreover, TRA also organized a Ramadan Iftar in collaboration with RashidPaediatric Therapy Center, which was the largest of its kind. "</item>
+        <item>"The General Authority for Regulating the Telecommunications Sector (TRA) signed a Memorandum of Understanding (MOU) with the Telecom Regulatory Authority of India (TRAI) on the 3rd of September 2015 during the joint commission meetings that both countries held in India, in the presence of H.H. Sheikh Abdullah Bin Zayed Al Nahyan, UAE Foreign Minister and H.E. Reem Bint Ibrahim Al Hashimi, Minister of State. The agreement aims at strengthening the collaboration between the two countries within the Telecommunications and ICT space. The MOU pledges both countries’ commitment to promoting closer co-operation and knowledge exchange pertaining to various aspects of international and regional ICT.
+
+
+
+            H.E. Hamad Obaid Al Mansoori, TRA’s Director General said: “This agreement falls within the framework of bilateral cooperation between UAE and India, and aims to secure optimum utilization of the Telecommunication Sector to best serve the development efforts, economy, and knowledge society, which will reflect positively on the competitiveness of both countries. The importance of the Telecommunications Sector is reflected through the strategic role it plays in our contemporary society, as it contributes significantly in the economic and social development.  We regard taking advantage of the global expertise and strengthening the ties with international stakeholders as necessities for the growth and prosperity of this sector”
+
+
+
+            TRA believes that the Telecommunications sector is a strategic catalyst that will accelerate the UAE’s competitiveness. Moreover, TRA is always keen to exchange knowledge and experience within the ICT field and implement best practices that contribute positively to developing a knowledge–based economy.
+
+
+
+            Key areas of cooperation include technological developments and new technologies; universal services of telecommunications and Mobile Number Portability (MNP), Spectrum issues, green telecom, e-government and e-services, in addition to participating in international events and forums and any other issues as may be mutually agreed.
+
+
+
+            H.E. Al Mansoori and Mr. Sudhir Gopta, TRAI Secretary, signed the MOU. Additionally, H.E. Al Mansoori and Engineer Nasser Bin Hammad, TRA Senior Manager International Affairs met with H.E. Ravi Shankar, Minister of Road and Transport to exchange point of views regarding many significant topics such as UN post-2015 sustainable development agenda that will be validated by the General Assembly during this month. Moreover, meeting attendees exchanged thoughts about the challenges facing the Telecommunications sector including broadband services, Cyber Security, and the promotion of investing in Telecommunications and ICT companies. Both parties agreed that discussing such topics further is crucial during bilateral meetings on the sidelines of international forums."</item>
+        <item>"The UAE General Authority for Regulating the Telecommunications sector (TRA) announced recently, that the number of registrations on the national .ae domain has increased, reaching more than 164,000. This figure position the UAE at the forefront among the countries in the region for the number of registrations within the nation’s respective range.
+
+
+
+            This achievement reflects UAE’s government commitment to elevating the country’s competitiveness. It is also proof of the immense effort exerted by the government to serve and develop the internet community in UAE.  Driven by its commitment to the directives of the UAE wise leadership, the TRA strives to achieve its vision of providing the optimum environment for the Telecommunications sector to thrive and lead. This increment indicates that the TRA has made great strides towards this vision.
+
+
+
+            In this respect, H.E. Hamad Obaid Al Mansoory, TRA Director General, stated, “This significant growth in the number of registrations on the national domain .ae is an indication to the quality of this service, and its amplified importance in helping registered companies reach out to a wider targeted community, according to the nature of business. We are confident that the demand rates for registration with the national domains will continue to gain momentum, due to its capacity to meet the users’ needs and its role to keep Intellectual Property Rights.”
+
+
+
+            “This achievement reflects TRA’s commitment to implementing UAE’s wise government’s directives towards elevating the competitiveness of UAE and maintaining its leading position in the world. We regard the national domain name as of paramount importance as it represents the country’s identity in the digital world. As we all know, the economic and service activities are increasing on the internet as much as they are in reality. Here in UAE, these services are increasing day after day as companies and institutions are interested in identifying themselves through the domain, we hope that this upward trend will continue in the coming period” he added.
+
+
+
+            In this context, Mohamed Al Zarooni, Director Policies &amp; Programs, Information and e-government Sector - TRA, stated “The national domain name is a key element in the development of the internet industry in UAE, as it represents a vital form of digital identity for any company or institution that is proud to be operating in UAE. It also contributes positively to elevating UAE’s competitiveness.  The domain’s impact extends to affect other areas like the internet proliferation and e-commerce infrastructure. On this occasion, we would like to express our gratitude to all those who use the national domain name (.ae ) in their websites and e-business, and would like to thank our partners, the domain name registration services (.ae) providers, for their continuing efforts to promote the (.ae)”.
+
+
+
+            The national domain, is a new horizon raised by the pioneering UAE, enables any individual or company to register a specific domain name and enjoy the benefits of the national domain name (.ae). Individuals and companies reserve the right to use their domain name for a certain period, and this requires complying with the terms related to the Domain Name Registry Operator Service Agreement."</item>
+        <item>"The National HR Development &amp; Employment Authority (TANMIA) announced that it has successfully completed its e-linking process with the UAE Electronic Federal Network (FEDnet) in accordance with the wise directives of H.H. Sheikh Mohammed bin Rashid Al Maktoum, Vice President and Prime Minister of the UAE and Ruler of Dubai who expressed the importance of transformation to full integration and interconnectivity in order to provide high-quality services to attain a complete transition from customer satisfaction to customer delight and the UAE Federal Electronic Network (FEDnet) is one of the initiatives falling under the mGovernment transformation roadmap.
+
+
+
+
+
+            H.E. Hamad Obaid Al Mansoori, UAE TRA Director General said: “Our wise leadership has set the features and objectives of the coming phase of smart transformation focusing on quality, use, connectivity and satisfaction. The UAE Electronic Federal Network (FEDnet) is considered an important national project in this area as it provides strategic support for the transformation process and lays the foundation for implementing the UAE mGovernment projects by connecting all Federal government related entities with each other using a common electronic network able to provide seamless, safe and durable IT services and connectivity between entities and thus  pave the way for subsequent mGovernment initiatives based on connectivity and integration between federal institutions."
+
+
+
+            “Linking TANMIA with the UAE Electronic Federal network ecosystem reflects its important and vital role and its commitment and keenness to actively participate and engage in the mGovernment transformation efforts,” he added.
+
+
+
+            "The UAE Electronic Federal Network project fulfills key objectives of mGovernment transformation roadmap most importantly supporting and facilitating information integration and full connectivity between federal entities, reducing the cost of IT infrastructure for the federal entities and providing a highly efficient, smooth and durable electronic services in accordance with common and unified standards of quality, efficiency and sustainability for all federal entities which will eventually improve reliability and enhance security standards  along with other substantial benefits including supporting Emiratization efforts through training and qualifying national cadres capable enough to implement the plans of this vital project,” explained H.E. Al Mansoori.
+
+
+
+            TANMIA has launched its linking project to the UAE Electronic Federal Network in cooperation and coordination with the General Authority for Regulating the Telecommunications Sector (TRA) in order to enable TANMIA to access the interconnection infrastructure with all UAE government entities. The full interconnection is more efficient and effective than the direct bilateral linkage between two entities and will bring many benefits for TANMIA and contribute in achieving its main objectives including coordination with other institutions to obtain data that will help in performing  labor market analysis on a continuous basis and provide professional consultancy for national cadres looking for a job, follow-up and evaluate employment of Emirati citizens in private and public sectors and provide support for small investment companies. All these tasks require access to information and sync data in real time to improve the level and quality of offered services and empower the national workforce.
+
+
+
+            Engineer Ahmed Hussein Al Hammadi, TANMIA’s Head of Information and Technology Department, stated that “the completion of the e-linking project in cooperation and coordination with the General Authority for Regulating the Telecommunications Sector (TRA) reflects the immense efforts exerted by TANMIA to achieve the vision of H.H. Sheikh Mohammed bin Rashid Al Maktoum which is heading toward a more advanced and smart level of UAE Federal electronic services. Fednet will contribute to this vision through providing many advantages and features that will elevate the communication level between the systems of ministries and authorities. Moreover, it will reduce dependence on main devices which in return will lead to saving the Federal Government’s resources”
+
+
+
+
+
+            The TRA has successfully accomplished the interconnection processes linking many UAE government entities to the UAE Electronic Federal Network (FEDnet), including the ministries of finance, labor, health, interior and economy, in addition to the National Electronic Security Authority (NESA) and the Emirates Identity Authority. The TRA has rolled out the FEDnet project in order to achieve a complete integration and connectivity among all government entities on both local and federal levels."</item>
+        <item>"In collaboration with the United Arab Emirates Prime Minister\'s Office at the Ministry of Cabinet Affairs, the mGovernment team of the General Authority for Regulating the Telecommunications sector (TRA), hosted a series of introductory workshops over three days on the strategic indicators towards smart government 2014-2016. A large number of representatives attended the workshops from the federal government across the UAE.
+
+
+
+            The workshops demonstrated a list of updates and events, approved by mGovernment, which will be implemented in Q4 2015. The mGovernment team also introduced a list of measurement requirements as part of the strategic planning towards smart government that highlight the role and mission of the federal authorities in this respect and present the proper communication tools to TRA who is responsible for measuring mGovernment readiness.
+
+
+
+            H.E. Hamad Obaid Al Mansouri, Director General, TRA said: “The excellent teamwork spirit among all concerned government authorities working on the mTransformation project has been a key element behind this remarkable achievement. This is been highlighted through the major accomplishments during the first phase of this national project launched by our wise leadership. On this occasion I would like to extend my gratitude and appreciation to all ministries and government authorities for their highly appreciated and continuous efforts to successfully accomplish the mGov project, which will contribute to further promote the UAE as a leading nation in terms of providing excellence in the field of government services.”
+
+
+
+            The workshop participants were also introduced to five key indicators including the usage of eGovernment and mGovernment services, customer satisfaction levels, public awareness levels, government services and government website’s commitment to quality standards. Participants been informed about the mTransformation’s percentage completion during the first half of the year.
+
+
+
+            These series of workshops also established direct communication channels with the mTransformation leaders at all government authorities, and formed a great opportunity to have a closer look at what achievements until date, as well as identifying challenges and solutions. "</item>
+        <item>"The General Authority for Regulating the Telecommunications Sector (TRA) concluded a training session organized by the mGovernment’s Center of Digital Innovation (CoDI) on the period from August 17 to 19th. This comes within the training program for Q3 and Q4 2015 which aims to develop the basic knowledge society skills as part of the TRA’s contributions and efforts in achieving the vision of the wise leadership directed towards boosting the community’s access to knowledge and valuable education resources in line with the endeavors and aspirations of the UAE society that follows a modern and smart lifestyle competing with the world’s most advanced societies and adopts the latest technologies and innovations that enhance people’s welfare and boost levels of engagement and communication between government entities, individuals and organizations in the community.
+
+
+
+            The training session, held under the theme "Mobile Applications Security: Protecting Information Security in Smart Applications Era", witnessed the participation of employees representing various government departments and aimed to develop their capabilities in the field of mobile security. Additionally, it will introduce them to the best practices in protecting the security of their organizations as well as their personal security against various security threats, in addition to identifying the potential security vulnerabilities that attackers can use to access and steal sensitive information. The participants were engaged on experiments of finding solutions for the mobile services security challenges and identifying the potential security vulnerabilities through practical experiments on the iOS platform security threat model, in addition to many other subjects that concern those interested in mGovernment initiatives including developers of mobile devices applications, IT departments’ officials, system analysts and operators.
+
+
+
+            "Great achievements are always accompanied by greater challenges. The UAE has reinforced its regional leading position in eGovernment and mGovernment services and among the first nations on the global level in this area. With the high penetration rate of the smart devices from corporates and BYOD solutions, the risks of security breaches is increasing significantly, especially when applications on these devices are being used for both business and personal activities. Therefore, it is very important to increase staff awareness on the importance of adopting best practices that ensure the safe use of various programs and applications provided by mobile devices platforms to protect the user from being a victim for electronic attacks or security breaches,” commented H.E. Hamad Obaid Al Mansouri, TRA Director General and UAE mGovernment Director General.
+
+
+
+            “The training session provided an overview on the mobile security space and the security analysis frameworks, in addition to best practices through a mobile toolset aimed at supporting organizations get a quick start into mobile security. The training also focused on the Android platform with a thorough review of the software architecture, security patterns and practices, as well as defensive designs and security threat model“, said Majid Al Madhloum, the head of Centre of Digital Innovations.
+
+
+
+
+
+            The training program organized by the TRA through mGovernment’s Center of Digital Innovation’s (CoDI) includes various topics such as the basics of ICT including web browsing &amp; ecommerce. Other areas to be covered by the training program include management best practices, in addition to developing basic business skills such as professional business writing and communication skills, services marketing and customer service. Furthermore, the program includes online smart learning that is an innovative way for citizens seeking to enhance their skills in the workspace.
+
+
+
+            “As we advance in the ICT space, we need to continuously develop our skills, and TRA has provided this information through special courses and specific mGov programs,” said Mubarak Al Khalfany, System Analyst at the Federal Transport Authority – Land and Maritime and participant in the training course. “The Smart applications security course has been very useful on both practical and technical level, where I learned how to protect the Government\'s owned smart applications. As smart devices are different from websites in terms of structure, we need to develop our knowledge in this area to be capable of applying in our work environment. I would like to thank TRA for their unlimited support in providing experienced and efficient lecturers from its own workforce to train us.”
+
+
+
+            The training schedule for Q3 and Q4 of 2015 is available through the mGov portal and registration for online classes can be done through https://mgovtraining.government.ae/. The onsite classes will be offered through the Center of Digital Innovation – CoDI at the TRA Dubai while other self-paced learning modules will also be available at the mGov Portal."</item>
+    </array>
+
+</resources>

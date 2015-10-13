@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/background_activity_home_tab_bar"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:saveEnabled="false">
+
+    <RadioButton
+        android:id="@+id/rbHome_BNRG"
+        style="@style/TabBarButtonStyle"
+        android:drawableTop="@drawable/ic_home"
+        android:singleLine="true"
+        android:text="@string/str_home"
+        tools:checked="true"/>
+
+    <RadioButton
+        android:id="@+id/rbFavorites_BNRG"
+        style="@style/TabBarButtonStyle"
+        android:drawableTop="@drawable/ic_favorites"
+        android:singleLine="true"
+        android:text="@string/str_favorites"/>
+
+    <RadioButton
+        android:id="@+id/rbInfoHub_BNRG"
+        style="@style/TabBarButtonStyle"
+        android:drawableTop="@drawable/ic_info"
+        android:singleLine="true"
+        android:text="@string/str_info_hub"/>
+
+    <RadioButton
+        android:id="@+id/rbInquiries_BNRG"
+        style="@style/TabBarButtonStyle"
+        android:drawableTop="@drawable/ic_inq"
+        android:singleLine="true"
+        android:text="@string/str_inquiries"/>
+
+    <RadioButton
+        android:id="@+id/rbSettings_BNRG"
+        style="@style/TabBarButtonStyle"
+        android:drawableTop="@drawable/ic_settings"
+        android:singleLine="true"
+        android:text="@string/str_settings"/>
+</RadioGroup>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="?attr/userProfileBackground"
+        tools:ignore="ContentDescription"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:paddingTop="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.uae.tra_smart_services.customviews.HexagonView
+                android:id="@+id/hvUserAvatar_FUP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dp"
+                app:hexagonSrc="@drawable/ic_user_placeholder"
+                app:hexagonBackgroundColor="?userAvatarBackground"
+                app:hexagonBorderColor="@android:color/white"
+                app:hexagonBorderSize="2dp"
+                app:hexagonSideSize="48dp"/>
+
+            <TextView
+                android:id="@+id/tvUsername_FUP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hvUserAvatar_FUP"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:textColor="#455560"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Maher Al Mulla"/>
+
+            <LinearLayout
+                android:id="@+id/llEditProfile_FUP"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_below="@id/tvUsername_FUP"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                app:layout_widthPercent="90%">
+
+                <com.uae.tra_smart_services.customviews.ThemedImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    app:imageSrc="@drawable/ic_user_prof"
+                    app:tintColor="?attr/colorPrimary"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/fragment_user_profile_edit_profile"
+                    android:textColor="#475762"
+                    android:textSize="14sp"/>
+
+                <com.uae.tra_smart_services.customviews.ThemedImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    style="@style/ImageViewRotationStyle"
+                    app:imageSrc="@drawable/ic_profile_arrow"
+                    app:tintColor="?attr/colorPrimary"/>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/vUserProfileDivider_FUP"
+                style="@style/UserProfileDivider"
+                android:layout_below="@id/llEditProfile_FUP"
+                app:layout_widthPercent="90%"/>
+
+            <LinearLayout
+                android:id="@+id/llChangePassword_FUP"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_below="@id/vUserProfileDivider_FUP"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_widthPercent="90%">
+
+                <com.uae.tra_smart_services.customviews.ThemedImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    app:imageSrc="@drawable/ic_profile_lock"
+                    app:tintColor="?attr/colorPrimary"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/fragment_user_profile_change_password"
+                    android:textColor="#475762"
+                    android:textSize="14sp"/>
+
+                <com.uae.tra_smart_services.customviews.ThemedImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    style="@style/ImageViewRotationStyle"
+                    app:imageSrc="@drawable/ic_profile_arrow"
+                    app:tintColor="?attr/colorPrimary"/>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/vChangePasswordDivider_FUP"
+                style="@style/UserProfileDivider"
+                android:layout_below="@id/llChangePassword_FUP"
+                app:layout_widthPercent="90%"/>
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/llResetPassword_FUP"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_below="@id/vChangePasswordDivider_FUP"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--app:layout_widthPercent="90%">-->
+
+            <!--<com.uae.tra_smart_services.customviews.ThemedImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:scaleType="centerInside"-->
+            <!--app:imageSrc="@drawable/ic_profile_lock"-->
+            <!--app:tintColor="?attr/colorPrimary"/>-->
+
+            <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginEnd="16dp"-->
+            <!--android:layout_marginStart="16dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:ellipsize="end"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="@string/fragment_user_profile_reset_password"-->
+            <!--android:textColor="#475762"-->
+            <!--android:textSize="14sp"/>-->
+
+            <!--<com.uae.tra_smart_services.customviews.ThemedImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:scaleType="centerInside"-->
+            <!--app:imageSrc="@drawable/ic_profile_arrow"-->
+            <!--app:tintColor="?attr/colorPrimary"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<View-->
+            <!--android:id="@+id/vResetPasswordDivider_FUP"-->
+            <!--style="@style/UserProfileDivider"-->
+            <!--android:layout_below="@id/llResetPassword_FUP"-->
+            <!--app:layout_widthPercent="90%"/>-->
+
+            <LinearLayout
+                android:id="@+id/llLogout_FUP"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_below="@id/vChangePasswordDivider_FUP"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_widthPercent="90%">
+
+                <com.uae.tra_smart_services.customviews.ThemedImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    app:imageSrc="@drawable/ic_profile_logout"
+                    app:tintColor="?attr/colorPrimary"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/fragment_user_profile_logout"
+                    android:textColor="#475762"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+        </android.support.percent.PercentRelativeLayout>
+
+    </ScrollView>
+</FrameLayout>

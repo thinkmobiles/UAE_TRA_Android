@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="?attr/userProfileBackground"
+        tools:ignore="ContentDescription"/>
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:paddingTop="?attr/actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <LinearLayout
+                android:id="@+id/llSignInFields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:text="tra.gov.ae"
+                    android:id="@+id/tvDomainAvail_FDCH"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:hint="@string/str_insert_domain_name_here"
+                    android:inputType="textUri|textAutoComplete"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="?attr/colorPrimary"
+                    android:textSize="18sp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"/>
+
+                <View style="@style/AuthorizationFieldsSeparator"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/llSignInActions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
+
+                <Button
+                    android:id="@+id/btnAvail_FDCH"
+                    android:text="@string/str_availabilty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/space_FDCH"
+                    android:padding="8dp"
+                    android:textColor="@color/hex_text_color_white"
+                    android:background="?attr/authorizationButtonsBackground"
+                    android:textSize="16sp"/>
+
+                <Space
+                    android:id="@+id/space_FDCH"
+                    android:layout_width="16dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:id="@+id/btnWhoIs_FDCH"
+                    android:text="@string/str_whois"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:layout_toEndOf="@id/space_FDCH"
+                    android:textColor="@color/hex_text_color_white"
+                    android:background="?attr/authorizationButtonsBackground"
+                    android:textSize="16sp"/>
+
+            </RelativeLayout>
+
+            <com.uae.tra_smart_services.customviews.ServiceRatingView
+                android:id="@+id/llDomainServiceRatingView"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

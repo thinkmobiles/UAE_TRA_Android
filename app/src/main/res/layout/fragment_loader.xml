@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rlFragmentContainer_FL"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/hexagonLoaderBackground">
+
+    <TextView
+        android:id="@+id/tvLoaderTitleText"
+        android:textSize="20dp"
+        android:layout_marginTop="50dp"
+        tools:text="@string/str_give_us_moment"
+        android:text="@string/str_give_us_moment"
+        android:textColor="@color/hex_text_color_white"
+        android:gravity="bottom"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_width="240dp"
+        android:layout_height="100dp"/>
+
+    <com.uae.tra_smart_services.customviews.LoaderView
+        android:id="@+id/lvLoaderView"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/tvLoaderTitleText"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:hexagonSideSize="50dp"
+        app:hexagonBorderColor="#ffffff"
+        app:hexagonProcessBorderColor="#ffffff"
+        app:hexagonSuccessBorderColor="?attr/serviceInfoBackground"
+        app:hexagonBorderSize="3dp"
+        app:hexagonProcessBorderSize="3dp"
+        app:hexagonSuccessBorderSize="5dp"
+        app:hexagonSrc="@mipmap/ic_logo_2x"
+        app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
+        app:hexagonLoaderPeriod="2000"
+        app:hexagonFillingPeriod="600"
+        app:hexagonStatusPeriod="400"/>
+
+    <TextView
+        android:id="@+id/tvLoaderBackButton"
+        tools:text="@string/str_cancel_request"
+        android:text="@string/str_cancel_request"
+        android:textSize="20dp"
+        android:padding="30dp"
+        android:textColor="@color/hex_text_color_white"
+        android:textAlignment="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lvLoaderView"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <com.uae.tra_smart_services.customviews.ServiceRatingView
+        android:id="@+id/srvRating_FL"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLoaderBackButton"/>
+
+</RelativeLayout>

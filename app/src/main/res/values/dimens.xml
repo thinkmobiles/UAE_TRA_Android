@@ -6,15 +6,29 @@
     <!--            AuthorizationActivity               -->
     <dimen name="dp_authorization_fields_separator_height">1dp</dimen>
     <dimen name="dp_authorization_fields_separator_margin">15dp</dimen>
-    <dimen name="dp_transparent_fields_padding">15dp</dimen>
-    <dimen name="dp_authorization_button_text_size">20sp</dimen>
+    <dimen name="dp_transparent_fields_padding">14dp</dimen>
+    <dimen name="sp_authorization_button_text_size">20sp</dimen>
     <dimen name="authorization_button_stroke_width">1dp</dimen>
     <dimen name="dp_button_margin">10dp</dimen>
     <dimen name="dp_edittext_drawable_padding">7dp</dimen>
     <dimen name="dp_forgot_pass_static_text_padding">10dp</dimen>
     <dimen name="dp_register_now_static_text_padding">30dp</dimen>
+    <dimen name="sp_settings_static_text_size">18sp</dimen>
     <dimen name="dp_register_actions_area_padding">20dp</dimen>
     <dimen name="dp_login_now_static_text_padding">15dp</dimen>
     <dimen name="dp_auth_button_corner">2dp</dimen>
+    <dimen name="dp_dashboard_tab_side_padding">1dp</dimen>
+    <dimen name="dp_dashboard_tab_top_padding">2dp</dimen>
+    <dimen name="dp_dashboard_tab_drawable_padding">3dp</dimen>
+    <dimen name="dp_divider_padding_side">3dp</dimen>
+    <dimen name="dp_service_container_padding">10dp</dimen>
+
+    <!--            RatingView                      -->
+    <dimen name="rating_hexagon_side">30dp</dimen>
+    <dimen name="rating_hexagon_border_size">1.5dp</dimen>
+    <dimen name="rating_odd_hexagon_margin_top">16dp</dimen>
+    <dimen name="rating_hexagon_text_size">24sp</dimen>
+
+
 
 </resources>
