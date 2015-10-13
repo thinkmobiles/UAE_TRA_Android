@@ -38,7 +38,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     private PointF[] mLTScalatorArea = new PointF[3];
     private PointF[] mRBScalatorArea = new PointF[3];
     /** Views */
-    private FrameLayout parent;
+    private CutterOverlay parent;
     private HexagonCutterView mCutter;
     private OnCutterChanged mAreaChangeHandler;
     /** Entities */
@@ -86,7 +86,8 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if(changed && mCutter != null){
             mCutter.layout(left = l, top = t, right = r, bottom = b);
-            parent = (FrameLayout) getParent();
+            parent = (CutterOverlay) getParent();
+            mAreaChangeHandler = (OnCutterChanged) getParent();
             parentWidth = parent.getWidth();
             parentHeight = parent.getHeight();
             setX((parentWidth - width) / 2);
