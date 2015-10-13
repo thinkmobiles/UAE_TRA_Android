@@ -13,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.HexagonUtils;
 
@@ -22,22 +21,40 @@ import com.uae.tra_smart_services.HexagonUtils;
  */
 
 public class CutterContainer extends ViewGroup implements View.OnTouchListener, ViewGroup.OnHierarchyChangeListener{
-
+    /** Coordinates */
     private int left, top, right, bottom;
+    private int width, height;
+    private int parentWidth, parentHeight;
+    float downX;
+    float downY;
+    float lastTransitionX, lastTransitionY;
+    Rect rect = new Rect();
+    private Pressed currentPressed;
+    /** Drawables */
     private final Path mBorderPath = new Path();
     private final Paint mBorderPaint = new Paint();
-
     private final Path mLTScalatorPath = new Path();
     private final Path mRBScalatorPath = new Path();
     private PointF[] mLTScalatorArea = new PointF[3];
     private PointF[] mRBScalatorArea = new PointF[3];
+    /** Views */
     private FrameLayout parent;
     private HexagonCutterView mCutter;
-
+    private OnCutterChanged mAreaChangeHandler;
+    /** Entities */
+    private enum Pressed {
+        SCALATOR(-1), CUTTER(0);
+        private int dir;
+        Pressed(int _dir){
+            dir = _dir;
+        }
+    }
+    /** Constructors */
     public CutterContainer(Context context) { this(context, null); }
 
     public CutterContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         setWillNotDraw(false);
         setOnTouchListener(this);
         setOnHierarchyChangeListener(this);
@@ -56,8 +73,7 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(400, 400);
     }
-    private int width, height;
-    private int parentWidth, parentHeight;
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(width = w, height = h, oldw, oldh);
@@ -101,21 +117,12 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
     }
 
     private void initScalatorsPath(){
-        mLTScalatorPath.reset();
-        mLTScalatorArea[0] = new PointF(0,0);
-        mLTScalatorPath.moveTo(mLTScalatorArea[0].x, mLTScalatorArea[0].y);
-        mLTScalatorArea[1] = new PointF(70, 0);
-        mLTScalatorPath.lineTo(mLTScalatorArea[1].x, mLTScalatorArea[1].y);
-        mLTScalatorArea[2] = new PointF(0, 70);
-        mLTScalatorPath.lineTo(mLTScalatorArea[2].x, mLTScalatorArea[2].y);
-        mLTScalatorPath.close();
-
         mRBScalatorPath.reset();
         mRBScalatorArea[0] = new PointF(width, height);
         mRBScalatorPath.moveTo(mRBScalatorArea[0].x, mRBScalatorArea[0].y);
-        mRBScalatorArea[1] = new PointF(width - 70, height);
+        mRBScalatorArea[1] = new PointF(width - 100, height);
         mRBScalatorPath.lineTo(mRBScalatorArea[1].x, mRBScalatorArea[1].y);
-        mRBScalatorArea[2] = new PointF(width, height - 70);
+        mRBScalatorArea[2] = new PointF(width, height - 60);
         mRBScalatorPath.lineTo(mRBScalatorArea[2].x, mRBScalatorArea[2].y);
         mRBScalatorPath.close();
     }
@@ -126,9 +133,6 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
         canvas.drawPath(mRBScalatorPath, mBorderPaint);
     }
 
-    float downX;
-    float downY;
-    private Pressed pressed;
     @Override
     public boolean onTouch(View _view, MotionEvent _event) {
         final PointF clickPoint = new PointF(_event.getX(), _event.getY());
@@ -137,106 +141,70 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
                 downX = _event.getRawX();
                 downY = _event.getRawY();
                 if (HexagonUtils.pointInPolygon(clickPoint, mRBScalatorArea)){
-                    pressed = Pressed.DOWN;
-                } else if (HexagonUtils.pointInPolygon(clickPoint, mLTScalatorArea)){
-                    pressed = Pressed.UP;
-                } else if(mCutter != null && HexagonUtils.pointInPolygon(clickPoint, mCutter.getPoints())){
+                    currentPressed = Pressed.SCALATOR;
+                } else {
                     downX = _event.getX();
                     downY = _event.getY() + 50;
-                    pressed = Pressed.HEX;
-                } else {
-                    pressed = Pressed.NOTHING;
+                    currentPressed = Pressed.CUTTER;
                 }
-
-                Log.e("MOVE", "RAW_X:" + _event.getRawX() + ", RAW_Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
+//                Log.e("MOVE", "RAW_X:" + _event.getRawX() + ", RAW_Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
                 return true;
 
             case MotionEvent.ACTION_MOVE:
-                if(pressed == Pressed.HEX){
-                    moveContainer(_event);
-                } else if (pressed == Pressed.DOWN || pressed == Pressed.UP){
+                if(currentPressed == Pressed.SCALATOR){
                     scaleContainer(_event);
+                } else {
+                    moveContainer(_event);
                 }
                 return true;
-
-            case MotionEvent.ACTION_UP:
-//                Log.e("ACTION_UP", "X:" + _event.getRawX() + ", Y:" + _event.getRawY());
-                return true;
-
-            default:
-                Toast.makeText(getContext(), "default", Toast.LENGTH_SHORT).show();
-                return super.onInterceptTouchEvent(_event);
         }
+        return false;
     }
-    Rect rect = new Rect();
-    float lastTransitionX, lastTransitionY;
+
     private void moveContainer(MotionEvent _event) {
         getHitRect(rect);
-        if(_event.getRawX() - downX >= 0 && _event.getRawX() + (getWidth() - downX) <= parent.getWidth()){
-            float transitionX = -downX + _event.getRawX();
-            setX(lastTransitionX = transitionX);
-//            layout((int) (left + transitionX), top, (int) (right + transitionX), bottom);
-//            layout(left, top, right, bottom);
+        if(rect.left >= 0 && rect.right <= parent.getWidth()){
+            lastTransitionX = -downX + _event.getRawX();
+            if(lastTransitionX <= 0) lastTransitionX = 0;
+            if(lastTransitionX >= parent.getWidth() - getWidth()) lastTransitionX = parent.getWidth() - getWidth();
+            setX(lastTransitionX);
         }
-        if(_event.getRawY() - downY >= 0 && _event.getRawY() + (getHeight() - downY) <= parent.getHeight() - 120){
-            float transitionY = -downY + _event.getRawY();
-            setY(lastTransitionY = transitionY);
-//            layout(left, (int) (top + transitionY), right, (int) (bottom + transitionY));
-//            layout(left, top, right, bottom);
+        if(rect.top >= 0 && rect.bottom <= parent.getHeight()){
+            lastTransitionY = -downY + _event.getRawY();
+            if(lastTransitionY <= 0) lastTransitionY = 0;
+            if(lastTransitionY >= parent.getHeight() - getHeight()) lastTransitionY = parent.getHeight() - getHeight();
+            setY(lastTransitionY);
         }
-        Log.e("MOVE", "RAW_X:" + _event.getRawX() + ", RAW_Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
+//        Log.e("MOVE", "RAW_X:" + _event.getRawX() + ", RAW_Y:" + _event.getRawY() + " | x:" + _event.getX() + ", y:" + _event.getY());
         mAreaChangeHandler.onContainerAreaChanged(getWidth(), getHeight(), getX(), getY());
     }
 
     float scaleX = 1, scaleY = 1;
     private void scaleContainer(MotionEvent _event) {
-        float maxDelta;
         float deltaX = _event.getRawX() - downX;
         float deltaY = _event.getRawY() - downY;
-        maxDelta = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 15;
-        Rect rect = new Rect();
+        width = getWidth();
+        height = getHeight();
+        float maxDelta = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         getHitRect(rect);
-        switch (pressed){
-            case DOWN:{
+        switch (currentPressed){
+            case SCALATOR:{
 //                    Log.e("SCALE_DOWN", "X:" + _event.getRawX() + ", Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
-                    if(deltaX > 0 && deltaY > 0 && rect.left >= 0 && rect.top >= 0 && rect.right <= parentWidth && rect.bottom <= parentHeight) {
-                        scaleX = getWidth() / (getWidth() - maxDelta);
-                        scaleY = getHeight() / (getHeight() - maxDelta);
-                    } else if(deltaX < 0 && deltaY < 0 && width > parentWidth / 2.5) {
-                        scaleX = getWidth() / (getWidth() + maxDelta);
-                        scaleY = getHeight() / (getHeight() + maxDelta);
+                    if(deltaX >= 0 && deltaY >= 0 && rect.left >= 0 && rect.top >= 0 && rect.right <= parentWidth && rect.bottom <= parentHeight) {
+                        scaleX = width / (width - maxDelta);
+                        scaleY = height / (height - maxDelta);
+                    } else if(deltaX <= 0 && deltaY <= 0 && width >= parentWidth / 2.5) {
+                        scaleX = width / (width + maxDelta);
+                        scaleY = height / (height + maxDelta);
                     } else {
                         return;
                     }
-                    layout(0, 0, (int) (getWidth() * scaleX), (int) (getHeight() * scaleY));
-                break;
-            }
-            case UP:{
-//                    Log.e("SCALE_UP", "X:" + _event.getRawX() + ", Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
-                    if(deltaX > 0 && deltaY > 0 && width > parentWidth / 2.5) {
-                        scaleX = getWidth() / (getWidth() - maxDelta);
-                        scaleY = getHeight() / (getHeight() - maxDelta);
-                    } else if(deltaX < 0 && deltaY < 0 && rect.left >= 0 && rect.top >= 0 && rect.right <= parentWidth && rect.bottom <= parentHeight ) {
-                        scaleX = getWidth() / (getWidth() + maxDelta);
-                        scaleY = getHeight() / (getHeight() + maxDelta);
-                    } else {
-                        return;
-                    }
-                    layout(0, 0, (int) (getWidth() / scaleX), (int) (getHeight() / scaleY));
+                    layout(0, 0, (int) (width * scaleX), (int) (height * scaleY));
                 break;
             }
         }
         setX((lastTransitionX == 0) ? (parentWidth - width) / 2 : lastTransitionX);
         setY((lastTransitionY == 0) ? (parentHeight - height) / 2 : lastTransitionY);
-    }
-
-    private enum Pressed {
-        DOWN(-1), HEX(0), UP(1), NOTHING(Integer.MAX_VALUE);
-
-        private int dir;
-        Pressed(int _dir){
-            dir = _dir;
-        }
     }
 
     public Path getCutterPath(){
@@ -247,7 +215,6 @@ public class CutterContainer extends ViewGroup implements View.OnTouchListener, 
         return mCutter;
     }
 
-    private OnCutterChanged mAreaChangeHandler;
     public void setAreaChangeHandler(OnCutterChanged _handler){
         mAreaChangeHandler = _handler;
     }

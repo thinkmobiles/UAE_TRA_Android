@@ -14,7 +14,8 @@ import android.view.View;
  */
 
 public class HexagonCutterView extends View {
-    private final int HEXAGON_BORDER_COUNT = 6;
+    private static final int HEXAGON_BORDER_COUNT = 6;
+    private static double HEXAGON_SECTION = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
 
     private final Path mPath = new Path();
     private final Paint mPaint = new Paint();
@@ -41,18 +42,16 @@ public class HexagonCutterView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        double section = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
-
         int mCenterWidth = w / 2;
         int mCenterHeight = h / 2;
 
-        mHexagonSide = mCenterHeight * 0.95;
+        mHexagonSide = mCenterHeight;
 
         mPath.reset();
         mPoints[0] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(0)), (float) (mCenterHeight - mHexagonSide * Math.cos(0)));
         mPath.moveTo(mPoints[0].x, mPoints[0].y);
         for (int i = 1; i < HEXAGON_BORDER_COUNT; i++) {
-            mPoints[i] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(section * -i)), (float) (mCenterHeight - mHexagonSide * Math.cos(section * -i)));
+            mPoints[i] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(HEXAGON_SECTION * -i)), (float) (mCenterHeight - mHexagonSide * Math.cos(HEXAGON_SECTION * -i)));
             mPath.lineTo(mPoints[i].x, mPoints[i].y);
         }
         mPath.close();
@@ -61,7 +60,6 @@ public class HexagonCutterView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        canvas.restore();
         canvas.drawPath(mPath, mPaint);
     }
 

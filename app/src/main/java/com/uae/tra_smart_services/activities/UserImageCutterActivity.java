@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AbsoluteLayout;
@@ -56,7 +57,13 @@ public class UserImageCutterActivity extends Activity implements CutterContainer
 
         setContentView(R.layout.layout_cutter);
         alMainContainer = (FrameLayout) findViewById(R.id.alMainContainer);
-        background = (ImageView) findViewById(R.id.cutted_image);
+        alMainContainer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+//        background = (ImageView) findViewById(R.id.cutted_image);
         ccContainer = (CutterContainer) findViewById(R.id.ccContainer);
         ccContainer.setAreaChangeHandler(this);
         doCrop = (TextView) findViewById(R.id.doCrop);
@@ -105,7 +112,7 @@ public class UserImageCutterActivity extends Activity implements CutterContainer
         mask.recycle();
         mOffsetX = _offsetX;
         mOffsetY = _offsetY;
-        background.setImageBitmap(bitmap);
+        alMainContainer.setBackground(new BitmapDrawable(bitmap));
     }
     float mOffsetX, mOffsetY;
     @Override

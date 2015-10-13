@@ -12,6 +12,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -118,24 +119,6 @@ public class UserAvatarCropperFragment extends BaseFragment implements View.OnCl
         Paint paint = new Paint();
         paint.setAntiAlias(true);
 
-//        Path mPath=new Path();
-        /*PointF[] mPoints = new PointF[6];
-        double section = 2.0 * Math.PI / 6;
-
-        int mCenterWidth = width / 2;
-        int mCenterHeight = heght / 2;
-
-        int mHexagonSide = width / 2;
-
-        _cropperPath.reset();
-        mPoints[0] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(0)), (float) (mCenterHeight - mHexagonSide * Math.cos(0)));
-        _cropperPath.moveTo(mPoints[0].x, mPoints[0].y);
-        for (int i = 1; i < 6; i++) {
-            mPoints[i] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(section * -i)), (float) (mCenterHeight - mHexagonSide * Math.cos(section * -i)));
-            _cropperPath.lineTo(mPoints[i].x, mPoints[i].y);
-        }
-        _cropperPath.close();*/
-
         canvas.drawPath(_cropperPath, paint);
 
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
@@ -153,6 +136,12 @@ public class UserAvatarCropperFragment extends BaseFragment implements View.OnCl
         super.initViews();
 
         alMainContainer = (FrameLayout) findView(R.id.alMainContainer);
+        alMainContainer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         background = (ImageView) findView(R.id.cutted_image);
         ccContainer = (CutterContainer) findView(R.id.ccContainer);
         ccContainer.setAreaChangeHandler(this);

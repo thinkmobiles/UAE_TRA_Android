@@ -26,13 +26,13 @@
         android:id="@+id/doCrop"
         android:gravity="center"
         android:background="#d94a4746"
-        android:text="CROP IMAGE"
+        android:text="CROP"
         android:textColor="@android:color/white"
-        android:textSize="26sp"
+        android:textSize="30sp"
         android:textAlignment="center"
         android:singleLine="true"
         android:layout_gravity="right|bottom"
-        android:padding="15dp"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp" />
 
