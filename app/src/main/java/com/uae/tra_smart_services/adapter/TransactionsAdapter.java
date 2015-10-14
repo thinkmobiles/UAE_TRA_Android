@@ -19,6 +19,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.TransactionsAdapter.ViewHolder;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
 import com.uae.tra_smart_services.rest.RestClient;
 import com.uae.tra_smart_services.rest.TRAServicesAPI;
@@ -218,7 +219,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
             if (mRetrofitError != null) {
                 String error = NetworkErrorHandler.processRetrofitError(mActivity, mRetrofitError);
                 if (error != null) {
-                    Toast.makeText(mActivity, error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, error, C.TOAST_LENGTH).show();
                 }
             }
         }

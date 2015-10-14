@@ -39,11 +39,12 @@ public class HexagonalButtonsLayout extends View {
 
     private Paint mSeparatorPaint;
     private Paint mButtonPaint;
-    private Paint mShadowPaint;
+//    private Paint mShadowPaint;
     private Paint mButtonSecondColorPaint;
     private Paint mPressedButtonPaint;
     private Paint mOrangeTextPaint;
     private Paint mWhiteTextPain;
+    private Path mSeparatorPath;
     private int mSeparatorColor;
     private int mPressedButtonColor;
     private int mButtonsCount;
@@ -68,13 +69,26 @@ public class HexagonalButtonsLayout extends View {
     private float mStartGapWidth, mGapWidthDifference;
     private float mAnimationProgress = 0.0f;
 
+
+    private final int DOUBLE_BUTTONS = 8;
+    private final int HALF_BUTTONS = 2;
+    private float mTwoDivSquare;
+    private float mMaxDrawableHeight;
+
     public HexagonalButtonsLayout(final Context _context, final AttributeSet _attrs) {
         super(_context, _attrs);
         initProperties(_attrs);
         initPaint();
         initDrawables();
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//        setLayerType();
     }
+
+//    private void setLayerType() {
+//        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+//        if (currentapiVersion <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//        }
+//    }
 
     public final PointF[] getCenters() {
         return mCenters.toArray(new PointF[mCenters.size()]);
@@ -123,7 +137,8 @@ public class HexagonalButtonsLayout extends View {
 
         mHexagonGapWidth = mStartGapWidth + mGapWidthDifference * _animationProgress;
         requestLayout();
-        invalidate();
+//        calculateVariables(getWidth());
+//        invalidate();
     }
 
     private void initProperties(final AttributeSet _attrs) {
@@ -145,6 +160,8 @@ public class HexagonalButtonsLayout extends View {
         mGapWidthDifference = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
         mTextSizeDifference = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
         mStartGapWidth = mHexagonGapWidth;
+
+        mTwoDivSquare = (float) (2 / Math.sqrt(3));
     }
 
     private void initPaint() {
@@ -157,13 +174,13 @@ public class HexagonalButtonsLayout extends View {
         mButtonPaint.setColor(Color.WHITE);
         mButtonPaint.setStyle(Paint.Style.FILL);
 
-        mShadowPaint = new Paint();
-        mShadowPaint.setStyle(Paint.Style.FILL);
-        if (mIsTutorialMode) {
-            mShadowPaint.setShadowLayer(15.0f, 0, 0, 0xff4b4b4b);
-        } else {
-            mShadowPaint.setShadowLayer(3.0f, 4.0f, 4.0f, 0xFF8C8C8C);
-        }
+//        mShadowPaint = new Paint();
+//        mShadowPaint.setStyle(Paint.Style.FILL);
+//        if (mIsTutorialMode) {
+//            mShadowPaint.setShadowLayer(15.0f, 0, 0, 0xff4b4b4b);
+//        } else {
+//            mShadowPaint.setShadowLayer(3.0f, 4.0f, 4.0f, 0xFF8C8C8C);
+//        }
 
         mButtonSecondColorPaint = new Paint();
         mButtonSecondColorPaint.setColor(0xFF44545F);
@@ -189,6 +206,8 @@ public class HexagonalButtonsLayout extends View {
         mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_spam)));
         mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_coverage)));
         mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_earth)));
+
+        mMaxDrawableHeight = getMaxDrawableHeight(mDrawables);
     }
 
     @Override
@@ -203,11 +222,18 @@ public class HexagonalButtonsLayout extends View {
 
         width = widthSize;
 
-        final float triangleHeight = ((width - getPaddingStart() - getPaddingEnd() -
-                mHexagonGapWidth * mButtonsCount - mHexagonGapWidth) / mButtonsCount) / 2;
-        final float radius = (float) (triangleHeight * 2 / Math.sqrt(3));
+//        final float triangleHeight = (width - getPaddingStart() - getPaddingEnd() -
+//                mHexagonGapWidth * mButtonsCount - mHexagonGapWidth) / DOUBLE_BUTTONS;
+//        final float radius = (float) (triangleHeight * 2 / Math.sqrt(3));
 
-        myHeight = (int) (radius * 2 + mHexagonGapWidth + mSeparatorStrokeWidth + getPaddingTop() + getPaddingBottom());
+        mTriangleHeight = (width - getPaddingLeft() - getPaddingRight() -
+                mHexagonGapWidth * mButtonsCount - mHexagonGapWidth) / DOUBLE_BUTTONS;
+        mRadius = mTriangleHeight * mTwoDivSquare;
+
+        mSeparatorTriangleHeight = mTriangleHeight + mHexagonGapWidth / 2;
+        mSeparatorRadius = mSeparatorTriangleHeight * mTwoDivSquare;
+
+        myHeight = (int) (mRadius * 2 + mHexagonGapWidth + mSeparatorStrokeWidth + getPaddingTop() + getPaddingBottom());
 
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
@@ -223,26 +249,16 @@ public class HexagonalButtonsLayout extends View {
     protected final void onSizeChanged(final int _w, final int _h,
                                        final int _oldw, final int _oldh) {
         super.onSizeChanged(_w, _h, _oldw, _oldh);
-        calculateVariables(_w);
+//        calculateVariables(_w);
 
         if (mOldWidth == null || mOldWidth != _w || mCenters == null || mCenters.isEmpty()) {
             mOldWidth = _w;
             calculateCenters();
+            measureDrawablesBounds();
+//            calculateSeparatorPath();
         }
 
-        measureDrawablesBounds();
-
-        mWhiteTextPain.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress);
-        mOrangeTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress);
-    }
-
-    private void calculateVariables(final int _w) {
-        mTriangleHeight = ((_w - getPaddingLeft() - getPaddingRight() -
-                mHexagonGapWidth * mButtonsCount - mHexagonGapWidth) / mButtonsCount) / 2;
-        mRadius = (float) (mTriangleHeight * 2 / Math.sqrt(3));
-
-        mSeparatorTriangleHeight = mTriangleHeight + mHexagonGapWidth / 2;
-        mSeparatorRadius = (float) (mSeparatorTriangleHeight * 2 / Math.sqrt(3));
+//        measureDrawablesBounds();
     }
 
     private void calculateCenters() {
@@ -256,8 +272,25 @@ public class HexagonalButtonsLayout extends View {
         }
     }
 
+    private void calculateSeparatorPath() {
+        mSeparatorPath = new Path();
+
+        float centerY = getPaddingTop() + mRadius + mHexagonGapWidth / 2;
+
+        mSeparatorPath.moveTo(mCenters.get(0).x - calculateWithCoefficient(2 * mSeparatorTriangleHeight), centerY + mSeparatorRadius);
+        mSeparatorPath.lineTo(mCenters.get(0).x - calculateWithCoefficient(mSeparatorTriangleHeight), centerY + mSeparatorRadius / 2);
+
+        for (int hexagon = 0; hexagon < mButtonsCount; hexagon++) {
+
+            mSeparatorPath.lineTo(mCenters.get(hexagon).x, centerY + mSeparatorRadius);
+            mSeparatorPath.lineTo(mCenters.get(hexagon).x + calculateWithCoefficient(mSeparatorTriangleHeight), centerY + mSeparatorRadius / 2);
+        }
+
+        mSeparatorPath.lineTo(mCenters.get(mButtonsCount - 1).x + calculateWithCoefficient(mSeparatorTriangleHeight * 2), centerY + mSeparatorRadius);
+    }
+
     private void measureDrawablesBounds() {
-        float centerY = getPaddingTop() + mRadius / 2 + getMaxDrawableHeight(mDrawables);
+        float centerY = getPaddingTop() + mRadius / 2 + mMaxDrawableHeight;
 
         for (int hexagon = 0; hexagon < mButtonsCount; hexagon++) {
             final float drawableWidth = mDrawables.get(hexagon).getMinimumWidth();
@@ -304,16 +337,16 @@ public class HexagonalButtonsLayout extends View {
 
             final PointF point = mCenters.get(hexagon);
 
-            if (hexagon < (mButtonsCount / 2)) {
+            if (hexagon < HALF_BUTTONS) {
                 buttonsPath = calculatePath(buttonsPath, point.x, point.y, hexagon);
             } else {
                 buttonsSecondPath = calculatePath(buttonsSecondPath, point.x, point.y, hexagon);
             }
         }
 
-        _canvas.drawPath(buttonsSecondPath, mShadowPaint);
+//        _canvas.drawPath(buttonsSecondPath, mShadowPaint);
         _canvas.drawPath(buttonsSecondPath, mButtonSecondColorPaint);
-        _canvas.drawPath(buttonsPath, mShadowPaint);
+//        _canvas.drawPath(buttonsPath, mShadowPaint);
         _canvas.drawPath(buttonsPath, mButtonPaint);
     }
 
@@ -361,14 +394,15 @@ public class HexagonalButtonsLayout extends View {
         Path separatorPath = new Path();
 
         float centerY = getPaddingTop() + mRadius + mHexagonGapWidth / 2;
+        final float halfSeparatorRadius = mSeparatorRadius / 2;
 
         separatorPath.moveTo(mCenters.get(0).x - calculateWithCoefficient(2 * mSeparatorTriangleHeight), centerY + mSeparatorRadius);
-        separatorPath.lineTo(mCenters.get(0).x - calculateWithCoefficient(mSeparatorTriangleHeight), centerY + mSeparatorRadius / 2);
+        separatorPath.lineTo(mCenters.get(0).x - calculateWithCoefficient(mSeparatorTriangleHeight), centerY + halfSeparatorRadius);
 
         for (int hexagon = 0; hexagon < mButtonsCount; hexagon++) {
 
             separatorPath.lineTo(mCenters.get(hexagon).x, centerY + mSeparatorRadius);
-            separatorPath.lineTo(mCenters.get(hexagon).x + calculateWithCoefficient(mSeparatorTriangleHeight), centerY + mSeparatorRadius / 2);
+            separatorPath.lineTo(mCenters.get(hexagon).x + calculateWithCoefficient(mSeparatorTriangleHeight), centerY + halfSeparatorRadius);
         }
 
         separatorPath.lineTo(mCenters.get(mButtonsCount - 1).x + calculateWithCoefficient(mSeparatorTriangleHeight * 2), centerY + mSeparatorRadius);
@@ -383,54 +417,17 @@ public class HexagonalButtonsLayout extends View {
     }
 
     private void drawText(final Canvas _canvas) {
-//        _canvas.drawText(getResources().getString(R.string.hexagon_button_verification), mCenters.get(0).x,
-//                mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
-
         drawTextLayout(_canvas, mCenters.get(0), getResources().getString(R.string.hexagon_button_verification),
                 mOrangeTextPaint.getColor());
-//        if (getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
-//            TextPaint mTextPaint = new TextPaint();
-//            mTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress - mTextSizeDifference);
-//            mTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
-//            mTextPaint.setColor(ImageUtils.isBlackAndWhiteMode(getContext()) ? Color.BLACK : 0xFFF68F1E);
-//            StaticLayout mTextLayout = new StaticLayout(getResources().getString(R.string.hexagon_button_spam), mTextPaint,
-//                    (int) (mTriangleHeight * 1.5), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
-//
-//            _canvas.save();
-//
-//            _canvas.translate(mCenters.get(1).x + calculateWithCoefficient(mTextLayout.getWidth() / 2), mCenters.get(0).y + mRadius / 2 - mTextLayout.getHeight() / 2);
-//            mTextLayout.draw(_canvas);
-//            _canvas.restore();
-//        } else {
-//            _canvas.drawText(getResources().getString(R.string.hexagon_button_spam), mCenters.get(1).x,
-//                    mCenters.get(0).y + mRadius / 2, mOrangeTextPaint);
-//        }
 
         drawTextLayout(_canvas, mCenters.get(1), getResources().getString(R.string.hexagon_button_spam),
                 mOrangeTextPaint.getColor());
 
-//        _canvas.drawText(getResources().getString(R.string.hexagon_button_coverage), mCenters.get(2).x,
-//                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
-
         drawTextLayout(_canvas, mCenters.get(2), getResources().getString(R.string.hexagon_button_coverage),
                 mWhiteTextPain.getColor());
-//        TextPaint mTextPaint = new TextPaint();
-//        mTextPaint.setTextSize(mTextSize - mTextSizeDifference * mAnimationProgress - mTextSizeDifference);
-//        mTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), CalligraphyConfig.get().getFontPath()));
-//        mTextPaint.setColor(ImageUtils.isBlackAndWhiteMode(getContext()) ? Color.BLACK : mWhiteTextPain.getColor());
-//
-//        StaticLayout mTextLayout = new StaticLayout(getResources().getString(R.string.hexagon_button_domain_check), mTextPaint,
-//                (int) (mTriangleHeight * 2), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
-//
-//        _canvas.save();
-//
-//        _canvas.translate(mCenters.get(3).x - (mTextLayout.getWidth() / 2), mCenters.get(0).y + mRadius / 3  - mTextLayout.getHeight() / 2);
-//        mTextLayout.draw(_canvas);
-//        _canvas.restore();
-        drawTextLayout(_canvas, mCenters.get(3), getResources().getString(R.string.str_domain_check), mWhiteTextPain.getColor());
 
-//        _canvas.drawText(getResources().getString(R.string.service_domain_check), mCenters.get(3).x,
-//                mCenters.get(0).y + mRadius / 2, mWhiteTextPain);
+        drawTextLayout(_canvas, mCenters.get(3), getResources().getString(R.string.str_domain_check),
+                mWhiteTextPain.getColor());
     }
 
     private void drawTextLayout(final Canvas _canvas, final PointF _center, final String _text,

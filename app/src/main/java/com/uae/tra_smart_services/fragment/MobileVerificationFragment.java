@@ -150,7 +150,7 @@ public class MobileVerificationFragment extends BaseServiceFragment
             if (isImeiValid()) {
                 searchDeviceByImei();
             } else {
-                Toast.makeText(getActivity(), R.string.enter_valid_imei_code, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.enter_valid_imei_code, C.TOAST_LENGTH).show();
             }
         } else {
             openImeiScannerIfCan();
@@ -165,7 +165,7 @@ public class MobileVerificationFragment extends BaseServiceFragment
                 mCameraPermissionManager.requestUncheckedPermissions(this, CAMERA_PERMISSION_REQUEST_CODE);
             }
         } else {
-            Toast.makeText(getActivity(), getString(R.string.str_camera_is_not_available), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.str_camera_is_not_available), C.TOAST_LENGTH).show();
         }
     }
 

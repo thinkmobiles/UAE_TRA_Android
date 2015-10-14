@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.global;
 
 import android.support.annotation.StringDef;
+import android.widget.Toast;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -12,6 +13,8 @@ public final class C {
 
     private C() {
     }
+
+    public static final int TOAST_LENGTH = Toast.LENGTH_LONG;
 
     public static final String KEY_SCANNER_RESULT_TEXT = "SCANNER_RESULT_TEXT";
 

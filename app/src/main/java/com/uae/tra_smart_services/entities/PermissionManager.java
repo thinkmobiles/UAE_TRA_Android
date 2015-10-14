@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
 import com.uae.tra_smart_services.util.PermissionUtils;
 
@@ -97,7 +98,7 @@ public final class PermissionManager {
                 mRequestSuccessListener.onPermissionRequestSuccess(_fragment);
             }
         } else {
-            Toast.makeText(mContext, R.string.attachment_permission_denied, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.attachment_permission_denied, C.TOAST_LENGTH).show();
         }
         return true;
     }
