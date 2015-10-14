@@ -2,10 +2,7 @@ package com.uae.tra_smart_services.rest.robo_requests;
 
 import com.uae.tra_smart_services.rest.TRAServicesAPI;
 import com.uae.tra_smart_services.rest.model.request.RatingServiceRequestModel;
-import com.uae.tra_smart_services.rest.model.response.CustomResponse;
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
-
-import retrofit.client.Response;
 
 /**
  * Created by PC on 9/3/2015.

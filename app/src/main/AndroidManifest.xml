@@ -14,14 +14,14 @@
         android:required="false"/>
 
     <application
-        android:name=".TRAApplication"
+        android:name="com.uae.tra_smart_services.TRAApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeGreen">
 
-        <activity android:name=".activity.SplashActivity"
+        <activity android:name="com.uae.tra_smart_services.activities.UserImageCutterActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -30,25 +30,21 @@
         </activity>
 
         <activity
-            android:name=".activity.AuthorizationActivity"
-            android:parentActivityName=".activity.HomeActivity"
+            android:name="com.uae.tra_smart_services.activity.AuthorizationActivity"
+            android:parentActivityName="com.uae.tra_smart_services.activity.HomeActivity"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".activity.HomeActivity"
+        <activity android:name="com.uae.tra_smart_services.activity.HomeActivity"
                   android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".activities.UserImageCutterActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".activity.ScannerActivity"
+        <activity android:name="com.uae.tra_smart_services.activity.ScannerActivity"
                   android:screenOrientation="portrait"/>
 
         <service
-            android:name=".rest.TRARestService"
+            android:name="com.uae.tra_smart_services.rest.TRARestService"
             android:exported="false"/>
 
         <meta-data

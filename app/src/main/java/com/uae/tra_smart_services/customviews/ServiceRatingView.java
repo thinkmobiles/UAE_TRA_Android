@@ -1,23 +1,15 @@
 package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 
-import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
  * Created by ak-buffalo on 14.09.15.

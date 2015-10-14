@@ -4,9 +4,6 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
-import com.uae.tra_smart_services.R;
 
 /**
  * Created by PC on 9/7/2015.
