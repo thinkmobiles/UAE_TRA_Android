@@ -45,7 +45,7 @@ public class UserImageCutterActivity extends Activity implements /*CutterContain
 
     protected void initViews() {
         alMainContainer = (FrameLayout) findViewById(R.id.alMainContainer);
-        overlay = (CutterOverlay) findViewById(R.id.coOverlay);
+//        overlay = (CutterOverlay) findViewById(R.id.coOverlay);
         background = (ImageView) findViewById(R.id.cutted_image);
         ccContainer = (ImageCutterView) findViewById(R.id.ccContainer);
         doCrop = (TextView) findViewById(R.id.doCrop);

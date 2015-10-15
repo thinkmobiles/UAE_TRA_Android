@@ -16,6 +16,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.uae.tra_smart_services.HexagonUtils;
 import com.uae.tra_smart_services.R;
@@ -24,15 +25,18 @@ import com.uae.tra_smart_services.R;
  * Created by and on 09.10.15.
  */
 
-public class ImageCutterView extends ViewGroup implements View.OnTouchListener, ViewGroup.OnHierarchyChangeListener{
+public class ImageCutterView extends ViewGroup implements View.OnTouchListener, ViewGroup.OnHierarchyChangeListener, ViewTreeObserver.OnGlobalLayoutListener{
     /** Coordinates */
     private int layoutWidth, layoutHeight;
+    private int left, top, right, bottom;
+    private boolean isChanged;
     float downX;
     float downY;
-    float lastTransitionX, lastTransitionY;
+    float containerOffsetX, containerOffsetY;
     private Rect containerCoords = new Rect();
     private Pressed currentPressed;
     private int containerSide;
+    private int cropperButtonHeight;
     /** Drawables */
     private final Paint mBorderPaint = new Paint();
     private final Path mRBScalatorPath = new Path();
@@ -41,9 +45,10 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
     private CutterOverlay parent;
     private HexagonCutterView mCutter;
     private OnCutterChanged mAreaChangeHandler;
+
     /** Entities */
     private enum Pressed {
-        SCALATOR(-1), CUTTER(0);
+        SCALATOR(-1), NOTHONG(0), CUTTER(1);
         private int dir;
         Pressed(int _dir){
             dir = _dir;
@@ -59,12 +64,13 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
         setWillNotDraw(false);
         setOnTouchListener(this);
         setOnHierarchyChangeListener(this);
+        getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
     private void obtainAttributes(AttributeSet attrs) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.HexagonView);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageCutterView);
         try {
-            containerSide = a.getInteger(R.styleable.ImageCutterView_containerSide, Color.TRANSPARENT);
+            containerSide = a.getInteger(R.styleable.ImageCutterView_containerSide, 400);
         } finally {
             a.recycle();
         }
@@ -95,22 +101,28 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(layoutWidth = w, layoutHeight = h, oldw, oldh);
-        initContainerRect();
-        initScalatorPaint();
-        calculateScalatorPath();
-        prepareOverlay();
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if(changed && mCutter != null){
+        isChanged = !changed;
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        if(isChanged && mCutter != null){
+            initContainerRect();
             mCutter.layout(containerCoords.left, containerCoords.top, containerCoords.right, containerCoords.bottom);
+            initScalatorPaint();
+            calculateScalatorPath();
+            prepareOverlay();
         }
     }
 
     private void initContainerRect(){
+        cropperButtonHeight = ((View) getParent()).findViewById(R.id.doCrop).getHeight();
         containerCoords.left = (getWidth() - containerSide) / 2;
-        containerCoords.top = (getHeight() - containerSide) / 2;
+        containerCoords.top = (getHeight() - containerSide - cropperButtonHeight) / 2;
         containerCoords.right = containerCoords.left + containerSide;
         containerCoords.bottom = containerCoords.top + containerSide;
     }
@@ -145,12 +157,16 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
         final PointF clickPoint = new PointF(_event.getX(), _event.getY());
         switch (_event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                downX = _event.getRawX();
-                downY = _event.getRawY();
+                downX = _event.getRawX() - containerCoords.left;
+                downY = _event.getRawY() - containerCoords.top;
                 if (HexagonUtils.pointInPolygon(clickPoint, mRBScalatorArea)){
                     currentPressed = Pressed.SCALATOR;
+                    downX = _event.getRawX();
+                    downY = _event.getRawY();
                 } else if (containerCoords.contains((int) _event.getX(), (int) _event.getY())){
                     currentPressed = Pressed.CUTTER;
+                } else {
+                    currentPressed = Pressed.NOTHONG;
                 }
 //                Log.e("MOVE", "RAW_X:" + _event.getRawX() + ", RAW_Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
                 return true;
@@ -158,7 +174,7 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
             case MotionEvent.ACTION_MOVE:
                 if(currentPressed == Pressed.SCALATOR){
                     scaleContainer(_event);
-                } else {
+                } else if(currentPressed == Pressed.CUTTER){
                     moveContainer(_event);
                 }
                 return true;
@@ -167,50 +183,44 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
     }
 
     private void moveContainer(MotionEvent _event) {
-        if(containerCoords.left >= 0 && containerCoords.right <= parent.getWidth()){
-            lastTransitionX = -downX + _event.getRawX();
-            if(lastTransitionX <= 0) lastTransitionX = 0;
-            if(lastTransitionX >= getWidth() - getWidth()) lastTransitionX = parent.getWidth() - getWidth();
-//            containerCoords.offsetTo();
-            setX(lastTransitionX);
-        }
-        if(containerCoords.top >= 0 && containerCoords.bottom <= parent.getHeight()){
-            lastTransitionY = -downY + _event.getRawY();
-            if(lastTransitionY <= 0) lastTransitionY = 0;
-            if(lastTransitionY >= parent.getHeight() - getHeight()) lastTransitionY = parent.getHeight() - getHeight();
-            setY(lastTransitionY);
-        }
 //        Log.e("MOVE", "RAW_X:" + _event.getRawX() + ", RAW_Y:" + _event.getRawY() + " | x:" + _event.getX() + ", y:" + _event.getY());
-        mAreaChangeHandler.onContainerAreaChanged(getWidth(), getHeight(), getX(), getY());
-        invalidate();
+        if(containerCoords.left >= 0 && containerCoords.right <= getWidth()){
+            containerOffsetX = _event.getRawX() - downX;
+            if(containerOffsetX < 0) containerOffsetX = 0;
+            if(containerOffsetX > getWidth() - containerSide) containerOffsetX = getWidth() - containerSide;
+        }
+        if(containerCoords.top >= 0 && containerCoords.bottom <= getHeight() - cropperButtonHeight){
+            containerOffsetY = _event.getRawY() - downY;
+            if(containerOffsetY < 0) containerOffsetY = 0;
+            if(containerOffsetY > getHeight() - containerSide - cropperButtonHeight)
+                containerOffsetY = getHeight() - containerSide - cropperButtonHeight;
+        }
+        containerCoords.offsetTo((int) containerOffsetX, (int) containerOffsetY);
+        calculateScalatorPath();
+        mCutter.layout(containerCoords.left, containerCoords.top, containerCoords.right, containerCoords.bottom);
     }
 
-    float scaleX = 1, scaleY = 1;
     private void scaleContainer(MotionEvent _event) {
-//        float deltaX = _event.getRawX() - downX;
-//        float deltaY = _event.getRawY() - downY;
-//        containerWidth = getWidth();
-//        containerHeight = getHeight();
-//        float maxDelta = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-//        getHitRect(containerCoords);
-//        switch (currentPressed){
-//            case SCALATOR:{
-////                    Log.e("SCALE_DOWN", "X:" + _event.getRawX() + ", Y:" + _event.getRawY()+" | x:" + _event.getX() + ", y:" + _event.getY());
-//                    if(deltaX >= 0 && deltaY >= 0 && containerCoords.left >= 0 && containerCoords.top >= 0 && containerCoords.right <= parentWidth && containerCoords.bottom <= parentHeight) {
-//                        scaleX = containerWidth / (containerWidth - maxDelta);
-//                        scaleY = containerHeight / (containerHeight - maxDelta);
-//                    } else if(deltaX <= 0 && deltaY <= 0 && containerWidth >= parentWidth / 2.5) {
-//                        scaleX = containerWidth / (containerWidth + maxDelta);
-//                        scaleY = containerHeight / (containerHeight + maxDelta);
-//                    } else {
-//                        return;
-//                    }
-//                    layout(0, 0, (int) (containerWidth * scaleX), (int) (containerHeight * scaleY));
-//                break;
-//            }
-//        }
-//        setX((lastTransitionX == 0) ? (parentWidth - containerWidth) / 2 : lastTransitionX);
-//        setY((lastTransitionY == 0) ? (parentHeight - containerHeight) / 2 : lastTransitionY);
+        float deltaX = _event.getRawX() - downX;
+        float deltaY = _event.getRawY() - downY;
+        float delta = (float) Math.abs(deltaX + deltaY) / 2;
+        switch (currentPressed){
+            case SCALATOR:{
+                    if(deltaX >= 0 && deltaY >= 0 && containerCoords.right <= getWidth() && containerCoords.bottom <= getHeight()) {
+                        containerCoords.right += delta;
+                        containerCoords.bottom += delta;
+                    } else if(deltaX <= 0 && deltaY <= 0 && containerSide >= getWidth() / 2.5) {
+                        containerCoords.right -= delta;
+                        containerCoords.bottom -= delta;
+                    } else {
+                        return;
+                    }
+                    containerSide = containerCoords.bottom - containerCoords.top;
+                    calculateScalatorPath();
+                    mCutter.layout(containerCoords.left, containerCoords.top, containerCoords.right, containerCoords.bottom);
+                break;
+            }
+        }
     }
 
     public Path getCutterPath(){
@@ -231,39 +241,30 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
 
     Canvas canvas;
     Paint paint;
-    Bitmap overlayBitmap;
     private void prepareOverlay(){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        Bitmap bitmapOverlay = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.RGB_565);
+        bitmapOverlay = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.RGB_565);
         bitmapOverlay.setHasAlpha(true);
         bitmapOverlay = makeTransparent(bitmapOverlay, 170);
-
-        if (bitmapOverlay.isMutable()) {
-            overlayBitmap = bitmapOverlay;
-        } else {
-            overlayBitmap = bitmapOverlay.copy(Bitmap.Config.ARGB_8888, true);
-            bitmapOverlay.recycle();
-        }
-        overlayBitmap.setHasAlpha(true);
-
-        canvas = new Canvas(overlayBitmap);
         paint = new Paint();
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));
-
     }
 
+    private Bitmap bitmapOverlay;
     private void drawOverlay(Canvas _canvas){
-
-        Bitmap mask = Bitmap.createBitmap(containerCoords.right - containerCoords.left, containerCoords.bottom - containerCoords.top, Bitmap.Config.RGB_565);
-
-        canvas.drawBitmap(mask, containerCoords.left, containerCoords.right, paint);
+        Bitmap overlayBitmap;
+        if (bitmapOverlay.isMutable()) {
+            overlayBitmap = bitmapOverlay.copy(Bitmap.Config.ARGB_8888, true);
+        } else {
+            overlayBitmap = bitmapOverlay;
+        }
+        canvas = new Canvas(overlayBitmap);
+         Bitmap mask = Bitmap.createBitmap(containerCoords.right - containerCoords.left, containerCoords.bottom - containerCoords.top, Bitmap.Config.RGB_565);
+        canvas.drawBitmap(mask, containerCoords.left, containerCoords.top, paint);
         mask.recycle();
-
         _canvas.drawBitmap(overlayBitmap, 0, 0, new Paint());
     }
-
-
 
     private Bitmap makeTransparent(Bitmap src, int value) {
         Bitmap transBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
@@ -274,5 +275,4 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
         canvas.drawBitmap(src, 0, 0, paint);
         return transBitmap;
     }
-
 }

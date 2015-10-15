@@ -41,12 +41,9 @@ public class HexagonCutterView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
         int mCenterWidth = w / 2;
         int mCenterHeight = h / 2;
-
         mHexagonSide = mCenterHeight;
-
         mPath.reset();
         mPoints[0] = new PointF((float) (mCenterWidth - mHexagonSide * Math.sin(0)), (float) (mCenterHeight - mHexagonSide * Math.cos(0)));
         mPath.moveTo(mPoints[0].x, mPoints[0].y);
