@@ -37,6 +37,7 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
     private Pressed currentPressed;
     private int containerSide;
     private int cropperButtonHeight;
+    private static final int plusArea = 50;
     /** Drawables */
     private final Paint mBorderPaint = new Paint();
     private final Path mRBScalatorPath = new Path();
@@ -135,13 +136,21 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
     }
 
     private void calculateScalatorPath(){
+        float x;
+        float y;
         mRBScalatorPath.reset();
-        mRBScalatorArea[0] = new PointF(containerCoords.right, containerCoords.bottom);
-        mRBScalatorPath.moveTo(mRBScalatorArea[0].x, mRBScalatorArea[0].y);
-        mRBScalatorArea[1] = new PointF(containerCoords.right - 100, containerCoords.bottom);
-        mRBScalatorPath.lineTo(mRBScalatorArea[1].x, mRBScalatorArea[1].y);
-        mRBScalatorArea[2] = new PointF(containerCoords.right, containerCoords.bottom - 60);
-        mRBScalatorPath.lineTo(mRBScalatorArea[2].x, mRBScalatorArea[2].y);
+        x = containerCoords.right;
+        y = containerCoords.bottom;
+        mRBScalatorArea[0] = new PointF(x, y + plusArea);
+        mRBScalatorPath.moveTo(x, y);
+        x = containerCoords.right - 100;
+        y = containerCoords.bottom;
+        mRBScalatorArea[1] = new PointF(x - plusArea, y + plusArea);
+        mRBScalatorPath.lineTo(x, y);
+        x = containerCoords.right;
+        y = containerCoords.bottom - 60;
+        mRBScalatorArea[2] = new PointF(x + plusArea, y - plusArea);
+        mRBScalatorPath.lineTo(x, y);
         mRBScalatorPath.close();
     }
 
@@ -197,6 +206,7 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
         }
         containerCoords.offsetTo((int) containerOffsetX, (int) containerOffsetY);
         calculateScalatorPath();
+//        invalidate();
         mCutter.layout(containerCoords.left, containerCoords.top, containerCoords.right, containerCoords.bottom);
     }
 
@@ -217,6 +227,8 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
                     }
                     containerSide = containerCoords.bottom - containerCoords.top;
                     calculateScalatorPath();
+                    invalidate();
+//                    mCutter.invalidate(containerCoords.left, containerCoords.top, containerCoords.right, containerCoords.bottom);
                     mCutter.layout(containerCoords.left, containerCoords.top, containerCoords.right, containerCoords.bottom);
                 break;
             }

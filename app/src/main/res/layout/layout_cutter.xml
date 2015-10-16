@@ -12,38 +12,40 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"/>
 
-    <!--<com.uae.tra_smart_services.customviews.CutterOverlay
-        android:id="@+id/coOverlay"
+    <com.uae.tra_smart_services.customviews.ImageCutterView
+        android:id="@+id/ccContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >-->
-
-        <com.uae.tra_smart_services.customviews.ImageCutterView
-            android:id="@+id/ccContainer"
+        android:layout_height="match_parent"
+        app:containerSide="400">
+        <com.uae.tra_smart_services.customviews.HexagonCutterView
+            android:id="@+id/hvCutter"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:containerSide="400">
-
-            <com.uae.tra_smart_services.customviews.HexagonCutterView
-                android:id="@+id/hvCutter"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </com.uae.tra_smart_services.customviews.ImageCutterView>
-
-    <!--</com.uae.tra_smart_services.customviews.CutterOverlay>-->
+            android:layout_height="match_parent" />
+    </com.uae.tra_smart_services.customviews.ImageCutterView>
 
     <TextView
         android:id="@+id/doCrop"
         android:gravity="center"
         android:background="#d94a4746"
-        android:text="CROP"
+        android:text="CROP IMAGE"
         android:textColor="@android:color/white"
-        android:textSize="30sp"
+        android:textSize="26sp"
         android:textAlignment="center"
         android:singleLine="true"
         android:layout_gravity="right|bottom"
-        android:padding="10dp"
+        android:padding="15dp"
         android:layout_width="match_parent"
         android:layout_height="60dp" />
+
+    <!--<com.uae.tra_smart_services.customviews.HexagonView
+        android:id="@+id/hvIcon_LIIHA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_gravity="left|bottom"
+        app:hexagonSideSize="60dp"
+        app:hexagonSrc="@drawable/ic_temp_left_field_icon"
+        app:hexagonBorderSize="3dp"
+        app:hexagonBorderColor="?attr/colorPrimary"/>-->
 
 </FrameLayout>

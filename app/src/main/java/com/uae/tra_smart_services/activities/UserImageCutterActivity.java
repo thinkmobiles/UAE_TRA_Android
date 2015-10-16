@@ -45,7 +45,6 @@ public class UserImageCutterActivity extends Activity implements /*CutterContain
 
     protected void initViews() {
         alMainContainer = (FrameLayout) findViewById(R.id.alMainContainer);
-//        overlay = (CutterOverlay) findViewById(R.id.coOverlay);
         background = (ImageView) findViewById(R.id.cutted_image);
         ccContainer = (ImageCutterView) findViewById(R.id.ccContainer);
         doCrop = (TextView) findViewById(R.id.doCrop);
@@ -96,5 +95,5 @@ public class UserImageCutterActivity extends Activity implements /*CutterContain
         _res.setBounds(0, 0, _res.getIntrinsicWidth(), _res.getIntrinsicHeight());
         _res.draw(canvas);
         return mutableBitmap;
-    }
+}
 }

@@ -42,8 +42,8 @@ public class LoaderView extends View {
     private float mBorderSize, mProcessBorderSize, mSuccessBorderSize;
 
     private final int DEFAULT_HEXAGON_RADIUS = Math.round(30 * getResources().getDisplayMetrics().density);
-    private final int HEXAGON_BORDER_COUNT = 6;
-    private final double mHexagonSection = 2.0 * Math.PI / HEXAGON_BORDER_COUNT;
+    private final int FUCKING_SIX = 6;
+    private final double mHexagonSection = 2.0 * Math.PI / FUCKING_SIX;
 
     private int mCenterWidth, mCenterHeight;
 
@@ -124,7 +124,7 @@ public class LoaderView extends View {
         mProcessPaint.setStyle(Paint.Style.STROKE);
 
         mEndProcessPaint.setAntiAlias(true);
-        mEndProcessPaint.setStrokeWidth(mBorderSize+1);
+        mEndProcessPaint.setStrokeWidth(mBorderSize + 1);
         mEndProcessPaint.setStyle(Paint.Style.STROKE);
 
         mFillArePaint.setAntiAlias(true);
@@ -231,7 +231,7 @@ public class LoaderView extends View {
         mHexagonPath.moveTo(
                 (float) (mCenterWidth - mHexagonSide * Math.sin(0)),
                 (float) (mCenterHeight - mHexagonSide * Math.cos(0)));
-        for (int i = 1; i < HEXAGON_BORDER_COUNT; i++) {
+        for (int i = 1; i < FUCKING_SIX; i++) {
             mHexagonPath.lineTo(
                     (float) (mCenterWidth - mHexagonSide * Math.sin(mHexagonSection * -i)),
                     (float) (mCenterHeight - mHexagonSide * Math.cos(mHexagonSection * -i)));
