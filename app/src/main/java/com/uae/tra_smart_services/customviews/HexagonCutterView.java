@@ -27,7 +27,7 @@ public class HexagonCutterView extends View {
     }
     public HexagonCutterView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        setWillNotDraw(false);
         init();
     }
 
@@ -55,18 +55,9 @@ public class HexagonCutterView extends View {
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-    }
-
-    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawPath(mPath, mPaint);
-    }
-
-    public PointF[] getPoints(){
-        return mPoints;
     }
 
     public Path getPath(){
