@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -39,7 +40,13 @@ import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.ChangeUserProfileRequest;
+import com.uae.tra_smart_services.util.IntentUtils;
 import com.uae.tra_smart_services.util.StringUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit.client.Response;
 
@@ -195,11 +202,30 @@ public final class EditUserProfileFragment extends BaseFragment
         public MyHexTarget(HexagonView _view) {
             super(_view);
         }
-
+        private String mPhotoFilePath;
+        private Uri mImageUri;
         @Override
         public void onResourceReady(Drawable resource, GlideAnimation<? super Drawable> glideAnimation) {
+            final File imageFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            final boolean isFolderExist = imageFolder.exists() || imageFolder.mkdir();
+
+            if (isFolderExist) {
+                String imageFileName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                File imageFile;
+                try {
+                    imageFile = File.createTempFile(imageFileName, AttachmentManager.PHOTO_FILE_EXTENSION, imageFolder);
+                } catch (IOException e) {
+                    imageFile = null;
+                }
+                if (imageFile != null) {
+                    mPhotoFilePath = imageFile.getPath();
+                    startActivityForResult(IntentUtils.getImageCutterStartIntent(Uri.fromFile(imageFile)), FRAGMENT_CODE);
+                }
+            } else {
+                Toast.makeText(getActivity(), "Can't create photo", Toast.LENGTH_SHORT).show();
+            }
+
             C.TEMP_USER_IMG = resource;
-            startActivityForResult(new Intent(getActivity(), UserImageCutterActivity.class), 10001);
         }
     }
 

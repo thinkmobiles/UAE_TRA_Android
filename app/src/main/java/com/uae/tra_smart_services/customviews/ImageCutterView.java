@@ -13,16 +13,19 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 
 import com.uae.tra_smart_services.HexagonUtils;
 import com.uae.tra_smart_services.R;
 
 /**
- * Created by and on 09.10.15.
+ * Created by ak-buffalo on 09.10.15.
  */
 
 public class ImageCutterView extends ViewGroup implements View.OnTouchListener, ViewGroup.OnHierarchyChangeListener, ViewTreeObserver.OnGlobalLayoutListener{
@@ -42,6 +45,7 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
     private final Path mRBScalatorPath = new Path();
     private PointF[] mRBScalatorArea = new PointF[3];
     private Bitmap bitmapOverlay;
+    private Bitmap originalBitmap;
     private Canvas canvas;
     private Paint paint;
     /** Views */
@@ -97,12 +101,12 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        isChanged = !changed;
+        isChanged = changed;
     }
 
     @Override
     public void onGlobalLayout() {
-        if(isChanged && mCutter != null){
+        if(isChanged && mCutter != null && bitmapOverlay != null){
             initContainerRect();
             initScalatorPaint();
             calculateScalatorPath();
@@ -146,12 +150,6 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
         mRBScalatorPath.close();
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        drawOverlay(canvas);
-        canvas.drawPath(mRBScalatorPath, mBorderPaint);
-    }
 
     @Override
     public boolean onTouch(View _view, MotionEvent _event) {
@@ -231,6 +229,12 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
         mAreaChangeHandler = _handler;
     }
 
+    public void setOriginalImageBitmap(Bitmap _originalBitmap, WindowManager _windowManager){
+        DisplayMetrics metrics = new DisplayMetrics();
+        _windowManager.getDefaultDisplay().getMetrics(metrics);
+        originalBitmap = Bitmap.createScaledBitmap(_originalBitmap, metrics.widthPixels, metrics.heightPixels, true);
+    }
+
     private void prepareOverlay(){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -239,6 +243,14 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
         bitmapOverlay = makeTransparent(bitmapOverlay, 170);
         paint = new Paint();
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawBitmap(originalBitmap, 0, 0, null);
+        drawOverlay(canvas);
+        canvas.drawPath(mRBScalatorPath, mBorderPaint);
     }
 
     private void drawOverlay(Canvas _canvas){

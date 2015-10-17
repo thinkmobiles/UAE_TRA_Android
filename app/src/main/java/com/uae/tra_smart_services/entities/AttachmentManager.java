@@ -35,8 +35,8 @@ public final class AttachmentManager {
     private static final int REQUEST_CAMERA_PHOTO_CODE = 131;
 
     private static final String CAMERA_PHOTO_FILE_PATH_KEY = "CAMERA_PHOTO_FILE_PATH_KEY";
-    private static final String SELECTED_IMAGE_URI_KEY = "SELECTED_IMAGE_URI_KEY";
-    private static final String PHOTO_FILE_EXTENSION = ".jpg";
+    public static final String SELECTED_IMAGE_URI_KEY = "SELECTED_IMAGE_URI_KEY";
+    public static final String PHOTO_FILE_EXTENSION = ".jpg";
 
     private final Context mContext;
     private final PackageManager mPackageManager;

@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,7 +11,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,8 +23,11 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.ImageCutterView;
 import com.uae.tra_smart_services.global.C;
 
+import java.io.IOException;
+import java.net.URI;
+
 /**
- * Created by and on 15.09.15.
+ * Created by ak-buffalo on 15.09.15.
  */
 
 public class UserImageCutterActivity extends Activity implements ImageCutterView.OnCutterChanged, View.OnClickListener{
@@ -31,28 +38,40 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
     private Path mCutterPath;
     private int mCutterOffsetX, mCutterOffsetY;
     private int mCutterSide;
-
-    ImageView cutted_image;
+    Uri imageUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cutter);
-        initData();
-        initViews();
-        initListeners();
+        imageUri = (Uri) getIntent().getSerializableExtra("fileUri");
+        imageUri = getIntent().getData();
+        imageUri = (Uri) getIntent().getExtras().get(Intent.EXTRA_STREAM);
 
-        cutted_image = (ImageView) findViewById(R.id.cutted_image);
+        try {
+            initData();
+            initViews();
+            initListeners();
+        } catch (Exception e) {
+            setResult(RESULT_CANCELED, new Intent());
+            finish();
+        }
     }
 
-    protected void initData(){
-        C.TEMP_USER_IMG = new BitmapDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.pic_test));
-        originBitmap = convertAnotherDrawableToBitmap(C.TEMP_USER_IMG);
+    protected void initData() throws IOException{
+        originBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+        originBitmap = doScaleBitmap(originBitmap);
     }
 
     protected void initViews() {
         ccCutterView = (ImageCutterView) findViewById(R.id.ccContainer);
-        ccCutterView.setBackgroundDrawable(new BitmapDrawable(originBitmap));
+        ccCutterView.setOriginalImageBitmap(originBitmap, getWindowManager());
         doCropButton = (TextView) findViewById(R.id.doCrop);
+    }
+
+    private Bitmap doScaleBitmap(Bitmap _originalBitmap) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return Bitmap.createScaledBitmap(_originalBitmap, metrics.widthPixels, metrics.heightPixels, true);
     }
 
     protected void initListeners() {
@@ -68,20 +87,16 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
     }
 
     private void doCropImage() {
-        Bitmap resultingImage = Bitmap.createBitmap(ccCutterView.getMeasuredWidth(), ccCutterView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap resultingImage = Bitmap.createBitmap(mCutterSide, mCutterSide, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(resultingImage);
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         canvas.drawPath(mCutterPath, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(originBitmap, /*(int) (-mCutterOffsetX)*/0, /*(int) (-mCutterOffsetY)*/0, paint);
+        canvas.drawBitmap(originBitmap, -mCutterOffsetX, -mCutterOffsetY, paint);
 
-//        C.TEMP_USER_IMG = new BitmapDrawable(resultingImage);
-//        finishActivity(10001);
-        doCropButton.setVisibility(View.INVISIBLE);
-        ccCutterView.setVisibility(View.INVISIBLE);
-        cutted_image.setVisibility(View.VISIBLE);
-        cutted_image.setImageBitmap(resultingImage);
+        setResult(RESULT_OK, new Intent());
+        finish();
     }
 
     private Bitmap convertAnotherDrawableToBitmap(Drawable _res){
