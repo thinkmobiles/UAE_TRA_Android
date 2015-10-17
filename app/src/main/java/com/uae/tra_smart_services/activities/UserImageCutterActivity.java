@@ -68,15 +68,13 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
     }
 
     private void doCropImage() {
-        Bitmap bitmap1 = Bitmap.createBitmap(mCutterSide, mCutterSide, Bitmap.Config.ARGB_8888);
-        Bitmap bitmap2 = originBitmap;
-        Bitmap resultingImage = Bitmap.createBitmap(mCutterSide, mCutterSide, bitmap1.getConfig());
+        Bitmap resultingImage = Bitmap.createBitmap(ccCutterView.getMeasuredWidth(), ccCutterView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(resultingImage);
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         canvas.drawPath(mCutterPath, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap2, (int) (-mCutterOffsetX), (int) (-mCutterOffsetY), paint);
+        canvas.drawBitmap(originBitmap, /*(int) (-mCutterOffsetX)*/0, /*(int) (-mCutterOffsetY)*/0, paint);
 
 //        C.TEMP_USER_IMG = new BitmapDrawable(resultingImage);
 //        finishActivity(10001);
