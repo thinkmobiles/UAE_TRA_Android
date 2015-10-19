@@ -13,6 +13,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -34,7 +35,6 @@ import com.uae.tra_smart_services.util.ImageUtils;
 public class DragFrameLayout extends FrameLayout implements OnDragListener {
 
     //region C
-    private final float SHADOW_RADIUS = 5 * getResources().getDisplayMetrics().density;
     private final float DELETE_ARC_VISIBLE_HEIGHT = 150 * getResources().getDisplayMetrics().density;
     private final float DELETE_ARC_HEIGHT = 400 * getResources().getDisplayMetrics().density;
     private final float SHADOW_SCALE = 0.95F; // [0.0..1.0]
@@ -70,7 +70,11 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
 
     public DragFrameLayout(final Context _context, final AttributeSet _attrs) {
         super(_context, _attrs);
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+
         initAttributes(_context, _attrs);
         initPaints();
         setOnDragListener(this);
@@ -79,9 +83,9 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
         mTrashBtn.setHexagonSide(TRASH_BUTTON_SIZE);
         mTrashBtn.setBackgroundColor(mDeleteColor);
         mTrashBtn.setHexagonSrcDrawable(R.drawable.ic_action_delete);
-        mTrashBtn.setHexagonShadow(SHADOW_RADIUS * 2, Color.GRAY);
+//        mTrashBtn.setHexagonShadow(SHADOW_RADIUS * 2, Color.GRAY);
 
-        ViewGroup invisibleContainer = new FrameLayout(getContext());
+        final ViewGroup invisibleContainer = new FrameLayout(getContext());
         invisibleContainer.setVisibility(INVISIBLE);
         invisibleContainer.addView(mTrashBtn);
         addView(invisibleContainer);
@@ -106,7 +110,6 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
         mShadowPaint = new Paint();
         mShadowPaint.setStyle(Paint.Style.FILL);
         mShadowPaint.setColor(mShadowBackgroundColor);
-        mShadowPaint.setShadowLayer(SHADOW_RADIUS, 0, 0, Color.GRAY);
 
         mShadowShadowPaint = new Paint();
         mShadowShadowPaint.setStyle(Paint.Style.FILL);

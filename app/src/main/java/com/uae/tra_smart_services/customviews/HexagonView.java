@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
@@ -51,8 +52,8 @@ public final class HexagonView extends View implements Target {
     //endregion
 
     private final Path mPath;
-    private Paint mPaint, mShadowPaint, mTextPaint;
-    private Rect mHexagonRect, mTextRect;
+    private Paint mBorderPathPaint, mTextPaint, mBackgroundPaint;
+    private Rect mTextRect;
     private Drawable mSrcDrawable;
 
     @DrawableRes
@@ -64,7 +65,7 @@ public final class HexagonView extends View implements Target {
     private float mBorderWidth, mTextSize;
 
     @ColorInt
-    private int mBorderColor, mBackgroundColor, mTextColor, mSrcTintColor;
+    private int mBorderColor, mTextColor, mSrcTintColor;
 
     public HexagonView(Context context) {
         this(context, null);
@@ -72,8 +73,12 @@ public final class HexagonView extends View implements Target {
 
     public HexagonView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+
+        final int backgroundColor;
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HexagonView);
         try {
             setHexagonSide(a.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS));
@@ -82,7 +87,7 @@ public final class HexagonView extends View implements Target {
             mBorderColor = a.getColor(R.styleable.HexagonView_hexagonBorderColor, 0xFFC8C7C6);
             mTextColor = a.getColor(R.styleable.HexagonView_hexagonTextColor, mBorderColor);
             mSrcTintColor = a.getColor(R.styleable.HexagonView_hexagonSrcTintColor, Color.TRANSPARENT);
-            mBackgroundColor = a.getColor(R.styleable.HexagonView_hexagonBackgroundColor, Color.TRANSPARENT);
+            backgroundColor = a.getColor(R.styleable.HexagonView_hexagonBackgroundColor, Color.TRANSPARENT);
             mSrcDrawable = a.getDrawable(R.styleable.HexagonView_hexagonSrc);
             mSrcRes = a.getResourceId(R.styleable.HexagonView_hexagonSrc, R.drawable.authorization_logo);
             mText = a.getString(R.styleable.HexagonView_hexagonText);
@@ -93,11 +98,16 @@ public final class HexagonView extends View implements Target {
 
         tintDrawableIfNeed();
 
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setColor(mBorderColor);
-        mPaint.setStrokeWidth(mBorderWidth);
-        mPaint.setStyle(Paint.Style.STROKE);
+        mBorderPathPaint = new Paint();
+        mBorderPathPaint.setAntiAlias(true);
+        mBorderPathPaint.setColor(mBorderColor);
+        mBorderPathPaint.setStrokeWidth(mBorderWidth);
+        mBorderPathPaint.setStyle(Paint.Style.STROKE);
+
+        mBackgroundPaint = new Paint();
+        mBackgroundPaint.setAntiAlias(true);
+        mBackgroundPaint.setColor(backgroundColor);
+        mBackgroundPaint.setStyle(Paint.Style.FILL);
 
         mTextPaint = new Paint();
         mTextPaint.setTextAlign(Paint.Align.CENTER);
@@ -106,7 +116,6 @@ public final class HexagonView extends View implements Target {
 
         mPath = new Path();
 
-        mHexagonRect = new Rect();
         mTextRect = new Rect();
     }
 
@@ -125,14 +134,8 @@ public final class HexagonView extends View implements Target {
 
     @Override
     public void setBackgroundColor(@ColorInt int _backgroundColor) {
-        mBackgroundColor = _backgroundColor;
+        mBackgroundPaint.setColor(_backgroundColor);
         invalidate();
-    }
-
-    public final void setHexagonShadow(final float _radius, final int _color) {
-        mShadowPaint = new Paint();
-        mShadowPaint.setStyle(Paint.Style.FILL);
-        mShadowPaint.setShadowLayer(_radius, 0, 0, _color);
     }
 
     public final void setHexagonSrcDrawable(@DrawableRes final int _drawableRes) {
@@ -223,73 +226,68 @@ public final class HexagonView extends View implements Target {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //region Draw shadow
-//        canvas.save();
-//        canvas.clipPath(mPath, Region.Op.DIFFERENCE);
-        if (mShadowPaint != null) {
-            canvas.drawPath(mPath, mShadowPaint);
-        }
-//        canvas.restore();
-        //endregion
 
-        canvas.clipPath(mPath);
-        canvas.drawColor(mBackgroundColor);
+        canvas.drawPath(mPath, mBackgroundPaint);
         if (mSrcDrawable != null) {
-            canvas.getClipBounds(mHexagonRect);
-            drawSrc(canvas, mSrcDrawable);
+            canvas.clipPath(mPath);
+            drawImageSrc(canvas, mSrcDrawable);
+            canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
         }
 
         if (!TextUtils.isEmpty(mText)) {
             drawText(canvas);
         }
-        canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
 
-        canvas.drawPath(mPath, mPaint);
+        canvas.drawPath(mPath, mBorderPathPaint);
     }
 
-    private void drawSrc(final Canvas _canvas, final Drawable _drawable) {
+    private void drawImageSrc(final Canvas _canvas, final Drawable _drawable) {
         if (mScaleType == INSIDE_CROP) {
-            drawInsideCropImage(_canvas, _drawable);
+            drawCenterInsideImage(_canvas, _drawable);
         } else if (mScaleType == CENTER_CROP) {
             drawCenterCropImage(_canvas, _drawable);
         }
     }
 
-    private void drawInsideCropImage(final Canvas _canvas, final Drawable _drawable) {
-        int drawableWidth = _drawable.getIntrinsicWidth(), drawableHeight = _drawable.getIntrinsicHeight();
-        int canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
+    private void drawCenterInsideImage(final Canvas _canvas, final Drawable _drawable) {
+        float drawableWidth = _drawable.getMinimumWidth(), drawableHeight = _drawable.getMinimumHeight();
+        float canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
 
-        drawableWidth = drawableWidth == -1 ? canvasWidth : drawableWidth;
-        drawableHeight = drawableHeight == -1 ? canvasHeight : drawableHeight;
+        final float scale;
+        final float offsetX, offsetY;
 
-        if (drawableWidth < canvasWidth || drawableHeight < canvasHeight) {
-            float centerY = (float) (mHexagonSide + getBorderWidth() / 2f);
-            float centerX = (float) getWidth() / 2;
-
-            mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
-                    (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
-            _drawable.draw(_canvas);
+        if (drawableWidth <= canvasWidth && drawableHeight <= canvasHeight) {
+            drawCenterImage(_canvas, _drawable);
+            return;
+        } else if (drawableWidth <= drawableHeight) {
+            scale = canvasHeight / drawableHeight;
         } else {
-            float scale;
-            _drawable.setBounds(0, 0, drawableWidth, drawableHeight);
-            if (drawableWidth * canvasHeight > canvasWidth * drawableHeight) {//image is wider
-                scale = (float) canvasHeight / (float) drawableHeight;
-            } else { //image is higher
-                scale = (float) canvasWidth / (float) drawableWidth;
-            }
-            float dx = (canvasWidth - drawableWidth * scale) / 2f;
-            float dy = (canvasHeight - drawableHeight * scale) / 2f;
-
-            _canvas.save();
-            _canvas.scale(scale, scale);
-            _canvas.translate(Math.round(dx), Math.round(dy));
-            _drawable.draw(_canvas);
-            _canvas.restore();
+            scale = canvasWidth / drawableWidth;
         }
+        offsetX = (canvasWidth - (drawableWidth * scale)) / 2;
+        offsetY = (canvasHeight - (drawableHeight * scale)) / 2;
+        _drawable.setBounds(0, 0, Math.round(drawableWidth), Math.round(drawableHeight));
+
+        _canvas.save();
+        _canvas.translate(Math.round(offsetX), Math.round(offsetY));
+        _canvas.scale(scale, scale);
+        _drawable.draw(_canvas);
+        _canvas.restore();
+    }
+
+    private void drawCenterImage(Canvas _canvas, Drawable _drawable) {
+        float drawableWidth = _drawable.getMinimumWidth(), drawableHeight = _drawable.getMinimumHeight();
+
+        float centerY = (float) (mHexagonSide + getBorderWidth() / 2f);
+        float centerX = (float) getWidth() / 2;
+
+        mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
+                (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
+        _drawable.draw(_canvas);
     }
 
     private void drawCenterCropImage(Canvas _canvas, Drawable _drawable) {
-        float drawableWidth = _drawable.getIntrinsicWidth(), drawableHeight = _drawable.getIntrinsicHeight();
+        float drawableWidth = _drawable.getMinimumWidth(), drawableHeight = _drawable.getMinimumHeight();
         float canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
 
         final float scale;

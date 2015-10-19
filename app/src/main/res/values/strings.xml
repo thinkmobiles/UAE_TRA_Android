@@ -6,7 +6,7 @@
     <!--                Authorization screens                -->
     <string name="register_title">Create Account</string>
     <string name="forgot_password_title">Forgot Password</string>
-    <string name="error_fill_all_fields">Please enter fill the fields with necessary information. All the fields should be filled with required data</string>
+    <string name="error_fill_all_fields">Please fill the fields with necessary information. All the fields should be filled with required data</string>
 
     <!--            Email field               -->
     <string name="str_email">Email</string>
