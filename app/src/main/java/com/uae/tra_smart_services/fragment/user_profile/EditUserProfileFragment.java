@@ -144,7 +144,9 @@ public final class EditUserProfileFragment extends BaseFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == FRAGMENT_CODE && resultCode == Activity.RESULT_OK) {
-            onAttachmentGet(Uri.parse(data.getStringExtra("FITTED_IMAGE")));
+            String fittedImagePath = data.getStringExtra("FITTED_IMAGE");
+            Uri fittedImageUri = Uri.parse(fittedImagePath);
+            onAttachmentGet(fittedImageUri);
         } else {
             mAttachmentManager.onActivityResult(requestCode, resultCode, data);
         }
