@@ -16,6 +16,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.SpamServiceProviderAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
@@ -115,11 +116,11 @@ public class ReportSmsSpamFragment extends BaseServiceFragment implements OnClic
 
     private boolean validateData() {
         if (etNumberOfSpammer.getText().toString().isEmpty()) {
-            Toast.makeText(getActivity(), R.string.str_invalid_number, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.str_invalid_number, C.TOAST_LENGTH).show();
             return false;
         }
         if (etDescription.getText().toString().isEmpty()) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, C.TOAST_LENGTH).show();
             return false;
         }
         return true;

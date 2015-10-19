@@ -17,6 +17,7 @@ import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseServiceFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
@@ -121,11 +122,11 @@ public class ReportWebSpamFragment extends BaseServiceFragment implements OnClic
 
     private boolean validateData() {
         if (!mFilters.check(etUrl.getText().toString())) {
-            Toast.makeText(getActivity(), R.string.str_invalid_url, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.str_invalid_url, C.TOAST_LENGTH).show();
             return false;
         }
         if (etDescription.getText().toString().isEmpty()) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, C.TOAST_LENGTH).show();
             return false;
         }
         return true;

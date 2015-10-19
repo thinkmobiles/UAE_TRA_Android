@@ -30,6 +30,7 @@ import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
@@ -226,12 +227,12 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     private boolean validateData() {
         if (etTitle.getText().toString().trim().isEmpty() ||
                 etMessageDescription.getText().toString().trim().isEmpty()) {
-            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, C.TOAST_LENGTH).show();
             return false;
         }
 
         if (nothingSelected) {
-            Toast.makeText(getActivity(), R.string.fragment_innovations_no_selected_item, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.fragment_innovations_no_selected_item, C.TOAST_LENGTH).show();
             return false;
         }
 

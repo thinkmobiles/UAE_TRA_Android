@@ -1,14 +1,17 @@
 buildscript {
     repositories {
+        mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
     }
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.jakewharton.hugo'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -24,7 +27,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
-        versionName "1.41.8"
+        versionName "1.42.1"
     }
     buildTypes {
         release {
@@ -56,6 +59,7 @@ dependencies {
     compile 'com.octo.android.robospice:robospice-retrofit:1.4.14'
 
     //3rd party libs
+    compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'me.dm7.barcodescanner:zxing:1.8.2'

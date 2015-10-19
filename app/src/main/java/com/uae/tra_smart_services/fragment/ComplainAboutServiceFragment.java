@@ -20,6 +20,7 @@ import com.uae.tra_smart_services.adapter.ServiceProviderAdapter;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.customviews.ThemedImageView;
 import com.uae.tra_smart_services.fragment.base.BaseComplainFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
@@ -121,18 +122,18 @@ public final class ComplainAboutServiceFragment extends BaseComplainFragment
         final String description = etDescription.getText().toString();
 
         if (title.isEmpty() || phone.isEmpty() || description.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, C.TOAST_LENGTH).show();
             return false;
         }
 
         if (phone.length() < TRAPatterns.MIN_PHONE_NUMBER_LENGTH) {
-            Toast.makeText(getActivity(), R.string.phone_number_is_too_short, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.phone_number_is_too_short, C.TOAST_LENGTH).show();
             return false;
         }
 
         boolean numberInvalid = !Patterns.PHONE.matcher(phone).matches();
         if (numberInvalid) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_reference_number, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.fragment_complain_no_reference_number, C.TOAST_LENGTH).show();
             return false;
         }
         return true;

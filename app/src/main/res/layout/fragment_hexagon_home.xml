@@ -45,9 +45,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/hhHeader_FHH"
             android:paddingTop="5dp"
-            app:hexTextSize="12dp"
+            app:hexTextSize="10dp"
             app:hexagonGapWidth="10dp"
-            app:separatorStrokeWidth="2dp"/>
+            app:separatorStrokeWidth="2dp"
+            android:visibility="visible"/>
 
     </RelativeLayout>
 

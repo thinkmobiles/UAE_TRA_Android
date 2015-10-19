@@ -32,6 +32,7 @@ import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
@@ -201,6 +202,60 @@ public final class EditUserProfileFragment extends BaseFragment
         Glide.with(getActivity())
                 .load(mImageUri)
                 .into((Target) new HexagonViewTarget(hvUserAvatar));
+//        Target target = new Target() {
+//            @Override
+//            public void onBitmapLoaded(Bitmap _bitmap, Picasso.LoadedFrom from) {
+//                try {
+//                    ExifInterface exifInterface = new ExifInterface(_imageUri.getPath());
+//
+//                    int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+//                    Matrix matrix = new Matrix();
+//                    switch (orientation) {
+//                        case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+//                            matrix.setScale(-1, 1);
+//                            break;
+//                        case ExifInterface.ORIENTATION_ROTATE_180:
+//                            matrix.setRotate(180);
+//                            break;
+//                        case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+//                            matrix.setRotate(180);
+//                            matrix.postScale(-1, 1);
+//                            break;
+//                        case ExifInterface.ORIENTATION_TRANSPOSE:
+//                            matrix.setRotate(90);
+//                            matrix.postScale(-1, 1);
+//                            break;
+//                        case ExifInterface.ORIENTATION_ROTATE_90:
+//                            matrix.setRotate(90);
+//                            break;
+//                        case ExifInterface.ORIENTATION_TRANSVERSE:
+//                            matrix.setRotate(-90);
+//                            matrix.postScale(-1, 1);
+//                            break;
+//                        case ExifInterface.ORIENTATION_ROTATE_270:
+//                            matrix.setRotate(-90);
+//                            break;
+//                    }
+//                    _bitmap = Bitmap.createBitmap(_bitmap, 0, 0, _bitmap.getWidth(), _bitmap.getHeight(), matrix, false);
+//                } catch (IOException exc) {
+//                    exc.printStackTrace();
+//                }
+//                hvUserAvatar.postScaleType(HexagonView.CENTER_CROP);
+//                hvUserAvatar.setHexagonSrcDrawable(new BitmapDrawable(getResources(), _bitmap));
+//                hvUserAvatar.setTag(null);
+//            }
+//
+//            @Override
+//            public void onBitmapFailed(Drawable errorDrawable) {
+//
+//            }
+//
+//            @Override
+//            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//            }
+//        };
+//        hvUserAvatar.setTag(target);
     }
 
     @Override
@@ -226,32 +281,32 @@ public final class EditUserProfileFragment extends BaseFragment
 
 
         if (firstName.isEmpty() || lastName.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, C.TOAST_LENGTH).show();
             return false;
         }
 
         if (firstName.length() < MIN_USERNAME_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_short, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_short, C.TOAST_LENGTH).show();
             return false;
         } else if (firstName.length() > MAX_USERNAME_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_long, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_long, C.TOAST_LENGTH).show();
             return false;
         }
 
         if (lastName.length() < MIN_USERNAME_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_short, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_short, C.TOAST_LENGTH).show();
             return false;
         } else if (lastName.length() > MAX_USERNAME_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_long, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_long, C.TOAST_LENGTH).show();
             return false;
         }
 
         if (!StringUtils.isAllLettersOrWhiteSpace(firstName)) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, C.TOAST_LENGTH).show();
             return false;
         }
         if (!StringUtils.isAllLettersOrWhiteSpace(lastName)) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, C.TOAST_LENGTH).show();
             return false;
         }
         return true;

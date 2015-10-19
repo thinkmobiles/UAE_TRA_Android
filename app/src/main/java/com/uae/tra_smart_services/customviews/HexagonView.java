@@ -10,7 +10,6 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
@@ -319,10 +318,7 @@ public final class HexagonView extends View implements Target {
     @Override
     public final void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
         postScaleType(CENTER_CROP);
-        final LayerDrawable layerDrawable = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.layerlist_infohub_icon);
-        layerDrawable.setDrawableByLayerId(R.id.lli_infohub_icon_background, new ColorDrawable(Color.MAGENTA));
-        layerDrawable.setDrawableByLayerId(R.id.lli_infohub_icon_front, new BitmapDrawable(getResources(), bitmap));
-        setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getContext(), layerDrawable));
+        setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getContext(), new BitmapDrawable(getResources(), bitmap)));
     }
 
     @Override

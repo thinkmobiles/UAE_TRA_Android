@@ -232,7 +232,7 @@ public class SettingsFragment extends BaseFragment
     private void setBaseUrl(String _url) {
         ServerConstants.BASE_URL = _url;
         mPrefs.edit().putString(C.KEY_BASE_URL, _url).commit();
-        Toast.makeText(getActivity(), getString(R.string.str_success), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.str_success), C.TOAST_LENGTH).show();
     }
 
     @Override

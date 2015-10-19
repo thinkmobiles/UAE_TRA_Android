@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.graphics.Region;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
@@ -128,12 +129,20 @@ public class HexagonalHeader extends View implements Target {
 
     public HexagonalHeader(final Context _context, final AttributeSet _attrs) {
         super(_context, _attrs);
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         initProperties(_attrs);
         initPaint();
         initButtons();
         setInvisibleHexagons();
         initDrawables();
+        setLayerType();
+    }
+
+    private void setLayerType() {
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
     }
 
     public final void setOnButtonClickListener(final OnButtonClickListener _buttonClickListener) {
@@ -147,7 +156,6 @@ public class HexagonalHeader extends View implements Target {
         calculateButtonsPath();
         measureDrawableBounds();
         requestLayout();
-//        invalidate();
     }
 
     public final PointF getAvatarCenter() {
@@ -556,13 +564,21 @@ public class HexagonalHeader extends View implements Target {
         mAvatarPath.lineTo(mAvatarHexagon[5].x, mAvatarHexagon[5].y);
         mAvatarPath.close();
 
+//        mAvatarClipPath = new Path();
+//        mAvatarClipPath.moveTo(centerX, centerY + radius - mHexagonAvatarBorderWidth / 2);
+//        mAvatarClipPath.lineTo(centerX - avatarTriangleHeight + mHexagonAvatarBorderWidth / 2, centerY + radius / 2 - mHexagonAvatarBorderWidth / 2);
+//        mAvatarClipPath.lineTo(centerX - avatarTriangleHeight + mHexagonAvatarBorderWidth / 2, centerY - radius / 2 + mHexagonAvatarBorderWidth / 2);
+//        mAvatarClipPath.lineTo(centerX, centerY - radius + mHexagonAvatarBorderWidth / 2);
+//        mAvatarClipPath.lineTo(centerX + avatarTriangleHeight - mHexagonAvatarBorderWidth / 2, centerY - radius / 2 + mHexagonAvatarBorderWidth / 2);
+//        mAvatarClipPath.lineTo(centerX + avatarTriangleHeight - mHexagonAvatarBorderWidth / 2, centerY + radius / 2 - mHexagonAvatarBorderWidth / 2);
+//        mAvatarClipPath.close();
         mAvatarClipPath = new Path();
-        mAvatarClipPath.moveTo(centerX, centerY + radius - mHexagonAvatarBorderWidth / 2);
-        mAvatarClipPath.lineTo(centerX - avatarTriangleHeight + mHexagonAvatarBorderWidth / 2, centerY + radius / 2 - mHexagonAvatarBorderWidth / 2);
-        mAvatarClipPath.lineTo(centerX - avatarTriangleHeight + mHexagonAvatarBorderWidth / 2, centerY - radius / 2 + mHexagonAvatarBorderWidth / 2);
-        mAvatarClipPath.lineTo(centerX, centerY - radius + mHexagonAvatarBorderWidth / 2);
-        mAvatarClipPath.lineTo(centerX + avatarTriangleHeight - mHexagonAvatarBorderWidth / 2, centerY - radius / 2 + mHexagonAvatarBorderWidth / 2);
-        mAvatarClipPath.lineTo(centerX + avatarTriangleHeight - mHexagonAvatarBorderWidth / 2, centerY + radius / 2 - mHexagonAvatarBorderWidth / 2);
+        mAvatarClipPath.moveTo(centerX, centerY + radius);
+        mAvatarClipPath.lineTo(centerX - avatarTriangleHeight, centerY + radius / 2);
+        mAvatarClipPath.lineTo(centerX - avatarTriangleHeight, centerY - radius / 2);
+        mAvatarClipPath.lineTo(centerX, centerY - radius);
+        mAvatarClipPath.lineTo(centerX + avatarTriangleHeight, centerY - radius / 2);
+        mAvatarClipPath.lineTo(centerX + avatarTriangleHeight, centerY + radius / 2);
         mAvatarClipPath.close();
     }
 

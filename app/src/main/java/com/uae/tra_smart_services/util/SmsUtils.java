@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.global.C;
 
 /**
  * Created by mobimaks on 25.09.2015.
@@ -23,7 +24,7 @@ public final class SmsUtils {
         if (intent.resolveActivity(_context.getPackageManager()) != null) {
             _context.startActivity(intent);
         } else {
-            Toast.makeText(_context, R.string.fragment_report_spam_cant_send_sms, Toast.LENGTH_SHORT).show();
+            Toast.makeText(_context, R.string.fragment_report_spam_cant_send_sms, C.TOAST_LENGTH).show();
         }
     }
 

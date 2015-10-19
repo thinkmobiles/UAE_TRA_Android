@@ -19,6 +19,7 @@ import com.uae.tra_smart_services.adapter.StateRegisterAdapter;
 import com.uae.tra_smart_services.entities.CustomFilterPool;
 import com.uae.tra_smart_services.entities.Filter;
 import com.uae.tra_smart_services.fragment.base.BaseAuthorizationFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.rest.model.request.RegisterModel;
 import com.uae.tra_smart_services.rest.robo_requests.RegisterRequest;
@@ -138,73 +139,73 @@ public class RegisterFragment extends BaseAuthorizationFragment implements View.
         if (firstName.isEmpty() || lastName.isEmpty() || emiratesID.isEmpty() ||
                 userName.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() ||
                 password.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, C.TOAST_LENGTH).show();
             return false;
         }
 
         if (firstName.length() < MIN_USERNAME_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_short, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_short, C.TOAST_LENGTH).show();
             return false;
         } else if (firstName.length() > MAX_USERNAME_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_long, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_firstname_long, C.TOAST_LENGTH).show();
             return false;
         }
 
         if (lastName.length() < MIN_USERNAME_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_short, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_short, C.TOAST_LENGTH).show();
             return false;
         } else if (lastName.length() > MAX_USERNAME_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_long, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_lastname_long, C.TOAST_LENGTH).show();
             return false;
         }
 
         if (!StringUtils.isAllLettersOrWhiteSpace(firstName)) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_first_name, C.TOAST_LENGTH).show();
             return false;
         }
         if (!StringUtils.isAllLettersOrWhiteSpace(lastName)) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_last_name, C.TOAST_LENGTH).show();
             return false;
         }
         //endregion
         //region Validate Emirates ID
         if (emiratesID.isEmpty() || !TRAPatterns.EMIRATES_ID.matcher(emiratesID).matches()) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_emirates_id, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_emirates_id, C.TOAST_LENGTH).show();
             return false;
         }
         //endregion
         //region Validate username
         if (userName.length() < MIN_USERNAME_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_username_short, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_username_short, C.TOAST_LENGTH).show();
             return false;
         } else if (userName.length() > MAX_USERNAME_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_username_long, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_username_long, C.TOAST_LENGTH).show();
             return false;
         } else if (!Character.isLetter(userName.charAt(0))) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_username_start_char, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_username_start_char, C.TOAST_LENGTH).show();
             return false;
         }
         //endregion
         //region Validate phone number
         if (phoneNumber.length() < MIN_PHONE_LENGTH || !Patterns.PHONE.matcher(phoneNumber).matches()) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_phone_number, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_phone_number, C.TOAST_LENGTH).show();
             return false;
         }
         //endregion
         //region Validate account credentials
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_email_format, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_email_format, C.TOAST_LENGTH).show();
             return false;
         }
         if (password.length() < MIN_PASSWORD_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_password_short, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_password_short, C.TOAST_LENGTH).show();
             return false;
         } else if (password.length() > MAX_PASSWORD_LENGTH) {
-            Toast.makeText(getActivity(), R.string.authorization_invalid_password_long, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.authorization_invalid_password_long, C.TOAST_LENGTH).show();
             return false;
         }
         if (!password.equals(confirmPassword)) {
-            Toast.makeText(getActivity(), R.string.error_password_confirm, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.error_password_confirm, C.TOAST_LENGTH).show();
             return false;
         }
         //endregion

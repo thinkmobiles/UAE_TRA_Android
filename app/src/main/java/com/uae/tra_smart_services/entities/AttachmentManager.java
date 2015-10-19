@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog;
 import com.uae.tra_smart_services.global.AttachmentOption;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
 import com.uae.tra_smart_services.util.IntentUtils;
 
@@ -137,7 +138,7 @@ public final class AttachmentManager implements OnOpenPermissionExplanationDialo
                 _fragment.startActivityForResult(takePictureIntent, REQUEST_CAMERA_PHOTO_CODE);
             }
         } else {
-            Toast.makeText(mContext, "Can't create photo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Can't create photo", C.TOAST_LENGTH).show();
         }
     }
 
@@ -209,7 +210,7 @@ public final class AttachmentManager implements OnOpenPermissionExplanationDialo
                 tryOpenCamera(_fragment);
             }
         } else {
-            Toast.makeText(_context, R.string.fragment_complain_about_service_no_camera_and_app, Toast.LENGTH_SHORT).show();
+            Toast.makeText(_context, R.string.fragment_complain_about_service_no_camera_and_app, C.TOAST_LENGTH).show();
         }
     }
 

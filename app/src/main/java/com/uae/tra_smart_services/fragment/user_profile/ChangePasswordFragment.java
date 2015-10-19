@@ -19,6 +19,7 @@ import com.uae.tra_smart_services.customviews.ProfileController;
 import com.uae.tra_smart_services.customviews.ProfileController.ControllerButton;
 import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButtonClickListener;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.rest.robo_requests.ChangePasswordRequest;
@@ -120,12 +121,12 @@ public class ChangePasswordFragment extends BaseFragment implements OnCheckedCha
         final String newPassRetype = etNewPasswordRetype.getText().toString().trim();
 
         if (oldPass.isEmpty() || newPass.isEmpty() || newPassRetype.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.error_fill_all_fields, C.TOAST_LENGTH).show();
             return false;
         }
 
         if (!newPass.equals(newPassRetype)) {
-            Toast.makeText(getActivity(), R.string.error_password_confirm, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.error_password_confirm, C.TOAST_LENGTH).show();
             return false;
         }
 
