@@ -70,15 +70,13 @@ public final class AttachmentManager {
                 final File photoFile = new File(mPhotoFilePath);
                 if (resultCode == Activity.RESULT_OK) {
                     mImageUri = Uri.fromFile(photoFile);
-//                    mImageGetCallback.onAttachmentGet(mImageUri);
                     mImageGetCallback.moveToCutterActivity(mImageUri);
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     photoFile.delete();
                 }
             }
-        } else if (requestCode == REQUEST_GALLERY_IMAGE_CODE && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == REQUEST_GALLERY_IMAGE_CODE) {
             mImageUri = data.getData();
-//            mImageGetCallback.onAttachmentGet(mImageUri);
             mImageGetCallback.moveToCutterActivity(mImageUri);
         }
     }

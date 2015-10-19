@@ -106,7 +106,7 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
 
     @Override
     public void onGlobalLayout() {
-        if(isChanged && mCutter != null && bitmapOverlay != null){
+        if(isChanged && mCutter != null){
             initContainerRect();
             initScalatorPaint();
             calculateScalatorPath();

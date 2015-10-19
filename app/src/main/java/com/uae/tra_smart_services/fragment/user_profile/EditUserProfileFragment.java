@@ -144,8 +144,7 @@ public final class EditUserProfileFragment extends BaseFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == FRAGMENT_CODE && resultCode == Activity.RESULT_OK) {
-            hvUserAvatar.postScaleType(HexagonView.CENTER_CROP);
-            hvUserAvatar.setHexagonSrcDrawable(C.TEMP_USER_IMG);
+            onAttachmentGet(mImageUri);
         } else {
             mAttachmentManager.onActivityResult(requestCode, resultCode, data);
         }
@@ -197,44 +196,11 @@ public final class EditUserProfileFragment extends BaseFragment
                 .into((Target) new HexagonViewTarget(hvUserAvatar));
     }
     int FRAGMENT_CODE = 10001;
-    class MyHexTarget extends HexagonViewTarget{
-
-        public MyHexTarget(HexagonView _view) {
-            super(_view);
-        }
-        private String mPhotoFilePath;
-        private Uri mImageUri;
-        @Override
-        public void onResourceReady(Drawable resource, GlideAnimation<? super Drawable> glideAnimation) {
-            final File imageFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            final boolean isFolderExist = imageFolder.exists() || imageFolder.mkdir();
-
-            if (isFolderExist) {
-                String imageFileName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                File imageFile;
-                try {
-                    imageFile = File.createTempFile(imageFileName, AttachmentManager.PHOTO_FILE_EXTENSION, imageFolder);
-                } catch (IOException e) {
-                    imageFile = null;
-                }
-                if (imageFile != null) {
-                    mPhotoFilePath = imageFile.getPath();
-                    startActivityForResult(IntentUtils.getImageCutterStartIntent(Uri.fromFile(imageFile)), FRAGMENT_CODE);
-                }
-            } else {
-                Toast.makeText(getActivity(), "Can't create photo", Toast.LENGTH_SHORT).show();
-            }
-
-            C.TEMP_USER_IMG = resource;
-        }
-    }
 
     @Override
     public void moveToCutterActivity(@NonNull Uri _imageUri) {
         mImageUri = _imageUri;
-        Glide.with(getActivity())
-                .load(mImageUri)
-                .into((Target) new MyHexTarget(hvUserAvatar));
+        startActivityForResult(IntentUtils.getImageCutterStartIntent(mImageUri), FRAGMENT_CODE);
     }
 
     @Override
