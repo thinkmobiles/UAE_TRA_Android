@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.ImageCutterView;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.util.IntentUtils;
 
 import java.io.IOException;
 import java.net.URI;
@@ -43,10 +44,6 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cutter);
-        imageUri = (Uri) getIntent().getSerializableExtra("fileUri");
-        imageUri = getIntent().getData();
-        imageUri = (Uri) getIntent().getExtras().get(Intent.EXTRA_STREAM);
-
         try {
             initData();
             initViews();
@@ -58,6 +55,7 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
     }
 
     protected void initData() throws IOException{
+        imageUri =  Uri.parse(getIntent().getStringExtra(IntentUtils.STRING_FILE_URI));
         originBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
         originBitmap = doScaleBitmap(originBitmap);
     }

@@ -9,6 +9,7 @@ import android.provider.MediaStore;
  */
 public final class IntentUtils {
 
+    public static final String STRING_FILE_URI = "fileUri";
     private static final String IMAGE_MIME_TYPE = "image/*";
     private static final String IMAGE_CUTTER_INTENT = "com.uae.tra_smart_services.intent.image_cutter";
 
@@ -31,10 +32,6 @@ public final class IntentUtils {
     }
 
     public static Intent getImageCutterStartIntent(final Uri fileUri){
-        Intent intent = new Intent(IMAGE_CUTTER_INTENT);
-        intent.setData(fileUri);
-        intent.setType(IMAGE_MIME_TYPE);
-        intent.putExtra("fileUri", fileUri);
-        return intent;
+        return new Intent(IMAGE_CUTTER_INTENT).putExtra(STRING_FILE_URI, fileUri.toString());
     }
 }
