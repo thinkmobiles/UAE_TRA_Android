@@ -26,6 +26,9 @@ import com.uae.tra_smart_services.rest.robo_requests.ChangePasswordRequest;
 
 import retrofit.client.Response;
 
+import static com.uae.tra_smart_services.global.C.MAX_PASSWORD_LENGTH;
+import static com.uae.tra_smart_services.global.C.MIN_PASSWORD_LENGTH;
+
 /**
  * Created by mobimaks on 08.09.2015.
  */
@@ -122,6 +125,21 @@ public class ChangePasswordFragment extends BaseFragment implements OnCheckedCha
 
         if (oldPass.isEmpty() || newPass.isEmpty() || newPassRetype.isEmpty()) {
             Toast.makeText(getActivity(), R.string.error_fill_all_fields, C.TOAST_LENGTH).show();
+            return false;
+        }
+
+        if (newPass.length() < MIN_PASSWORD_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_password_short, C.TOAST_LENGTH).show();
+            return false;
+        }
+
+        if (newPass.length() > MAX_PASSWORD_LENGTH) {
+            Toast.makeText(getActivity(), R.string.authorization_invalid_password_long, C.TOAST_LENGTH).show();
+            return false;
+        }
+
+        if (!newPass.equals(newPassRetype)) {
+            Toast.makeText(getActivity(), R.string.error_password_confirm, C.TOAST_LENGTH).show();
             return false;
         }
 

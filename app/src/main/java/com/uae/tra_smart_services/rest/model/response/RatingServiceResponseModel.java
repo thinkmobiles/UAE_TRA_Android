@@ -10,7 +10,8 @@ import retrofit.mime.TypedInput;
 /**
  * Created by PC on 9/3/2015.
  */
-public class RatingServiceResponseModel extends CustomResponse{
+public class RatingServiceResponseModel extends CustomResponse {
+
     @Expose
     public String serviceName;
 
@@ -50,8 +51,8 @@ public class RatingServiceResponseModel extends CustomResponse{
 
     @Override
     public String toString() {
-        return "{"+
-                "serviceName:" + serviceName + ","+
+        return "{" +
+                "serviceName:" + serviceName + "," +
                 "rate:" + rate + ", " +
                 "feedback:" + feedback +
                 "}";

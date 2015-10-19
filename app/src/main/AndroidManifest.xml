@@ -24,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeGreen">
 
-        <activity android:name=".activity.SplashActivity"
+        <activity
+            android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -35,16 +36,15 @@
         <activity
             android:name=".activity.AuthorizationActivity"
             android:parentActivityName=".activity.HomeActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"/>
 
-        </activity>
+        <activity
+            android:name=".activity.HomeActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".activity.HomeActivity"
-                  android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".activity.ScannerActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ScannerActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".rest.TRARestService"
@@ -52,6 +52,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="8f2fec49c70c4b9ae542be587d9897f637adce08" />
+            android:value="8f2fec49c70c4b9ae542be587d9897f637adce08"/>
+
     </application>
 </manifest>

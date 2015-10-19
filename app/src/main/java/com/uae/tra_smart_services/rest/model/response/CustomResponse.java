@@ -1,5 +1,7 @@
 package com.uae.tra_smart_services.rest.model.response;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,10 +13,19 @@ import retrofit.mime.TypedInput;
  * Created by PC on 9/3/2015.
  */
 public class CustomResponse {
+    @Expose
     private final String url;
+
+    @Expose
     private final int status;
+
+    @Expose
     private final String reason;
+
+    @Expose
     private final List<Header> headers;
+
+    @Expose
     private final TypedInput body;
 
     public CustomResponse(String url, int status, String reason, List<Header> headers, TypedInput body) {

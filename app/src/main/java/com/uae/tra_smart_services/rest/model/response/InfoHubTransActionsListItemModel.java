@@ -6,9 +6,14 @@ import android.os.Parcelable;
 /**
  * Created by ak-buffalo on 20.08.15.
  */
-public class InfoHubTransActionsListItemModel extends InfoHubListItemModel<InfoHubTransActionsListItemModel> implements Parcelable{
-    public InfoHubTransActionsListItemModel(Parcel in) {}
-    public InfoHubTransActionsListItemModel() {}
+public class InfoHubTransActionsListItemModel extends InfoHubListItemModel<InfoHubTransActionsListItemModel> implements Parcelable {
+
+    public InfoHubTransActionsListItemModel() {
+    }
+
+    public InfoHubTransActionsListItemModel(Parcel in) {
+    }
+
     public static final Parcelable.Creator<InfoHubTransActionsListItemModel> CREATOR
             = new Parcelable.Creator<InfoHubTransActionsListItemModel>() {
         public InfoHubTransActionsListItemModel createFromParcel(Parcel in) {

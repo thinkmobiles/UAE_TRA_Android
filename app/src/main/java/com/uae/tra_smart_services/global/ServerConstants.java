@@ -9,9 +9,12 @@ public final class ServerConstants {
     }
 
     public static final int TIMEOUT = 20;//seconds
-    public static final String BASE_URL1 = "http://mobws.tra.gov.ae";
-    public static final String BASE_URL2 = "http://185.54.19.249:80";
-    public static final String BASE_URL3 = "http://192.168.120.40:80";
+    public static final String HTTP_SCHEME = "http://";
+    public static final String HTTPS_SCHEME = "https://";
+
+    public static final String BASE_URL1 = HTTP_SCHEME + "mobws.tra.gov.ae";
+    public static final String BASE_URL2 = HTTP_SCHEME + "185.54.19.249:80";
+    public static final String BASE_URL3 = HTTP_SCHEME + "192.168.120.40:80";
     public static String BASE_URL = BASE_URL1;
     public static final String AUTH_URL = "/auth";
     public static final String ACCESS_TOKEN = "access_token";

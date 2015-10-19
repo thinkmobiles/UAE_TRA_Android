@@ -2,51 +2,60 @@ package com.uae.tra_smart_services.rest.model.response;
 
 import android.os.Parcel;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by ak-buffalo on 20.08.15.
  */
 public class InfoHubListItemModel<T> {
+
+    @Expose
     private String mIconUrl;
+
+    @Expose
     private String mHeaderImageUrl;
+
+    @Expose
     private String mTitle = "";
+
+    @Expose
     private String mDescription;
+
+    @Expose
     private String mFullDescription;
+
+    @Expose
     private String mDate;
 
-    protected InfoHubListItemModel(){}
-
-    public T setDate(String mDate) {
-        this.mDate = mDate;
-        return (T) this;
+    protected InfoHubListItemModel() {
     }
 
-    public T setIconUrl(String mIconUrl) {
+    public void setDate(String mDate) {
+        this.mDate = mDate;
+    }
+
+    public void setIconUrl(String mIconUrl) {
         this.mIconUrl = mIconUrl;
-        return (T) this;
     }
 
     public String getHeaderImageUrl() {
         return mHeaderImageUrl;
     }
 
-    public T setHeaderImageUrl(String _headerImageUrl) {
+    public void setHeaderImageUrl(String _headerImageUrl) {
         this.mHeaderImageUrl = _headerImageUrl;
-        return (T) this;
     }
 
-    public T setTitle(String title) {
+    public void setTitle(String title) {
         mTitle = title;
-        return (T) this;
     }
 
-    public T setDescription(String mDescription) {
+    public void setDescription(String mDescription) {
         this.mDescription = mDescription;
-        return (T) this;
     }
 
-    public T setFullDescription(String _fullDescription) {
+    public void setFullDescription(String _fullDescription) {
         this.mFullDescription = _fullDescription;
-        return (T) this;
     }
 
     public String getIconUrl() {
@@ -79,6 +88,7 @@ public class InfoHubListItemModel<T> {
     }
 
     public int mData;
+
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(mData);
     }

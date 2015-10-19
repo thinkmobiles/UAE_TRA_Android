@@ -3,12 +3,16 @@ package com.uae.tra_smart_services.rest.model.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by ak-buffalo on 14.08.15.
  */
-public class DomainInfoCheckResponseModel implements Parcelable{
+public class DomainInfoCheckResponseModel implements Parcelable {
 
+    @Expose
     public String urlData;
+
     /*
     String domainName;
     String registrationId;
@@ -76,16 +80,22 @@ public class DomainInfoCheckResponseModel implements Parcelable{
     public int describeContents() {
         return 0;
     }
-    public int mData;
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mData);
+        dest.writeString(this.urlData);
     }
 
-    public static final Parcelable.Creator<DomainInfoCheckResponseModel> CREATOR
-            = new Parcelable.Creator<DomainInfoCheckResponseModel>() {
-        public DomainInfoCheckResponseModel createFromParcel(Parcel in) {
-            return new DomainInfoCheckResponseModel(in);
+    public DomainInfoCheckResponseModel() {
+    }
+
+    protected DomainInfoCheckResponseModel(Parcel in) {
+        this.urlData = in.readString();
+    }
+
+    public static final Parcelable.Creator<DomainInfoCheckResponseModel> CREATOR = new Parcelable.Creator<DomainInfoCheckResponseModel>() {
+        public DomainInfoCheckResponseModel createFromParcel(Parcel source) {
+            return new DomainInfoCheckResponseModel(source);
         }
 
         public DomainInfoCheckResponseModel[] newArray(int size) {
@@ -93,9 +103,6 @@ public class DomainInfoCheckResponseModel implements Parcelable{
         }
     };
 
-    public DomainInfoCheckResponseModel(Parcel in) {
-        mData = in.readInt();
-    }
 }
 
 

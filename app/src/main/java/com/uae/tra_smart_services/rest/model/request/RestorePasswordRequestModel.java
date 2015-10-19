@@ -1,10 +1,14 @@
 package com.uae.tra_smart_services.rest.model.request;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by ak-buffalo on 18.09.15.
  */
 
 public class RestorePasswordRequestModel {
+
+    @Expose
     public String email;
 
     public RestorePasswordRequestModel(String _email){
