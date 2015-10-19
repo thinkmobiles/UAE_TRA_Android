@@ -230,9 +230,10 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
     }
 
     public void setOriginalImageBitmap(Bitmap _originalBitmap, WindowManager _windowManager){
-        DisplayMetrics metrics = new DisplayMetrics();
-        _windowManager.getDefaultDisplay().getMetrics(metrics);
-        originalBitmap = Bitmap.createScaledBitmap(_originalBitmap, metrics.widthPixels, metrics.heightPixels, true);
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        _windowManager.getDefaultDisplay().getMetrics(metrics);
+//        originalBitmap = Bitmap.createScaledBitmap(_originalBitmap, metrics.widthPixels, metrics.heightPixels, true);
+        originalBitmap = _originalBitmap;
     }
 
     private void prepareOverlay(){
