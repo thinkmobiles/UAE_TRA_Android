@@ -25,6 +25,7 @@ import android.graphics.Paint.Style;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
@@ -78,10 +79,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         //Load defaults from resources
         final Resources res = getResources();
-        final int defaultPageColor = res.getColor(R.color.default_circle_indicator_page_color);
-        final int defaultFillColor = res.getColor(R.color.default_circle_indicator_fill_color);
+        final int defaultPageColor = ContextCompat.getColor(getContext(), R.color.default_circle_indicator_page_color);
+        final int defaultFillColor = ContextCompat.getColor(getContext(), R.color.default_circle_indicator_fill_color);
         final int defaultOrientation = res.getInteger(R.integer.default_circle_indicator_orientation);
-        final int defaultStrokeColor = res.getColor(R.color.default_circle_indicator_stroke_color);
+        final int defaultStrokeColor = ContextCompat.getColor(getContext(), R.color.default_circle_indicator_stroke_color);
         final float defaultStrokeWidth = res.getDimension(R.dimen.default_circle_indicator_stroke_width);
         final float defaultRadius = res.getDimension(R.dimen.default_circle_indicator_radius);
         final boolean defaultCentered = res.getBoolean(R.bool.default_circle_indicator_centered);
@@ -104,7 +105,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
         if (background != null) {
-          setBackgroundDrawable(background);
+            setBackground(background);
         }
 
         a.recycle();
@@ -198,7 +199,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-         canvas.translate(0, 3 * getResources().getDisplayMetrics().density);
+        canvas.translate(0, 3 * getResources().getDisplayMetrics().density);
 
         if (mViewPager == null) {
             return;
@@ -455,8 +456,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     /**
      * Determines the width of this view
      *
-     * @param measureSpec
-     *            A measureSpec packed into an int
+     * @param measureSpec A measureSpec packed into an int
      * @return The width of the view, honoring constraints from measureSpec
      */
     private int measureLong(int measureSpec) {
@@ -470,7 +470,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         } else {
             //Calculate the width according the views count
             final int count = mViewPager.getAdapter().getCount();
-            result = (int)(getPaddingLeft() + getPaddingRight()
+            result = (int) (getPaddingLeft() + getPaddingRight()
                     + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
@@ -483,8 +483,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     /**
      * Determines the height of this view
      *
-     * @param measureSpec
-     *            A measureSpec packed into an int
+     * @param measureSpec A measureSpec packed into an int
      * @return The height of the view, honoring constraints from measureSpec
      */
     private int measureShort(int measureSpec) {
@@ -497,7 +496,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             result = specSize;
         } else {
             //Measure the height
-            result = (int)(2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
+            result = (int) (2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
@@ -508,7 +507,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        SavedState savedState = (SavedState)state;
+        SavedState savedState = (SavedState) state;
         super.onRestoreInstanceState(savedState.getSuperState());
         mCurrentPage = savedState.currentPage;
         mSnapPage = savedState.currentPage;

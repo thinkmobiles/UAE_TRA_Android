@@ -11,6 +11,7 @@ public final class ServerConstants {
     public static final int TIMEOUT = 20;//seconds
     public static final String HTTP_SCHEME = "http://";
     public static final String HTTPS_SCHEME = "https://";
+    public static final String JSON_TYPE = "Content-Type: application/json";
 
     public static final String BASE_URL1 = HTTP_SCHEME + "mobws.tra.gov.ae";
     public static final String BASE_URL2 = HTTP_SCHEME + "185.54.19.249:80";
@@ -47,6 +48,7 @@ public final class ServerConstants {
     public static final String SEARCH_STRING = "searchString";
     public static final String SEARCH_URL = "/taggedsearch/{" + SEARCH_STRING + "}";
 
+    public static final String PATH_HOLDER = "path";
 
     //!!!!!!!!!!!!! NEW API !!!!!!!!!!!!!!!!!!!!!!!!
     public static final String CHECK_WHO_IS_URL = "/checkWhois";

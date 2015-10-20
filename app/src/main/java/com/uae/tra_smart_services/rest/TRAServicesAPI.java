@@ -39,6 +39,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ABOUT_T
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ENQUIRIES_SERVICE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.GET_TRANSACTIONS;
 import static com.uae.tra_smart_services.global.ServerConstants.HELP_SALIM_URL;
+import static com.uae.tra_smart_services.global.ServerConstants.JSON_TYPE;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGIN_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGOUT_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_CHECK_URL;
@@ -68,8 +69,6 @@ import static com.uae.tra_smart_services.global.ServerConstants.USER_PROFILE;
  * Created by Mikazme on 13/08/2015.
  */
 public interface TRAServicesAPI {
-
-    String JSON_TYPE = "Content-Type: application/json";
 
     @GET(CHECK_WHO_IS_URL)
     DomainInfoCheckResponseModel getDomainData(@Query(PARAMETER_CHECK_URL) String _checkUrl);

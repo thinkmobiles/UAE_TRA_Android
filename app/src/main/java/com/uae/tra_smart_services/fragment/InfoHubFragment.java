@@ -71,7 +71,6 @@ public final class InfoHubFragment extends BaseFragment
 
     private void initTransactionsList() {
         mTransactionsList = findView(R.id.rvTransactionsList_FIH);
-        mTransactionsList.setHasFixedSize(true);
 
         mTransactionsLayoutManager = new LinearLayoutManager(getActivity());
         mTransactionsList.setLayoutManager(mTransactionsLayoutManager);

@@ -98,7 +98,6 @@ public final class FavoritesFragment extends BaseFragment
         final List<Service> favoriteServices = getFavoriteServices();
         mFavoritesAdapter = new FavoritesAdapter(getActivity(), favoriteServices);
         mFavoritesAdapter.setFavoriteClickListener(this);
-        rvFavoritesList.setHasFixedSize(true);
         rvFavoritesList.setAdapter(mFavoritesAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         rvFavoritesList.setLayoutManager(mLinearLayoutManager);

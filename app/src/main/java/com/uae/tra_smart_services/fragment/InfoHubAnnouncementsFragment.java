@@ -202,7 +202,6 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
 //        ivBackground = findView(R.id.ivBackground_FIHA);
 //        ivBackground.setImageResource(ImageUtils.isBlackAndWhiteMode(getActivity()) ? R.drawable.res_bg_2_gray : R.drawable.res_bg_2);
         mList = findView(R.id.rvInfoHubAnnList_FIHA);
-        mList.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mList.setLayoutManager(mLayoutManager);
         mAdapter = new InfoHubAnnFullListAdapter(getActivity(), DUMMY_ANNOUNCEMENTS_LIST);

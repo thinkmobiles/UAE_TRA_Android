@@ -11,8 +11,6 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
@@ -72,10 +70,7 @@ public final class HexagonView extends View implements Target {
 
     public HexagonView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         final int backgroundColor;
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HexagonView);
