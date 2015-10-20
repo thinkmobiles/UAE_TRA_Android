@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,34 +35,59 @@ public final class AttachmentManager {
 
     private static final int REQUEST_GALLERY_IMAGE_CODE = 130;
     private static final int REQUEST_CAMERA_PHOTO_CODE = 131;
+    public static final int REQUEST_CUTTER_VIEW = 132;
 
     private static final String CAMERA_PHOTO_FILE_PATH_KEY = "CAMERA_PHOTO_FILE_PATH_KEY";
     public static final String SELECTED_IMAGE_URI_KEY = "SELECTED_IMAGE_URI_KEY";
     public static final String PHOTO_FILE_EXTENSION = ".jpg";
+    public static final String CUTTED_IMAGE_PATH = "FITTED_IMAGE_PATH";
+    public static final String CUTTED_IMAGE_NAME = "user_avatar";
 
     private final Context mContext;
     private final PackageManager mPackageManager;
     private final OnImageGetCallback mImageGetCallback;
+    private final OnCutterRequest mCutterRequest;
 
     private String mPhotoFilePath;
     private Uri mImageUri;
+    private Uri cuttedImageUri;
 
     public AttachmentManager(@NonNull final Context _context, @NonNull final OnImageGetCallback _imageGetCallback) {
         mContext = _context;
         mPackageManager = _context.getPackageManager();
         mImageGetCallback = _imageGetCallback;
+        mCutterRequest = (OnCutterRequest) _imageGetCallback;
+        if ((cuttedImageUri = getCuttedImageUri()) == null) {
+            cuttedImageUri = createTempFile(CUTTED_IMAGE_NAME);
+            saveCuttedImagePath(cuttedImageUri.toString());
+        }
+    }
+
+    private void saveCuttedImagePath(String _imagepath){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(CUTTED_IMAGE_PATH, _imagepath);
+        editor.commit();
+    }
+
+    private Uri getCuttedImageUri(){
+        String imagePAth = PreferenceManager.getDefaultSharedPreferences(mContext).getString(CUTTED_IMAGE_PATH, null);
+        if(imagePAth != null){
+            return Uri.parse(imagePAth);
+        }
+        return null;
     }
 
     public void onRestoreInstanceState(@NonNull final Bundle _savedInstanceState) {
         mPhotoFilePath = _savedInstanceState.getString(CAMERA_PHOTO_FILE_PATH_KEY);
-        mImageUri = _savedInstanceState.getParcelable(SELECTED_IMAGE_URI_KEY);
+        cuttedImageUri = _savedInstanceState.getParcelable(SELECTED_IMAGE_URI_KEY);
         if (mImageUri != null) {
-            mImageGetCallback.onAttachmentGet(mImageUri);
+            mImageGetCallback.onAttachmentGet(cuttedImageUri);
         }
     }
 
     public void onSaveInstanceState(@NonNull final Bundle _outState) {
-        _outState.putParcelable(SELECTED_IMAGE_URI_KEY, mImageUri);
+        _outState.putParcelable(SELECTED_IMAGE_URI_KEY, cuttedImageUri);
         _outState.putString(CAMERA_PHOTO_FILE_PATH_KEY, mPhotoFilePath);
     }
 
@@ -70,14 +97,16 @@ public final class AttachmentManager {
                 final File photoFile = new File(mPhotoFilePath);
                 if (resultCode == Activity.RESULT_OK) {
                     mImageUri = Uri.fromFile(photoFile);
-                    mImageGetCallback.moveToCutterActivity(mImageUri);
+                    mCutterRequest.moveToCutterActivity(mImageUri, cuttedImageUri);
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     photoFile.delete();
                 }
             }
         } else if (requestCode == REQUEST_GALLERY_IMAGE_CODE) {
             mImageUri = data.getData();
-            mImageGetCallback.moveToCutterActivity(mImageUri);
+            mCutterRequest.moveToCutterActivity(mImageUri, cuttedImageUri);
+        } else if (requestCode == REQUEST_CUTTER_VIEW && resultCode == Activity.RESULT_OK) {
+            mImageGetCallback.onAttachmentGet(cuttedImageUri);
         }
     }
 
@@ -89,11 +118,24 @@ public final class AttachmentManager {
     }
 
     public void openCamera(final Fragment _fragment) {
+        final Uri imageUri;
+        if((imageUri = createTempFileRaw()) != null){
+            Intent takePictureIntent = IntentUtils.getCameraStartIntent(imageUri);
+            _fragment.startActivityForResult(takePictureIntent, REQUEST_CAMERA_PHOTO_CODE);
+        } else {
+            Toast.makeText(mContext, "Can't create photo", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private Uri createTempFileRaw(){
+       return createTempFile(null);
+    }
+
+    private Uri createTempFile(String _fileName){
         final File imageFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         final boolean isFolderExist = imageFolder.exists() || imageFolder.mkdir();
-
         if (isFolderExist) {
-            String imageFileName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String imageFileName = (_fileName == null) ? new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) : _fileName;
             File imageFile;
             try {
                 imageFile = File.createTempFile(imageFileName, PHOTO_FILE_EXTENSION, imageFolder);
@@ -102,12 +144,10 @@ public final class AttachmentManager {
             }
             if (imageFile != null) {
                 mPhotoFilePath = imageFile.getPath();
-                Intent takePictureIntent = IntentUtils.getCameraStartIntent(Uri.fromFile(imageFile));
-                _fragment.startActivityForResult(takePictureIntent, REQUEST_CAMERA_PHOTO_CODE);
+                return Uri.fromFile(imageFile);
             }
-        } else {
-            Toast.makeText(mContext, "Can't create photo", Toast.LENGTH_SHORT).show();
         }
+        return null;
     }
 
     @Nullable
@@ -164,7 +204,9 @@ public final class AttachmentManager {
 
     public interface OnImageGetCallback {
         void onAttachmentGet(final @NonNull Uri _imageUri);
-        void moveToCutterActivity(final @NonNull Uri _imageUri);
     }
 
+    public interface OnCutterRequest {
+        void moveToCutterActivity(final @NonNull Uri _resImageUri, final @NonNull Uri _cuttedImageUri);
+    }
 }

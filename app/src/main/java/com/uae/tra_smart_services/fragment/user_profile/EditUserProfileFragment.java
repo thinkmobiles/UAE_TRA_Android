@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.fragment.user_profile;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ import com.uae.tra_smart_services.util.IntentUtils;
 import com.uae.tra_smart_services.util.StringUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -57,7 +59,7 @@ import static com.uae.tra_smart_services.global.C.MIN_USERNAME_LENGTH;
  * Created by mobimaks on 08.09.2015.
  */
 public final class EditUserProfileFragment extends BaseFragment
-        implements OnClickListener, OnControllerButtonClickListener, OnImageGetCallback, OnImageSourceSelectListener {
+        implements OnClickListener, OnControllerButtonClickListener, OnImageGetCallback, OnImageSourceSelectListener, AttachmentManager.OnCutterRequest {
 
     private static final String KEY_USER_PROFILE_MODEL = "USER_PROFILE_MODEL";
     private static final String KEY_EDIT_PROFILE_REQUEST = "EDIT_PROFILE_REQUEST";
@@ -69,6 +71,7 @@ public final class EditUserProfileFragment extends BaseFragment
     private AttachmentManager mAttachmentManager;
     private ProfileController pcProfileController;
     private Uri mImageUri;
+    private Uri mCuttedImageUri;
 
     private UserProfileResponseModel mUserProfile;
     private OnUserProfileDataChangeListener mProfileDataChangeListener;
@@ -143,13 +146,7 @@ public final class EditUserProfileFragment extends BaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == FRAGMENT_CODE && resultCode == Activity.RESULT_OK) {
-            String fittedImagePath = data.getStringExtra("FITTED_IMAGE");
-            Uri fittedImageUri = Uri.parse(fittedImagePath);
-            onAttachmentGet(fittedImageUri);
-        } else {
-            mAttachmentManager.onActivityResult(requestCode, resultCode, data);
-        }
+        mAttachmentManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -191,18 +188,18 @@ public final class EditUserProfileFragment extends BaseFragment
     }
 
     @Override
-    public void onAttachmentGet(@NonNull final Uri _imageUri) {
-        mImageUri = _imageUri;
+    public void onAttachmentGet(final @NonNull Uri _cuttedImageUri) {
+        mCuttedImageUri = _cuttedImageUri;
         Glide.with(getActivity())
-                .load(mImageUri)
+                .load(mCuttedImageUri)
                 .into((Target) new HexagonViewTarget(hvUserAvatar));
     }
-    int FRAGMENT_CODE = 10001;
 
     @Override
-    public void moveToCutterActivity(@NonNull Uri _imageUri) {
+    public void moveToCutterActivity(@NonNull Uri _imageUri, final @NonNull Uri _cuttedImageUri) {
         mImageUri = _imageUri;
-        startActivityForResult(IntentUtils.getImageCutterStartIntent(mImageUri), FRAGMENT_CODE);
+        mCuttedImageUri = _cuttedImageUri;
+        startActivityForResult(IntentUtils.getImageCutterStartIntent(mImageUri, mCuttedImageUri), AttachmentManager.REQUEST_CUTTER_VIEW);
     }
 
     @Override
@@ -349,7 +346,6 @@ public final class EditUserProfileFragment extends BaseFragment
             getSpiceManager().removeDataFromCache(Response.class, KEY_EDIT_PROFILE_REQUEST);
             processError(spiceException);
         }
-
     }
 
     @Override

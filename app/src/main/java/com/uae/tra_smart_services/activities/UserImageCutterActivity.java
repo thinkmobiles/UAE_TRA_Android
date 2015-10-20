@@ -3,54 +3,40 @@ package com.uae.tra_smart_services.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.customviews.ImageCutterView;
-import com.uae.tra_smart_services.entities.AttachmentManager;
-import com.uae.tra_smart_services.entities.HexagonViewTarget;
-import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.util.IntentUtils;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.OutputStream;
 
 /**
  * Created by ak-buffalo on 15.09.15.
  */
 
 public class UserImageCutterActivity extends Activity implements ImageCutterView.OnCutterChanged, View.OnClickListener {
-
-    public static final String PHOTO_FILE_EXTENSION = ".jpg";
 
     private ImageCutterView ccCutterView;
     private TextView doCropButton;
@@ -59,6 +45,7 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
     private int mCutterOffsetX, mCutterOffsetY;
     private int mCutterSide;
     private Uri imageUri;
+    private Uri cuttedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +60,8 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
     }
 
     protected void initData() {
-        imageUri =  Uri.parse(getIntent().getStringExtra(IntentUtils.STRING_FILE_URI));
+        imageUri = Uri.parse(getIntent().getStringExtra(IntentUtils.STRING_IMAGE_URI));
+        cuttedImageUri = Uri.parse(getIntent().getStringExtra(IntentUtils.STRING_CUTTED_IMAGE_URI));
         Glide.with(this)
             .load(imageUri)
             .into(new SimpleTarget<GlideDrawable>() {
@@ -97,7 +85,7 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
 
     protected void initViews(){
         ccCutterView = (ImageCutterView) findViewById(R.id.ccContainer);
-        ccCutterView.setOriginalImageBitmap(originBitmap, getWindowManager());
+        ccCutterView.setOriginalImageBitmap(originBitmap);
         doCropButton = (TextView) findViewById(R.id.doCrop);
     }
 
@@ -111,8 +99,8 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
         if(_view.getId() == R.id.doCrop){
             doCropImage(new OnImageProcess() {
                 @Override
-                public void onSaved(Uri _fittedImageUri) {
-                    setResult(RESULT_OK, new Intent().putExtra("FITTED_IMAGE", _fittedImageUri));
+                public void onSaved() {
+                    setResult(RESULT_OK, new Intent());
                     finish();
                 }
                 @Override
@@ -139,37 +127,37 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(originBitmap, -mCutterOffsetX, -mCutterOffsetY, paint);
 
-        createNewFittedImage(resultingImage, _handler);
+        writeCuttedImage(resultingImage, _handler);
     }
 
-    private void createNewFittedImage(Bitmap _resultBitmap, OnImageProcess _handler){
-        final File imageFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        final boolean isFolderExist = imageFolder.exists() || imageFolder.mkdir();
-        if (isFolderExist) {
-            String imageFileName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            File imageFile;
+    private void writeCuttedImage(Bitmap _resultBitmap, OnImageProcess _handler){
+        String sourceFilename = cuttedImageUri.getPath();
+        FileOutputStream fOut = null;
+        try {
+            fOut = new FileOutputStream(sourceFilename, false);
+            _resultBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+            _resultBitmap.recycle();
+            System.gc();
+            _handler.onSaved();
+        } catch (IOException e) {
+            _handler.onFailed();
+        } finally {
             try {
-                imageFile = File.createTempFile(imageFileName, PHOTO_FILE_EXTENSION, imageFolder);
+                if (fOut != null) fOut.close();
             } catch (IOException e) {
-                imageFile = null;
+
             }
-            if (imageFile != null) {
-                FileOutputStream fOut;
-                try {
-                    fOut = new FileOutputStream(imageFile);
-                    _resultBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-                    fOut.flush();
-                    fOut.close();
-                    _resultBitmap.recycle();
-                    System.gc();
-                    _handler.onSaved(Uri.fromFile(imageFile));
-                } catch (Exception e) {
-                    _handler.onFailed();
-                }
-            }
-        } else {
-            Toast.makeText(this, "Can't process photo", Toast.LENGTH_SHORT).show();
         }
+    /*
+        OutputStream fout = null;
+        try {
+            fout = getContentResolver().openOutputStream(cuttedImageUri);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    */
     }
 
     @Override
@@ -181,7 +169,7 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
     }
 
     interface OnImageProcess{
-        void onSaved(Uri _fittedImageUri);
+        void onSaved();
         void onFailed();
     }
 }

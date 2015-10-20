@@ -229,7 +229,7 @@ public class ImageCutterView extends ViewGroup implements View.OnTouchListener, 
         mAreaChangeHandler = _handler;
     }
 
-    public void setOriginalImageBitmap(Bitmap _originalBitmap, WindowManager _windowManager){
+    public void setOriginalImageBitmap(Bitmap _originalBitmap){
         originalBitmap = _originalBitmap;
     }
 

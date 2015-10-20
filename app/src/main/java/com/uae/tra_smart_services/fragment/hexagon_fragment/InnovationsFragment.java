@@ -266,11 +266,6 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     }
 
     @Override
-    public void moveToCutterActivity(@NonNull Uri _imageUri) {
-
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(KEY_SELECTED_IDEA_POSITION, mSelectedIdeaPosition);
         outState.putBoolean(KEY_IS_SPINNER_CLICKED, mIsSpinnerClicked);

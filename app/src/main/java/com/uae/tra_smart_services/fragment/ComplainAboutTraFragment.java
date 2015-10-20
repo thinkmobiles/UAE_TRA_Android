@@ -100,11 +100,6 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     }
 
     @Override
-    public void moveToCutterActivity(@NonNull Uri _imageUri) {
-
-    }
-
-    @Override
     protected void onAttachmentDeleted() {
         tivAddAttachment.setImageResource(R.drawable.ic_action_attachment);
     }

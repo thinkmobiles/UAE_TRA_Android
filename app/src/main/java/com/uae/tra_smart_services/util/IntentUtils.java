@@ -9,7 +9,8 @@ import android.provider.MediaStore;
  */
 public final class IntentUtils {
 
-    public static final String STRING_FILE_URI = "fileUri";
+    public static final String STRING_IMAGE_URI = "imageUri";
+    public static final String STRING_CUTTED_IMAGE_URI = "cuttedImageUri";
     private static final String IMAGE_MIME_TYPE = "image/*";
     private static final String IMAGE_CUTTER_INTENT = "com.uae.tra_smart_services.intent.image_cutter";
 
@@ -31,7 +32,7 @@ public final class IntentUtils {
         return takePictureIntent;
     }
 
-    public static Intent getImageCutterStartIntent(final Uri fileUri){
-        return new Intent(IMAGE_CUTTER_INTENT).putExtra(STRING_FILE_URI, fileUri.toString());
+    public static Intent getImageCutterStartIntent(final Uri _imageUri, final Uri _cuttedImageUri){
+        return new Intent(IMAGE_CUTTER_INTENT).putExtra(STRING_IMAGE_URI, _imageUri.toString()).putExtra(STRING_CUTTED_IMAGE_URI, _cuttedImageUri.toString());
     }
 }
