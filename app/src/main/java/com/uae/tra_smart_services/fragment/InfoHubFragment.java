@@ -18,19 +18,26 @@ import android.widget.TextView;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.adapter.InfoHubAnnPreviewListAdapter;
 import com.uae.tra_smart_services.adapter.TransactionsAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
 import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel;
+import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
 import com.uae.tra_smart_services.rest.robo_requests.GetTransactionsRequest;
 import com.uae.tra_smart_services.util.EndlessScrollListener;
 import com.uae.tra_smart_services.util.EndlessScrollListener.OnLoadMoreListener;
+
+import java.util.ArrayList;
 
 /**
  * Created by ak-buffalo on 19.08.15.
  */
 public final class InfoHubFragment extends BaseFragment
-        implements OnLoadMoreListener, OnQueryTextListener, OnActionExpandListener, OperationStateManager {
+        implements OnLoadMoreListener, OnQueryTextListener, OnActionExpandListener,
+        OperationStateManager, View.OnClickListener {
 
     private static final String KEY_TRANSACTIONS_REQUEST = "TRANSACTIONS_REQUEST";
     private static final int DEFAULT_PAGE_SIZE = 10;
@@ -40,11 +47,15 @@ public final class InfoHubFragment extends BaseFragment
     private boolean mIsAllTransactionDownloaded;
 
     private ProgressBar pbLoadingTransactions;
+    private TextView tvSeeMoreAnnouncements;
+    private RecyclerView mAnnouncementsListPreview;
     private RecyclerView mTransactionsList;
+    private LinearLayoutManager mAnnouncementsLayoutManager;
     private TextView tvNoTransactions;
     private SearchView svSearchTransaction;
 
     private LinearLayoutManager mTransactionsLayoutManager;
+    private InfoHubAnnPreviewListAdapter mAnnouncementsListPreviewAdapter;
     private TransactionsAdapter mTransactionsListAdapter;
     private TransactionsResponseListener mTransactionsListener;
     private EndlessScrollListener mEndlessScrollListener;
@@ -62,11 +73,28 @@ public final class InfoHubFragment extends BaseFragment
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        startFirstLoad();
+    }
+
+    @Override
     protected final void initViews() {
         super.initViews();
         pbLoadingTransactions = findView(R.id.pbLoadingTransactions_FIH);
         tvNoTransactions = findView(R.id.tvNoPendingTransactions_FIH);
+        tvSeeMoreAnnouncements = findView(R.id.tvSeeMorebAnn_FIH);
+        initAnnouncementsListPreview();
         initTransactionsList();
+    }
+
+    private void initAnnouncementsListPreview() {
+        mAnnouncementsListPreview = findView(R.id.rvInfoHubListPrev_FIH);
+        mAnnouncementsListPreview.setHasFixedSize(true);
+        mAnnouncementsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mAnnouncementsListPreview.setLayoutManager(mAnnouncementsLayoutManager);
+        mAnnouncementsListPreviewAdapter = new InfoHubAnnPreviewListAdapter(getActivity(), new ArrayList<InfoHubAnnouncementsListItemModel>());
+        mAnnouncementsListPreview.setAdapter(mAnnouncementsListPreviewAdapter);
     }
 
     private void initTransactionsList() {
@@ -85,12 +113,32 @@ public final class InfoHubFragment extends BaseFragment
         mTransactionsListener = new TransactionsResponseListener();
         mEndlessScrollListener = new EndlessScrollListener(mTransactionsLayoutManager, this);
         mTransactionsList.addOnScrollListener(mEndlessScrollListener);
+        tvSeeMoreAnnouncements.setOnClickListener(this);
+        mAnnouncementsListPreviewAdapter.setOnItemClickListener(new OnInfoHubItemClickListener<InfoHubAnnouncementsListItemModel>() {
+            @Override
+            public void onItemSelected(InfoHubAnnouncementsListItemModel item) {
+                Bundle args = new Bundle();
+                args.putParcelable(C.INFO_HUB_ANN_DATA, item);
+                getFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.flContainer_AH, InfoHubDetailsFragment.newInstance(args))
+                        .commit();
+            }
+        });
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        startFirstLoad();
+    public void onClick(View _view) {
+        switch (_view.getId()) {
+            case R.id.tvSeeMorebAnn_FIH:
+                getFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.flContainer_AH, InfoHubAnnouncementsFragment.newInstance())
+                        .commit();
+                break;
+        }
     }
 
     private void startFirstLoad() {
