@@ -18,19 +18,21 @@ import android.widget.TextView;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.adapter.InfoHubAnnPreviewListAdapter;
+import com.uae.tra_smart_services.adapter.AnnouncementsAdapter;
 import com.uae.tra_smart_services.adapter.TransactionsAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.global.QueryAdapter;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
+import com.uae.tra_smart_services.rest.model.response.GetAnnouncementsResponseModel;
 import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel;
 import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
+import com.uae.tra_smart_services.rest.request_listeners.AnnouncementsResponseListener;
+import com.uae.tra_smart_services.rest.robo_requests.GetAnnouncementsRequest;
 import com.uae.tra_smart_services.rest.robo_requests.GetTransactionsRequest;
 import com.uae.tra_smart_services.util.EndlessScrollListener;
 import com.uae.tra_smart_services.util.EndlessScrollListener.OnLoadMoreListener;
-
-import java.util.ArrayList;
 
 /**
  * Created by ak-buffalo on 19.08.15.
@@ -40,11 +42,11 @@ public final class InfoHubFragment extends BaseFragment
         OperationStateManager, View.OnClickListener {
 
     private static final String KEY_TRANSACTIONS_REQUEST = "TRANSACTIONS_REQUEST";
-    private static final int DEFAULT_PAGE_SIZE = 10;
+    private static final int DEFAULT_PAGE_SIZE_TRANSACTIONS = 10;
 
     private int mTransactionPageNum;
     private boolean mIsSearching;
-    private boolean mIsAllTransactionDownloaded;
+    private boolean mIsAllTransactionDownloaded, mIsAllAnnouncementsDownloaded;
 
     private ProgressBar pbLoadingTransactions;
     private TextView tvSeeMoreAnnouncements;
@@ -55,11 +57,12 @@ public final class InfoHubFragment extends BaseFragment
     private SearchView svSearchTransaction;
 
     private LinearLayoutManager mTransactionsLayoutManager;
-    private InfoHubAnnPreviewListAdapter mAnnouncementsListPreviewAdapter;
+    private AnnouncementsAdapter mAnnouncementsListAdapter;
     private TransactionsAdapter mTransactionsListAdapter;
     private TransactionsResponseListener mTransactionsListener;
+    private AnnouncementsResponseListener mAnnouncementsResponseListener;
     private EndlessScrollListener mEndlessScrollListener;
-    private boolean mIsInLoading;
+    private boolean mIsTransactionsInLoading, mIsAnnouncementsInLoading;
 
 
     public static InfoHubFragment newInstance() {
@@ -84,25 +87,24 @@ public final class InfoHubFragment extends BaseFragment
         pbLoadingTransactions = findView(R.id.pbLoadingTransactions_FIH);
         tvNoTransactions = findView(R.id.tvNoPendingTransactions_FIH);
         tvSeeMoreAnnouncements = findView(R.id.tvSeeMorebAnn_FIH);
+        mAnnouncementsListPreview = findView(R.id.rvInfoHubListPrev_FIH);
+        mTransactionsList = findView(R.id.rvTransactionsList_FIH);
         initAnnouncementsListPreview();
         initTransactionsList();
     }
 
     private void initAnnouncementsListPreview() {
-        mAnnouncementsListPreview = findView(R.id.rvInfoHubListPrev_FIH);
         mAnnouncementsListPreview.setHasFixedSize(true);
         mAnnouncementsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mAnnouncementsLayoutManager.scrollToPosition(0);
         mAnnouncementsListPreview.setLayoutManager(mAnnouncementsLayoutManager);
-        mAnnouncementsListPreviewAdapter = new InfoHubAnnPreviewListAdapter(getActivity(), new ArrayList<InfoHubAnnouncementsListItemModel>());
-        mAnnouncementsListPreview.setAdapter(mAnnouncementsListPreviewAdapter);
+        mAnnouncementsListAdapter = new AnnouncementsAdapter(getActivity(), this, true);
+        mAnnouncementsListPreview.setAdapter(mAnnouncementsListAdapter);
     }
 
     private void initTransactionsList() {
-        mTransactionsList = findView(R.id.rvTransactionsList_FIH);
-
         mTransactionsLayoutManager = new LinearLayoutManager(getActivity());
         mTransactionsList.setLayoutManager(mTransactionsLayoutManager);
-
         mTransactionsListAdapter = new TransactionsAdapter(getActivity(), this);
         mTransactionsList.setAdapter(mTransactionsListAdapter);
     }
@@ -111,10 +113,12 @@ public final class InfoHubFragment extends BaseFragment
     protected void initListeners() {
         super.initListeners();
         mTransactionsListener = new TransactionsResponseListener();
+        mAnnouncementsResponseListener =
+                new AnnouncementsResponseListener(this, mAnnouncementsListAdapter, mIsAnnouncementsInLoading, mIsAllAnnouncementsDownloaded, mTransactionPageNum);
         mEndlessScrollListener = new EndlessScrollListener(mTransactionsLayoutManager, this);
         mTransactionsList.addOnScrollListener(mEndlessScrollListener);
         tvSeeMoreAnnouncements.setOnClickListener(this);
-        mAnnouncementsListPreviewAdapter.setOnItemClickListener(new OnInfoHubItemClickListener<InfoHubAnnouncementsListItemModel>() {
+        mAnnouncementsListAdapter.setOnItemClickListener(new OnInfoHubItemClickListener<InfoHubAnnouncementsListItemModel>() {
             @Override
             public void onItemSelected(InfoHubAnnouncementsListItemModel item) {
                 Bundle args = new Bundle();
@@ -144,11 +148,18 @@ public final class InfoHubFragment extends BaseFragment
     private void startFirstLoad() {
         mTransactionPageNum = 1;
         loadTransactionPage(mTransactionPageNum);
+        loadAnnouncementsPage(0);
+    }
+
+    private void loadAnnouncementsPage(final int _offset) {
+        GetAnnouncementsRequest announcementsRequest = new GetAnnouncementsRequest(new QueryAdapter.OffsetQuery(_offset, 3));
+        mIsAnnouncementsInLoading = true;
+        getSpiceManager().execute(announcementsRequest, mAnnouncementsResponseListener);
     }
 
     private void loadTransactionPage(final int _page) {
-        GetTransactionsRequest transactionsRequest = new GetTransactionsRequest(_page, DEFAULT_PAGE_SIZE);
-        mIsInLoading = true;
+        GetTransactionsRequest transactionsRequest = new GetTransactionsRequest(_page, DEFAULT_PAGE_SIZE_TRANSACTIONS);
+        mIsTransactionsInLoading = true;
         getSpiceManager().execute(transactionsRequest, mTransactionsListener);
     }
 
@@ -210,7 +221,7 @@ public final class InfoHubFragment extends BaseFragment
     public final void loadMore() {
         if (mIsSearching) {
             mTransactionsListAdapter.loadMoreSearchResults();
-        } else if (!mIsAllTransactionDownloaded && !mIsInLoading) {
+        } else if (!mIsAllTransactionDownloaded && !mIsTransactionsInLoading) {
             loadTransactionPage(++mTransactionPageNum);
         }
     }
@@ -219,7 +230,7 @@ public final class InfoHubFragment extends BaseFragment
 
         @Override
         public final void onRequestSuccess(GetTransactionResponseModel.List result) {
-            mIsInLoading = false;
+            mIsTransactionsInLoading = false;
             if (isAdded() && result != null) {
                 mIsAllTransactionDownloaded = result.isEmpty();
                 if (mIsAllTransactionDownloaded) {
@@ -243,7 +254,7 @@ public final class InfoHubFragment extends BaseFragment
 
         @Override
         public final void onRequestFailure(SpiceException spiceException) {
-            mIsInLoading = false;
+            mIsTransactionsInLoading = false;
             mTransactionPageNum--;
             handleNoResult();
             processError(spiceException);
@@ -280,5 +291,4 @@ public final class InfoHubFragment extends BaseFragment
     protected final int getLayoutResource() {
         return R.layout.fragment_info_hub;
     }
-
 }

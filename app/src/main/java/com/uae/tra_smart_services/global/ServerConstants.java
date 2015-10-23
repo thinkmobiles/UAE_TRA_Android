@@ -71,6 +71,7 @@ public final class ServerConstants {
     public static final String USER_PROFILE = "/crm/profile";
     public static final String CHANGE_PASSWORD = "/crm/changePass";
     public static final String GET_TRANSACTIONS = "/crm/transactions";
+    public static final String GET_ANNOUNCEMENTS = "/announcement";
     public static final String POST_INNOVATION = "/innovation";
     public static final String SERVICE_INFO = "/service/about";
 
@@ -78,6 +79,8 @@ public final class ServerConstants {
     public static final String PARAMETER_CHECK_URL = "checkUrl";
     public static final String PARAMETER_IMEI = "imei";
     public static final String PARAMETER_DEVICE_BRAND = "brand";
+    public static final String PARAMETER_OFFSET = "offset";
+    public static final String PARAMETER_LIMIT = "limit";
     public static final String PARAMETER_START_OFFSET = "start";
     public static final String PARAMETER_END_LIMIT = "end";
     public static final String PARAMETER_SERVICE_NAME = "name";

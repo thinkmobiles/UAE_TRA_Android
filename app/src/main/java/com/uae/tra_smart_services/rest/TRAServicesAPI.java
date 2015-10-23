@@ -16,7 +16,8 @@ import com.uae.tra_smart_services.rest.model.request.SmsReportRequestModel;
 import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
-import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel.List;
+import com.uae.tra_smart_services.rest.model.response.GetAnnouncementsResponseModel;
+import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel;
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.ServiceInfoResponse;
@@ -38,6 +39,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ABOUT_S
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ABOUT_TRA_SERVICE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ENQUIRIES_SERVICE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.GET_TRANSACTIONS;
+import static com.uae.tra_smart_services.global.ServerConstants.GET_ANNOUNCEMENTS;
 import static com.uae.tra_smart_services.global.ServerConstants.HELP_SALIM_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.JSON_TYPE;
 import static com.uae.tra_smart_services.global.ServerConstants.LOGIN_URL;
@@ -48,6 +50,8 @@ import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_DEVICE
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_END_LIMIT;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_IMEI;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_LANGUAGE;
+import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_LIMIT;
+import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_OFFSET;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_PAGE;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_SEARCH;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_SERVICE_NAME;
@@ -138,14 +142,22 @@ public interface TRAServicesAPI {
     Response postInnovation(@Body PostInnovationRequestModel _model);
 
     @GET(GET_TRANSACTIONS)
-    List getTransactions(@Query(PARAMETER_PAGE) final int _page,
+    GetTransactionResponseModel.List getTransactions(@Query(PARAMETER_PAGE) final int _page,
                          @Query(PARAMETER_COUNT) final int _count);
-//                         @Query("orderAsc") final int _asc);
 
     @GET(GET_TRANSACTIONS)
-    List searchTransactions(@Query(PARAMETER_PAGE) final int _page,
+    GetTransactionResponseModel.List searchTransactions(@Query(PARAMETER_PAGE) final int _page,
                             @Query(PARAMETER_COUNT) final int _count,
                             @Query(PARAMETER_SEARCH) final String _query);
+
+    @GET(GET_ANNOUNCEMENTS)
+    GetAnnouncementsResponseModel getAnnouncements(@Query(PARAMETER_OFFSET) final int _offset,
+                            @Query(PARAMETER_LIMIT) final int _limit);
+
+    @GET(GET_ANNOUNCEMENTS)
+    GetAnnouncementsResponseModel searchAnnouncements(@Query(PARAMETER_OFFSET) final int _offset,
+                                                           @Query(PARAMETER_LIMIT) final int _limit,
+                                                           @Query(PARAMETER_SEARCH) final String _query);
 
     @GET(SERVICE_INFO)
     ServiceInfoResponse getServiceInfo(@Query(PARAMETER_SERVICE_NAME) String _serviceName,

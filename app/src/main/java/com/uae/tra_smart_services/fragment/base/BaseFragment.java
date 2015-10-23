@@ -194,7 +194,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         getFragmentManager().popBackStackImmediate();
     }
 
-    protected final void processError(final SpiceException _exception) {
+    public final void processError(final SpiceException _exception) {
         NetworkErrorHandler.processError(this, _exception);
     }
 

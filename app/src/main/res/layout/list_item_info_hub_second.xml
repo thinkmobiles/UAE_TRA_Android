@@ -7,7 +7,7 @@
     android:padding="3dp">
 
     <com.uae.tra_smart_services.customviews.HexagonView
-        android:id="@+id/hvIcon_LIHLI"
+        android:id="@+id/hvIcon_LIHS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -19,7 +19,7 @@
         app:hexagonBorderColor="#000000"/>
 
     <TextView
-        android:id="@+id/hvTitle_LIHLI"
+        android:id="@+id/hvTitle_LIHS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -32,14 +32,14 @@
         android:paddingEnd="10dp"
         android:gravity="start"
         android:text="Title Title Title Title Title"
-        android:layout_alignTop="@+id/hvIcon_LIHLI"
-        android:layout_toStartOf="@+id/hvDate_LIHLI"
-        android:layout_toEndOf="@+id/hvIcon_LIHLI"
+        android:layout_alignTop="@+id/hvIcon_LIHS"
+        android:layout_toStartOf="@+id/hvDate_LIHS"
+        android:layout_toEndOf="@+id/hvIcon_LIHS"
         />
 
     <TextView
         tools:text="John Doe asdasd asdasda asdasda najsdnasjn jnj nkjnkjqdsn adads akjsdna asdjnaskjdas da sda sd as   asdasdasdasd asdasdasdasd najsdnasjn jnj nkjnkjqdsn adads akjsdna asdjnaskjdas da sda sd as   asdasdasdasd asdasdasdasd asdasda najsdnasjn jnj nkjnkjqdsn adads akjsdna asdjnaskjdas da sda sd as   asdasdasdasd asdasdasdasd asdasdas dasd as d"
-        android:id="@+id/hvDescr_LIHLI"
+        android:id="@+id/hvDescr_LIHS"
         android:layout_gravity="fill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,11 +55,11 @@
         android:paddingEnd="10dp"
         android:layout_alignParentEnd="true"
         android:gravity="start"
-        android:layout_toEndOf="@+id/hvIcon_LIHLI"
-        android:layout_below="@+id/hvTitle_LIHLI" />
+        android:layout_toEndOf="@+id/hvIcon_LIHS"
+        android:layout_below="@+id/hvTitle_LIHS" />
 
     <TextView
-        android:id="@+id/hvDate_LIHLI"
+        android:id="@+id/hvDate_LIHS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
@@ -68,16 +68,16 @@
         android:text="date"
         android:textSize="10sp"
         android:textColor="@color/hex_color_accent"
-        android:layout_above="@+id/hvDescr_LIHLI"
-        android:layout_alignEnd="@+id/hvDescr_LIHLI"
-        android:layout_alignTop="@+id/hvIcon_LIHLI" />
+        android:layout_above="@+id/hvDescr_LIHS"
+        android:layout_alignEnd="@+id/hvDescr_LIHS"
+        android:layout_alignTop="@+id/hvIcon_LIHS" />
 
     <View
         style="@style/ListViewItemSeparator"
         android:id="@+id/vListViewItemSeparator"
         android:layout_marginStart="5dp"
-        android:layout_alignStart="@+id/hvDescr_LIHLI"
-        android:layout_below="@+id/hvIcon_LIHLI"
-        android:layout_alignEnd="@+id/hvDescr_LIHLI" />
+        android:layout_alignStart="@+id/hvDescr_LIHS"
+        android:layout_below="@+id/hvIcon_LIHS"
+        android:layout_alignEnd="@+id/hvDescr_LIHS" />
 
 </RelativeLayout> 

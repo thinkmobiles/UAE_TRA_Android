@@ -402,7 +402,6 @@ public final class EditUserProfileFragment extends BaseFragment
             getSpiceManager().removeDataFromCache(Response.class, KEY_EDIT_PROFILE_REQUEST);
             processError(spiceException);
         }
-
     }
 
     @Override
