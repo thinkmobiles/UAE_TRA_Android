@@ -66,8 +66,8 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     }
 
     @Override
-    protected void initData() {
-        super.initData();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         startFirstLoad();
     }
 
@@ -82,6 +82,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
 
     private final void initAnnouncementsList(){
         mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.scrollToPosition(0);
         mList.setLayoutManager(mLayoutManager);
         mListAdapter = new AnnouncementsAdapter(getActivity(), this, false);
         mList.setAdapter(mListAdapter);
@@ -98,7 +99,6 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     private void initSearchView(Menu menu) {
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         MenuItemCompat.setOnActionExpandListener(searchItem, this);
-
         svSearchTransaction = (SearchView) MenuItemCompat.getActionView(searchItem);
         svSearchTransaction.setOnQueryTextListener(this);
     }

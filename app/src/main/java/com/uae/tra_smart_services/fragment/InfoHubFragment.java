@@ -148,11 +148,11 @@ public final class InfoHubFragment extends BaseFragment
     private void startFirstLoad() {
         mTransactionPageNum = 1;
         loadTransactionPage(mTransactionPageNum);
-        loadAnnouncementsPage(0);
+        loadAnnouncementsPage(1);
     }
 
-    private void loadAnnouncementsPage(final int _offset) {
-        GetAnnouncementsRequest announcementsRequest = new GetAnnouncementsRequest(new QueryAdapter.OffsetQuery(_offset, 3));
+    private void loadAnnouncementsPage(final int _page) {
+        GetAnnouncementsRequest announcementsRequest = new GetAnnouncementsRequest(QueryAdapter.pageToOffset(_page, 3));
         mIsAnnouncementsInLoading = true;
         getSpiceManager().execute(announcementsRequest, mAnnouncementsResponseListener);
     }

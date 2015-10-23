@@ -162,7 +162,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         } else {
             progressBarCount = mIsShowingLoaderForData ? 1 : 0;
         }
-        return mShowingData.size() + progressBarCount;
+        return mShowingData.size() + (mIsPreview ? progressBarCount : 0);
     }
 
     private final class TransactionFilter extends Filter {
