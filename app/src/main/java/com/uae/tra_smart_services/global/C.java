@@ -90,4 +90,23 @@ public final class C {
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final int MAX_PASSWORD_LENGTH = 32;
 
+    //region Languages names const
+    @StringDef({ENGLISH, ARABIC})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Language {
+    }
+
+    public static final String ENGLISH = "en";
+    public static final String ARABIC = "ar";
+    //endregion
+
+    //region Http method const
+    @StringDef({HttpMethod.GET, HttpMethod.POST})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface HttpMethod {
+        String GET = "GET";
+        String POST = "POST";
+    }
+    //endregion
+
 }

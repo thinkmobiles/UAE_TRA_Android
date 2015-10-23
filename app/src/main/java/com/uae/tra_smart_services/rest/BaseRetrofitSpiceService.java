@@ -1,5 +1,8 @@
 package com.uae.tra_smart_services.rest;
 
+import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.octo.android.robospice.retrofit.RetrofitGsonSpiceService;
@@ -19,7 +22,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.TIMEOUT;
 /**
  * Created by mobimaks on 19.10.2015.
  */
-public abstract class BaseRetrofitSpiceService extends RetrofitGsonSpiceService {
+abstract class BaseRetrofitSpiceService extends RetrofitGsonSpiceService {
 
     @Override
     protected final Builder createRestAdapterBuilder() {
@@ -38,10 +41,15 @@ public abstract class BaseRetrofitSpiceService extends RetrofitGsonSpiceService 
 
     @Override
     protected final Converter createConverter() {
-        final Gson gson = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .create();
+        final Gson gson = getGsonBuilder().create();
         return new GsonConverter(gson);
+    }
+
+    @NonNull
+    @CallSuper
+    protected GsonBuilder getGsonBuilder() {
+        return new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation();
     }
 
 }

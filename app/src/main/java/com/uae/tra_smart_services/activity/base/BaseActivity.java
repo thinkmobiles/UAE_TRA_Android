@@ -21,6 +21,9 @@ import java.util.Locale;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.uae.tra_smart_services.global.C.ARABIC;
+import static com.uae.tra_smart_services.global.C.ENGLISH;
+
 /**
  * Created by Mikazme on 22/07/2015.
  */
@@ -72,16 +75,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
                 .getDefaultSharedPreferences(this)
                 .getFloat(BaseCustomSwitcher.Type.FONT.toString(), 1f);
         Configuration config = getResources().getConfiguration();
-        config.fontScale = (!mLanguage.equals("ar")) ? mFontSize : (float) (mFontSize * 0.85);
+        config.fontScale = (!mLanguage.equals(ARABIC)) ? mFontSize : (float) (mFontSize * 0.85);
         getResources().updateConfiguration(config, null);
     }
 
     public final void setApplicationLanguage() {
         mLanguage = PreferenceManager
                 .getDefaultSharedPreferences(this)
-                .getString(BaseCustomSwitcher.Type.LANGUAGE.toString(), "en");
+                .getString(BaseCustomSwitcher.Type.LANGUAGE.toString(), ENGLISH);
 
-        if (mLanguage.equals("en")) {
+        if (mLanguage.equals(ENGLISH)) {
             initDefaultFont("fonts/Lato-Regular.ttf");
         } else {
             initDefaultFont("fonts/DroidKufi-Regular.ttf");

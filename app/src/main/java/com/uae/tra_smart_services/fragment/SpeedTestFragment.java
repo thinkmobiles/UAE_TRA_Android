@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 /**
  * Created by mobimaks on 07.09.2015.
  */
+@Deprecated
 public final class SpeedTestFragment extends BaseServiceFragment implements OnClickListener, Loader.Cancelled, RequestListener<Long> {
 
     private static final String KEY_SPEED_TEST_REQUEST = "SPEED_TEST_REQUEST";

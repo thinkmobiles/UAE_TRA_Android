@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.TargetImageView;
+import com.uae.tra_smart_services.entities.ImageViewTarget;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.rest.model.response.InfoHubListItemModel;
@@ -45,7 +45,7 @@ public class InfoHubDetailsFragment extends BaseFragment {
     @Override
     protected void initViews() {
         headerImage = findView(R.id.tvHeaderImage_FIHD);
-        Picasso.with(getActivity()).load(infoHubAnnModel.getHeaderImageUrl()).placeholder(R.drawable.logo).into(new TargetImageView(headerImage));
+        Picasso.with(getActivity()).load(infoHubAnnModel.getHeaderImageUrl()).placeholder(R.drawable.logo).into(new ImageViewTarget(headerImage));
         headerDate = findView(R.id.tvHeaderDate_FIHD);
         headerDate.setText(infoHubAnnModel.getDate());
         headerTitle = findView(R.id.tvHeaderTitle_FIHD);

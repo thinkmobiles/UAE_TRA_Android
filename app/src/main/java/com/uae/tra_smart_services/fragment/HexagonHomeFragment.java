@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
@@ -34,8 +35,12 @@ import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.Loader.Dismiss;
+import com.uae.tra_smart_services.rest.model.response.DynamicServiceInfoResponseModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
+import com.uae.tra_smart_services.rest.robo_requests.DynamicServiceListRequest;
 import com.uae.tra_smart_services.rest.robo_requests.UserProfileRequest;
+import com.uae.tra_smart_services.util.EndlessScrollListener;
+import com.uae.tra_smart_services.util.EndlessScrollListener.OnLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +58,11 @@ import static com.uae.tra_smart_services.global.HeaderStaticService.SEARCH;
 /**
  * Created by Mikazme on 13/08/2015.
  */
-public class HexagonHomeFragment extends BaseFragment implements OnServiceSelected, OnButtonClickListener {
+public class HexagonHomeFragment extends BaseFragment implements OnServiceSelected, OnButtonClickListener, OnLoadMoreListener {
 
     private static final String KEY_LOAD_USER_PROFILE = "LOAD_USER_PROFILE";
     private static final String KEY_IF_PENDING_REQUEST = "IF_PENDING_REQUEST";
+    private static final String KEY_DYNAMIC_LIST_REQUEST = "DYNAMIC_LIST_REQUEST";
 
     public final String RECYCLER_TAG = "RecyclerView_test";
 
@@ -65,16 +71,20 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
     private HexagonalHeader mHexagonalHeader;
 
     private ServicesRecyclerViewAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private StaggeredGridLayoutManager mLayoutManager;
     private List<Service> mDataSet;
 
     private OnServiceSelectListener mServiceSelectListener;
     private OnStaticServiceSelectListener mStaticServiceSelectListener;
     private OnHeaderStaticServiceSelectedListener mHeaderStaticServiceSelectedListener;
     private OnOpenUserProfileClickListener mProfileClickListener;
-    private LoadProfileListener mLoadProfileListener;
+    private EndlessScrollListener mEndlessScrollListener;
 
     private UserProfileRequest mUserProfileRequest;
+    private DynamicServiceListRequest mDynamicServiceListRequest;
+
+    private LoadProfileListener mLoadProfileListener;
+    private DynamicServiceListListener mDynamicServicesListListener;
 
     private ValueAnimator mHexagonalHeaderAnimator, mHexagonHeaderReverseAnimator;
 
@@ -227,16 +237,28 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Picasso.with(getActivity()).load(ServerConstants.BASE_URL + "/crm/profileImage").
-                skipMemoryCache().error(R.drawable.ic_user_placeholder).
-                placeholder(R.drawable.ic_user_placeholder).into(mHexagonalHeader);
+        Picasso.with(getActivity())
+                .load(ServerConstants.BASE_URL + "/crm/profileImage")
+                .memoryPolicy(MemoryPolicy.NO_STORE)
+                .error(R.drawable.ic_user_placeholder)
+                .placeholder(R.drawable.ic_user_placeholder)
+                .into(mHexagonalHeader);
 
         mLoadProfileListener = new LoadProfileListener();
+        mDynamicServicesListListener = new DynamicServiceListListener();
 
         initServiceList();
 
         mLayoutManager = new StaggeredGridLayoutManager(4, 1);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        initEndlessListener();
+    }
+
+    private void initEndlessListener() {
+        mEndlessScrollListener = new EndlessScrollListener(mLayoutManager, this);
+
+        mRecyclerView.addOnScrollListener(mEndlessScrollListener);
     }
 
     private void initServiceList() {
@@ -248,6 +270,8 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
         super.onStart();
         getSpiceManager().getFromCache(UserProfileResponseModel.class, KEY_LOAD_USER_PROFILE,
                 DurationInMillis.ALWAYS_RETURNED, mLoadProfileListener);
+        getSpiceManager().getFromCache(DynamicServiceInfoResponseModel.List.class, KEY_DYNAMIC_LIST_REQUEST,
+                DurationInMillis.ALWAYS_RETURNED, mDynamicServicesListListener);
     }
 
     @Override
@@ -299,6 +323,14 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
         } else if (SEARCH.equals(_hexagonButton)) {
             mHeaderStaticServiceSelectedListener.onHeaderStaticServiceSelected(SEARCH);
         }
+    }
+
+    @Override
+    public final void onLoadMoreEvent() {
+        mRecyclerView.removeOnScrollListener(mEndlessScrollListener);
+        mDynamicServiceListRequest = new DynamicServiceListRequest();
+        getSpiceManager().execute(mDynamicServiceListRequest, KEY_DYNAMIC_LIST_REQUEST, DurationInMillis.ALWAYS_EXPIRED,
+                mDynamicServicesListListener);
     }
 
     @Override
@@ -362,12 +394,34 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
         }
     }
 
+    private class DynamicServiceListListener implements RequestListener<DynamicServiceInfoResponseModel.List> {
+
+        @Override
+        public void onRequestSuccess(DynamicServiceInfoResponseModel.List result) {
+            getSpiceManager().removeDataFromCache(DynamicServiceInfoResponseModel.List.class, KEY_DYNAMIC_LIST_REQUEST);
+            if (isAdded() && result != null) {
+                mAdapter.addDynamicServices(result);
+            }
+
+        }
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            getSpiceManager().removeDataFromCache(DynamicServiceInfoResponseModel.List.class, KEY_DYNAMIC_LIST_REQUEST);
+            if (isAdded()) {
+                mRecyclerView.addOnScrollListener(mEndlessScrollListener);
+            }
+        }
+    }
+
+    //region Interfaces
     public interface OnOpenUserProfileClickListener {
         void onOpenUserProfileClick(final UserProfileResponseModel _userProfile);
     }
 
     public interface OnServiceSelectListener {
         <T> void onServiceSelect(final Service _service, T data);
+        <T> void onServiceSelect(final DynamicServiceInfoResponseModel _service, T data);
     }
 
     public interface OnStaticServiceSelectListener {
@@ -377,4 +431,5 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
     public interface OnHeaderStaticServiceSelectedListener {
         void onHeaderStaticServiceSelected(final HeaderStaticService _service);
     }
+    //endregion
 }

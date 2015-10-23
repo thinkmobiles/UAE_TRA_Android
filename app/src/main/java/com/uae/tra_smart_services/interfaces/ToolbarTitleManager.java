@@ -8,5 +8,7 @@ import android.support.annotation.StringRes;
 public interface ToolbarTitleManager {
     void setTitle(@StringRes int _resId);
 
+    void setTitle(CharSequence _title);
+
     void setToolbarVisibility(final boolean _isVisible);
 }

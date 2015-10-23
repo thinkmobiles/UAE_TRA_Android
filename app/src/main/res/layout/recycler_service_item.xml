@@ -26,5 +26,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="top|center"
         android:textSize="12sp"
-        android:lines="3"/>
+        android:lines="3"
+        android:textColor="@color/hex_color_dark_gray"/>
+
 </android.support.percent.PercentRelativeLayout >

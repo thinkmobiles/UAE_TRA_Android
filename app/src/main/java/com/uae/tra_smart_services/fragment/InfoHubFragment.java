@@ -159,7 +159,7 @@ public final class InfoHubFragment extends BaseFragment
     }
 
     @Override
-    public final void loadMore() {
+    public final void onLoadMoreEvent() {
         if (mIsSearching) {
             mTransactionsListAdapter.loadMoreSearchResults();
         } else if (!mIsAllTransactionDownloaded && !mIsInLoading) {
