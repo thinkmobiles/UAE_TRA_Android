@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -131,7 +132,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         switch (item.getItemId()) {
             case R.id.action_send:
                 hideKeyboard(tvSignalLevel);
-                collectDataAdnSendToServer();
+                collectDataAndSendToServer();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -322,11 +323,11 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         });
     }
 
-    private void collectDataAdnSendToServer() {
+    private void collectDataAndSendToServer() {
         mLocationModel.setAddress(etLocation.getText().toString());
         mLocationModel.setSignalLevel(sbProgressBar.getProgress() + 1);
         if (TextUtils.isEmpty(mLocationModel.getAddress()) && mLocationModel.getLocation() == null) {
-            showMessage(R.string.str_location_error, R.string.str_location_error_message);
+            Toast.makeText(getActivity(), R.string.str_location_error_message, Toast.LENGTH_SHORT).show();
             return;
         }
 
