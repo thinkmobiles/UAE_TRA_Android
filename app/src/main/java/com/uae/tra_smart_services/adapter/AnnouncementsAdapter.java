@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -140,7 +141,12 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         if(viewType == VIEW_TYPE_LOADER && !mIsPreview){
             return new ViewHolder(new ProgressBar(parent.getContext()), true);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub_second, parent, false);
+            final View view;
+            if (mIsPreview){
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub_second, parent, false);
+            } else {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub, parent, false);
+            }
             return new ViewHolder(view);
         }
     }
@@ -260,11 +266,19 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         public ViewHolder(View itemView) {
             super(itemView);
             container = itemView;
-            sStartOffset = (Space) itemView.findViewById(R.id.sStartOffset_LIIHS);
-            hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIHS);
-            title = (TextView) itemView.findViewById(R.id.hvTitle_LIHS);
-            description = (TextView) itemView.findViewById(R.id.hvDescr_LIHS);
-            date = (TextView) itemView.findViewById(R.id.hvDate_LIHS);
+            if(mIsPreview){
+                sStartOffset = (Space) itemView.findViewById(R.id.sStartOffset_LIIHS);
+                hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIIHS);
+                title = (TextView) itemView.findViewById(R.id.hvTitle_LIIHS);
+                description = (TextView) itemView.findViewById(R.id.hvDescr_LIIHS);
+                date = (TextView) itemView.findViewById(R.id.hvDate_LIIHS);
+            } else {
+                sStartOffset = (Space) itemView.findViewById(R.id.sStartOffset_LIIH);
+                hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIIH);
+                title = (TextView) itemView.findViewById(R.id.hvTitle_LIIH);
+                description = (TextView) itemView.findViewById(R.id.hvDescr_LIIH);
+                date = (TextView) itemView.findViewById(R.id.hvDate_LIIH);
+            }
         }
 
         public ViewHolder(View view, boolean _isProgress) {

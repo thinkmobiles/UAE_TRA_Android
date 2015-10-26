@@ -53,10 +53,10 @@ public class InfoHubAnnPreviewListAdapter extends RecyclerView.Adapter<InfoHubAn
                     }
                 }
             });
-            hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIHLI);
-            title = (TextView) itemView.findViewById(R.id.hvTitle_LIHLI);
-            description = (TextView) itemView.findViewById(R.id.hvDescr_LIHLI);
-            date = (TextView) itemView.findViewById(R.id.hvDate_LIHLI);
+            hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIIH);
+            title = (TextView) itemView.findViewById(R.id.hvTitle_LIIH);
+            description = (TextView) itemView.findViewById(R.id.hvDescr_LIIH);
+            date = (TextView) itemView.findViewById(R.id.hvDate_LIIH);
         }
 
         public void setData(InfoHubAnnouncementsListItemModel _model){

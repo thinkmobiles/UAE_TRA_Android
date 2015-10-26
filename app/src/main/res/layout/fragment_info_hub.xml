@@ -78,7 +78,7 @@
             style="@style/ListViewItemSeparator"
             android:layout_alignEnd="@+id/textView2"
             android:layout_alignStart="@+id/tvSeeMoreInfoHubAnn_FIH"
-            android:layout_below="@+id/hvIcon_LIHS"
+            android:layout_below="@+id/hvIcon_LIIHS"
             android:layout_marginStart="5dp"/>
 
         <RelativeLayout

@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlInfoHubListItemContainer_FIHLI"
-    android:layout_width="340dp"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:padding="3dp">
 
@@ -14,19 +14,21 @@
         android:layout_height="wrap_content"/>
 
     <com.uae.tra_smart_services.customviews.HexagonView
-        android:id="@+id/hvIcon_LIHS"
+        android:id="@+id/hvIcon_LIIHS"
+        android:layout_toEndOf="@id/sStartOffset_LIIHS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_marginBottom="7dp"
         android:layout_gravity="start"
-        app:hexagonSideSize="45dp"
-        app:hexagonSrc="@android:color/white"
-        app:hexagonBorderSize="2dp"
-        app:hexagonBorderColor="#000000"/>
+        android:layout_marginBottom="2dp"
+        app:hexagonSideSize="40dp"
+        app:hexagonSrc="@drawable/ic_form"
+        app:hexagonBorderSize="1dp"
+        app:hexagonBorderColor="?attr/colorPrimary"/>
 
     <TextView
-        android:id="@+id/hvTitle_LIHS"
+        android:id="@+id/hvTitle_LIIHS"
+        tools:text="Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -38,15 +40,14 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:gravity="start"
-        android:text="Title Title Title Title Title"
-        android:layout_alignTop="@+id/hvIcon_LIHS"
-        android:layout_toStartOf="@+id/hvDate_LIHS"
-        android:layout_toEndOf="@+id/hvIcon_LIHS"
+        android:layout_alignTop="@+id/hvIcon_LIIHS"
+        android:layout_toStartOf="@+id/hvDate_LIIHS"
+        android:layout_toEndOf="@+id/hvIcon_LIIHS"
         />
 
     <TextView
+        android:id="@+id/hvDescr_LIIHS"
         tools:text="John Doe asdasd asdasda asdasda najsdnasjn jnj nkjnkjqdsn adads akjsdna asdjnaskjdas da sda sd as   asdasdasdasd asdasdasdasd najsdnasjn jnj nkjnkjqdsn adads akjsdna asdjnaskjdas da sda sd as   asdasdasdasd asdasdasdasd asdasda najsdnasjn jnj nkjnkjqdsn adads akjsdna asdjnaskjdas da sda sd as   asdasdasdasd asdasdasdasd asdasdas dasd as d"
-        android:id="@+id/hvDescr_LIHS"
         android:layout_gravity="fill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,18 +56,17 @@
         android:maxLines = "3"
         android:maxEms="12"
         android:singleLine = "false"
-        android:width="20dp"
-        android:text="Description"
+        android:width="10dp"
         android:textSize="16sp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:layout_alignParentEnd="true"
         android:gravity="start"
-        android:layout_toEndOf="@+id/hvIcon_LIHS"
-        android:layout_below="@+id/hvTitle_LIHS" />
+        android:layout_toEndOf="@+id/hvIcon_LIIHS"
+        android:layout_below="@+id/hvTitle_LIIHS" />
 
     <TextView
-        android:id="@+id/hvDate_LIHS"
+        android:id="@+id/hvDate_LIIHS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
@@ -75,16 +75,16 @@
         android:text="date"
         android:textSize="10sp"
         android:textColor="@color/hex_color_accent"
-        android:layout_above="@+id/hvDescr_LIHS"
-        android:layout_alignEnd="@+id/hvDescr_LIHS"
-        android:layout_alignTop="@+id/hvIcon_LIHS" />
+        android:layout_above="@+id/hvDescr_LIIHS"
+        android:layout_alignEnd="@+id/hvDescr_LIIHS"
+        android:layout_alignTop="@+id/hvIcon_LIIHS" />
 
     <View
         style="@style/ListViewItemSeparator"
         android:id="@+id/vListViewItemSeparator"
         android:layout_marginStart="5dp"
-        android:layout_alignStart="@+id/hvDescr_LIHS"
-        android:layout_below="@+id/hvIcon_LIHS"
-        android:layout_alignEnd="@+id/hvDescr_LIHS" />
+        android:layout_alignStart="@+id/hvDescr_LIIHS"
+        android:layout_below="@+id/hvIcon_LIIHS"
+        android:layout_alignEnd="@+id/hvDescr_LIIHS" />
 
 </RelativeLayout> 

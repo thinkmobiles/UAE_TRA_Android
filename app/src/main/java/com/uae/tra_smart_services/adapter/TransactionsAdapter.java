@@ -253,10 +253,10 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         public ViewHolder(View itemView) {
             super(itemView);
             sStartOffset = (Space) itemView.findViewById(R.id.sStartOffset_LIIH);
-            hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIHLI);
-            title = (TextView) itemView.findViewById(R.id.hvTitle_LIHLI);
-            description = (TextView) itemView.findViewById(R.id.hvDescr_LIHLI);
-            date = (TextView) itemView.findViewById(R.id.hvDate_LIHLI);
+            hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIIH);
+            title = (TextView) itemView.findViewById(R.id.hvTitle_LIIH);
+            description = (TextView) itemView.findViewById(R.id.hvDescr_LIIH);
+            date = (TextView) itemView.findViewById(R.id.hvDate_LIIH);
         }
 
         public ViewHolder(View view, boolean _isProgress) {

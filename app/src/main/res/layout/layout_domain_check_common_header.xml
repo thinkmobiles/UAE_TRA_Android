@@ -14,7 +14,7 @@
     tools:src="@drawable/ic_edit">
 
     <com.uae.tra_smart_services.customviews.HexagonView
-        android:id="@+id/hvIcon_LIHS"
+        android:id="@+id/hvIcon_LIIHS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
