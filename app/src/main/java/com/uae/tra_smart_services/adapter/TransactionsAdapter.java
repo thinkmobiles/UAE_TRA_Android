@@ -243,7 +243,6 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
-
         private HexagonView hexagonView;
         private TextView title, description, date;
         private ProgressBar progressBar;
