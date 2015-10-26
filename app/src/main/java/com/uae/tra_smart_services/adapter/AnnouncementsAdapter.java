@@ -279,6 +279,12 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
                 description = (TextView) itemView.findViewById(R.id.hvDescr_LIIH);
                 date = (TextView) itemView.findViewById(R.id.hvDate_LIIH);
             }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View _view) {
+                    onItemClickListener.onItemSelected(_view.getTag());
+                }
+            });
         }
 
         public ViewHolder(View view, boolean _isProgress) {
