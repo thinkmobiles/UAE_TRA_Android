@@ -15,9 +15,11 @@ import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.TransactionsAdapter.ViewHolder;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
@@ -267,7 +269,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         public void setData(int _position, GetTransactionResponseModel _model) {
             if (!isProgress) {
                 sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
-//            Picasso.with(mActivity).load(_model.getIconUrl()).into(hexagonView);
+//            Picasso.with(mActivity).load(_model.getIconUrl()).into(new HexagonViewTarget(hexagonView));
                 title.setText(_model.title);
                 description.setText(_model.description);
                 date.setText(_model.modifiedDatetime);

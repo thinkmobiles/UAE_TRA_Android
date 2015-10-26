@@ -11,14 +11,15 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AnnouncementsAdapter.ViewHolder;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
@@ -41,7 +42,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
 
     private final Activity mActivity;
     private final OperationStateManager mOperationStateManager;
-    private final List<GetAnnouncementsResponseModel.Announcements> mDataSet, mShowingData;
+    private final List<GetAnnouncementsResponseModel.Announcement> mDataSet, mShowingData;
 
     private TransactionFilter mFilter;
     private boolean mIsShowingLoaderForData;
@@ -84,7 +85,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         return mDataSet.isEmpty();
     }
 
-    public void addAll(final List<GetAnnouncementsResponseModel.Announcements> _announcementsResponses) {
+    public void addAll(final List<GetAnnouncementsResponseModel.Announcement> _announcementsResponses) {
         mDataSet.addAll(_announcementsResponses);
         if (!mIsInSearchMode) {
             int oldSize = mShowingData.size();
@@ -198,7 +199,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
             mSearchQuery = String.valueOf(constraint);
             mIsCurrentlyLoading = true;
 
-            final List<GetAnnouncementsResponseModel.Announcements> filteredList;
+            final List<GetAnnouncementsResponseModel.Announcement> filteredList;
             final FilterResults filterResults = new FilterResults();
             try {
                 filteredList = mTRAServicesAPI.searchAnnouncements(mSearchResultPageNum, DEFAULT_PAGE_SIZE, mSearchQuery).announcements;
@@ -250,7 +251,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         @UiThread
         private void showNewSearchResults(FilterResults results) {
             mOperationStateManager.showData();
-            mShowingData.addAll((ArrayList<GetAnnouncementsResponseModel.Announcements>) results.values);
+            mShowingData.addAll((ArrayList<GetAnnouncementsResponseModel.Announcement>) results.values);
             notifyDataSetChanged();
         }
     }
@@ -279,12 +280,6 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
                 description = (TextView) itemView.findViewById(R.id.hvDescr_LIIH);
                 date = (TextView) itemView.findViewById(R.id.hvDate_LIIH);
             }
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View _view) {
-                    onItemClickListener.onItemSelected(_view.getTag());
-                }
-            });
         }
 
         public ViewHolder(View view, boolean _isProgress) {
@@ -295,26 +290,20 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
                     ViewGroup.LayoutParams.WRAP_CONTENT));
         }
 
-        public void setData(int _position, GetAnnouncementsResponseModel.Announcements _model) {
+        public void setData(int _position, final GetAnnouncementsResponseModel.Announcement _model) {
             if (!isProgress) {
                 sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
-//            Picasso.with(mActivity).load(_model.getIconUrl()).into(hexagonView);
+                Picasso.with(mActivity).load(_model.image).into(new HexagonViewTarget(hexagonView));
                 title.setText(_model.title);
                 description.setText(_model.description);
                 date.setText(_model.createdAt);
-                container.setOnClickListener(new OnItemPressListener(_model));
+                container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View _view) {
+                        onItemClickListener.onItemSelected(_model);
+                    }
+                });
             }
-        }
-    }
-
-    private class OnItemPressListener implements View.OnClickListener{
-        private GetAnnouncementsResponseModel.Announcements model;
-        OnItemPressListener(GetAnnouncementsResponseModel.Announcements _model){
-            model = _model;
-        }
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(mActivity, model.title, Toast.LENGTH_SHORT).show();
         }
     }
 }

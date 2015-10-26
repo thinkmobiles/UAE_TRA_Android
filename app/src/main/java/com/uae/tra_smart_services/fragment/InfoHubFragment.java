@@ -27,7 +27,6 @@ import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
 import com.uae.tra_smart_services.rest.model.response.GetAnnouncementsResponseModel;
 import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel;
-import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
 import com.uae.tra_smart_services.rest.request_listeners.AnnouncementsResponseListener;
 import com.uae.tra_smart_services.rest.robo_requests.GetAnnouncementsRequest;
 import com.uae.tra_smart_services.rest.robo_requests.GetTransactionsRequest;
@@ -164,9 +163,9 @@ public final class InfoHubFragment extends BaseFragment
         mEndlessScrollListener = new EndlessScrollListener(mTransactionsLayoutManager, this);
         mTransactionsList.addOnScrollListener(mEndlessScrollListener);
         tvSeeMoreAnnouncements.setOnClickListener(this);
-        mAnnouncementsListAdapter.setOnItemClickListener(new OnInfoHubItemClickListener<InfoHubAnnouncementsListItemModel>() {
+        mAnnouncementsListAdapter.setOnItemClickListener(new OnInfoHubItemClickListener<GetAnnouncementsResponseModel.Announcement>() {
             @Override
-            public void onItemSelected(InfoHubAnnouncementsListItemModel item) {
+            public void onItemSelected(GetAnnouncementsResponseModel.Announcement item) {
                 Bundle args = new Bundle();
                 args.putParcelable(C.INFO_HUB_ANN_DATA, item);
                 getFragmentManager()

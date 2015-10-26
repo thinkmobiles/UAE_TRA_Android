@@ -20,7 +20,7 @@ import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.QueryAdapter;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
-import com.uae.tra_smart_services.rest.model.response.InfoHubAnnouncementsListItemModel;
+import com.uae.tra_smart_services.rest.model.response.GetAnnouncementsResponseModel;
 import com.uae.tra_smart_services.rest.request_listeners.AnnouncementsResponseListener;
 import com.uae.tra_smart_services.rest.robo_requests.GetAnnouncementsRequest;
 import com.uae.tra_smart_services.util.EndlessScrollListener;
@@ -29,7 +29,7 @@ import com.uae.tra_smart_services.util.EndlessScrollListener;
  * Created by ak-buffalo on 18.08.15.
  */
 public class InfoHubAnnouncementsFragment extends BaseFragment
-        implements OnInfoHubItemClickListener<InfoHubAnnouncementsListItemModel>,
+        implements OnInfoHubItemClickListener<GetAnnouncementsResponseModel.Announcement>,
         EndlessScrollListener.OnLoadMoreListener, SearchView.OnQueryTextListener, OperationStateManager, MenuItemCompat.OnActionExpandListener {
 
     private RecyclerView mList;
@@ -101,7 +101,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     }
 
     @Override
-    public void onItemSelected(InfoHubAnnouncementsListItemModel item) {
+    public void onItemSelected(GetAnnouncementsResponseModel.Announcement item) {
         Bundle args = new Bundle();
         args.putParcelable(C.INFO_HUB_ANN_DATA, item);
         getFragmentManager()
