@@ -8,11 +8,17 @@ import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem;
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem.BaseBuilder;
 import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric;
 import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType;
+import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule;
 
 import java.lang.reflect.Type;
 
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.BOOLEAN_ITEM;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.STRING_ITEM;
+import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.EMAIL;
+import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.NONE;
+import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.NUMBER;
+import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.STRING;
+import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.URL;
 
 /**
  * Created by mobimaks on 22.10.2015.
@@ -41,6 +47,7 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
                 .setIsValidationRequired(main.get(IS_REQUIRED).getAsBoolean())
                 .setDisplayName(getLocalisedText((JsonObject) main.get(DISPLAY_NAME)))
                 .setPlaceholder(getLocalisedText((JsonObject) main.get(PLACEHOLDER)))
+                .setValidationRule(parseValidationRule(main.get(VALIDATE_RULE).getAsString()))
                 .build();
     }
 
@@ -52,6 +59,21 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
             return STRING_ITEM;
         }
         return BOOLEAN_ITEM;//default item (may be placeholder or sth like that)
+    }
+
+    @ValidationRule
+    private String parseValidationRule(final String _rule) {
+        if (STRING.equalsIgnoreCase(_rule)) {
+            return STRING;
+        } else if (NUMBER.equalsIgnoreCase(_rule)) {
+            return NUMBER;
+        } else if (EMAIL.equalsIgnoreCase(_rule)) {
+            return EMAIL;
+        } else if (URL.equalsIgnoreCase(_rule)) {
+            return URL;
+        } else {
+            return NONE;
+        }
     }
 
 }

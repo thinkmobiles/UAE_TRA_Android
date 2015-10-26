@@ -247,7 +247,7 @@ public class HexagonHomeFragment extends BaseFragment implements OnServiceSelect
         mLayoutManager = new StaggeredGridLayoutManager(4, 1);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        initEndlessListener();
+        //initEndlessListener();
     }
 
     private void initEndlessListener() {

@@ -19,7 +19,7 @@ import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuild
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.NONE;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.NUMBER;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.STRING;
-import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.ULR;
+import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.URL;
 
 /**
  * Created by mobimaks on 22.10.2015.
@@ -37,14 +37,14 @@ public final class InputItemBuilderFabric {
         String PICKER_ITEM = "picker";
     }
 
-    @StringDef({NONE, STRING, NUMBER, EMAIL, ULR})
+    @StringDef({NONE, STRING, NUMBER, EMAIL, URL})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ValidationRule {
         String NONE = "none";
         String STRING = "string";
         String NUMBER = "number";
         String EMAIL = "email";
-        String ULR = "url";
+        String URL = "url";
     }
 
     public BaseBuilder createBuilder(final @InputItemType String _itemType) {

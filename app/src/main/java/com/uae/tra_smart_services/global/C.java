@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.global;
 
+import android.support.annotation.IntDef;
 import android.support.annotation.StringDef;
 import android.widget.Toast;
 
@@ -106,6 +107,15 @@ public final class C {
     public @interface HttpMethod {
         String GET = "GET";
         String POST = "POST";
+    }
+    //endregion
+
+    //region Spice manager const
+    @IntDef({SpiceManager.TRA_SERVICES_API, SpiceManager.DYNAMIC_SERVICES_API})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SpiceManager {
+        int TRA_SERVICES_API = 0;
+        int DYNAMIC_SERVICES_API = 1;
     }
     //endregion
 

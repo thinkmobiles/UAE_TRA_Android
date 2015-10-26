@@ -22,16 +22,16 @@ import static com.uae.tra_smart_services.global.ServerConstants.PATH_HOLDER;
 public interface DynamicServicesApi {
 
     @GET("/{" + PATH_HOLDER + "}")
-    Response performGetRequest(@NonNull  final @Path(PATH_HOLDER) String url,
+    Response performGetRequest(@NonNull final @Path(encode = false, value = PATH_HOLDER) String url,
                                @Nullable final @QueryMap Map<String, String> options);
 
     @POST("/{" + PATH_HOLDER + "}")
-    Response performPostRequest(@NonNull  final @Path(PATH_HOLDER) String url,
+    Response performPostRequest(@NonNull final @Path(encode = false, value = PATH_HOLDER) String url,
                                 @Nullable final @QueryMap Map<String, String> options);
 
     @POST("/{" + PATH_HOLDER + "}")
-    Response performPostRequest(@NonNull  final @Path(PATH_HOLDER) String url,
+    Response performPostRequest(@NonNull final @Path(encode = false, value = PATH_HOLDER) String url,
                                 @Nullable final @QueryMap Map<String, String> options,
-                                @NonNull  final @Body JsonElement _body);
+                                @NonNull final @Body JsonElement _body);
 
 }

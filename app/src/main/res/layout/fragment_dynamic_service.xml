@@ -24,14 +24,14 @@
         android:scrollbars="none"
         tools:layout_marginTop="0dp">
 
-        <LinearLayout
+        <com.uae.tra_smart_services.customviews.PercentLinearLayout
             android:id="@+id/llContainer_FDS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="?dynamicServiceDivider"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:showDividers="middle|end"/>
+            android:showDividers="middle"/>
 
     </ScrollView>
 

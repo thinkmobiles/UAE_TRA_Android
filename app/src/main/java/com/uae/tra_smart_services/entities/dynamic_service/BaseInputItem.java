@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.JsonElement;
+import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule;
+
 import java.util.ArrayList;
 
 /**
@@ -19,11 +22,13 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
 
     protected String mId;
     protected String mQueryName;
-    protected boolean isValidationRequired;
     protected String mDisplayName;
     protected String mPlaceholder;
+    protected boolean isValidationRequired;
     protected int order;
-    //add validate as
+
+    @ValidationRule
+    protected String mValidationRule;
 
     public View getView(final LayoutInflater _inflater, final ViewGroup _container) {
         if (rootView == null) {
@@ -66,6 +71,12 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
     public final int getOrder() {
         return order;
     }
+
+    @NonNull
+    public abstract JsonElement getJsonData();
+
+    @NonNull
+    public abstract String getArgsData();
 
     @Override
     public int compareTo(@NonNull final BaseInputItem _another) {
@@ -113,6 +124,11 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
 
         public <E extends BaseBuilder<T>> E setOrder(int _order) {
             mInstance.order = _order;
+            return (E) this;
+        }
+
+        public <E extends BaseBuilder<T>> E setValidationRule(@ValidationRule String _validationRule) {
+            mInstance.mValidationRule = _validationRule;
             return (E) this;
         }
 

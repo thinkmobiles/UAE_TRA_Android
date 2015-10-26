@@ -1,11 +1,14 @@
 package com.uae.tra_smart_services.entities.dynamic_service.input_item;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem;
 
@@ -27,7 +30,7 @@ public class BooleanInputItem extends BaseInputItem implements OnClickListener {
         super.initViews();
         rlContainer = findView(R.id.rlContainer_IIB);
         tvText = findView(R.id.tvText_IIB);
-        tvText.setText(mPlaceholder);
+        tvText.setText(getPlaceholder());
 
         swSwitch = findView(R.id.swSwitch_IIB);
     }
@@ -45,7 +48,21 @@ public class BooleanInputItem extends BaseInputItem implements OnClickListener {
 
     @Override
     public boolean isDataValid() {
-        return super.isDataValid() || swSwitch.isChecked();
+        return true;
+    }
+
+    @NonNull
+    @Override
+    public final JsonElement getJsonData() {
+        final JsonObject element = new JsonObject();
+        element.addProperty(getQueryName(), swSwitch.isChecked());
+        return element;
+    }
+
+    @NonNull
+    @Override
+    public final String getArgsData() {
+        return String.valueOf(swSwitch.isChecked());
     }
 
     public static class Builder extends BaseBuilder<BooleanInputItem> {
@@ -55,10 +72,6 @@ public class BooleanInputItem extends BaseInputItem implements OnClickListener {
             return new BooleanInputItem();
         }
 
-        @Override
-        public BooleanInputItem build() {
-            return mInstance;
-        }
     }
 
     @Override
