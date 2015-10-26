@@ -73,7 +73,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     protected void initViews() {
         super.initViews();
         mList = findView(R.id.rvInfoHubAnnList_FIHA);
-//        pbLoading = findView(R.id.pbLoadingAnnoncements_FIHA);
+        pbLoading = findView(R.id.pbLoadingAnnoncements_FIHA);
         tvNoResult = findView(R.id.tvNoPendingAnnoncements_FIHA);
         initAnnouncementsList();
     }
@@ -170,21 +170,21 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
 
     @Override
     public final void showProgress() {
-//        pbLoading.setVisibility(View.VISIBLE);
+        pbLoading.setVisibility(View.VISIBLE);
         mList.setVisibility(View.INVISIBLE);
         tvNoResult.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public final void showData() {
-//        pbLoading.setVisibility(View.INVISIBLE);
+        pbLoading.setVisibility(View.INVISIBLE);
         mList.setVisibility(View.VISIBLE);
         tvNoResult.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public final void showEmptyView() {
-//        pbLoading.setVisibility(View.INVISIBLE);
+        pbLoading.setVisibility(View.INVISIBLE);
         mList.setVisibility(View.INVISIBLE);
         tvNoResult.setVisibility(View.VISIBLE);
     }
