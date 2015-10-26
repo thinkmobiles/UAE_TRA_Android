@@ -21,13 +21,23 @@ public class HexagonViewTarget extends ViewTarget<HexagonView, Drawable> impleme
     private final int mScaleType;
 
     public HexagonViewTarget(final HexagonView _view) {
-        this(_view, ScaleType.CENTER_CROP);
+        this(_view, ScaleType.CENTER_CROP, false);
+    }
+
+    public HexagonViewTarget(final HexagonView _view, final boolean _isGlideTarget) {
+        this(_view, ScaleType.CENTER_CROP, _isGlideTarget);
     }
 
     public HexagonViewTarget(final HexagonView _view, final @ScaleType int _scaleType) {
+        this(_view, _scaleType, false);
+    }
+
+    public HexagonViewTarget(final HexagonView _view, final @ScaleType int _scaleType, final boolean _isGlideTarget) {
         super(_view);
         mScaleType = _scaleType;
-        _view.setTag(this);
+        if (!_isGlideTarget) {
+            _view.setTag(this);
+        }
     }
 
     @Override
