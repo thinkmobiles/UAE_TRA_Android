@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.customviews;
+package com.uae.tra_smart_services.entities;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,11 +13,11 @@ import com.uae.tra_smart_services.util.ImageUtils;
  * Created by mobimaks on 26.08.2015.
  */
 
-public final class TargetImageView implements Target {
+public final class ImageViewTarget implements Target {
 
     private final ImageView mImageView;
 
-    public TargetImageView(final ImageView _imageView) {
+    public ImageViewTarget(final ImageView _imageView) {
         mImageView = _imageView;
         mImageView.setTag(this);
     }

@@ -122,7 +122,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     }
 
     @Override
-    public void loadMore() {
+    public void onLoadMoreEvent() {
         if (mIsSearching) {
             mListAdapter.loadMoreSearchResults();
         } else if (!mIsAllAnnouncementsDownloaded && !mIsAnnouncementsInLoading) {

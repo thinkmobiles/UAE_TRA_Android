@@ -37,6 +37,9 @@ import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 
 import org.apache.commons.lang3.text.WordUtils;
 
+import static com.uae.tra_smart_services.global.C.SpiceManager.DYNAMIC_SERVICES_API;
+import static com.uae.tra_smart_services.global.C.SpiceManager.TRA_SERVICES_API;
+
 /**
  * Created by Mikazme on 22/07/2015.
  */
@@ -199,7 +202,11 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     }
 
     protected final SpiceManager getSpiceManager() {
-        return mSpiceLoader.getSpiceManager();
+        return mSpiceLoader.getSpiceManager(TRA_SERVICES_API);
+    }
+
+    protected final SpiceManager getDynamicSpiceManager() {
+        return mSpiceLoader.getSpiceManager(DYNAMIC_SERVICES_API);
     }
 
     protected final void hideKeyboard(View view) {

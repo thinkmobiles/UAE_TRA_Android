@@ -16,6 +16,7 @@ public final class ServerConstants {
     public static final String BASE_URL1 = HTTP_SCHEME + "mobws.tra.gov.ae";
     public static final String BASE_URL2 = HTTP_SCHEME + "185.54.19.249:80";
     public static final String BASE_URL3 = HTTP_SCHEME + "192.168.120.40:80";
+    public static final String BASE_URL4 = HTTP_SCHEME + "projects.thinkmobiles.com:7791";
     public static String BASE_URL = BASE_URL1;
     public static final String AUTH_URL = "/auth";
     public static final String ACCESS_TOKEN = "access_token";
@@ -74,6 +75,7 @@ public final class ServerConstants {
     public static final String GET_ANNOUNCEMENTS = "/announcement";
     public static final String POST_INNOVATION = "/innovation";
     public static final String SERVICE_INFO = "/service/about";
+    public static final String DYNAMIC_SERVICE_LIST = "/service";
 
     //!!!!!!!!!!!! API PARAMETERS !!!!!!!!!!!!!!!!!!
     public static final String PARAMETER_CHECK_URL = "checkUrl";

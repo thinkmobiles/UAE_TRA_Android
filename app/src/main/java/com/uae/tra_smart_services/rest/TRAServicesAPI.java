@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.rest;
 
+import com.uae.tra_smart_services.entities.dynamic_service.DynamicService;
 import com.uae.tra_smart_services.rest.model.request.ChangePasswordModel;
 import com.uae.tra_smart_services.rest.model.request.ComplainServiceProviderModel;
 import com.uae.tra_smart_services.rest.model.request.ComplainTRAServiceModel;
@@ -18,6 +19,8 @@ import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckRes
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.GetAnnouncementsResponseModel;
 import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel;
+import com.uae.tra_smart_services.rest.model.response.DynamicServiceInfoResponseModel;
+import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel.List;
 import com.uae.tra_smart_services.rest.model.response.RatingServiceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.ServiceInfoResponse;
@@ -30,6 +33,7 @@ import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.PUT;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 import static com.uae.tra_smart_services.global.ServerConstants.CHANGE_PASSWORD;
@@ -38,6 +42,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.CHECK_WHO_IS_URL
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ABOUT_SERVICE_PROVIDER_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ABOUT_TRA_SERVICE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.COMPLAIN_ENQUIRIES_SERVICE_URL;
+import static com.uae.tra_smart_services.global.ServerConstants.DYNAMIC_SERVICE_LIST;
 import static com.uae.tra_smart_services.global.ServerConstants.GET_TRANSACTIONS;
 import static com.uae.tra_smart_services.global.ServerConstants.GET_ANNOUNCEMENTS;
 import static com.uae.tra_smart_services.global.ServerConstants.HELP_SALIM_URL;
@@ -56,6 +61,7 @@ import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_PAGE;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_SEARCH;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_SERVICE_NAME;
 import static com.uae.tra_smart_services.global.ServerConstants.PARAMETER_START_OFFSET;
+import static com.uae.tra_smart_services.global.ServerConstants.PATH_HOLDER;
 import static com.uae.tra_smart_services.global.ServerConstants.POOR_COVERAGE_URL;
 import static com.uae.tra_smart_services.global.ServerConstants.POST_INNOVATION;
 import static com.uae.tra_smart_services.global.ServerConstants.RATING_SERVICE_URL;
@@ -162,5 +168,11 @@ public interface TRAServicesAPI {
     @GET(SERVICE_INFO)
     ServiceInfoResponse getServiceInfo(@Query(PARAMETER_SERVICE_NAME) String _serviceName,
                                        @Query(PARAMETER_LANGUAGE) String _language);
+
+    @GET(DYNAMIC_SERVICE_LIST)
+    DynamicServiceInfoResponseModel.List getDynamicServiceList();
+
+    @GET(DYNAMIC_SERVICE_LIST + "/{" + PATH_HOLDER + "}")
+    DynamicService getDynamicServiceDetails(@Path(PATH_HOLDER) String _id);
 
 }

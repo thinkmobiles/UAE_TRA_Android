@@ -31,6 +31,7 @@ import com.uae.tra_smart_services.fragment.DeviceApprovalFragment;
 import com.uae.tra_smart_services.fragment.DomainCheckerFragment;
 import com.uae.tra_smart_services.fragment.DomainInfoFragment;
 import com.uae.tra_smart_services.fragment.DomainIsAvailableFragment;
+import com.uae.tra_smart_services.fragment.DynamicServiceFragment;
 import com.uae.tra_smart_services.fragment.EnquiriesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment;
 import com.uae.tra_smart_services.fragment.FavoritesFragment.OnFavoritesEventListener;
@@ -78,6 +79,7 @@ import com.uae.tra_smart_services.interfaces.OnActivateTutorialListener;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
+import com.uae.tra_smart_services.rest.model.response.DynamicServiceInfoResponseModel;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.util.PersistentCookieStore;
@@ -171,6 +173,15 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public <T> void onServiceSelect(final DynamicServiceInfoResponseModel _service, @Nullable T data) {
+        onServiceSelect(_service, data, true);
+    }
+
+    public <T> void onServiceSelect(final DynamicServiceInfoResponseModel _service, @Nullable T data, final boolean _useBackStack) {
+        replaceFragment(DynamicServiceFragment.newInstance(_service), _useBackStack);
     }
 
     @Override

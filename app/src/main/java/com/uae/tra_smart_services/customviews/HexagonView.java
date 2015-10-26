@@ -2,14 +2,12 @@ package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Region;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
@@ -20,19 +18,19 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import static com.uae.tra_smart_services.customviews.HexagonView.ScaleType.CENTER_CROP;
+import static com.uae.tra_smart_services.customviews.HexagonView.ScaleType.INSIDE_CROP;
 
 
 /**
  * Created by mobimaks on 02.08.2015.
  */
-public final class HexagonView extends View implements Target {
+public final class HexagonView extends View {
 
     private final int DEFAULT_TEXT_SIZE = Math.round(14 * getResources().getDisplayMetrics().density);
     private final int DEFAULT_HEXAGON_RADIUS = Math.round(30 * getResources().getDisplayMetrics().density);
@@ -42,10 +40,9 @@ public final class HexagonView extends View implements Target {
     @IntDef({INSIDE_CROP, CENTER_CROP})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ScaleType {
+        int INSIDE_CROP = 0;
+        int CENTER_CROP = 1;
     }
-
-    public static final int INSIDE_CROP = 0;
-    public static final int CENTER_CROP = 1;
     //endregion
 
     private final Path mPath;
@@ -310,17 +307,4 @@ public final class HexagonView extends View implements Target {
         _canvas.drawText(mText, _canvas.getWidth() / 2, y, mTextPaint);
     }
 
-    @Override
-    public final void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-        postScaleType(CENTER_CROP);
-        setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getContext(), new BitmapDrawable(getResources(), bitmap)));
-    }
-
-    @Override
-    public final void onBitmapFailed(Drawable errorDrawable) {
-    }
-
-    @Override
-    public final void onPrepareLoad(Drawable placeHolderDrawable) {
-    }
 }

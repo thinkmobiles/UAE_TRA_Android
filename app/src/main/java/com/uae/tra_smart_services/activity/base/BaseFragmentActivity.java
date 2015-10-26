@@ -9,7 +9,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.octo.android.robospice.SpiceManager;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.SpiceLoader;
+import com.uae.tra_smart_services.rest.DynamicRestService;
 import com.uae.tra_smart_services.rest.TRARestService;
 
 /**
@@ -18,26 +20,32 @@ import com.uae.tra_smart_services.rest.TRARestService;
 public abstract class BaseFragmentActivity extends BaseActivity implements SpiceLoader {
 
     private InputMethodManager mInputMethodManager;
-    private SpiceManager spiceManager = new SpiceManager(TRARestService.class);
-
+    private SpiceManager mSpiceManager = new SpiceManager(TRARestService.class);
+    private SpiceManager mDynamicSpiceManager = new SpiceManager(DynamicRestService.class);
 
     @CallSuper
     @Override
     public void onStart() {
         super.onStart();
-        spiceManager.start(this);
+        mSpiceManager.start(this);
+        mDynamicSpiceManager.start(this);
     }
 
     @CallSuper
     @Override
     public void onStop() {
-        spiceManager.shouldStop();
+        mDynamicSpiceManager.shouldStop();
+        mSpiceManager.shouldStop();
         super.onStop();
     }
 
     @Override
-    public final SpiceManager getSpiceManager() {
-        return spiceManager;
+    public final SpiceManager getSpiceManager(final @C.SpiceManager int _spiceManager) {
+        if (_spiceManager == C.SpiceManager.DYNAMIC_SERVICES_API) {
+            return mDynamicSpiceManager;
+        } else {
+            return mSpiceManager;
+        }
     }
 
     @IdRes

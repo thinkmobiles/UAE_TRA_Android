@@ -18,6 +18,8 @@ import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.customviews.HexagonView.ScaleType;
+import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.rest.model.request.LogoutRequestModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
@@ -93,7 +95,7 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
         llLogout = findView(R.id.llLogout_FUP);
 
         if (!TextUtils.isEmpty(mUserProfile.getImageUrl())) {
-            Picasso.with(getActivity()).load(mUserProfile.getImageUrl()).into(hvUserAvatar);
+            Picasso.with(getActivity()).load(mUserProfile.getImageUrl()).into(new HexagonViewTarget(hvUserAvatar));
         }
     }
 
@@ -174,10 +176,10 @@ public final class UserProfileFragment extends BaseFragment implements OnClickLi
 
     private void initUserAvatar(final UserProfileResponseModel _userProfile) {
         if (_userProfile.getImageUrl().isEmpty()) {
-            hvUserAvatar.setScaleType(HexagonView.INSIDE_CROP);
+            hvUserAvatar.setScaleType(ScaleType.INSIDE_CROP);
             hvUserAvatar.setHexagonSrcDrawable(R.drawable.ic_user_placeholder);
         } else {
-            Picasso.with(getActivity()).load(_userProfile.getImageUrl()).into(hvUserAvatar);
+            Picasso.with(getActivity()).load(_userProfile.getImageUrl()).into(new HexagonViewTarget(hvUserAvatar));
         }
     }
 

@@ -65,5 +65,9 @@
     <color name="hex_sendImeiCodeColor_green">#00CC66</color>
     <color name="hex_sendImeiCodeColor_gray">#131313</color>
 
+    <!--                Dynamic service             -->
+    <color name="fragment_dynamic_service_text_color">@android:color/black</color>
+    <color name="fragment_dynamic_service_hint_color">@color/hex_color_dark_gray</color>
+
 
 </resources>

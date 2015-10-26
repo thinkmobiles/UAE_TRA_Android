@@ -11,7 +11,7 @@
     android:paddingEnd="24dp"
     android:paddingStart="16dp"
     android:paddingTop="8dp"
-    tools:background="@android:color/darker_gray">
+    tools:background="#5aaa">
 
     <com.uae.tra_smart_services.customviews.HexagonView
         android:id="@+id/hvIcon_LIAF"

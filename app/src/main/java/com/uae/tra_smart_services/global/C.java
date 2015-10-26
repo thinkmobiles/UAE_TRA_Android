@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.global;
 
+import android.support.annotation.IntDef;
 import android.support.annotation.StringDef;
 import android.widget.Toast;
 
@@ -89,5 +90,33 @@ public final class C {
     public static final int MAX_USERNAME_LENGTH = 32;
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final int MAX_PASSWORD_LENGTH = 32;
+
+    //region Languages names const
+    @StringDef({ENGLISH, ARABIC})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Language {
+    }
+
+    public static final String ENGLISH = "en";
+    public static final String ARABIC = "ar";
+    //endregion
+
+    //region Http method const
+    @StringDef({HttpMethod.GET, HttpMethod.POST})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface HttpMethod {
+        String GET = "GET";
+        String POST = "POST";
+    }
+    //endregion
+
+    //region Spice manager const
+    @IntDef({SpiceManager.TRA_SERVICES_API, SpiceManager.DYNAMIC_SERVICES_API})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SpiceManager {
+        int TRA_SERVICES_API = 0;
+        int DYNAMIC_SERVICES_API = 1;
+    }
+    //endregion
 
 }

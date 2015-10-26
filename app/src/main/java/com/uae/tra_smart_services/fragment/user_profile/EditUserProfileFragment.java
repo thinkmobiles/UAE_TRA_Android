@@ -21,6 +21,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.customviews.HexagonView.ScaleType;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.customviews.ProfileController;
 import com.uae.tra_smart_services.customviews.ProfileController.ControllerButton;
@@ -189,10 +190,10 @@ public final class EditUserProfileFragment extends BaseFragment
 
     private void initUserAvatar(final UserProfileResponseModel _userProfile) {
         if (_userProfile.getImageUrl().isEmpty()) {
-            hvUserAvatar.postScaleType(HexagonView.INSIDE_CROP);
+            hvUserAvatar.postScaleType(ScaleType.INSIDE_CROP);
             hvUserAvatar.setHexagonSrcDrawable(R.drawable.ic_user_placeholder);
         } else {
-            Picasso.with(getActivity()).load(_userProfile.getImageUrl()).into(hvUserAvatar);
+            Picasso.with(getActivity()).load(_userProfile.getImageUrl()).into(new HexagonViewTarget(hvUserAvatar));
         }
     }
 
@@ -201,7 +202,7 @@ public final class EditUserProfileFragment extends BaseFragment
         mImageUri = _imageUri;
         Glide.with(getActivity())
                 .load(mImageUri)
-                .into((Target) new HexagonViewTarget(hvUserAvatar));
+                .into((Target) new HexagonViewTarget(hvUserAvatar, true));
 //        Target target = new Target() {
 //            @Override
 //            public void onBitmapLoaded(Bitmap _bitmap, Picasso.LoadedFrom from) {

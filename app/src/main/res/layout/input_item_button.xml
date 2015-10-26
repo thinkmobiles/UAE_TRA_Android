@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button
+    android:id="@+id/btnSubmit_IIB"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_centerHorizontal="true"
+    android:layout_gravity="center_horizontal"
+    android:background="?authorizationButtonsBackground"
+    android:layout_marginTop="8dp"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:textColor="@android:color/white"
+    app:layout_widthPercent="60%"
+    tools:text="@string/fragment_report_spam_sms_submit"/>

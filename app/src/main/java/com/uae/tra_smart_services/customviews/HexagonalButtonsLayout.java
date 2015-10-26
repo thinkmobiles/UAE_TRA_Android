@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.util.HexagonUtils;
 import com.uae.tra_smart_services.util.ImageUtils;
 
@@ -433,7 +434,7 @@ public class HexagonalButtonsLayout extends View {
     private void drawTextLayout(final Canvas _canvas, final PointF _center, final String _text,
                                 final int _textColor) {
         float spacingMult = 1.0f;
-        if (getResources().getConfiguration().locale.toString().equals("ar")) {
+        if (getResources().getConfiguration().locale.toString().equals(C.ARABIC)) {
             spacingMult = 0.7f;
         }
 

@@ -17,9 +17,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvFavoritesList_FAS"
         android:layout_width="match_parent"
-        android:layout_marginTop="?actionBarSize"
         android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        tools:layout_marginTop="0dp"
         tools:listitem="@layout/list_item_add_favorite"/>
-
 
 </FrameLayout>
