@@ -16,7 +16,7 @@
     <TextView
         android:id="@+id/tvNoPendingAnnoncements_FIHA"
         android:layout_width="match_parent"
-        android:text="@string/fragment_info_hub_no_pending_transactions"
+        android:text="@string/fragment_info_hub_no_pending_announcements"
         android:visibility="gone"
         android:textSize="18sp"
         android:layout_below="@+id/tvTransText_FIH"
