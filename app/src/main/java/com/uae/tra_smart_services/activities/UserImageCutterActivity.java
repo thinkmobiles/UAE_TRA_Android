@@ -21,16 +21,11 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.ImageCutterView;
+import com.uae.tra_smart_services.util.ImageUtils;
 import com.uae.tra_smart_services.util.IntentUtils;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * Created by ak-buffalo on 15.09.15.
@@ -127,10 +122,10 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(originBitmap, -mCutterOffsetX, -mCutterOffsetY, paint);
 
-        writeCuttedImage(resultingImage, _handler);
+        reWriteCuttedImage(resultingImage, _handler);
     }
 
-    private void writeCuttedImage(Bitmap _resultBitmap, OnImageProcess _handler){
+    private void reWriteCuttedImage(Bitmap _resultBitmap, OnImageProcess _handler){
         String sourceFilename = cuttedImageUri.getPath();
         FileOutputStream fOut = null;
         try {
@@ -150,14 +145,6 @@ public class UserImageCutterActivity extends Activity implements ImageCutterView
 
             }
         }
-    /*
-        OutputStream fout = null;
-        try {
-            fout = getContentResolver().openOutputStream(cuttedImageUri);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    */
     }
 
     @Override

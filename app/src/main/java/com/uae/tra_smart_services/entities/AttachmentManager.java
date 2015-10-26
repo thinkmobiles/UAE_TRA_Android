@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog;
 import com.uae.tra_smart_services.global.AttachmentOption;
+import com.uae.tra_smart_services.util.ImageUtils;
 import com.uae.tra_smart_services.util.IntentUtils;
 
 import java.io.File;
@@ -60,6 +61,8 @@ public final class AttachmentManager {
         if ((cuttedImageUri = getCuttedImageUri()) == null) {
             cuttedImageUri = createTempFile(CUTTED_IMAGE_NAME);
             saveCuttedImagePath(cuttedImageUri.toString());
+        } else {
+            ImageUtils.deleteViaContentProvider(mContext, cuttedImageUri);
         }
     }
 

@@ -1,6 +1,8 @@
 package com.uae.tra_smart_services.util;
 
+import android.annotation.TargetApi;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -9,6 +11,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.AttrRes;
@@ -102,6 +105,25 @@ public final class ImageUtils {
             return drawable;
         } else {
             return getFilteredDrawable(_context, drawable);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static boolean deleteViaContentProvider(Context context, Uri _uri) {
+        if (_uri == null) {
+            return false;
+        }
+
+        try {
+            ContentResolver resolver = context.getContentResolver();
+//            ContentValues contentValues = new ContentValues();
+//            int media_type = 1;
+//            contentValues.put("media_type", media_type);
+//            resolver.update(_uri, contentValues, null, null);
+
+            return resolver.delete(_uri, null, null) > 0;
+        } catch (Throwable e) {
+            return false;
         }
     }
 }
