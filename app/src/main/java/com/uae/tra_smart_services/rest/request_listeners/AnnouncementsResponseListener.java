@@ -19,10 +19,10 @@ public final class AnnouncementsResponseListener implements RequestListener<GetA
     private boolean mIsAllTransactionDownloaded;
     private int mAnnouncementsPageNum;
 
-    public AnnouncementsResponseListener(BaseFragment _fragment, AnnouncementsAdapter _announcementsListAdapter,
+    public AnnouncementsResponseListener(BaseFragment _fragment, OperationStateManager _manager,AnnouncementsAdapter _announcementsListAdapter,
             boolean _isAnnouncementsInLoading, boolean _isAllTransactionDownloaded, int _announcementsPageNum) {
         mFragment = _fragment;
-        mOperationStateManager = (OperationStateManager) _fragment;
+        mOperationStateManager = _manager;
         mAnnouncementsListAdapter = _announcementsListAdapter;
         mIsAnnouncementsInLoading = _isAnnouncementsInLoading;
         mIsAllTransactionDownloaded = _isAllTransactionDownloaded;

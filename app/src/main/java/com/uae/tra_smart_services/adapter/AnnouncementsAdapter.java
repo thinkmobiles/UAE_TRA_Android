@@ -113,7 +113,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         mFilter.loadMoreSearchResults();
     }
 
-    public final void showTransactions() {
+    public final void showAnnouncements() {
         if (mDataSet.isEmpty()) {
             mOperationStateManager.showEmptyView();
         } else {
@@ -134,8 +134,6 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
             return VIEW_TYPE_LOADER;
         }
     }
-
-    static final String t = TransactionsAdapter.class.getSimpleName();
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -162,7 +160,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         } else {
             progressBarCount = mIsShowingLoaderForData ? 1 : 0;
         }
-        return mShowingData.size() + (mIsPreview ? progressBarCount : 0);
+        return mShowingData.size() + (!mIsPreview ? progressBarCount : 0);
     }
 
     private final class TransactionFilter extends Filter {

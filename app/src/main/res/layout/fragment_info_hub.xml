@@ -45,6 +45,17 @@
                 android:textColor="@drawable/selector_simple_triggerable_textview"
                 android:textSize="14sp"/>
 
+            <TextView
+                android:id="@+id/tvNoAnnouncements_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_info_hub_no_pending_announcements"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:ellipsize="end"
+                android:gravity="center"/>
+
             <android.support.v7.widget.RecyclerView
                 tools:listitem="@layout/list_item_info_hub_second"
                 android:id="@+id/rvInfoHubListPrev_FIH"
@@ -53,6 +64,14 @@
                 android:layout_below="@+id/tvAnnText_FIH"
                 android:layout_marginTop="5dp"
                 android:scrollbars="horizontal"/>
+
+            <ProgressBar
+                android:id="@+id/pbLoadingAnnoncements_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvAnnText_FIH"
+                android:visibility="visible"
+                android:layout_centerHorizontal="true"/>
         </RelativeLayout>
 
         <View
@@ -93,13 +112,13 @@
                 android:id="@+id/rvTransactionsList_FIH"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
-                android:layout_below="@+id/tvTransText_FIH"/>
+                android:visibility="visible"
+                android:layout_below="@+id/tvTransText_FIH" />
 
             <ProgressBar
                 android:id="@+id/pbLoadingTransactions_FIH"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/tvTransText_FIH"
                 android:layout_centerInParent="true"
                 android:visibility="visible"/>

@@ -1,7 +1,5 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -91,7 +89,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     @Override
     protected void initListeners() {
         super.initListeners();
-        mAnnouncementsResponseListener = new AnnouncementsResponseListener(this, mListAdapter, mIsAnnouncementsInLoading, mIsAllAnnouncementsDownloaded, 1);
+        mAnnouncementsResponseListener = new AnnouncementsResponseListener(this, this, mListAdapter, mIsAnnouncementsInLoading, mIsAllAnnouncementsDownloaded, 1);
         mListAdapter.setOnItemClickListener(this);
         mList.addOnScrollListener(new EndlessScrollListener(mLayoutManager, this));
     }
@@ -162,7 +160,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
         Log.i("SearchI", "onMenuItemActionCollapse");
         mIsSearching = false;
         tvNoResult.setText(R.string.fragment_info_hub_no_pending_transactions);
-        mListAdapter.showTransactions();
+        mListAdapter.showAnnouncements();
         if (mIsAllAnnouncementsDownloaded) {
             mListAdapter.stopLoading();
         } else {
