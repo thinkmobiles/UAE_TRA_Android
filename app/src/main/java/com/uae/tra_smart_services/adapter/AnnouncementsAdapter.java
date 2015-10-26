@@ -260,6 +260,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         public ViewHolder(View itemView) {
             super(itemView);
             container = itemView;
+            sStartOffset = (Space) itemView.findViewById(R.id.sStartOffset_LIIHS);
             hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIHS);
             title = (TextView) itemView.findViewById(R.id.hvTitle_LIHS);
             description = (TextView) itemView.findViewById(R.id.hvDescr_LIHS);
@@ -276,7 +277,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
 
         public void setData(int _position, GetAnnouncementsResponseModel.Announcements _model) {
             if (!isProgress) {
-//                sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
+                sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
 //            Picasso.with(mActivity).load(_model.getIconUrl()).into(hexagonView);
                 title.setText(_model.title);
                 description.setText(_model.description);

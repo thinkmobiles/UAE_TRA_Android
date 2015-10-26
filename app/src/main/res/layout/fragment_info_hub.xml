@@ -115,13 +115,13 @@
                 android:visibility="visible"
                 android:layout_below="@+id/tvTransText_FIH" />
 
-            <ProgressBar
+            <!--<ProgressBar
                 android:id="@+id/pbLoadingTransactions_FIH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvTransText_FIH"
                 android:layout_centerInParent="true"
-                android:visibility="visible"/>
+                android:visibility="visible"/>-->
         </RelativeLayout>
     </LinearLayout>
 

@@ -6,6 +6,13 @@
     android:layout_height="wrap_content"
     android:padding="3dp">
 
+    <Space
+        android:layout_width="32dp"
+        android:visibility="gone"
+        android:id="@+id/sStartOffset_LIIHS"
+        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content"/>
+
     <com.uae.tra_smart_services.customviews.HexagonView
         android:id="@+id/hvIcon_LIHS"
         android:layout_width="wrap_content"

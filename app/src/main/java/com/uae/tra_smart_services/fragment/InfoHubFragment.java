@@ -87,21 +87,21 @@ public final class InfoHubFragment extends BaseFragment
     private final OperationStateManager mTransactionsOperationStateManager = new OperationStateManager() {
         @Override
         public final void showProgress() {
-            pbLoadingTransactions.setVisibility(View.VISIBLE);
+//            pbLoadingTransactions.setVisibility(View.VISIBLE);
             mTransactionsList.setVisibility(View.INVISIBLE);
             tvNoTransactions.setVisibility(View.INVISIBLE);
         }
 
         @Override
         public final void showData() {
-            pbLoadingTransactions.setVisibility(View.INVISIBLE);
+//            pbLoadingTransactions.setVisibility(View.INVISIBLE);
             mTransactionsList.setVisibility(View.VISIBLE);
             tvNoTransactions.setVisibility(View.INVISIBLE);
         }
 
         @Override
         public final void showEmptyView() {
-            pbLoadingTransactions.setVisibility(View.INVISIBLE);
+//            pbLoadingTransactions.setVisibility(View.INVISIBLE);
             mTransactionsList.setVisibility(View.INVISIBLE);
             tvNoTransactions.setVisibility(View.VISIBLE);
         }
@@ -127,10 +127,10 @@ public final class InfoHubFragment extends BaseFragment
     @Override
     protected final void initViews() {
         super.initViews();
-        pbLoadingTransactions = findView(R.id.pbLoadingTransactions_FIH);
         pbLoadingAnnouncements = findView(R.id.pbLoadingAnnoncements_FIH);
-        tvNoTransactions = findView(R.id.tvNoPendingTransactions_FIH);
+//        pbLoadingTransactions = findView(R.id.pbLoadingTransactions_FIH);
         tvNoAnnouncements = findView(R.id.tvNoAnnouncements_FIH);
+        tvNoTransactions = findView(R.id.tvNoPendingTransactions_FIH);
         tvSeeMoreAnnouncements = findView(R.id.tvSeeMorebAnn_FIH);
         mAnnouncementsListPreview = findView(R.id.rvInfoHubListPrev_FIH);
         mTransactionsList = findView(R.id.rvTransactionsList_FIH);
@@ -141,7 +141,6 @@ public final class InfoHubFragment extends BaseFragment
     private void initAnnouncementsListPreview() {
         mAnnouncementsListPreview.setHasFixedSize(true);
         mAnnouncementsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mAnnouncementsLayoutManager.scrollToPosition(0);
         mAnnouncementsListPreview.setLayoutManager(mAnnouncementsLayoutManager);
         mAnnouncementsListAdapter = new AnnouncementsAdapter(getActivity(), mAnnouncementsOperationStateManager, true);
         mAnnouncementsListPreview.setAdapter(mAnnouncementsListAdapter);
