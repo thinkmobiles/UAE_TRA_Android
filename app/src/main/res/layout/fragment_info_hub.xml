@@ -114,7 +114,7 @@
                 android:id="@+id/rvTransactionsList_FIH"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="invisible"
+                android:visibility="gone"
                 android:layout_below="@+id/tvTransText_FIH"/>
 
             <ProgressBar
