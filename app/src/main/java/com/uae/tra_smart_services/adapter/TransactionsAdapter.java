@@ -123,8 +123,6 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         }
     }
 
-    static final String t = TransactionsAdapter.class.getSimpleName();
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {

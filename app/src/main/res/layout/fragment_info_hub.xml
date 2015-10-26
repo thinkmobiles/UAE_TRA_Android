@@ -63,15 +63,17 @@
                 android:layout_height="110dp"
                 android:layout_below="@+id/tvAnnText_FIH"
                 android:layout_marginTop="5dp"
+                android:visibility="invisible"
                 android:scrollbars="horizontal"/>
 
             <ProgressBar
                 android:id="@+id/pbLoadingAnnoncements_FIH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvAnnText_FIH"
                 android:visibility="visible"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
         <View
@@ -112,17 +114,16 @@
                 android:id="@+id/rvTransactionsList_FIH"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"
-                android:layout_below="@+id/tvTransText_FIH" />
+                android:visibility="invisible"
+                android:layout_below="@+id/tvTransText_FIH"/>
 
-            <!--<ProgressBar
+            <ProgressBar
                 android:id="@+id/pbLoadingTransactions_FIH"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@id/tvTransText_FIH"
                 android:layout_centerInParent="true"
-                android:visibility="visible"/>-->
+                android:visibility="visible"/>
         </RelativeLayout>
     </LinearLayout>
-
 </FrameLayout>

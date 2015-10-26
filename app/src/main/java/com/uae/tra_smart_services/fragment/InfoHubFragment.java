@@ -87,21 +87,21 @@ public final class InfoHubFragment extends BaseFragment
     private final OperationStateManager mTransactionsOperationStateManager = new OperationStateManager() {
         @Override
         public final void showProgress() {
-//            pbLoadingTransactions.setVisibility(View.VISIBLE);
+            pbLoadingTransactions.setVisibility(View.VISIBLE);
             mTransactionsList.setVisibility(View.INVISIBLE);
             tvNoTransactions.setVisibility(View.INVISIBLE);
         }
 
         @Override
         public final void showData() {
-//            pbLoadingTransactions.setVisibility(View.INVISIBLE);
+            pbLoadingTransactions.setVisibility(View.INVISIBLE);
             mTransactionsList.setVisibility(View.VISIBLE);
             tvNoTransactions.setVisibility(View.INVISIBLE);
         }
 
         @Override
         public final void showEmptyView() {
-//            pbLoadingTransactions.setVisibility(View.INVISIBLE);
+            pbLoadingTransactions.setVisibility(View.INVISIBLE);
             mTransactionsList.setVisibility(View.INVISIBLE);
             tvNoTransactions.setVisibility(View.VISIBLE);
         }
@@ -128,7 +128,7 @@ public final class InfoHubFragment extends BaseFragment
     protected final void initViews() {
         super.initViews();
         pbLoadingAnnouncements = findView(R.id.pbLoadingAnnoncements_FIH);
-//        pbLoadingTransactions = findView(R.id.pbLoadingTransactions_FIH);
+        pbLoadingTransactions = findView(R.id.pbLoadingTransactions_FIH);
         tvNoAnnouncements = findView(R.id.tvNoAnnouncements_FIH);
         tvNoTransactions = findView(R.id.tvNoPendingTransactions_FIH);
         tvSeeMoreAnnouncements = findView(R.id.tvSeeMorebAnn_FIH);

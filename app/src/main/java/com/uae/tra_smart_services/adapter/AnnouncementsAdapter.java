@@ -138,7 +138,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == VIEW_TYPE_LOADER && !mIsPreview){
+        if(viewType == VIEW_TYPE_LOADER){
             return new ViewHolder(new ProgressBar(parent.getContext()), true);
         } else {
             final View view;
