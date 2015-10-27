@@ -83,15 +83,15 @@ public final class AttachmentManager {
 
     public void onRestoreInstanceState(@NonNull final Bundle _savedInstanceState) {
         mPhotoFilePath = _savedInstanceState.getString(CAMERA_PHOTO_FILE_PATH_KEY);
-        cuttedImageUri = _savedInstanceState.getParcelable(SELECTED_IMAGE_URI_KEY);
+        mImageUri = _savedInstanceState.getParcelable(SELECTED_IMAGE_URI_KEY);
         if (mImageUri != null) {
-            mImageGetCallback.onAttachmentGet(cuttedImageUri);
+            mImageGetCallback.onAttachmentGet(mImageUri, cuttedImageUri);
         }
     }
 
     public void onSaveInstanceState(@NonNull final Bundle _outState) {
-        _outState.putParcelable(SELECTED_IMAGE_URI_KEY, cuttedImageUri);
         _outState.putString(CAMERA_PHOTO_FILE_PATH_KEY, mPhotoFilePath);
+        _outState.putParcelable(SELECTED_IMAGE_URI_KEY, mImageUri);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -109,7 +109,7 @@ public final class AttachmentManager {
             mImageUri = data.getData();
             mCutterRequest.moveToCutterActivity(mImageUri, cuttedImageUri);
         } else if (requestCode == REQUEST_CUTTER_VIEW && resultCode == Activity.RESULT_OK) {
-            mImageGetCallback.onAttachmentGet(cuttedImageUri);
+            mImageGetCallback.onAttachmentGet(mImageUri, cuttedImageUri);
         }
     }
 
@@ -206,7 +206,7 @@ public final class AttachmentManager {
     }
 
     public interface OnImageGetCallback {
-        void onAttachmentGet(final @NonNull Uri _imageUri);
+        void onAttachmentGet(final @NonNull Uri _fromImageUri, final @NonNull Uri _cutterImageUri);
     }
 
     public interface OnCutterRequest {
