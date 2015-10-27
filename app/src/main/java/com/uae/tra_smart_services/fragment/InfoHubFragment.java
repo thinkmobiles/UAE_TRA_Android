@@ -21,6 +21,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AnnouncementsAdapter;
 import com.uae.tra_smart_services.adapter.TransactionsAdapter;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
+import com.uae.tra_smart_services.fragment.InfoHubAnnouncementsFragment.BooleanHolder;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.QueryAdapter;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
@@ -60,7 +61,8 @@ public final class InfoHubFragment extends BaseFragment
     private TransactionsResponseListener mTransactionsListener;
     private AnnouncementsResponseListener mAnnouncementsResponseListener;
     private EndlessScrollListener mEndlessScrollListener;
-    private boolean mIsTransactionsInLoading, mIsAnnouncementsInLoading;
+    private boolean mIsTransactionsInLoading;
+    private BooleanHolder mIsAnnouncementsInLoading = new BooleanHolder();
     private final OperationStateManager mAnnouncementsOperationStateManager = new OperationStateManager() {
         @Override
         public final void showProgress() {
@@ -197,14 +199,14 @@ public final class InfoHubFragment extends BaseFragment
     }
 
     private void loadAnnouncementsPage(final int _page) {
+        mIsAnnouncementsInLoading.trueV();
         GetAnnouncementsRequest announcementsRequest = new GetAnnouncementsRequest(QueryAdapter.pageToOffset(_page, 3));
-        mIsAnnouncementsInLoading = true;
         getSpiceManager().execute(announcementsRequest, mAnnouncementsResponseListener);
     }
 
     private void loadTransactionPage(final int _page) {
-        GetTransactionsRequest transactionsRequest = new GetTransactionsRequest(_page, DEFAULT_PAGE_SIZE_TRANSACTIONS);
         mIsTransactionsInLoading = true;
+        GetTransactionsRequest transactionsRequest = new GetTransactionsRequest(_page, DEFAULT_PAGE_SIZE_TRANSACTIONS);
         getSpiceManager().execute(transactionsRequest, mTransactionsListener);
     }
 

@@ -38,7 +38,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     private ProgressBar pbLoading;
     private TextView tvNoResult;
     private EndlessScrollListener mEndlessScrollListener;
-    private boolean mIsAnnouncementsInLoading;
+    private final BooleanHolder mIsAnnouncementsInLoading = new BooleanHolder();
     private static final int DEFAULT_OFFSET_ANNOUNCEMENTS = 10;
     private int mAnnouncementsPageNum;
     private AnnouncementsResponseListener mAnnouncementsResponseListener;
@@ -116,16 +116,16 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     }
 
     private void loadAnnouncementsPage(final int _page) {
+        mIsAnnouncementsInLoading.trueV();
         GetAnnouncementsRequest announcementsRequest = new GetAnnouncementsRequest(QueryAdapter.pageToOffset(_page, DEFAULT_OFFSET_ANNOUNCEMENTS));
         getSpiceManager().execute(announcementsRequest, mAnnouncementsResponseListener);
-        mIsAnnouncementsInLoading = true;
     }
 
     @Override
     public void onLoadMoreEvent() {
         if (mIsSearching) {
             mListAdapter.loadMoreSearchResults();
-        } else if (!mIsAllAnnouncementsDownloaded && !mIsAnnouncementsInLoading) {
+        } else if (!mIsAllAnnouncementsDownloaded && !mIsAnnouncementsInLoading.getV()) {
             loadAnnouncementsPage(++mAnnouncementsPageNum);
         }
     }
@@ -197,5 +197,20 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_info_hub_announcements;
+    }
+
+    public static class BooleanHolder {
+        private boolean value = false;
+        public void trueV() {
+            value = true;
+        }
+
+        public void falseV() {
+            value = false;
+        }
+
+        public boolean getV() {
+            return value;
+        }
     }
 }
