@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.uae.tra_smart_services.customviews.ImageCutterView
+    <com.uae.tra_smart_services_cutter.customviews.ImageCutterView
         android:id="@+id/ccContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:containerSide="400">
-        <com.uae.tra_smart_services.customviews.HexagonCutterView
+        <com.uae.tra_smart_services_cutter.customviews.HexagonCutterView
             android:id="@+id/hvCutter"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </com.uae.tra_smart_services.customviews.ImageCutterView>
+    </com.uae.tra_smart_services_cutter.customviews.ImageCutterView>
 
     <TextView
         android:id="@+id/doCrop"

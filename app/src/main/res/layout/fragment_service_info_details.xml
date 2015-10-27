@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.uae.tra_smart_services.customviews.HexagonView
+            <com.uae.tra_smart_services_cutter.customviews.HexagonView
                 android:id="@+id/hvServiceInfoIcon_FSID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

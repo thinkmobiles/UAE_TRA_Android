@@ -17,7 +17,7 @@
         android:orientation="vertical"
         tools:background="#20d43f3f">
 
-        <com.uae.tra_smart_services.customviews.HexagonView
+        <com.uae.tra_smart_services_cutter.customviews.HexagonView
             android:id="@+id/hvCancel_LPC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
         android:orientation="vertical"
         tools:background="#20717d84">
 
-        <com.uae.tra_smart_services.customviews.HexagonView
+        <com.uae.tra_smart_services_cutter.customviews.HexagonView
             android:id="@+id/hvReset_LPC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
         android:orientation="vertical"
         tools:background="#203cbb4b">
 
-        <com.uae.tra_smart_services.customviews.HexagonView
+        <com.uae.tra_smart_services_cutter.customviews.HexagonView
             android:id="@+id/hvConfirm_LPC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

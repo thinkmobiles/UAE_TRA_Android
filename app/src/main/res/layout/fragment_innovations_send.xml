@@ -123,7 +123,7 @@
                     android:layout_below="@id/etTitle_FIS"
                     android:background="?attr/colorPrimary"/>
 
-                <com.uae.tra_smart_services.customviews.ThemedImageView
+                <com.uae.tra_smart_services_cutter.customviews.ThemedImageView
                     android:id="@+id/tivArrowIcon_FIS"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
@@ -170,7 +170,7 @@
                     android:layout_below="@id/tvInnovativeIdea_FIS"
                     android:background="?attr/colorPrimary"/>
 
-                <com.uae.tra_smart_services.customviews.ThemedImageView
+                <com.uae.tra_smart_services_cutter.customviews.ThemedImageView
                     android:id="@+id/tivAddAttachment_FIS"
                     android:layout_width="48dp"
                     android:layout_height="48dp"

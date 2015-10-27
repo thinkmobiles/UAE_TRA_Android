@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.uae.tra_smart_services.customviews.HexagonView
+            <com.uae.tra_smart_services_cutter.customviews.HexagonView
                 android:id="@+id/hvUserAvatar_FEUP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                 style="@style/UserProfileDivider"
                 android:layout_below="@id/etPhone_FEUP"/>
 
-            <com.uae.tra_smart_services.customviews.ProfileController
+            <com.uae.tra_smart_services_cutter.customviews.ProfileController
                 android:id="@+id/pcProfileController_FEUP"
                 android:layout_alignParentBottom="true"
                 android:gravity="bottom"

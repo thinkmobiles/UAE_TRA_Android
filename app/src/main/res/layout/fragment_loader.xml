@@ -21,7 +21,7 @@
         android:layout_width="240dp"
         android:layout_height="100dp"/>
 
-    <com.uae.tra_smart_services.customviews.LoaderView
+    <com.uae.tra_smart_services_cutter.customviews.LoaderView
         android:id="@+id/lvLoaderView"
         android:layout_marginTop="25dp"
         android:layout_below="@+id/tvLoaderTitleText"
@@ -55,7 +55,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
 
-    <com.uae.tra_smart_services.customviews.ServiceRatingView
+    <com.uae.tra_smart_services_cutter.customviews.ServiceRatingView
         android:id="@+id/srvRating_FL"
         android:visibility="gone"
         android:layout_centerVertical="true"

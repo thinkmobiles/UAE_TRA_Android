@@ -24,7 +24,7 @@
         android:id="@+id/sSpace_SISSP"
         android:layout_height="match_parent"/>
 
-    <com.uae.tra_smart_services.customviews.ThemedImageView
+    <com.uae.tra_smart_services_cutter.customviews.ThemedImageView
         android:layout_width="wrap_content"
         android:id="@+id/tivArrowIcon_SISSP"
         android:layout_height="wrap_content"

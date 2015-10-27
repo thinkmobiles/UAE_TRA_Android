@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.uae.tra_smart_services"
+    package="com.uae.tra_smart_services_cutter"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -14,14 +14,14 @@
         android:required="false"/>
 
     <application
-        android:name="com.uae.tra_smart_services.TRAApplication"
+        android:name="com.uae.tra_smart_services_cutter.TRAApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="TRA with cutter"
         android:supportsRtl="true"
         android:theme="@style/AppThemeGreen">
 
-        <activity android:name="com.uae.tra_smart_services.activity.SplashActivity">
+        <activity android:name="com.uae.tra_smart_services_cutter.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -29,11 +29,11 @@
         </activity>
 
         <activity
-            android:name="com.uae.tra_smart_services.activity.AuthorizationActivity"
-            android:parentActivityName="com.uae.tra_smart_services.activity.HomeActivity"
+            android:name="com.uae.tra_smart_services_cutter.activity.AuthorizationActivity"
+            android:parentActivityName="com.uae.tra_smart_services_cutter.activity.HomeActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name="com.uae.tra_smart_services.activities.UserImageCutterActivity"
+        <activity android:name="com.uae.tra_smart_services_cutter.activities.UserImageCutterActivity"
                   android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.uae.tra_smart_services.intent.image_cutter"/>
@@ -42,14 +42,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.uae.tra_smart_services.activity.HomeActivity"
+        <activity android:name="com.uae.tra_smart_services_cutter.activity.HomeActivity"
                   android:screenOrientation="portrait"/>
 
-        <activity android:name="com.uae.tra_smart_services.activity.ScannerActivity"
+        <activity android:name="com.uae.tra_smart_services_cutter.activity.ScannerActivity"
                   android:screenOrientation="portrait"/>
 
         <service
-            android:name="com.uae.tra_smart_services.rest.TRARestService"
+            android:name="com.uae.tra_smart_services_cutter.rest.TRARestService"
             android:exported="false"/>
 
         <meta-data

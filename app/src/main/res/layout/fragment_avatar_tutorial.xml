@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <com.uae.tra_smart_services.customviews.HexagonalHeader
+    <com.uae.tra_smart_services_cutter.customviews.HexagonalHeader
         android:id="@+id/hhHeader_FAT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:pressedColor="?attr/hexagonHeaderButtonPressedColor"
         app:tutorialType="avatar"/>
 
-    <com.uae.tra_smart_services.customviews.tutorial.AvatarTipView
+    <com.uae.tra_smart_services_cutter.customviews.tutorial.AvatarTipView
         android:id="@+id/atvAvatarTip_FAT"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
