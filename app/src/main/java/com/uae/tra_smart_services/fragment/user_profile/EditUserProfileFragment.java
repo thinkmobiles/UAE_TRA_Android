@@ -202,7 +202,7 @@ public final class EditUserProfileFragment extends BaseFragment
         mImageUri = _imageUri;
         Glide.with(getActivity())
                 .load(mImageUri)
-                .into((Target) new HexagonViewTarget(hvUserAvatar));
+                .into((Target) new HexagonViewTarget(hvUserAvatar, true));
 //        Target target = new Target() {
 //            @Override
 //            public void onBitmapLoaded(Bitmap _bitmap, Picasso.LoadedFrom from) {
@@ -403,7 +403,6 @@ public final class EditUserProfileFragment extends BaseFragment
             getSpiceManager().removeDataFromCache(Response.class, KEY_EDIT_PROFILE_REQUEST);
             processError(spiceException);
         }
-
     }
 
     @Override

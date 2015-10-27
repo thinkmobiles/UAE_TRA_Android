@@ -35,8 +35,6 @@ public class GetTransactionResponseModel {
     @Expose
     public String description;
 
-    @SuppressWarnings("serial")
     public static class List extends ArrayList<GetTransactionResponseModel> {
     }
-
 }

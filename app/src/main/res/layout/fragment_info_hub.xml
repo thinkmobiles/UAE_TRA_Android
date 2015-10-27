@@ -45,6 +45,17 @@
                 android:textColor="@drawable/selector_simple_triggerable_textview"
                 android:textSize="14sp"/>
 
+            <TextView
+                android:id="@+id/tvNoAnnouncements_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_info_hub_no_pending_announcements"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:ellipsize="end"
+                android:gravity="center"/>
+
             <android.support.v7.widget.RecyclerView
                 tools:listitem="@layout/list_item_info_hub_second"
                 android:id="@+id/rvInfoHubListPrev_FIH"
@@ -52,14 +63,24 @@
                 android:layout_height="110dp"
                 android:layout_below="@+id/tvAnnText_FIH"
                 android:layout_marginTop="5dp"
+                android:visibility="invisible"
                 android:scrollbars="horizontal"/>
+
+            <ProgressBar
+                android:id="@+id/pbLoadingAnnoncements_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
         <View
             style="@style/ListViewItemSeparator"
             android:layout_alignEnd="@+id/textView2"
             android:layout_alignStart="@+id/tvSeeMoreInfoHubAnn_FIH"
-            android:layout_below="@+id/hvIcon_LIHLI"
+            android:layout_below="@+id/hvIcon_LIIHS"
             android:layout_marginStart="5dp"/>
 
         <RelativeLayout
@@ -105,5 +126,4 @@
                 android:visibility="visible"/>
         </RelativeLayout>
     </LinearLayout>
-
 </FrameLayout>

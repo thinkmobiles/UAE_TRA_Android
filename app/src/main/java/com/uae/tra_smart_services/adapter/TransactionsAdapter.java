@@ -15,9 +15,11 @@ import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.TransactionsAdapter.ViewHolder;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
@@ -122,8 +124,6 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
             return VIEW_TYPE_LOADER;
         }
     }
-
-    static final String t = TransactionsAdapter.class.getSimpleName();
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -243,7 +243,6 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
-
         private HexagonView hexagonView;
         private TextView title, description, date;
         private ProgressBar progressBar;
@@ -253,10 +252,10 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         public ViewHolder(View itemView) {
             super(itemView);
             sStartOffset = (Space) itemView.findViewById(R.id.sStartOffset_LIIH);
-            hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIHLI);
-            title = (TextView) itemView.findViewById(R.id.hvTitle_LIHLI);
-            description = (TextView) itemView.findViewById(R.id.hvDescr_LIHLI);
-            date = (TextView) itemView.findViewById(R.id.hvDate_LIHLI);
+            hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIIH);
+            title = (TextView) itemView.findViewById(R.id.hvTitle_LIIH);
+            description = (TextView) itemView.findViewById(R.id.hvDescr_LIIH);
+            date = (TextView) itemView.findViewById(R.id.hvDate_LIIH);
         }
 
         public ViewHolder(View view, boolean _isProgress) {
@@ -270,7 +269,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         public void setData(int _position, GetTransactionResponseModel _model) {
             if (!isProgress) {
                 sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
-//            Picasso.with(mActivity).load(_model.getIconUrl()).into(hexagonView);
+//            Picasso.with(mActivity).load(_model.getIconUrl()).into(new HexagonViewTarget(hexagonView));
                 title.setText(_model.title);
                 description.setText(_model.description);
                 date.setText(_model.modifiedDatetime);

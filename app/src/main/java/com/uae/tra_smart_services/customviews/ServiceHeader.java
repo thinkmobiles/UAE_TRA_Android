@@ -41,7 +41,7 @@ public final class ServiceHeader extends LinearLayout {
         inflate(getContext(), R.layout.layout_domain_check_common_header, this);
         setPaddingRelative(0, DEFAULT_PADDING, 0, DEFAULT_PADDING);
 
-        hvIcon = (HexagonView) findViewById(R.id.hvIcon_LIHLI);
+        hvIcon = (HexagonView) findViewById(R.id.hvIcon_LIIHS);
         tvTitle = (TextView) findViewById(R.id.tvTitle_LIHLI);
     }
 
