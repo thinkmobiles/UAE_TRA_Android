@@ -7,8 +7,7 @@ import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem;
 
@@ -53,10 +52,8 @@ public class BooleanInputItem extends BaseInputItem implements OnClickListener {
 
     @NonNull
     @Override
-    public final JsonElement getJsonData() {
-        final JsonObject element = new JsonObject();
-        element.addProperty(getQueryName(), swSwitch.isChecked());
-        return element;
+    public final JsonPrimitive getJsonValue() {
+        return new JsonPrimitive(swSwitch.isChecked());
     }
 
     @NonNull

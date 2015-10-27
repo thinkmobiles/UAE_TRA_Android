@@ -1,5 +1,8 @@
 package com.uae.tra_smart_services.rest.gson_deserializer;
 
+import android.support.annotation.NonNull;
+
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,9 +14,12 @@ import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabri
 import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.BOOLEAN_ITEM;
+import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.PICKER_ITEM;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.STRING_ITEM;
+import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.TEXT_ITEM;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.EMAIL;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.NONE;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.NUMBER;
@@ -33,6 +39,7 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
     private static final String VALIDATE_RULE = "validateAs";
     private static final String DISPLAY_NAME = "displayName";
     private static final String PLACEHOLDER = "placeHolder";
+    private static final String DATA_SOURCE = "dataSource";
 
     @Override
     public BaseInputItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -48,6 +55,8 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
                 .setDisplayName(getLocalisedText((JsonObject) main.get(DISPLAY_NAME)))
                 .setPlaceholder(getLocalisedText((JsonObject) main.get(PLACEHOLDER)))
                 .setValidationRule(parseValidationRule(main.get(VALIDATE_RULE).getAsString()))
+                .setDataSource(parseStringList(main, DATA_SOURCE))
+                .setInputItemType(inputType)
                 .build();
     }
 
@@ -57,6 +66,10 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
             return BOOLEAN_ITEM;
         } else if (STRING_ITEM.equalsIgnoreCase(_inputType)) {
             return STRING_ITEM;
+        } else if (TEXT_ITEM.equalsIgnoreCase(_inputType)) {
+            return TEXT_ITEM;
+        } else if (PICKER_ITEM.equalsIgnoreCase(_inputType)) {
+            return PICKER_ITEM;
         }
         return BOOLEAN_ITEM;//default item (may be placeholder or sth like that)
     }
@@ -74,6 +87,19 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
         } else {
             return NONE;
         }
+    }
+
+    @NonNull
+    private ArrayList<String> parseStringList(final JsonObject _sourceObject, final String _listKey) {
+        final ArrayList<String> data = new ArrayList<>();
+        final JsonElement listElement = _sourceObject.get(_listKey);
+        if (listElement != null && listElement.isJsonArray()) {
+            final JsonArray elements = listElement.getAsJsonArray();
+            for (final JsonElement element : elements) {
+                data.add(element.getAsString());
+            }
+        }
+        return data;
     }
 
 }

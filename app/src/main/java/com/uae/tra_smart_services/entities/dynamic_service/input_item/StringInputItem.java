@@ -1,13 +1,16 @@
 package com.uae.tra_smart_services.entities.dynamic_service.input_item;
 
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.text.InputType;
+import android.util.Patterns;
 import android.widget.EditText;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem;
+
+import org.apache.commons.lang3.math.NumberUtils;
 
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.EMAIL;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule.NUMBER;
@@ -19,25 +22,25 @@ import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuild
  */
 public class StringInputItem extends BaseInputItem {
 
-    private EditText etEditText;
+    protected EditText etEditText;
 
     protected StringInputItem() {
-        super();
     }
 
+    @CallSuper
     @Override
-    protected final void initViews() {
+    protected void initViews() {
         super.initViews();
         etEditText = findView(R.id.etEdit_IIT);
         etEditText.setHint(getPlaceholder());
-        if (mValidationRule != null) {
+        if (getValidationRule() != null) {
             processValidationRule();
         }
     }
 
-    private void processValidationRule() {
+    protected void processValidationRule() {
         final int inputType;
-        switch (mValidationRule) {
+        switch (getValidationRule()) {
             case STRING:
                 inputType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE;
                 break;
@@ -59,21 +62,38 @@ public class StringInputItem extends BaseInputItem {
 
     @Override
     public boolean isDataValid() {
-        return super.isDataValid() || !etEditText.getText().toString().isEmpty();
+        return !isValidationRequired() || validateData();
+    }
+
+    private boolean validateData() {
+        final String text = etEditText.getText().toString();
+        switch (getValidationRule()) {
+            case EMAIL:
+                return Patterns.EMAIL_ADDRESS.matcher(text).matches();
+            case NUMBER:
+                return NumberUtils.isNumber(text);
+            case URL:
+                return Patterns.WEB_URL.matcher(text).matches();
+            case STRING:
+            default:
+                return !text.isEmpty();
+        }
     }
 
     @NonNull
     @Override
-    public JsonElement getJsonData() {
-        final JsonObject object = new JsonObject();
-        object.addProperty(getQueryName(), getArgsData());
-        return object;
+    public JsonPrimitive getJsonValue() {
+        return new JsonPrimitive(getArgsData());
     }
 
     @NonNull
     @Override
     public final String getArgsData() {
         return etEditText.getText().toString();
+    }
+
+    protected final EditText getEditText() {
+        return etEditText;
     }
 
     public static final class Builder extends BaseBuilder {

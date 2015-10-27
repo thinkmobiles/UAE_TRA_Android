@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:id="@+id/tvTitle_SIIIP"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeightSmall"
+    android:gravity="center_vertical"
+    android:singleLine="true"
+    android:textColor="@color/fragment_dynamic_service_text_color"
+    android:textColorHint="@color/fragment_dynamic_service_hint_color"
+    android:textSize="18sp"
+    tools:text="SMS Spam. SMS Spam. SMS Spam. SMS Spam. SMS Spam"/>

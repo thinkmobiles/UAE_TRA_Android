@@ -47,6 +47,7 @@ public final class DynamicServiceFragment extends BaseFragment implements OnClic
     private DynamicRequestListener mDynamicRequestListener;
 
     private DynamicService mDynamicService;
+    private boolean mIsServiceLoaded;
     //endregion
 
     public static DynamicServiceFragment newInstance(final DynamicServiceInfoResponseModel _serviceInfo) {
@@ -79,16 +80,17 @@ public final class DynamicServiceFragment extends BaseFragment implements OnClic
     }
 
     @Override
-    public final void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            mDynamicService = savedInstanceState.getParcelable(KEY_DYNAMIC_SERVICE);
-        }
-        if (mDynamicService == null) {
+    public final void onActivityCreated(final Bundle _savedInstanceState) {
+        super.onActivityCreated(_savedInstanceState);
+        mIsServiceLoaded = _savedInstanceState != null && _savedInstanceState.getBoolean(KEY_DYNAMIC_SERVICE);
+
+        if (mIsServiceLoaded) {
+            mDynamicService = new DynamicService();
+            mDynamicService.onRestoreInstanceState(_savedInstanceState);
+            initDynamicViews();
+        } else {
             loaderDialogShow();
             loadDynamicServiceInfo();
-        } else {
-            initDynamicViews();
         }
     }
 
@@ -137,15 +139,24 @@ public final class DynamicServiceFragment extends BaseFragment implements OnClic
         if (mDynamicService.isDataValid()) {
             final BaseRequest<Response, DynamicServicesApi> request;
             if (HttpMethod.GET.equals(mDynamicService.method)) {
-                request = new DynamicServiceGetRequest(mDynamicService.url, null);
+                request = new DynamicServiceGetRequest(mDynamicService.url, mDynamicService.getQueryMap());
             } else {
-                request = new DynamicServicePostRequest(mDynamicService.url);
+                request = new DynamicServicePostRequest(mDynamicService.url, mDynamicService.getQueryMap(), mDynamicService.getJsonData());
             }
             loaderDialogShow();
             getDynamicSpiceManager().execute(request, KEY_DYNAMIC_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mDynamicRequestListener);
         } else {
             Toast.makeText(getActivity(), "Invalid data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public final void onSaveInstanceState(final Bundle _outState) {
+        if (mDynamicService != null) {
+            mDynamicService.onSaveInstanceState(_outState);
+        }
+        _outState.putBoolean(KEY_DYNAMIC_SERVICE, mIsServiceLoaded);
+        super.onSaveInstanceState(_outState);
     }
 
     private final class DynamicRequestListener implements RequestListener<Response> {
@@ -178,6 +189,7 @@ public final class DynamicServiceFragment extends BaseFragment implements OnClic
             getSpiceManager().removeDataFromCache(DynamicService.class, KEY_DYNAMIC_SERVICE_REQUEST);
             if (isAdded() && _service != null) {
                 mDynamicService = _service;
+                mIsServiceLoaded = true;
                 initDynamicViews();
                 loaderDialogDismiss();
             }

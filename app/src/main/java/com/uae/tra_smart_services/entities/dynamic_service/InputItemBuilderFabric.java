@@ -4,7 +4,9 @@ import android.support.annotation.StringDef;
 
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem.BaseBuilder;
 import com.uae.tra_smart_services.entities.dynamic_service.input_item.BooleanInputItem;
+import com.uae.tra_smart_services.entities.dynamic_service.input_item.PickerInputItem;
 import com.uae.tra_smart_services.entities.dynamic_service.input_item.StringInputItem;
+import com.uae.tra_smart_services.entities.dynamic_service.input_item.TextInputItem;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -26,7 +28,7 @@ import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuild
  */
 public final class InputItemBuilderFabric {
 
-    @StringDef({BOOLEAN_ITEM, STRING_ITEM})
+    @StringDef({STRING_ITEM, TEXT_ITEM, NUMBER_ITEM, BOOLEAN_ITEM, FILE_ITEM, PICKER_ITEM})
     @Retention(RetentionPolicy.SOURCE)
     public @interface InputItemType {
         String STRING_ITEM = "string";
@@ -52,9 +54,11 @@ public final class InputItemBuilderFabric {
             case STRING_ITEM:
                 return new StringInputItem.Builder();
             case TEXT_ITEM:
+                return new TextInputItem.Builder();
+            case PICKER_ITEM:
+                return new PickerInputItem.Builder();
             case NUMBER_ITEM:
             case FILE_ITEM:
-            case PICKER_ITEM:
             case BOOLEAN_ITEM:
             default:
                 return new BooleanInputItem.Builder();

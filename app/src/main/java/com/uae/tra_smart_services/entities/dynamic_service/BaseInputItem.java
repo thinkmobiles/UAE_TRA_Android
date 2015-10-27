@@ -1,5 +1,7 @@
 package com.uae.tra_smart_services.entities.dynamic_service;
 
+import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -7,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType;
 import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mobimaks on 22.10.2015.
@@ -18,14 +22,36 @@ import java.util.ArrayList;
 @SuppressWarnings("unchecked")
 public abstract class BaseInputItem implements Comparable<BaseInputItem> {
 
+    //region Save keys
+    private static final String KEY_PREFIX = BaseInputItem.class.getSimpleName();
+    private static final String KEY_ID = KEY_PREFIX + "_ID";
+    private static final String KEY_QUERY_NAME = KEY_PREFIX + "_QUERY_NAME";
+    private static final String KEY_DISPLAY_NAME = KEY_PREFIX + "_DISPLAY_NAME";
+    private static final String KEY_PLACEHOLDER = KEY_PREFIX + "_PLACEHOLDER";
+    private static final String KEY_DATA_SOURCE = KEY_PREFIX + "_DATA_SOURCE";
+    private static final String KEY_IS_VALIDATION_REQUIRED = KEY_PREFIX + "_IS_VALIDATION_REQUIRED";
+    private static final String KEY_ORDER = KEY_PREFIX + "_ORDER";
+    private static final String KEY_VALIDATION_RULE = KEY_PREFIX + "_VALIDATION_RULE";
+    private static final String KEY_ITEM_TYPE = KEY_PREFIX + "_ITEM_TYPE";
+    //endregion
+
+    @InputItemType
+    public static String getRestoredInputItemType(final Bundle _savedState) {
+        return _savedState.getString(KEY_ITEM_TYPE);
+    }
+
     protected View rootView;
 
     protected String mId;
     protected String mQueryName;
     protected String mDisplayName;
     protected String mPlaceholder;
+    protected ArrayList<String> mDataSource;
     protected boolean isValidationRequired;
     protected int order;
+
+    @InputItemType
+    protected String mItemType;
 
     @ValidationRule
     protected String mValidationRule;
@@ -37,6 +63,32 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
             initListeners();
         }
         return rootView;
+    }
+
+    @CallSuper
+    public void onRestoreInstanceState(@NonNull final Bundle _savedInstanceState) {
+        mId = _savedInstanceState.getString(KEY_ID);
+        mQueryName = _savedInstanceState.getString(KEY_QUERY_NAME);
+        mDisplayName = _savedInstanceState.getString(KEY_DISPLAY_NAME);
+        mPlaceholder = _savedInstanceState.getString(KEY_PLACEHOLDER);
+        mDataSource = _savedInstanceState.getStringArrayList(KEY_DATA_SOURCE);
+        isValidationRequired = _savedInstanceState.getBoolean(KEY_IS_VALIDATION_REQUIRED);
+        order = _savedInstanceState.getInt(KEY_ORDER);
+        mValidationRule = _savedInstanceState.getString(KEY_VALIDATION_RULE);
+        mItemType = _savedInstanceState.getString(KEY_ITEM_TYPE);
+    }
+
+    @CallSuper
+    public void onSaveInstanceState(@NonNull final Bundle _outState) {
+        _outState.putString(KEY_ID, mId);
+        _outState.putString(KEY_QUERY_NAME, mQueryName);
+        _outState.putString(KEY_DISPLAY_NAME, mDisplayName);
+        _outState.putString(KEY_PLACEHOLDER, mPlaceholder);
+        _outState.putStringArrayList(KEY_DATA_SOURCE, mDataSource);
+        _outState.putBoolean(KEY_IS_VALIDATION_REQUIRED, isValidationRequired);
+        _outState.putInt(KEY_ORDER, order);
+        _outState.putString(KEY_VALIDATION_RULE, mValidationRule);
+        _outState.putString(KEY_ITEM_TYPE, mItemType);
     }
 
     @LayoutRes
@@ -72,11 +124,24 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
         return order;
     }
 
+    public List<String> getDataSourceList() {
+        return mDataSource;
+    }
+
     @NonNull
-    public abstract JsonElement getJsonData();
+    public abstract JsonPrimitive getJsonValue();
 
     @NonNull
     public abstract String getArgsData();
+
+    @ValidationRule
+    protected final String getValidationRule() {
+        return mValidationRule;
+    }
+
+    protected final boolean isValidationRequired() {
+        return isValidationRequired;
+    }
 
     @Override
     public int compareTo(@NonNull final BaseInputItem _another) {
@@ -132,13 +197,20 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
             return (E) this;
         }
 
+        public <E extends BaseBuilder<T>> E setDataSource(@ValidationRule ArrayList<String> _dataSource) {
+            mInstance.mDataSource = _dataSource;
+            return (E) this;
+        }
+
+        public <E extends BaseBuilder<T>> E setInputItemType(@InputItemType String _itemType) {
+            mInstance.mItemType = _itemType;
+            return (E) this;
+        }
+
         public T build() {
             return mInstance;
         }
 
-    }
-
-    public static abstract class List<T extends BaseInputItem> extends ArrayList<T> {
     }
 
 }
