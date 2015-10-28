@@ -1,7 +1,7 @@
 package com.uae.tra_smart_services.entities.dynamic_service.input_item;
 
 import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.util.Patterns;
 import android.widget.EditText;
@@ -62,11 +62,15 @@ public class StringInputItem extends BaseInputItem {
 
     @Override
     public boolean isDataValid() {
-        return !isValidationRequired() || validateData();
+        final String text = etEditText.getText().toString();
+        if (isRequired) {
+            return validateData(text);
+        } else {
+            return text.isEmpty() || validateData(text);
+        }
     }
 
-    private boolean validateData() {
-        final String text = etEditText.getText().toString();
+    private boolean validateData(final String text) {
         switch (getValidationRule()) {
             case EMAIL:
                 return Patterns.EMAIL_ADDRESS.matcher(text).matches();
@@ -80,13 +84,13 @@ public class StringInputItem extends BaseInputItem {
         }
     }
 
-    @NonNull
+    @Nullable
     @Override
     public JsonPrimitive getJsonValue() {
         return new JsonPrimitive(getArgsData());
     }
 
-    @NonNull
+    @Nullable
     @Override
     public final String getArgsData() {
         return etEditText.getText().toString();

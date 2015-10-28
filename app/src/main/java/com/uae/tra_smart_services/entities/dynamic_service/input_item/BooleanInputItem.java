@@ -1,6 +1,6 @@
 package com.uae.tra_smart_services.entities.dynamic_service.input_item;
 
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,13 +50,13 @@ public class BooleanInputItem extends BaseInputItem implements OnClickListener {
         return true;
     }
 
-    @NonNull
+    @Nullable
     @Override
     public final JsonPrimitive getJsonValue() {
         return new JsonPrimitive(swSwitch.isChecked());
     }
 
-    @NonNull
+    @Nullable
     @Override
     public final String getArgsData() {
         return String.valueOf(swSwitch.isChecked());

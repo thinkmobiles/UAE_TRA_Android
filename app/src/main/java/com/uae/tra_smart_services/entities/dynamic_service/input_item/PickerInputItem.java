@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.entities.dynamic_service.input_item;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -92,7 +93,7 @@ public class PickerInputItem extends BaseInputItem implements OnClickListener, O
 
     @Override
     public boolean isDataValid() {
-        return !isValidationRequired() || mIsSpinnerClicked;
+        return !isRequired() || mIsSpinnerClicked;
     }
 
     @Override
@@ -100,16 +101,16 @@ public class PickerInputItem extends BaseInputItem implements OnClickListener, O
 
     }
 
-    @NonNull
+    @Nullable
     @Override
     public JsonPrimitive getJsonValue() {
-        return new JsonPrimitive(getArgsData());
+        return mIsSpinnerClicked ? new JsonPrimitive(mAdapter.getItem(sPicker.getSelectedItemPosition())) : null;
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getArgsData() {
-        return mIsSpinnerClicked ? mAdapter.getItem(sPicker.getSelectedItemPosition()) : "";
+        return mIsSpinnerClicked ? mAdapter.getItem(sPicker.getSelectedItemPosition()) : null;
     }
 
     @Override

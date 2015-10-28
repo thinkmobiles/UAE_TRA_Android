@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog;
+import com.uae.tra_smart_services.entities.PermissionManager.OnPermissionRequestSuccessListener;
 import com.uae.tra_smart_services.global.AttachmentOption;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * Created by mobimaks on 02.10.2015.
  */
-public final class AttachmentManager implements OnOpenPermissionExplanationDialogListener, PermissionManager.OnPermissionRequestSuccessListener {
+public final class AttachmentManager implements OnOpenPermissionExplanationDialogListener, OnPermissionRequestSuccessListener {
 
     private static final int REQUEST_GALLERY_IMAGE_CODE = 130;
     private static final int REQUEST_CAMERA_PHOTO_CODE = 131;
@@ -184,9 +185,14 @@ public final class AttachmentManager implements OnOpenPermissionExplanationDialo
     }
 
     public final void openDefaultPicker(@NonNull Context _context, @NonNull Fragment _fragment) {
+        final boolean needDeleteOption = getImageUri() != null;
+        openDefaultPicker(_context, _fragment, needDeleteOption);
+    }
+
+    public final void openDefaultPicker(@NonNull Context _context, @NonNull Fragment _fragment, final boolean needDeleteOption) {
         final boolean isGalleryAvailable = isGalleryPickAvailable();
         final boolean canGetPhoto = canGetCameraPicture();
-        final boolean needDeleteOption = getImageUri() != null;
+
         final List<AttachmentOption> options = new ArrayList<>();
 
         if (isGalleryAvailable) {
@@ -212,6 +218,7 @@ public final class AttachmentManager implements OnOpenPermissionExplanationDialo
         } else {
             Toast.makeText(_context, R.string.fragment_complain_about_service_no_camera_and_app, C.TOAST_LENGTH).show();
         }
+
     }
 
     public interface OnImageGetCallback {

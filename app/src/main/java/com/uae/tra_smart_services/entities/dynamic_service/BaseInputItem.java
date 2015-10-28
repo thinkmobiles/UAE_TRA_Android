@@ -5,6 +5,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
     private static final String KEY_ITEM_TYPE = KEY_PREFIX + "_ITEM_TYPE";
     //endregion
 
+    @SuppressWarnings("ResourceType")
     @InputItemType
     public static String getRestoredInputItemType(final Bundle _savedState) {
         return _savedState.getString(KEY_ITEM_TYPE);
@@ -47,7 +49,7 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
     protected String mDisplayName;
     protected String mPlaceholder;
     protected ArrayList<String> mDataSource;
-    protected boolean isValidationRequired;
+    protected boolean isRequired;
     protected int order;
 
     @InputItemType
@@ -65,6 +67,7 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
         return rootView;
     }
 
+    @SuppressWarnings("ResourceType")
     @CallSuper
     public void onRestoreInstanceState(@NonNull final Bundle _savedInstanceState) {
         mId = _savedInstanceState.getString(KEY_ID);
@@ -72,7 +75,7 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
         mDisplayName = _savedInstanceState.getString(KEY_DISPLAY_NAME);
         mPlaceholder = _savedInstanceState.getString(KEY_PLACEHOLDER);
         mDataSource = _savedInstanceState.getStringArrayList(KEY_DATA_SOURCE);
-        isValidationRequired = _savedInstanceState.getBoolean(KEY_IS_VALIDATION_REQUIRED);
+        isRequired = _savedInstanceState.getBoolean(KEY_IS_VALIDATION_REQUIRED);
         order = _savedInstanceState.getInt(KEY_ORDER);
         mValidationRule = _savedInstanceState.getString(KEY_VALIDATION_RULE);
         mItemType = _savedInstanceState.getString(KEY_ITEM_TYPE);
@@ -85,7 +88,7 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
         _outState.putString(KEY_DISPLAY_NAME, mDisplayName);
         _outState.putString(KEY_PLACEHOLDER, mPlaceholder);
         _outState.putStringArrayList(KEY_DATA_SOURCE, mDataSource);
-        _outState.putBoolean(KEY_IS_VALIDATION_REQUIRED, isValidationRequired);
+        _outState.putBoolean(KEY_IS_VALIDATION_REQUIRED, isRequired);
         _outState.putInt(KEY_ORDER, order);
         _outState.putString(KEY_VALIDATION_RULE, mValidationRule);
         _outState.putString(KEY_ITEM_TYPE, mItemType);
@@ -101,7 +104,7 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
     }
 
     public boolean isDataValid() {
-        return !isValidationRequired;
+        return !isRequired;
     }
 
     public final String getId() {
@@ -128,10 +131,15 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
         return mDataSource;
     }
 
-    @NonNull
+    @InputItemType
+    public String getItemType() {
+        return mItemType;
+    }
+
+    @Nullable
     public abstract JsonPrimitive getJsonValue();
 
-    @NonNull
+    @Nullable
     public abstract String getArgsData();
 
     @ValidationRule
@@ -139,8 +147,16 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
         return mValidationRule;
     }
 
-    protected final boolean isValidationRequired() {
-        return isValidationRequired;
+    protected void setValidationRule(@ValidationRule String _validationRule) {
+        mValidationRule = _validationRule;
+    }
+
+    protected final boolean isRequired() {
+        return isRequired;
+    }
+
+    public final boolean isAttachmentItem() {
+        return InputItemType.FILE_ITEM.equals(mItemType);
     }
 
     @Override
@@ -172,8 +188,8 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
             return (E) this;
         }
 
-        public <E extends BaseBuilder<T>> E setIsValidationRequired(boolean _isValidationRequired) {
-            mInstance.isValidationRequired = _isValidationRequired;
+        public <E extends BaseBuilder<T>> E setIsRequired(boolean _isRequired) {
+            mInstance.isRequired = _isRequired;
             return (E) this;
         }
 

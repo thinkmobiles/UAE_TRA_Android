@@ -17,6 +17,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.BOOLEAN_ITEM;
+import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.FILE_ITEM;
+import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.NUMBER_ITEM;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.PICKER_ITEM;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.STRING_ITEM;
 import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType.TEXT_ITEM;
@@ -51,7 +53,7 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
                 .setId(main.get(ID).getAsString())
                 .setQueryName(main.get(NAME).getAsString())
                 .setOrder(main.get(ORDER).getAsInt())
-                .setIsValidationRequired(main.get(IS_REQUIRED).getAsBoolean())
+                .setIsRequired(main.get(IS_REQUIRED).getAsBoolean())
                 .setDisplayName(getLocalisedText((JsonObject) main.get(DISPLAY_NAME)))
                 .setPlaceholder(getLocalisedText((JsonObject) main.get(PLACEHOLDER)))
                 .setValidationRule(parseValidationRule(main.get(VALIDATE_RULE).getAsString()))
@@ -70,6 +72,10 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
             return TEXT_ITEM;
         } else if (PICKER_ITEM.equalsIgnoreCase(_inputType)) {
             return PICKER_ITEM;
+        } else if (FILE_ITEM.equalsIgnoreCase(_inputType)) {
+            return FILE_ITEM;
+        } else if (NUMBER_ITEM.equalsIgnoreCase(_inputType)) {
+            return NUMBER_ITEM;
         }
         return BOOLEAN_ITEM;//default item (may be placeholder or sth like that)
     }

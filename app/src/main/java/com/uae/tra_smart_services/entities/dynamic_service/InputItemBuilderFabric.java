@@ -3,7 +3,9 @@ package com.uae.tra_smart_services.entities.dynamic_service;
 import android.support.annotation.StringDef;
 
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem.BaseBuilder;
+import com.uae.tra_smart_services.entities.dynamic_service.input_item.AttachmentInputItem;
 import com.uae.tra_smart_services.entities.dynamic_service.input_item.BooleanInputItem;
+import com.uae.tra_smart_services.entities.dynamic_service.input_item.NumberInputItem;
 import com.uae.tra_smart_services.entities.dynamic_service.input_item.PickerInputItem;
 import com.uae.tra_smart_services.entities.dynamic_service.input_item.StringInputItem;
 import com.uae.tra_smart_services.entities.dynamic_service.input_item.TextInputItem;
@@ -57,8 +59,10 @@ public final class InputItemBuilderFabric {
                 return new TextInputItem.Builder();
             case PICKER_ITEM:
                 return new PickerInputItem.Builder();
-            case NUMBER_ITEM:
             case FILE_ITEM:
+                return new AttachmentInputItem.Builder();
+            case NUMBER_ITEM:
+                return new NumberInputItem.Builder();
             case BOOLEAN_ITEM:
             default:
                 return new BooleanInputItem.Builder();

@@ -5,8 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.annotations.Expose;
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem.BaseBuilder;
+import com.uae.tra_smart_services.entities.dynamic_service.input_item.AttachmentInputItem;
 import com.uae.tra_smart_services.global.C.HttpMethod;
 
 import java.util.ArrayList;
@@ -64,6 +66,7 @@ public class DynamicService {
         url = _savedInstanceState.getString(KEY_URL);
         buttonText = _savedInstanceState.getString(KEY_BUTTON_TEXT);
         serviceName = _savedInstanceState.getString(KEY_SERVICE_NAME);
+        //noinspection ResourceType
         method = _savedInstanceState.getString(KEY_METHOD);
 
         final ArrayList<String> bodyArgsList = _savedInstanceState.getStringArrayList(KEY_BODY_ARGS);
@@ -121,7 +124,10 @@ public class DynamicService {
         final Map<String, String> map = new HashMap<>();
         for (final BaseInputItem inputItem : inputItems) {
             if (queryArgs.contains(inputItem.getQueryName())) {
-                map.put(inputItem.getQueryName(), inputItem.getArgsData());
+                final String data;
+                if ((data = inputItem.getArgsData()) != null) {
+                    map.put(inputItem.getQueryName(), data);
+                }
             }
         }
         return map;
@@ -135,10 +141,34 @@ public class DynamicService {
                 if (object == null) {
                     object = new JsonObject();
                 }
-                object.add(inputItem.getQueryName(), inputItem.getJsonValue());
+                final JsonPrimitive value;
+                if ((value = inputItem.getJsonValue()) != null) {
+                    object.add(inputItem.getQueryName(), value);
+                }
             }
         }
         return object;
     }
 
+    @NonNull
+    public List<Attachment> getAttachments() {
+        final List<Attachment> attachments = new ArrayList<>();
+        for (final BaseInputItem inputItem : inputItems) {
+
+            final AttachmentInputItem attachmentItem;
+            if (inputItem.isAttachmentItem() &&
+                    (attachmentItem = (AttachmentInputItem) inputItem).getAttachmentUri() != null) {
+                final boolean isQueryArgument;
+                if (queryArgs.contains(inputItem.getQueryName())) {
+                    isQueryArgument = true;
+                } else if (bodyArgs.contains(inputItem.getQueryName())) {
+                    isQueryArgument = false;
+                } else {
+                    continue;//skip this attachment
+                }
+                attachments.add(new Attachment(attachmentItem, isQueryArgument));
+            }
+        }
+        return attachments;
+    }
 }
