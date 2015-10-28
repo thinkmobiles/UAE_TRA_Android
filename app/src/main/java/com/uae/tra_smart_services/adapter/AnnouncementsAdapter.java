@@ -17,40 +17,48 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.adapter.TransactionsAdapter.ViewHolder;
+import com.uae.tra_smart_services.adapter.AnnouncementsAdapter.ViewHolder;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
 import com.uae.tra_smart_services.rest.RestClient;
 import com.uae.tra_smart_services.rest.TRAServicesAPI;
-import com.uae.tra_smart_services.rest.model.response.GetTransactionResponseModel;
+import com.uae.tra_smart_services.rest.model.response.GetAnnouncementsResponseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.RetrofitError;
+/**
+ * Created by ak-buffalo on 23.10.15.
+ */
+public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filterable {
 
-public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterable {
-
-    private static final int VIEW_TYPE_TRANSACTION = 0;
+    private static final int VIEW_TYPE_ANNOUNCEMENTS = 0;
     private static final int VIEW_TYPE_LOADER = 1;
 
     private final Activity mActivity;
     private final OperationStateManager mOperationStateManager;
-    private final GetTransactionResponseModel.List mDataSet, mShowingData;
+    private final List<GetAnnouncementsResponseModel.Announcement> mDataSet, mShowingData;
 
     private TransactionFilter mFilter;
     private boolean mIsShowingLoaderForData;
     private boolean mIsInSearchMode;
     private boolean mIsAllSearchResultDownloaded;
+    private boolean mIsPreview;
 
-    public TransactionsAdapter(final Activity _activity, final OperationStateManager _operationStateManager) {
+    private OnInfoHubItemClickListener onItemClickListener;
+
+    public AnnouncementsAdapter(final Activity _activity, final OperationStateManager _operationStateManager, boolean isPreview) {
         mActivity = _activity;
         mOperationStateManager = _operationStateManager;
         mIsShowingLoaderForData = true;
-        mDataSet = new GetTransactionResponseModel.List();
-        mShowingData = new GetTransactionResponseModel.List();
+        mDataSet = new ArrayList<>();
+        mShowingData = new ArrayList<>();
+        mIsPreview = isPreview;
     }
 
     public void startLoading() {
@@ -77,13 +85,17 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         return mDataSet.isEmpty();
     }
 
-    public void addAll(final List<GetTransactionResponseModel> _transactionResponses) {
-        mDataSet.addAll(_transactionResponses);
+    public void addAll(final List<GetAnnouncementsResponseModel.Announcement> _announcementsResponses) {
+        mDataSet.addAll(_announcementsResponses);
         if (!mIsInSearchMode) {
             int oldSize = mShowingData.size();
-            mShowingData.addAll(_transactionResponses);
-            notifyItemRangeInserted(oldSize, _transactionResponses.size());
+            mShowingData.addAll(_announcementsResponses);
+            notifyItemRangeInserted(oldSize, _announcementsResponses.size());
         }
+    }
+
+    public final void setOnItemClickListener(final OnInfoHubItemClickListener _onItemClickListener) {
+        onItemClickListener = _onItemClickListener;
     }
 
     @Override
@@ -103,7 +115,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         mFilter.loadMoreSearchResults();
     }
 
-    public final void showTransactions() {
+    public final void showAnnouncements() {
         if (mDataSet.isEmpty()) {
             mOperationStateManager.showEmptyView();
         } else {
@@ -119,7 +131,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
     @Override
     public int getItemViewType(int position) {
         if (position < mShowingData.size()) {
-            return VIEW_TYPE_TRANSACTION;
+            return VIEW_TYPE_ANNOUNCEMENTS;
         } else {
             return VIEW_TYPE_LOADER;
         }
@@ -127,13 +139,16 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case VIEW_TYPE_LOADER:
-                return new ViewHolder(new ProgressBar(parent.getContext()), true);
-            case VIEW_TYPE_TRANSACTION:
-            default:
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub, parent, false);
-                return new ViewHolder(view);
+        if(viewType == VIEW_TYPE_LOADER){
+            return new ViewHolder(new ProgressBar(parent.getContext()), true);
+        } else {
+            final View view;
+            if (mIsPreview){
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub_second, parent, false);
+            } else {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub, parent, false);
+            }
+            return new ViewHolder(view);
         }
     }
 
@@ -152,7 +167,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         } else {
             progressBarCount = mIsShowingLoaderForData ? 1 : 0;
         }
-        return mShowingData.size() + progressBarCount;
+        return mShowingData.size() + (!mIsPreview ? progressBarCount : 0);
     }
 
     private final class TransactionFilter extends Filter {
@@ -184,10 +199,10 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
             mSearchQuery = String.valueOf(constraint);
             mIsCurrentlyLoading = true;
 
-            final List<GetTransactionResponseModel> filteredList;
+            final List<GetAnnouncementsResponseModel.Announcement> filteredList;
             final FilterResults filterResults = new FilterResults();
             try {
-                filteredList = mTRAServicesAPI.searchTransactions(mSearchResultPageNum, DEFAULT_PAGE_SIZE, mSearchQuery);
+                filteredList = mTRAServicesAPI.searchAnnouncements(mSearchResultPageNum, DEFAULT_PAGE_SIZE, mSearchQuery).announcements;
                 if (filteredList.isEmpty()) {
                     mIsAllSearchResultDownloaded = true;
                 }
@@ -236,13 +251,13 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         @UiThread
         private void showNewSearchResults(FilterResults results) {
             mOperationStateManager.showData();
-            mShowingData.addAll((GetTransactionResponseModel.List) results.values);
+            mShowingData.addAll((ArrayList<GetAnnouncementsResponseModel.Announcement>) results.values);
             notifyDataSetChanged();
         }
-
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
+        private View container;
         private HexagonView hexagonView;
         private TextView title, description, date;
         private ProgressBar progressBar;
@@ -251,11 +266,20 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
 
         public ViewHolder(View itemView) {
             super(itemView);
-            sStartOffset = (Space) itemView.findViewById(R.id.sStartOffset_LIIH);
-            hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIIH);
-            title = (TextView) itemView.findViewById(R.id.hvTitle_LIIH);
-            description = (TextView) itemView.findViewById(R.id.hvDescr_LIIH);
-            date = (TextView) itemView.findViewById(R.id.hvDate_LIIH);
+            container = itemView;
+            if(mIsPreview){
+                sStartOffset = (Space) itemView.findViewById(R.id.sStartOffset_LIIHS);
+                hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIIHS);
+                title = (TextView) itemView.findViewById(R.id.hvTitle_LIIHS);
+                description = (TextView) itemView.findViewById(R.id.hvDescr_LIIHS);
+                date = (TextView) itemView.findViewById(R.id.hvDate_LIIHS);
+            } else {
+                sStartOffset = (Space) itemView.findViewById(R.id.sStartOffset_LIIH);
+                hexagonView = (HexagonView) itemView.findViewById(R.id.hvIcon_LIIH);
+                title = (TextView) itemView.findViewById(R.id.hvTitle_LIIH);
+                description = (TextView) itemView.findViewById(R.id.hvDescr_LIIH);
+                date = (TextView) itemView.findViewById(R.id.hvDate_LIIH);
+            }
         }
 
         public ViewHolder(View view, boolean _isProgress) {
@@ -266,13 +290,19 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
                     ViewGroup.LayoutParams.WRAP_CONTENT));
         }
 
-        public void setData(int _position, GetTransactionResponseModel _model) {
+        public void setData(int _position, final GetAnnouncementsResponseModel.Announcement _model) {
             if (!isProgress) {
                 sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
-//            Picasso.with(mActivity).load(_model.getIconUrl()).into(new HexagonViewTarget(hexagonView));
+                Picasso.with(mActivity).load(_model.image).into(new HexagonViewTarget(hexagonView));
                 title.setText(_model.title);
                 description.setText(_model.description);
-                date.setText(_model.modifiedDatetime);
+                date.setText(_model.createdAt);
+                container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View _view) {
+                        onItemClickListener.onItemSelected(_model);
+                    }
+                });
             }
         }
     }

@@ -31,6 +31,7 @@
         android:background="@android:color/transparent"
         android:hint="@string/str_put_search_phrase"
         android:paddingBottom="15dp"
+        android:singleLine="true"
         android:textColorHint="@color/hex_text_color_white"/>
 
     <TextView

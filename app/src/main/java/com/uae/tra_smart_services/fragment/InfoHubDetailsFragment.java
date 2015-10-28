@@ -9,7 +9,7 @@ import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.entities.ImageViewTarget;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
-import com.uae.tra_smart_services.rest.model.response.InfoHubListItemModel;
+import com.uae.tra_smart_services.rest.model.response.GetAnnouncementsResponseModel;
 
 
 /**
@@ -22,7 +22,7 @@ public class InfoHubDetailsFragment extends BaseFragment {
     private TextView headerTitle;
     private TextView bodyFullDescription;
 
-    private InfoHubListItemModel infoHubAnnModel;
+    private GetAnnouncementsResponseModel.Announcement infoHubAnnModel;
 
     public static InfoHubDetailsFragment newInstance(Bundle _bundle) {
         InfoHubDetailsFragment fragment = new InfoHubDetailsFragment();
@@ -45,13 +45,13 @@ public class InfoHubDetailsFragment extends BaseFragment {
     @Override
     protected void initViews() {
         headerImage = findView(R.id.tvHeaderImage_FIHD);
-        Picasso.with(getActivity()).load(infoHubAnnModel.getHeaderImageUrl()).placeholder(R.drawable.logo).into(new ImageViewTarget(headerImage));
+        Picasso.with(getActivity()).load(infoHubAnnModel.image).placeholder(R.drawable.logo).into(new ImageViewTarget(headerImage));
         headerDate = findView(R.id.tvHeaderDate_FIHD);
-        headerDate.setText(infoHubAnnModel.getDate());
+        headerDate.setText(infoHubAnnModel.createdAt);
         headerTitle = findView(R.id.tvHeaderTitle_FIHD);
-        headerTitle.setText(infoHubAnnModel.getDescription());
+        headerTitle.setText(infoHubAnnModel.title);
         bodyFullDescription = findView(R.id.tvBodyDescr_FIHD);
-        bodyFullDescription.setText(infoHubAnnModel.getFullDescription());
+        bodyFullDescription.setText(infoHubAnnModel.description);
     }
 
     @Override
