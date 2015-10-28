@@ -27,7 +27,7 @@ public class PickerInputItem extends BaseInputItem implements OnClickListener, O
     private static final String KEY_IS_NOTHING_SELECTED = KEY_PREFIX + "_IS_NOTHING_SELECTED";
     private static final String KEY_SELECTED_ITEM = KEY_PREFIX + "_SELECTED_ITEM";
 
-    private TextView tvPlaceHolder;
+    private TextView tvDisplayName, tvPlaceHolder;
     private ImageView tivArrowIcon;
     private Spinner sPicker;
 
@@ -41,6 +41,9 @@ public class PickerInputItem extends BaseInputItem implements OnClickListener, O
     @Override
     protected void initViews() {
         super.initViews();
+        tvDisplayName = findView(R.id.tvDisplayName_IIP);
+        tvDisplayName.setText(getDisplayName());
+
         tvPlaceHolder = findView(R.id.tvPickerPlaceholder_IIP);
         tvPlaceHolder.setText(getPlaceholder());
 

@@ -5,14 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="48dp"
+    android:layout_marginTop="@dimen/fragment_dynamic_service_item_margin"
+    android:minHeight="@dimen/fragment_dynamic_service_item_height"
     android:orientation="horizontal"
     tools:background="#999">
 
+    <TextView
+        android:id="@+id/tvDisplayName_IIB"
+        tools:text="@string/fragment_edit_user_profile_first_name"
+        style="@style/InputItemNameStyle"/>
+
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/swSwitch_IIB"
+        android:saveEnabled="false"
+        android:layout_below="@id/tvDisplayName_IIB"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/fragment_dynamic_service_item_height"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:clickable="false"
@@ -21,15 +29,17 @@
     <Space
         android:id="@+id/sSpace_IIB"
         android:layout_width="16dp"
+        android:layout_below="@id/tvDisplayName_IIB"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/swSwitch_IIB"/>
 
     <TextView
         android:id="@+id/tvText_IIB"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDisplayName_IIB"
+        android:gravity="center_vertical"
+        android:layout_height="@dimen/fragment_dynamic_service_item_height"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
         android:layout_toStartOf="@id/sSpace_IIB"
         android:ellipsize="end"
         android:singleLine="true"

@@ -17,11 +17,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        app:layout_widthPercent="92%"
-        android:fillViewport="true"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="?actionBarSize"
+        android:fillViewport="true"
         android:scrollbars="none"
+        app:layout_widthPercent="92%"
         tools:layout_marginTop="0dp">
 
         <com.uae.tra_smart_services.customviews.PercentLinearLayout
@@ -31,6 +31,7 @@
             android:divider="?dynamicServiceDivider"
             android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:paddingBottom="16dp"
             android:showDividers="middle"/>
 
     </ScrollView>

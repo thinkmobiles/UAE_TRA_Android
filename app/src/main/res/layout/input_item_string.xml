@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EditText
-    android:id="@+id/etEdit_IIT"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="48dp"
-    android:background="@android:color/transparent"
-    android:minWidth="48dp"
-    android:paddingBottom="8dp"
-    android:paddingTop="8dp"
-    android:singleLine="true"
-    android:textColor="@color/fragment_dynamic_service_text_color"
-    android:textColorHint="@color/fragment_dynamic_service_hint_color"
-    android:textSize="@dimen/sp_settings_static_text_size"
-    tools:text="Test text"/>
+    android:layout_marginTop="@dimen/fragment_dynamic_service_item_margin">
+
+    <TextView
+        android:id="@+id/tvDisplayName_IIS"
+        style="@style/InputItemNameStyle"
+        tools:text="@string/fragment_edit_user_profile_first_name"/>
+
+    <EditText
+        android:id="@+id/etEdit_IIT"
+        android:layout_width="match_parent"
+        android:saveEnabled="false"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDisplayName_IIS"
+        android:background="@android:color/transparent"
+        android:minHeight="@dimen/fragment_dynamic_service_item_height"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:singleLine="true"
+        android:textColor="@color/fragment_dynamic_service_text_color"
+        android:textColorHint="@color/fragment_dynamic_service_hint_color"
+        android:textSize="@dimen/sp_settings_static_text_size"
+        tools:ignore="LabelFor,TextFields"
+        tools:text="Test text"/>
+
+</RelativeLayout>
+

@@ -1,10 +1,14 @@
 package com.uae.tra_smart_services.entities.dynamic_service.input_item;
 
+import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.JsonPrimitive;
 import com.uae.tra_smart_services.R;
@@ -22,7 +26,13 @@ import static com.uae.tra_smart_services.entities.dynamic_service.InputItemBuild
  */
 public class StringInputItem extends BaseInputItem {
 
+    private static final String KEY_PREFIX = StringInputItem.class.getSimpleName();
+    private static final String KEY_TEXT = KEY_PREFIX + "TEXT";
+
     protected EditText etEditText;
+    protected TextView tvDisplayName;
+
+    private String mText;
 
     protected StringInputItem() {
     }
@@ -31,8 +41,15 @@ public class StringInputItem extends BaseInputItem {
     @Override
     protected void initViews() {
         super.initViews();
+        tvDisplayName = findView(R.id.tvDisplayName_IIS);
+        tvDisplayName.setText(getDisplayName());
+
         etEditText = findView(R.id.etEdit_IIT);
         etEditText.setHint(getPlaceholder());
+        if (!TextUtils.isEmpty(mText)) {
+            etEditText.setText(mText);
+        }
+
         if (getValidationRule() != null) {
             processValidationRule();
         }
@@ -94,6 +111,18 @@ public class StringInputItem extends BaseInputItem {
     @Override
     public final String getArgsData() {
         return etEditText.getText().toString();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle _outState) {
+        _outState.putString(KEY_TEXT, etEditText.getText().toString());
+        super.onSaveInstanceState(_outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle _savedInstanceState) {
+        super.onRestoreInstanceState(_savedInstanceState);
+        mText = _savedInstanceState.getString(KEY_TEXT);
     }
 
     protected final EditText getEditText() {

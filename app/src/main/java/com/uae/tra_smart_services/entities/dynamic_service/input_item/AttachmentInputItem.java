@@ -24,7 +24,7 @@ public class AttachmentInputItem extends BaseInputItem implements OnClickListene
     private static final String KEY_ATTACHMENT_URI = KEY_PREFIX + "_ATTACHMENT_URI";
 
     private RelativeLayout rlContainer;
-    private TextView tvText;
+    private TextView tvDisplayName, tvText;
     private ImageView ivAttachment;
 
     private Uri mAttachmentUri;
@@ -37,6 +37,10 @@ public class AttachmentInputItem extends BaseInputItem implements OnClickListene
     protected void initViews() {
         super.initViews();
         rlContainer = findView(R.id.rlContainer_IIA);
+
+        tvDisplayName = findView(R.id.tvDisplayName_IIA);
+        tvDisplayName.setText(getDisplayName());
+
         ivAttachment = findView(R.id.ivAttachment_IIA);
         tvText = findView(R.id.tvText_IIA);
 

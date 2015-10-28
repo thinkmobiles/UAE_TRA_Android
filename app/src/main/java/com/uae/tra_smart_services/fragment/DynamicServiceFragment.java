@@ -231,9 +231,9 @@ public final class DynamicServiceFragment extends BaseFragment
         if (mDynamicService.isDataValid()) {
             final BaseDynamicServiceRequest request;
             if (HttpMethod.GET.equals(mDynamicService.method)) {
-                request = new DynamicServiceGetRequest(getActivity(), mDynamicService.url,mDynamicService.getQueryMap());
+                request = new DynamicServiceGetRequest(getActivity(), mDynamicService.url, mDynamicService.getQueryMap());
             } else {
-                request = new DynamicServicePostRequest(getActivity(), mDynamicService.url,mDynamicService.getQueryMap());
+                request = new DynamicServicePostRequest(getActivity(), mDynamicService.url, mDynamicService.getQueryMap());
                 ((DynamicServicePostRequest) request).setJsonBody(mDynamicService.getJsonData());
             }
             request.addAttachments(mDynamicService.getAttachments());

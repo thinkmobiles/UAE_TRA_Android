@@ -131,4 +131,12 @@
         <item name="android:rotationY">0</item>
     </style>
 
+    <style name="InputItemNameStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:textColor">#b9b9b9</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>
