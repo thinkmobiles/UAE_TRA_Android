@@ -95,7 +95,7 @@ public class ComplainAboutTraFragment extends BaseComplainFragment
     }
 
     @Override
-    public void onAttachmentGet(final @NonNull Uri _fromImageUri, final @NonNull Uri _cutterImageUri) {
+    public void onAttachmentGet(final @NonNull Uri _resultImageUri) {
         tivAddAttachment.setImageResource(R.drawable.ic_check);
     }
 

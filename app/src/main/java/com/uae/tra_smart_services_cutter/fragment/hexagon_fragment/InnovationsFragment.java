@@ -261,7 +261,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     public void onNothingSelected(AdapterView<?> parent) { }
 
     @Override
-    public void onAttachmentGet(final @NonNull Uri _fromImageUri, final @NonNull Uri _cutterImageUri) {
+    public void onAttachmentGet(final @NonNull Uri _fromImageUri_resultImageUri) {
         tivAddAttachment.setImageResource(R.drawable.ic_check);
     }
 

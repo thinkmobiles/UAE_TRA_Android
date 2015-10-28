@@ -176,11 +176,10 @@ public final class EditUserProfileFragment extends BaseFragment
     }
 
     @Override
-    public void onAttachmentGet(final @NonNull Uri _fromImageUri, final @NonNull Uri _cutterImageUri) {
-        mImageUri = _fromImageUri;
-        mCuttedImageUri = _cutterImageUri;
+    public void onAttachmentGet(final @NonNull Uri _resultImageUri) {
+        mImageUri = _resultImageUri;
         Glide.with(getActivity())
-                .load(mCuttedImageUri)
+                .load(mImageUri)
                 .into((Target) new HexagonViewTarget(hvUserAvatar));
     }
 

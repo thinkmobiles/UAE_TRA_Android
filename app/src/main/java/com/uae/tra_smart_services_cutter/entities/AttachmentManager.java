@@ -85,7 +85,7 @@ public final class AttachmentManager {
         mPhotoFilePath = _savedInstanceState.getString(CAMERA_PHOTO_FILE_PATH_KEY);
         mImageUri = _savedInstanceState.getParcelable(SELECTED_IMAGE_URI_KEY);
         if (mImageUri != null) {
-            mImageGetCallback.onAttachmentGet(mImageUri, cuttedImageUri);
+            mImageGetCallback.onAttachmentGet(mImageUri);
         }
     }
 
@@ -108,8 +108,10 @@ public final class AttachmentManager {
         } else if (requestCode == REQUEST_GALLERY_IMAGE_CODE) {
             mImageUri = data.getData();
             mCutterRequest.moveToCutterActivity(mImageUri, cuttedImageUri);
-        } else if (requestCode == REQUEST_CUTTER_VIEW && resultCode == Activity.RESULT_OK) {
-            mImageGetCallback.onAttachmentGet(mImageUri, cuttedImageUri);
+        } else if (requestCode == REQUEST_CUTTER_VIEW) {
+            if(resultCode == Activity.RESULT_OK)
+                mImageUri = cuttedImageUri;
+            mImageGetCallback.onAttachmentGet(mImageUri);
         }
     }
 
@@ -206,7 +208,7 @@ public final class AttachmentManager {
     }
 
     public interface OnImageGetCallback {
-        void onAttachmentGet(final @NonNull Uri _fromImageUri, final @NonNull Uri _cutterImageUri);
+        void onAttachmentGet(final @NonNull Uri _resultImageUri);
     }
 
     public interface OnCutterRequest {
