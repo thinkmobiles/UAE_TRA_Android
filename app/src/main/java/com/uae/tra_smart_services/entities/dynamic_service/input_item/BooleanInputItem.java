@@ -80,12 +80,6 @@ public class BooleanInputItem extends BaseInputItem implements OnClickListener {
         mIsChecked = _savedInstanceState.getBoolean(KEY_IS_CHECKED);
     }
 
-    @Nullable
-    @Override
-    public final String getArgsData() {
-        return String.valueOf(swSwitch.isChecked());
-    }
-
     public static class Builder extends BaseBuilder<BooleanInputItem> {
 
         @Override

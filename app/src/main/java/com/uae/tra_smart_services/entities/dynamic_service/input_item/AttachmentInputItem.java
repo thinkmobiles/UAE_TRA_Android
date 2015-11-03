@@ -108,12 +108,6 @@ public class AttachmentInputItem extends BaseInputItem implements OnClickListene
         return null;
     }
 
-    @Nullable
-    @Override
-    public String getArgsData() {
-        return null;
-    }
-
     @Override
     protected int getLayoutRes() {
         return R.layout.input_item_attachment;

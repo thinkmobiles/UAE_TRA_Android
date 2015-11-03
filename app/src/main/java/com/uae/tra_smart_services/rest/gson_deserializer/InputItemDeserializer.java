@@ -2,13 +2,14 @@ package com.uae.tra_smart_services.rest.gson_deserializer;
 
 import android.support.annotation.NonNull;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem;
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem.BaseBuilder;
+import com.uae.tra_smart_services.entities.dynamic_service.DataSourceItem;
 import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric;
 import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType;
 import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule;
@@ -45,21 +46,20 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
 
     @Override
     public BaseInputItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        final JsonObject main = (JsonObject) json;
+        final JsonObject main = json.getAsJsonObject();
         final String inputType = parseInputType(main.get(TYPE).getAsString());
         final InputItemBuilderFabric fabric = new InputItemBuilderFabric();
-        final BaseBuilder builder = fabric.createBuilder(inputType);
-        return builder
+        final BaseBuilder builder = fabric.createBuilder(inputType)
                 .setId(main.get(ID).getAsString())
                 .setQueryName(main.get(NAME).getAsString())
                 .setOrder(main.get(ORDER).getAsInt())
                 .setIsRequired(main.get(IS_REQUIRED).getAsBoolean())
-                .setDisplayName(getLocalisedText((JsonObject) main.get(DISPLAY_NAME)))
-                .setPlaceholder(getLocalisedText((JsonObject) main.get(PLACEHOLDER)))
-                .setValidationRule(parseValidationRule(main.get(VALIDATE_RULE).getAsString()))
-                .setDataSource(parseStringList(main, DATA_SOURCE))
-                .setInputItemType(inputType)
-                .build();
+                .setDisplayName(getLocalisedText(main.getAsJsonObject(DISPLAY_NAME)))
+                .setPlaceholder(getLocalisedText(main.getAsJsonObject(PLACEHOLDER)))
+                .setValidationRule(parseValidationRule(main.get(VALIDATE_RULE)))
+                .setDataSource(parseDataSourceList(context, main.get(DATA_SOURCE)))
+                .setInputItemType(inputType);
+        return builder.build();
     }
 
     @InputItemType
@@ -81,7 +81,12 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
     }
 
     @ValidationRule
-    private String parseValidationRule(final String _rule) {
+    private String parseValidationRule(final JsonElement _ruleElement) {
+        if (_ruleElement == null) {
+            return NONE;
+        }
+
+        final String _rule = _ruleElement.getAsString();
         if (STRING.equalsIgnoreCase(_rule)) {
             return STRING;
         } else if (NUMBER.equalsIgnoreCase(_rule)) {
@@ -96,14 +101,14 @@ public final class InputItemDeserializer extends BaseDeserializer<BaseInputItem>
     }
 
     @NonNull
-    private ArrayList<String> parseStringList(final JsonObject _sourceObject, final String _listKey) {
-        final ArrayList<String> data = new ArrayList<>();
-        final JsonElement listElement = _sourceObject.get(_listKey);
-        if (listElement != null && listElement.isJsonArray()) {
-            final JsonArray elements = listElement.getAsJsonArray();
-            for (final JsonElement element : elements) {
-                data.add(element.getAsString());
-            }
+    private ArrayList<DataSourceItem> parseDataSourceList(final JsonDeserializationContext _context, final JsonElement _dataSourceObject) {
+        ArrayList<DataSourceItem> data = null;
+        if (_context != null) {
+            final Type listType = new TypeToken<ArrayList<DataSourceItem>>() {}.getType();
+            data = _context.deserialize(_dataSourceObject, listType);
+        }
+        if (data == null) {
+            data = new ArrayList<>();
         }
         return data;
     }

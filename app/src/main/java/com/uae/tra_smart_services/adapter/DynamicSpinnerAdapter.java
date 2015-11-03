@@ -5,20 +5,21 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.entities.dynamic_service.DataSourceItem;
 
 import java.util.List;
 
 /**
  * Created by mobimaks on 27.10.2015.
  */
-public final class DynamicSpinnerAdapter extends BaseSpinnerAdapter<String> {
+public final class DynamicSpinnerAdapter extends BaseSpinnerAdapter<DataSourceItem> {
 
-    public DynamicSpinnerAdapter(Context _context, List<String> _data) {
+    public DynamicSpinnerAdapter(Context _context, List<DataSourceItem> _data) {
         super(_context, _data);
     }
 
     @Override
-    protected ViewHolder<String> getViewHolder(View _view) {
+    protected ViewHolder<DataSourceItem> getViewHolder(View _view) {
         return new DynamicViewHolder(_view);
     }
 
@@ -33,11 +34,11 @@ public final class DynamicSpinnerAdapter extends BaseSpinnerAdapter<String> {
     }
 
     @Override
-    protected ViewHolder<String> getDropDownViewHolder(View _view) {
+    protected ViewHolder<DataSourceItem> getDropDownViewHolder(View _view) {
         return new InnovationDropdownViewHolder(_view);
     }
 
-    protected class DynamicViewHolder extends ViewHolder<String> {
+    protected class DynamicViewHolder extends ViewHolder<DataSourceItem> {
 
         private TextView tvTitle;
 
@@ -47,13 +48,13 @@ public final class DynamicSpinnerAdapter extends BaseSpinnerAdapter<String> {
         }
 
         @Override
-        public void setData(int _position, final String _data) {
-            tvTitle.setText(_data);
+        public void setData(int _position, final DataSourceItem _data) {
+            tvTitle.setText(_data.getName());
         }
     }
 
 
-    protected final class InnovationDropdownViewHolder extends ViewHolder<String> {
+    protected final class InnovationDropdownViewHolder extends ViewHolder<DataSourceItem> {
 
         private TextView tvTitle;
 
@@ -63,8 +64,8 @@ public final class DynamicSpinnerAdapter extends BaseSpinnerAdapter<String> {
         }
 
         @Override
-        public void setData(final int _position, final String _data) {
-            tvTitle.setText(_data);
+        public void setData(final int _position, final DataSourceItem _data) {
+            tvTitle.setText(_data.getName());
         }
     }
 }

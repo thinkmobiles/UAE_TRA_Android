@@ -104,13 +104,7 @@ public class StringInputItem extends BaseInputItem {
     @Nullable
     @Override
     public JsonPrimitive getJsonValue() {
-        return new JsonPrimitive(getArgsData());
-    }
-
-    @Nullable
-    @Override
-    public final String getArgsData() {
-        return etEditText.getText().toString();
+        return new JsonPrimitive(etEditText.getText().toString());
     }
 
     @Override

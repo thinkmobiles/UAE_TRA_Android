@@ -107,13 +107,8 @@ public class PickerInputItem extends BaseInputItem implements OnClickListener, O
     @Nullable
     @Override
     public JsonPrimitive getJsonValue() {
-        return mIsSpinnerClicked ? new JsonPrimitive(mAdapter.getItem(sPicker.getSelectedItemPosition())) : null;
-    }
-
-    @Nullable
-    @Override
-    public String getArgsData() {
-        return mIsSpinnerClicked ? mAdapter.getItem(sPicker.getSelectedItemPosition()) : null;
+        final String value = mAdapter.getItem(sPicker.getSelectedItemPosition()).value;
+        return mIsSpinnerClicked ? new JsonPrimitive(value) : null;
     }
 
     @Override

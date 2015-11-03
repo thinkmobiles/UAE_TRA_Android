@@ -49,7 +49,7 @@ public abstract class BaseInputItem implements SaveStateObject, Comparable<BaseI
     protected String mQueryName;
     protected String mDisplayName;
     protected String mPlaceholder;
-    protected ArrayList<String> mDataSource;
+    protected ArrayList<DataSourceItem> mDataSource;
     protected boolean isRequired;
     protected int order;
 
@@ -76,7 +76,7 @@ public abstract class BaseInputItem implements SaveStateObject, Comparable<BaseI
         mQueryName = _savedInstanceState.getString(KEY_QUERY_NAME);
         mDisplayName = _savedInstanceState.getString(KEY_DISPLAY_NAME);
         mPlaceholder = _savedInstanceState.getString(KEY_PLACEHOLDER);
-        mDataSource = _savedInstanceState.getStringArrayList(KEY_DATA_SOURCE);
+        mDataSource = _savedInstanceState.getParcelableArrayList(KEY_DATA_SOURCE);
         isRequired = _savedInstanceState.getBoolean(KEY_IS_VALIDATION_REQUIRED);
         order = _savedInstanceState.getInt(KEY_ORDER);
         mValidationRule = _savedInstanceState.getString(KEY_VALIDATION_RULE);
@@ -90,7 +90,7 @@ public abstract class BaseInputItem implements SaveStateObject, Comparable<BaseI
         _outState.putString(KEY_QUERY_NAME, mQueryName);
         _outState.putString(KEY_DISPLAY_NAME, mDisplayName);
         _outState.putString(KEY_PLACEHOLDER, mPlaceholder);
-        _outState.putStringArrayList(KEY_DATA_SOURCE, mDataSource);
+        _outState.putParcelableArrayList(KEY_DATA_SOURCE, mDataSource);
         _outState.putBoolean(KEY_IS_VALIDATION_REQUIRED, isRequired);
         _outState.putInt(KEY_ORDER, order);
         _outState.putString(KEY_VALIDATION_RULE, mValidationRule);
@@ -130,7 +130,7 @@ public abstract class BaseInputItem implements SaveStateObject, Comparable<BaseI
         return order;
     }
 
-    public List<String> getDataSourceList() {
+    public List<DataSourceItem> getDataSourceList() {
         return mDataSource;
     }
 
@@ -141,9 +141,6 @@ public abstract class BaseInputItem implements SaveStateObject, Comparable<BaseI
 
     @Nullable
     public abstract JsonPrimitive getJsonValue();
-
-    @Nullable
-    public abstract String getArgsData();
 
     @ValidationRule
     protected final String getValidationRule() {
@@ -216,7 +213,7 @@ public abstract class BaseInputItem implements SaveStateObject, Comparable<BaseI
             return (E) this;
         }
 
-        public <E extends BaseBuilder<T>> E setDataSource(@ValidationRule ArrayList<String> _dataSource) {
+        public <E extends BaseBuilder<T>> E setDataSource(@ValidationRule ArrayList<DataSourceItem> _dataSource) {
             mInstance.mDataSource = _dataSource;
             return (E) this;
         }

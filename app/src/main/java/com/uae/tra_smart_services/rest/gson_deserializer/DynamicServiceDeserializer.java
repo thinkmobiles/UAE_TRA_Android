@@ -24,14 +24,14 @@ public class DynamicServiceDeserializer extends BaseDeserializer<DynamicService>
     @Override
     public DynamicService deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final DynamicService model = new DynamicService();
-        final JsonObject jsonObject = (JsonObject) json;
+        final JsonObject jsonObject = json.getAsJsonObject();
         model.id = jsonObject.get(ID).getAsString();
 
         final Type listType = new TypeToken<ArrayList<InputItemsPage>>() {}.getType();
         model.pages = context.deserialize(jsonObject.get(PAGES), listType);
 
-        model.buttonText = getLocalisedText((JsonObject) jsonObject.get(BUTTON_TEXT));
-        model.serviceName = getLocalisedText((JsonObject) jsonObject.get(SERVICE_NAME));
+        model.buttonText = getLocalisedText(jsonObject.getAsJsonObject(BUTTON_TEXT));
+        model.serviceName = getLocalisedText(jsonObject.getAsJsonObject(SERVICE_NAME));
         return model;
     }
 

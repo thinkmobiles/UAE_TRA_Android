@@ -23,7 +23,7 @@ public final class InputItemsPageDeserializer extends BaseDeserializer<InputItem
 
     @Override
     public InputItemsPage deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        final JsonObject mainObject = (JsonObject) json;
+        final JsonObject mainObject = json.getAsJsonObject();
         final InputItemsPage inputItemsPage = new InputItemsPage();
         inputItemsPage.number = mainObject.get(NUMBER).getAsInt();
         inputItemsPage.id = mainObject.get(ID).getAsString();
