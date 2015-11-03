@@ -128,10 +128,12 @@ public final class DynamicServiceFragment extends BaseFragment
         toolbarTitleManager.setTitle(mDynamicService.serviceName);
 
         final LayoutInflater inflater = LayoutInflater.from(getActivity());
-        for (final BaseInputItem inputItem : mDynamicService.pages.get(0).inputItems) {//TODO: add pagination
-            llContainer.addView(inputItem.getView(inflater, llContainer));
-            if (inputItem.isAttachmentItem()) {
-                ((AttachmentInputItem) inputItem).setAttachmentCallback(this);
+        for (InputItemsPage page : mDynamicService.pages) {//TODO: add pagination
+            for (BaseInputItem inputItem : page.inputItems) {
+                llContainer.addView(inputItem.getView(inflater, llContainer));
+                if (inputItem.isAttachmentItem()) {
+                    ((AttachmentInputItem) inputItem).setAttachmentCallback(this);
+                }
             }
         }
 
