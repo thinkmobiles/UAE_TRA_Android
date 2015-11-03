@@ -2,48 +2,35 @@ package com.uae.tra_smart_services.entities.dynamic_service;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.annotations.Expose;
-import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem.BaseBuilder;
-import com.uae.tra_smart_services.entities.dynamic_service.input_item.AttachmentInputItem;
-import com.uae.tra_smart_services.global.C.HttpMethod;
+import com.uae.tra_smart_services.interfaces.SaveStateObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by mobimaks on 22.10.2015.
  */
-public class DynamicService {
+public class DynamicService implements SaveStateObject {
 
     //region Save keys
     private static final String KEY_PREFIX = DynamicService.class.getSimpleName();
     private static final String KEY_ID = KEY_PREFIX + "_ID";
-    private static final String KEY_URL = KEY_PREFIX + "_URL";
     private static final String KEY_BUTTON_TEXT = KEY_PREFIX + "_BUTTON_TEXT";
     private static final String KEY_SERVICE_NAME = KEY_PREFIX + "_SERVICE_NAME";
-    private static final String KEY_METHOD = KEY_PREFIX + "_METHOD";
-    private static final String KEY_BODY_ARGS = KEY_PREFIX + "_BODY_ARGS";
-    private static final String KEY_QUERY_ARGS = KEY_PREFIX + "_QUERY_ARGS";
-    private static final String KEY_INPUT_ITEM = KEY_PREFIX + "_INPUT_ITEM";
-    private static final String KEY_INPUT_ITEMS_COUNT = KEY_PREFIX + "_INPUT_ITEMS_COUNT";
+    private static final String KEY_PAGE = KEY_PREFIX + "_PAGE";
+    private static final String KEY_PAGES_NUMBER = KEY_PREFIX + "_PAGES_NUMBER";
     //endregion
 
     @Expose
     public String id;
 
     @Expose
-    public String url;
-
-    @Expose
-    public List<BaseInputItem> inputItems;
+    public List<InputItemsPage> pages;
 
     @Expose
     public String buttonText;
@@ -51,68 +38,43 @@ public class DynamicService {
     @Expose
     public String serviceName;
 
-    @Expose
-    @HttpMethod
-    public String method;
-
-    @Expose
-    public Set<String> bodyArgs;
-
-    @Expose
-    public Set<String> queryArgs;
-
+    @Override
     public final void onRestoreInstanceState(@NonNull final Bundle _savedInstanceState) {
         id = _savedInstanceState.getString(KEY_ID);
-        url = _savedInstanceState.getString(KEY_URL);
         buttonText = _savedInstanceState.getString(KEY_BUTTON_TEXT);
         serviceName = _savedInstanceState.getString(KEY_SERVICE_NAME);
-        //noinspection ResourceType
-        method = _savedInstanceState.getString(KEY_METHOD);
 
-        final ArrayList<String> bodyArgsList = _savedInstanceState.getStringArrayList(KEY_BODY_ARGS);
-        bodyArgs = (bodyArgsList == null) ? new HashSet<String>() : new HashSet<>(bodyArgsList);
-
-        final ArrayList<String> queryArgsList = _savedInstanceState.getStringArrayList(KEY_QUERY_ARGS);
-        queryArgs = (queryArgsList == null) ? new HashSet<String>() : new HashSet<>(queryArgsList);
-
-        inputItems = new ArrayList<>();
-        final int itemsCount = _savedInstanceState.getInt(KEY_INPUT_ITEMS_COUNT);
-        final InputItemBuilderFabric fabric = new InputItemBuilderFabric();
-        for (int i = 0; i < itemsCount; i++) {
-            final Bundle savedItemState = _savedInstanceState.getBundle(KEY_INPUT_ITEM + i);
-            if (savedItemState == null) {
-                continue;
+        pages = new ArrayList<>();
+        final int pageNumber = _savedInstanceState.getInt(KEY_PAGES_NUMBER);
+        for (int i = 0; i < pageNumber; i++) {
+            final Bundle savedPageState = _savedInstanceState.getBundle(KEY_PAGE + i);
+            if (savedPageState != null) {
+                final InputItemsPage inputItemsPage = new InputItemsPage();
+                inputItemsPage.onRestoreInstanceState(savedPageState);
+                pages.add(inputItemsPage);
             }
-            final String itemType = BaseInputItem.getRestoredInputItemType(savedItemState);
-            final BaseBuilder builder = fabric.createBuilder(itemType);
-            final BaseInputItem inputItem = builder.build();
-            inputItem.onRestoreInstanceState(savedItemState);
-            inputItems.add(inputItem);
         }
     }
 
+    @Override
     public final void onSaveInstanceState(@NonNull final Bundle _outState) {
         _outState.putString(KEY_ID, id);
-        _outState.putString(KEY_URL, url);
         _outState.putString(KEY_BUTTON_TEXT, buttonText);
         _outState.putString(KEY_SERVICE_NAME, serviceName);
-        _outState.putString(KEY_METHOD, method);
-        _outState.putStringArrayList(KEY_BODY_ARGS, new ArrayList<>(bodyArgs));
-        _outState.putStringArrayList(KEY_QUERY_ARGS, new ArrayList<>(queryArgs));
 
-        final int itemsCount = inputItems.size();
-        _outState.putInt(KEY_INPUT_ITEMS_COUNT, itemsCount);
-        for (int i = 0; i < itemsCount; i++) {
-            final BaseInputItem inputItem = inputItems.get(i);
-            final Bundle args = new Bundle();
-            inputItem.onSaveInstanceState(args);
-            _outState.putBundle(KEY_INPUT_ITEM + i, args);
+        final int pagesNumber = pages.size();
+        _outState.putInt(KEY_PAGES_NUMBER, pagesNumber);
+        for (int i = 0; i < pagesNumber; i++) {
+            final InputItemsPage itemsPage = pages.get(i);
+            final Bundle outState = new Bundle();
+            itemsPage.onSaveInstanceState(outState);
+            _outState.putBundle(KEY_PAGE + i, outState);
         }
     }
 
     public boolean isDataValid() {
-        for (final BaseInputItem inputItem : inputItems) {
-            if (!inputItem.isDataValid()) {
+        for (final InputItemsPage itemsPage : pages) {
+            if (!itemsPage.isDataValid()) {
                 return false;
             }
         }
@@ -120,31 +82,12 @@ public class DynamicService {
     }
 
     @NonNull
-    public Map<String, String> getQueryMap() {
-        final Map<String, String> map = new HashMap<>();
-        for (final BaseInputItem inputItem : inputItems) {
-            if (queryArgs.contains(inputItem.getQueryName())) {
-                final String data;
-                if ((data = inputItem.getArgsData()) != null) {
-                    map.put(inputItem.getQueryName(), data);
-                }
-            }
-        }
-        return map;
-    }
-
-    @Nullable
     public JsonObject getJsonData() {
-        JsonObject object = null;
-        for (final BaseInputItem inputItem : inputItems) {
-            if (bodyArgs.contains(inputItem.getQueryName())) {
-                if (object == null) {
-                    object = new JsonObject();
-                }
-                final JsonPrimitive value;
-                if ((value = inputItem.getJsonValue()) != null) {
-                    object.add(inputItem.getQueryName(), value);
-                }
+        final JsonObject object = new JsonObject();
+        for (final InputItemsPage page : pages) {
+            final Map<String, JsonPrimitive> pageValuesMap = page.getValuesMap();
+            for (Map.Entry<String, JsonPrimitive> entry : pageValuesMap.entrySet()) {
+                object.add(entry.getKey(), entry.getValue());
             }
         }
         return object;
@@ -153,21 +96,8 @@ public class DynamicService {
     @NonNull
     public List<Attachment> getAttachments() {
         final List<Attachment> attachments = new ArrayList<>();
-        for (final BaseInputItem inputItem : inputItems) {
-
-            final AttachmentInputItem attachmentItem;
-            if (inputItem.isAttachmentItem() &&
-                    (attachmentItem = (AttachmentInputItem) inputItem).getAttachmentUri() != null) {
-                final boolean isQueryArgument;
-                if (queryArgs.contains(inputItem.getQueryName())) {
-                    isQueryArgument = true;
-                } else if (bodyArgs.contains(inputItem.getQueryName())) {
-                    isQueryArgument = false;
-                } else {
-                    continue;//skip this attachment
-                }
-                attachments.add(new Attachment(attachmentItem, isQueryArgument));
-            }
+        for (final InputItemsPage page : pages) {
+            attachments.addAll(page.getAttachments());
         }
         return attachments;
     }

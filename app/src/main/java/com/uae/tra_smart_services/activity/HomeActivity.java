@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager.OnBackStackChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
@@ -176,20 +177,24 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
     }
 
     @Override
-    public <T> void onServiceSelect(final DynamicServiceInfoResponseModel _service, @Nullable T data) {
-        onServiceSelect(_service, data, true);
-    }
-
-    public <T> void onServiceSelect(final DynamicServiceInfoResponseModel _service, @Nullable T data, final boolean _useBackStack) {
-        replaceFragment(DynamicServiceFragment.newInstance(_service), _useBackStack);
-    }
-
-    @Override
-    public <T> void onServiceSelect(final Service _service, @Nullable T _data) {
+    public void onServiceSelect(final DynamicServiceInfoResponseModel _service, @Nullable Parcelable _data) {
         onServiceSelect(_service, _data, true);
     }
 
-    public <T> void onServiceSelect(final Service _service, @Nullable T _data, final boolean _useBackStack) {
+    public void onServiceSelect(final DynamicServiceInfoResponseModel _service, @Nullable Parcelable _data, final boolean _useBackStack) {
+        if (_service.needAuth) {
+            openFragmentIfAuthorized(DynamicServiceFragment.newInstance(_service), FragmentType.DYNAMIC_SERVICE, _data, _useBackStack);
+        } else {
+            replaceFragment(DynamicServiceFragment.newInstance(_service), _useBackStack);
+        }
+    }
+
+    @Override
+    public void onServiceSelect(final Service _service, @Nullable Parcelable _data) {
+        onServiceSelect(_service, _data, true);
+    }
+
+    public void onServiceSelect(final Service _service, @Nullable Parcelable _data, final boolean _useBackStack) {
         switch (_service) {
             case DOMAIN_CHECK:
                 replaceFragment(DomainCheckerFragment.newInstance(), _useBackStack);
@@ -234,15 +239,24 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
     }
 
     private void openFragmentIfAuthorized(final BaseFragment _fragment, final Enum _service) {
-        openFragmentIfAuthorized(_fragment, _service, true);
+        openFragmentIfAuthorized(_fragment, _service, null, true);
     }
 
     private void openFragmentIfAuthorized(final BaseFragment _fragment, final Enum _service, final boolean _useBackStack) {
+        openFragmentIfAuthorized(_fragment, _service, null, _useBackStack);
+    }
+
+    private void openFragmentIfAuthorized(final BaseFragment _fragment, final Enum _service, final Parcelable _data) {
+        openFragmentIfAuthorized(_fragment, _service, _data, true);
+    }
+
+    private void openFragmentIfAuthorized(final BaseFragment _fragment, final Enum _service, final Parcelable _data, final boolean _useBackStack) {
         if (TRAApplication.isLoggedIn()) {
             replaceFragment(_fragment, _useBackStack);
         } else {
             Intent intent = AuthorizationActivity.getStartForResultIntent(this, _service);
             intent.putExtra(C.USE_BACK_STACK, _useBackStack);
+            intent.putExtra(C.FRAGMENT_DATA, _data);
             startActivityForResult(intent, C.REQUEST_CODE_LOGIN);
         }
     }
@@ -269,26 +283,27 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
         if (_resultCode == C.LOGIN_SUCCESS) {
             final Enum fragmentType = (Enum) _data.getSerializableExtra(C.FRAGMENT_FOR_REPLACING);
             final boolean useBackStack = _data.getBooleanExtra(C.USE_BACK_STACK, true);
+            final Parcelable data = _data.getParcelableExtra(C.FRAGMENT_DATA);
             if (uncheckTabIfNotLogged) {
                 mPreviousCheckedTabId = 0;
                 clearBackStack();
             }
-            openFragmentAfterLogin(fragmentType, useBackStack);
+            openFragmentAfterLogin(fragmentType, data, useBackStack);
         } else if (uncheckTabIfNotLogged) {
             bottomNavRadios.check(mPreviousCheckedTabId);
             mPreviousCheckedTabId = 0;
         }
     }
 
-    private void openFragmentAfterLogin(final Enum _fragmentType, final boolean _useBackStack) {
+    private void openFragmentAfterLogin(final Enum _fragmentType, @Nullable Parcelable _data, final boolean _useBackStack) {
         if (_fragmentType instanceof Service) {
             onServiceSelect((Service) _fragmentType, null, _useBackStack);
         } else if (_fragmentType instanceof FragmentType) {
-            openFragmentAfterLogin((FragmentType) _fragmentType, _useBackStack);
+            openFragmentAfterLogin((FragmentType) _fragmentType, _data, _useBackStack);
         }
     }
 
-    private void openFragmentAfterLogin(final FragmentType _fragmentType, final boolean _useBackStack) {
+    private void openFragmentAfterLogin(final FragmentType _fragmentType, @Nullable Parcelable _data, final boolean _useBackStack) {
         switch (_fragmentType) {
             case REPORT_SMS_SPAM:
                 replaceFragment(ReportSmsSpamFragment.newInstance(), _useBackStack);
@@ -307,6 +322,9 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
                 break;
             case INNOVATIONS:
                 replaceFragment(InnovationsFragment.newInstance(), _useBackStack);
+                break;
+            case DYNAMIC_SERVICE:
+                replaceFragment(DynamicServiceFragment.newInstance((DynamicServiceInfoResponseModel) _data), _useBackStack);
                 break;
         }
     }

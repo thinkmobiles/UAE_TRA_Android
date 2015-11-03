@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.google.gson.JsonPrimitive;
 import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.InputItemType;
 import com.uae.tra_smart_services.entities.dynamic_service.InputItemBuilderFabric.ValidationRule;
+import com.uae.tra_smart_services.interfaces.SaveStateObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  * Created by mobimaks on 22.10.2015.
  */
 @SuppressWarnings("unchecked")
-public abstract class BaseInputItem implements Comparable<BaseInputItem> {
+public abstract class BaseInputItem implements SaveStateObject, Comparable<BaseInputItem> {
 
     //region Save keys
     private static final String KEY_PREFIX = BaseInputItem.class.getSimpleName();
@@ -69,6 +70,7 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
 
     @SuppressWarnings("ResourceType")
     @CallSuper
+    @Override
     public void onRestoreInstanceState(@NonNull final Bundle _savedInstanceState) {
         mId = _savedInstanceState.getString(KEY_ID);
         mQueryName = _savedInstanceState.getString(KEY_QUERY_NAME);
@@ -82,6 +84,7 @@ public abstract class BaseInputItem implements Comparable<BaseInputItem> {
     }
 
     @CallSuper
+    @Override
     public void onSaveInstanceState(@NonNull final Bundle _outState) {
         _outState.putString(KEY_ID, mId);
         _outState.putString(KEY_QUERY_NAME, mQueryName);

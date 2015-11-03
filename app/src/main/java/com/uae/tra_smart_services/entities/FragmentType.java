@@ -10,5 +10,6 @@ public enum FragmentType {
     SPAM_REPORT_HISTORY,
     ENQUIRIES,
     INFO_HUB,
-    INNOVATIONS
+    INNOVATIONS,
+    DYNAMIC_SERVICE
 }

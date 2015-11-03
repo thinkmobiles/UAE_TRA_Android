@@ -32,7 +32,7 @@ public class ServicesRecyclerViewAdapter extends Adapter<ServicesRecyclerViewAda
     private static final int STATIC_SERVICE_TYPE = 0;
     private static final int DYNAMIC_SERVICE_TYPE = 1;
 
-    private static final int FAKE_ITEMS_COUNT = 28;
+    private static final int FAKE_ITEMS_COUNT = 27;
 
     private final LayoutInflater mInflater;
     private final Context mContext;
@@ -139,14 +139,15 @@ public class ServicesRecyclerViewAdapter extends Adapter<ServicesRecyclerViewAda
                     .with(mContext)
                     .load(_service.getIconUrl(mContext))
                     .into(new HexagonViewTarget(hvHexagonView, ScaleType.INSIDE_CROP));
-            textView.setText(_service.id);
+            textView.setText(_service.getServiceName());
             rootView.setTag(_service);
         }
 
         @Override
         public void onClick(View v) {
             if (mServiceSelectListener != null && rootView.getTag() != null) {
-                mServiceSelectListener.onServiceSelect((DynamicServiceInfoResponseModel) rootView.getTag(), null);
+                DynamicServiceInfoResponseModel dynamicServiceInfo = (DynamicServiceInfoResponseModel) rootView.getTag();
+                mServiceSelectListener.onServiceSelect(dynamicServiceInfo, dynamicServiceInfo);
             }
         }
 

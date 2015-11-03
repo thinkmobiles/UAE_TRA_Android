@@ -5,37 +5,40 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.StringRes;
 import android.widget.TextView;
 
-import com.octo.android.robospice.SpiceManager;
-import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.ServiceRatingView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
-import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.ServerConstants;
-import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckResponseModel;
 import com.uae.tra_smart_services.util.ImageUtils;
 
 /**
  * Created by ak-buffalo on 14.08.15.
  */
-public class DomainIsAvailableFragment extends BaseFragment{
+public final class DomainIsAvailableFragment extends BaseFragment{
+
+    private static final String KEY_DOMAIN_AVAILABILITY_MODEL = "DOMAIN_AVAILABILITY_MODEL";
+
+    private DomainAvailabilityCheckResponseModel mAvailabilityCheckResponse;
 
     public static DomainIsAvailableFragment newInstance(DomainAvailabilityCheckResponseModel _model) {
-        Bundle bundle = new Bundle();
-        bundle.putString(C.DOMAIN_INFO, _model.domainStrValue);
-        bundle.putString(C.DOMAIN_STATUS, _model.availableStatus);
-        DomainIsAvailableFragment fragment = new DomainIsAvailableFragment();
-        fragment.setArguments(bundle);
+        final DomainIsAvailableFragment fragment = new DomainIsAvailableFragment();
+        final Bundle args = new Bundle();
+        args.putParcelable(KEY_DOMAIN_AVAILABILITY_MODEL, _model);
+        fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public final void onCreate(final Bundle _savedInstanceState) {
+        super.onCreate(_savedInstanceState);
+        mAvailabilityCheckResponse = getArguments().getParcelable(KEY_DOMAIN_AVAILABILITY_MODEL);
     }
 
     @Override
     protected void initViews() {
         super.initViews();
-        ((TextView) findView(R.id.tvDomainStrValue_FDCH)).setText(getArguments().getString(C.DOMAIN_INFO));
-        TextView statustext = findView(R.id.tvDomainAvail_FDCH);
-        String status = getArguments().getString(C.DOMAIN_STATUS, "");
+        ((TextView) findView(R.id.tvDomainStrValue_FDCH)).setText(mAvailabilityCheckResponse.domainStrValue);
+        String status = mAvailabilityCheckResponse.availableStatus;
         
         @StringRes int availabilityTextRes;
         @ColorRes int availabilityColorRes;
@@ -55,8 +58,9 @@ public class DomainIsAvailableFragment extends BaseFragment{
                 availabilityColorRes = R.color.hex_black_color;
                 break;
         }
-        statustext.setText(getString(availabilityTextRes));
-        statustext.setTextColor(getResources().getColor(availabilityColorRes));
+        final TextView statusTextView = findView(R.id.tvDomainAvail_FDCH);
+        statusTextView.setText(getString(availabilityTextRes));
+        statusTextView.setTextColor(getResources().getColor(availabilityColorRes));
     }
 
     @Override

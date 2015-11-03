@@ -5,9 +5,11 @@ import android.support.annotation.NonNull;
 import com.google.gson.GsonBuilder;
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem;
 import com.uae.tra_smart_services.entities.dynamic_service.DynamicService;
+import com.uae.tra_smart_services.entities.dynamic_service.InputItemsPage;
 import com.uae.tra_smart_services.global.ServerConstants;
 import com.uae.tra_smart_services.rest.gson_deserializer.DynamicServiceDeserializer;
 import com.uae.tra_smart_services.rest.gson_deserializer.InputItemDeserializer;
+import com.uae.tra_smart_services.rest.gson_deserializer.InputItemsPageDeserializer;
 
 /**
  * Created by Mikazme on 13/08/2015.
@@ -24,6 +26,7 @@ public final class TRARestService extends BaseRetrofitSpiceService {
     protected GsonBuilder getGsonBuilder() {
         return super.getGsonBuilder()
                 .registerTypeAdapter(BaseInputItem.class, new InputItemDeserializer())
+                .registerTypeAdapter(InputItemsPage.class, new InputItemsPageDeserializer())
                 .registerTypeAdapter(DynamicService.class, new DynamicServiceDeserializer())
                 ;
     }

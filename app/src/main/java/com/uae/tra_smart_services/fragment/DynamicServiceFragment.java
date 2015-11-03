@@ -23,16 +23,14 @@ import com.uae.tra_smart_services.entities.AttachmentManager;
 import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem;
 import com.uae.tra_smart_services.entities.dynamic_service.DynamicService;
+import com.uae.tra_smart_services.entities.dynamic_service.InputItemsPage;
 import com.uae.tra_smart_services.entities.dynamic_service.input_item.AttachmentInputItem;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
-import com.uae.tra_smart_services.global.C.HttpMethod;
 import com.uae.tra_smart_services.interfaces.OnOpenAttachmentPickerListener;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
 import com.uae.tra_smart_services.rest.model.response.DynamicServiceInfoResponseModel;
-import com.uae.tra_smart_services.rest.robo_requests.BaseDynamicServiceRequest;
-import com.uae.tra_smart_services.rest.robo_requests.DynamicServiceGetRequest;
-import com.uae.tra_smart_services.rest.robo_requests.DynamicServicePostRequest;
+import com.uae.tra_smart_services.rest.robo_requests.DynamicServiceDetailsRequest;
 import com.uae.tra_smart_services.rest.robo_requests.DynamicServiceRequest;
 
 import retrofit.client.Response;
@@ -121,7 +119,7 @@ public final class DynamicServiceFragment extends BaseFragment
     }
 
     private void loadDynamicServiceInfo() {
-        final DynamicServiceRequest request = new DynamicServiceRequest(mServiceInfo.id);
+        final DynamicServiceDetailsRequest request = new DynamicServiceDetailsRequest(mServiceInfo.id);
         getSpiceManager().execute(request, KEY_DYNAMIC_SERVICE_REQUEST,
                 DurationInMillis.ALWAYS_EXPIRED, mServiceRequestListener);
     }
@@ -130,7 +128,7 @@ public final class DynamicServiceFragment extends BaseFragment
         toolbarTitleManager.setTitle(mDynamicService.serviceName);
 
         final LayoutInflater inflater = LayoutInflater.from(getActivity());
-        for (final BaseInputItem inputItem : mDynamicService.inputItems) {
+        for (final BaseInputItem inputItem : mDynamicService.pages.get(0).inputItems) {//TODO: add pagination
             llContainer.addView(inputItem.getView(inflater, llContainer));
             if (inputItem.isAttachmentItem()) {
                 ((AttachmentInputItem) inputItem).setAttachmentCallback(this);
@@ -197,10 +195,13 @@ public final class DynamicServiceFragment extends BaseFragment
 
     private void notifyInputItemDataChanged(@Nullable Uri _imageUri) {
         if (mDynamicService != null) {
-            for (BaseInputItem inputItem : mDynamicService.inputItems) {
-                if (inputItem.getId().equals(mAttachmentCallerId)) {
-                    ((AttachmentInputItem) inputItem).onAttachmentStateChanged(_imageUri);
-                    break;
+            searchAttachmentCaller:
+            for (InputItemsPage page : mDynamicService.pages) {
+                for (BaseInputItem inputItem : page.inputItems) {
+                    if (inputItem.getId().equals(mAttachmentCallerId)) {
+                        ((AttachmentInputItem) inputItem).onAttachmentStateChanged(_imageUri);
+                        break searchAttachmentCaller;
+                    }
                 }
             }
         }
@@ -229,15 +230,7 @@ public final class DynamicServiceFragment extends BaseFragment
     private void validateAndSendData() {
         hideKeyboard(getView());
         if (mDynamicService.isDataValid()) {
-            final BaseDynamicServiceRequest request;
-            if (HttpMethod.GET.equals(mDynamicService.method)) {
-                request = new DynamicServiceGetRequest(getActivity(), mDynamicService.url, mDynamicService.getQueryMap());
-            } else {
-                request = new DynamicServicePostRequest(getActivity(), mDynamicService.url, mDynamicService.getQueryMap());
-                ((DynamicServicePostRequest) request).setJsonBody(mDynamicService.getJsonData());
-            }
-            request.addAttachments(mDynamicService.getAttachments());
-
+            final DynamicServiceRequest request = new DynamicServiceRequest(mDynamicService);
             loaderDialogShow();
             getDynamicSpiceManager().execute(request, KEY_DYNAMIC_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mDynamicRequestListener);
         } else {

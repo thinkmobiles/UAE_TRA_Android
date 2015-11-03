@@ -28,11 +28,11 @@ public class DomainInfoFragment extends BaseFragment implements AlertDialogFragm
     private TextView tvRegContactId_FDI;
     private TextView tvRegContactName_FDI;
 
-    public static DomainInfoFragment newInstance(DomainInfoCheckResponseModel _domainInfo) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(C.DOMAIN_INFO, _domainInfo);
-        DomainInfoFragment fragment = new DomainInfoFragment();
-        fragment.setArguments(bundle);
+    public static DomainInfoFragment newInstance(final DomainInfoCheckResponseModel _domainInfo) {
+        final DomainInfoFragment fragment = new DomainInfoFragment();
+        final Bundle args = new Bundle();
+        args.putParcelable(C.DOMAIN_INFO, _domainInfo);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -71,7 +71,7 @@ public class DomainInfoFragment extends BaseFragment implements AlertDialogFragm
 
     @Override
     public DomainDataParser onCreateLoader(int id, Bundle args) {
-        return new DomainDataParser(getActivity(),  (DomainInfoCheckResponseModel) args.getParcelable(C.DOMAIN_INFO));
+        return new DomainDataParser(getActivity(), (DomainInfoCheckResponseModel) args.getParcelable(C.DOMAIN_INFO));
     }
 
     @Override
@@ -89,7 +89,7 @@ public class DomainInfoFragment extends BaseFragment implements AlertDialogFragm
         loader.reset();
     }
 
-    private static class DomainDataParser extends AsyncTaskLoader<Map<String, String>>{
+    private static class DomainDataParser extends AsyncTaskLoader<Map<String, String>> {
         private DomainInfoCheckResponseModel mModel;
 
         public DomainDataParser(Context _context, DomainInfoCheckResponseModel _model) {
@@ -99,11 +99,11 @@ public class DomainInfoFragment extends BaseFragment implements AlertDialogFragm
 
         @Override
         public Map<String, String> loadInBackground() {
-            return new HashMap<String, String>(){
+            return new HashMap<String, String>() {
                 {
-                    for (String line : mModel.urlData.split("\\r\\n")){
+                    for (String line : mModel.urlData.split("\\r\\n")) {
                         String[] keyvaluePair = line.split(":");
-                        if(keyvaluePair.length == 2){
+                        if (keyvaluePair.length == 2) {
                             put(keyvaluePair[0].trim(), keyvaluePair[1].trim());
                         }
                     }
