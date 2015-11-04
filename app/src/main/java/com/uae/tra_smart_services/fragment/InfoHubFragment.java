@@ -1,8 +1,12 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.MenuItemCompat.OnActionExpandListener;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -12,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,6 +25,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AnnouncementsAdapter;
 import com.uae.tra_smart_services.adapter.TransactionsAdapter;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.InfoHubAnnouncementsFragment.BooleanHolder;
 import com.uae.tra_smart_services.global.C;
@@ -34,11 +40,14 @@ import com.uae.tra_smart_services.rest.robo_requests.GetTransactionsRequest;
 import com.uae.tra_smart_services.util.EndlessScrollListener;
 import com.uae.tra_smart_services.util.EndlessScrollListener.OnLoadMoreListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by ak-buffalo on 19.08.15.
  */
 public final class InfoHubFragment extends BaseFragment
-        implements OnLoadMoreListener, OnQueryTextListener, OnActionExpandListener, View.OnClickListener {
+        implements OnLoadMoreListener, OnQueryTextListener, OnActionExpandListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String KEY_TRANSACTIONS_REQUEST = "TRANSACTIONS_REQUEST";
     private static final int DEFAULT_PAGE_SIZE_TRANSACTIONS = 10;
@@ -63,6 +72,10 @@ public final class InfoHubFragment extends BaseFragment
     private EndlessScrollListener mEndlessScrollListener;
     private boolean mIsTransactionsInLoading;
     private BooleanHolder mIsAnnouncementsInLoading = new BooleanHolder();
+    private LoaderView loaderView;
+    private CoordinatorLayout transactionCoordinator;
+
+    private SwipeRefreshLayout transactionsRefresher;
     private final OperationStateManager mAnnouncementsOperationStateManager = new OperationStateManager() {
         @Override
         public final void showProgress() {
@@ -108,7 +121,6 @@ public final class InfoHubFragment extends BaseFragment
         }
     };
 
-
     public static InfoHubFragment newInstance() {
         return new InfoHubFragment();
     }
@@ -135,6 +147,16 @@ public final class InfoHubFragment extends BaseFragment
         tvSeeMoreAnnouncements = findView(R.id.tvSeeMorebAnn_FIH);
         mAnnouncementsListPreview = findView(R.id.rvInfoHubListPrev_FIH);
         mTransactionsList = findView(R.id.rvTransactionsList_FIH);
+//        transactionsRefresher = findView(R.id.srlTransactionsRefresher_FIH);
+        transactionCoordinator = findView(R.id.clTransactionsRefresher_FIH);
+        transactionCoordinator.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                mTransactionsList.setTranslationY((int) Math.abs(scrollY - oldScrollY));
+            }
+        });
+        loaderView = findView(R.id.lvHexagonLoader_FIH);
+        loaderView.setTag(Color.WHITE);
         initAnnouncementsListPreview();
         initTransactionsList();
     }
@@ -203,11 +225,12 @@ public final class InfoHubFragment extends BaseFragment
         GetAnnouncementsRequest announcementsRequest = new GetAnnouncementsRequest(QueryAdapter.pageToOffset(_page, 3));
         getSpiceManager().execute(announcementsRequest, mAnnouncementsResponseListener);
     }
-
+    GetTransactionsRequest transactionsRequest;
     private void loadTransactionPage(final int _page) {
         mIsTransactionsInLoading = true;
-        GetTransactionsRequest transactionsRequest = new GetTransactionsRequest(_page, DEFAULT_PAGE_SIZE_TRANSACTIONS);
+        transactionsRequest = new GetTransactionsRequest(_page, DEFAULT_PAGE_SIZE_TRANSACTIONS);
         getSpiceManager().execute(transactionsRequest, mTransactionsListener);
+//        new TransactionLoader().execute();
     }
 
     @Override
@@ -273,10 +296,60 @@ public final class InfoHubFragment extends BaseFragment
         }
     }
 
+    @Override
+    public void onRefresh() {
+//        new TransactionLoader().execute();
+        loaderView.startProcessing();
+        loadTransactionPage(mTransactionPageNum = 1);
+    }
+
+    /** STUB!! */
+    private class TransactionLoader extends AsyncTask<Void, Void, GetTransactionResponseModel.List>{
+        private TransactionsResponseListener listener;
+        TransactionLoader(){
+            listener = new TransactionsResponseListener();
+        }
+
+        @Override
+        protected GetTransactionResponseModel.List doInBackground(Void... params) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            GetTransactionResponseModel.List list = new GetTransactionResponseModel.List();
+            GetTransactionResponseModel[] models = new GetTransactionResponseModel[10];
+            for (int i = 0; i < 10; i++){
+                models[i] = new GetTransactionResponseModel();
+                models[i].title = "title" + i;
+                models[i].description = "description description description description" + i;
+            }
+
+            list.addAll(Arrays.asList(models));
+
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(GetTransactionResponseModel.List getTransactionResponseModels) {
+            /*if(transactionsRefresher.isRefreshing()){
+                transactionsRefresher.setRefreshing(false);
+            }*/
+            if(getTransactionResponseModels != null){
+                listener.onRequestSuccess(getTransactionResponseModels);
+            } else {
+                listener.onRequestFailure(new SpiceException("Something went wrong..."));
+            }
+            mTransactionsList.scrollToPosition(0);
+            loaderView.startFilling(LoaderView.State.SUCCESS);
+        }
+    }
+
     private final class TransactionsResponseListener implements RequestListener<GetTransactionResponseModel.List> {
 
         @Override
         public final void onRequestSuccess(GetTransactionResponseModel.List result) {
+//            transactionsRefresher.setRefreshing(false);
             mIsTransactionsInLoading = false;
             if (isAdded() && result != null) {
                 mIsAllTransactionDownloaded = result.isEmpty();
@@ -289,6 +362,8 @@ public final class InfoHubFragment extends BaseFragment
             } else {
                 mTransactionPageNum--;
             }
+
+            loaderView.startFilling(LoaderView.State.SUCCESS);
         }
 
         private void handleNoResult() {

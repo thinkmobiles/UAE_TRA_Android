@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ImageView
@@ -97,6 +98,25 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
+            <com.uae.tra_smart_services.customviews.LoaderView
+                android:id="@+id/lvHexagonLoader_FIH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:hexagonSideSize="50dp"
+                app:hexagonBorderColor="#afafaf"
+                app:hexagonProcessBorderColor="#ff8400"
+                app:hexagonSuccessBorderColor="?attr/serviceInfoBackground"
+                app:hexagonBorderSize="3dp"
+                app:hexagonProcessBorderSize="3dp"
+                app:hexagonSuccessBorderSize="5dp"
+                app:hexagonSrc="@mipmap/ic_logo_2x"
+                app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
+                app:hexagonLoaderPeriod="2000"
+                app:hexagonFillingPeriod="600"
+                app:hexagonStatusPeriod="400"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
             <TextView
                 android:id="@+id/tvNoPendingTransactions_FIH"
                 android:layout_width="match_parent"
@@ -109,21 +129,30 @@
                 android:gravity="center"
                 android:layout_height="match_parent"/>
 
-            <android.support.v7.widget.RecyclerView
-                tools:listitem="@layout/list_item_info_hub"
-                android:id="@+id/rvTransactionsList_FIH"
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/clTransactionsRefresher_FIH"
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
-                android:layout_below="@+id/tvTransText_FIH"/>
+                android:layout_below="@id/lvHexagonLoader_FIH">
+
+                <android.support.v7.widget.RecyclerView
+                    tools:listitem="@layout/list_item_info_hub"
+                    android:id="@+id/rvTransactionsList_FIH"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"/>
+            </android.support.design.widget.CoordinatorLayout>
 
             <ProgressBar
                 android:id="@+id/pbLoadingTransactions_FIH"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_below="@id/tvTransText_FIH"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
                 android:layout_centerInParent="true"
-                android:visibility="visible"/>
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
         </RelativeLayout>
     </LinearLayout>
 </FrameLayout>
