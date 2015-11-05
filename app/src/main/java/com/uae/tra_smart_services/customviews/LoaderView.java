@@ -71,7 +71,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     private ObjectAnimator animatorEnd;
     private ObjectAnimator animatorFilling;
     private ObjectAnimator animatorSuccessOrFailed;
-    private float mSuccessOrFailedAnimationLength, mSuccessAnimationLength, mFailedAnimationLength;
+    private float mSuccessAnimationLength, mFailedAnimationLength;
     private float mProcessAnimationLength;
     private int mLoadingAnimPeriod, mFillingAnimPeriod, mStatusAnimPeriod;
 
@@ -171,9 +171,10 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
         animatorFilling.setDuration(mFillingAnimPeriod);
         animatorFilling.setInterpolator(new DecelerateInterpolator());
         animatorFilling.addListener(this);
+
         animatorSuccessOrFailed = ObjectAnimator.ofFloat(LoaderView.this, "phaseSuccessOrFailure", 1.0f, 0.0f);
-        animatorSuccessOrFailed.addListener(this);
         animatorSuccessOrFailed.setDuration(mStatusAnimPeriod);
+        animatorSuccessOrFailed.addListener(this);
     }
 
     @Override
@@ -230,6 +231,12 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
         dismissedIconPath.lineTo(mFailureFigureOffsetX, mFailureFigureOffsetY + mFailureFigureWH);
     }
 
+    @Override
+    public void onGlobalLayout() {
+        initPaths();
+        getViewTreeObserver().removeGlobalOnLayoutListener(this);
+    }
+
     private void tintDrawableIfNeed() {
         if (mSrcDrawable != null && mSrcTintColor != Color.TRANSPARENT) {
             Drawable wrappedDrawable = DrawableCompat.wrap(mSrcDrawable);
@@ -246,12 +253,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
         mAnimationState = State.INITIALL;
         mEndProcessPaint.setColor(_color);
         mSuccessOrFailPaint.setColor(_color);
-    }
-
-    @Override
-    public void onGlobalLayout() {
-        initPaths();
-        getViewTreeObserver().removeGlobalOnLayoutListener(this);
     }
 
     public void startProcessing(){
