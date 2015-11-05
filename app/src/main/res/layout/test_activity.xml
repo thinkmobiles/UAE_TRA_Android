@@ -29,6 +29,17 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:id="@+id/tvNoPendingTransactions_FIH"
+        android:layout_width="match_parent"
+        android:text="@string/fragment_info_hub_no_pending_transactions"
+        android:visibility="gone"
+        android:textSize="18sp"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:layout_height="match_parent"/>
+
     <ListView
         android:id="@+id/listview"
         tools:listitem="asdfg"

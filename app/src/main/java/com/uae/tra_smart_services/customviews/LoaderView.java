@@ -29,8 +29,6 @@ import com.uae.tra_smart_services.R;
 
 public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutListener, Animator.AnimatorListener {
 
-    private Callbacks mCallbacks;
-
     public enum State{
         INITIALL(0), PROCESSING(1), FILLING(2), SUCCESS(3), CANCELLED(4), FAILURE(5);
 
@@ -270,6 +268,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     }
 
     public void stopProcessing(){
+        mAnimationState = State.INITIALL;
         animatorStart.end();
         animatorEnd.end();
     }
@@ -326,9 +325,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
     @Override
     public void onAnimationStart(Animator animation) {
-        if (animatorStart == animation && mAnimationState == State.PROCESSING && mCallbacks != null) {
-            mCallbacks.onLoadingStarted();
-        }
+
     }
 
     @Override
@@ -343,10 +340,8 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
                     startDrawFailureFigure();
                     break;
             }
-        } else if (animatorEnd == animation && mAnimationState == State.PROCESSING && mCallbacks != null) {
-            mCallbacks.onLoadingFinished(mCurrentState);
-        }
-        if(animation == animatorStart || animation == animatorEnd){
+        } else if(mAnimationState != State.FILLING && (animation == animatorStart || animation == animatorEnd)){
+            mAnimationState = State.INITIALL;
             animation.setupStartValues();
         }
     }
@@ -424,15 +419,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
             _drawable.draw(_canvas);
             _canvas.restore();
         }
-    }
-
-    public interface Callbacks {
-        void onLoadingStarted();
-        void onLoadingFinished(State _state);
-    }
-
-    public void registerCallbacks(Callbacks _callbacks){
-        mCallbacks = _callbacks;
     }
 }
 
