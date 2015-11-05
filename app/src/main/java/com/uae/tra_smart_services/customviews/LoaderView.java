@@ -15,7 +15,9 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
@@ -25,7 +27,7 @@ import com.uae.tra_smart_services.R;
  * Created by ak-buffalo on 21.09.15.
  */
 
-public class LoaderView extends View {
+public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutListener, Animator.AnimatorListener {
 
     private Callbacks mCallbacks;
 
@@ -69,7 +71,7 @@ public class LoaderView extends View {
     private ObjectAnimator animatorEnd;
     private ObjectAnimator animatorFilling;
     private ObjectAnimator animatorSuccessOrFailed;
-    private float mSuccessOrFailedAnimationLength;
+    private float mSuccessOrFailedAnimationLength, mSuccessAnimationLength, mFailedAnimationLength;
     private float mProcessAnimationLength;
     private int mLoadingAnimPeriod, mFillingAnimPeriod, mStatusAnimPeriod;
 
@@ -80,7 +82,7 @@ public class LoaderView extends View {
     public LoaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
+        getViewTreeObserver().addOnGlobalLayoutListener(this);
         mHexagonPath = new Path();
         successIconPath = new Path();
         dismissedIconPath = new Path();
@@ -144,108 +146,33 @@ public class LoaderView extends View {
         mSuccessOrFailPaint.setStyle(Paint.Style.STROKE);
     }
 
+    private void initPaths(){
+        mProcessAnimationLength = new PathMeasure(mHexagonPath, false).getLength();
+        mSuccessAnimationLength = new PathMeasure(successIconPath, false).getLength();
+        mFailedAnimationLength = new PathMeasure(dismissedIconPath, false).getLength();
+    }
+
     private void initAnimators(){
         animatorStart = ObjectAnimator.ofFloat(LoaderView.this, "phaseStart", 1.0f, 0.0f);
-        animatorStart.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                if (mCallbacks != null) {
-                    mCallbacks.onLoadingStarted();
-                }
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
         animatorStart.setDuration(mLoadingAnimPeriod);
         animatorStart.setInterpolator(new DecelerateInterpolator(1.3f));
         animatorStart.setRepeatCount(ObjectAnimator.INFINITE);
         animatorStart.setRepeatMode(ObjectAnimator.RESTART);
+        animatorStart.addListener(this);
 
         animatorEnd = ObjectAnimator.ofFloat(LoaderView.this, "phaseEnd", 1.0f, 0.0f);
         animatorEnd.setDuration(mLoadingAnimPeriod);
         animatorEnd.setInterpolator(new AccelerateInterpolator(0.7f));
         animatorEnd.setRepeatCount(ObjectAnimator.INFINITE);
         animatorEnd.setRepeatMode(ObjectAnimator.RESTART);
-        animatorEnd.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                animatorFilling.start();
-            }
-
-            @Override
-            public void onAnimationStart(Animator animation) {/* Is not implemented */}
-
-            @Override
-            public void onAnimationEnd(Animator animation) {/* Is not implemented */}
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {/* Is not implemented */}
-        });
+        animatorEnd.addListener(this);
 
         animatorFilling = ObjectAnimator.ofFloat(LoaderView.this, "phaseFilling", 0.0f, 255.0f);
         animatorFilling.setDuration(mFillingAnimPeriod);
         animatorFilling.setInterpolator(new DecelerateInterpolator());
-        animatorFilling.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                switch (mCurrentState) {
-                    case SUCCESS:
-                        startDrawSuccessFigure();
-                        break;
-                    case CANCELLED:
-                    case FAILURE:
-                        startDrawFailureFigure();
-                        break;
-                }
-            }
-
-            @Override
-            public void onAnimationStart(Animator animation) {/* Is not implemented */}
-
-            @Override
-            public void onAnimationCancel(Animator animation) {/* Is not implemented */}
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {/* Is not implemented */}
-        });
-
+        animatorFilling.addListener(this);
         animatorSuccessOrFailed = ObjectAnimator.ofFloat(LoaderView.this, "phaseSuccessOrFailure", 1.0f, 0.0f);
-        animatorSuccessOrFailed.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                if (mCallbacks != null) {
-                    mCallbacks.onLoadingFinished(mCurrentState);
-                }
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
+        animatorSuccessOrFailed.addListener(this);
         animatorSuccessOrFailed.setDuration(mStatusAnimPeriod);
     }
 
@@ -315,25 +242,20 @@ public class LoaderView extends View {
         return mCurrentState;
     }
 
-    int color;
     public void init(int _color){
         mAnimationState = State.INITIALL;
-        color = _color;
         mEndProcessPaint.setColor(_color);
         mSuccessOrFailPaint.setColor(_color);
-        PathMeasure measure = new PathMeasure(mHexagonPath, false);
-        mProcessAnimationLength = measure.getLength();
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        initPaths();
+        getViewTreeObserver().removeGlobalOnLayoutListener(this);
     }
 
     public void startProcessing(){
         mAnimationState = State.PROCESSING;
-
-        mEndProcessPaint.setColor(color);
-        mSuccessOrFailPaint.setColor(color);
-
-        PathMeasure measure = new PathMeasure(mHexagonPath, false);
-        mProcessAnimationLength = measure.getLength();
-
         animatorStart.start();
         animatorEnd.start();
     }
@@ -347,17 +269,11 @@ public class LoaderView extends View {
 
     private void startDrawSuccessFigure() {
         mAnimationState = State.SUCCESS;
-
-        PathMeasure measure = new PathMeasure(successIconPath, false);
-        mSuccessOrFailedAnimationLength = measure.getLength();
         animatorSuccessOrFailed.start();
     }
 
     private void startDrawFailureFigure() {
         mAnimationState = State.FAILURE;
-
-        PathMeasure measure = new PathMeasure(dismissedIconPath, false);
-        mSuccessOrFailedAnimationLength = measure.getLength();
         animatorSuccessOrFailed.start();
     }
 
@@ -381,7 +297,9 @@ public class LoaderView extends View {
 
     /** It will be called by animator to draw failure figure on filled hexagon area*/
     public void setPhaseSuccessOrFailure(float _phaseSuccessOrFailure){
-        mSuccessOrFailPaint.setPathEffect(createPathEffect(mSuccessOrFailedAnimationLength, _phaseSuccessOrFailure, 0.0f));
+        mSuccessOrFailPaint.setPathEffect(createPathEffect(
+                mCurrentState == State.SUCCESS ? mSuccessAnimationLength : mFailedAnimationLength,
+                _phaseSuccessOrFailure, 0.0f));
         invalidate();
     }
 
@@ -391,6 +309,40 @@ public class LoaderView extends View {
                 Math.max(_phase * _pathLength, _offset)
             );
     }
+
+    @Override
+    public void onAnimationStart(Animator animation) {
+        if (animatorStart == animation && mAnimationState == State.PROCESSING && mCallbacks != null) {
+            mCallbacks.onLoadingStarted();
+        }
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animation) {
+        if (animatorFilling == animation && mAnimationState == State.FILLING) {
+            switch (mCurrentState) {
+                case SUCCESS:
+                    startDrawSuccessFigure();
+                    break;
+                case CANCELLED:
+                case FAILURE:
+                    startDrawFailureFigure();
+                    break;
+            }
+        } else if (animatorEnd == animation && mAnimationState == State.PROCESSING && mCallbacks != null) {
+            mCallbacks.onLoadingFinished(mCurrentState);
+        }
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation) {
+        if (animatorEnd == animation && mAnimationState == State.FILLING) {
+            animatorFilling.start();
+        }
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animation) { /* Unimplemented method*/ }
 
     @Override
     public void onDraw(Canvas _canvas) {
