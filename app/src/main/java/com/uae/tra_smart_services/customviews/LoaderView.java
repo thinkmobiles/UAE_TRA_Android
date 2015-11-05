@@ -177,6 +177,12 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
         animatorSuccessOrFailed.addListener(this);
     }
 
+    public void init(int _color){
+        mAnimationState = State.INITIALL;
+        mEndProcessPaint.setColor(_color);
+        mSuccessOrFailPaint.setColor(_color);
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -249,16 +255,23 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
         return mCurrentState;
     }
 
-    public void init(int _color){
-        mAnimationState = State.INITIALL;
-        mEndProcessPaint.setColor(_color);
-        mSuccessOrFailPaint.setColor(_color);
+    public void setProgress(float progress){
+        if(progress > 1.0f){
+            return;
+        }
+        setAlpha(progress);
+        setPhaseStart(1 - progress);
     }
 
     public void startProcessing(){
         mAnimationState = State.PROCESSING;
         animatorStart.start();
         animatorEnd.start();
+    }
+
+    public void stopProcessing(){
+        animatorStart.end();
+        animatorEnd.end();
     }
 
     public void startFilling(final State _currentState){
@@ -332,6 +345,9 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
             }
         } else if (animatorEnd == animation && mAnimationState == State.PROCESSING && mCallbacks != null) {
             mCallbacks.onLoadingFinished(mCurrentState);
+        }
+        if(animation == animatorStart || animation == animatorEnd){
+            animation.setupStartValues();
         }
     }
 
