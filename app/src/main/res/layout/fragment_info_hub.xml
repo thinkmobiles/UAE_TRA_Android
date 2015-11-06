@@ -69,7 +69,6 @@
 
             <com.uae.tra_smart_services.customviews.LoaderView
                 android:id="@+id/pbLoadingAnnoncements_FIH"
-                android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:alpha="0"

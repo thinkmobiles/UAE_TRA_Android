@@ -54,8 +54,9 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
 
     private LayoutParams setTop(boolean _bool){
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT, !_bool ? RelativeLayout.TRUE : 0);
-        params.addRule(RelativeLayout.ALIGN_PARENT_TOP, !_bool ? RelativeLayout.TRUE : 0);
+        params.addRule(RelativeLayout.CENTER_VERTICAL, !_bool ? RelativeLayout.TRUE : 0);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        params.setMargins(0, 15, 0, 5);
         return params;
     }
 
