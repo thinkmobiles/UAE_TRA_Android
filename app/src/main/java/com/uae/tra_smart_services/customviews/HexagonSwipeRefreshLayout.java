@@ -4,11 +4,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
     private int mVerticalRange;
     private boolean mIsOpen;
     private LoaderView loaderView;
-    private ListView listview;
+    private RecyclerView listview;
     private TextView noPendingTransactions;
 
     public HexagonSwipeRefreshLayout(Context context, AttributeSet attrs) {
@@ -43,7 +44,7 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
     @Override
     public void onLoadingStart() {
         noPendingTransactions.setVisibility(GONE);
-        if(listview.getCount() == 0){
+        if(listview.getAdapter().getItemCount() == 0){
             loaderView.setTop(200);
             listview.setVisibility(GONE);
         }
@@ -57,9 +58,10 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
         loaderView.setAlpha(0);
         mDraggingState = ViewDragHelper.STATE_IDLE;
         mDragHelper.smoothSlideViewTo(listview, 0, 0);
-        if(!_isSucceed && listview.getCount() == 0) {
+        if(!_isSucceed && listview.getAdapter().getItemCount() == 0) {
             listview.setVisibility(INVISIBLE);
             loaderView.setTop((getHeight() - loaderView.getHeight()) / 2);
+            noPendingTransactions.setVisibility(VISIBLE);
         } else {
             listview.setVisibility(VISIBLE);
             noPendingTransactions.setVisibility(INVISIBLE);
@@ -94,7 +96,7 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
 
         @Override
         public boolean tryCaptureView(View view, int i) {
-            return (view.getId() == R.id.listview);
+            return (view.getId() == R.id.rvTransactionsList_FIH);
         }
 
         @Override
@@ -131,7 +133,7 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
     protected void onFinishInflate() {
         loaderView = (LoaderView) findViewById(R.id.loaderView);
         loaderView.init(Color.WHITE);
-        listview = (ListView) findViewById(R.id.listview);
+        listview = (RecyclerView) findViewById(R.id.rvTransactionsList_FIH);
         listview.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -143,14 +145,14 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
                 }
             }
         });
-        noPendingTransactions = (TextView) findViewById(R.id.tvNoPendingTransactions_FIH);
+        noPendingTransactions = (TextView) findViewById(R.id.tvNoTransactions_FIH);
         mDragHelper = ViewDragHelper.create(this, 1.0f, new DragHelperCallback());
         mIsOpen = false;
         super.onFinishInflate();
     }
 
     private boolean canMoveList() {
-        return (listview.getFirstVisiblePosition() == 0 || listview.getCount() == 0)
+        return (((LinearLayoutManager)listview.getLayoutManager()).findFirstVisibleItemPosition() == 0 || listview.getAdapter().getItemCount() == 0)
                 && mDraggingState != ViewDragHelper.STATE_SETTLING
                 && listview.getVisibility() == VISIBLE;
     }

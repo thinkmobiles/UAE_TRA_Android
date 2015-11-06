@@ -117,41 +117,55 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
-            <TextView
-                android:id="@+id/tvNoPendingTransactions_FIH"
-                android:layout_width="match_parent"
-                android:text="@string/fragment_info_hub_no_pending_transactions"
-                android:visibility="gone"
-                android:textSize="18sp"
-                android:layout_below="@+id/tvTransText_FIH"
-                android:layout_centerInParent="true"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:layout_height="match_parent"/>
-
-            <android.support.design.widget.CoordinatorLayout
-                android:id="@+id/clTransactionsRefresher_FIH"
+            <com.uae.tra_smart_services.customviews.HexagonSwipeRefreshLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/lvHexagonLoader_FIH">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@android:color/white"
+                android:id="@+id/hsrlTransactionRefresher">
+
+                <com.uae.tra_smart_services.customviews.LoaderView
+                    android:id="@+id/loaderView"
+                    android:alpha="0"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:hexagonSideSize="40dp"
+                    app:hexagonBorderColor="#afafaf"
+                    app:hexagonProcessBorderColor="?attr/serviceInfoBackground"
+                    app:hexagonSuccessBorderColor="@android:color/white"
+                    app:hexagonBorderSize="3dp"
+                    app:hexagonProcessBorderSize="3dp"
+                    app:hexagonSuccessBorderSize="5dp"
+                    app:hexagonSrc="@mipmap/ic_logo_2x"
+                    app:hexagonSrcTintColor="?attr/serviceInfoBackground"
+                    app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
+                    app:hexagonLoaderPeriod="2000"
+                    app:hexagonFillingPeriod="450"
+                    app:hexagonStatusPeriod="300"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:id="@+id/tvNoTransactions_FIH"
+                    android:layout_width="match_parent"
+                    android:text="@string/fragment_info_hub_no_pending_transactions"
+                    android:visibility="gone"
+                    android:textSize="18sp"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:layout_height="match_parent"/>
 
                 <android.support.v7.widget.RecyclerView
-                    tools:listitem="@layout/list_item_info_hub"
                     android:id="@+id/rvTransactionsList_FIH"
+                    tools:listitem="@layout/list_item_info_hub"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone"/>
-            </android.support.design.widget.CoordinatorLayout>
-
-            <ProgressBar
-                android:id="@+id/pbLoadingTransactions_FIH"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+            </com.uae.tra_smart_services.customviews.HexagonSwipeRefreshLayout>
 
         </RelativeLayout>
     </LinearLayout>
