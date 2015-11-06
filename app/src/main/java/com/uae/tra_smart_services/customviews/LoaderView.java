@@ -261,6 +261,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     }
 
     public void startProcessing(){
+        setAlpha(1);
         mAnimationState = State.PROCESSING;
         animatorStart.start();
         animatorEnd.start();

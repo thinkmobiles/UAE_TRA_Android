@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -54,7 +56,7 @@ public final class InfoHubFragment extends BaseFragment
     private boolean mIsSearching;
     private boolean mIsAllTransactionDownloaded, mIsAllAnnouncementsDownloaded;
 
-    private ProgressBar pbLoadingTransactions, pbLoadingAnnouncements;
+    private LoaderView pbLoadingTransactions, pbLoadingAnnouncements;
     private TextView tvSeeMoreAnnouncements;
     private RecyclerView mAnnouncementsListPreview;
     private RecyclerView mTransactionsList;
@@ -80,15 +82,18 @@ public final class InfoHubFragment extends BaseFragment
     }
 
     private final OperationStateManager mAnnouncementsOperationStateManager = new OperationStateManager() {
+
         @Override
         public final void showProgress() {
             pbLoadingAnnouncements.setVisibility(View.VISIBLE);
+            pbLoadingAnnouncements.startProcessing();
             mAnnouncementsListPreview.setVisibility(View.INVISIBLE);
             tvNoAnnouncements.setVisibility(View.INVISIBLE);
         }
 
         @Override
         public final void showData() {
+            pbLoadingAnnouncements.stopProcessing();
             pbLoadingAnnouncements.setVisibility(View.INVISIBLE);
             mAnnouncementsListPreview.setVisibility(View.VISIBLE);
             tvNoAnnouncements.setVisibility(View.INVISIBLE);
@@ -96,6 +101,7 @@ public final class InfoHubFragment extends BaseFragment
 
         @Override
         public final void showEmptyView() {
+            pbLoadingAnnouncements.stopProcessing();
             pbLoadingAnnouncements.setVisibility(View.INVISIBLE);
             mAnnouncementsListPreview.setVisibility(View.INVISIBLE);
             tvNoAnnouncements.setVisibility(View.VISIBLE);
@@ -103,6 +109,7 @@ public final class InfoHubFragment extends BaseFragment
     };
 
     private final OperationStateManager mTransactionsOperationStateManager = new OperationStateManager() {
+
         @Override
         public final void showProgress() {
             pbLoadingTransactions.setVisibility(View.VISIBLE);
@@ -141,7 +148,7 @@ public final class InfoHubFragment extends BaseFragment
     protected final void initViews() {
         super.initViews();
         pbLoadingAnnouncements = findView(R.id.pbLoadingAnnoncements_FIH);
-//        pbLoadingTransactions = findView(R.id.pbLoadingTransactions_FIH);
+        pbLoadingAnnouncements.init(Color.WHITE);
         tvNoAnnouncements = findView(R.id.tvNoAnnouncements_FIH);
         tvNoTransactions = findView(R.id.tvNoTransactions_FIH);
         tvSeeMoreAnnouncements = findView(R.id.tvSeeMorebAnn_FIH);
@@ -212,6 +219,7 @@ public final class InfoHubFragment extends BaseFragment
 
     private void startFirstLoad() {
         mHexagonSwipeRefreshLayout.onLoadingStart();
+        mAnnouncementsOperationStateManager.showProgress();
         loadTransactionPage(mTransactionPageNum = 1);
         loadAnnouncementsPage(1);
     }

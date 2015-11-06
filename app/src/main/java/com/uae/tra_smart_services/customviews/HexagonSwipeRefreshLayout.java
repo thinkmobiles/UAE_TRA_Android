@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,11 +46,17 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
     public void onLoadingStart() {
         noPendingTransactions.setVisibility(GONE);
         if(listview.getAdapter().getItemCount() == 0){
-            loaderView.setTop(200);
+            loaderView.setLayoutParams(setTop(false));
             listview.setVisibility(GONE);
         }
-        loaderView.setAlpha(1);
         loaderView.startProcessing();
+    }
+
+    private LayoutParams setTop(boolean _bool){
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT, !_bool ? RelativeLayout.TRUE : 0);
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP, !_bool ? RelativeLayout.TRUE : 0);
+        return params;
     }
 
     @Override
@@ -60,12 +67,12 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
         mDragHelper.smoothSlideViewTo(listview, 0, 0);
         if(!_isSucceed && listview.getAdapter().getItemCount() == 0) {
             listview.setVisibility(INVISIBLE);
-            loaderView.setTop((getHeight() - loaderView.getHeight()) / 2);
+            loaderView.setLayoutParams(setTop(false));
             noPendingTransactions.setVisibility(VISIBLE);
         } else {
             listview.setVisibility(VISIBLE);
+            loaderView.setLayoutParams(setTop(true));
             noPendingTransactions.setVisibility(INVISIBLE);
-            loaderView.setTop(0);
         }
     }
 

@@ -67,14 +67,28 @@
                 android:visibility="invisible"
                 android:scrollbars="horizontal"/>
 
-            <ProgressBar
+            <com.uae.tra_smart_services.customviews.LoaderView
                 android:id="@+id/pbLoadingAnnoncements_FIH"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:alpha="0"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:hexagonSideSize="40dp"
+                app:hexagonBorderColor="#afafaf"
+                app:hexagonProcessBorderColor="?attr/serviceInfoBackground"
+                app:hexagonSuccessBorderColor="@android:color/white"
+                app:hexagonBorderSize="3dp"
+                app:hexagonProcessBorderSize="3dp"
+                app:hexagonSuccessBorderSize="5dp"
+                app:hexagonSrc="@mipmap/ic_logo_2x"
+                app:hexagonSrcTintColor="?attr/serviceInfoBackground"
+                app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
+                app:hexagonLoaderPeriod="2000"
+                app:hexagonFillingPeriod="450"
+                app:hexagonStatusPeriod="300"/>
         </RelativeLayout>
 
         <View
@@ -128,6 +142,8 @@
 
                 <com.uae.tra_smart_services.customviews.LoaderView
                     android:id="@+id/loaderView"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
                     android:alpha="0"
                     android:layout_margin="10dp"
                     android:layout_width="wrap_content"
@@ -144,9 +160,7 @@
                     app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
                     app:hexagonLoaderPeriod="2000"
                     app:hexagonFillingPeriod="450"
-                    app:hexagonStatusPeriod="300"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" />
+                    app:hexagonStatusPeriod="300"/>
 
                 <TextView
                     android:id="@+id/tvNoTransactions_FIH"
