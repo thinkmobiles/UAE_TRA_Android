@@ -6,7 +6,5 @@ package com.uae.tra_smart_services.interfaces;
 
 public interface OuterLayoutState {
     void onLoadingStart();
-    void onRefreshStart();
-    void onRefreshSucceed();
     void onLoadingFinished(boolean _isSucceed);
 }

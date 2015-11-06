@@ -61,6 +61,8 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
     @Override
     public void onLoadingFinished(boolean _isSucceed) {
         loaderView.stopProcessing();
+        loaderView.setAlpha(0);
+        mDraggingState = ViewDragHelper.STATE_IDLE;
         mDragHelper.smoothSlideViewTo(listview, 0, 0);
         if(_isSucceed){
             listview.setVisibility(VISIBLE);
@@ -69,17 +71,6 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
             listview.setVisibility(INVISIBLE);
             loaderView.setTop((getHeight() - loaderView.getHeight()) / 2);
         }
-        loaderView.setAlpha(0);
-    }
-
-    @Override
-    public void onRefreshStart() {
-
-    }
-
-    @Override
-    public void onRefreshSucceed() {
-
     }
 
     private OuterLayout.Listener listener;
@@ -90,20 +81,8 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
     public class DragHelperCallback extends ViewDragHelper.Callback {
         @Override
         public void onViewDragStateChanged(int state) {
-            if (state == mDraggingState) { // no change
+            if (state == mDraggingState || isOpen()) {
                 return;
-            }
-            if ((mDraggingState == ViewDragHelper.STATE_DRAGGING || mDraggingState == ViewDragHelper.STATE_SETTLING) && state == ViewDragHelper.STATE_IDLE) {
-                // the view stopped from moving.
-
-                if (mDraggingBorder == 0) {
-//                    onStopDraggingToClosed();
-                } else if (mDraggingBorder == mVerticalRange) {
-                    mIsOpen = true;
-                }
-            }
-            if (state == ViewDragHelper.STATE_DRAGGING) {
-//                onStartDragging();
             }
             mDraggingState = state;
         }
@@ -140,9 +119,8 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
             }
             if (mDraggingBorder == rangeToCheck) {
                 mIsOpen = true;
-                onLoadingStart();
+                mDraggingState = ViewDragHelper.STATE_SETTLING;
                 listener.onRefresh();
-
                 return;
             }
             scrollToTop();
@@ -154,7 +132,6 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
             }
         }
     }
-
 
     @Override
     protected void onFinishInflate() {
@@ -178,19 +155,8 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
         super.onFinishInflate();
     }
 
-    /*private void onStartDragging() {
-        Log.e("TAG", "onStartDragging()");
-//        loaderView.startProcessing();
-    }
-
-    private void onStopDraggingToClosed() {
-        Log.e("TAG", "onStopDraggingToClosed()");
-//        loaderView.startFilling(LoaderView.State.SUCCESS);
-    }
-    */
-
     private boolean canMoveList(MotionEvent event) {
-        return listview.getFirstVisiblePosition() == 0 || listview.getCount() == 0;
+        return (listview.getFirstVisiblePosition() == 0 || listview.getCount() == 0) && mDraggingState != ViewDragHelper.STATE_SETTLING;
     }
 
     @Override
@@ -227,7 +193,6 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
     public boolean isOpen() {
         return mIsOpen;
     }
-
 
     public interface Listener {
         void onRefresh();
