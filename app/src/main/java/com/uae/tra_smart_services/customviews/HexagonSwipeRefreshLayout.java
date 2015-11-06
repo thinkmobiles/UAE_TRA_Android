@@ -2,33 +2,25 @@ package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.activity.TestAcivity;
 import com.uae.tra_smart_services.interfaces.OuterLayoutState;
 
 /**
- * Created by and on 03.11.15.
+ * Created by ak-buffalo on 03.11.15.
  */
+public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTreeObserver.OnGlobalLayoutListener, OuterLayoutState {
 
-public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGlobalLayoutListener, OuterLayoutState {
-
-    private final double AUTO_OPEN_SPEED_LIMIT = 800.0;
     private int mDraggingState = 0;
-    private Button mQueenButton;
     private ViewDragHelper mDragHelper;
     private int mDraggingBorder;
     private int mVerticalRange;
@@ -37,7 +29,7 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
     private ListView listview;
     private TextView noPendingTransactions;
 
-    public OuterLayout(Context context, AttributeSet attrs) {
+    public HexagonSwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         getViewTreeObserver().addOnGlobalLayoutListener(this);
         mIsOpen = false;
@@ -75,7 +67,7 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
         }
     }
 
-    private OuterLayout.Listener listener;
+    private HexagonSwipeRefreshLayout.Listener listener;
     public void registerListener(Listener _listener){
         listener = _listener;
     }
@@ -130,7 +122,7 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
 
         private void scrollToTop() {
             if(mDragHelper.settleCapturedViewAt(0, 0)) {
-                ViewCompat.postInvalidateOnAnimation(OuterLayout.this);
+                ViewCompat.postInvalidateOnAnimation(HexagonSwipeRefreshLayout.this);
             }
         }
     }
@@ -157,7 +149,7 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
         super.onFinishInflate();
     }
 
-    private boolean canMoveList(MotionEvent event) {
+    private boolean canMoveList() {
         return (listview.getFirstVisiblePosition() == 0 || listview.getCount() == 0)
                 && mDraggingState != ViewDragHelper.STATE_SETTLING
                 && listview.getVisibility() == VISIBLE;
@@ -165,7 +157,7 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        if (canMoveList(event) && mDragHelper.shouldInterceptTouchEvent(event)) {
+        if (canMoveList() && mDragHelper.shouldInterceptTouchEvent(event)) {
             return true;
         } else {
             return false;
@@ -174,7 +166,7 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (canMoveList(event) || isMoving()) {
+        if (canMoveList() || isMoving()) {
             mDragHelper.processTouchEvent(event);
             return true;
         } else {

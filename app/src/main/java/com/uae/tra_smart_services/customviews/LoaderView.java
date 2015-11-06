@@ -26,7 +26,6 @@ import com.uae.tra_smart_services.R;
 /**
  * Created by ak-buffalo on 21.09.15.
  */
-
 public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutListener, Animator.AnimatorListener {
 
     public enum State{

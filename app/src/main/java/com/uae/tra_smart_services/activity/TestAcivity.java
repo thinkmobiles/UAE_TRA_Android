@@ -1,22 +1,17 @@
 package com.uae.tra_smart_services.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.customviews.LoaderView;
-import com.uae.tra_smart_services.customviews.OuterLayout;
+import com.uae.tra_smart_services.customviews.HexagonSwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +20,7 @@ import java.util.Map;
 /**
  * Created by and on 03.11.15.
  */
-public class TestAcivity extends Activity implements View.OnClickListener, OuterLayout.Listener{
+public class TestAcivity extends Activity implements View.OnClickListener, HexagonSwipeRefreshLayout.Listener{
     final String ATTRIBUTE_NAME_TEXT = "text";
     final String ATTRIBUTE_NAME_CHECKED = "checked";
     final String ATTRIBUTE_NAME_IMAGE = "image";
@@ -38,7 +33,7 @@ public class TestAcivity extends Activity implements View.OnClickListener, Outer
 
     private Button mQueen;
     private Button mHidden;
-    private OuterLayout mOuterLayout;
+    private HexagonSwipeRefreshLayout mOuterLayout;
     private LinearLayout mMainLayout;
     private ListView listview;
     private TextView noPendingTransactions;
@@ -47,7 +42,7 @@ public class TestAcivity extends Activity implements View.OnClickListener, Outer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_activity);
-        mOuterLayout = (OuterLayout) findViewById(R.id.outer_layout);
+        mOuterLayout = (HexagonSwipeRefreshLayout) findViewById(R.id.outer_layout);
         mOuterLayout.registerListener(this);
         listview = (ListView) findViewById(R.id.listview);
         noPendingTransactions = (TextView) findViewById(R.id.tvNoPendingTransactions_FIH);
