@@ -16,8 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -56,7 +54,7 @@ public final class InfoHubFragment extends BaseFragment
     private boolean mIsSearching;
     private boolean mIsAllTransactionDownloaded, mIsAllAnnouncementsDownloaded;
 
-    private LoaderView pbLoadingTransactions, pbLoadingAnnouncements;
+    private LoaderView pbLoadingTransactions, lvAnnouncementsLoader;
     private TextView tvSeeMoreAnnouncements;
     private RecyclerView mAnnouncementsListPreview;
     private RecyclerView mTransactionsList;
@@ -85,24 +83,24 @@ public final class InfoHubFragment extends BaseFragment
 
         @Override
         public final void showProgress() {
-            pbLoadingAnnouncements.setVisibility(View.VISIBLE);
-            pbLoadingAnnouncements.startProcessing();
+            lvAnnouncementsLoader.setVisibility(View.VISIBLE);
+            lvAnnouncementsLoader.startProcessing();
             mAnnouncementsListPreview.setVisibility(View.INVISIBLE);
             tvNoAnnouncements.setVisibility(View.INVISIBLE);
         }
 
         @Override
         public final void showData() {
-            pbLoadingAnnouncements.stopProcessing();
-            pbLoadingAnnouncements.setVisibility(View.INVISIBLE);
+            lvAnnouncementsLoader.stopProcessing();
+            lvAnnouncementsLoader.setVisibility(View.INVISIBLE);
             mAnnouncementsListPreview.setVisibility(View.VISIBLE);
             tvNoAnnouncements.setVisibility(View.INVISIBLE);
         }
 
         @Override
         public final void showEmptyView() {
-            pbLoadingAnnouncements.stopProcessing();
-            pbLoadingAnnouncements.setVisibility(View.INVISIBLE);
+            lvAnnouncementsLoader.stopProcessing();
+            lvAnnouncementsLoader.setVisibility(View.INVISIBLE);
             mAnnouncementsListPreview.setVisibility(View.INVISIBLE);
             tvNoAnnouncements.setVisibility(View.VISIBLE);
         }
@@ -147,13 +145,13 @@ public final class InfoHubFragment extends BaseFragment
     @Override
     protected final void initViews() {
         super.initViews();
-        pbLoadingAnnouncements = findView(R.id.pbLoadingAnnoncements_FIH);
-        pbLoadingAnnouncements.init(Color.WHITE);
+        lvAnnouncementsLoader = findView(R.id.lvLoadingAnnoncements_FIH);
+        lvAnnouncementsLoader.init(Color.parseColor("#fff0de"));
         tvNoAnnouncements = findView(R.id.tvNoAnnouncements_FIH);
         tvNoTransactions = findView(R.id.tvNoTransactions_FIH);
         tvSeeMoreAnnouncements = findView(R.id.tvSeeMorebAnn_FIH);
         mAnnouncementsListPreview = findView(R.id.rvInfoHubListPrev_FIH);
-        mHexagonSwipeRefreshLayout = findView(R.id.hsrlTransactionRefresher);
+        mHexagonSwipeRefreshLayout = findView(R.id.hsrlTransactionRefresher_FIH);
         mTransactionsList = findView(R.id.rvTransactionsList_FIH);
         initAnnouncementsListPreview();
         initTransactionsList();

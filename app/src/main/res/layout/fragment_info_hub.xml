@@ -68,7 +68,7 @@
                 android:scrollbars="horizontal"/>
 
             <com.uae.tra_smart_services.customviews.LoaderView
-                android:id="@+id/pbLoadingAnnoncements_FIH"
+                android:id="@+id/lvLoadingAnnoncements_FIH"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:alpha="0"
@@ -111,36 +111,17 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <com.uae.tra_smart_services.customviews.LoaderView
-                android:id="@+id/lvHexagonLoader_FIH"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:hexagonSideSize="50dp"
-                app:hexagonBorderColor="#afafaf"
-                app:hexagonProcessBorderColor="#ff8400"
-                app:hexagonSuccessBorderColor="?attr/serviceInfoBackground"
-                app:hexagonBorderSize="3dp"
-                app:hexagonProcessBorderSize="3dp"
-                app:hexagonSuccessBorderSize="5dp"
-                app:hexagonSrc="@mipmap/ic_logo_2x"
-                app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
-                app:hexagonLoaderPeriod="2000"
-                app:hexagonFillingPeriod="600"
-                app:hexagonStatusPeriod="400"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-
             <com.uae.tra_smart_services.customviews.HexagonSwipeRefreshLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:background="@android:color/white"
-                android:id="@+id/hsrlTransactionRefresher">
+                android:id="@+id/hsrlTransactionRefresher_FIH"
+                android:layout_below="@+id/tvTransText_FIH">
 
                 <com.uae.tra_smart_services.customviews.LoaderView
-                    android:id="@+id/loaderView"
+                    android:id="@+id/lvLoadingTransactions_FIH"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
                     android:alpha="0"

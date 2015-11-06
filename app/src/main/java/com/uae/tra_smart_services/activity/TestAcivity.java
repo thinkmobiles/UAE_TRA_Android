@@ -42,7 +42,7 @@ public class TestAcivity extends Activity implements View.OnClickListener, Hexag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_activity);
-        mOuterLayout = (HexagonSwipeRefreshLayout) findViewById(R.id.hsrlTransactionRefresher);
+        mOuterLayout = (HexagonSwipeRefreshLayout) findViewById(R.id.hsrlTransactionRefresher_FIH);
         mOuterLayout.registerListener(this);
         listview = (ListView) findViewById(R.id.listview);
         noPendingTransactions = (TextView) findViewById(R.id.tvNoPendingTransactions_FIH);

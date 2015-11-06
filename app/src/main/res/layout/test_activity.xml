@@ -6,10 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
-    android:id="@+id/hsrlTransactionRefresher">
+    android:id="@+id/hsrlTransactionRefresher_FIH">
 
     <com.uae.tra_smart_services.customviews.LoaderView
-        android:id="@+id/loaderView"
+        android:id="@+id/lvLoadingTransactions_FIH"
         android:alpha="0"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"

@@ -3,14 +3,15 @@ package com.uae.tra_smart_services.customviews;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,7 +40,7 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
 
     @Override
     public void onGlobalLayout() {
-        mVerticalRange = loaderView.getHeight() + 40;
+        mVerticalRange = loaderView.getHeight() + 30;
     }
 
     @Override
@@ -76,6 +77,8 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
             noPendingTransactions.setVisibility(INVISIBLE);
         }
     }
+
+
 
     private HexagonSwipeRefreshLayout.Listener listener;
     public void registerListener(Listener _listener){
@@ -139,9 +142,10 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
 
     @Override
     protected void onFinishInflate() {
-        loaderView = (LoaderView) findViewById(R.id.loaderView);
-        loaderView.init(Color.WHITE);
-        listview = (RecyclerView) findViewById(R.id.rvTransactionsList_FIH);
+        loaderView = (LoaderView) getChildAt(0);
+        loaderView.init(Color.parseColor("#fff0de"));
+        noPendingTransactions = (TextView) getChildAt(1);
+        listview = (RecyclerView) getChildAt(2);
         listview.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -153,7 +157,6 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
                 }
             }
         });
-        noPendingTransactions = (TextView) findViewById(R.id.tvNoTransactions_FIH);
         mDragHelper = ViewDragHelper.create(this, 1.0f, new DragHelperCallback());
         mIsOpen = false;
         super.onFinishInflate();
