@@ -50,8 +50,9 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
 
     @Override
     public void onLoadingStart() {
+        noPendingTransactions.setVisibility(GONE);
         if(listview.getCount() == 0){
-            loaderView.setTop((getHeight() - loaderView.getHeight()) / 2);
+            loaderView.setTop(200);
             listview.setVisibility(GONE);
         }
         loaderView.setAlpha(1);
@@ -64,12 +65,13 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
         loaderView.setAlpha(0);
         mDraggingState = ViewDragHelper.STATE_IDLE;
         mDragHelper.smoothSlideViewTo(listview, 0, 0);
-        if(_isSucceed){
-            listview.setVisibility(VISIBLE);
-            loaderView.setTop(0);
-        } else {
+        if(!_isSucceed && listview.getCount() == 0) {
             listview.setVisibility(INVISIBLE);
             loaderView.setTop((getHeight() - loaderView.getHeight()) / 2);
+        } else {
+            listview.setVisibility(VISIBLE);
+            noPendingTransactions.setVisibility(INVISIBLE);
+            loaderView.setTop(0);
         }
     }
 
@@ -156,7 +158,9 @@ public class OuterLayout extends RelativeLayout implements ViewTreeObserver.OnGl
     }
 
     private boolean canMoveList(MotionEvent event) {
-        return (listview.getFirstVisiblePosition() == 0 || listview.getCount() == 0) && mDraggingState != ViewDragHelper.STATE_SETTLING;
+        return (listview.getFirstVisiblePosition() == 0 || listview.getCount() == 0)
+                && mDraggingState != ViewDragHelper.STATE_SETTLING
+                && listview.getVisibility() == VISIBLE;
     }
 
     @Override

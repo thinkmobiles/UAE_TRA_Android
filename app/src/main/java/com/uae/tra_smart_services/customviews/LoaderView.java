@@ -268,8 +268,8 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     }
 
     public void stopProcessing(){
-        mAnimationState = State.INITIALL;
         animatorStart.cancel();
+        mAnimationState = State.INITIALL;
         animatorEnd.cancel();
     }
 
@@ -338,15 +338,13 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
                     startDrawFailureFigure();
                     break;
             }
+        } else if (animatorEnd == animation && mAnimationState == State.FILLING) {
+            animatorFilling.start();
         }
     }
 
     @Override
-    public void onAnimationCancel(Animator animation) {
-        if (animatorEnd == animation && mAnimationState == State.FILLING) {
-            animatorFilling.start();
-        }
-    }
+    public void onAnimationCancel(Animator animation) { /* Unimplemented method*/ }
 
     @Override
     public void onAnimationRepeat(Animator animation) { /* Unimplemented method*/ }

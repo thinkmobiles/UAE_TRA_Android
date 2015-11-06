@@ -67,6 +67,8 @@ public class TestAcivity extends Activity implements View.OnClickListener, Outer
         load();
     }
 
+    boolean isOk = true;
+
     private void load(){
         new AsyncTask<Void,Void,ArrayList<Map<String, Object>>>(){
 
@@ -102,16 +104,17 @@ public class TestAcivity extends Activity implements View.OnClickListener, Outer
             @Override
             protected void onPostExecute(ArrayList<Map<String, Object>> _result) {
                 super.onPostExecute(_result);
-                if(_result != null){
+                if(isOk){
                     adapter = new SimpleAdapter(TestAcivity.this, _result, R.layout.test_list_item, from, to);
                     listview.setAdapter(adapter);
                     noPendingTransactions.setVisibility(View.INVISIBLE);
                     mOuterLayout.onLoadingFinished(true);
+                    isOk = false;
                 } else {
                     noPendingTransactions.setVisibility(View.VISIBLE);
                     mOuterLayout.onLoadingFinished(false);
+                    isOk = true;
                 }
-
             }
         }.execute();
     }
