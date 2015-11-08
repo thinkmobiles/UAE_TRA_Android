@@ -269,7 +269,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
     public void stopProcessing(){
         animatorStart.cancel();
-        mAnimationState = State.INITIALL;
         animatorEnd.cancel();
     }
 
@@ -340,6 +339,9 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
             }
         } else if (animatorEnd == animation && mAnimationState == State.FILLING) {
             animatorFilling.start();
+        } else if (animatorEnd == animation && mAnimationState == State.PROCESSING){
+            mAnimationState = State.INITIALL;
+            invalidate();
         }
     }
 
@@ -356,7 +358,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
             case INITIALL: {
                 _canvas.drawPath(mHexagonPath, mProcessPaint);
                 if (mSrcDrawable != null) {
-                    drawSrc(_canvas, mSrcDrawable);
+                    drawCenterInsideImage(_canvas, mSrcDrawable);
                 }
             } break;
             case PROCESSING: {
@@ -364,7 +366,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
                 _canvas.drawPath(mHexagonPath, mEndProcessPaint);
                 _canvas.drawPath(mHexagonPath, mBorderPaint);
                 if (mSrcDrawable != null) {
-                    drawSrc(_canvas, mSrcDrawable);
+                    drawCenterInsideImage(_canvas, mSrcDrawable);
                 }
             } break;
             case FILLING: {
@@ -381,37 +383,42 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
         }
     }
 
-    private void drawSrc(final Canvas _canvas, final Drawable _drawable) {
-        int drawableWidth = _drawable.getIntrinsicWidth() + 30, drawableHeight = _drawable.getIntrinsicHeight() + 30;
-        int canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
 
-        drawableWidth = drawableWidth == -1 ? canvasWidth : drawableWidth;
-        drawableHeight = drawableHeight == -1 ? canvasHeight : drawableHeight;
+    private void drawCenterImage(Canvas _canvas, Drawable _drawable) {
+        float drawableWidth = _drawable.getMinimumWidth(), drawableHeight = _drawable.getMinimumHeight();
 
-        if (drawableWidth < canvasWidth || drawableHeight < canvasHeight) {
-            float centerY = (float) (mHexagonSide + mBorderSize / 2f);
-            float centerX = (float) getWidth() / 2;
+        float centerY = (float) (mHexagonSide + mBorderSize / 2f);
+        float centerX = (float) getWidth() / 2;
 
-            mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
-                    (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
-            _drawable.draw(_canvas);
+        mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
+                (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
+        _drawable.draw(_canvas);
+    }
+
+    private void drawCenterInsideImage(final Canvas _canvas, final Drawable _drawable) {
+        float drawableWidth = _drawable.getMinimumWidth(), drawableHeight = _drawable.getMinimumHeight();
+        float canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
+
+        final float scale;
+        final float offsetX, offsetY;
+
+        if (drawableWidth <= canvasWidth && drawableHeight <= canvasHeight) {
+            drawCenterImage(_canvas, _drawable);
+            return;
+        } else if (drawableWidth <= drawableHeight) {
+            scale = canvasHeight / drawableHeight;
         } else {
-            float scale;
-            _drawable.setBounds(0, 0, drawableWidth, drawableHeight);
-            if (drawableWidth * canvasHeight > canvasWidth * drawableHeight) {//image is wider
-                scale = (float) canvasHeight / (float) drawableHeight;
-            } else { //image is higher
-                scale = (float) canvasWidth / (float) drawableWidth;
-            }
-            float dx = (canvasWidth - drawableWidth * scale) / 2f;
-            float dy = (canvasHeight - drawableHeight * scale) / 2f;
-
-            _canvas.save();
-            _canvas.scale(scale, scale);
-            _canvas.translate(Math.round(dx), Math.round(dy));
-            _drawable.draw(_canvas);
-            _canvas.restore();
+            scale = canvasWidth / drawableWidth;
         }
+        offsetX = (canvasWidth - (drawableWidth * scale)) / 2;
+        offsetY = (canvasHeight - (drawableHeight * scale)) / 2;
+        _drawable.setBounds(0, 0, Math.round(drawableWidth), Math.round(drawableHeight));
+
+        _canvas.save();
+        _canvas.translate(Math.round(offsetX), Math.round(offsetY));
+        _canvas.scale(scale, scale);
+        _drawable.draw(_canvas);
+        _canvas.restore();
     }
 }
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,37 +15,32 @@
         tools:src="?attr/favoritesBackground"/>
 
     <com.uae.tra_smart_services.customviews.HexagonSwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/hsrlTransactionRefresher_FIHA"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/hsrlRefresher_FIHA"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <com.uae.tra_smart_services.customviews.LoaderView
-            android:id="@+id/lvLoadingTransactions_FIH"
+            android:id="@+id/lvLoader_FIHA"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:alpha="0"
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:hexagonSideSize="40dp"
+            app:hexagonSideSize="25dp"
             app:hexagonBorderColor="#afafaf"
             app:hexagonProcessBorderColor="?attr/serviceInfoBackground"
             app:hexagonSuccessBorderColor="@android:color/white"
-            app:hexagonBorderSize="3dp"
-            app:hexagonProcessBorderSize="3dp"
-            app:hexagonSuccessBorderSize="5dp"
+            app:hexagonBorderSize="2dp"
+            app:hexagonProcessBorderSize="2dp"
             app:hexagonSrc="@mipmap/ic_logo_2x"
             app:hexagonSrcTintColor="?attr/serviceInfoBackground"
             app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
-            app:hexagonLoaderPeriod="2000"
-            app:hexagonFillingPeriod="450"
-            app:hexagonStatusPeriod="300"/>
+            app:hexagonLoaderPeriod="2000" />
 
         <TextView
-            android:id="@+id/tvNoAnnouncements_FIHA"
+            android:id="@+id/tvNoResult_FIHA"
             android:layout_width="match_parent"
             android:text="@string/fragment_info_hub_no_pending_transactions"
             android:visibility="gone"
@@ -55,7 +51,7 @@
             android:layout_height="match_parent"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvTransactionsList_FIHA"
+            android:id="@+id/rvList_FIHA"
             tools:listitem="@layout/list_item_info_hub"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

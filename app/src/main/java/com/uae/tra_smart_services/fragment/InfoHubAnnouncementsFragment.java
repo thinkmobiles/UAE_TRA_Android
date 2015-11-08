@@ -75,9 +75,9 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     @Override
     protected void initViews() {
         super.initViews();
-        tvNoResult = findView(R.id.tvNoAnnouncements_FIH);
-        mList = findView(R.id.rvInfoHubListPrev_FIH);
-        mHexagonSwipeRefreshLayout = findView(R.id.hsrlTransactionRefresher_FIH);
+        tvNoResult = findView(R.id.tvNoResult_FIHA);
+        mList = findView(R.id.rvList_FIHA);
+        mHexagonSwipeRefreshLayout = findView(R.id.hsrlRefresher_FIHA);
         initAnnouncementsList();
     }
 
@@ -201,7 +201,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.tvNoAnnouncements_FIHA){
+        if(v.getId() == R.id.tvNoResult_FIHA){
             onRefresh();
         }
     }

@@ -31,6 +31,7 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
     private LoaderView loaderView;
     private RecyclerView listview;
     private TextView noPendingTransactions;
+    private HexagonSwipeRefreshLayout.Listener listener;
 
     public HexagonSwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -78,9 +79,6 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
         }
     }
 
-
-
-    private HexagonSwipeRefreshLayout.Listener listener;
     public void registerListener(Listener _listener){
         listener = _listener;
     }
@@ -107,7 +105,7 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
 
         @Override
         public boolean tryCaptureView(View view, int i) {
-            return (view.getId() == R.id.rvTransactionsList_FIH);
+            return view == listview;
         }
 
         @Override
