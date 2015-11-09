@@ -15,18 +15,12 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.uae.tra_smart_services.R;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ak-buffalo on 21.09.15.
@@ -262,9 +256,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
             return;
         }
         setAlpha(progress);
-        mProcessPaint.setPathEffect(new DashPathEffect(
-                new float[] { progress * mProcessAnimationLength, mProcessAnimationLength}, 0
-        ));
+        mProcessPaint.setPathEffect(createLinearPathEffect(mProcessAnimationLength, progress));
         invalidate();
     }
 
@@ -307,15 +299,17 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
     /** It will be called by animator to draw the end of loading animation */
     public void setPhaseEnd(float _phaseEnd) {
-        DashPathEffect pathEffectStart = new DashPathEffect(
-                new float[] { phaseStart * mProcessAnimationLength, mProcessAnimationLength }, 0
-        );
-        mProcessPaint.setPathEffect(pathEffectStart);
-        DashPathEffect pathEffectEnd = new DashPathEffect(
-                new float[] { _phaseEnd * mProcessAnimationLength, mProcessAnimationLength }, 0
-        );
-        mEndProcessPaint.setPathEffect(pathEffectEnd);
+        mProcessPaint.setPathEffect(createProgressPathEffect(phaseStart, _phaseEnd));
         invalidate();
+    }
+
+    private PathEffect createProgressPathEffect(float _phaseStart, float _phaseEnd){
+        float toEnd = mProcessAnimationLength - _phaseStart * mProcessAnimationLength;
+        float fromStart = _phaseEnd * mProcessAnimationLength;
+        float filled = mProcessAnimationLength - (toEnd + fromStart);
+        return new DashPathEffect(
+                new float[] { 0, fromStart, filled, toEnd }, 0
+        );
     }
 
     /** It will be called by animator to fill the hexagon area smoothly after loading finished */
@@ -326,13 +320,13 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
     /** It will be called by animator to draw failure figure on filled hexagon area*/
     public void setPhaseSuccessOrFailure(float _phaseSuccessOrFailure){
-        mSuccessOrFailPaint.setPathEffect(createPathEffect(
+        mSuccessOrFailPaint.setPathEffect(createLinearPathEffect(
                 mCurrentState == State.SUCCESS ? mSuccessAnimationLength : mFailedAnimationLength,
-                _phaseSuccessOrFailure, 0.0f));
+                _phaseSuccessOrFailure));
         invalidate();
     }
 
-    private static PathEffect createPathEffect(float _pathLength, float _phase, float _offset) {
+    private static PathEffect createLinearPathEffect(float _pathLength, float _phase) {
         return new DashPathEffect(
                 new float[] { _phase * _pathLength, _pathLength},
                 0
@@ -376,9 +370,9 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
                 }
             } break;
             case PROCESSING: {
-                _canvas.drawPath(mHexagonPath, mProcessPaint);
-                _canvas.drawPath(mHexagonPath, mEndProcessPaint);
                 _canvas.drawPath(mHexagonPath, mBorderPaint);
+                _canvas.drawPath(mHexagonPath, mProcessPaint);
+//                _canvas.drawPath(mHexagonPath, mEndProcessPaint);
                 if (mSrcDrawable != null) {
                     drawCenterInsideImage(_canvas, mSrcDrawable);
                 }

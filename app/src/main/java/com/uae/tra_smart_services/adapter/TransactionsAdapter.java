@@ -104,11 +104,11 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
     }
 
     public final void showTransactions() {
-//        if (mDataSet.isEmpty()) {
-//            mOperationStateManager.showEmptyView();
-//        } else {
-//            mOperationStateManager.showData();
-//        }
+        if (mDataSet.isEmpty()) {
+            mOperationStateManager.showEmptyView();
+        } else {
+            mOperationStateManager.showData();
+        }
         mFilter = null;
         mIsInSearchMode = false;
         mShowingData.clear();
@@ -148,7 +148,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
     public int getItemCount() {
         final int progressBarCount;
         if (mIsInSearchMode) {
-            progressBarCount = mIsAllSearchResultDownloaded ? 0 : 1;
+            progressBarCount = 0;
         } else {
             progressBarCount = mIsShowingLoaderForData && mShowingData.size() != 0 ? 1 : 0;
         }
@@ -227,7 +227,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         @UiThread
         private void handleNoResults() {
             if (mShowingData.isEmpty()) {
-//                mOperationStateManager.showEmptyView();
+                mOperationStateManager.showEmptyView();
             } else {
                 stopLoading();
             }
@@ -235,7 +235,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
 
         @UiThread
         private void showNewSearchResults(FilterResults results) {
-//            mOperationStateManager.showData();
+            mOperationStateManager.showData();
             mShowingData.addAll((GetTransactionResponseModel.List) results.values);
             notifyDataSetChanged();
         }

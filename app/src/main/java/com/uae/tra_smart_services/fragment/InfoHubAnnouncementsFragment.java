@@ -145,13 +145,11 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Log.i("SearchI", "onQueryTextChange");
         return true;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.i("SearchI", "onQueryTextSubmit");
         mIsSearching = true;
         tvNoResult.setText(R.string.str_no_search_result);
         hideKeyboard(getView());
@@ -163,13 +161,11 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
 
     @Override
     public boolean onMenuItemActionExpand(MenuItem item) {
-        Log.i("SearchI", "onMenuItemActionExpand");
         return true;
     }
 
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
-        Log.i("SearchI", "onMenuItemActionCollapse");
         mIsSearching = false;
         tvNoResult.setText(R.string.fragment_info_hub_no_pending_transactions);
         mListAdapter.showAnnouncements();

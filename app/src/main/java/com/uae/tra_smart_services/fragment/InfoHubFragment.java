@@ -53,9 +53,9 @@ public final class InfoHubFragment extends BaseFragment
 
     private int mTransactionPageNum;
     private boolean mIsSearching;
-    private boolean mIsAllTransactionDownloaded, mIsAllAnnouncementsDownloaded;
+    private boolean mIsAllTransactionDownloaded;
 
-    private LoaderView pbLoadingTransactions, lvAnnouncementsLoader;
+    private LoaderView lvAnnouncementsLoader;
     private TextView tvSeeMoreAnnouncements;
     private RecyclerView mAnnouncementsListPreview;
     private RecyclerView mTransactionsList;
@@ -71,10 +71,8 @@ public final class InfoHubFragment extends BaseFragment
     private EndlessScrollListener mEndlessScrollListener;
     private boolean mIsTransactionsInLoading;
     private BooleanHolder mIsAnnouncementsInLoading = new BooleanHolder();
-    private LoaderView loaderView;
-    private CoordinatorLayout transactionCoordinator;
     private HexagonSwipeRefreshLayout mHexagonSwipeRefreshLayout;
-    private SwipeRefreshLayout transactionsRefresher;
+    private GetTransactionsRequest transactionsRequest;
 
     public static InfoHubFragment newInstance() {
         return new InfoHubFragment();
@@ -111,23 +109,17 @@ public final class InfoHubFragment extends BaseFragment
 
         @Override
         public final void showProgress() {
-            pbLoadingTransactions.setVisibility(View.VISIBLE);
-            mTransactionsList.setVisibility(View.INVISIBLE);
-            tvNoTransactions.setVisibility(View.INVISIBLE);
+            mHexagonSwipeRefreshLayout.onLoadingStart();
         }
 
         @Override
         public final void showData() {
-            pbLoadingTransactions.setVisibility(View.INVISIBLE);
-            mTransactionsList.setVisibility(View.VISIBLE);
-            tvNoTransactions.setVisibility(View.INVISIBLE);
+            mHexagonSwipeRefreshLayout.onLoadingFinished(true);
         }
 
         @Override
         public final void showEmptyView() {
-            pbLoadingTransactions.setVisibility(View.INVISIBLE);
-            mTransactionsList.setVisibility(View.INVISIBLE);
-            tvNoTransactions.setVisibility(View.VISIBLE);
+            mHexagonSwipeRefreshLayout.onLoadingFinished(false);
         }
     };
 
@@ -186,7 +178,7 @@ public final class InfoHubFragment extends BaseFragment
         mAnnouncementsResponseListener =
                 new AnnouncementsResponseListener(
                         this, mAnnouncementsOperationStateManager, mAnnouncementsListAdapter,
-                        mIsAnnouncementsInLoading, mIsAllAnnouncementsDownloaded, mTransactionPageNum);
+                        mIsAnnouncementsInLoading, false, mTransactionPageNum);
         mEndlessScrollListener = new EndlessScrollListener(mTransactionsLayoutManager, this);
         mTransactionsList.addOnScrollListener(mEndlessScrollListener);
         tvNoTransactions.setOnClickListener(this);
@@ -234,7 +226,7 @@ public final class InfoHubFragment extends BaseFragment
         GetAnnouncementsRequest announcementsRequest = new GetAnnouncementsRequest(QueryAdapter.pageToOffset(_page, 3));
         getSpiceManager().execute(announcementsRequest, mAnnouncementsResponseListener);
     }
-    GetTransactionsRequest transactionsRequest;
+
     private void loadTransactionPage(final int _page) {
         mIsTransactionsInLoading = true;
         transactionsRequest = new GetTransactionsRequest(_page, DEFAULT_PAGE_SIZE_TRANSACTIONS);
@@ -267,7 +259,7 @@ public final class InfoHubFragment extends BaseFragment
         mIsSearching = true;
         tvNoTransactions.setText(R.string.str_no_search_result);
         hideKeyboard(getView());
-//        mTransactionsOperationStateManager.showProgress();
+        mTransactionsOperationStateManager.showProgress();
         mTransactionsLayoutManager.scrollToPosition(0);
         mTransactionsListAdapter.getFilter().filter(query);
         return true;
@@ -308,50 +300,6 @@ public final class InfoHubFragment extends BaseFragment
         loadTransactionPage(mTransactionPageNum = 1);
     }
 
-    /** STUB!! */
-    private class TransactionLoader extends AsyncTask<Void, Void, GetTransactionResponseModel.List>{
-        private TransactionsResponseListener listener;
-        TransactionLoader(){
-            listener = new TransactionsResponseListener();
-        }
-
-        @Override
-        protected GetTransactionResponseModel.List doInBackground(Void... params) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            GetTransactionResponseModel.List list = new GetTransactionResponseModel.List();
-            GetTransactionResponseModel[] models = new GetTransactionResponseModel[10];
-            for (int i = 0; i < 10; i++){
-                models[i] = new GetTransactionResponseModel();
-                models[i].title = "title" + i;
-                models[i].description = "description description description description" + i;
-            }
-
-            list.addAll(Arrays.asList(models));
-
-            return list;
-        }
-
-        @Override
-        protected void onPostExecute(GetTransactionResponseModel.List getTransactionResponseModels) {
-            /*if(transactionsRefresher.isRefreshing()){
-                transactionsRefresher.setRefreshing(false);
-            }*/
-            if(getTransactionResponseModels != null){
-//                listener.onRequestSuccess(getTransactionResponseModels);
-                mHexagonSwipeRefreshLayout.onLoadingFinished(true);
-            } else {
-                mHexagonSwipeRefreshLayout.onLoadingFinished(false);
-//                listener.onRequestFailure(new SpiceException("Something went wrong..."));
-            }
-//            mTransactionsList.scrollToPosition(0);
-//            loaderView.startFilling(LoaderView.State.SUCCESS);
-        }
-    }
-
     private final class TransactionsResponseListener implements RequestListener<GetTransactionResponseModel.List> {
 
         @Override
@@ -362,9 +310,8 @@ public final class InfoHubFragment extends BaseFragment
                 if (mIsAllTransactionDownloaded) {
                     handleNoResult();
                 } else {
-//                    mTransactionsOperationStateManager.showData();
+                    mTransactionsOperationStateManager.showData();
                     mTransactionsListAdapter.addAll(result);
-                    mHexagonSwipeRefreshLayout.onLoadingFinished(true);
                 }
             } else {
                 mTransactionPageNum--;
@@ -373,8 +320,7 @@ public final class InfoHubFragment extends BaseFragment
 
         private void handleNoResult() {
             if (mTransactionsListAdapter.isEmpty()) {
-//                mTransactionsOperationStateManager.showEmptyView();
-                mHexagonSwipeRefreshLayout.onLoadingFinished(false);
+                mTransactionsOperationStateManager.showEmptyView();
             } else {
                 mTransactionsListAdapter.stopLoading();
             }
@@ -382,7 +328,6 @@ public final class InfoHubFragment extends BaseFragment
 
         @Override
         public final void onRequestFailure(SpiceException spiceException) {
-            mHexagonSwipeRefreshLayout.onLoadingFinished(false);
             mIsTransactionsInLoading = false;
             mTransactionPageNum--;
             handleNoResult();
