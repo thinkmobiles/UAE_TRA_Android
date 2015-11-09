@@ -58,7 +58,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
     private State mAnimationState = State.INITIALL;
     private State mCurrentState;
-
+    private boolean isInitLoading;
 
     private final Path mHexagonPath, successIconPath, dismissedIconPath;
     private final Paint mBorderPaint, mProcessPaint, mFillArePaint, mSuccessOrFailPaint;
@@ -109,6 +109,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
             mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
             mSrcDrawable = array.getDrawable(R.styleable.HexagonView_hexagonSrc);
             mSrcTintColor = array.getColor(R.styleable.HexagonView_hexagonSrcTintColor, Color.TRANSPARENT);
+            isInitLoading = array.getBoolean(R.styleable.HexagonView_hexagonIsInitiallLoading, false);
         } finally {
             array.recycle();
         }
@@ -230,6 +231,8 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     public void onGlobalLayout() {
         initPaths();
         initAnimators();
+        if(isInitLoading)
+            startProcessing();
         getViewTreeObserver().removeGlobalOnLayoutListener(this);
     }
 
@@ -322,8 +325,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
     private static PathEffect createLinearPathEffect(float _pathLength, float _phase) {
         return new DashPathEffect(
-                new float[] { _phase * _pathLength, _pathLength},
-                0
+                new float[] { _phase * _pathLength, _pathLength}, 0
         );
     }
 

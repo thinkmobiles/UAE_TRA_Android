@@ -259,7 +259,7 @@ public final class InfoHubFragment extends BaseFragment
         mIsSearching = true;
         tvNoTransactions.setText(R.string.str_no_search_result);
         hideKeyboard(getView());
-        mTransactionsOperationStateManager.showProgress();
+//        mTransactionsOperationStateManager.showProgress();
         mTransactionsLayoutManager.scrollToPosition(0);
         mTransactionsListAdapter.getFilter().filter(query);
         return true;

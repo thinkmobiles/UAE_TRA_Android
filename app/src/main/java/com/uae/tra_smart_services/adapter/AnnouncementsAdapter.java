@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AnnouncementsAdapter.ViewHolder;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
 import com.uae.tra_smart_services.global.C;
@@ -139,8 +141,10 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LoaderView loaderView = (LoaderView) layoutInflater.inflate(R.layout.loader_view, null, true);
         if(viewType == VIEW_TYPE_LOADER){
-            return new ViewHolder(new ProgressBar(parent.getContext()), true);
+            return new ViewHolder(loaderView);
         } else {
             final View view;
             if (mIsPreview){
@@ -260,7 +264,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         private View container;
         private HexagonView hexagonView;
         private TextView title, description, date;
-        private ProgressBar progressBar;
+        private HexagonView progressBar;
         private Space sStartOffset;
         private boolean isProgress;
 
@@ -285,9 +289,11 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         public ViewHolder(View view, boolean _isProgress) {
             super(view);
             isProgress = _isProgress;
-            progressBar = (ProgressBar) view;
-            progressBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            progressBar = (HexagonView) view;
+            progressBar.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT)
+            );
         }
 
         public void setData(int _position, final GetAnnouncementsResponseModel.Announcement _model) {
