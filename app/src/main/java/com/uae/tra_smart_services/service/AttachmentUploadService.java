@@ -8,7 +8,6 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.uae.tra_smart_services.interfaces.AttachmentResultListener;
 import com.uae.tra_smart_services.manager.AttachmentUploadManager;
@@ -51,7 +50,7 @@ public final class AttachmentUploadService extends Service implements Attachment
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(this, "Service created", Toast.LENGTH_SHORT).show();
+        Logger.d(TAG, "Service created");
         mResultsToNotify = new LinkedHashMap<>();
         mErrorsToNotify = new LinkedHashSet<>();
 
@@ -155,7 +154,7 @@ public final class AttachmentUploadService extends Service implements Attachment
 
     @Override
     public void onDestroy() {
-        Toast.makeText(this, "Service destroyed", Toast.LENGTH_SHORT).show();
+        Logger.d(TAG, "Service destroyed");
         mResultsToNotify = null;
         mErrorsToNotify = null;
         mAttachmentUploadManager.cancelAllUploads();
