@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +11,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.AnnouncementsAdapter;
+import com.uae.tra_smart_services.customviews.HexagonSwipeRefreshLayout;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.QueryAdapter;
@@ -30,7 +33,7 @@ import com.uae.tra_smart_services.util.EndlessScrollListener;
  */
 public class InfoHubAnnouncementsFragment extends BaseFragment
         implements OnInfoHubItemClickListener<GetAnnouncementsResponseModel.Announcement>,
-        EndlessScrollListener.OnLoadMoreListener, SearchView.OnQueryTextListener, OperationStateManager, MenuItemCompat.OnActionExpandListener {
+        EndlessScrollListener.OnLoadMoreListener, SearchView.OnQueryTextListener, OperationStateManager, MenuItemCompat.OnActionExpandListener, View.OnClickListener, HexagonSwipeRefreshLayout.Listener, ViewTreeObserver.OnGlobalLayoutListener {
 
     private RecyclerView mList;
     private LinearLayoutManager mLayoutManager;
@@ -45,6 +48,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     private boolean mIsSearching;
     private boolean mIsAllAnnouncementsDownloaded;
     private SearchView svSearchTransaction;
+    private HexagonSwipeRefreshLayout mHexagonSwipeRefreshLayout;
 
     public static InfoHubAnnouncementsFragment newInstance() {
         return new InfoHubAnnouncementsFragment();
@@ -66,15 +70,21 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getView().getViewTreeObserver().addOnGlobalLayoutListener(this);
+    }
+
+    @Override
+    public void onGlobalLayout() {
         startFirstLoad();
+        getView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
 
     @Override
     protected void initViews() {
         super.initViews();
-        mList = findView(R.id.rvInfoHubAnnList_FIHA);
-        pbLoading = findView(R.id.pbLoadingAnnoncements_FIHA);
-        tvNoResult = findView(R.id.tvNoPendingAnnoncements_FIHA);
+        tvNoResult = findView(R.id.tvNoResult_FIHA);
+        mList = findView(R.id.rvList_FIHA);
+        mHexagonSwipeRefreshLayout = findView(R.id.hsrlRefresher_FIHA);
         initAnnouncementsList();
     }
 
@@ -91,6 +101,8 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
         mAnnouncementsResponseListener = new AnnouncementsResponseListener(this, this, mListAdapter, mIsAnnouncementsInLoading, mIsAllAnnouncementsDownloaded, 1);
         mListAdapter.setOnItemClickListener(this);
         mList.addOnScrollListener(new EndlessScrollListener(mLayoutManager, this));
+        tvNoResult.setOnClickListener(this);
+        mHexagonSwipeRefreshLayout.registerListener(this);
     }
 
     private void initSearchView(Menu menu) {
@@ -112,6 +124,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     }
 
     private void startFirstLoad() {
+        mHexagonSwipeRefreshLayout.onLoadingStart();
         loadAnnouncementsPage(mAnnouncementsPageNum = 1);
     }
 
@@ -132,13 +145,11 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Log.i("SearchI", "onQueryTextChange");
         return true;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.i("SearchI", "onQueryTextSubmit");
         mIsSearching = true;
         tvNoResult.setText(R.string.str_no_search_result);
         hideKeyboard(getView());
@@ -150,13 +161,11 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
 
     @Override
     public boolean onMenuItemActionExpand(MenuItem item) {
-        Log.i("SearchI", "onMenuItemActionExpand");
         return true;
     }
 
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
-        Log.i("SearchI", "onMenuItemActionCollapse");
         mIsSearching = false;
         tvNoResult.setText(R.string.fragment_info_hub_no_pending_transactions);
         mListAdapter.showAnnouncements();
@@ -170,23 +179,17 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
 
     @Override
     public final void showProgress() {
-        pbLoading.setVisibility(View.VISIBLE);
-        mList.setVisibility(View.INVISIBLE);
-        tvNoResult.setVisibility(View.INVISIBLE);
+        mHexagonSwipeRefreshLayout.onLoadingStart();
     }
 
     @Override
     public final void showData() {
-        pbLoading.setVisibility(View.INVISIBLE);
-        mList.setVisibility(View.VISIBLE);
-        tvNoResult.setVisibility(View.INVISIBLE);
+        mHexagonSwipeRefreshLayout.onLoadingFinished(true);
     }
 
     @Override
     public final void showEmptyView() {
-        pbLoading.setVisibility(View.INVISIBLE);
-        mList.setVisibility(View.INVISIBLE);
-        tvNoResult.setVisibility(View.VISIBLE);
+        mHexagonSwipeRefreshLayout.onLoadingFinished(false);
     }
 
     @Override
@@ -197,6 +200,19 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_info_hub_announcements;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.tvNoResult_FIHA){
+            onRefresh();
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        mHexagonSwipeRefreshLayout.onLoadingStart();
+        loadAnnouncementsPage(mAnnouncementsPageNum = 1);
     }
 
     public static class BooleanHolder {

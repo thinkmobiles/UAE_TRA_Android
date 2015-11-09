@@ -50,6 +50,7 @@
                     android:textColor="?attr/colorPrimary"
                     android:textColorHint="?attr/colorPrimary"
                     android:textSize="18sp"
+                    android:text="tra.gov.ae"/>
                     tools:text="tra.gov.ae"/>
 
                 <View style="@style/AuthorizationFieldsSeparator"/>

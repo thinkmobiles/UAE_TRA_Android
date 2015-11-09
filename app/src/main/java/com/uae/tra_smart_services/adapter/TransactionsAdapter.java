@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.TransactionsAdapter.ViewHolder;
 import com.uae.tra_smart_services.customviews.HexagonView;
+import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
 import com.uae.tra_smart_services.global.C;
@@ -127,9 +129,11 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LoaderView loaderView = (LoaderView) layoutInflater.inflate(R.layout.loader_view, null, true);
         switch (viewType) {
             case VIEW_TYPE_LOADER:
-                return new ViewHolder(new ProgressBar(parent.getContext()), true);
+                return new ViewHolder(loaderView, true);
             case VIEW_TYPE_TRANSACTION:
             default:
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_info_hub, parent, false);
@@ -150,7 +154,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         if (mIsInSearchMode) {
             progressBarCount = mIsAllSearchResultDownloaded ? 0 : 1;
         } else {
-            progressBarCount = mIsShowingLoaderForData ? 1 : 0;
+            progressBarCount = mIsShowingLoaderForData && mShowingData.size() != 0 ? 1 : 0;
         }
         return mShowingData.size() + progressBarCount;
     }
@@ -245,7 +249,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
     protected class ViewHolder extends RecyclerView.ViewHolder {
         private HexagonView hexagonView;
         private TextView title, description, date;
-        private ProgressBar progressBar;
+        private LoaderView progressBar;
         private Space sStartOffset;
         private boolean isProgress;
 
@@ -261,7 +265,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         public ViewHolder(View view, boolean _isProgress) {
             super(view);
             isProgress = _isProgress;
-            progressBar = (ProgressBar) view;
+            progressBar = (LoaderView) view;
             progressBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
         }

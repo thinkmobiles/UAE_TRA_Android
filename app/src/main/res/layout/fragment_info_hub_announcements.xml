@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,33 +14,48 @@
         android:scaleType="centerCrop"
         tools:src="?attr/favoritesBackground"/>
 
-    <TextView
-        android:id="@+id/tvNoPendingAnnoncements_FIHA"
+    <com.uae.tra_smart_services.customviews.HexagonSwipeRefreshLayout
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/hsrlRefresher_FIHA"
         android:layout_width="match_parent"
-        android:text="@string/fragment_info_hub_no_pending_announcements"
-        android:visibility="gone"
-        android:textSize="18sp"
-        android:layout_below="@+id/tvTransText_FIH"
-        android:layout_centerInParent="true"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" >
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvInfoHubAnnList_FIHA"
-        tools:listitem="@layout/list_item_info_hub"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"/>
+        <com.uae.tra_smart_services.customviews.LoaderView
+            android:id="@+id/lvLoader_FIHA"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:alpha="0"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:hexagonSideSize="25dp"
+            app:hexagonBorderColor="#afafaf"
+            app:hexagonProcessBorderColor="?attr/serviceInfoBackground"
+            app:hexagonSuccessBorderColor="@android:color/white"
+            app:hexagonBorderSize="2dp"
+            app:hexagonProcessBorderSize="2dp"
+            app:hexagonSrc="@mipmap/ic_logo_2x"
+            app:hexagonSrcTintColor="?attr/serviceInfoBackground"
+            app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
+            app:hexagonLoaderPeriod="2000" />
 
-    <ProgressBar
-        android:id="@+id/pbLoadingAnnoncements_FIHA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvTransText_FIH"
-        android:layout_centerInParent="true"
-        android:visibility="visible"
-        android:layout_gravity="center" />
+        <TextView
+            android:id="@+id/tvNoResult_FIHA"
+            android:layout_width="match_parent"
+            android:text="@string/fragment_info_hub_no_pending_transactions"
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:layout_height="match_parent"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvList_FIHA"
+            tools:listitem="@layout/list_item_info_hub"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </com.uae.tra_smart_services.customviews.HexagonSwipeRefreshLayout>
 
 </FrameLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.uae.tra_smart_services.customviews.LoaderView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lvLoadingTransactions_FIH"
+    android:layout_centerVertical="true"
+    android:layout_centerInParent="true"
+    android:layout_centerHorizontal="true"
+    android:layout_margin="15dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:hexagonSideSize="25dp"
+    app:hexagonBorderColor="#afafaf"
+    app:hexagonProcessBorderColor="?attr/serviceInfoBackground"
+    app:hexagonSuccessBorderColor="@android:color/white"
+    app:hexagonBorderSize="2dp"
+    app:hexagonProcessBorderSize="2dp"
+    app:hexagonSrc="@mipmap/ic_logo_2x"
+    app:hexagonSrcTintColor="?attr/serviceInfoBackground"
+    app:hexagonLoaderBackground="?attr/hexagonLoaderBackground"
+    app:hexagonLoaderPeriod="2000"
+    app:hexagonIsInitiallLoading="true"/>

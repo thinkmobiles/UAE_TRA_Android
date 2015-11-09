@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -12,8 +13,10 @@ import android.graphics.PathEffect;
 import android.graphics.PathMeasure;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
@@ -22,11 +25,10 @@ import com.uae.tra_smart_services.R;
 /**
  * Created by ak-buffalo on 21.09.15.
  */
-
-public class LoaderView extends View {
+public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutListener, Animator.AnimatorListener {
 
     public enum State{
-        INITIALL(0), PROCESSING(1), FILLING(2), SUCCESS(3), CANCELLED(4),FAILURE(5);
+        INITIALL(0), PROCESSING(1), FILLING(2), SUCCESS(3), CANCELLED(4), FAILURE(5);
 
         private int state;
         State(int _state){ state = _state; }
@@ -35,10 +37,9 @@ public class LoaderView extends View {
     private Drawable mSrcDrawable;
 
     @ColorInt
-    private int mBorderColor, mProcessBorderColor, mSuccessBorderColor;
+    private int mBorderColor, mProcessBorderColor, mSuccessBorderColor, mSrcTintColor;
+
     private double mHexagonSide, mHexagonInnerRadius;
-    private float mSuccessOrFailedAnimationLength;
-    private float mProcessAnimationLength;
     private float mBorderSize, mProcessBorderSize, mSuccessBorderSize;
 
     private final int DEFAULT_HEXAGON_RADIUS = Math.round(30 * getResources().getDisplayMetrics().density);
@@ -57,16 +58,18 @@ public class LoaderView extends View {
 
     private State mAnimationState = State.INITIALL;
     private State mCurrentState;
-
-    private int mLoadingAnimPeriod, mFillingAnimPeriod, mStatusAnimPeriod;
+    private boolean isInitLoading;
 
     private final Path mHexagonPath, successIconPath, dismissedIconPath;
-    private final Paint mBorderPaint, mProcessPaint, mEndProcessPaint, mFillArePaint, mSuccessOrFailPaint;
+    private final Paint mBorderPaint, mProcessPaint, mFillArePaint, mSuccessOrFailPaint;
 
     private ObjectAnimator animatorStart;
     private ObjectAnimator animatorEnd;
     private ObjectAnimator animatorFilling;
     private ObjectAnimator animatorSuccessOrFailed;
+    private float mSuccessAnimationLength, mFailedAnimationLength;
+    private float mProcessAnimationLength;
+    private int mLoadingAnimPeriod, mFillingAnimPeriod, mStatusAnimPeriod;
 
     public LoaderView(Context context) {
         this(context, null);
@@ -75,20 +78,19 @@ public class LoaderView extends View {
     public LoaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
+        getViewTreeObserver().addOnGlobalLayoutListener(this);
         mHexagonPath = new Path();
         successIconPath = new Path();
         dismissedIconPath = new Path();
 
         mBorderPaint = new Paint();
         mProcessPaint = new Paint();
-        mEndProcessPaint = new Paint();
         mFillArePaint = new Paint();
         mSuccessOrFailPaint = new Paint();
 
         initParams(context, attrs);
         initPaints();
-        initAnimators();
+        tintDrawableIfNeed();
     }
 
     private void initParams(Context context, AttributeSet attrs){
@@ -106,6 +108,8 @@ public class LoaderView extends View {
             mStatusAnimPeriod = array.getInt(R.styleable.HexagonView_hexagonStatusPeriod, 500);
             mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
             mSrcDrawable = array.getDrawable(R.styleable.HexagonView_hexagonSrc);
+            mSrcTintColor = array.getColor(R.styleable.HexagonView_hexagonSrcTintColor, Color.TRANSPARENT);
+            isInitLoading = array.getBoolean(R.styleable.HexagonView_hexagonIsInitiallLoading, false);
         } finally {
             array.recycle();
         }
@@ -123,10 +127,6 @@ public class LoaderView extends View {
         mProcessPaint.setStrokeWidth(mProcessBorderSize);
         mProcessPaint.setStyle(Paint.Style.STROKE);
 
-        mEndProcessPaint.setAntiAlias(true);
-        mEndProcessPaint.setStrokeWidth(mBorderSize+1);
-        mEndProcessPaint.setStyle(Paint.Style.STROKE);
-
         mFillArePaint.setAntiAlias(true);
         mFillArePaint.setColor(mProcessBorderColor);
         mFillArePaint.setStrokeWidth(mBorderSize);
@@ -137,63 +137,40 @@ public class LoaderView extends View {
         mSuccessOrFailPaint.setStyle(Paint.Style.STROKE);
     }
 
+    private void initPaths(){
+        mProcessAnimationLength = new PathMeasure(mHexagonPath, false).getLength();
+        mSuccessAnimationLength = new PathMeasure(successIconPath, false).getLength();
+        mFailedAnimationLength = new PathMeasure(dismissedIconPath, false).getLength();
+    }
+
     private void initAnimators(){
-        animatorStart = ObjectAnimator.ofFloat(LoaderView.this, "phaseStart", 1.0f, 0.0f);
+        animatorStart = ObjectAnimator.ofFloat(LoaderView.this, "phaseStart", 0.0f, 1.0f);
         animatorStart.setDuration(mLoadingAnimPeriod);
         animatorStart.setInterpolator(new DecelerateInterpolator(1.3f));
         animatorStart.setRepeatCount(ObjectAnimator.INFINITE);
         animatorStart.setRepeatMode(ObjectAnimator.RESTART);
+        animatorStart.addListener(this);
 
-        animatorEnd = ObjectAnimator.ofFloat(LoaderView.this, "phaseEnd", 1.0f, 0.0f);
+        animatorEnd = ObjectAnimator.ofFloat(LoaderView.this, "phaseEnd", 0.0f, 1.0f);
         animatorEnd.setDuration(mLoadingAnimPeriod);
         animatorEnd.setInterpolator(new AccelerateInterpolator(0.7f));
         animatorEnd.setRepeatCount(ObjectAnimator.INFINITE);
         animatorEnd.setRepeatMode(ObjectAnimator.RESTART);
-        animatorEnd.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                animatorFilling.start();
-            }
-
-            @Override
-            public void onAnimationStart(Animator animation) {/* Is not implemented */}
-
-            @Override
-            public void onAnimationEnd(Animator animation) {/* Is not implemented */}
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {/* Is not implemented */}
-        });
+        animatorEnd.addListener(this);
 
         animatorFilling = ObjectAnimator.ofFloat(LoaderView.this, "phaseFilling", 0.0f, 255.0f);
         animatorFilling.setDuration(mFillingAnimPeriod);
         animatorFilling.setInterpolator(new DecelerateInterpolator());
-        animatorFilling.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                switch (mCurrentState) {
-                    case SUCCESS:
-                        startDrawSuccessFigure();
-                        break;
-                    case CANCELLED:
-                    case FAILURE:
-                        startDrawFailureFigure();
-                        break;
-                }
-            }
+        animatorFilling.addListener(this);
 
-            @Override
-            public void onAnimationStart(Animator animation) {/* Is not implemented */}
-
-            @Override
-            public void onAnimationCancel(Animator animation) {/* Is not implemented */}
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {/* Is not implemented */}
-        });
-
-        animatorSuccessOrFailed = ObjectAnimator.ofFloat(LoaderView.this, "phaseSuccessOrFailure", 1.0f, 0.0f);
+        animatorSuccessOrFailed = ObjectAnimator.ofFloat(LoaderView.this, "phaseSuccessOrFailure", 0.0f, 1.0f);
         animatorSuccessOrFailed.setDuration(mStatusAnimPeriod);
+        animatorSuccessOrFailed.addListener(this);
+    }
+
+    public void init(int _color){
+        mAnimationState = State.INITIALL;
+        mSuccessOrFailPaint.setColor(_color);
     }
 
     @Override
@@ -250,21 +227,48 @@ public class LoaderView extends View {
         dismissedIconPath.lineTo(mFailureFigureOffsetX, mFailureFigureOffsetY + mFailureFigureWH);
     }
 
+    @Override
+    public void onGlobalLayout() {
+        initPaths();
+        initAnimators();
+        if(isInitLoading)
+            startProcessing();
+        getViewTreeObserver().removeGlobalOnLayoutListener(this);
+    }
+
+    private void tintDrawableIfNeed() {
+        if (mSrcDrawable != null && mSrcTintColor != Color.TRANSPARENT) {
+            Drawable wrappedDrawable = DrawableCompat.wrap(mSrcDrawable);
+            DrawableCompat.setTint(wrappedDrawable.mutate(), mSrcTintColor);
+            mSrcDrawable = wrappedDrawable;
+        }
+    }
+
     public State getCurrentState(){
         return mCurrentState;
     }
 
+    public void setProgress(float progress){
+        if(progress > 1.0f){
+            return;
+        }
+        setAlpha(progress);
+        mProcessPaint.setPathEffect(createLinearPathEffect(mProcessAnimationLength, progress));
+        invalidate();
+    }
+
     public void startProcessing(){
+        setAlpha(1);
         mAnimationState = State.PROCESSING;
-
-        mEndProcessPaint.setColor((int) getTag());
-        mSuccessOrFailPaint.setColor((int) getTag());
-
-        PathMeasure measure = new PathMeasure(mHexagonPath, false);
-        mProcessAnimationLength = measure.getLength();
-
         animatorStart.start();
         animatorEnd.start();
+    }
+
+    public void stopProcessing(){
+        setAlpha(0);
+        mAnimationState = State.INITIALL;
+        animatorStart.cancel();
+        animatorEnd.cancel();
     }
 
     public void startFilling(final State _currentState){
@@ -276,30 +280,33 @@ public class LoaderView extends View {
 
     private void startDrawSuccessFigure() {
         mAnimationState = State.SUCCESS;
-
-        PathMeasure measure = new PathMeasure(successIconPath, false);
-        mSuccessOrFailedAnimationLength = measure.getLength();
         animatorSuccessOrFailed.start();
     }
 
     private void startDrawFailureFigure() {
         mAnimationState = State.FAILURE;
-
-        PathMeasure measure = new PathMeasure(dismissedIconPath, false);
-        mSuccessOrFailedAnimationLength = measure.getLength();
         animatorSuccessOrFailed.start();
     }
 
+    private float phaseStart;
     /** It will be called by animator to draw the start of loading animation */
     public void setPhaseStart(float _phaseStart) {
-        mProcessPaint.setPathEffect(createPathEffect(mProcessAnimationLength, _phaseStart, 0.0f));
-        invalidate();
+        phaseStart = _phaseStart;
     }
 
     /** It will be called by animator to draw the end of loading animation */
     public void setPhaseEnd(float _phaseEnd) {
-        mEndProcessPaint.setPathEffect(createPathEffect(mProcessAnimationLength, _phaseEnd, 0.0f));
+        mProcessPaint.setPathEffect(createProgressPathEffect(phaseStart, _phaseEnd));
         invalidate();
+    }
+
+    private PathEffect createProgressPathEffect(float _phaseStart, float _phaseEnd){
+        float toEnd = mProcessAnimationLength - _phaseStart * mProcessAnimationLength;
+        float fromStart = _phaseEnd * mProcessAnimationLength;
+        float filled = mProcessAnimationLength - (toEnd + fromStart);
+        return new DashPathEffect(
+                new float[] { 0, fromStart, filled, toEnd }, 0
+        );
     }
 
     /** It will be called by animator to fill the hexagon area smoothly after loading finished */
@@ -310,74 +317,110 @@ public class LoaderView extends View {
 
     /** It will be called by animator to draw failure figure on filled hexagon area*/
     public void setPhaseSuccessOrFailure(float _phaseSuccessOrFailure){
-        mSuccessOrFailPaint.setPathEffect(createPathEffect(mSuccessOrFailedAnimationLength, _phaseSuccessOrFailure, 0.0f));
+        mSuccessOrFailPaint.setPathEffect(createLinearPathEffect(
+                mCurrentState == State.SUCCESS ? mSuccessAnimationLength : mFailedAnimationLength,
+                _phaseSuccessOrFailure));
         invalidate();
     }
 
-    private static PathEffect createPathEffect(float _pathLength, float _phase, float _offset) {
+    private static PathEffect createLinearPathEffect(float _pathLength, float _phase) {
         return new DashPathEffect(
-                new float[] { _pathLength, _pathLength},
-                Math.max(_phase * _pathLength, _offset)
-            );
+                new float[] { _phase * _pathLength, _pathLength}, 0
+        );
     }
+
+    @Override
+    public void onAnimationStart(Animator animation) { /* Unimplemented method*/ }
+
+    @Override
+    public void onAnimationEnd(Animator animation) {
+        if (animatorFilling == animation && mAnimationState == State.FILLING) {
+            switch (mCurrentState) {
+                case SUCCESS:
+                    startDrawSuccessFigure();
+                    break;
+                case CANCELLED:
+                case FAILURE:
+                    startDrawFailureFigure();
+                    break;
+            }
+        } else if (animatorEnd == animation && mAnimationState == State.FILLING) {
+            animatorFilling.start();
+        }
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation) { /* Unimplemented method*/ }
+
+    @Override
+    public void onAnimationRepeat(Animator animation) { /* Unimplemented method*/ }
 
     @Override
     public void onDraw(Canvas _canvas) {
         super.onDraw(_canvas);
         switch (mAnimationState){
-            case PROCESSING:
+            case INITIALL: {
                 _canvas.drawPath(mHexagonPath, mProcessPaint);
-                _canvas.drawPath(mHexagonPath, mEndProcessPaint);
-                _canvas.drawPath(mHexagonPath, mBorderPaint);
                 if (mSrcDrawable != null) {
-                    drawSrc(_canvas, mSrcDrawable);
+                    drawCenterInsideImage(_canvas, mSrcDrawable);
                 }
-                break;
-            case FILLING:
+            } break;
+            case PROCESSING: {
+                _canvas.drawPath(mHexagonPath, mBorderPaint);
+                _canvas.drawPath(mHexagonPath, mProcessPaint);
+                if (mSrcDrawable != null) {
+                    drawCenterInsideImage(_canvas, mSrcDrawable);
+                }
+            } break;
+            case FILLING: {
                 _canvas.drawPath(mHexagonPath, mFillArePaint);
-                break;
-            case SUCCESS:
+            } break;
+            case SUCCESS: {
                 _canvas.drawPath(mHexagonPath, mFillArePaint);
                 _canvas.drawPath(successIconPath, mSuccessOrFailPaint);
-                break;
-            case FAILURE:
+            } break;
+            case FAILURE: {
                 _canvas.drawPath(mHexagonPath, mFillArePaint);
                 _canvas.drawPath(dismissedIconPath, mSuccessOrFailPaint);
-                break;
+            } break;
         }
     }
 
-    private void drawSrc(final Canvas _canvas, final Drawable _drawable) {
-        int drawableWidth = _drawable.getIntrinsicWidth() + 30, drawableHeight = _drawable.getIntrinsicHeight() + 30;
-        int canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
+    private void drawCenterImage(Canvas _canvas, Drawable _drawable) {
+        float drawableWidth = _drawable.getMinimumWidth(), drawableHeight = _drawable.getMinimumHeight();
 
-        drawableWidth = drawableWidth == -1 ? canvasWidth : drawableWidth;
-        drawableHeight = drawableHeight == -1 ? canvasHeight : drawableHeight;
+        float centerY = (float) (mHexagonSide + mBorderSize / 2f);
+        float centerX = (float) getWidth() / 2;
 
-        if (drawableWidth < canvasWidth || drawableHeight < canvasHeight) {
-            float centerY = (float) (mHexagonSide + mBorderSize / 2f);
-            float centerX = (float) getWidth() / 2;
+        mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
+                (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
+        _drawable.draw(_canvas);
+    }
 
-            mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
-                    (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
-            _drawable.draw(_canvas);
+    private void drawCenterInsideImage(final Canvas _canvas, final Drawable _drawable) {
+        float drawableWidth = _drawable.getMinimumWidth(), drawableHeight = _drawable.getMinimumHeight();
+        float canvasWidth = _canvas.getWidth(), canvasHeight = _canvas.getHeight();
+
+        final float scale;
+        final float offsetX, offsetY;
+
+        if (drawableWidth <= canvasWidth && drawableHeight <= canvasHeight) {
+            drawCenterImage(_canvas, _drawable);
+            return;
+        } else if (drawableWidth <= drawableHeight) {
+            scale = canvasHeight / drawableHeight;
         } else {
-            float scale;
-            _drawable.setBounds(0, 0, drawableWidth, drawableHeight);
-            if (drawableWidth * canvasHeight > canvasWidth * drawableHeight) {//image is wider
-                scale = (float) canvasHeight / (float) drawableHeight;
-            } else { //image is higher
-                scale = (float) canvasWidth / (float) drawableWidth;
-            }
-            float dx = (canvasWidth - drawableWidth * scale) / 2f;
-            float dy = (canvasHeight - drawableHeight * scale) / 2f;
-
-            _canvas.save();
-            _canvas.scale(scale, scale);
-            _canvas.translate(Math.round(dx), Math.round(dy));
-            _drawable.draw(_canvas);
-            _canvas.restore();
+            scale = canvasWidth / drawableWidth;
         }
+        offsetX = (canvasWidth - (drawableWidth * scale)) / 2;
+        offsetY = (canvasHeight - (drawableHeight * scale)) / 2;
+        _drawable.setBounds(0, 0, Math.round(drawableWidth), Math.round(drawableHeight));
+
+        _canvas.save();
+        _canvas.translate(Math.round(offsetX), Math.round(offsetY));
+        _canvas.scale(scale, scale);
+        _drawable.draw(_canvas);
+        _canvas.restore();
     }
 }
 

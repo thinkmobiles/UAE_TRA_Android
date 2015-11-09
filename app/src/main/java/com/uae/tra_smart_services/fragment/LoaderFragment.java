@@ -63,7 +63,7 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
             bgColor = Color.parseColor("#505050");
         }
         lvLoader = findView(R.id.lvLoaderView);
-        lvLoader.setTag(bgColor);
+        lvLoader.init(bgColor);
         tvLoaderTitleText = findView(R.id.tvLoaderTitleText);
         srvRating = findView(R.id.srvRating_FL);
         srvRating.init(this);
