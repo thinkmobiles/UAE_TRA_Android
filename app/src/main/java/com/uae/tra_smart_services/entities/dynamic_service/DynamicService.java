@@ -44,8 +44,8 @@ public class DynamicService implements SaveStateObject {
         buttonText = _savedInstanceState.getString(KEY_BUTTON_TEXT);
         serviceName = _savedInstanceState.getString(KEY_SERVICE_NAME);
 
-        pages = new ArrayList<>();
         final int pageNumber = _savedInstanceState.getInt(KEY_PAGES_NUMBER);
+        pages = new ArrayList<>(pageNumber);
         for (int i = 0; i < pageNumber; i++) {
             final Bundle savedPageState = _savedInstanceState.getBundle(KEY_PAGE + i);
             if (savedPageState != null) {

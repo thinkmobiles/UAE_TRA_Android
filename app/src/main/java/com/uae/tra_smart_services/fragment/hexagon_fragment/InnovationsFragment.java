@@ -26,14 +26,14 @@ import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.customviews.ThemedImageView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
-import com.uae.tra_smart_services.entities.AttachmentManager;
-import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
+import com.uae.tra_smart_services.manager.AttachmentManager;
+import com.uae.tra_smart_services.manager.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.rest.model.request.PostInnovationRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.PostInnovationRequest;
 

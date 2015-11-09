@@ -13,10 +13,10 @@ import android.view.MenuItem;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
-import com.uae.tra_smart_services.entities.AttachmentManager;
-import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.global.AttachmentOption;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
+import com.uae.tra_smart_services.manager.AttachmentManager;
+import com.uae.tra_smart_services.manager.AttachmentManager.OnImageGetCallback;
 
 /**
  * Created by mobimaks on 11.08.2015.

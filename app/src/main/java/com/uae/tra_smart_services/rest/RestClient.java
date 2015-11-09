@@ -19,6 +19,7 @@ public final class RestClient {
 
     private static RestClient mRestClient;
     private TRAServicesAPI mTRAServicesAPI;
+    private DynamicServicesApi mDynamicServicesApi;
 
     private RestClient() {
         final OkHttpClient okHttpClient = new OkHttpClient();
@@ -29,10 +30,11 @@ public final class RestClient {
                 .setEndpoint(ServerConstants.BASE_URL)
                 .setClient(new OkClient(okHttpClient));
         if (BuildConfig.DEBUG) {
-            builder.setLogLevel(RestAdapter.LogLevel.FULL);
+            builder.setLogLevel(RestAdapter.LogLevel.HEADERS);
         }
         final RestAdapter adapter = builder.build();
         mTRAServicesAPI = adapter.create(TRAServicesAPI.class);
+        mDynamicServicesApi = adapter.create(DynamicServicesApi.class);
     }
 
     public static RestClient getInstance() {
@@ -44,5 +46,9 @@ public final class RestClient {
 
     public final TRAServicesAPI getTRAServicesAPI() {
         return mTRAServicesAPI;
+    }
+
+    public final DynamicServicesApi getDynamicServicesApi() {
+        return mDynamicServicesApi;
     }
 }

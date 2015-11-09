@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.entities;
+package com.uae.tra_smart_services.manager;
 
 import android.Manifest;
 import android.app.Activity;
@@ -17,10 +17,11 @@ import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog;
-import com.uae.tra_smart_services.entities.PermissionManager.OnPermissionRequestSuccessListener;
+import com.uae.tra_smart_services.entities.Permission;
 import com.uae.tra_smart_services.global.AttachmentOption;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
+import com.uae.tra_smart_services.manager.PermissionManager.OnPermissionRequestSuccessListener;
 import com.uae.tra_smart_services.util.IntentUtils;
 
 import java.io.File;

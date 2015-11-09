@@ -1,5 +1,6 @@
 package com.uae.tra_smart_services.entities.dynamic_service.input_item;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,12 +23,14 @@ public class AttachmentInputItem extends BaseInputItem implements OnClickListene
 
     private static final String KEY_PREFIX = AttachmentInputItem.class.getSimpleName();
     private static final String KEY_ATTACHMENT_URI = KEY_PREFIX + "_ATTACHMENT_URI";
+    private static final String KEY_ATTACHMENT_ID = KEY_PREFIX + "_ATTACHMENT_ID";
 
     private RelativeLayout rlContainer;
     private TextView tvDisplayName, tvText;
     private ImageView ivAttachment;
 
     private Uri mAttachmentUri;
+    private String mAttachmentId;
     private OnOpenAttachmentPickerListener mListener;
 
     protected AttachmentInputItem() {
@@ -55,6 +58,20 @@ public class AttachmentInputItem extends BaseInputItem implements OnClickListene
             ivAttachment.setImageResource(R.drawable.ic_check);
             tvText.setText(mAttachmentUri.toString());
         }
+
+        invalidateUploadIndicator();
+    }
+
+    private void invalidateUploadIndicator() {
+        if (mAttachmentUri != null) {
+            if (mAttachmentId == null) {
+                ivAttachment.setBackgroundColor(Color.RED);
+            } else {
+                ivAttachment.setBackgroundColor(Color.GREEN);
+            }
+        } else {
+            ivAttachment.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
     @Override
@@ -76,17 +93,32 @@ public class AttachmentInputItem extends BaseInputItem implements OnClickListene
         return mAttachmentUri;
     }
 
+    public String getAttachmentId() {
+        return mAttachmentId;
+    }
+
+    public void setAttachmentId(final String _attachmentId) {
+        mAttachmentId = _attachmentId;
+        invalidateUploadIndicator();
+    }
+
     public void setAttachmentCallback(OnOpenAttachmentPickerListener _listener) {
         mListener = _listener;
     }
 
+    public boolean isAttachmentUploaded() {
+        return mAttachmentId != null;
+    }
+
     public void onAttachmentStateChanged(@Nullable Uri _uri) {
         mAttachmentUri = _uri;
+        mAttachmentId = null;
         invalidateAttachmentIndicator();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle _outState) {
+        _outState.putString(KEY_ATTACHMENT_ID, mAttachmentId);
         _outState.putParcelable(KEY_ATTACHMENT_URI, mAttachmentUri);
         super.onSaveInstanceState(_outState);
     }
@@ -95,11 +127,16 @@ public class AttachmentInputItem extends BaseInputItem implements OnClickListene
     public void onRestoreInstanceState(@NonNull Bundle _savedInstanceState) {
         super.onRestoreInstanceState(_savedInstanceState);
         mAttachmentUri = _savedInstanceState.getParcelable(KEY_ATTACHMENT_URI);
+        mAttachmentId = _savedInstanceState.getString(KEY_ATTACHMENT_ID);
     }
 
     @Override
     public boolean isDataValid() {
-        return !isRequired() || mAttachmentUri != null;
+        if (isRequired()) {
+            return mAttachmentId != null;
+        } else {
+            return mAttachmentUri == null || mAttachmentId != null;
+        }
     }
 
     @Nullable

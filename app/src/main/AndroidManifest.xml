@@ -54,6 +54,10 @@
             android:name=".rest.DynamicRestService"
             android:exported="false"/>
 
+        <service
+            android:name=".service.AttachmentUploadService"
+            android:exported="false"/>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="8f2fec49c70c4b9ae542be587d9897f637adce08"/>

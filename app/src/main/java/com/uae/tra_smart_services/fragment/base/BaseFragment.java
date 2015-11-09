@@ -34,6 +34,7 @@ import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.interfaces.SpiceLoader;
 import com.uae.tra_smart_services.interfaces.ToolbarTitleManager;
+import com.uae.tra_smart_services.service.AttachmentUploadService;
 
 import org.apache.commons.lang3.text.WordUtils;
 
@@ -122,12 +123,21 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     }
 
     protected final void loaderDialogShow(String _title, Loader.Cancelled _callBack) {
-        ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
+        Log.d(AttachmentUploadService.TAG, "loaderDialogShow");
+        ProgressDialog dialog = findFragmentByTag(ProgressDialog.TAG);
+        if (dialog == null) {
+            Log.d(AttachmentUploadService.TAG, "loaderDialogShow new");
+            ProgressDialog.newInstance(_title, _callBack).show(getFragmentManager());
+        } else if (!dialog.isVisible()) {
+            Log.d(AttachmentUploadService.TAG, "loaderDialogShow set visible");
+            getFragmentManager().beginTransaction().show(dialog).commit();
+        }
     }
 
     protected final boolean loaderDialogDismiss() {
         Log.d("DeviceBrand", "loaderDialogDismiss");
         ProgressDialog dialog = findFragmentByTag(ProgressDialog.TAG);
+        Log.d(AttachmentUploadService.TAG, "loaderDialogDismiss dialog = " + String.valueOf(dialog));
         if (dialog != null) {
             dialog.dismiss();
             return true;
