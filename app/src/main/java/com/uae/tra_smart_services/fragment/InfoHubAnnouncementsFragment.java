@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ import com.uae.tra_smart_services.util.EndlessScrollListener;
  */
 public class InfoHubAnnouncementsFragment extends BaseFragment
         implements OnInfoHubItemClickListener<GetAnnouncementsResponseModel.Announcement>,
-        EndlessScrollListener.OnLoadMoreListener, SearchView.OnQueryTextListener, OperationStateManager, MenuItemCompat.OnActionExpandListener, View.OnClickListener, HexagonSwipeRefreshLayout.Listener {
+        EndlessScrollListener.OnLoadMoreListener, SearchView.OnQueryTextListener, OperationStateManager, MenuItemCompat.OnActionExpandListener, View.OnClickListener, HexagonSwipeRefreshLayout.Listener, ViewTreeObserver.OnGlobalLayoutListener {
 
     private RecyclerView mList;
     private LinearLayoutManager mLayoutManager;
@@ -69,7 +70,13 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getView().getViewTreeObserver().addOnGlobalLayoutListener(this);
+    }
+
+    @Override
+    public void onGlobalLayout() {
         startFirstLoad();
+        getView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
 
     @Override

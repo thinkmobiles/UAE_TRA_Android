@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -45,7 +46,7 @@ import java.util.Arrays;
  * Created by ak-buffalo on 19.08.15.
  */
 public final class InfoHubFragment extends BaseFragment
-        implements OnLoadMoreListener, OnQueryTextListener, OnActionExpandListener, View.OnClickListener, HexagonSwipeRefreshLayout.Listener {
+        implements OnLoadMoreListener, OnQueryTextListener, OnActionExpandListener, View.OnClickListener, HexagonSwipeRefreshLayout.Listener, ViewTreeObserver.OnGlobalLayoutListener {
 
     private static final String KEY_TRANSACTIONS_REQUEST = "TRANSACTIONS_REQUEST";
     private static final int DEFAULT_PAGE_SIZE_TRANSACTIONS = 10;
@@ -139,7 +140,13 @@ public final class InfoHubFragment extends BaseFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getView().getViewTreeObserver().addOnGlobalLayoutListener(this);
+    }
+
+    @Override
+    public void onGlobalLayout() {
         startFirstLoad();
+        getView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
 
     @Override

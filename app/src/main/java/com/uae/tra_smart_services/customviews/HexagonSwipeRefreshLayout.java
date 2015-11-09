@@ -62,10 +62,11 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
         return params;
     }
 
+    boolean afterLoading;
     @Override
     public void onLoadingFinished(boolean _isSucceed) {
+        afterLoading = true;
         loaderView.stopProcessing();
-        loaderView.setAlpha(0);
         mDraggingState = ViewDragHelper.STATE_IDLE;
         mDragHelper.smoothSlideViewTo(listview, 0, 0);
         if(!_isSucceed && listview.getAdapter().getItemCount() == 0) {
@@ -95,7 +96,9 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             float loaderPhase = (top / (float) mVerticalRange);
-            loaderView.setProgress(loaderPhase);
+            if(!afterLoading){
+                loaderView.setProgress(loaderPhase);
+            }
             mDraggingBorder = top;
         }
 
@@ -105,7 +108,7 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
 
         @Override
         public boolean tryCaptureView(View view, int i) {
-            return view == listview;
+            return (view == listview) ? !(afterLoading = false) : false;
         }
 
         @Override
@@ -124,6 +127,7 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
             }
             if (mDraggingBorder == rangeToCheck) {
                 mIsOpen = true;
+                afterLoading = false;
                 mDraggingState = ViewDragHelper.STATE_SETTLING;
                 listener.onRefresh();
                 return;

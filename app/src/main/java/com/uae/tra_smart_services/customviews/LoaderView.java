@@ -23,6 +23,11 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.uae.tra_smart_services.R;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by ak-buffalo on 21.09.15.
  */
@@ -92,7 +97,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
         initParams(context, attrs);
         initPaints();
-        initAnimators();
         tintDrawableIfNeed();
     }
 
@@ -150,14 +154,14 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     }
 
     private void initAnimators(){
-        animatorStart = ObjectAnimator.ofFloat(LoaderView.this, "phaseStart", 1.0f, 0.0f);
+        animatorStart = ObjectAnimator.ofFloat(LoaderView.this, "phaseStart", 0.0f, 1.0f);
         animatorStart.setDuration(mLoadingAnimPeriod);
         animatorStart.setInterpolator(new DecelerateInterpolator(1.3f));
         animatorStart.setRepeatCount(ObjectAnimator.INFINITE);
         animatorStart.setRepeatMode(ObjectAnimator.RESTART);
         animatorStart.addListener(this);
 
-        animatorEnd = ObjectAnimator.ofFloat(LoaderView.this, "phaseEnd", 1.0f, 0.0f);
+        animatorEnd = ObjectAnimator.ofFloat(LoaderView.this, "phaseEnd", 0.0f, 1.0f);
         animatorEnd.setDuration(mLoadingAnimPeriod);
         animatorEnd.setInterpolator(new AccelerateInterpolator(0.7f));
         animatorEnd.setRepeatCount(ObjectAnimator.INFINITE);
@@ -169,7 +173,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
         animatorFilling.setInterpolator(new DecelerateInterpolator());
         animatorFilling.addListener(this);
 
-        animatorSuccessOrFailed = ObjectAnimator.ofFloat(LoaderView.this, "phaseSuccessOrFailure", 1.0f, 0.0f);
+        animatorSuccessOrFailed = ObjectAnimator.ofFloat(LoaderView.this, "phaseSuccessOrFailure", 0.0f, 1.0f);
         animatorSuccessOrFailed.setDuration(mStatusAnimPeriod);
         animatorSuccessOrFailed.addListener(this);
     }
@@ -237,6 +241,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     @Override
     public void onGlobalLayout() {
         initPaths();
+        initAnimators();
         getViewTreeObserver().removeGlobalOnLayoutListener(this);
     }
 
@@ -257,7 +262,10 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
             return;
         }
         setAlpha(progress);
-        setPhaseStart(1 - progress);
+        mProcessPaint.setPathEffect(new DashPathEffect(
+                new float[] { progress * mProcessAnimationLength, mProcessAnimationLength}, 0
+        ));
+        invalidate();
     }
 
     public void startProcessing(){
@@ -268,6 +276,8 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     }
 
     public void stopProcessing(){
+        setAlpha(0);
+        mAnimationState = State.INITIALL;
         animatorStart.cancel();
         animatorEnd.cancel();
     }
@@ -289,15 +299,22 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
         animatorSuccessOrFailed.start();
     }
 
+    private float phaseStart;
     /** It will be called by animator to draw the start of loading animation */
     public void setPhaseStart(float _phaseStart) {
-        mProcessPaint.setPathEffect(createPathEffect(mProcessAnimationLength, _phaseStart, 0.0f));
-        invalidate();
+        phaseStart = _phaseStart;
     }
 
     /** It will be called by animator to draw the end of loading animation */
     public void setPhaseEnd(float _phaseEnd) {
-        mEndProcessPaint.setPathEffect(createPathEffect(mProcessAnimationLength, _phaseEnd, 0.0f));
+        DashPathEffect pathEffectStart = new DashPathEffect(
+                new float[] { phaseStart * mProcessAnimationLength, mProcessAnimationLength }, 0
+        );
+        mProcessPaint.setPathEffect(pathEffectStart);
+        DashPathEffect pathEffectEnd = new DashPathEffect(
+                new float[] { _phaseEnd * mProcessAnimationLength, mProcessAnimationLength }, 0
+        );
+        mEndProcessPaint.setPathEffect(pathEffectEnd);
         invalidate();
     }
 
@@ -317,9 +334,9 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
     private static PathEffect createPathEffect(float _pathLength, float _phase, float _offset) {
         return new DashPathEffect(
-                new float[] { _pathLength, _pathLength},
-                Math.max(_phase * _pathLength, _offset)
-            );
+                new float[] { _phase * _pathLength, _pathLength},
+                0
+        );
     }
 
     @Override
@@ -339,9 +356,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
             }
         } else if (animatorEnd == animation && mAnimationState == State.FILLING) {
             animatorFilling.start();
-        } else if (animatorEnd == animation && mAnimationState == State.PROCESSING){
-            mAnimationState = State.INITIALL;
-            invalidate();
         }
     }
 
@@ -382,7 +396,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
             } break;
         }
     }
-
 
     private void drawCenterImage(Canvas _canvas, Drawable _drawable) {
         float drawableWidth = _drawable.getMinimumWidth(), drawableHeight = _drawable.getMinimumHeight();
