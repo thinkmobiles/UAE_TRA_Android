@@ -61,7 +61,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
 
     private final Path mHexagonPath, successIconPath, dismissedIconPath;
-    private final Paint mBorderPaint, mProcessPaint, mEndProcessPaint, mFillArePaint, mSuccessOrFailPaint;
+    private final Paint mBorderPaint, mProcessPaint, mFillArePaint, mSuccessOrFailPaint;
 
     private ObjectAnimator animatorStart;
     private ObjectAnimator animatorEnd;
@@ -85,7 +85,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
         mBorderPaint = new Paint();
         mProcessPaint = new Paint();
-        mEndProcessPaint = new Paint();
         mFillArePaint = new Paint();
         mSuccessOrFailPaint = new Paint();
 
@@ -126,10 +125,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
         mProcessPaint.setColor(mProcessBorderColor);
         mProcessPaint.setStrokeWidth(mProcessBorderSize);
         mProcessPaint.setStyle(Paint.Style.STROKE);
-
-        mEndProcessPaint.setAntiAlias(true);
-        mEndProcessPaint.setStrokeWidth(mBorderSize + 1);
-        mEndProcessPaint.setStyle(Paint.Style.STROKE);
 
         mFillArePaint.setAntiAlias(true);
         mFillArePaint.setColor(mProcessBorderColor);
@@ -174,7 +169,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
 
     public void init(int _color){
         mAnimationState = State.INITIALL;
-        mEndProcessPaint.setColor(_color);
         mSuccessOrFailPaint.setColor(_color);
     }
 
@@ -372,7 +366,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
             case PROCESSING: {
                 _canvas.drawPath(mHexagonPath, mBorderPaint);
                 _canvas.drawPath(mHexagonPath, mProcessPaint);
-//                _canvas.drawPath(mHexagonPath, mEndProcessPaint);
                 if (mSrcDrawable != null) {
                     drawCenterInsideImage(_canvas, mSrcDrawable);
                 }
