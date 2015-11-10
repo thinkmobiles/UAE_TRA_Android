@@ -22,14 +22,10 @@ public final class InputItemsPage implements SaveStateObject {
 
     //region Save keys
     private static final String KEY_PREFIX = InputItemsPage.class.getSimpleName();
-    private static final String KEY_PAGE_NUMBER = KEY_PREFIX + "_PAGE_NUMBER";
     private static final String KEY_ID = KEY_PREFIX + "_ID";
     private static final String KEY_INPUT_ITEMS_NUMBER = KEY_PREFIX + "_INPUT_ITEMS_NUMBER";
     private static final String KEY_INPUT_ITEM = KEY_PREFIX + "_INPUT_ITEM_";
     //endregion
-
-    @Expose
-    public int number;
 
     @Expose
     @SerializedName("_id")
@@ -41,10 +37,10 @@ public final class InputItemsPage implements SaveStateObject {
 
     @Override
     public final void onRestoreInstanceState(@NonNull final Bundle _savedInstanceState) {
-        number = _savedInstanceState.getInt(KEY_PAGE_NUMBER);
         id = _savedInstanceState.getString(KEY_ID);
 
         final int inputItemsNumber = _savedInstanceState.getInt(KEY_INPUT_ITEMS_NUMBER);
+        inputItems = new ArrayList<>(inputItemsNumber);
         final InputItemBuilderFabric fabric = new InputItemBuilderFabric();
         for (int i = 0; i < inputItemsNumber; i++) {
             final Bundle savedItemState = _savedInstanceState.getBundle(KEY_INPUT_ITEM + i);
@@ -60,7 +56,6 @@ public final class InputItemsPage implements SaveStateObject {
 
     @Override
     public final void onSaveInstanceState(@NonNull final Bundle _outState) {
-        _outState.putInt(KEY_PAGE_NUMBER, number);
         _outState.putString(KEY_ID, id);
 
         final int inputItemsNumber = inputItems.size();

@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.entities;
+package com.uae.tra_smart_services.manager;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.entities.Permission;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
 import com.uae.tra_smart_services.util.PermissionUtils;

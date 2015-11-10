@@ -28,8 +28,6 @@ import com.uae.tra_smart_services.customviews.ProfileController.ControllerButton
 import com.uae.tra_smart_services.customviews.ProfileController.OnControllerButtonClickListener;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
-import com.uae.tra_smart_services.entities.AttachmentManager;
-import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
@@ -37,6 +35,8 @@ import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.Loader.BackButton;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
+import com.uae.tra_smart_services.manager.AttachmentManager;
+import com.uae.tra_smart_services.manager.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.rest.model.request.UserNameModel;
 import com.uae.tra_smart_services.rest.model.response.UserProfileResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.ChangeUserProfileRequest;

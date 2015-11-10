@@ -17,7 +17,6 @@ import java.util.Collections;
  */
 public final class InputItemsPageDeserializer extends BaseDeserializer<InputItemsPage> {
 
-    private static final String NUMBER = "number";
     private static final String ID = "_id";
     private static final String INPUT_ITEMS = "inputItems";
 
@@ -25,7 +24,6 @@ public final class InputItemsPageDeserializer extends BaseDeserializer<InputItem
     public InputItemsPage deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final JsonObject mainObject = json.getAsJsonObject();
         final InputItemsPage inputItemsPage = new InputItemsPage();
-        inputItemsPage.number = mainObject.get(NUMBER).getAsInt();
         inputItemsPage.id = mainObject.get(ID).getAsString();
 
         final Type listType = new TypeToken<ArrayList<BaseInputItem>>() {}.getType();

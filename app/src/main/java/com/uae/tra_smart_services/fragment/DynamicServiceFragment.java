@@ -19,19 +19,26 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment.OnOkListener;
 import com.uae.tra_smart_services.dialog.AttachmentPickerDialog.OnImageSourceSelectListener;
-import com.uae.tra_smart_services.entities.AttachmentManager;
-import com.uae.tra_smart_services.entities.AttachmentManager.OnImageGetCallback;
 import com.uae.tra_smart_services.entities.dynamic_service.BaseInputItem;
 import com.uae.tra_smart_services.entities.dynamic_service.DynamicService;
 import com.uae.tra_smart_services.entities.dynamic_service.InputItemsPage;
 import com.uae.tra_smart_services.entities.dynamic_service.input_item.AttachmentInputItem;
 import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.global.AttachmentOption;
+import com.uae.tra_smart_services.interfaces.AttachmentResultListener;
 import com.uae.tra_smart_services.interfaces.OnOpenAttachmentPickerListener;
 import com.uae.tra_smart_services.interfaces.OnOpenPermissionExplanationDialogListener;
+import com.uae.tra_smart_services.manager.AttachmentManager;
+import com.uae.tra_smart_services.manager.AttachmentManager.OnImageGetCallback;
+import com.uae.tra_smart_services.manager.AttachmentUploadServiceManager;
 import com.uae.tra_smart_services.rest.model.response.DynamicServiceInfoResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DynamicServiceDetailsRequest;
 import com.uae.tra_smart_services.rest.robo_requests.DynamicServiceRequest;
+import com.uae.tra_smart_services.service.AttachmentUploadService;
+import com.uae.tra_smart_services.util.Logger;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import retrofit.client.Response;
 
@@ -40,13 +47,14 @@ import retrofit.client.Response;
  */
 public final class DynamicServiceFragment extends BaseFragment
         implements OnClickListener, OnOpenAttachmentPickerListener, OnImageGetCallback,
-        OnOpenPermissionExplanationDialogListener, OnOkListener, OnImageSourceSelectListener {
+        OnOpenPermissionExplanationDialogListener, OnOkListener, OnImageSourceSelectListener, AttachmentResultListener {
 
     //region Const
     private static final String KEY_DYNAMIC_REQUEST = "DYNAMIC_REQUEST";
     private static final String KEY_SERVICE_INFO = "SERVICE_INFO";
     private static final String KEY_DYNAMIC_SERVICE_REQUEST = "DYNAMIC_SERVICE_REQUEST";
     private static final String KEY_DYNAMIC_SERVICE = "DYNAMIC_SERVICE";
+    private static final String KEY_WAITING_ATTACHMENTS_TO_UPLOAD = "WAITING_ATTACHMENTS_TO_UPLOAD";
 
     private static final String KEY_ATTACHMENT_CALLER_ID = "ATTACHMENT_CALLER_ID";
     //endregion
@@ -64,6 +72,9 @@ public final class DynamicServiceFragment extends BaseFragment
     private AttachmentManager mAttachmentManager;
     private String mAttachmentCallerId;
     private boolean mIsServiceLoaded;
+
+    private AttachmentUploadServiceManager mAttachmentUploadManager;
+    private boolean mIsWaitingAttachmentsToUploadBeforeSendData;
     //endregion
 
     public static DynamicServiceFragment newInstance(final DynamicServiceInfoResponseModel _serviceInfo) {
@@ -78,6 +89,7 @@ public final class DynamicServiceFragment extends BaseFragment
     public void onCreate(final Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
         mAttachmentManager = new AttachmentManager(getActivity(), this, this);
+        mAttachmentUploadManager = new AttachmentUploadServiceManager(getActivity());
 
         final Bundle args = getArguments();
         mServiceInfo = args.getParcelable(KEY_SERVICE_INFO);
@@ -104,6 +116,7 @@ public final class DynamicServiceFragment extends BaseFragment
             mAttachmentManager.onRestoreInstanceState(_savedInstanceState);
             mAttachmentCallerId = _savedInstanceState.getString(KEY_ATTACHMENT_CALLER_ID, "");
             mIsServiceLoaded = _savedInstanceState.getBoolean(KEY_DYNAMIC_SERVICE);
+            mIsWaitingAttachmentsToUploadBeforeSendData = _savedInstanceState.getBoolean(KEY_WAITING_ATTACHMENTS_TO_UPLOAD);
         } else {
             mIsServiceLoaded = false;
         }
@@ -141,6 +154,9 @@ public final class DynamicServiceFragment extends BaseFragment
         button.setText(mDynamicService.buttonText);
         button.setOnClickListener(this);
         llContainer.addView(button);
+
+        mAttachmentUploadManager.startAndConnectToService();
+        mAttachmentUploadManager.subscribe(this);
     }
 
     @Override
@@ -201,7 +217,12 @@ public final class DynamicServiceFragment extends BaseFragment
             for (InputItemsPage page : mDynamicService.pages) {
                 for (BaseInputItem inputItem : page.inputItems) {
                     if (inputItem.getId().equals(mAttachmentCallerId)) {
-                        ((AttachmentInputItem) inputItem).onAttachmentStateChanged(_imageUri);
+                        AttachmentInputItem attachmentInputItem = (AttachmentInputItem) inputItem;
+                        attachmentInputItem.onAttachmentStateChanged(_imageUri);
+                        if (_imageUri != null) {
+                            Logger.d(AttachmentUploadService.TAG, "notifyInputItemDataChanged uploadAttachmentIfNotPending");
+                            mAttachmentUploadManager.uploadAttachmentIfNotPending(_imageUri);
+                        }
                         break searchAttachmentCaller;
                     }
                 }
@@ -213,11 +234,14 @@ public final class DynamicServiceFragment extends BaseFragment
     @Override
     public final void onStart() {
         super.onStart();
+        Logger.d(AttachmentUploadService.TAG, "onStart");
         getSpiceManager().getFromCache(DynamicService.class, KEY_DYNAMIC_SERVICE_REQUEST,
                 DurationInMillis.ALWAYS_RETURNED, mServiceRequestListener);
 
         getDynamicSpiceManager().getFromCache(Response.class, KEY_DYNAMIC_REQUEST,
                 DurationInMillis.ALWAYS_RETURNED, mDynamicRequestListener);
+
+        mAttachmentUploadManager.bindToServiceAndSubscribeIfShould(this);
     }
 
     @Override
@@ -231,12 +255,89 @@ public final class DynamicServiceFragment extends BaseFragment
 
     private void validateAndSendData() {
         hideKeyboard(getView());
-        if (mDynamicService.isDataValid()) {
-            final DynamicServiceRequest request = new DynamicServiceRequest(mDynamicService);
-            loaderDialogShow();
-            getDynamicSpiceManager().execute(request, KEY_DYNAMIC_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mDynamicRequestListener);
+
+        if (validateAttachmentsUploadState()) {
+            if (mDynamicService.isDataValid()) {
+                loaderDialogShow();
+                final DynamicServiceRequest request = new DynamicServiceRequest(mDynamicService);
+                getDynamicSpiceManager().execute(request, KEY_DYNAMIC_REQUEST, DurationInMillis.ALWAYS_EXPIRED, mDynamicRequestListener);
+            } else {
+                loaderDialogDismiss();
+                Toast.makeText(getActivity(), "Invalid data", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(getActivity(), "Invalid data", Toast.LENGTH_SHORT).show();
+            loaderDialogShow();
+        }
+    }
+
+    private boolean validateAttachmentsUploadState() {
+        Set<Uri> attachmentSetToUpload = getUnUploadedAttachments();
+        mIsWaitingAttachmentsToUploadBeforeSendData = !attachmentSetToUpload.isEmpty();
+        if (mIsWaitingAttachmentsToUploadBeforeSendData) {
+            for (Uri attachmentUri : attachmentSetToUpload) {
+                mAttachmentUploadManager.uploadAttachmentIfNotPending(attachmentUri);
+            }
+        }
+        return !mIsWaitingAttachmentsToUploadBeforeSendData;
+    }
+
+    @NonNull
+    private Set<Uri> getUnUploadedAttachments() {
+        Set<Uri> attachmentSetToUpload = new LinkedHashSet<>();
+        for (InputItemsPage page : mDynamicService.pages) {
+            for (BaseInputItem inputItem : page.inputItems) {
+                if (inputItem.isAttachmentItem() && !inputItem.isDataValid()) {
+                    AttachmentInputItem attachmentInputItem = (AttachmentInputItem) inputItem;
+                    Uri attachmentUri = attachmentInputItem.getAttachmentUri();
+                    if (attachmentUri != null) {
+                        Logger.d(AttachmentUploadService.TAG, "getUnUploadedAttachments. " + attachmentInputItem.getQueryName() + " | " + attachmentInputItem);
+                        attachmentSetToUpload.add(attachmentUri);
+                    }
+                }
+            }
+        }
+        return attachmentSetToUpload;
+    }
+
+    @Override
+    public void onResult(Uri _attachmentUri, String _result) {
+        notifyAttachmentItemAboutResult(_attachmentUri, _result);
+        Logger.d(AttachmentUploadService.TAG,
+                "Dynamic fragment. onResult: " + _attachmentUri +
+                        " | IsWaiting = " + mIsWaitingAttachmentsToUploadBeforeSendData +
+                        " | isAllUploadsCompleted = " + mAttachmentUploadManager.isAllUploadsCompleted());
+
+        if (mIsWaitingAttachmentsToUploadBeforeSendData && mAttachmentUploadManager.isAllUploadsCompleted()) {
+            mIsWaitingAttachmentsToUploadBeforeSendData = false;
+            validateAndSendData();
+        }
+    }
+
+    @Override
+    public void onError(Uri _attachmentUri) {
+        notifyAttachmentItemAboutResult(_attachmentUri, null);
+        Logger.d(AttachmentUploadService.TAG,
+                "Dynamic fragment. onError: " + _attachmentUri +
+                        " | IsWaiting = " + mIsWaitingAttachmentsToUploadBeforeSendData +
+                        " | isAllUploadsCompleted = " + mAttachmentUploadManager.isAllUploadsCompleted());
+        if (mIsWaitingAttachmentsToUploadBeforeSendData && mAttachmentUploadManager.isAllUploadsCompleted()) {
+            mIsWaitingAttachmentsToUploadBeforeSendData = false;
+            Toast.makeText(getActivity(), "Attachment upload error", Toast.LENGTH_SHORT).show();
+            loaderDialogDismiss();
+        }
+    }
+
+    private void notifyAttachmentItemAboutResult(@NonNull Uri _attachmentUri, @Nullable String _result) {
+        for (InputItemsPage page : mDynamicService.pages) {
+            for (BaseInputItem inputItem : page.inputItems) {
+                if (inputItem.isAttachmentItem()) {
+                    AttachmentInputItem attachmentInputItem = (AttachmentInputItem) inputItem;
+                    if (_attachmentUri.equals(attachmentInputItem.getAttachmentUri())) {
+                        Logger.d(AttachmentUploadService.TAG, "notifyAttachmentItemAboutResult. " + _attachmentUri + ": " + String.valueOf(_result) + "| attachmentInputItem: " + attachmentInputItem);
+                        attachmentInputItem.setAttachmentId(_result);
+                    }
+                }
+            }
         }
     }
 
@@ -249,13 +350,22 @@ public final class DynamicServiceFragment extends BaseFragment
             _outState.putString(KEY_ATTACHMENT_CALLER_ID, mAttachmentCallerId);
         }
         mAttachmentManager.onSaveInstanceState(_outState);
+        _outState.putBoolean(KEY_WAITING_ATTACHMENTS_TO_UPLOAD, mIsWaitingAttachmentsToUploadBeforeSendData);
         _outState.putBoolean(KEY_DYNAMIC_SERVICE, mIsServiceLoaded);
         super.onSaveInstanceState(_outState);
     }
 
     @Override
+    public void onStop() {
+        Logger.d(AttachmentUploadService.TAG, "onStop");
+        mAttachmentUploadManager.unbindIfNeed();
+        super.onStop();
+    }
+
+    @Override
     public void onDestroy() {
         mAttachmentManager = null;
+        mAttachmentUploadManager = null;
         super.onDestroy();
     }
 
