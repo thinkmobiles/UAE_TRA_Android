@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ProgressBar;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -263,7 +264,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         private View container;
         private HexagonView hexagonView;
         private TextView title, description, date;
-        private LoaderView loaderView;
+        private LoaderView progressBar;
         private Space sStartOffset;
         private boolean isProgress;
 
@@ -288,12 +289,12 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         public ViewHolder(View view, boolean _isProgress) {
             super(view);
             isProgress = _isProgress;
-            loaderView = (LoaderView) view;
-            loaderView.setLayoutParams(new ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT)
+            progressBar = (LoaderView) view;
+            progressBar.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT)
             );
-            loaderView.requestLayout();
+            progressBar.requestLayout();
         }
 
         public void setData(int _position, final GetAnnouncementsResponseModel.Announcement _model) {

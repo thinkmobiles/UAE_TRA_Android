@@ -126,10 +126,10 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LoaderView loaderView = (LoaderView) layoutInflater.inflate(R.layout.loader_view, null, true);
         switch (viewType) {
             case VIEW_TYPE_LOADER:
+                LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LoaderView loaderView = (LoaderView) layoutInflater.inflate(R.layout.loader_view, null, true);
                 return new ViewHolder(loaderView, true);
             case VIEW_TYPE_TRANSACTION:
             default:

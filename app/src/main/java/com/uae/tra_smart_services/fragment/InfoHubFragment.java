@@ -108,19 +108,13 @@ public final class InfoHubFragment extends BaseFragment
     private final OperationStateManager mTransactionsOperationStateManager = new OperationStateManager() {
 
         @Override
-        public final void showProgress() {
-            mHexagonSwipeRefreshLayout.onLoadingStart();
-        }
+        public final void showProgress() { mHexagonSwipeRefreshLayout.onLoadingStart(); }
 
         @Override
-        public final void showData() {
-            mHexagonSwipeRefreshLayout.onLoadingFinished(true);
-        }
+        public final void showData() { mHexagonSwipeRefreshLayout.onLoadingFinished(true); }
 
         @Override
-        public final void showEmptyView() {
-            mHexagonSwipeRefreshLayout.onLoadingFinished(false);
-        }
+        public final void showEmptyView() { mHexagonSwipeRefreshLayout.onLoadingFinished(false); }
     };
 
     @Override
@@ -215,7 +209,7 @@ public final class InfoHubFragment extends BaseFragment
     }
 
     private void startFirstLoad() {
-        mHexagonSwipeRefreshLayout.onLoadingStart();
+        mTransactionsOperationStateManager.showProgress();
         mAnnouncementsOperationStateManager.showProgress();
         loadTransactionPage(mTransactionPageNum = 1);
         loadAnnouncementsPage(1);
