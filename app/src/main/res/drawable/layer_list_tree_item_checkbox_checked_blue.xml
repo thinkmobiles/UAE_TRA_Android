@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="oval">
+
+            <gradient
+                android:startColor="@color/hex_primary_blue"
+                android:endColor="@color/hex_primary_blue"
+                android:angle="270"/>
+
+            <stroke
+                android:width="2px"
+                android:color="@color/hex_primary_blue" />
+
+            <size
+                android:height="20dp"
+                android:width="20dp"/>
+        </shape>
+    </item>
+
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/ic_tick"/>
+    </item>
+
+</layer-list>

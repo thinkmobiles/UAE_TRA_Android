@@ -101,5 +101,8 @@
 
     <attr name="dynamicServiceDivider" format="reference"/>
 
+    <attr name="treeNodeBackground" format="reference"/>
+
+    <attr name="treeNodeCheckboxSelector" format="reference"/>
 
 </resources>

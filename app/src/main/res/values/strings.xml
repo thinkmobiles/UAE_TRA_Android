@@ -405,5 +405,7 @@
     <string name="fragment_poor_coverage_location_permission_explanation">Location access is required to detect your location.</string>
     <string name="attachment_permission_denied">Permission request was denied.</string>
 
+    <string name="ic_keyboard_arrow_down">&#xe0c5;</string>
+    <string name="ic_keyboard_arrow_up">&#xe0c8;</string>
 
 </resources>
