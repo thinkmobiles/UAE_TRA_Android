@@ -100,7 +100,7 @@ public class TestActivity extends Activity {
         }
     }
 
-    public class TreeSelectableItemHolder extends TreeNode.BaseNodeViewHolder<TreeSelectableItem> {
+    public class TreeSelectableItemHolder extends TreeNode.BaseNodeViewHolder<TreeSelectableItem> implements TreeNode.TreeNodeClickListener{
         private TextView tvValue;
         private CheckBox nodeSelector;
 
@@ -128,6 +128,8 @@ public class TestActivity extends Activity {
             params.setMargins(LEVEL_PADDING * (mNode.getLevel() - 1), 0, 0, 0);
             view.setLayoutParams(params);
 
+//            mNode.setClickListener(this);
+
             return view;
         }
 
@@ -135,6 +137,17 @@ public class TestActivity extends Activity {
         public void toggleSelectionMode(boolean editModeEnabled) {
             nodeSelector.setVisibility(editModeEnabled ? View.VISIBLE : View.GONE);
             nodeSelector.setChecked(mNode.isSelected());
+        }
+
+        @Override
+        public void toggle(boolean active) {
+            super.toggle(active);
+            mNode.setSelected(active);
+            nodeSelector.setChecked(active);
+        }
+
+        @Override
+        public void onClick(TreeNode node, Object value) {
         }
     }
 
