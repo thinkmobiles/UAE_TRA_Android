@@ -44,7 +44,7 @@ public final class C {
 
     public static final String IS_CANCELABLE = "isCancelabel";
 
-    public static final String TITLE = "title";
+    public static final String TITLE = "text";
 
     public static final String KEY_FAVORITE_SERVICES = "FAVORITE_SERVICES";
 
