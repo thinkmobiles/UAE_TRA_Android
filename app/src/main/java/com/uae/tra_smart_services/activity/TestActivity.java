@@ -89,7 +89,7 @@ public class TestActivity extends Activity {
             }
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(LEVEL_PADDING * mNode.getLevel(), 0, 0, 0);
+            params.setMargins(LEVEL_PADDING * (mNode.getLevel() - 1), 0, 0, 0);
             view.setLayoutParams(params);
             return view;
         }
@@ -125,10 +125,8 @@ public class TestActivity extends Activity {
             nodeSelector.setChecked(node.isSelected());
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(LEVEL_PADDING * (mNode.getLevel() - 1), 0, 0, 0);
+            params.setMargins(LEVEL_PADDING * (mNode.getLevel() - 2), 0, 0, 0);
             view.setLayoutParams(params);
-
-//            mNode.setClickListener(this);
 
             return view;
         }
