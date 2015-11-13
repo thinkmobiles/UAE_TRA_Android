@@ -37,7 +37,8 @@ public class TreeSelectableItemHolder extends TreeNode.BaseNodeViewHolder<Equipm
                 mNode.setSelected(isChecked);
             }
         });
-        nodeSelector.setChecked(node.isSelected());
+        node.setSelected(value.checked);
+        nodeSelector.setChecked(value.checked);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(LEVEL_PADDING * (mNode.getLevel() - 1), 0, 0, 0);

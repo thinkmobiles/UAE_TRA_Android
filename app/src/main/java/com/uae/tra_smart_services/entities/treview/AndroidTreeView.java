@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.entities;
+package com.uae.tra_smart_services.entities.treview;
 
 import android.content.Context;
 import android.text.TextUtils;

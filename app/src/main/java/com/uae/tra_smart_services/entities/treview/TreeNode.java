@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unnamed.b.atv.R;
-import com.uae.tra_smart_services.entities.AndroidTreeView;
 
 import java.util.ArrayList;
 import java.util.Collection;
