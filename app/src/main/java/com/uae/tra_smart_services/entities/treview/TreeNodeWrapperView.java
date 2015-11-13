@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.entities;
+package com.uae.tra_smart_services.entities.treview;
 
 import android.content.Context;
 import android.view.ContextThemeWrapper;
@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import com.unnamed.b.atv.R;
 
 /**
- * Created by Bogdan Melnychuk on 2/10/15.
+ * Created by bmelnychuk on 2/10/15.
  */
 public class TreeNodeWrapperView extends LinearLayout {
     private LinearLayout nodeItemsContainer;

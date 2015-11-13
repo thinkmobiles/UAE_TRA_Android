@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.entities;
+package com.uae.tra_smart_services.entities.treview;
 
 import android.content.Context;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.unnamed.b.atv.model.TreeNode;
 
 /**
- * Created by Bogdan Melnychuk on 2/11/15.
+ * Created by bmelnychuk on 2/11/15.
  */
 public class SimpleViewHolder extends TreeNode.BaseNodeViewHolder<Object> {
 

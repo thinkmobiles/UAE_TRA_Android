@@ -1,4 +1,4 @@
-package com.uae.tra_smart_services.entities;
+package com.uae.tra_smart_services.entities.treview;
 
 import android.content.Context;
 import android.view.View;
@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 
 import com.unnamed.b.atv.R;
 import com.uae.tra_smart_services.entities.AndroidTreeView;
-import com.uae.tra_smart_services.entities.TreeNodeWrapperView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Bogdan Melnychuk on 2/10/15.
+ * Created by bmelnychuk on 2/10/15.
  */
 public class TreeNode {
     public static final String NODES_ID_SEPARATOR = ":";
