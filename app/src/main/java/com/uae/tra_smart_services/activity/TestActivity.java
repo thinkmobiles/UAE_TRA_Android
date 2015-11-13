@@ -3,12 +3,14 @@ package com.uae.tra_smart_services.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
@@ -17,6 +19,7 @@ import com.uae.tra_smart_services.entities.TreeNode;
 import com.uae.tra_smart_services.entities.AndroidTreeView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by and on 10.11.15.
@@ -35,7 +38,7 @@ public class TestActivity extends Activity {
     }
 
     private void initTreeView() {
-        TreeNode root = TreeNode.root();
+        /*TreeNode root = TreeNode.root();
         TreeNode child0 = new TreeNode(new EquipmentModel.TreeHeader("Child0")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
 
         child0.addChildren(
@@ -72,6 +75,7 @@ public class TestActivity extends Activity {
         TreeNode child5 = new TreeNode(new EquipmentModel.TreeHeader("Child5")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
 
         root.addChildren(child0, child1, child2, child3, child4, child5);
+        */
 
         CustomAndroidTreeView tView = new CustomAndroidTreeView(this);
         tView.setTreeViewAdapter(new TreeViewBaseAdapter<TreeEntity>(EquipmentModel.getRootEntity()){
@@ -84,6 +88,11 @@ public class TestActivity extends Activity {
             @Override
             protected int getChildCount(TreeEntity _entity) {
                 return _entity.getChildren().size();
+            }
+
+            @Override
+            protected List<TreeEntity> getChildren(TreeEntity _entity) {
+                return _entity.getChildren();
             }
 
             @Override
@@ -193,47 +202,50 @@ public class TestActivity extends Activity {
         }
 
     }
-        public abstract class TreeViewBaseAdapter<M extends TreeEntity>{
-            private M mModel;
-            TreeNode root = TreeNode.root();
 
-            TreeViewBaseAdapter(M _model){
-                mModel = _model;
-            }
+    public abstract class TreeViewBaseAdapter<M extends TreeEntity>{
+        private M mModel;
+        TreeNode root = TreeNode.root();
 
-            public TreeNode getRoot(){
-                return root.addChildren(createChildNodes(mModel));
-            }
+        TreeViewBaseAdapter(M _model){
+            mModel = _model;
+        }
 
-            protected abstract boolean hasChild(M _entity);
+        public TreeNode getRoot(){
+            return root.addChildren(createChildNodes(mModel));
+        }
 
-            protected abstract int getChildCount(M _entity);
+        protected abstract boolean hasChild(M _entity);
 
-            protected abstract TreeNode createTreeHeaderNode(M _entity);
+        protected abstract int getChildCount(M _entity);
 
-            protected abstract TreeNode createTreeItemNode(M _entity);
+        protected abstract List<TreeEntity> getChildren(TreeEntity _entity);
 
-            protected TreeNode createTreeNode(M _entity){
-                if(_entity.canHaveChild()){
-                    return createTreeHeaderNode(_entity);
-                } else {
-                    return createTreeItemNode(_entity);
-                }
-            }
+        protected abstract TreeNode createTreeHeaderNode(M _entity);
 
-            protected ArrayList<TreeNode> createChildNodes(TreeEntity _entity) {
-                ArrayList<TreeNode> treeNodes = new ArrayList<>();
-                for (int i = 0; i < _entity.getChildren().size(); i++){
-                    TreeEntity treeEntity = _entity.getChildren().get(i);
-                    TreeNode treeNode = createTreeNode((M)treeEntity);
-                    if(hasChild((M)treeEntity)){
-                        treeNode.addChildren(createChildNodes(treeEntity));
-                    }
-                    treeNodes.add(treeNode);
-                }
-                return treeNodes;
+        protected abstract TreeNode createTreeItemNode(M _entity);
+
+        protected TreeNode createTreeNode(M _entity){
+            if(_entity.canHaveChild()){
+                return createTreeHeaderNode(_entity);
+            } else {
+                return createTreeItemNode(_entity);
             }
         }
+
+        protected List<TreeNode> createChildNodes(TreeEntity _entity) {
+            List<TreeNode> treeNodes = new ArrayList<>();
+            for (int i = 0; i < getChildCount((M) _entity); i++){
+                TreeEntity treeEntity = getChildren(_entity).get(i);
+                TreeNode treeNode = createTreeNode((M)treeEntity);
+                if(hasChild((M)treeEntity)){
+                    treeNode.addChildren(createChildNodes(treeEntity));
+                }
+                treeNodes.add(treeNode);
+            }
+            return treeNodes;
+        }
+    }
 
     public static class EquipmentModel{
 
@@ -273,10 +285,10 @@ public class TestActivity extends Activity {
             };
         }
 
-        public ArrayList<TreeEntity> mHeaders = new ArrayList<>();
+        public List<TreeEntity> mHeaders = new ArrayList<>();
 
         public static class TreeHeader implements TreeEntity {
-            public ArrayList<TreeEntity> children = new ArrayList<>();
+            public List<TreeEntity> children = new ArrayList<>();
 
             public String title;
             TreeHeader(String _title) {
@@ -294,7 +306,7 @@ public class TestActivity extends Activity {
             }
 
             @Override
-            public ArrayList<TreeEntity> getChildren() {
+            public List<TreeEntity> getChildren() {
                 return children;
             }
         }
@@ -316,7 +328,7 @@ public class TestActivity extends Activity {
             public void add(TreeEntity _entity) { /* Never have to be implemented*/ }
 
             @Override
-            public ArrayList<TreeEntity> getChildren() {
+            public List<TreeEntity> getChildren() {
                 return new ArrayList<>();
             }
         }
@@ -325,6 +337,6 @@ public class TestActivity extends Activity {
     public interface TreeEntity {
         boolean canHaveChild();
         void add(TreeEntity _entity);
-        ArrayList<TreeEntity> getChildren();
+        List<TreeEntity> getChildren();
     }
 }
