@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -40,8 +39,7 @@ public class TreeSelectableItemHolder extends TreeNode.BaseNodeViewHolder<Equipm
         nodeSelector.setChecked(node.isSelected());
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams parentParams = (LinearLayout.LayoutParams) mNode.getParent().getViewHolder().getView().getLayoutParams();
-        params.setMargins(parentParams.leftMargin + LEVEL_PADDING, 0, 0, 0);
+        params.setMargins(LEVEL_PADDING * (mNode.getLevel() - 1), 0, 0, 0);
         view.setLayoutParams(params);
 
         return view;

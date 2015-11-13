@@ -102,12 +102,4 @@ public class TestActivity extends Activity {
         tView.setDefaultAnimation(true);
         container.addView(tView.getView());
     }
-
-
-
-
-
-
-
-
 }
