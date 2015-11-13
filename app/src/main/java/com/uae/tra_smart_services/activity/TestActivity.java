@@ -17,12 +17,10 @@ import com.uae.tra_smart_services.entities.TreeNode;
 import com.uae.tra_smart_services.entities.AndroidTreeView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by and on 10.11.15.
  */
-
 public class TestActivity extends Activity {
     private FrameLayout container;
     private static final int LEVEL_PADDING = 30;
@@ -96,20 +94,6 @@ public class TestActivity extends Activity {
             @Override
             protected TreeNode createTreeItemNode(TreeEntity _entity) {
                 return new TreeNode(_entity).setViewHolder(new TreeSelectableItemHolder(getBaseContext()));
-            }
-
-            @Override
-            protected ArrayList<TreeNode> createChildNodes(TreeEntity _entity) {
-                ArrayList<TreeNode> treeNodes = new ArrayList<>();
-                for (int i = 0; i < _entity.getChildren().size(); i++){
-                    TreeEntity treeEntity = _entity.getChildren().get(i);
-                    TreeNode treeNode = createTreeNode(treeEntity);
-                    if(hasChild(treeEntity)){
-                        treeNode.addChildren(createChildNodes(treeEntity));
-                    }
-                    treeNodes.add(treeNode);
-                }
-                return treeNodes;
             }
         });
         tView.setDefaultAnimation(true);
@@ -237,7 +221,18 @@ public class TestActivity extends Activity {
                 }
             }
 
-            protected abstract ArrayList<TreeNode> createChildNodes(M _entity);
+            protected ArrayList<TreeNode> createChildNodes(TreeEntity _entity) {
+                ArrayList<TreeNode> treeNodes = new ArrayList<>();
+                for (int i = 0; i < _entity.getChildren().size(); i++){
+                    TreeEntity treeEntity = _entity.getChildren().get(i);
+                    TreeNode treeNode = createTreeNode((M)treeEntity);
+                    if(hasChild((M)treeEntity)){
+                        treeNode.addChildren(createChildNodes(treeEntity));
+                    }
+                    treeNodes.add(treeNode);
+                }
+                return treeNodes;
+            }
         }
 
     public static class EquipmentModel{
