@@ -9,7 +9,45 @@ import static com.uae.tra_smart_services.entities.treview.TreeViewBaseAdapter.Tr
  * Created by ak-buffalo on 13.11.15.
  */
 public class EquipmentModel {
-
+    /*
+    -    TreeNode root = TreeNode.root();
+    -    TreeNode child0 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("Child0")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -
+    -    child0.addChildren(
+    -            new TreeNode(new EquipmentModel.EquipmentTreeSelectableItem(false, "ChildChild")).setViewHolder(new TreeSelectableItemHolder(getBaseContext())),
+    -            new TreeNode(new EquipmentModel.EquipmentTreeSelectableItem(false, "ChildChild")).setViewHolder(new TreeSelectableItemHolder(getBaseContext())),
+    -            new TreeNode(new EquipmentModel.EquipmentTreeSelectableItem(false, "ChildChild")).setViewHolder(new TreeSelectableItemHolder(getBaseContext())),
+    -            new TreeNode(new EquipmentModel.EquipmentTreeSelectableItem(false, "ChildChild")).setViewHolder(new TreeSelectableItemHolder(getBaseContext()))
+    -    );
+    -    TreeNode child1 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("Child1")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -    TreeNode child11 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("ChildChild")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -    TreeNode child12 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("ChildChild")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -    TreeNode child121 = new TreeNode(new EquipmentModel.EquipmentTreeSelectableItem(false, "ChildChild")).setViewHolder(new TreeSelectableItemHolder(getBaseContext()));
+    -    TreeNode child122 = new TreeNode(new EquipmentModel.EquipmentTreeSelectableItem(false, "ChildChild")).setViewHolder(new TreeSelectableItemHolder(getBaseContext()));
+    -    TreeNode child123 = new TreeNode(new EquipmentModel.EquipmentTreeSelectableItem(false, "ChildChild")).setViewHolder(new TreeSelectableItemHolder(getBaseContext()));
+    -    child12.addChildren(child121, child122, child123);
+    -    TreeNode child13 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("ChildChild")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -    TreeNode child14 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("ChildChild")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -    TreeNode undefinedChild1 = new TreeNode(new EquipmentModel.EquipmentTreeSelectableItem(false, "undefinedChild1")).setViewHolder(new TreeSelectableItemHolder(getBaseContext()));
+    -    TreeNode undefinedChild2 = new TreeNode(new EquipmentModel.EquipmentTreeSelectableItem(false, "undefinedChild2")).setViewHolder(new TreeSelectableItemHolder(getBaseContext()));
+    -    TreeNode child15 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("ChildChild")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -    TreeNode child16 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("ChildChild")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -    child1.addChild( child11);
+    -    child1.addChild( child12);
+    -    child1.addChild( child13);
+    -    child1.addChild( child14);
+    -    child1.addChild(undefinedChild1);
+    -    child1.addChild(undefinedChild2);
+    -    child1.addChild(child15);
+    -    child1.addChild(child16);
+    -
+    -    TreeNode child2 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("Child2")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -    TreeNode child3 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("Child3")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -    TreeNode child4 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("Child4")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -    TreeNode child5 = new TreeNode(new EquipmentModel.EquipmentTreeHeader("Child5")).setViewHolder(new TreeHeaderHolder(getBaseContext()));
+    -
+    -    root.addChildren(child0, child1, child2, child3, child4, child5);
+    -    */
     public static TreeEntity getRootEntity(){
         return new EquipmentTreeHeader(null){
             {
