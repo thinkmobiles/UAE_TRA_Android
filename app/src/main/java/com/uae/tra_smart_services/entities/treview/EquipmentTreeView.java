@@ -5,9 +5,9 @@ import android.content.Context;
 /**
  * Created by ak-buffalo on 13.11.15.
  */
-public class EquipmentAndroidTreeView extends AndroidTreeView {
+public class EquipmentTreeView extends AndroidTreeView {
     public TreeViewBaseAdapter<?> mTreeViewBaseAdapter;
-    public EquipmentAndroidTreeView(Context context) {
+    public EquipmentTreeView(Context context) {
         super(context, null);
     }
 
