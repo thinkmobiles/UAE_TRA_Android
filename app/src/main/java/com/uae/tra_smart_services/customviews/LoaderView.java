@@ -80,6 +80,7 @@ public class LoaderView extends View implements Animator.AnimatorListener {
     public LoaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        setWillNotDraw(false);
         mHexagonPath = new Path();
         successIconPath = new Path();
         dismissedIconPath = new Path();
@@ -250,6 +251,10 @@ public class LoaderView extends View implements Animator.AnimatorListener {
 
     public State getCurrentState(){
         return mCurrentState;
+    }
+
+    public boolean isInLoading(){
+        return mAnimationState == State.PROCESSING;
     }
 
     public void setProgress(float progress){
