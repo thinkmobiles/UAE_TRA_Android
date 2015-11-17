@@ -12,9 +12,11 @@ import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.PathMeasure;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
@@ -25,8 +27,8 @@ import com.uae.tra_smart_services.R;
 /**
  * Created by ak-buffalo on 21.09.15.
  */
-public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutListener, Animator.AnimatorListener {
-
+public class LoaderView extends View implements Animator.AnimatorListener {
+    private static final String LOG_TAG = "LoaderView";
     public enum State{
         INITIALL(0), PROCESSING(1), FILLING(2), SUCCESS(3), CANCELLED(4), FAILURE(5);
 
@@ -56,7 +58,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     private int mFailureFigureOffsetX;
     private int mFailureFigureOffsetY;
 
-    private State mAnimationState = State.INITIALL;
+    public State mAnimationState = State.INITIALL;
     private State mCurrentState;
     private boolean isInitLoading;
 
@@ -78,7 +80,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     public LoaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        getViewTreeObserver().addOnGlobalLayoutListener(this);
         mHexagonPath = new Path();
         successIconPath = new Path();
         dismissedIconPath = new Path();
@@ -195,6 +196,13 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        calculatePaths(w, h);
+        initPaths();
+        initAnimators();
+        initLoadingIfNeed();
+    }
+
+    private void calculatePaths(int w, int h){
         mCenterWidth = w / 2;
         mCenterHeight = h / 2;
 
@@ -227,13 +235,9 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
         dismissedIconPath.lineTo(mFailureFigureOffsetX, mFailureFigureOffsetY + mFailureFigureWH);
     }
 
-    @Override
-    public void onGlobalLayout() {
-        initPaths();
-        initAnimators();
+    private void initLoadingIfNeed(){
         if(isInitLoading)
             startProcessing();
-        getViewTreeObserver().removeGlobalOnLayoutListener(this);
     }
 
     private void tintDrawableIfNeed() {
@@ -274,8 +278,7 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     public void startFilling(final State _currentState){
         mAnimationState = State.FILLING;
         mCurrentState = _currentState;
-        animatorStart.cancel();
-        animatorEnd.cancel();
+        animatorFilling.start();
     }
 
     private void startDrawSuccessFigure() {
@@ -330,7 +333,12 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
     }
 
     @Override
-    public void onAnimationStart(Animator animation) { /* Unimplemented method*/ }
+    public void onAnimationStart(Animator animation) {
+        if(animation == animatorFilling && mAnimationState == State.FILLING){
+            animatorStart.end();
+            animatorEnd.end();
+        }
+    }
 
     @Override
     public void onAnimationEnd(Animator animation) {
@@ -344,8 +352,6 @@ public class LoaderView extends View implements ViewTreeObserver.OnGlobalLayoutL
                     startDrawFailureFigure();
                     break;
             }
-        } else if (animatorEnd == animation && mAnimationState == State.FILLING) {
-            animatorFilling.start();
         }
     }
 
