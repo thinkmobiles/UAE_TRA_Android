@@ -9,12 +9,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.rest.model.response.EquipmentModel;
+import com.uae.tra_smart_services.rest.model.response.EquipmentTreeModel;
 
 /**
  * Created by ak-buffalo on 13.11.15.
  */
-public class TreeSelectableItemHolder extends TreeNode.BaseNodeViewHolder<EquipmentModel.EquipmentTreeSelectableItem> implements TreeNode.TreeNodeClickListener{
+public class TreeSelectableItemHolder extends TreeNode.BaseNodeViewHolder<EquipmentTreeModel.EquipmentTreeItem> implements TreeNode.TreeNodeClickListener{
     private TextView tvValue;
     private CheckBox nodeSelector;
     private static final int LEVEL_PADDING = 30;
@@ -24,11 +24,11 @@ public class TreeSelectableItemHolder extends TreeNode.BaseNodeViewHolder<Equipm
     }
 
     @Override
-    public View createNodeView(TreeNode node, EquipmentModel.EquipmentTreeSelectableItem value) {
+    public View createNodeView(TreeNode node, EquipmentTreeModel.EquipmentTreeItem value) {
         final View view = LayoutInflater.from(context).inflate(R.layout.layout_selectable_item, null, false);
 
         tvValue = (TextView) view.findViewById(R.id.node_value);
-        tvValue.setText(value.text);
+        tvValue.setText(value.value);
 
         nodeSelector = (CheckBox) view.findViewById(R.id.node_selector);
         nodeSelector.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

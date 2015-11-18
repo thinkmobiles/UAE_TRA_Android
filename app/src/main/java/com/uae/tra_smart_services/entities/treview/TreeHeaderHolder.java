@@ -8,12 +8,12 @@ import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
 import com.uae.tra_smart_services.R;
-import com.uae.tra_smart_services.rest.model.response.EquipmentModel;
+import com.uae.tra_smart_services.rest.model.response.EquipmentTreeModel;
 
 /**
  * Created by ak-buffalo on 13.11.15.
  */
-public class TreeHeaderHolder extends TreeNode.BaseNodeViewHolder<EquipmentModel.EquipmentTreeHeader> {
+public class TreeHeaderHolder extends TreeNode.BaseNodeViewHolder<EquipmentTreeModel.EquipmentTreeItem> {
     private TextView tvValue;
     private PrintView arrowView;
     private static final int LEVEL_PADDING = 30;
@@ -23,11 +23,11 @@ public class TreeHeaderHolder extends TreeNode.BaseNodeViewHolder<EquipmentModel
     }
 
     @Override
-    public View createNodeView(TreeNode node, EquipmentModel.EquipmentTreeHeader value) {
+    public View createNodeView(TreeNode node, EquipmentTreeModel.EquipmentTreeItem value) {
         final View view = LayoutInflater.from(context).inflate(R.layout.layout_tree_header, null, false);
 
         tvValue = (TextView) view.findViewById(R.id.node_value);
-        tvValue.setText(value.title);
+        tvValue.setText(value.value);
 
         arrowView = (PrintView) view.findViewById(R.id.arrow_icon);
         if (node.isLeaf()) {
