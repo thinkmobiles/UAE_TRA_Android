@@ -3,6 +3,7 @@ package com.uae.tra_smart_services.fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Address;
@@ -11,6 +12,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -99,6 +102,8 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     private String mLastUpdateTime = "";
     private PoorCoverageRequest mPoorCoverageRequest;
     private PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
+    private TelephonyManager mTelephonyManager;
+    private SignalStrengthListener mSignalStrengthListener;
 
     private PermissionManager mLocationPermissionManager;
     private boolean isLoaderAdded;
@@ -174,6 +179,11 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
             locationTypeChooser.show(getFragmentManager());
         }
     }
+    private void createSignalStrengthListener(){
+        mSignalStrengthListener = new SignalStrengthListener();
+        mTelephonyManager = ((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE));
+        mTelephonyManager.listen(mSignalStrengthListener, SignalStrengthListener.LISTEN_SIGNAL_STRENGTHS);
+    }
 
     @Override
     protected void initData() {
@@ -181,6 +191,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         buildGoogleApiClient();
         createLocationRequest();
         buildLocationSettingsRequest();
+        createSignalStrengthListener();
     }
 
     @Override
@@ -305,6 +316,16 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
             case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
                 Log.i(TAG, "Location settings are inadequate, and cannot be fixed here");
                 break;
+        }
+    }
+
+    private class SignalStrengthListener extends PhoneStateListener {
+        @Override
+        public void onSignalStrengthsChanged(android.telephony.SignalStrength signalStrength) {
+            int strengthAmplitude = signalStrength.getLevel() - 1;
+            sbPoorCoverage.setProgress(strengthAmplitude);
+            sbPoorCoverage.setEnabled(false);
+            super.onSignalStrengthsChanged(signalStrength);
         }
     }
 
