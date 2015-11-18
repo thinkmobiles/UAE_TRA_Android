@@ -3,12 +3,14 @@ package com.uae.tra_smart_services.fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -56,6 +58,7 @@ public class MobileVerificationFragment extends BaseServiceFragment
     }
 
     private HexagonView hvSendImeiCode;
+    private HexagonView hvObtainOwnIMEI;
     private ImageView ivCameraBtn;
     private EditText etImeiNumber;
 
@@ -87,6 +90,7 @@ public class MobileVerificationFragment extends BaseServiceFragment
         super.initViews();
         ivCameraBtn = findView(R.id.ivCameraBtn_FMV);
         etImeiNumber = findView(R.id.etImeiNumber_FMV);
+        hvObtainOwnIMEI = findView(R.id.hvObtainOwnIMEI_FMV);
         hvSendImeiCode = findView(R.id.hvSendImeiCode_FMV);
         hvSendImeiCode.setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getActivity(), ContextCompat.getDrawable(getActivity(), R.drawable.ic_check_ver_grn)));
     }
@@ -97,6 +101,7 @@ public class MobileVerificationFragment extends BaseServiceFragment
         mRequestListener = new RequestResponseListener();
         ivCameraBtn.setOnClickListener(this);
         hvSendImeiCode.setOnClickListener(this);
+        hvObtainOwnIMEI.setOnClickListener(this);
 
         mCameraPermissionManager.setRequestSuccessListener(this);
     }
@@ -145,15 +150,26 @@ public class MobileVerificationFragment extends BaseServiceFragment
 
     @Override
     public void onClick(final View _view) {
-        if (_view.getId() == R.id.hvSendImeiCode_FMV) {
-            hideKeyboard(etImeiNumber);
-            if (isImeiValid()) {
-                searchDeviceByImei();
-            } else {
-                Toast.makeText(getActivity(), R.string.enter_valid_imei_code, C.TOAST_LENGTH).show();
-            }
-        } else {
-            openImeiScannerIfCan();
+        switch(_view.getId()){
+            case R.id.hvSendImeiCode_FMV:{
+                hideKeyboard(etImeiNumber);
+                if (isImeiValid()) {
+                    searchDeviceByImei();
+                } else {
+                    Toast.makeText(getActivity(), R.string.enter_valid_imei_code, C.TOAST_LENGTH).show();
+                }
+            } break;
+            case R.id.ivCameraBtn_FMV:{
+                openImeiScannerIfCan();
+            } break;
+            case R.id.hvObtainOwnIMEI_FMV:{
+                String deviceID = ((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+                if(deviceID != null){
+                    etImeiNumber.setText(deviceID);
+                } else {
+                    Toast.makeText(getActivity(), "There is no registered radio module", Toast.LENGTH_SHORT).show();
+                }
+            } break;
         }
     }
 

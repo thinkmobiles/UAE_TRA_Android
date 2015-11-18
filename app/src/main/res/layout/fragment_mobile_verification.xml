@@ -41,7 +41,8 @@
                 app:hexagonBorderSize="2dp"
                 app:hexagonSideSize="48dp"
                 app:hexagonSrc="@drawable/ic_mobile"
-                app:hexagonSrcTintColor="?attr/homePageHeaderBackground"/>
+                app:hexagonSrcTintColor="?attr/homePageHeaderBackground"
+                android:id="@+id/hvObtainOwnIMEI_FMV"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,14 +74,14 @@
             android:background="@android:color/white">
 
             <ImageView
-                android:id="@+id/ivCameraBtn_FMV"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:background="?attr/selectableItemBackground"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_action_camera"/>
+                android:src="@drawable/ic_action_camera"
+                android:id="@+id/ivCameraBtn_FMV"/>
 
             <EditText
                 android:id="@+id/etImeiNumber_FMV"
@@ -105,21 +106,6 @@
                 android:background="?attr/homePageHeaderBackground"/>
         </RelativeLayout>
 
-        <!--<TextView-->
-        <!--android:text="@string/str_where_find_imei"-->
-        <!--android:textSize="14sp"-->
-        <!--android:textColor="#707d7a"-->
-        <!--android:textAlignment="center"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_marginStart="40dp"-->
-        <!--android:layout_marginEnd="40dp"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
-
-
-        <!--</LinearLayout>-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -132,7 +118,6 @@
             android:orientation="vertical">
 
             <com.uae.tra_smart_services.customviews.HexagonView
-                android:id="@+id/hvSendImeiCode_FMV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -140,7 +125,8 @@
                 app:hexagonBorderColor="?attr/sendImeiCodeColor"
                 app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="35dp"
-                app:hexagonSrcTintColor="?attr/sendImeiCodeColor"/>
+                app:hexagonSrcTintColor="?attr/sendImeiCodeColor"
+                android:id="@+id/hvSendImeiCode_FMV"/>
 
             <TextView
                 android:layout_width="wrap_content"
