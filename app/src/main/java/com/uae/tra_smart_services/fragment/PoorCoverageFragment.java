@@ -447,6 +447,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
             getSpiceManager().getFromCache(Response.class, TAG, DurationInMillis.ALWAYS_EXPIRED, new PoorCoverageRequestListener());
             etLocation.clearFocus();
             etLocation.setOnFocusChangeListener(this);
+            sbPoorCoverage.setOnSeekBarChangeListener(this);
             isLoaderAdded = true;
         }
         super.onViewStateRestored(savedInstanceState);
@@ -456,12 +457,13 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     public void onSaveInstanceState(Bundle outState) {
         mLocationPermissionManager.onSaveInstanceState(outState);
         etLocation.setOnFocusChangeListener(null);
+        sbPoorCoverage.setOnSeekBarChangeListener(null);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        tvSignalLevel.setText(getResources().getStringArray(R.array.fragment_poor_coverage_signal_levels)[progress]);
+        tvSignalLevel.setText(getActivity().getResources().getStringArray(R.array.fragment_poor_coverage_signal_levels)[progress]);
         mLocationModel.setSignalLevel(progress + 1);
     }
 
