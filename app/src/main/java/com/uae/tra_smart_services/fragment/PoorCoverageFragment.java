@@ -161,14 +161,16 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     protected void initListeners() {
         super.initListeners();
         mLocationPermissionManager.setRequestSuccessListener(this);
+        etLocation.setOnFocusChangeListener(this);
         etLocation.setOnClickListener(this);
         sbPoorCoverage.setOnSeekBarChangeListener(this);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        etLocation.setOnFocusChangeListener(this);
+    private final void removeListeners(){
+        mLocationPermissionManager.setRequestSuccessListener(null);
+        etLocation.setOnFocusChangeListener(null);
+        sbPoorCoverage.setOnSeekBarChangeListener(null);
+        etLocation.setOnFocusChangeListener(null);
     }
 
     @Override
@@ -243,6 +245,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         if (mGoogleApiClient != null) {
             mGoogleApiClient.disconnect();
         }
+        removeListeners();
     }
 
     @Override
@@ -446,8 +449,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         if(savedInstanceState != null){
             getSpiceManager().getFromCache(Response.class, TAG, DurationInMillis.ALWAYS_EXPIRED, new PoorCoverageRequestListener());
             etLocation.clearFocus();
-            etLocation.setOnFocusChangeListener(this);
-            sbPoorCoverage.setOnSeekBarChangeListener(this);
+            initListeners();
             isLoaderAdded = true;
         }
         super.onViewStateRestored(savedInstanceState);
@@ -456,8 +458,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     @Override
     public void onSaveInstanceState(Bundle outState) {
         mLocationPermissionManager.onSaveInstanceState(outState);
-        etLocation.setOnFocusChangeListener(null);
-        sbPoorCoverage.setOnSeekBarChangeListener(null);
+        removeListeners();
         super.onSaveInstanceState(outState);
     }
 
