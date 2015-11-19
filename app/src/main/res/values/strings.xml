@@ -408,4 +408,7 @@
     <string name="ic_keyboard_arrow_down">&#xe0c5;</string>
     <string name="ic_keyboard_arrow_up">&#xe0c8;</string>
 
+    <string name="str_my_imei">MY IMEI</string>
+    <string name="str_where_to_find_imei">Where to find the IMEI code on your device?</string>
+
 </resources>

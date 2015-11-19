@@ -14,8 +14,10 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -58,7 +60,8 @@ public class MobileVerificationFragment extends BaseServiceFragment
     }
 
     private HexagonView hvSendImeiCode;
-    private HexagonView hvObtainOwnIMEI;
+    private TextView tvSendImeiCode;
+    private Button hvObtainOwnIMEI;
     private ImageView ivCameraBtn;
     private EditText etImeiNumber;
 
@@ -90,8 +93,9 @@ public class MobileVerificationFragment extends BaseServiceFragment
         super.initViews();
         ivCameraBtn = findView(R.id.ivCameraBtn_FMV);
         etImeiNumber = findView(R.id.etImeiNumber_FMV);
-        hvObtainOwnIMEI = findView(R.id.hvObtainOwnIMEI_FMV);
+        hvObtainOwnIMEI = findView(R.id.btnMyImei_FMV);
         hvSendImeiCode = findView(R.id.hvSendImeiCode_FMV);
+        tvSendImeiCode = findView(R.id.tvSendImeiCode_FMV);
         hvSendImeiCode.setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getActivity(), ContextCompat.getDrawable(getActivity(), R.drawable.ic_check_ver_grn)));
     }
 
@@ -101,8 +105,8 @@ public class MobileVerificationFragment extends BaseServiceFragment
         mRequestListener = new RequestResponseListener();
         ivCameraBtn.setOnClickListener(this);
         hvSendImeiCode.setOnClickListener(this);
+        tvSendImeiCode.setOnClickListener(this);
         hvObtainOwnIMEI.setOnClickListener(this);
-
         mCameraPermissionManager.setRequestSuccessListener(this);
     }
 
@@ -151,6 +155,7 @@ public class MobileVerificationFragment extends BaseServiceFragment
     @Override
     public void onClick(final View _view) {
         switch(_view.getId()){
+            case R.id.tvSendImeiCode_FMV:
             case R.id.hvSendImeiCode_FMV:{
                 hideKeyboard(etImeiNumber);
                 if (isImeiValid()) {
@@ -162,7 +167,7 @@ public class MobileVerificationFragment extends BaseServiceFragment
             case R.id.ivCameraBtn_FMV:{
                 openImeiScannerIfCan();
             } break;
-            case R.id.hvObtainOwnIMEI_FMV:{
+            case R.id.btnMyImei_FMV:{
                 String deviceID = ((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
                 if(deviceID != null){
                     etImeiNumber.setText(deviceID);
