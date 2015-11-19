@@ -2,6 +2,7 @@ package com.uae.tra_smart_services.rest.model.response;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.uae.tra_smart_services.entities.treview.TreeViewBaseAdapter.TreeEntity;
 
@@ -15,15 +16,15 @@ public class EquipmentTreeModel {
     public String name;
     public int order;
     public String _id;
-    public ArrayList<? extends EquipmentTreeItem> dataSource;
+    public ArrayList<EquipmentTreeItem> dataSource;
 
     public class EquipmentTreeItem implements TreeEntity {
-        public List<TreeEntity> items = new ArrayList<>();
 
         public String value;
         public String EN;
         public String AR;
         public boolean checked;
+        public ArrayList<EquipmentTreeItem> items = new ArrayList<>();
 
         @Override
         public boolean haveChild() {
@@ -32,12 +33,13 @@ public class EquipmentTreeModel {
 
         @Override
         public void add(TreeEntity _entity) {
-            items.add(_entity);
+            items.add((EquipmentTreeItem) _entity);
         }
 
         @Override
-        public List<TreeEntity> getChildren() {
-            return items;
-        }
+        public List<TreeEntity> getChildren() { return (ArrayList) items; }
     }
+
+    public Map<String, String> displayName;
+    public Map<String, String> placeHolder;
 }

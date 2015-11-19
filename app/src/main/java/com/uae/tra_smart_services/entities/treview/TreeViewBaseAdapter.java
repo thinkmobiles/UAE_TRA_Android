@@ -1,7 +1,5 @@
 package com.uae.tra_smart_services.entities.treview;
 
-import com.uae.tra_smart_services.rest.model.response.EquipmentTreeModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +15,7 @@ public abstract class TreeViewBaseAdapter<M extends TreeViewBaseAdapter.TreeEnti
     }
 
     public TreeNode getRoot(){
-        for (int i = 0; i < mModel.size(); i++){
-            root.addChild(createTreeNode(mModel.get(i)));
-        }
-
+        root.addChildren(createTreeNodes(mModel));
         return root;
     }
 
@@ -35,21 +30,28 @@ public abstract class TreeViewBaseAdapter<M extends TreeViewBaseAdapter.TreeEnti
     protected abstract TreeNode createTreeItemNode(M _entity);
 
     protected TreeNode createTreeNode(M _entity){
-        if(_entity.haveChild()){
-            return createTreeHeaderNode(_entity);
+        if(hasChild(_entity)){
+            TreeNode headerNode = createTreeHeaderNode(_entity);
+            headerNode.addChildren(createChildNodesFromParent(_entity));
+            return headerNode;
         } else {
             return createTreeItemNode(_entity);
         }
     }
 
-    protected List<TreeNode> createChildNodes(TreeEntity _entity) {
+    protected List<TreeNode> createTreeNodes(List<M> _entitityList){
+        List<TreeNode> resultNodes = new ArrayList<>();
+        for(M entity : _entitityList){
+            resultNodes.add(createTreeNode(entity));
+        }
+        return resultNodes;
+    }
+
+    protected List<TreeNode> createChildNodesFromParent(TreeEntity _entity) {
         List<TreeNode> treeNodes = new ArrayList<>();
         for (int i = 0; i < getChildCount((M) _entity); i++){
             TreeEntity treeEntity = getChildren(_entity).get(i);
             TreeNode treeNode = createTreeNode((M)treeEntity);
-            if(hasChild((M)treeEntity)){
-                treeNode.addChildren(createChildNodes(treeEntity));
-            }
             treeNodes.add(treeNode);
         }
         return treeNodes;
