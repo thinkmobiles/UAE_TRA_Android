@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.adapter.WorkQueueExpandableAdapter;
 import com.uae.tra_smart_services.entities.treview.EquipmentTreeView;
 import com.uae.tra_smart_services.entities.treview.TreeHeaderHolder;
 import com.uae.tra_smart_services.entities.treview.TreeNode;
@@ -34,8 +35,182 @@ public class TestActivity extends Activity{
 
         RecyclerView mCrimeRecyclerView = (RecyclerView) findViewById(R.id.expandibleRecycleView);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        WorkQueueExpandableAdapter crimeExpandableAdapter = new WorkQueueExpandableAdapter(getActivity(), generateCrimes());
+
+        Gson gson = new Gson();
+        JsonReader reader = new JsonReader(new StringReader(dataModelStr));
+        final WorkQueueExpandableAdapter.WorkQueueDataModel workQueueDataModel = gson.fromJson(reader, WorkQueueExpandableAdapter.WorkQueueDataModel.class);
+
+
+        mCrimeRecyclerView.setAdapter(new WorkQueueExpandableAdapter(this, new WorkQueueExpandableAdapter.NetModelToExpRecyclerViewModelAdapter(workQueueDataModel)));
+
+
+
     }
+
+    private static final String dataModelStr = "{\n" +
+            "          \"order\": 0,\n" +
+            "          \"name\": \"tableContent\",\n" +
+            "          \"inputType\": \"table\",\n" +
+            "          \"additional\": {\n" +
+            "            \"sectorField\": \"dealerType\"\n" +
+            "          },\n" +
+            "          \"required\": false,\n" +
+            "          \"validateAs\": \"none\",\n" +
+            "          \"_id\": \"564ed3f65491f82223bedcac\",\n" +
+            "          \"dataSource\": [\n" +
+            "            {\n" +
+            "              \"EN\": \"Reference Number\",\n" +
+            "              \"AR\": \"al Reference Number\",\n" +
+            "              \"value\": \"referenceNumber\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"EN\": \"Status\",\n" +
+            "              \"AR\": \"al Status\",\n" +
+            "              \"value\": \"status\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"EN\": \"Workitem Name\",\n" +
+            "              \"AR\": \"al Workitem Name\",\n" +
+            "              \"value\": \"workitemName\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"EN\": \"Task Type\",\n" +
+            "              \"AR\": \"al Task Type\",\n" +
+            "              \"value\": \"taskType\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"EN\": \"Organization Name\",\n" +
+            "              \"AR\": \"al Organization Name\",\n" +
+            "              \"value\": \"organizationName\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"EN\": \"Created By\",\n" +
+            "              \"AR\": \"al Created By\",\n" +
+            "              \"value\": \"createdBy\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"EN\": \"Created Date\",\n" +
+            "              \"AR\": \"al Created Date\",\n" +
+            "              \"value\": \"createdDate\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"EN\": \"Dealer Type\",\n" +
+            "              \"AR\": \"Dealer Type\",\n" +
+            "              \"value\": \"dealerType\"\n" +
+            "            }\n" +
+            "          ],\n" +
+            "          \"displayName\": {\n" +
+            "            \"EN\": \"Some Table\",\n" +
+            "            \"AR\": \"AR Some Table\"\n" +
+            "          },\n" +
+            "          \"placeHolder\": {\n" +
+            "            \"EN\": \"\",\n" +
+            "            \"AR\": \"\"\n" +
+            "          },\n" +
+            "          \"dataContent\": [\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"2\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type1\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"2\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type2\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"2\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"2\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type1\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"2\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type1\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"2\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type2\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"2\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type1\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"2\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type2\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"3\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            }\n" +
+            "          ]\n" +
+            "        }";
+
 
     private final void createTreeView(){
         FrameLayout container = (FrameLayout) findViewById(R.id.container);

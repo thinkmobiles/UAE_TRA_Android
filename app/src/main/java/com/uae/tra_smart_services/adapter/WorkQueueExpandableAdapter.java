@@ -29,6 +29,9 @@ public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQu
 
 
 
+
+
+
     public class DataModel {
         public String sectorField;
         List<Map<String,String>> dataModel;
@@ -40,28 +43,30 @@ public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQu
         public static class List extends ArrayList<DataSource> {}
     }
 
-    public class NetModelToExpRecyclerViewModelAdapter implements Comparator<String> {
+    public static class NetModelToExpRecyclerViewModelAdapter implements Comparator<String> {
         public List<ParentObject> mParentObjects;
-        public List<DataSource> dataSources;
-        public DataModel datamodel;
+        public WorkQueueDataModel datamodel;
 
-        public NetModelToExpRecyclerViewModelAdapter(List<DataSource> _dataSources, DataModel _datamodel){
-            dataSources = _dataSources;
+        public NetModelToExpRecyclerViewModelAdapter(WorkQueueDataModel _datamodel){
             datamodel = _datamodel;
         }
 
-        public Map<String, ArrayList<DataSource>> prepareData(){
-            Map<String, ArrayList<DataSource>> unique = new HashMap<>();
-            Set<String> keys = unique.keySet();
-            for(final DataSource dataSource : dataSources){
-                String valueToFind = dataSource.dataSource.get(datamodel.sectorField);
+        public Map<String, List<Map<String, String>>> prepareData(){
+            Map<String, List<Map<String, String>>> unique = new HashMap<>();
+            header: for(final Map<String, String> content : datamodel.dataContent){
+                Set<String> keys = unique.keySet();
+                String valueToFind = content.get(datamodel.additional.get("sectorField"));
+                if(unique.isEmpty()){
+                    unique.put(valueToFind, new ArrayList<Map<String, String>>(){{add(content);}});
+                    continue;
+                }
                 for (String key : keys){
                     if(compare(valueToFind, key) > 0){
-                        unique.get(key).add(dataSource);
-                    } else {
-                        unique.put(key, new ArrayList<DataSource>(){{add(dataSource);}});
+                        unique.get(key).add(content);
+                        continue header ;
                     }
                 }
+                unique.put(valueToFind, new ArrayList<Map<String, String>>(){{add(content);}});
             }
             return unique;
         }
@@ -76,25 +81,21 @@ public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQu
         }
 
         public List<ParentObject> getParentObjects(){
-            Map<String, ArrayList<DataSource>> parents = prepareData();
             return (mParentObjects = new ArrayList<ParentObject>(){
                 {
-                    for(final Map.Entry<String, ArrayList<DataSource>> parent : prepareData().entrySet()){
-                        add(new ParentObject() {
-                            private String title = parent.getKey();
-
+                    for(final Map.Entry<String, List<Map<String, String>>> item : prepareData().entrySet()){
+                        add(new Header() {
                             @Override
                             public List<Object> getChildObjectList() {
-                                return new ArrayList<Object>(parent.getValue());
+                                return new ArrayList<Object>(item.getValue());
                             }
-
                             @Override
                             public void setChildObjectList(List<Object> list) {
 
                             }
-
+                            @Override
                             public String getTile(){
-                                return title;
+                                return item.getKey();
                             }
                         });
                     }
@@ -107,6 +108,9 @@ public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQu
         }
     }
 
+    public interface Header extends ParentObject {
+        String getTile();
+    }
 
     private LayoutInflater mInflater;
     private NetModelToExpRecyclerViewModelAdapter netModelToExpRecyclerViewModelAdapter;
@@ -170,5 +174,19 @@ public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQu
 //            mCrimeDateText = (TextView) itemView.findViewById(R.id.child_list_item_crime_date_text_view);
 //            mCrimeSolvedCheckBox = (CheckBox) itemView.findViewById(R.id.child_list_item_crime_solved_check_box);
         }
+    }
+
+    public class WorkQueueDataModel {
+        public Integer order;
+        public String name;
+        public String inputType;
+        public HashMap<String, String> additional;
+        public boolean required;
+        public String validateAs;
+        public String _id;
+        public ArrayList<HashMap<String,String>> dataSource;
+        public HashMap<String, String> displayName;
+        public HashMap<String, String> placeHolder;
+        public ArrayList<HashMap<String, String>> dataContent;
     }
 }
