@@ -10,6 +10,8 @@ public interface Loader {
 
     void startLoading(String _msg);
 
+    void continueLoading();
+
     void successLoading(String _msg);
 
     void cancelLoading(String _msg);
@@ -19,6 +21,8 @@ public interface Loader {
     void dissmissLoadingWithAction(Dismiss afterDissmiss);
 
     void setButtonPressedBehavior(BackButton backButtonPressed);
+
+    boolean isInLoading();
 
     interface Dismiss {
         void onLoadingDismissed();

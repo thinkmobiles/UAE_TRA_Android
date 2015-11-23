@@ -3,6 +3,7 @@ package com.uae.tra_smart_services.fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Address;
@@ -11,6 +12,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -38,6 +41,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uae.tra_smart_services.R;
@@ -72,7 +76,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         OnOkListener, OnItemPickListener,
         ConnectionCallbacks, OnConnectionFailedListener,
         OnSeekBarChangeListener, OnClickListener, ResultCallback<LocationSettingsResult>,
-        LocationListener, OnPermissionRequestSuccessListener, OnOpenPermissionExplanationDialogListener {
+        LocationListener, OnPermissionRequestSuccessListener, OnOpenPermissionExplanationDialogListener, View.OnFocusChangeListener {
     //endregion
 
     //region CONSTANTS
@@ -98,8 +102,11 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     private String mLastUpdateTime = "";
     private PoorCoverageRequest mPoorCoverageRequest;
     private PoorCoverageRequestModel mLocationModel = new PoorCoverageRequestModel();
+    private TelephonyManager mTelephonyManager;
+    private SignalStrengthListener mSignalStrengthListener;
 
     private PermissionManager mLocationPermissionManager;
+    private boolean isLoaderAdded;
     //endregion
 
     //region VIEWS
@@ -154,18 +161,30 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     protected void initListeners() {
         super.initListeners();
         mLocationPermissionManager.setRequestSuccessListener(this);
+        etLocation.setOnFocusChangeListener(this);
         etLocation.setOnClickListener(this);
         sbPoorCoverage.setOnSeekBarChangeListener(this);
-        etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    locationTypeChooser = SingleChoiceDialog.newInstance(PoorCoverageFragment.this,
-                            R.string.str_select_location_type, LocationType.toStringResArray());
-                    locationTypeChooser.show(getFragmentManager());
-                }
-            }
-        });
+    }
+
+    private final void removeListeners(){
+        mLocationPermissionManager.setRequestSuccessListener(null);
+        etLocation.setOnFocusChangeListener(null);
+        sbPoorCoverage.setOnSeekBarChangeListener(null);
+        etLocation.setOnFocusChangeListener(null);
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus && !isLoaderAdded) {
+            locationTypeChooser = SingleChoiceDialog.newInstance(PoorCoverageFragment.this,
+                    R.string.str_select_location_type, LocationType.toStringResArray());
+            locationTypeChooser.show(getFragmentManager());
+        }
+    }
+    private void createSignalStrengthListener(){
+        mSignalStrengthListener = new SignalStrengthListener();
+        mTelephonyManager = ((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE));
+        mTelephonyManager.listen(mSignalStrengthListener, SignalStrengthListener.LISTEN_SIGNAL_STRENGTHS);
     }
 
     @Override
@@ -174,6 +193,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         buildGoogleApiClient();
         createLocationRequest();
         buildLocationSettingsRequest();
+        createSignalStrengthListener();
     }
 
     @Override
@@ -190,6 +210,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
         }
+        getSpiceManager().addListenerIfPending(Response.class, TAG, new PoorCoverageRequestListener());
     }
 
     @Override
@@ -224,6 +245,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         if (mGoogleApiClient != null) {
             mGoogleApiClient.disconnect();
         }
+        removeListeners();
     }
 
     @Override
@@ -300,6 +322,16 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         }
     }
 
+    private class SignalStrengthListener extends PhoneStateListener {
+        @Override
+        public void onSignalStrengthsChanged(android.telephony.SignalStrength signalStrength) {
+            int strengthAmplitude = signalStrength.getLevel() - 1;
+            sbPoorCoverage.setProgress(strengthAmplitude);
+            sbPoorCoverage.setEnabled(false);
+            super.onSignalStrengthsChanged(signalStrength);
+        }
+    }
+
     protected void startLocationUpdates() {
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient,
@@ -344,7 +376,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         getSpiceManager().execute(
                 mPoorCoverageRequest = new PoorCoverageRequest(
                         mLocationModel
-                ),
+                ), TAG, DurationInMillis.ALWAYS_EXPIRED,
                 new PoorCoverageRequestListener()
         );
     }
@@ -413,14 +445,26 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        if(savedInstanceState != null){
+            getSpiceManager().getFromCache(Response.class, TAG, DurationInMillis.ALWAYS_EXPIRED, new PoorCoverageRequestListener());
+            etLocation.clearFocus();
+            initListeners();
+            isLoaderAdded = true;
+        }
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         mLocationPermissionManager.onSaveInstanceState(outState);
+        removeListeners();
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        tvSignalLevel.setText(getResources().getStringArray(R.array.fragment_poor_coverage_signal_levels)[progress]);
+        tvSignalLevel.setText(getActivity().getResources().getStringArray(R.array.fragment_poor_coverage_signal_levels)[progress]);
         mLocationModel.setSignalLevel(progress + 1);
     }
 
@@ -452,34 +496,47 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             processError(spiceException);
+            getSpiceManager().removeAllDataFromCache();
         }
 
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
             boolean isDialog = loaderDialogDismiss();
-            switch (poorCoverageRequestModel.getStatus()) {
-                case 200:
-                    if (isDialog) {
-                        showMessage(R.string.str_success, R.string.str_data_has_been_sent);
-                    } else {
-                        loaderOverlaySuccess(getString(R.string.str_data_has_been_sent));
-                    }
-                    break;
-                case 400:
-                    if (isDialog) {
-                        showMessage(R.string.str_error, R.string.str_something_went_wrong);
-                    } else {
-                        loaderOverlayCancelled(getString(R.string.str_something_went_wrong));
-                    }
-                    break;
-                case 500:
-                    if (isDialog) {
-                        showMessage(R.string.str_error, R.string.str_request_failed);
-                    } else {
-                        loaderOverlayCancelled(getString(R.string.str_request_failed));
-                    }
-                    break;
+            if(poorCoverageRequestModel != null){
+                switch (poorCoverageRequestModel.getStatus()) {
+                    case 200:
+                        if (isDialog) {
+                            showMessage(R.string.str_success, R.string.str_data_has_been_sent);
+                        } else {
+                            loaderOverlaySuccess(getString(R.string.str_data_has_been_sent));
+                        }
+                        break;
+                    case 400:
+                        if (isDialog) {
+                            showMessage(R.string.str_error, R.string.str_something_went_wrong);
+                        } else {
+                            loaderOverlayCancelled(getString(R.string.str_something_went_wrong));
+                        }
+                        break;
+                    case 500:
+                        if (isDialog) {
+                            showMessage(R.string.str_error, R.string.str_request_failed);
+                        } else {
+                            loaderOverlayCancelled(getString(R.string.str_request_failed));
+                        }
+                        break;
+                    case 0:
+                        if (isDialog) {
+                            showMessage(R.string.str_error, R.string.str_request_failed);
+                        } else {
+                            loaderOverlayFailed(getString(R.string.str_request_failed), true);
+                        }
+                        break;
+                }
+            } else {
+                loaderOverlayFailed(getString(R.string.str_request_failed), true);
             }
+            getSpiceManager().removeAllDataFromCache();
         }
     }
 

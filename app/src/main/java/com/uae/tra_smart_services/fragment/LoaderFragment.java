@@ -23,6 +23,7 @@ import com.uae.tra_smart_services.util.ImageUtils;
 public class LoaderFragment extends BaseFragment implements View.OnClickListener, Loader, ServiceRatingView.CallBacks {
     /** Constants */
     public static final String TAG = LoaderFragment.class.getName();
+    public static final String STATE = "state";
     private static final String MSG = "message";
     private static final String SHOW_RATING = "show_rating";
     /** Views */
@@ -94,15 +95,15 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void onViewCreated(final View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        getRootView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                // start processing after layout globlly created
-                startLoading(getArguments().getString(MSG));
-                ViewTreeObserver obs = view.getViewTreeObserver();
-                obs.removeGlobalOnLayoutListener(this);
+                if (savedInstanceState == null || shouldContinueLoading) {
+                    startLoading(getArguments().getString(MSG));
+                }
+                getRootView().getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
     }
@@ -112,6 +113,12 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
         lvLoader.startProcessing();
         tvLoaderTitleText.setText(getArguments().getString(MSG));
         tvBackOrCancelBtn.setTag(LoaderView.State.PROCESSING);
+    }
+
+    boolean shouldContinueLoading;
+    @Override
+    public void continueLoading() {
+        shouldContinueLoading = true;
     }
 
     @Override
@@ -133,6 +140,11 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void setButtonPressedBehavior(BackButton _afterBackButton) {
         afterBackButton = _afterBackButton;
+    }
+
+    @Override
+    public boolean isInLoading() {
+        return lvLoader.isInLoading();
     }
 
     @Override

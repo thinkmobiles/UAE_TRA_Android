@@ -56,6 +56,8 @@
 
         <item name="hexagonLoaderBackground">@drawable/loader_bg_orange</item>
         <item name="dynamicServiceDivider">@drawable/horizontal_divider_orange</item>
+        <item name="treeNodeBackground">@drawable/shape_tree_node_background_orange</item>
+        <item name="treeNodeCheckboxSelector">@drawable/selector_tree_item_checkbox_green</item>
     </style>
 
     <style name="AppThemeGreen" parent="BaseAppTheme">
@@ -75,6 +77,8 @@
 
         <item name="hexagonLoaderBackground">@drawable/loader_bg_green</item>
         <item name="dynamicServiceDivider">@drawable/horizontal_divider_green</item>
+        <item name="treeNodeBackground">@drawable/shape_tree_node_background_green</item>
+        <item name="treeNodeCheckboxSelector">@drawable/selector_tree_item_checkbox_green</item>
     </style>
 
     <style name="AppThemeBlue" parent="BaseAppTheme">
@@ -94,6 +98,8 @@
 
         <item name="hexagonLoaderBackground">@drawable/loader_bg_blue</item>
         <item name="dynamicServiceDivider">@drawable/horizontal_divider_blue</item>
+        <item name="treeNodeBackground">@drawable/shape_tree_node_background_green</item>
+        <item name="treeNodeCheckboxSelector">@drawable/selector_tree_item_checkbox_green</item>
     </style>
 
     <!--<style name="AppThemeRed" parent="BaseAppTheme">-->
@@ -140,11 +146,13 @@
         <item name="profileControllerResetColor">@android:color/black</item>
         <item name="profileControllerSaveColor">@android:color/black</item>
         <item name="passwordVisibilityToggleBackground">@drawable/background_user_profile_password_toggle_black</item>
-        <item name="sendImeiCodeColor">@color/hex_sendImeiCodeColor_gray</item>
+        <item name="sendImeiCodeColor">@color/hex_sendImeiCodeColor_gray    </item>
         <!--<item name="hexagonLoaderBackground">@drawable/loader_bg_orange</item>-->
         <item name="rating_bad_color">@android:color/white</item>
         <item name="rating_neut_color">@android:color/white</item>
         <item name="rating_good_color">@android:color/white</item>
         <item name="dynamicServiceDivider">@drawable/horizontal_divider_black</item>
+        <item name="treeNodeBackground">@drawable/shape_tree_node_background_black</item>
+        <item name="treeNodeCheckboxSelector">@drawable/selector_tree_item_checkbox_green</item>
     </style>
 </resources>

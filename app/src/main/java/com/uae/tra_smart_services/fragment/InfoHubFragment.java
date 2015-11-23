@@ -108,19 +108,13 @@ public final class InfoHubFragment extends BaseFragment
     private final OperationStateManager mTransactionsOperationStateManager = new OperationStateManager() {
 
         @Override
-        public final void showProgress() {
-            mHexagonSwipeRefreshLayout.onLoadingStart();
-        }
+        public final void showProgress() { mHexagonSwipeRefreshLayout.onLoadingStart(); }
 
         @Override
-        public final void showData() {
-            mHexagonSwipeRefreshLayout.onLoadingFinished(true);
-        }
+        public final void showData() { mHexagonSwipeRefreshLayout.onLoadingFinished(true); }
 
         @Override
-        public final void showEmptyView() {
-            mHexagonSwipeRefreshLayout.onLoadingFinished(false);
-        }
+        public final void showEmptyView() { mHexagonSwipeRefreshLayout.onLoadingFinished(false); }
     };
 
     @Override
@@ -132,13 +126,13 @@ public final class InfoHubFragment extends BaseFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getView().getViewTreeObserver().addOnGlobalLayoutListener(this);
+        getRootView().getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
     @Override
     public void onGlobalLayout() {
         startFirstLoad();
-        getView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        getRootView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
 
     @Override
@@ -215,7 +209,7 @@ public final class InfoHubFragment extends BaseFragment
     }
 
     private void startFirstLoad() {
-        mHexagonSwipeRefreshLayout.onLoadingStart();
+        mTransactionsOperationStateManager.showProgress();
         mAnnouncementsOperationStateManager.showProgress();
         loadTransactionPage(mTransactionPageNum = 1);
         loadAnnouncementsPage(1);
@@ -259,7 +253,6 @@ public final class InfoHubFragment extends BaseFragment
         mIsSearching = true;
         tvNoTransactions.setText(R.string.str_no_search_result);
         hideKeyboard(getView());
-//        mTransactionsOperationStateManager.showProgress();
         mTransactionsLayoutManager.scrollToPosition(0);
         mTransactionsListAdapter.getFilter().filter(query);
         return true;

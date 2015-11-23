@@ -144,7 +144,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LoaderView loaderView = (LoaderView) layoutInflater.inflate(R.layout.loader_view, null, true);
         if(viewType == VIEW_TYPE_LOADER){
-            return new ViewHolder(loaderView);
+            return new ViewHolder(loaderView, true);
         } else {
             final View view;
             if (mIsPreview){
@@ -264,7 +264,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         private View container;
         private HexagonView hexagonView;
         private TextView title, description, date;
-        private HexagonView progressBar;
+        private LoaderView progressBar;
         private Space sStartOffset;
         private boolean isProgress;
 
@@ -289,11 +289,12 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         public ViewHolder(View view, boolean _isProgress) {
             super(view);
             isProgress = _isProgress;
-            progressBar = (HexagonView) view;
+            progressBar = (LoaderView) view;
             progressBar.setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT)
             );
+            progressBar.requestLayout();
         }
 
         public void setData(int _position, final GetAnnouncementsResponseModel.Announcement _model) {

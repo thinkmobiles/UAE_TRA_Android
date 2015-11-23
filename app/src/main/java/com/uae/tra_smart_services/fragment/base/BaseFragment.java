@@ -53,6 +53,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     protected ThemaDefiner mThemaDefiner;
     protected SpiceLoader mSpiceLoader;
     private Loader loader;
+    private int mLoaderFragmentID;
 
     @Override
     public void onAttach(final Activity _activity) {
@@ -276,6 +277,25 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
                 view.setText(null);
             }
         }
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        if(savedInstanceState != null && (mLoaderFragmentID = savedInstanceState.getInt(LoaderFragment.TAG)) != 0
+                && (loader = (Loader) getFragmentManager().findFragmentById(mLoaderFragmentID)) != null
+                && savedInstanceState.getBoolean(LoaderFragment.STATE) == true){
+            loader.continueLoading();
+        }
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if(outState != null && loader != null){
+            outState.putInt(LoaderFragment.TAG, mLoaderFragmentID = ((Fragment) loader).getId());
+            outState.putBoolean(LoaderFragment.STATE, loader.isInLoading());
+        }
+        super.onSaveInstanceState(outState);
     }
 
     protected static void setCapitalizeTextWatcher(final EditText editText) {

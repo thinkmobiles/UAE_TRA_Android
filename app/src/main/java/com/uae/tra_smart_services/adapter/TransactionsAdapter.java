@@ -11,17 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ProgressBar;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.adapter.TransactionsAdapter.ViewHolder;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.customviews.LoaderView;
-import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
@@ -129,10 +126,10 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LoaderView loaderView = (LoaderView) layoutInflater.inflate(R.layout.loader_view, null, true);
         switch (viewType) {
             case VIEW_TYPE_LOADER:
+                LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LoaderView loaderView = (LoaderView) layoutInflater.inflate(R.layout.loader_view, null, true);
                 return new ViewHolder(loaderView, true);
             case VIEW_TYPE_TRANSACTION:
             default:
@@ -249,7 +246,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
     protected class ViewHolder extends RecyclerView.ViewHolder {
         private HexagonView hexagonView;
         private TextView title, description, date;
-        private LoaderView progressBar;
+        private LoaderView loaderView;
         private Space sStartOffset;
         private boolean isProgress;
 
@@ -265,9 +262,10 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         public ViewHolder(View view, boolean _isProgress) {
             super(view);
             isProgress = _isProgress;
-            progressBar = (LoaderView) view;
-            progressBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            loaderView = (LoaderView) view;
+            loaderView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
+            loaderView.requestLayout();
         }
 
         public void setData(int _position, GetTransactionResponseModel _model) {

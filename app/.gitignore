@@ -1,2 +1,5 @@
 /build
 app.iml
+src/main/java/com/uae/tra_smart_services/activity/TestActivity.java
+/src/main/res/layout/test_activitiy.xml
+
