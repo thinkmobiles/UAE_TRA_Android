@@ -87,7 +87,6 @@
                     android:background="@android:color/transparent"
                     android:gravity="center_vertical"
                     android:hint="@string/str_insert_imei_hint"
-                    android:inputType="number"
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textColor="@android:color/background_dark"

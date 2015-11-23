@@ -90,7 +90,7 @@ public class MyViewPager extends ViewPager {
     protected void onScrollChanged(final int _left, final int _top, final int _oldLeft, final int _oldTop) {
         super.onScrollChanged(_left, _top, _oldLeft, _oldTop);
         if (_left == getCurrentPageX()) {
-            Logger.d(this, "onScrollChanged: " + _left);
+//            Logger.d(this, "onScrollChanged: " + _left);
             mIsFlingHandled = false;
         }
     }
@@ -127,7 +127,7 @@ public class MyViewPager extends ViewPager {
         @DebugLog
         public boolean onSwipeLeft(float velocityX, float velocityY) {
             if (canOpenNextPage()) {
-                Logger.d(this, "onFling Next");
+//                Logger.d(this, "onFling Next");
                 mIsFlingHandled = true;
                 openNextPage();
                 return true;
@@ -138,7 +138,7 @@ public class MyViewPager extends ViewPager {
         @DebugLog
         public boolean onSwipeRight(float velocityX, float velocityY) {
             if (canOpenPreviousPage()) {
-                Logger.d(this, "onFling Previous");
+//                Logger.d(this, "onFling Previous");
                 mIsFlingHandled = true;
                 openPreviousPage();
                 return true;

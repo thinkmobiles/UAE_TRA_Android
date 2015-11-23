@@ -67,11 +67,14 @@ public final class PermissionManager {
         if (rationalesPermission.isEmpty()) {
             _fragment.requestPermissions(PermissionUtils.getPermissionNames(uncheckedPermissions), _requestCode);
         } else {
-            openPermissionExplanationDialog(_fragment, rationalesPermission);
+            openPermissionExplanationDialog(_fragment, rationalesPermission, _requestCode);
         }
     }
 
-    private void openPermissionExplanationDialog(final Fragment _fragment, final ArrayList<Permission> _rationalesPermission) {
+    private void openPermissionExplanationDialog(final Fragment _fragment,
+                                                 final ArrayList<Permission> _rationalesPermission,
+                                                 final int _requestCode) {
+
         final StringBuilder explanationTextBuilder = new StringBuilder();
         explanationTextBuilder.append(_fragment.getString(_rationalesPermission.get(0).getPermissionExplanationRes()));
         for (int i = 0; i < _rationalesPermission.size() - 1; i++) {
@@ -79,7 +82,7 @@ public final class PermissionManager {
             explanationTextBuilder.append(_fragment.getString(_rationalesPermission.get(i + 1).getPermissionExplanationRes()));
         }
         mPermissionsToCheck = _rationalesPermission;
-        mExplanationDialogListener.onOpenPermissionExplanationDialog(explanationTextBuilder.toString());
+        mExplanationDialogListener.onOpenPermissionExplanationDialog(_requestCode, explanationTextBuilder.toString());
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -89,6 +92,7 @@ public final class PermissionManager {
     }
 
     public final boolean onRequestPermissionsResult(@NonNull Fragment _fragment,
+                                                    int _requestCode,
                                                     String[] _permissions,
                                                     @NonNull int[] _grantResults) {
 
@@ -96,7 +100,7 @@ public final class PermissionManager {
         ArrayList<Permission> declinedPermissions = PermissionUtils.getDeclinedPermissions(requestedPermissions, _grantResults);
         if (declinedPermissions.isEmpty()) {
             if (mRequestSuccessListener != null) {
-                mRequestSuccessListener.onPermissionRequestSuccess(_fragment);
+                mRequestSuccessListener.onPermissionRequestSuccess(_fragment, _requestCode);
             }
         } else {
             Toast.makeText(mContext, R.string.attachment_permission_denied, C.TOAST_LENGTH).show();
@@ -123,6 +127,6 @@ public final class PermissionManager {
     }
 
     public interface OnPermissionRequestSuccessListener {
-        void onPermissionRequestSuccess(final Fragment _fragment);
+        void onPermissionRequestSuccess(final Fragment _fragment, final int _requestCode);
     }
 }

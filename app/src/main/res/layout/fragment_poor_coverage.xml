@@ -20,6 +20,41 @@
         android:paddingStart="15dp"
         android:paddingEnd="15dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_vertical"
+            android:paddingTop="15dp"
+            android:text="@string/str_signal_level"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="20sp"/>
+
+        <SeekBar
+            android:id="@+id/sbPoorCoverage_FPC"
+            style="@style/UserAuthorizationDataEditTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:max="4"
+            tools:progress="2"/>
+
+        <TextView
+            android:id="@+id/tvSignalLevel_FPC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_vertical"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="20sp"
+            tools:text="@string/str_signal_level"/>
+
+        <View
+            android:id="@+id/vNumberOfSpammerDivider_FRSS"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_height="1dp"
+            android:background="?attr/colorPrimary"/>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -49,39 +84,6 @@
                 android:layout_alignTop="@id/etLocation_FPC"
                 android:layout_margin="10dp"/>
         </RelativeLayout>
-
-        <View
-            android:id="@+id/vNumberOfSpammerDivider_FRSS"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?attr/colorPrimary"/>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|center_vertical"
-            android:paddingTop="15dp"
-            android:text="@string/str_signal_level"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="20dp"/>
-
-        <SeekBar
-            android:id="@+id/sbPoorCoverage_FPC"
-            style="@style/UserAuthorizationDataEditTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="4"
-            tools:progress="2"/>
-
-        <TextView
-            android:id="@+id/tvSignalLevel_FPC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|center_vertical"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="20dp"
-            tools:text="@string/str_signal_level"/>
 
     </LinearLayout>
 </FrameLayout>

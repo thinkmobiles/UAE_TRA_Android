@@ -92,31 +92,32 @@ public final class DynamicServicePageAdapter extends PagerAdapter {
 
     @Override
     public View instantiateItem(ViewGroup pageContainer, int position) {
-        final View pageView = mInflater.inflate(R.layout.layout_dynamic_service_page, pageContainer, false);
-        pageContainer.addView(pageView);
+//        final View pageView = mInflater.inflate(R.layout.layout_dynamic_service_page, pageContainer, false);
+//        pageContainer.addView(pageView);
+//
+//        ViewHolder holder = (ViewHolder) pageView.getTag();
+//        if (holder == null) {
+//            holder = new ViewHolder(pageView);
+//        }
+//
+//        final LinearLayout inputItemsContainer = holder.inputItemsContainer;
+//        final InputItemsPage currentPage = mInputItemsPages.get(position);
+//
+//        final List<BaseInputItem> inputItems = currentPage.inputItems;
+//        for (BaseInputItem inputItem : inputItems) {
+//            View view = inputItem.getView(mInflater, inputItemsContainer);
+//            inputItemsContainer.addView(view);
+//        }
+//
+//        if (isLastItemPosition(position)) {
+//            mLastPageContainer = new SoftReference<>(inputItemsContainer);
+//            inputItemsContainer.addView(getSendBtn(inputItemsContainer));
+//        }
+//
+//        setAttachmentCallbackIntoPage(currentPage);
 
-        ViewHolder holder = (ViewHolder) pageView.getTag();
-        if (holder == null) {
-            holder = new ViewHolder(pageView);
-        }
-
-        final LinearLayout inputItemsContainer = holder.inputItemsContainer;
-        final InputItemsPage currentPage = mInputItemsPages.get(position);
-
-        final List<BaseInputItem> inputItems = currentPage.inputItems;
-        for (BaseInputItem inputItem : inputItems) {
-            View view = inputItem.getView(mInflater, inputItemsContainer);
-            inputItemsContainer.addView(view);
-        }
-
-        if (isLastItemPosition(position)) {
-            mLastPageContainer = new SoftReference<>(inputItemsContainer);
-            inputItemsContainer.addView(getSendBtn(inputItemsContainer));
-        }
-
-        setAttachmentCallbackIntoPage(currentPage);
-
-        return pageView;
+//        return pageView;
+        return null;
     }
 
     private Button getSendBtn(LinearLayout _inputItemsContainer) {
@@ -134,17 +135,17 @@ public final class DynamicServicePageAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        final InputItemsPage page = mInputItemsPages.get(position);
-        final ViewGroup pageView = (ViewGroup) object;
-        final LinearLayout inputItemsContainer = ((ViewHolder) pageView.getTag()).inputItemsContainer;
-        for (BaseInputItem inputItem : page.inputItems) {
-            inputItemsContainer.removeView(inputItem.getView(mInflater, inputItemsContainer));
-        }
-
-        if (isLastItemPosition(position)) {
-            inputItemsContainer.removeView(getSendBtn(inputItemsContainer));
-        }
-        container.removeView((View) object);
+//        final InputItemsPage page = mInputItemsPages.get(position);
+//        final ViewGroup pageView = (ViewGroup) object;
+//        final LinearLayout inputItemsContainer = ((ViewHolder) pageView.getTag()).inputItemsContainer;
+//        for (BaseInputItem inputItem : page.inputItems) {
+//            inputItemsContainer.removeView(inputItem.getView(mInflater, inputItemsContainer));
+//        }
+//
+//        if (isLastItemPosition(position)) {
+//            inputItemsContainer.removeView(getSendBtn(inputItemsContainer));
+//        }
+//        container.removeView((View) object);
     }
 
     @Override
@@ -154,11 +155,11 @@ public final class DynamicServicePageAdapter extends PagerAdapter {
 
     private final class ViewHolder {
 
-        final LinearLayout inputItemsContainer;
+//        final LinearLayout inputItemsContainer;
 
         public ViewHolder(@NonNull final View _view) {
-            inputItemsContainer = (LinearLayout) _view.findViewById(R.id.pllContainer_LDSP);
-            _view.setTag(this);
+//            inputItemsContainer = (LinearLayout) _view.findViewById(R.id.pllContainer_LDSP);
+//            _view.setTag(this);
         }
 
     }

@@ -145,8 +145,8 @@ public final class AttachmentManager implements OnOpenPermissionExplanationDialo
     }
 
     @Override
-    public void onOpenPermissionExplanationDialog(String _explanation) {
-        mExplanationDialogListener.onOpenPermissionExplanationDialog(_explanation);
+    public void onOpenPermissionExplanationDialog(int _requestCode, String _explanation) {
+        mExplanationDialogListener.onOpenPermissionExplanationDialog(_requestCode, _explanation);
     }
 
     public final void onConfirmPermissionExplanationDialog(final Fragment _fragment) {
@@ -156,11 +156,11 @@ public final class AttachmentManager implements OnOpenPermissionExplanationDialo
     public final boolean onRequestPermissionsResult(@NonNull Fragment _fragment, int _requestCode,
                                                     String[] _permissions, @NonNull int[] _grantResults) {
         return _requestCode == ATTACHMENT_PERMISSION_REQUEST &&
-                mTakePhotoPermissionManager.onRequestPermissionsResult(_fragment, _permissions, _grantResults);
+                mTakePhotoPermissionManager.onRequestPermissionsResult(_fragment, _requestCode, _permissions, _grantResults);
     }
 
     @Override
-    public void onPermissionRequestSuccess(final Fragment _fragment) {
+    public void onPermissionRequestSuccess(final Fragment _fragment, final int _requestCode) {
         tryOpenCamera(_fragment);
     }
 

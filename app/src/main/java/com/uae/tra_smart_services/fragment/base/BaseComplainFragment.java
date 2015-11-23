@@ -120,7 +120,7 @@ public abstract class BaseComplainFragment extends BaseServiceFragment
     }
 
     @Override
-    public final void onOpenPermissionExplanationDialog(final String _explanation) {
+    public final void onOpenPermissionExplanationDialog(int _requestCode, final String _explanation) {
         showMessage(_explanation);
     }
 

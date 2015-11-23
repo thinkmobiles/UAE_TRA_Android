@@ -9,10 +9,12 @@ import android.content.IntentSender;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
+import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -60,6 +62,7 @@ import com.uae.tra_smart_services.manager.PermissionManager.OnPermissionRequestS
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
 import com.uae.tra_smart_services.rest.robo_requests.PoorCoverageRequest;
+import com.uae.tra_smart_services.util.Logger;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -166,7 +169,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         sbPoorCoverage.setOnSeekBarChangeListener(this);
     }
 
-    private final void removeListeners(){
+    private void removeListeners() {
         mLocationPermissionManager.setRequestSuccessListener(null);
         etLocation.setOnFocusChangeListener(null);
         sbPoorCoverage.setOnSeekBarChangeListener(null);
@@ -181,7 +184,8 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
             locationTypeChooser.show(getFragmentManager());
         }
     }
-    private void createSignalStrengthListener(){
+
+    private void createSignalStrengthListener() {
         mSignalStrengthListener = new SignalStrengthListener();
         mTelephonyManager = ((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE));
         mTelephonyManager.listen(mSignalStrengthListener, SignalStrengthListener.LISTEN_SIGNAL_STRENGTHS);
@@ -214,7 +218,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     @Override
-    public final void onOpenPermissionExplanationDialog(String _explanation) {
+    public final void onOpenPermissionExplanationDialog(int _requestCode, String _explanation) {
         showMessage(_explanation);
     }
 
@@ -226,7 +230,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     @Override
     public void onRequestPermissionsResult(int _requestCode, @NonNull String[] _permissions, @NonNull int[] _grantResults) {
         if (_requestCode == LOCATION_PERMISSION_REQUEST) {
-            if (!mLocationPermissionManager.onRequestPermissionsResult(this, _permissions, _grantResults)) {
+            if (!mLocationPermissionManager.onRequestPermissionsResult(this, _requestCode, _permissions, _grantResults)) {
                 super.onRequestPermissionsResult(_requestCode, _permissions, _grantResults);
             }
         } else {
@@ -235,7 +239,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     @Override
-    public final void onPermissionRequestSuccess(Fragment _fragment) {
+    public final void onPermissionRequestSuccess(Fragment _fragment, int _requestCode) {
         checkLocationSettings();
     }
 
@@ -323,12 +327,31 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     private class SignalStrengthListener extends PhoneStateListener {
+
+        private static final float MAX_GSM_LEVEL = 31;
+        private static final float MAX_SEEK_BAR_LEVEL = 4;
+        private static final float ERROR_SIGNAL_LEVEL = 99;
+
         @Override
-        public void onSignalStrengthsChanged(android.telephony.SignalStrength signalStrength) {
-            int strengthAmplitude = signalStrength.getLevel() - 1;
-            sbPoorCoverage.setProgress(strengthAmplitude);
-            sbPoorCoverage.setEnabled(false);
-            super.onSignalStrengthsChanged(signalStrength);
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                int strengthAmplitude = signalStrength.getLevel();
+                sbPoorCoverage.setProgress(strengthAmplitude);
+                Logger.d("onSignalStrengthsChanged", "SignalStrengths = " + strengthAmplitude);
+                sbPoorCoverage.setEnabled(false);
+                super.onSignalStrengthsChanged(signalStrength);
+            } else if (signalStrength.isGsm()) {
+                int gsmSignalStrength = signalStrength.getGsmSignalStrength();
+                if (gsmSignalStrength != ERROR_SIGNAL_LEVEL) {
+                    int strengthAmplitude = Math.round(signalStrength.getGsmSignalStrength() / MAX_GSM_LEVEL * MAX_SEEK_BAR_LEVEL);
+                    sbPoorCoverage.setProgress(strengthAmplitude);
+                    Logger.d("onSignalStrengthsChanged", "SignalStrengths(pre-M) = " + strengthAmplitude);
+                    sbPoorCoverage.setEnabled(false);
+                }
+            } else {
+                sbPoorCoverage.setEnabled(true);
+                mTelephonyManager.listen(mSignalStrengthListener, SignalStrengthListener.LISTEN_NONE);
+            }
         }
     }
 
@@ -446,7 +469,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             getSpiceManager().getFromCache(Response.class, TAG, DurationInMillis.ALWAYS_EXPIRED, new PoorCoverageRequestListener());
             etLocation.clearFocus();
             initListeners();
@@ -502,7 +525,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
             boolean isDialog = loaderDialogDismiss();
-            if(poorCoverageRequestModel != null){
+            if (poorCoverageRequestModel != null) {
                 switch (poorCoverageRequestModel.getStatus()) {
                     case 200:
                         if (isDialog) {

@@ -190,7 +190,7 @@ public final class DynamicServiceFragment extends BaseFragment
     }
 
     @Override
-    public void onOpenPermissionExplanationDialog(String _explanation) {
+    public void onOpenPermissionExplanationDialog(int _requestCode, String _explanation) {
         showMessage(_explanation);
     }
 
