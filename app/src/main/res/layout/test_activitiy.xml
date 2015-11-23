@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container">
-    <RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/expandibleRecycleView">
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sSortSelector">
 
-    </RecyclerView>
-</FrameLayout>
+    </Spinner>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="560dp"
+        android:id="@+id/expandibleRecycleView"
+        android:layout_below="@+id/sSortSelector">
+
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

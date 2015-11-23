@@ -4,7 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -20,6 +26,7 @@ import com.uae.tra_smart_services.rest.model.response.EquipmentTreeModel;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by and on 13.11.15.
@@ -33,18 +40,24 @@ public class TestActivity extends Activity{
         setContentView(R.layout.test_activitiy);
 //        createTreeView();
 
-        RecyclerView mCrimeRecyclerView = (RecyclerView) findViewById(R.id.expandibleRecycleView);
-        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         Gson gson = new Gson();
         JsonReader reader = new JsonReader(new StringReader(dataModelStr));
         final WorkQueueExpandableAdapter.WorkQueueDataModel workQueueDataModel = gson.fromJson(reader, WorkQueueExpandableAdapter.WorkQueueDataModel.class);
 
+        List<String> sortBy = new ArrayList<>();
+        for (Map<String,String> localized : workQueueDataModel.dataSource){
+                sortBy.add(localized.get("EN"));
+        }
+        Spinner sortSelector = (Spinner) findViewById(R.id.sSortSelector);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sortBy);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortSelector.setAdapter(dataAdapter);
 
-        mCrimeRecyclerView.setAdapter(new WorkQueueExpandableAdapter(this, new WorkQueueExpandableAdapter.NetModelToExpRecyclerViewModelAdapter(workQueueDataModel)));
-
-
-
+        RecyclerView mCrimeRecyclerView = (RecyclerView) findViewById(R.id.expandibleRecycleView);
+        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        WorkQueueExpandableAdapter adapter = new WorkQueueExpandableAdapter(this, new WorkQueueExpandableAdapter.NetModelToExpRecyclerViewModelAdapter(workQueueDataModel), workQueueDataModel);
+        mCrimeRecyclerView.setAdapter(adapter);
+        sortSelector.setOnItemSelectedListener(adapter);
     }
 
     private static final String dataModelStr = "{\n" +
@@ -119,29 +132,559 @@ public class TestActivity extends Activity{
             "              \"dealerType\": \"dealer type\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"2\",\n" +
-            "              \"status\": \"disable\",\n" +
-            "              \"workitemName\": \"test\",\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
             "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type1\"\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"2\",\n" +
-            "              \"status\": \"disable\",\n" +
-            "              \"workitemName\": \"test\",\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
             "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type2\"\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"2\",\n" +
-            "              \"status\": \"disable\",\n" +
-            "              \"workitemName\": \"test\",\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"1\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
@@ -159,47 +702,77 @@ public class TestActivity extends Activity{
             "              \"dealerType\": \"dealer type1\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"2\",\n" +
-            "              \"status\": \"disable\",\n" +
-            "              \"workitemName\": \"test\",\n" +
-            "              \"taskType\": \"task Type\",\n" +
-            "              \"organizationName\": \"super\",\n" +
-            "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type1\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "              \"referenceNumber\": \"2\",\n" +
-            "              \"status\": \"disable\",\n" +
-            "              \"workitemName\": \"test\",\n" +
-            "              \"taskType\": \"task Type\",\n" +
-            "              \"organizationName\": \"super\",\n" +
-            "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type2\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "              \"referenceNumber\": \"2\",\n" +
-            "              \"status\": \"disable\",\n" +
-            "              \"workitemName\": \"test\",\n" +
-            "              \"taskType\": \"task Type\",\n" +
-            "              \"organizationName\": \"super\",\n" +
-            "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type1\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "              \"referenceNumber\": \"2\",\n" +
-            "              \"status\": \"disable\",\n" +
-            "              \"workitemName\": \"test\",\n" +
-            "              \"taskType\": \"task Type\",\n" +
-            "              \"organizationName\": \"super\",\n" +
-            "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type2\"\n" +
-            "            },\n" +
-            "            {\n" +
             "              \"referenceNumber\": \"3\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type2\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"4\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"5\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type1\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"6\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type1\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"7\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type2\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"8\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type1\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"9\",\n" +
+            "              \"status\": \"disable\",\n" +
+            "              \"workitemName\": \"test\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type2\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"10\",\n" +
             "              \"status\": \"disable\",\n" +
             "              \"workitemName\": \"test\",\n" +
             "              \"taskType\": \"task Type\",\n" +
@@ -329,7 +902,7 @@ public class TestActivity extends Activity{
         }}) {
             @Override
             protected boolean hasChild(TreeEntity _entity) {
-                return getChildCount(_entity) > 0;
+                return _entity.haveChild();
             }
 
             @Override
