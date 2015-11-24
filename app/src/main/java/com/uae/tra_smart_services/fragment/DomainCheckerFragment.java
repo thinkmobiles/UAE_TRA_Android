@@ -23,16 +23,13 @@ import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckRes
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
 import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
-
-import java.util.regex.Pattern;
+import com.uae.tra_smart_services.util.TRAPatterns;
 
 /**
  * Created by ak-buffalo on 10.08.15.
  */
 public class DomainCheckerFragment extends BaseServiceFragment
         implements View.OnClickListener, AlertDialogFragment.OnOkListener/*, Loader.Cancelled*/ {
-
-    private static final Pattern AE_DOMAIN_PATTERN = Pattern.compile("^.+(\\.ae)\\/?$");
 
     /**
      * Views
@@ -138,7 +135,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     }
 
     private boolean validateAeDomain() {
-        if (!AE_DOMAIN_PATTERN.matcher(etDomainAvail.getText()).matches()) {
+        if (!TRAPatterns.AE_DOMAIN_PATTERN.matcher(etDomainAvail.getText()).matches()) {
             Toast.makeText(getActivity(), R.string.fragment_domain_checker_hint, Toast.LENGTH_SHORT).show();
             return false;
         }

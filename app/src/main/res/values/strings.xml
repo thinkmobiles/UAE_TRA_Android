@@ -180,8 +180,6 @@
     <string name="fragment_favorites_menu_add">Add service</string>
 
 
-
-
     <!--                PoorCoverageFragment            -->
     <string-array name="fragment_poor_coverage_signal_levels">
         <item>Very Weak</item>
@@ -412,5 +410,6 @@
 
     <string name="str_my_imei">MY IMEI</string>
     <string name="str_where_to_find_imei">Where to find the IMEI code on your device?</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

@@ -46,11 +46,12 @@ dependencies {
     compile project(':viewpadeindicator')
 
     //Google libs
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.android.support:percent:23.1.0'
-    compile 'com.google.android.gms:play-services-location:8.1.0'
-    compile 'com.android.support:recyclerview-v7:23.1.0'
-    compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:percent:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.google.android.gms:play-services-location:8.3.0'
+    compile 'com.google.android.gms:play-services-maps:8.3.0'
 
     //Rest libs
     compile 'com.squareup.retrofit:retrofit:1.9.0'
@@ -62,13 +63,11 @@ dependencies {
     //3rd party libs
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'me.dm7.barcodescanner:zxing:1.8.2'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
+    compile 'com.github.bmelnychuk:atv:1.2.7'
+    compile 'com.github.johnkil.print:print:1.2.2'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
         transitive = true;
     }
-
-    compile 'com.github.bmelnychuk:atv:1.2.+'
-    compile 'com.github.johnkil.print:print:1.2.2'
 }

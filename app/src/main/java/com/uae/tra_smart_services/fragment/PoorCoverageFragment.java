@@ -23,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -43,6 +44,14 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -79,7 +88,8 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         OnOkListener, OnItemPickListener,
         ConnectionCallbacks, OnConnectionFailedListener,
         OnSeekBarChangeListener, OnClickListener, ResultCallback<LocationSettingsResult>,
-        LocationListener, OnPermissionRequestSuccessListener, OnOpenPermissionExplanationDialogListener, View.OnFocusChangeListener {
+        LocationListener, OnPermissionRequestSuccessListener, OnOpenPermissionExplanationDialogListener, OnFocusChangeListener,
+        OnMapReadyCallback {
     //endregion
 
     //region CONSTANTS
@@ -108,8 +118,9 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     private TelephonyManager mTelephonyManager;
     private SignalStrengthListener mSignalStrengthListener;
 
-    private PermissionManager mLocationPermissionManager;
+    private GoogleMap mGoogleMap;
     private boolean isLoaderAdded;
+    private PermissionManager mLocationPermissionManager;
     //endregion
 
     //region VIEWS
@@ -118,6 +129,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     private EditText etLocation;
     private SeekBar sbPoorCoverage;
     private ProgressBar sbProgressBar;
+    private MapView mvMap;
     //endregion
 
     public static PoorCoverageFragment newInstance() {
@@ -158,6 +170,9 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         sbProgressBar = findView(R.id.pbFindLoc_FPC);
         tvSignalLevel = findView(R.id.tvSignalLevel_FPC);
         tvSignalLevel.setText(getResources().getStringArray(R.array.fragment_poor_coverage_signal_levels)[0]);
+
+        mvMap = findView(R.id.mvMap_FPC);
+        mvMap.getMapAsync(this);
     }
 
     @Override
@@ -201,11 +216,21 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            mLocationPermissionManager.onRestoreInstanceState(savedInstanceState);
+    public void onActivityCreated(Bundle _savedInstanceState) {
+        super.onActivityCreated(_savedInstanceState);
+        mvMap.onCreate(_savedInstanceState);
+        if (_savedInstanceState != null) {
+            mLocationPermissionManager.onRestoreInstanceState(_savedInstanceState);
         }
+    }
+
+    @Override
+    public void onMapReady(final GoogleMap _googleMap) {
+        mGoogleMap = _googleMap;
+        if (mLocationPermissionManager.isAllPermissionsChecked()) {
+            invalidateMapLocation();
+        }
+
     }
 
     @Override
@@ -215,6 +240,12 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
             mGoogleApiClient.connect();
         }
         getSpiceManager().addListenerIfPending(Response.class, TAG, new PoorCoverageRequestListener());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mvMap.onResume();
     }
 
     @Override
@@ -244,15 +275,6 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.disconnect();
-        }
-        removeListeners();
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
@@ -269,6 +291,21 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onPause() {
+        mvMap.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.disconnect();
+        }
+        removeListeners();
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -418,6 +455,23 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         defineUserFriendlyAddress();
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
         stopLocationUpdates();
+
+        invalidateMapLocation();
+    }
+
+    private void invalidateMapLocation() {
+        if (mGoogleMap != null && mCurrentLocation != null) {
+            mvMap.setVisibility(View.VISIBLE);//TODO
+            final LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+            final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 16);
+            mGoogleMap.moveCamera(cameraUpdate);
+
+            mGoogleMap.clear();
+            mGoogleMap.addMarker(
+                    new MarkerOptions()
+                            .position(latLng)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        }
     }
 
     @Override
@@ -480,6 +534,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        mvMap.onSaveInstanceState(outState);
         mLocationPermissionManager.onSaveInstanceState(outState);
         removeListeners();
         super.onSaveInstanceState(outState);
@@ -506,6 +561,12 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         if (getSpiceManager().isStarted() && mPoorCoverageRequest != null) {
             getSpiceManager().cancel(mPoorCoverageRequest);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        mvMap.onDestroy();
+        super.onDestroyView();
     }
 
     @Override
