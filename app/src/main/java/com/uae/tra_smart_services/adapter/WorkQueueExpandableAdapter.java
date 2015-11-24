@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by and on 19.11.15.
+ * Created by ak-buffalo on 19.11.15.
  */
 public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQueueExpandableAdapter.WorkQueueParentViewHolder, WorkQueueExpandableAdapter.WorkQueueChildViewHolder>
                                                     implements Spinner.OnItemSelectedListener{
@@ -153,11 +153,11 @@ public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQu
 
         public List<ParentObject> initData(){
             prepareData();
-            getParentObjects();
+            createParentObjects();
             return mParentObjects;
         }
 
-        public void getParentObjects(){
+        public void createParentObjects(){
             mParentObjects = new ArrayList<ParentObject>(){
                 {
                     for(final Map.Entry<String, List<Map<String, String>>> item : unique.entrySet()){
@@ -182,7 +182,7 @@ public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQu
             for (final List<Map<String,String>> parent : adapter.unique.values()){
                 Collections.sort(parent, new MapComparator(_key));
             }
-            getParentObjects();
+            createParentObjects();
         }
 
         public class MapComparator implements Comparator<Object> {
