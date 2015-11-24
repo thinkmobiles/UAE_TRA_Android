@@ -22,9 +22,11 @@ import com.uae.tra_smart_services.entities.treview.TreeNode;
 import com.uae.tra_smart_services.entities.treview.TreeSelectableItemHolder;
 import com.uae.tra_smart_services.adapter.TreeViewBaseAdapter;
 import com.uae.tra_smart_services.rest.model.response.EquipmentTreeModel;
+import com.uae.tra_smart_services.rest.model.response.WorkQueueDataModel;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +34,23 @@ import java.util.Map;
  * Created by and on 13.11.15.
  */
 public class TestActivity extends Activity{
+    private class Student implements  Comparable<Student>{
+        public int num;
+        public String name;
 
+        public Student(int num, String name, int age) {
+            this.num = num;
+            this.name = name;
+            this.age = age;
+        }
+
+        public int age;
+
+        @Override
+        public int compareTo(Student another) {
+            return (num > another.num) ? 1 : -1;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +58,35 @@ public class TestActivity extends Activity{
         setContentView(R.layout.test_activitiy);
 //        createTreeView();
 
+
+
+
+
+
+        ArrayList<Student> arraylist = new ArrayList<Student>();
+        arraylist.add(new Student(223, "Chaitanya", 26));
+        arraylist.add(new Student(245, "Rahul", 24));
+        arraylist.add(new Student(209, "Ajeet", 32));
+
+        Collections.sort(arraylist);
+
+        for(Student str: arraylist){
+            System.out.println(str.name);
+        }
+
+
+
+
+
+
+
+
+
+
+
         Gson gson = new Gson();
         JsonReader reader = new JsonReader(new StringReader(dataModelStr));
-        final WorkQueueExpandableAdapter.WorkQueueDataModel workQueueDataModel = gson.fromJson(reader, WorkQueueExpandableAdapter.WorkQueueDataModel.class);
+        final WorkQueueDataModel workQueueDataModel = gson.fromJson(reader, WorkQueueDataModel.class);
 
         List<String> sortBy = new ArrayList<>();
         for (Map<String,String> localized : workQueueDataModel.dataSource){
@@ -55,7 +99,7 @@ public class TestActivity extends Activity{
 
         RecyclerView mCrimeRecyclerView = (RecyclerView) findViewById(R.id.expandibleRecycleView);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        WorkQueueExpandableAdapter adapter = new WorkQueueExpandableAdapter(this, new WorkQueueExpandableAdapter.NetModelToExpRecyclerViewModelAdapter(workQueueDataModel), workQueueDataModel);
+        WorkQueueExpandableAdapter adapter = new WorkQueueExpandableAdapter(this, workQueueDataModel);
         mCrimeRecyclerView.setAdapter(adapter);
         sortSelector.setOnItemSelectedListener(adapter);
     }
@@ -128,11 +172,61 @@ public class TestActivity extends Activity{
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"createdDate\": \"2020\\/02\\/03\",\n" +
             "              \"dealerType\": \"dealer type\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
+            "              \"referenceNumber\": \"2\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2019\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"3\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2018\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"4\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2017\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"5\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2016\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"6\",\n" +
+            "              \"status\": \"enable\",\n" +
+            "              \"workitemName\": \"workitem\",\n" +
+            "              \"taskType\": \"task Type\",\n" +
+            "              \"organizationName\": \"super\",\n" +
+            "              \"createdBy\": \"user\",\n" +
+            "              \"createdDate\": \"2015\\/02\\/03\",\n" +
+            "              \"dealerType\": \"dealer type\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"referenceNumber\": \"7\",\n" +
             "              \"status\": \"enable\",\n" +
             "              \"workitemName\": \"workitem\",\n" +
             "              \"taskType\": \"task Type\",\n" +
@@ -142,107 +236,57 @@ public class TestActivity extends Activity{
             "              \"dealerType\": \"dealer type\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
+            "              \"referenceNumber\": \"8\",\n" +
             "              \"status\": \"enable\",\n" +
             "              \"workitemName\": \"workitem\",\n" +
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"createdDate\": \"2013\\/02\\/03\",\n" +
             "              \"dealerType\": \"dealer type\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
+            "              \"referenceNumber\": \"9\",\n" +
             "              \"status\": \"enable\",\n" +
             "              \"workitemName\": \"workitem\",\n" +
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"createdDate\": \"2012\\/02\\/03\",\n" +
             "              \"dealerType\": \"dealer type\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
+            "              \"referenceNumber\": \"10\",\n" +
             "              \"status\": \"enable\",\n" +
             "              \"workitemName\": \"workitem\",\n" +
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"createdDate\": \"2011\\/02\\/03\",\n" +
             "              \"dealerType\": \"dealer type\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
+            "              \"referenceNumber\": \"11\",\n" +
             "              \"status\": \"enable\",\n" +
             "              \"workitemName\": \"workitem\",\n" +
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"createdDate\": \"2010\\/02\\/03\",\n" +
             "              \"dealerType\": \"dealer type\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
+            "              \"referenceNumber\": \"12\",\n" +
             "              \"status\": \"enable\",\n" +
             "              \"workitemName\": \"workitem\",\n" +
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"createdDate\": \"2009\\/02\\/03\",\n" +
             "              \"dealerType\": \"dealer type\"\n" +
             "            },\n" +
             "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
-            "              \"status\": \"enable\",\n" +
-            "              \"workitemName\": \"workitem\",\n" +
-            "              \"taskType\": \"task Type\",\n" +
-            "              \"organizationName\": \"super\",\n" +
-            "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
-            "              \"status\": \"enable\",\n" +
-            "              \"workitemName\": \"workitem\",\n" +
-            "              \"taskType\": \"task Type\",\n" +
-            "              \"organizationName\": \"super\",\n" +
-            "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
-            "              \"status\": \"enable\",\n" +
-            "              \"workitemName\": \"workitem\",\n" +
-            "              \"taskType\": \"task Type\",\n" +
-            "              \"organizationName\": \"super\",\n" +
-            "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
-            "              \"status\": \"enable\",\n" +
-            "              \"workitemName\": \"workitem\",\n" +
-            "              \"taskType\": \"task Type\",\n" +
-            "              \"organizationName\": \"super\",\n" +
-            "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
-            "              \"status\": \"enable\",\n" +
-            "              \"workitemName\": \"workitem\",\n" +
-            "              \"taskType\": \"task Type\",\n" +
-            "              \"organizationName\": \"super\",\n" +
-            "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
-            "              \"dealerType\": \"dealer type\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "              \"referenceNumber\": \"1\",\n" +
+            "              \"referenceNumber\": \"13\",\n" +
             "              \"status\": \"enable\",\n" +
             "              \"workitemName\": \"workitem\",\n" +
             "              \"taskType\": \"task Type\",\n" +
@@ -708,7 +752,7 @@ public class TestActivity extends Activity{
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"createdDate\": \"2003\\/02\\/03\",\n" +
             "              \"dealerType\": \"dealer type2\"\n" +
             "            },\n" +
             "            {\n" +
@@ -748,7 +792,7 @@ public class TestActivity extends Activity{
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"createdDate\": \"2002\\/02\\/03\",\n" +
             "              \"dealerType\": \"dealer type2\"\n" +
             "            },\n" +
             "            {\n" +
@@ -768,7 +812,7 @@ public class TestActivity extends Activity{
             "              \"taskType\": \"task Type\",\n" +
             "              \"organizationName\": \"super\",\n" +
             "              \"createdBy\": \"user\",\n" +
-            "              \"createdDate\": \"2014\\/02\\/03\",\n" +
+            "              \"createdDate\": \"2001\\/02\\/03\",\n" +
             "              \"dealerType\": \"dealer type2\"\n" +
             "            },\n" +
             "            {\n" +

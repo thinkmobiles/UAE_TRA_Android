@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
@@ -17,8 +16,10 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.github.johnkil.print.PrintView;
 import com.uae.tra_smart_services.R;
+import com.uae.tra_smart_services.rest.model.response.WorkQueueDataModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -33,83 +34,24 @@ public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQu
                                                     implements Spinner.OnItemSelectedListener{
     private final String mLocale;
     public WorkQueueDataModel datamodel;
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View _view, int position, long id) {
-        Toast.makeText(mContext, ((TextView)_view).getText(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) { }
-
-    public static class NetModelToExpRecyclerViewModelAdapter implements Comparator<String> {
-        public List<ParentObject> mParentObjects;
-        public WorkQueueDataModel datamodel;
-
-        public NetModelToExpRecyclerViewModelAdapter(WorkQueueDataModel _datamodel){
-            datamodel = _datamodel;
-        }
-
-        public Map<String, List<Map<String, String>>> prepareData(){
-            Map<String, List<Map<String, String>>> unique = new HashMap<>();
-            header: for(final Map<String, String> content : datamodel.dataContent){
-                Set<String> keys = unique.keySet();
-                String valueToFind = content.get(datamodel.additional.get("sectorField"));
-                if(unique.isEmpty()){
-                    unique.put(valueToFind, new ArrayList<Map<String, String>>(){{add(content);}});
-                    continue;
-                }
-                for (String key : keys){
-                    if(compare(valueToFind, key) > 0){
-                        unique.get(key).add(content);
-                        continue header;
-                    }
-                }
-                unique.put(valueToFind, new ArrayList<Map<String, String>>(){{add(content);}});
-            }
-            return unique;
-        }
-
-        @Override
-        public int compare(String lhs, String rhs) {
-            return (lhs.hashCode() == rhs.hashCode()) ? 1 : -1;
-        }
-
-        public List<ParentObject> getParentObjects(){
-            return (mParentObjects = new ArrayList<ParentObject>(){
-                {
-                    for(final Map.Entry<String, List<Map<String, String>>> item : prepareData().entrySet()){
-                        add(new Header() {
-                            @Override
-                            public List<Object> getChildObjectList() {
-                                return new ArrayList<Object>(item.getValue());
-                            }
-                            @Override
-                            public void setChildObjectList(List<Object> list) { /*No need to implement*/ }
-                            @Override
-                            public String getTile(){
-                                return item.getKey();
-                            }
-                        });
-                    }
-                }
-            });
-        }
-    }
-
-    public interface Header extends ParentObject {
-        String getTile();
-    }
-
     private LayoutInflater mInflater;
-    private NetModelToExpRecyclerViewModelAdapter netModelToExpRecyclerViewModelAdapter;
+    private static WorkQueueExpandableAdapter.NetModelToExpRecyclerViewModelAdapter adapter;
 
-    public WorkQueueExpandableAdapter(Context context, NetModelToExpRecyclerViewModelAdapter netModelToExpRecyclerViewModelAdapter, WorkQueueDataModel _datamodel) {
-        super(context, netModelToExpRecyclerViewModelAdapter.getParentObjects());
+    public WorkQueueExpandableAdapter(Context context, WorkQueueDataModel _datamodel) {
+        super(context, (adapter = new WorkQueueExpandableAdapter.NetModelToExpRecyclerViewModelAdapter(_datamodel)).initData());
         mInflater = LayoutInflater.from(context);
         datamodel = _datamodel;
         mLocale = Locale.getDefault().getLanguage().toUpperCase();
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View _view, int position, long id) {
+        adapter.sortBy(datamodel.dataSource.get(position).get("value"));
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) { }
 
     @Override
     public WorkQueueParentViewHolder onCreateParentViewHolder(ViewGroup viewGroup) {
@@ -138,7 +80,6 @@ public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQu
     }
 
     public class WorkQueueParentViewHolder extends ParentViewHolder {
-
         public TextView mWorkQueueHeaderTitleTextView;
         public PrintView arrowView;
 
@@ -179,17 +120,87 @@ public class WorkQueueExpandableAdapter extends ExpandableRecyclerAdapter<WorkQu
         }
     }
 
-    public class WorkQueueDataModel {
-        public Integer order;
-        public String name;
-        public String inputType;
-        public HashMap<String, String> additional;
-        public boolean required;
-        public String validateAs;
-        public String _id;
-        public ArrayList<HashMap<String,String>> dataSource;
-        public HashMap<String, String> displayName;
-        public HashMap<String, String> placeHolder;
-        public ArrayList<HashMap<String, String>> dataContent;
+    public static class NetModelToExpRecyclerViewModelAdapter implements Comparator<String> {
+        public List<ParentObject> mParentObjects;
+        public WorkQueueDataModel datamodel;
+
+        public NetModelToExpRecyclerViewModelAdapter(WorkQueueDataModel _datamodel){
+            datamodel = _datamodel;
+        }
+        Map<String, List<Map<String, String>>> unique = new HashMap<>();
+        public void prepareData(){
+            header: for(final Map<String, String> content : datamodel.dataContent){
+                Set<String> keys = unique.keySet();
+                String valueToFind = content.get(datamodel.additional.get("sectorField"));
+                if(unique.isEmpty()){
+                    unique.put(valueToFind, new ArrayList<Map<String, String>>(){{add(content);}});
+                    continue;
+                }
+                for (String key : keys){
+                    if(compare(valueToFind, key) > 0){
+                        unique.get(key).add(content);
+                        continue header;
+                    }
+                }
+                unique.put(valueToFind, new ArrayList<Map<String, String>>(){{add(content);}});
+            }
+        }
+
+        @Override
+        public int compare(String lhs, String rhs) {
+            return (lhs.hashCode() == rhs.hashCode()) ? 1 : -1;
+        }
+
+        public List<ParentObject> initData(){
+            prepareData();
+            getParentObjects();
+            return mParentObjects;
+        }
+
+        public void getParentObjects(){
+            mParentObjects = new ArrayList<ParentObject>(){
+                {
+                    for(final Map.Entry<String, List<Map<String, String>>> item : unique.entrySet()){
+                        add(new Header() {
+                            @Override
+                            public List<Object> getChildObjectList() {
+                                return new ArrayList<Object>(item.getValue());
+                            }
+                            @Override
+                            public void setChildObjectList(List<Object> list) { /*No need to implement*/ }
+                            @Override
+                            public String getTile(){
+                                return item.getKey();
+                            }
+                        });
+                    }
+                }
+            };
+        }
+
+        public void sortBy(String _key){
+            for (final List<Map<String,String>> parent : adapter.unique.values()){
+                Collections.sort(parent, new MapComparator(_key));
+            }
+            getParentObjects();
+        }
+
+        public class MapComparator implements Comparator<Object> {
+            private final String key;
+
+            public MapComparator(String key) {
+                this.key = key;
+            }
+
+            public int compare(Object first, Object second) {
+                String firstValue = ((Map<String, String>) first).get(key);
+                String secondValue = ((Map<String, String>) second).get(key);
+                return firstValue.compareTo(secondValue);
+            }
+        }
+    }
+
+    public interface Header extends ParentObject {
+        String getTile();
     }
 }
