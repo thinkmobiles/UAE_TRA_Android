@@ -130,7 +130,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
                     break;
             }
         } else {
-            showMessage(R.string.str_error, R.string.str_invalid_url);
+            Toast.makeText(getActivity(), R.string.str_invalid_url, Toast.LENGTH_SHORT).show();
         }
     }
 

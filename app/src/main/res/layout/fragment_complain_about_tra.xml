@@ -24,9 +24,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="?attr/actionBarSize"
+            tools:paddingTop="0dp"
             tools:ignore="HardcodedText,RtlSymmetry"
             android:paddingStart="15dp"
             android:paddingEnd="15dp">
+
+            <TextView
+                android:id="@+id/tvTitleStarLabel_FCAT"
+                style="@style/StarLabelStyle"/>
 
             <LinearLayout
                 android:id="@+id/llComplainTitle_FCAT"
@@ -67,7 +72,13 @@
                 android:layout_width="match_parent"
                 android:layout_below="@id/llComplainTitle_FCAT"
                 android:layout_height="1dp"
+                android:layout_marginBottom="4dp"
                 android:background="?attr/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/tvDescriptionStarLabel_FCAT"
+                android:layout_below="@id/vComplainTitleDivider_FCAT"
+                style="@style/StarLabelStyle"/>
 
             <EditText
                 android:id="@+id/etDescription_FCAT"
@@ -80,7 +91,6 @@
                 android:hint="@string/description"
                 android:inputType="textAutoCorrect|textMultiLine"
                 android:paddingEnd="8dp"
-                android:singleLine="true"
                 android:textColor="?attr/colorPrimary"
                 android:textColorHint="?attr/colorPrimary"
                 android:textSize="18sp"

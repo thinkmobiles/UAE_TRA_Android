@@ -125,6 +125,11 @@
                     app:layout_marginStartPercent="10%"
                     tools:ignore="TextFields"/>
 
+                <TextView
+                    android:id="@+id/tvDescriptionStarLabel_FCAS"
+                    android:layout_alignTop="@id/tivPhoneIcon_FRSS"
+                    style="@style/StarLabelStyle"/>
+
                 <View
                     android:id="@+id/vNumberOfSpammerDivider_FRSS"
                     android:layout_width="match_parent"
