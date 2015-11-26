@@ -70,4 +70,8 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
         transitive = true;
     }
+
+    compile 'com.github.bmelnychuk:atv:1.2.+'
+    compile 'com.github.johnkil.print:print:1.2.2'
+    compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
 }

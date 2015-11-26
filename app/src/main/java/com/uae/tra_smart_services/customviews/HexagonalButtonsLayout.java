@@ -1,6 +1,7 @@
 package com.uae.tra_smart_services.customviews;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
@@ -75,6 +77,8 @@ public class HexagonalButtonsLayout extends View {
     private final int HALF_BUTTONS = 2;
     private float mTwoDivSquare;
     private float mMaxDrawableHeight;
+
+    private final int textColorByTheme = calculateColorByTheme(getContext(), R.attr.themeMainColor);
 
     public HexagonalButtonsLayout(final Context _context, final AttributeSet _attrs) {
         super(_context, _attrs);
@@ -203,10 +207,10 @@ public class HexagonalButtonsLayout extends View {
     private void initDrawables() {
         mDrawables = new ArrayList<>();
 
-        mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_verif)));
-        mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_spam)));
-        mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_coverage)));
-        mDrawables.add(ImageUtils.getFilteredDrawable(getContext(), ContextCompat.getDrawable(getContext(), R.drawable.ic_earth)));
+        mDrawables.add(ImageUtils.getFilteredDrawableByTheme(getContext(), R.drawable.ic_verif, R.attr.themeMainColor));
+        mDrawables.add(ImageUtils.getFilteredDrawableByTheme(getContext(), R.drawable.ic_spam, R.attr.themeMainColor));
+        mDrawables.add(ImageUtils.getFilteredDrawableByTheme(getContext(), R.drawable.ic_coverage, R.attr.themeMainColor));
+        mDrawables.add(ImageUtils.getFilteredDrawableByTheme(getContext(), R.drawable.ic_earth, R.attr.themeMainColor));
 
         mMaxDrawableHeight = getMaxDrawableHeight(mDrawables);
     }
@@ -327,27 +331,19 @@ public class HexagonalButtonsLayout extends View {
         }
 
         drawDrawables(_canvas);
-        drawText(_canvas);
+        drawText(_canvas, textColorByTheme);
     }
 
     private void drawHexagons(final Canvas _canvas) {
         Path buttonsPath = new Path();
-        Path buttonsSecondPath = new Path();
 
         for (int hexagon = 0; hexagon < mButtonsCount; hexagon++) {
 
             final PointF point = mCenters.get(hexagon);
 
-            if (hexagon < HALF_BUTTONS) {
-                buttonsPath = calculatePath(buttonsPath, point.x, point.y, hexagon);
-            } else {
-                buttonsSecondPath = calculatePath(buttonsSecondPath, point.x, point.y, hexagon);
-            }
+            buttonsPath = calculatePath(buttonsPath, point.x, point.y, hexagon);
         }
 
-//        _canvas.drawPath(buttonsSecondPath, mShadowPaint);
-        _canvas.drawPath(buttonsSecondPath, mButtonSecondColorPaint);
-//        _canvas.drawPath(buttonsPath, mShadowPaint);
         _canvas.drawPath(buttonsPath, mButtonPaint);
     }
 
@@ -417,18 +413,14 @@ public class HexagonalButtonsLayout extends View {
         }
     }
 
-    private void drawText(final Canvas _canvas) {
-        drawTextLayout(_canvas, mCenters.get(0), getResources().getString(R.string.hexagon_button_verification),
-                mOrangeTextPaint.getColor());
+    private void drawText(final Canvas _canvas, final int _textColor) {
+        drawTextLayout(_canvas, mCenters.get(0), getResources().getString(R.string.hexagon_button_verification), _textColor);
 
-        drawTextLayout(_canvas, mCenters.get(1), getResources().getString(R.string.hexagon_button_spam),
-                mOrangeTextPaint.getColor());
+        drawTextLayout(_canvas, mCenters.get(1), getResources().getString(R.string.hexagon_button_spam), _textColor);
 
-        drawTextLayout(_canvas, mCenters.get(2), getResources().getString(R.string.hexagon_button_coverage),
-                mWhiteTextPain.getColor());
+        drawTextLayout(_canvas, mCenters.get(2), getResources().getString(R.string.hexagon_button_coverage), _textColor);
 
-        drawTextLayout(_canvas, mCenters.get(3), getResources().getString(R.string.str_domain_check),
-                mWhiteTextPain.getColor());
+        drawTextLayout(_canvas, mCenters.get(3), getResources().getString(R.string.str_domain_check), _textColor);
     }
 
     private void drawTextLayout(final Canvas _canvas, final PointF _center, final String _text,
@@ -484,6 +476,13 @@ public class HexagonalButtonsLayout extends View {
                 return;
             }
         }
+    }
+
+    private int calculateColorByTheme(final Context _context, @AttrRes final int _attr){
+        final TypedValue typedValue = new TypedValue();
+        final Resources.Theme theme = _context.getTheme();
+        theme.resolveAttribute(_attr, typedValue, true);
+        return typedValue.data;
     }
 
     private void captureClick(final MotionEvent _event) {
