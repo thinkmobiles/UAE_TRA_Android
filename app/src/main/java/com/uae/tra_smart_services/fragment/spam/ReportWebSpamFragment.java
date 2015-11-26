@@ -21,7 +21,6 @@ import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.Service;
 import com.uae.tra_smart_services.interfaces.Loader;
 import com.uae.tra_smart_services.interfaces.Loader.Cancelled;
-import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.rest.model.request.HelpSalimModel;
 import com.uae.tra_smart_services.rest.model.response.SmsSpamResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.HelpSalimRequest;
@@ -50,7 +49,7 @@ public class ReportWebSpamFragment extends BaseServiceFragment implements OnClic
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
-    
+
     @Override
     protected final void initData() {
         super.initData();
@@ -100,7 +99,7 @@ public class ReportWebSpamFragment extends BaseServiceFragment implements OnClic
 
     private void collectAndSendToServer() {
         if (validateData()) {
-            loaderOverlayShow(getString(R.string.str_sending), (LoaderMarker) this);
+            loaderOverlayShow(getString(R.string.str_sending), this);
             loaderOverlayButtonBehavior(new Loader.BackButton() {
                 @Override
                 public void onBackButtonPressed(LoaderView.State _currentState) {
@@ -125,10 +124,10 @@ public class ReportWebSpamFragment extends BaseServiceFragment implements OnClic
             Toast.makeText(getActivity(), R.string.str_invalid_url, C.TOAST_LENGTH).show();
             return false;
         }
-        if (etDescription.getText().toString().isEmpty()) {
-            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, C.TOAST_LENGTH).show();
-            return false;
-        }
+//        if (etDescription.getText().toString().isEmpty()) {
+//            Toast.makeText(getActivity(), R.string.fragment_complain_no_description, C.TOAST_LENGTH).show();
+//            return false;
+//        }
         return true;
     }
 

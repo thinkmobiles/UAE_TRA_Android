@@ -256,8 +256,8 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
         showMessage(-1, _titleRes, _bodyRes);
     }
 
-    protected final void showMessage(int messageId, String _title, String _body) {
-        AlertDialogFragment.newInstance(this, messageId, _title, _body)
+    protected final void showMessage(int _messageId, String _title, String _body) {
+        AlertDialogFragment.newInstance(this, _messageId, _title, _body)
                 .show(getFragmentManager());
     }
 
@@ -266,7 +266,11 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
     }
 
     protected final void showMessage(String _body) {
-        showMessage(-1, "", _body);
+        showMessage(-1, _body);
+    }
+
+    protected final void showMessage(int _messageId, String _body) {
+        showMessage(_messageId, "", _body);
     }
 
     @Override
@@ -281,9 +285,9 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
-        if(savedInstanceState != null && (mLoaderFragmentID = savedInstanceState.getInt(LoaderFragment.TAG)) != 0
+        if (savedInstanceState != null && (mLoaderFragmentID = savedInstanceState.getInt(LoaderFragment.TAG)) != 0
                 && (loader = (Loader) getFragmentManager().findFragmentById(mLoaderFragmentID)) != null
-                && savedInstanceState.getBoolean(LoaderFragment.STATE) == true){
+                && savedInstanceState.getBoolean(LoaderFragment.STATE) == true) {
             loader.continueLoading();
         }
         super.onViewStateRestored(savedInstanceState);
@@ -291,7 +295,7 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if(outState != null && loader != null){
+        if (outState != null && loader != null) {
             outState.putInt(LoaderFragment.TAG, mLoaderFragmentID = ((Fragment) loader).getId());
             outState.putBoolean(LoaderFragment.STATE, loader.isInLoading());
         }

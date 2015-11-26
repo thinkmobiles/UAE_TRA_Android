@@ -215,7 +215,7 @@ public class InnovationsFragment extends BaseFragment implements //region Interf
     }
 
     @Override
-    public void onOpenPermissionExplanationDialog(final String _explanation) {
+    public void onOpenPermissionExplanationDialog(int _requestCode, final String _explanation) {
         showMessage(_explanation);
     }
 

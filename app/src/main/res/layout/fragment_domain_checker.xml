@@ -36,7 +36,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/tvDomainAvail_FDCH"
+                    android:id="@+id/etDomainAvail_FDCH"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -50,7 +50,6 @@
                     android:textColor="?attr/colorPrimary"
                     android:textColorHint="?attr/colorPrimary"
                     android:textSize="18sp"
-                    android:text="tra.gov.ae"/>
                     tools:text="tra.gov.ae"/>
 
                 <View style="@style/AuthorizationFieldsSeparator"/>

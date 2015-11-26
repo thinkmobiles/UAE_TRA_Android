@@ -9,10 +9,12 @@ import android.content.IntentSender;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
+import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -41,6 +44,14 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -60,6 +71,7 @@ import com.uae.tra_smart_services.manager.PermissionManager.OnPermissionRequestS
 import com.uae.tra_smart_services.rest.model.request.PoorCoverageRequestModel;
 import com.uae.tra_smart_services.rest.robo_requests.GeoLocationRequest;
 import com.uae.tra_smart_services.rest.robo_requests.PoorCoverageRequest;
+import com.uae.tra_smart_services.util.Logger;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -76,7 +88,8 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         OnOkListener, OnItemPickListener,
         ConnectionCallbacks, OnConnectionFailedListener,
         OnSeekBarChangeListener, OnClickListener, ResultCallback<LocationSettingsResult>,
-        LocationListener, OnPermissionRequestSuccessListener, OnOpenPermissionExplanationDialogListener, View.OnFocusChangeListener {
+        LocationListener, OnPermissionRequestSuccessListener, OnOpenPermissionExplanationDialogListener, OnFocusChangeListener,
+        OnMapReadyCallback {
     //endregion
 
     //region CONSTANTS
@@ -105,8 +118,9 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     private TelephonyManager mTelephonyManager;
     private SignalStrengthListener mSignalStrengthListener;
 
-    private PermissionManager mLocationPermissionManager;
+    private GoogleMap mGoogleMap;
     private boolean isLoaderAdded;
+    private PermissionManager mLocationPermissionManager;
     //endregion
 
     //region VIEWS
@@ -115,6 +129,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     private EditText etLocation;
     private SeekBar sbPoorCoverage;
     private ProgressBar sbProgressBar;
+    private MapView mvMap;
     //endregion
 
     public static PoorCoverageFragment newInstance() {
@@ -155,6 +170,9 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         sbProgressBar = findView(R.id.pbFindLoc_FPC);
         tvSignalLevel = findView(R.id.tvSignalLevel_FPC);
         tvSignalLevel.setText(getResources().getStringArray(R.array.fragment_poor_coverage_signal_levels)[0]);
+
+        mvMap = findView(R.id.mvMap_FPC);
+        mvMap.getMapAsync(this);
     }
 
     @Override
@@ -166,7 +184,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         sbPoorCoverage.setOnSeekBarChangeListener(this);
     }
 
-    private final void removeListeners(){
+    private void removeListeners() {
         mLocationPermissionManager.setRequestSuccessListener(null);
         etLocation.setOnFocusChangeListener(null);
         sbPoorCoverage.setOnSeekBarChangeListener(null);
@@ -181,7 +199,8 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
             locationTypeChooser.show(getFragmentManager());
         }
     }
-    private void createSignalStrengthListener(){
+
+    private void createSignalStrengthListener() {
         mSignalStrengthListener = new SignalStrengthListener();
         mTelephonyManager = ((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE));
         mTelephonyManager.listen(mSignalStrengthListener, SignalStrengthListener.LISTEN_SIGNAL_STRENGTHS);
@@ -197,11 +216,21 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            mLocationPermissionManager.onRestoreInstanceState(savedInstanceState);
+    public void onActivityCreated(Bundle _savedInstanceState) {
+        super.onActivityCreated(_savedInstanceState);
+        mvMap.onCreate(_savedInstanceState);
+        if (_savedInstanceState != null) {
+            mLocationPermissionManager.onRestoreInstanceState(_savedInstanceState);
         }
+    }
+
+    @Override
+    public void onMapReady(final GoogleMap _googleMap) {
+        mGoogleMap = _googleMap;
+        if (mLocationPermissionManager.isAllPermissionsChecked()) {
+            invalidateMapLocation();
+        }
+
     }
 
     @Override
@@ -214,7 +243,13 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     @Override
-    public final void onOpenPermissionExplanationDialog(String _explanation) {
+    public void onResume() {
+        super.onResume();
+        mvMap.onResume();
+    }
+
+    @Override
+    public final void onOpenPermissionExplanationDialog(int _requestCode, String _explanation) {
         showMessage(_explanation);
     }
 
@@ -226,7 +261,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     @Override
     public void onRequestPermissionsResult(int _requestCode, @NonNull String[] _permissions, @NonNull int[] _grantResults) {
         if (_requestCode == LOCATION_PERMISSION_REQUEST) {
-            if (!mLocationPermissionManager.onRequestPermissionsResult(this, _permissions, _grantResults)) {
+            if (!mLocationPermissionManager.onRequestPermissionsResult(this, _requestCode, _permissions, _grantResults)) {
                 super.onRequestPermissionsResult(_requestCode, _permissions, _grantResults);
             }
         } else {
@@ -235,17 +270,8 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     @Override
-    public final void onPermissionRequestSuccess(Fragment _fragment) {
+    public final void onPermissionRequestSuccess(Fragment _fragment, int _requestCode) {
         checkLocationSettings();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.disconnect();
-        }
-        removeListeners();
     }
 
     @Override
@@ -265,6 +291,21 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onPause() {
+        mvMap.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.disconnect();
+        }
+        removeListeners();
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -323,12 +364,31 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     private class SignalStrengthListener extends PhoneStateListener {
+
+        private static final float MAX_GSM_LEVEL = 31;
+        private static final float MAX_SEEK_BAR_LEVEL = 4;
+        private static final float ERROR_SIGNAL_LEVEL = 99;
+
         @Override
-        public void onSignalStrengthsChanged(android.telephony.SignalStrength signalStrength) {
-            int strengthAmplitude = signalStrength.getLevel() - 1;
-            sbPoorCoverage.setProgress(strengthAmplitude);
-            sbPoorCoverage.setEnabled(false);
-            super.onSignalStrengthsChanged(signalStrength);
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                int strengthAmplitude = signalStrength.getLevel();
+                sbPoorCoverage.setProgress(strengthAmplitude);
+                Logger.d("onSignalStrengthsChanged", "SignalStrengths = " + strengthAmplitude);
+                sbPoorCoverage.setEnabled(false);
+                super.onSignalStrengthsChanged(signalStrength);
+            } else if (signalStrength.isGsm()) {
+                int gsmSignalStrength = signalStrength.getGsmSignalStrength();
+                if (gsmSignalStrength != ERROR_SIGNAL_LEVEL) {
+                    int strengthAmplitude = Math.round(signalStrength.getGsmSignalStrength() / MAX_GSM_LEVEL * MAX_SEEK_BAR_LEVEL);
+                    sbPoorCoverage.setProgress(strengthAmplitude);
+                    Logger.d("onSignalStrengthsChanged", "SignalStrengths(pre-M) = " + strengthAmplitude);
+                    sbPoorCoverage.setEnabled(false);
+                }
+            } else {
+                sbPoorCoverage.setEnabled(true);
+                mTelephonyManager.listen(mSignalStrengthListener, SignalStrengthListener.LISTEN_NONE);
+            }
         }
     }
 
@@ -395,6 +455,23 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         defineUserFriendlyAddress();
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
         stopLocationUpdates();
+
+        invalidateMapLocation();
+    }
+
+    private void invalidateMapLocation() {
+        if (mGoogleMap != null && mCurrentLocation != null) {
+            mvMap.setVisibility(View.VISIBLE);//TODO
+            final LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+            final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 16);
+            mGoogleMap.moveCamera(cameraUpdate);
+
+            mGoogleMap.clear();
+            mGoogleMap.addMarker(
+                    new MarkerOptions()
+                            .position(latLng)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        }
     }
 
     @Override
@@ -446,7 +523,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             getSpiceManager().getFromCache(Response.class, TAG, DurationInMillis.ALWAYS_EXPIRED, new PoorCoverageRequestListener());
             etLocation.clearFocus();
             initListeners();
@@ -457,6 +534,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        mvMap.onSaveInstanceState(outState);
         mLocationPermissionManager.onSaveInstanceState(outState);
         removeListeners();
         super.onSaveInstanceState(outState);
@@ -486,6 +564,12 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     }
 
     @Override
+    public void onDestroyView() {
+        mvMap.onDestroy();
+        super.onDestroyView();
+    }
+
+    @Override
     public void onDestroy() {
         mLocationPermissionManager = null;
         super.onDestroy();
@@ -502,7 +586,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         @Override
         public void onRequestSuccess(Response poorCoverageRequestModel) {
             boolean isDialog = loaderDialogDismiss();
-            if(poorCoverageRequestModel != null){
+            if (poorCoverageRequestModel != null) {
                 switch (poorCoverageRequestModel.getStatus()) {
                     case 200:
                         if (isDialog) {

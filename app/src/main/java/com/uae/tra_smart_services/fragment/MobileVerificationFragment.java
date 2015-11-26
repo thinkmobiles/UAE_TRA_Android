@@ -52,16 +52,20 @@ public class MobileVerificationFragment extends BaseServiceFragment
     private static final String KEY_SEARCH_DEVICE_BY_IMEI_REQUEST = "SEARCH_DEVICE_BY_IMEI_REQUEST";
     private static final int CODE_SCANNER_REQUEST = 1;
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 0;
+    private static final int PHONE_PERMISSION_REQUEST_CODE = 1;
     private static final List<Permission> SCAN_IMEI_PERMISSIONS_LIST = new ArrayList<>(1);
+    private static final List<Permission> DETECT_IMEI_PERMISSIONS_LIST = new ArrayList<>(1);
 
     static {
         SCAN_IMEI_PERMISSIONS_LIST.add(
                 new Permission(Manifest.permission.CAMERA, R.string.fragment_mobile_verification_camera_permission_explanation));
+        DETECT_IMEI_PERMISSIONS_LIST.add(
+                new Permission(Manifest.permission.READ_PHONE_STATE, R.string.fragment_mobile_verification_phone_permission_explanation));
     }
 
     private HexagonView hvSendImeiCode;
     private TextView tvSendImeiCode;
-    private Button hvObtainOwnIMEI;
+    private Button btnObtainOwnIMEI;
     private ImageView ivCameraBtn;
     private EditText etImeiNumber;
 
@@ -69,7 +73,7 @@ public class MobileVerificationFragment extends BaseServiceFragment
     private RequestResponseListener mRequestListener;
     private SearchByImeiRequest mRequest;
 
-    private PermissionManager mCameraPermissionManager;
+    private PermissionManager mCameraPermissionManager, mPhonePermissionManager;
 
     public static MobileVerificationFragment newInstance() {
         return new MobileVerificationFragment();
@@ -86,6 +90,7 @@ public class MobileVerificationFragment extends BaseServiceFragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mCameraPermissionManager = new PermissionManager(getActivity(), SCAN_IMEI_PERMISSIONS_LIST, this);
+        mPhonePermissionManager = new PermissionManager(getActivity(), DETECT_IMEI_PERMISSIONS_LIST, this);
     }
 
     @Override
@@ -93,10 +98,12 @@ public class MobileVerificationFragment extends BaseServiceFragment
         super.initViews();
         ivCameraBtn = findView(R.id.ivCameraBtn_FMV);
         etImeiNumber = findView(R.id.etImeiNumber_FMV);
-        hvObtainOwnIMEI = findView(R.id.btnMyImei_FMV);
         hvSendImeiCode = findView(R.id.hvSendImeiCode_FMV);
         tvSendImeiCode = findView(R.id.tvSendImeiCode_FMV);
         hvSendImeiCode.setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getActivity(), ContextCompat.getDrawable(getActivity(), R.drawable.ic_check_ver_grn)));
+
+        btnObtainOwnIMEI = findView(R.id.btnMyImei_FMV);
+        btnObtainOwnIMEI.setVisibility(isPhoneAvailable() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -106,8 +113,9 @@ public class MobileVerificationFragment extends BaseServiceFragment
         ivCameraBtn.setOnClickListener(this);
         hvSendImeiCode.setOnClickListener(this);
         tvSendImeiCode.setOnClickListener(this);
-        hvObtainOwnIMEI.setOnClickListener(this);
+        btnObtainOwnIMEI.setOnClickListener(this);
         mCameraPermissionManager.setRequestSuccessListener(this);
+        mPhonePermissionManager.setRequestSuccessListener(this);
     }
 
     @Override
@@ -115,6 +123,7 @@ public class MobileVerificationFragment extends BaseServiceFragment
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             mCameraPermissionManager.onRestoreInstanceState(savedInstanceState);
+            mPhonePermissionManager.onRestoreInstanceState(savedInstanceState);
         }
     }
 
@@ -148,33 +157,31 @@ public class MobileVerificationFragment extends BaseServiceFragment
     }
 
     private boolean isImeiValid() {
-        final String imeiText = etImeiNumber.getText().toString();
+        final String imeiText = etImeiNumber.getText().toString().replace(" ", "");
         return imeiText.length() == 15 && TextUtils.isDigitsOnly(imeiText);// TODO: Add IMEI check
     }
 
     @Override
     public void onClick(final View _view) {
-        switch(_view.getId()){
+        switch (_view.getId()) {
             case R.id.tvSendImeiCode_FMV:
-            case R.id.hvSendImeiCode_FMV:{
+            case R.id.hvSendImeiCode_FMV: {
                 hideKeyboard(etImeiNumber);
                 if (isImeiValid()) {
                     searchDeviceByImei();
                 } else {
                     Toast.makeText(getActivity(), R.string.enter_valid_imei_code, C.TOAST_LENGTH).show();
                 }
-            } break;
-            case R.id.ivCameraBtn_FMV:{
+            }
+            break;
+            case R.id.ivCameraBtn_FMV: {
                 openImeiScannerIfCan();
-            } break;
-            case R.id.btnMyImei_FMV:{
-                String deviceID = ((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-                if(deviceID != null){
-                    etImeiNumber.setText(deviceID);
-                } else {
-                    Toast.makeText(getActivity(), "There is no registered radio module", Toast.LENGTH_SHORT).show();
-                }
-            } break;
+            }
+            break;
+            case R.id.btnMyImei_FMV: {
+                extractImeiCodeIfCan();
+            }
+            break;
         }
     }
 
@@ -190,30 +197,65 @@ public class MobileVerificationFragment extends BaseServiceFragment
         }
     }
 
-    @Override
-    public final void onOpenPermissionExplanationDialog(String _explanation) {
-        showMessage(_explanation);
-    }
-
-    @Override
-    public final void onOkPressed(int _messageId) {
-        mCameraPermissionManager.onConfirmPermissionExplanationDialog(this, CAMERA_PERMISSION_REQUEST_CODE);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] _permissions, @NonNull int[] _grantResults) {
-        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
-            if (!mCameraPermissionManager.onRequestPermissionsResult(this, _permissions, _grantResults)) {
-                super.onRequestPermissionsResult(requestCode, _permissions, _grantResults);
+    private void extractImeiCodeIfCan() {
+        if (isPhoneAvailable()) {
+            if (mPhonePermissionManager.isAllPermissionsChecked()) {
+                extractImeiCode();
+            } else {
+                mPhonePermissionManager.requestUncheckedPermissions(this, PHONE_PERMISSION_REQUEST_CODE);
             }
         } else {
-            super.onRequestPermissionsResult(requestCode, _permissions, _grantResults);
+            Toast.makeText(getActivity(), R.string.fragment_mobile_verification_no_radio_module, Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    private void extractImeiCode() {
+        String deviceID = ((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+        if (deviceID != null) {
+            etImeiNumber.setText(deviceID);
+        } else {
+            Toast.makeText(getActivity(), R.string.fragment_mobile_verification_no_radio_module, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public final void onPermissionRequestSuccess(Fragment _fragment) {
-        startScanner();
+    public final void onOpenPermissionExplanationDialog(int _requestCode, String _explanation) {
+        showMessage(_requestCode, _explanation);
+    }
+
+    @Override
+    public final void onOkPressed(int _messageId) {
+        if (_messageId == CAMERA_PERMISSION_REQUEST_CODE) {
+            mCameraPermissionManager.onConfirmPermissionExplanationDialog(this, CAMERA_PERMISSION_REQUEST_CODE);
+        } else if (_messageId == PHONE_PERMISSION_REQUEST_CODE) {
+            mPhonePermissionManager.onConfirmPermissionExplanationDialog(this, PHONE_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int _requestCode, @NonNull String[] _permissions, @NonNull int[] _grantResults) {
+        if (_requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (!mCameraPermissionManager.onRequestPermissionsResult(this, _requestCode, _permissions, _grantResults)) {
+                super.onRequestPermissionsResult(_requestCode, _permissions, _grantResults);
+            }
+        } else if (_requestCode == PHONE_PERMISSION_REQUEST_CODE) {
+            if (!mPhonePermissionManager.onRequestPermissionsResult(this, _requestCode, _permissions, _grantResults)) {
+                super.onRequestPermissionsResult(_requestCode, _permissions, _grantResults);
+            }
+        } else {
+            super.onRequestPermissionsResult(_requestCode, _permissions, _grantResults);
+        }
+    }
+
+    @Override
+    public final void onPermissionRequestSuccess(Fragment _fragment, int _requestCode) {
+        if (_requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            startScanner();
+        } else if (_requestCode == PHONE_PERMISSION_REQUEST_CODE) {
+            extractImeiCode();
+        }
     }
 
     private void startScanner() {
@@ -232,12 +274,14 @@ public class MobileVerificationFragment extends BaseServiceFragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
         mCameraPermissionManager.onSaveInstanceState(outState);
+        mPhonePermissionManager.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onDestroy() {
         mCameraPermissionManager = null;
+        mPhonePermissionManager = null;
         super.onDestroy();
     }
 
@@ -275,6 +319,10 @@ public class MobileVerificationFragment extends BaseServiceFragment
 
     private boolean isCameraAvailable() {
         return getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
+
+    private boolean isPhoneAvailable() {
+        return getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
     }
 
     public interface OnDeviceVerifiedListener {

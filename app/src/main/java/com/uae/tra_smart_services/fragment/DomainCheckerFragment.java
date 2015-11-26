@@ -7,6 +7,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -22,21 +23,31 @@ import com.uae.tra_smart_services.rest.model.response.DomainAvailabilityCheckRes
 import com.uae.tra_smart_services.rest.model.response.DomainInfoCheckResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.DomainAvailabilityCheckRequest;
 import com.uae.tra_smart_services.rest.robo_requests.DomainInfoCheckRequest;
+import com.uae.tra_smart_services.util.TRAPatterns;
 
 /**
  * Created by ak-buffalo on 10.08.15.
  */
 public class DomainCheckerFragment extends BaseServiceFragment
-        implements View.OnClickListener, AlertDialogFragment.OnOkListener/*, Loader.Cancelled*/{
-    /** Views */
+        implements View.OnClickListener, AlertDialogFragment.OnOkListener/*, Loader.Cancelled*/ {
+
+    /**
+     * Views
+     */
     private Button btnAvail, btnWhoIS;
     private EditText etDomainAvail;
-    /** Listeners */
+    /**
+     * Listeners
+     */
     private HexagonHomeFragment.OnServiceSelectListener mServiceSelectListener;
-    /** Requests */
+    /**
+     * Requests
+     */
     private DomainInfoCheckRequest mDomainInfoCheckRequest;
     private DomainAvailabilityCheckRequest mDomainAvailabilityCheckRequest;
-    /** Entities */
+    /**
+     * Entities
+     */
     private CustomFilterPool<String> filters;
 
     public static DomainCheckerFragment newInstance() {
@@ -70,7 +81,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
         super.initViews();
         btnAvail = findView(R.id.btnAvail_FDCH);
         btnWhoIS = findView(R.id.btnWhoIs_FDCH);
-        etDomainAvail = findView(R.id.tvDomainAvail_FDCH);
+        etDomainAvail = findView(R.id.etDomainAvail_FDCH);
     }
 
     @Override
@@ -83,22 +94,20 @@ public class DomainCheckerFragment extends BaseServiceFragment
     @Override
     protected final void initData() {
         super.initData();
-        filters = new CustomFilterPool<String>() {
-            {
-                addFilter(new Filter<String>() {
-                    @Override
-                    public boolean check(String _data) {
-                        return !_data.isEmpty();
-                    }
-                });
-                addFilter(new Filter<String>() {
-                    @Override
-                    public boolean check(String _data) {
-                        return Patterns.WEB_URL.matcher(_data).matches();
-                    }
-                });
+        filters = new CustomFilterPool<>();
+
+        filters.addFilter(new Filter<String>() {
+            @Override
+            public boolean check(String _data) {
+                return !_data.isEmpty();
             }
-        };
+        });
+        filters.addFilter(new Filter<String>() {
+            @Override
+            public boolean check(String _data) {
+                return Patterns.WEB_URL.matcher(_data).matches();
+            }
+        });
     }
 
     @Override
@@ -106,19 +115,33 @@ public class DomainCheckerFragment extends BaseServiceFragment
         final String domain = etDomainAvail.getText().toString();
         if (filters.check(domain)) {
             hideKeyboard(_view);
-            loaderOverlayShow(getString(R.string.str_checking), this, false);
             switch (_view.getId()) {
                 case R.id.btnAvail_FDCH:
-                    checkAvailability(domain);
+                    if (validateAeDomain()) {
+                        loaderOverlayShow(getString(R.string.str_checking), this, false);
+                        checkAvailability(domain);
+                    }
                     break;
                 case R.id.btnWhoIs_FDCH:
-                    checkWhoIs(domain);
+                    if (validateAeDomain()) {
+                        loaderOverlayShow(getString(R.string.str_checking), this, false);
+                        checkWhoIs(domain);
+                    }
                     break;
             }
         } else {
-            showMessage(R.string.str_error, R.string.str_invalid_url);
+            Toast.makeText(getActivity(), R.string.str_invalid_url, Toast.LENGTH_SHORT).show();
         }
     }
+
+    private boolean validateAeDomain() {
+        if (!TRAPatterns.AE_DOMAIN_PATTERN.matcher(etDomainAvail.getText()).matches()) {
+            Toast.makeText(getActivity(), R.string.fragment_domain_checker_hint, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
 
     private void checkAvailability(String _domain) {
         mDomainAvailabilityCheckRequest = new DomainAvailabilityCheckRequest(_domain);
@@ -146,11 +169,11 @@ public class DomainCheckerFragment extends BaseServiceFragment
 
     @Override
     public void onLoadingCanceled() {
-        if(getSpiceManager().isStarted()){
-            if(mDomainAvailabilityCheckRequest != null){
+        if (getSpiceManager().isStarted()) {
+            if (mDomainAvailabilityCheckRequest != null) {
                 getSpiceManager().cancel(mDomainAvailabilityCheckRequest);
             }
-            if(mDomainInfoCheckRequest != null){
+            if (mDomainInfoCheckRequest != null) {
                 getSpiceManager().cancel(mDomainInfoCheckRequest);
             }
         }
@@ -171,6 +194,7 @@ public class DomainCheckerFragment extends BaseServiceFragment
     private final class DomainAvailabilityCheckRequestListener
             extends DomainCheckRequestListener<DomainAvailabilityCheckResponseModel> {
         private String mDomain;
+
         DomainAvailabilityCheckRequestListener(String _domain) {
             super(_domain);
             mDomain = _domain;

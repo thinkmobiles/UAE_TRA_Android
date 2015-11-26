@@ -114,6 +114,11 @@
                     android:textColor="?attr/colorPrimary"
                     android:textColorHint="?attr/colorPrimary"/>
 
+                <TextView
+                    android:id="@+id/tvTitleStarLabel_FIS"
+                    android:layout_alignTop="@id/etTitle_FIS"
+                    style="@style/StarLabelStyle"/>
+
                 <View
                     android:id="@+id/vTitleDivider_FIS"
                     android:layout_width="match_parent"
@@ -133,6 +138,11 @@
                     android:scaleType="center"
                     app:imageSrc="@drawable/ic_profile_arrow_down"
                     app:tintColor="?attr/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/tvArrowIconStarLabel_FIS"
+                    android:layout_alignTop="@id/tivArrowIcon_FIS"
+                    style="@style/StarLabelStyle"/>
 
                 <Spinner
                     android:id="@+id/sInnovateIdea_FIS"
@@ -213,6 +223,11 @@
                     android:textColor="?attr/colorPrimary"
                     android:textColorHint="@color/hex_color_middle_gray"
                     android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvDescriptionStarLabel_FIS"
+                    android:layout_alignTop="@id/etMessageDescription_FIS"
+                    style="@style/StarLabelStyle"/>
 
             </RelativeLayout>
 

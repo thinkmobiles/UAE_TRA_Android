@@ -180,8 +180,6 @@
     <string name="fragment_favorites_menu_add">Add service</string>
 
 
-
-
     <!--                PoorCoverageFragment            -->
     <string-array name="fragment_poor_coverage_signal_levels">
         <item>Very Weak</item>
@@ -401,6 +399,8 @@
     <string name="fragment_domain_checker_hint">Only for .ae domain names</string>
 
     <string name="fragment_mobile_verification_camera_permission_explanation">Camera access is required to display the camera preview.</string>
+    <string name="fragment_mobile_verification_phone_permission_explanation">Phone access is required to get IMEI code.</string>
+    <string name="fragment_mobile_verification_no_radio_module">There is no registered radio module.</string>
     <string name="attachment_manager_storage_permission_explanation">Storage access is required to create photo.</string>
     <string name="fragment_poor_coverage_location_permission_explanation">Location access is required to detect your location.</string>
     <string name="attachment_permission_denied">Permission request was denied.</string>
@@ -410,5 +410,6 @@
 
     <string name="str_my_imei">MY IMEI</string>
     <string name="str_where_to_find_imei">Where to find the IMEI code on your device?</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
