@@ -37,6 +37,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
     //region C
     private final float DELETE_ARC_VISIBLE_HEIGHT = 150 * getResources().getDisplayMetrics().density;
     private final float DELETE_ARC_HEIGHT = 400 * getResources().getDisplayMetrics().density;
+    private final float SHADOW_SIZE = 3 * getResources().getDisplayMetrics().density;
     private final float SHADOW_SCALE = 0.95F; // [0.0..1.0]
     private final int DELETE_ARC_ALPHA = 64; // [0..255]
     private final int TRASH_BUTTON_SIZE = Math.round(30 * getResources().getDisplayMetrics().density);
@@ -46,13 +47,13 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
     private final int START_DELETE_ARC_ANGLE = 180, DELETE_ARC_SWEEP_ANGLE = 180;
     private final int ANIMATION_LENGTH = 240, BUTTON_ANIMATION_DELAY = 20;
 
-    private final RectF mShadowRect = new RectF();
+    private final RectF mBackgroundRect = new RectF();
     private final RectF mItemOverlayRect = new RectF();
     private final RectF mDeleteArcRect = new RectF();
 
     private final HexagonView mTrashBtn;
     private ValueAnimator mAreaAnimator, mTrashBtnAnimator;
-    private Paint mItemOverlayPaint, mShadowPaint, mShadowShadowPaint;
+    private Paint mItemOverlayPaint, mBackgroundPaint, mShadowShadowPaint, mShadowPaint;
     private Paint mDeleteArcPaint;
     //endregion
 
@@ -107,9 +108,14 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
         mItemOverlayPaint.setStyle(Paint.Style.FILL);
         mItemOverlayPaint.setColor(OVERLAY_ITEM_COLOR);
 
+        mBackgroundPaint = new Paint();
+        mBackgroundPaint.setStyle(Paint.Style.FILL);
+        mBackgroundPaint.setColor(mShadowBackgroundColor);
+
+
         mShadowPaint = new Paint();
-        mShadowPaint.setStyle(Paint.Style.FILL);
-        mShadowPaint.setColor(mShadowBackgroundColor);
+        mShadowPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mShadowPaint.setColor(Color.BLUE);
 
         mShadowShadowPaint = new Paint();
         mShadowShadowPaint.setStyle(Paint.Style.FILL);
@@ -234,7 +240,7 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
                 }
                 break;
             case DragEvent.ACTION_DROP:
-                if (mItemDeleteListener != null && RectF.intersects(mDeleteArcRect, mShadowRect)) {
+                if (mItemDeleteListener != null && RectF.intersects(mDeleteArcRect, mBackgroundRect)) {
                     mDragTarget.setVisibility(INVISIBLE);
                     ClipData.Item item = event.getClipData().getItemAt(0);
                     mItemDeleteListener.onDeleteItem(Integer.valueOf(item.getText().toString()));
@@ -277,7 +283,16 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
         } else if (translateY > getHeight() - mDragTarget.getHeight() * SHADOW_SCALE) {
             translateY = Math.round(getHeight() - mDragTarget.getHeight() * SHADOW_SCALE);
         }
-        mShadowRect.set(translateX, translateY, translateX + mDragTarget.getWidth() * SHADOW_SCALE, translateY + mDragTarget.getHeight() * SHADOW_SCALE);
+        mBackgroundRect.set(translateX, translateY, translateX + mDragTarget.getWidth() * SHADOW_SCALE, translateY + mDragTarget.getHeight() * SHADOW_SCALE);
+
+        invalidateShadowDrawable();
+    }
+
+    private RectShadowDrawable mRectShadowDrawable;
+
+    private void invalidateShadowDrawable() {
+        final int[] colors = new int[]{Color.GRAY, Color.TRANSPARENT};
+        mRectShadowDrawable = new RectShadowDrawable(mBackgroundRect, Math.round(SHADOW_SIZE), colors);
     }
 
     private void invalidateDeleteArea(final int _width, final int _height) {
@@ -299,10 +314,11 @@ public class DragFrameLayout extends FrameLayout implements OnDragListener {
             drawDeleteArea(canvas);
 
             if (mIsDragging) {
-                canvas.drawRect(mShadowRect, mShadowPaint);//draw shadow background
+                mRectShadowDrawable.draw(canvas);//draw shadow around of item
+                canvas.drawRect(mBackgroundRect, mBackgroundPaint);//draw shadow background
                 canvas.save();
                 canvas.scale(SHADOW_SCALE, SHADOW_SCALE);
-                canvas.translate(mShadowRect.left, mShadowRect.top / SHADOW_SCALE);
+                canvas.translate(mBackgroundRect.left, mBackgroundRect.top / SHADOW_SCALE);
                 mDragTarget.draw(canvas);//draw shadow view
                 canvas.restore();
             }
