@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.SpannableStringBuilder;
 
 import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.global.SpannableWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,47 +22,24 @@ public class SearchResult {
 
     public void initFromServicesList(List<Service> _services, Context _context){
         for(Service service : _services){
-            addItem(service, service.getTitle(_context));
+            addItem(new SearchResultItem(service, service.getTitle(_context)));
         }
-    }
-
-    private void addItem(Service _service, String _text){
-        searchResultItems.add(new SearchResultItem(_service, _text));
     }
 
     public List<SearchResultItem> getSearchResultItems(){
         return searchResultItems;
     }
 
-    public class SearchResultItem {
+    public class SearchResultItem extends SpannableWrapper {
         private Service service;
-        private SpannableStringBuilder spannedText;
-        private String originalText;
 
-        SearchResultItem(Service _service, String _text){
+        public SearchResultItem(Service _service, String _text){
+            super(_text);
             service = _service;
-            originalText = _text;
         }
 
         public Service getBindedService(){
             return service;
-        }
-
-        public String getOriginalText() {
-            return originalText;
-        }
-
-        public SpannableStringBuilder getSpannedText() {
-            return spannedText != null ? spannedText : new SpannableStringBuilder(originalText);
-        }
-
-        public void setSpannedText(SpannableStringBuilder _spannedText){
-            spannedText = _spannedText;
-        }
-
-        @Override
-        public String toString() {
-            return spannedText != null ? spannedText.toString() : originalText.toString();
         }
     }
 
@@ -73,7 +51,7 @@ public class SearchResult {
         searchResultItems.clear();
     }
 
-    public void addAllItems(ArrayList<SearchResult.SearchResultItem> results){
-        searchResultItems.addAll(results);
+    public void addItem(SearchResult.SearchResultItem results){
+        searchResultItems.add(results);
     }
 }

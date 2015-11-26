@@ -6,6 +6,7 @@ import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.entities.HexagonViewTarget;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.global.SpannableWrapper;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
 import com.uae.tra_smart_services.rest.RestClient;
@@ -141,9 +143,8 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LoaderView loaderView = (LoaderView) layoutInflater.inflate(R.layout.loader_view, null, true);
         if(viewType == VIEW_TYPE_LOADER){
+            LoaderView loaderView = (LoaderView) LayoutInflater.from(parent.getContext()).inflate(R.layout.loader_view, null, true);
             return new ViewHolder(loaderView, true);
         } else {
             final View view;
@@ -229,7 +230,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
             } else if (results.count == 0) {
                 handleNoResults();
             } else {
-                showNewSearchResults(results);
+                showNewSearchResults(results, constraint);
             }
         }
 
@@ -253,12 +254,15 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         }
 
         @UiThread
-        private void showNewSearchResults(FilterResults results) {
+        private void showNewSearchResults(FilterResults results, CharSequence _constraint) {
             mOperationStateManager.showData();
             mShowingData.addAll((ArrayList<GetAnnouncementsResponseModel.Announcement>) results.values);
             notifyDataSetChanged();
+            constraint = _constraint;
         }
     }
+
+    private CharSequence constraint = "";
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
         private View container;
@@ -294,16 +298,15 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT)
             );
-            progressBar.requestLayout();
         }
 
         public void setData(int _position, final GetAnnouncementsResponseModel.Announcement _model) {
-            if (!isProgress) {
+            if (!isProgress && constraint != null) {
                 sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
                 Picasso.with(mActivity).load(_model.image).into(new HexagonViewTarget(hexagonView));
-                title.setText(_model.title);
-                description.setText(_model.description);
-                date.setText(_model.createdAt);
+                title.setText((constraint != null) ? SpannableWrapper.makeSelectedTextBold(constraint, _model.title) : _model.title);
+                description.setText((constraint != null) ? SpannableWrapper.makeSelectedTextBold(constraint, _model.description) :_model.description);
+                date.setText((constraint != null) ? SpannableWrapper.makeSelectedTextBold(constraint, _model.createdAt) : _model.createdAt);
                 container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View _view) {
