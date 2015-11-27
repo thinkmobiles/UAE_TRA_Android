@@ -207,5 +207,6 @@ public class HexagonSwipeRefreshLayout extends RelativeLayout implements ViewTre
 
     public interface Listener {
         void onRefresh();
+        void onRefresh(String _contrains);
     }
 }
