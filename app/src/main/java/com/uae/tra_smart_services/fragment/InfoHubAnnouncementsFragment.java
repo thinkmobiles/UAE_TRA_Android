@@ -49,6 +49,8 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     private boolean mIsAllAnnouncementsDownloaded;
     private SearchView svSearchTransaction;
     private HexagonSwipeRefreshLayout mHexagonSwipeRefreshLayout;
+    private boolean mShouldHandle = true;
+    private String mSearchPhrase = "";
 
     public static InfoHubAnnouncementsFragment newInstance() {
         return new InfoHubAnnouncementsFragment();
@@ -151,6 +153,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     @Override
     public boolean onQueryTextSubmit(String query) {
         mIsSearching = true;
+        mSearchPhrase = query;
         tvNoResult.setText(R.string.str_no_search_result);
         hideKeyboard(getView());
         mLayoutManager.scrollToPosition(0);
@@ -210,8 +213,13 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
-        mHexagonSwipeRefreshLayout.onLoadingStart();
-        loadAnnouncementsPage(mAnnouncementsPageNum = 1);
+        if(mSearchPhrase == ""){
+            mHexagonSwipeRefreshLayout.onLoadingStart();
+            loadAnnouncementsPage(mAnnouncementsPageNum = 1);
+        } else {
+            showProgress();
+            onQueryTextSubmit(mSearchPhrase);
+        }
     }
 
     public static class BooleanHolder {
