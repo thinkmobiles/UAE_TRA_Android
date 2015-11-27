@@ -43,6 +43,7 @@ public final class AnnouncementsResponseListener implements RequestListener<GetA
         } else {
             mAnnouncementsPageNum--;
         }
+        mOperationStateManager.endLoading();
     }
 
     @Override
@@ -51,6 +52,7 @@ public final class AnnouncementsResponseListener implements RequestListener<GetA
         mAnnouncementsPageNum--;
         handleNoResult();
         mFragment.processError(spiceException);
+        mOperationStateManager.endLoading();
     }
 
     private void handleNoResult() {
@@ -59,5 +61,6 @@ public final class AnnouncementsResponseListener implements RequestListener<GetA
         } else {
             mAnnouncementsListAdapter.stopLoading();
         }
+        mOperationStateManager.endLoading();
     }
 }

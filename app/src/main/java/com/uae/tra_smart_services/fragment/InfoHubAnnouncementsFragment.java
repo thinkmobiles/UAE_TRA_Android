@@ -195,6 +195,11 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     }
 
     @Override
+    public void endLoading() {
+
+    }
+
+    @Override
     protected int getTitle() {
         return R.string.str_info_hub_announcements;
     }

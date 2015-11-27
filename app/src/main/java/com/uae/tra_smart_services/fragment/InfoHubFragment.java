@@ -30,6 +30,9 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.InfoHubAnnouncementsFragment.BooleanHolder;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.QueryAdapter;
+import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
 import com.uae.tra_smart_services.rest.model.response.GetAnnouncementsResponseModel;
@@ -41,6 +44,8 @@ import com.uae.tra_smart_services.util.EndlessScrollListener;
 import com.uae.tra_smart_services.util.EndlessScrollListener.OnLoadMoreListener;
 
 import java.util.Arrays;
+
+import retrofit.client.Response;
 
 /**
  * Created by ak-buffalo on 19.08.15.
@@ -73,6 +78,7 @@ public final class InfoHubFragment extends BaseFragment
     private BooleanHolder mIsAnnouncementsInLoading = new BooleanHolder();
     private HexagonSwipeRefreshLayout mHexagonSwipeRefreshLayout;
     private GetTransactionsRequest transactionsRequest;
+    private int loadedCount = 0;
 
     public static InfoHubFragment newInstance() {
         return new InfoHubFragment();
@@ -103,18 +109,50 @@ public final class InfoHubFragment extends BaseFragment
             mAnnouncementsListPreview.setVisibility(View.INVISIBLE);
             tvNoAnnouncements.setVisibility(View.VISIBLE);
         }
+
+        @Override
+        public void endLoading() {
+            loadedCount++;
+            if(loadedCount == 2){
+                loaderOverlayDismissWithAction(new Loader.Dismiss() {
+                    @Override
+                    public void onLoadingDismissed() {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+            }
+        }
     };
 
     private final OperationStateManager mTransactionsOperationStateManager = new OperationStateManager() {
 
         @Override
-        public final void showProgress() { mHexagonSwipeRefreshLayout.onLoadingStart(); }
+        public final void showProgress() {
+            mHexagonSwipeRefreshLayout.onLoadingStart();
+        }
 
         @Override
-        public final void showData() { mHexagonSwipeRefreshLayout.onLoadingFinished(true); }
+        public final void showData() {
+            mHexagonSwipeRefreshLayout.onLoadingFinished(true);
+        }
 
         @Override
-        public final void showEmptyView() { mHexagonSwipeRefreshLayout.onLoadingFinished(false); }
+        public final void showEmptyView() {
+            mHexagonSwipeRefreshLayout.onLoadingFinished(false);
+        }
+
+        @Override
+        public void endLoading() {
+            loadedCount++;
+            if(loadedCount == 2){
+                loaderOverlayDismissWithAction(new Loader.Dismiss() {
+                    @Override
+                    public void onLoadingDismissed() {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+            }
+        }
     };
 
     @Override
@@ -209,8 +247,7 @@ public final class InfoHubFragment extends BaseFragment
     }
 
     private void startFirstLoad() {
-        mTransactionsOperationStateManager.showProgress();
-        mAnnouncementsOperationStateManager.showProgress();
+        loaderOverlayCustomShow(getString(R.string.str_loading), null, false);
         loadTransactionPage(mTransactionPageNum = 1);
         loadAnnouncementsPage(1);
     }
@@ -301,6 +338,7 @@ public final class InfoHubFragment extends BaseFragment
             } else {
                 mTransactionPageNum--;
             }
+            mTransactionsOperationStateManager.endLoading();
         }
 
         private void handleNoResult() {
@@ -309,6 +347,7 @@ public final class InfoHubFragment extends BaseFragment
             } else {
                 mTransactionsListAdapter.stopLoading();
             }
+            mTransactionsOperationStateManager.endLoading();
         }
 
         @Override
@@ -317,6 +356,7 @@ public final class InfoHubFragment extends BaseFragment
             mTransactionPageNum--;
             handleNoResult();
             processError(spiceException);
+            mTransactionsOperationStateManager.endLoading();
         }
     }
 

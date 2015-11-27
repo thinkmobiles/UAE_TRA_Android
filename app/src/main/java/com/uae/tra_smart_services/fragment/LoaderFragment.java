@@ -24,17 +24,17 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     /** Constants */
     public static final String TAG = LoaderFragment.class.getName();
     public static final String STATE = "state";
-    private static final String MSG = "message";
-    private static final String SHOW_RATING = "show_rating";
+    public static final String MSG = "message";
+    public static final String SHOW_RATING = "show_rating";
     /** Views */
-    private LoaderView lvLoader;
-    private ServiceRatingView srvRating;
-    private TextView tvBackOrCancelBtn, tvLoaderTitleText;
-    private RelativeLayout rlFragmentContainer;
-    private BackButton afterBackButton;
+    protected LoaderView lvLoader;
+    protected ServiceRatingView srvRating;
+    protected TextView tvBackOrCancelBtn, tvLoaderTitleText;
+    protected RelativeLayout rlFragmentContainer;
+    protected BackButton afterBackButton;
     /** Listeners */
-    private static Loader.Cancelled mOnLoadingListener;
-    private static LoaderFragment.CallBacks mRatingCallbacks;
+    protected static Loader.Cancelled mOnLoadingListener;
+    protected static LoaderFragment.CallBacks mRatingCallbacks;
 
     public static LoaderFragment newInstance(String _msg, LoaderMarker _listener, boolean _showRating) {
         Bundle args = new Bundle();
@@ -178,6 +178,11 @@ public class LoaderFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onRate(int _rate) {
         mRatingCallbacks.onRate(_rate, lvLoader.getCurrentState());
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
     }
 
     public interface CallBacks extends LoaderMarker {
