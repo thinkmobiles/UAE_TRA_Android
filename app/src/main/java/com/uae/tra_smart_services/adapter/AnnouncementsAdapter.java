@@ -302,6 +302,8 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         public void setData(int _position, final GetAnnouncementsResponseModel.Announcement _model) {
             if (!isProgress) {
                 sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
+                hexagonView.postScaleType(HexagonView.ScaleType.INSIDE_CROP);
+                hexagonView.setHexagonSrcDrawable(R.drawable.ic_form);
                 Picasso.with(mActivity).load(_model.image).into(new HexagonViewTarget(hexagonView));
                 if(mConstraint.length() != 0){
                     title.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, Html.fromHtml(_model.title).toString()));
