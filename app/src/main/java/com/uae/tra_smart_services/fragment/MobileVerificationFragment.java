@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -38,7 +37,6 @@ import com.uae.tra_smart_services.manager.PermissionManager;
 import com.uae.tra_smart_services.manager.PermissionManager.OnPermissionRequestSuccessListener;
 import com.uae.tra_smart_services.rest.model.response.SearchDeviceResponseModel;
 import com.uae.tra_smart_services.rest.robo_requests.SearchByImeiRequest;
-import com.uae.tra_smart_services.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +98,6 @@ public class MobileVerificationFragment extends BaseServiceFragment
         etImeiNumber = findView(R.id.etImeiNumber_FMV);
         hvSendImeiCode = findView(R.id.hvSendImeiCode_FMV);
         tvSendImeiCode = findView(R.id.tvSendImeiCode_FMV);
-        hvSendImeiCode.setHexagonSrcDrawable(ImageUtils.getFilteredDrawable(getActivity(), ContextCompat.getDrawable(getActivity(), R.drawable.ic_check_ver_grn)));
 
         btnObtainOwnIMEI = findView(R.id.btnMyImei_FMV);
         btnObtainOwnIMEI.setVisibility(isPhoneAvailable() ? View.VISIBLE : View.GONE);

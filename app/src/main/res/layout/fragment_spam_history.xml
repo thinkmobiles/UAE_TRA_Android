@@ -71,7 +71,7 @@
                 android:id="@+id/hvIcon_FSH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:hexagonBackgroundColor="@android:color/white"
+                app:hexagonBackground="@android:color/white"
                 app:hexagonBorderColor="?attr/themeMainColor"
                 app:hexagonBorderSize="1dp"
                 app:hexagonSideSize="24dp"

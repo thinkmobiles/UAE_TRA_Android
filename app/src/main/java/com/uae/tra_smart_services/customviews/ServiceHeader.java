@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -75,10 +74,6 @@ public final class ServiceHeader extends LinearLayout {
 
     public void setHexagonIcon(@DrawableRes int _iconRes) {
         hvIcon.setHexagonSrcDrawable(_iconRes);
-    }
-
-    public void setHexagonBackgroundColor(@ColorInt int _color) {
-        hvIcon.setBackgroundColor(_color);
     }
 
 }

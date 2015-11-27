@@ -1,27 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<declare-styleable name="HexagonView">
-    <attr name="hexagonBorderColor" format="color"/>
-    <attr name="hexagonProcessBorderColor" format="color"/>
-    <attr name="hexagonSuccessBorderColor" format="color"/>
-    <attr name="hexagonBackgroundColor" format="color"/>
-    <attr name="hexagonBorderSize" format="dimension"/>
-    <attr name="hexagonProcessBorderSize" format="dimension"/>
-    <attr name="hexagonSuccessBorderSize" format="dimension"/>
+
     <attr name="hexagonSrc" format="reference|color"/>
     <attr name="hexagonSrcTintColor" format="reference|color"/>
+    <attr name="hexagonBorderSize" format="dimension"/>
+    <attr name="hexagonBorderColor" format="color"/>
     <attr name="hexagonSideSize" format="dimension"/>
-    <attr name="hexagonText" format="string"/>
-    <attr name="hexagonTextSize" format="dimension"/>
-    <attr name="hexagonTextColor" format="color"/>
-    <attr name="hexagonLoaderBackground" format="reference"/>
-    <attr name="hexagonLoaderPeriod" format="integer"/>
-    <attr name="hexagonFillingPeriod" format="integer"/>
-    <attr name="hexagonStatusPeriod" format="integer"/>
-    <attr name="hexagonIsInitiallLoading" format="boolean"/>
-    <attr name="scaleType" format="enum">
-        <enum name="cropInside" value="0"/>
-        <enum name="centerCrop" value="1"/>
-    </attr>
-</declare-styleable>
+
+    <declare-styleable name="HexagonView">
+        <attr name="hexagonSrc"/>
+        <attr name="hexagonSrcTintColor"/>
+        <attr name="hexagonBorderSize"/>
+        <attr name="hexagonBorderColor"/>
+        <attr name="hexagonSideSize"/>
+        <attr name="hexagonTextSize" format="dimension"/>
+        <attr name="hexagonTextColor" format="color"/>
+        <attr name="hexagonBackground" format="reference"/>
+        <attr name="hexagonText" format="string"/>
+        <attr name="scaleType" format="enum">
+            <enum name="cropInside" value="0"/>
+            <enum name="centerCrop" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="LoaderView">
+        <attr name="hexagonSrc"/>
+        <attr name="hexagonSrcTintColor"/>
+        <attr name="hexagonBorderSize"/>
+        <attr name="hexagonBorderColor"/>
+        <attr name="hexagonSideSize"/>
+
+        <attr name="hexagonProcessBorderColor" format="color"/>
+        <attr name="hexagonSuccessBorderColor" format="color"/>
+
+        <attr name="hexagonProcessBorderSize" format="dimension"/>
+        <attr name="hexagonSuccessBorderSize" format="dimension"/>
+
+        <attr name="hexagonLoaderBackground" format="reference"/>
+
+
+        <attr name="hexagonLoaderPeriod" format="integer"/>
+        <attr name="hexagonFillingPeriod" format="integer"/>
+        <attr name="hexagonStatusPeriod" format="integer"/>
+
+        <attr name="hexagonIsInitiallLoading" format="boolean"/>
+    </declare-styleable>
+
 </resources>

@@ -178,7 +178,6 @@ public class ServicesRecyclerViewAdapter extends Adapter<ServicesRecyclerViewAda
         }
 
         public void setEmptyData(final int _position) {
-            hvHexagonView.setBackgroundColor(0xc8c7c6);
             hvHexagonView.setHexagonSrcDrawable(null);
             textView.setText(null);
             hvHexagonView.setTag(null);

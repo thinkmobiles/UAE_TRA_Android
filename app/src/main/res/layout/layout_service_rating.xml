@@ -1,4 +1,5 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/textView2"
@@ -16,39 +17,45 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/rbDomainCheckRating_1_FDC"
+        <com.uae.tra_smart_services.customviews.HexagonView
             android:layout_width="wrap_content"
+            android:id="@+id/hvDomainCheckRating_1_FDC"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:layout_marginEnd="20dp"
-            android:button="@null"
-            android:tint="?attr/rating_bad_color"
-            android:src="@drawable/btn_bad_line"
-            android:tag="1"/>
+            app:hexagonSideSize="36dp"
+            app:hexagonBackground="@drawable/hexagon_translucent_selector"
+            app:hexagonSrc="@drawable/ic_btn_bad_line"
+            app:hexagonBorderColor="@android:color/white"
+            app:hexagonBorderSize="1dp"
+            android:tag="1"
+            app:hexagonSrcTintColor="?rating_bad_color"
+            android:layout_marginEnd="20dp"/>
 
-        <ImageView
-            android:id="@+id/rbDomainCheckRating_2_FDC"
+        <com.uae.tra_smart_services.customviews.HexagonView
             android:layout_width="wrap_content"
+            android:id="@+id/hvDomainCheckRating_2_FDC"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-            android:button="@null"
-            android:background="@android:color/transparent"
-            android:tint="?attr/rating_neut_color"
-            android:src="@drawable/btn_neut_line"
-            android:tag="2"/>
+            app:hexagonSideSize="36dp"
+            app:hexagonBackground="@drawable/hexagon_translucent_selector"
+            app:hexagonSrc="@drawable/ic_btn_neut_line"
+            app:hexagonBorderColor="@android:color/white"
+            app:hexagonBorderSize="1dp"
+            android:tag="2"
+            app:hexagonSrcTintColor="?rating_neut_color"
+            android:layout_marginEnd="20dp"/>
 
-        <ImageView
-            android:id="@+id/rbDomainCheckRating_3_FDC"
+        <com.uae.tra_smart_services.customviews.HexagonView
             android:layout_width="wrap_content"
+            android:id="@+id/hvDomainCheckRating_3_FDC"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:layout_marginStart="20dp"
-            android:button="@null"
-            android:tint="?attr/rating_good_color"
-            android:src="@drawable/btn_good_line"
-            android:tag="3"/>
+            app:hexagonSideSize="36dp"
+            app:hexagonBackground="@drawable/hexagon_translucent_selector"
+            app:hexagonSrc="@drawable/ic_btn_good_line"
+            app:hexagonBorderColor="@android:color/white"
+            app:hexagonBorderSize="1dp"
+            android:tag="3"
+            app:hexagonSrcTintColor="?rating_good_color"
+            android:layout_marginStart="20dp"/>
 
     </LinearLayout>
 

@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llContainer"
+    tools:background="@android:color/darker_gray"
     android:orientation="vertical"
     android:paddingTop="10dp">
 
@@ -14,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
+        app:hexagonBackground="@drawable/hexagon_selector"
         app:hexagonBorderSize="1dp"
         app:hexagonSideSize="35dp"
         app:hexagonBorderColor="#c8c7c6"/>
@@ -29,4 +32,4 @@
         android:lines="3"
         android:textColor="@color/hex_color_dark_gray"/>
 
-</android.support.percent.PercentRelativeLayout >
+</android.support.percent.PercentRelativeLayout>

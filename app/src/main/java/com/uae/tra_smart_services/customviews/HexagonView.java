@@ -46,9 +46,9 @@ public final class HexagonView extends View {
     //endregion
 
     private final Path mPath;
-    private Paint mBorderPathPaint, mTextPaint, mBackgroundPaint;
+    private Paint mBorderPathPaint, mTextPaint;//, mBackgroundPaint;
     private Rect mTextRect;
-    private Drawable mSrcDrawable;
+    private Drawable mBackgroundDrawable, mSrcDrawable;
 
     @DrawableRes
     private int mSrcRes;
@@ -69,7 +69,6 @@ public final class HexagonView extends View {
         super(context, attrs);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-        final int backgroundColor;
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HexagonView);
         try {
             setHexagonSide(a.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS));
@@ -78,7 +77,7 @@ public final class HexagonView extends View {
             mBorderColor = a.getColor(R.styleable.HexagonView_hexagonBorderColor, 0xFFC8C7C6);
             mTextColor = a.getColor(R.styleable.HexagonView_hexagonTextColor, mBorderColor);
             mSrcTintColor = a.getColor(R.styleable.HexagonView_hexagonSrcTintColor, Color.TRANSPARENT);
-            backgroundColor = a.getColor(R.styleable.HexagonView_hexagonBackgroundColor, Color.TRANSPARENT);
+            mBackgroundDrawable = a.getDrawable(R.styleable.HexagonView_hexagonBackground);
             mSrcDrawable = a.getDrawable(R.styleable.HexagonView_hexagonSrc);
             mSrcRes = a.getResourceId(R.styleable.HexagonView_hexagonSrc, R.drawable.authorization_logo);
             mText = a.getString(R.styleable.HexagonView_hexagonText);
@@ -95,10 +94,10 @@ public final class HexagonView extends View {
         mBorderPathPaint.setStrokeWidth(mBorderWidth);
         mBorderPathPaint.setStyle(Paint.Style.STROKE);
 
-        mBackgroundPaint = new Paint();
-        mBackgroundPaint.setAntiAlias(true);
-        mBackgroundPaint.setColor(backgroundColor);
-        mBackgroundPaint.setStyle(Paint.Style.FILL);
+//        mBackgroundPaint = new Paint();
+//        mBackgroundPaint.setAntiAlias(true);
+//        mBackgroundPaint.setColor(mBackgroundDrawable);
+//        mBackgroundPaint.setStyle(Paint.Style.FILL);
 
         mTextPaint = new Paint();
         mTextPaint.setTextAlign(Paint.Align.CENTER);
@@ -124,9 +123,16 @@ public final class HexagonView extends View {
     }
 
     @Override
-    public void setBackgroundColor(@ColorInt int _backgroundColor) {
-        mBackgroundPaint.setColor(_backgroundColor);
+    public void setBackground(Drawable background) {
+        mBackgroundDrawable = background;
+        mBackgroundDrawable.setBounds(0, 0, getWidth(), getHeight());
         invalidate();
+//        super.setBackground(background);
+    }
+
+    @Override
+    public void setBackgroundResource(@DrawableRes final int _id) {
+        setBackground(ContextCompat.getDrawable(getContext(), _id));
     }
 
     public final void setHexagonSrcDrawable(@DrawableRes final int _drawableRes) {
@@ -190,10 +196,20 @@ public final class HexagonView extends View {
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
+        boolean stateChangeHandled = false;
+        if (mBackgroundDrawable != null) {
+            mBackgroundDrawable.setState(getDrawableState());
+            stateChangeHandled = true;
+        }
         if (mSrcDrawable != null) {
             mSrcDrawable.setState(getDrawableState());
+            stateChangeHandled = true;
+        }
+
+        if (stateChangeHandled) {
             invalidate();
         }
+
     }
 
     @Override
@@ -212,18 +228,26 @@ public final class HexagonView extends View {
                     (float) (h / 2 + mHexagonSide * Math.cos(section * i)));
         }
         mPath.close();
+
+        if (mBackgroundDrawable != null) {
+            mBackgroundDrawable.setBounds(0, 0, w, h);
+        }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawPath(mPath, mBackgroundPaint);
-        if (mSrcDrawable != null) {
-            canvas.clipPath(mPath);
-            drawImageSrc(canvas, mSrcDrawable);
-            canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
+        canvas.clipPath(mPath);
+        if (mBackgroundDrawable != null) {
+            mBackgroundDrawable.draw(canvas);
         }
+//        canvas.drawPath(mPath, mBackgroundPaint);
+        if (mSrcDrawable != null) {
+//            canvas.clipPath(mPath);
+            drawImageSrc(canvas, mSrcDrawable);
+        }
+        canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.UNION);
 
         if (!TextUtils.isEmpty(mText)) {
             drawText(canvas);
@@ -272,7 +296,7 @@ public final class HexagonView extends View {
         float centerY = (float) (mHexagonSide + getBorderWidth() / 2f);
         float centerX = (float) getWidth() / 2;
 
-        mSrcDrawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
+        _drawable.setBounds((int) (centerX - drawableWidth / 2), (int) (centerY - drawableHeight / 2),
                 (int) (centerX + drawableWidth / 2), (int) (centerY + drawableHeight / 2));
         _drawable.draw(_canvas);
     }

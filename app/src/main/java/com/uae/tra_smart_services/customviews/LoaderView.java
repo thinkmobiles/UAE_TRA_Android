@@ -12,13 +12,10 @@ import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.PathMeasure;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
@@ -96,22 +93,22 @@ public class LoaderView extends View implements Animator.AnimatorListener {
     }
 
     private void initParams(Context context, AttributeSet attrs){
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.HexagonView);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LoaderView);
         try {
-            mHexagonSide = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS);
-            mBorderColor = array.getColor(R.styleable.HexagonView_hexagonBorderColor, 0xFFC8C7C6);
-            mProcessBorderColor = array.getColor(R.styleable.HexagonView_hexagonProcessBorderColor, 0xFFFFFFFF);
-            mSuccessBorderColor = array.getColor(R.styleable.HexagonView_hexagonSuccessBorderColor, 0xFFFFFFFF);
-            mBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonBorderSize, 3);
-            mProcessBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonProcessBorderSize, 3);
-            mSuccessBorderSize = array.getDimensionPixelSize(R.styleable.HexagonView_hexagonSuccessBorderSize, 5);
-            mLoadingAnimPeriod = array.getInt(R.styleable.HexagonView_hexagonLoaderPeriod, 1500);
-            mFillingAnimPeriod = array.getInt(R.styleable.HexagonView_hexagonFillingPeriod, 500);
-            mStatusAnimPeriod = array.getInt(R.styleable.HexagonView_hexagonStatusPeriod, 500);
+            mHexagonSide = array.getDimensionPixelSize(R.styleable.LoaderView_hexagonSideSize, DEFAULT_HEXAGON_RADIUS);
+            mBorderColor = array.getColor(R.styleable.LoaderView_hexagonBorderColor, 0xFFC8C7C6);
+            mProcessBorderColor = array.getColor(R.styleable.LoaderView_hexagonProcessBorderColor, 0xFFFFFFFF);
+            mSuccessBorderColor = array.getColor(R.styleable.LoaderView_hexagonSuccessBorderColor, 0xFFFFFFFF);
+            mBorderSize = array.getDimensionPixelSize(R.styleable.LoaderView_hexagonBorderSize, 3);
+            mProcessBorderSize = array.getDimensionPixelSize(R.styleable.LoaderView_hexagonProcessBorderSize, 3);
+            mSuccessBorderSize = array.getDimensionPixelSize(R.styleable.LoaderView_hexagonSuccessBorderSize, 5);
+            mLoadingAnimPeriod = array.getInt(R.styleable.LoaderView_hexagonLoaderPeriod, 1500);
+            mFillingAnimPeriod = array.getInt(R.styleable.LoaderView_hexagonFillingPeriod, 500);
+            mStatusAnimPeriod = array.getInt(R.styleable.LoaderView_hexagonStatusPeriod, 500);
             mHexagonInnerRadius = Math.sqrt(3) * mHexagonSide / 2;
-            mSrcDrawable = array.getDrawable(R.styleable.HexagonView_hexagonSrc);
-            mSrcTintColor = array.getColor(R.styleable.HexagonView_hexagonSrcTintColor, Color.TRANSPARENT);
-            isInitLoading = array.getBoolean(R.styleable.HexagonView_hexagonIsInitiallLoading, false);
+            mSrcDrawable = array.getDrawable(R.styleable.LoaderView_hexagonSrc);
+            mSrcTintColor = array.getColor(R.styleable.LoaderView_hexagonSrcTintColor, Color.TRANSPARENT);
+            isInitLoading = array.getBoolean(R.styleable.LoaderView_hexagonIsInitiallLoading, false);
         } finally {
             array.recycle();
         }
