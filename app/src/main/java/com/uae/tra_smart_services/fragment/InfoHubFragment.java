@@ -30,6 +30,9 @@ import com.uae.tra_smart_services.fragment.base.BaseFragment;
 import com.uae.tra_smart_services.fragment.InfoHubAnnouncementsFragment.BooleanHolder;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.global.QueryAdapter;
+import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.interfaces.Loader;
+import com.uae.tra_smart_services.interfaces.LoaderMarker;
 import com.uae.tra_smart_services.interfaces.OnInfoHubItemClickListener;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
 import com.uae.tra_smart_services.rest.model.response.GetAnnouncementsResponseModel;
@@ -41,6 +44,8 @@ import com.uae.tra_smart_services.util.EndlessScrollListener;
 import com.uae.tra_smart_services.util.EndlessScrollListener.OnLoadMoreListener;
 
 import java.util.Arrays;
+
+import retrofit.client.Response;
 
 /**
  * Created by ak-buffalo on 19.08.15.
@@ -73,6 +78,8 @@ public final class InfoHubFragment extends BaseFragment
     private BooleanHolder mIsAnnouncementsInLoading = new BooleanHolder();
     private HexagonSwipeRefreshLayout mHexagonSwipeRefreshLayout;
     private GetTransactionsRequest transactionsRequest;
+    private int loadedCount = 0;
+    private String mSearchPhrase = "";
 
     public static InfoHubFragment newInstance() {
         return new InfoHubFragment();
@@ -103,18 +110,50 @@ public final class InfoHubFragment extends BaseFragment
             mAnnouncementsListPreview.setVisibility(View.INVISIBLE);
             tvNoAnnouncements.setVisibility(View.VISIBLE);
         }
+
+        @Override
+        public void endLoading() {
+            loadedCount++;
+            if(loadedCount == 2){
+                loaderOverlayDismissWithAction(new Loader.Dismiss() {
+                    @Override
+                    public void onLoadingDismissed() {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+            }
+        }
     };
 
     private final OperationStateManager mTransactionsOperationStateManager = new OperationStateManager() {
 
         @Override
-        public final void showProgress() { mHexagonSwipeRefreshLayout.onLoadingStart(); }
+        public final void showProgress() {
+            mHexagonSwipeRefreshLayout.onLoadingStart();
+        }
 
         @Override
-        public final void showData() { mHexagonSwipeRefreshLayout.onLoadingFinished(true); }
+        public final void showData() {
+            mHexagonSwipeRefreshLayout.onLoadingFinished(true);
+        }
 
         @Override
-        public final void showEmptyView() { mHexagonSwipeRefreshLayout.onLoadingFinished(false); }
+        public final void showEmptyView() {
+            mHexagonSwipeRefreshLayout.onLoadingFinished(false);
+        }
+
+        @Override
+        public void endLoading() {
+            loadedCount++;
+            if(loadedCount == 2){
+                loaderOverlayDismissWithAction(new Loader.Dismiss() {
+                    @Override
+                    public void onLoadingDismissed() {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+            }
+        }
     };
 
     @Override
@@ -203,16 +242,17 @@ public final class InfoHubFragment extends BaseFragment
                             .commit();
                 break;
             case R.id.tvNoTransactions_FIH:
-                    onRefresh();
+                    onRefresh(mSearchPhrase);
                 break;
         }
     }
 
     private void startFirstLoad() {
-        mTransactionsOperationStateManager.showProgress();
-        mAnnouncementsOperationStateManager.showProgress();
-        loadTransactionPage(mTransactionPageNum = 1);
-        loadAnnouncementsPage(1);
+        if(isAdded()){
+            loaderOverlayCustomShow(getString(R.string.str_loading), null, false);
+            loadTransactionPage(mTransactionPageNum = 1);
+            loadAnnouncementsPage(1);
+        }
     }
 
     private void loadAnnouncementsPage(final int _page) {
@@ -247,6 +287,7 @@ public final class InfoHubFragment extends BaseFragment
     @Override
     public boolean onQueryTextSubmit(String query) {
         mIsSearching = true;
+        mSearchPhrase = query;
         tvNoTransactions.setText(R.string.str_no_search_result);
         hideKeyboard(getView());
         mTransactionsLayoutManager.scrollToPosition(0);
@@ -285,6 +326,11 @@ public final class InfoHubFragment extends BaseFragment
         loadTransactionPage(mTransactionPageNum = 1);
     }
 
+    @Override
+    public void onRefresh(String _contrains) {
+        onQueryTextSubmit(_contrains);
+    }
+
     private final class TransactionsResponseListener implements RequestListener<GetTransactionResponseModel.List> {
 
         @Override
@@ -301,6 +347,7 @@ public final class InfoHubFragment extends BaseFragment
             } else {
                 mTransactionPageNum--;
             }
+            mTransactionsOperationStateManager.endLoading();
         }
 
         private void handleNoResult() {
@@ -309,6 +356,7 @@ public final class InfoHubFragment extends BaseFragment
             } else {
                 mTransactionsListAdapter.stopLoading();
             }
+            mTransactionsOperationStateManager.endLoading();
         }
 
         @Override
@@ -317,6 +365,7 @@ public final class InfoHubFragment extends BaseFragment
             mTransactionPageNum--;
             handleNoResult();
             processError(spiceException);
+            mTransactionsOperationStateManager.endLoading();
         }
     }
 

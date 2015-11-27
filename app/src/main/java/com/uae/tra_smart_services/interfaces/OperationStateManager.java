@@ -9,4 +9,6 @@ public interface OperationStateManager {
     void showData();
 
     void showEmptyView();
+
+    void endLoading();
 }

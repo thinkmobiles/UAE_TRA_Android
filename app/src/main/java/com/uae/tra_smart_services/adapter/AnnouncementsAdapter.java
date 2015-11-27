@@ -51,6 +51,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
     private boolean mIsInSearchMode;
     private boolean mIsAllSearchResultDownloaded;
     private boolean mIsPreview;
+    private CharSequence mConstraint = "";
 
     private OnInfoHubItemClickListener onItemClickListener;
 
@@ -124,6 +125,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
             mOperationStateManager.showData();
         }
         mFilter = null;
+        mConstraint = "";
         mIsInSearchMode = false;
         mShowingData.clear();
         mShowingData.addAll(mDataSet);
@@ -240,6 +242,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
                     Toast.makeText(mActivity, error, C.TOAST_LENGTH).show();
                 }
             }
+            mOperationStateManager.showEmptyView();
         }
 
         @UiThread
@@ -256,11 +259,9 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
             mOperationStateManager.showData();
             mShowingData.addAll((ArrayList<GetAnnouncementsResponseModel.Announcement>) results.values);
             notifyDataSetChanged();
-            constraint = _constraint;
+            mConstraint = _constraint;
         }
     }
-
-    private CharSequence constraint = "";
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
         private View container;
@@ -299,12 +300,18 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         }
 
         public void setData(int _position, final GetAnnouncementsResponseModel.Announcement _model) {
-            if (!isProgress && constraint != null) {
+            if (!isProgress) {
                 sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
                 Picasso.with(mActivity).load(_model.image).into(new HexagonViewTarget(hexagonView));
-                title.setText((constraint != null) ? SpannableWrapper.makeSelectedTextBold(constraint, Html.fromHtml(_model.title).toString()) : Html.fromHtml(_model.title).toString());
-                description.setText((constraint != null) ? SpannableWrapper.makeSelectedTextBold(constraint, _model.description) :_model.description);
-                date.setText((constraint != null) ? SpannableWrapper.makeSelectedTextBold(constraint, _model.createdAt) : _model.createdAt);
+                if(mConstraint.length() != 0){
+                    title.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, Html.fromHtml(_model.title).toString()));
+                    description.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, _model.description));
+                    date.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, _model.createdAt));
+                } else {
+                    title.setText(Html.fromHtml(_model.title).toString());
+                    description.setText(_model.description);
+                    date.setText(_model.createdAt);
+                }
                 container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View _view) {

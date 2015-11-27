@@ -21,6 +21,7 @@ import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
 import com.uae.tra_smart_services.global.C;
+import com.uae.tra_smart_services.global.SpannableWrapper;
 import com.uae.tra_smart_services.interfaces.OperationStateManager;
 import com.uae.tra_smart_services.rest.RestClient;
 import com.uae.tra_smart_services.rest.TRAServicesAPI;
@@ -43,6 +44,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
     private boolean mIsShowingLoaderForData;
     private boolean mIsInSearchMode;
     private boolean mIsAllSearchResultDownloaded;
+    private CharSequence mConstraint = "";
 
     public TransactionsAdapter(final Activity _activity, final OperationStateManager _operationStateManager) {
         mActivity = _activity;
@@ -109,6 +111,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
             mOperationStateManager.showData();
         }
         mFilter = null;
+        mConstraint = "";
         mIsInSearchMode = false;
         mShowingData.clear();
         mShowingData.addAll(mDataSet);
@@ -210,7 +213,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
             } else if (results.count == 0) {
                 handleNoResults();
             } else {
-                showNewSearchResults(results);
+                showNewSearchResults(results, constraint);
             }
         }
 
@@ -234,10 +237,11 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
         }
 
         @UiThread
-        private void showNewSearchResults(FilterResults results) {
+        private void showNewSearchResults(FilterResults results, CharSequence _constraint) {
             mOperationStateManager.showData();
             mShowingData.addAll((GetTransactionResponseModel.List) results.values);
             notifyDataSetChanged();
+            mConstraint = _constraint;
         }
 
     }
@@ -271,9 +275,15 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
             if (!isProgress) {
                 sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
 //            Picasso.with(mActivity).load(_model.getIconUrl()).into(new HexagonViewTarget(hexagonView));
-                title.setText(_model.title);
-                description.setText(_model.description);
-                date.setText(_model.modifiedDatetime);
+                if(mConstraint.length() != 0){
+                    title.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, _model.title));
+                    description.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, _model.description));
+                    date.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, _model.modifiedDatetime));
+                } else {
+                    title.setText(_model.title);
+                    description.setText(_model.description);
+                    date.setText(_model.modifiedDatetime);
+                }
             }
         }
     }

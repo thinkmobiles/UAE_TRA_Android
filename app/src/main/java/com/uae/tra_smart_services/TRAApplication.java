@@ -21,8 +21,6 @@ public class TRAApplication extends Application {
         isLoggedIn = PreferenceManager.getDefaultSharedPreferences(this).
                 getBoolean(C.IS_LOGGED_IN, false);
         super.onCreate();
-
-
     }
 
     public static boolean isLoggedIn() {

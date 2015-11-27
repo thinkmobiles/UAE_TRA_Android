@@ -159,7 +159,7 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.rlGlobalContainer_AH, TutorialContainerFragment.newInstance())
+                .add(getGlobalContainerId(), TutorialContainerFragment.newInstance())
                 .commit();
     }
 
@@ -597,6 +597,13 @@ public class HomeActivity extends BaseFragmentActivity implements //region INTER
 
     @Override
     public void onBackPressed() {
+        final BaseFragment globalContainerFragment = (BaseFragment) getFragmentManager().findFragmentById(getGlobalContainerId());
+        if (globalContainerFragment != null) {
+            if (globalContainerFragment.onBackPressed()) {
+                return;
+            }
+        }
+
         final BaseFragment fragment = (BaseFragment) getFragmentManager().findFragmentById(getContainerId());
         if (fragment == null || !fragment.onBackPressed()) {
             super.onBackPressed();

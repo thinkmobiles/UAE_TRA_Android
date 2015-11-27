@@ -1,12 +1,10 @@
 package com.uae.tra_smart_services.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -49,6 +47,8 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     private boolean mIsAllAnnouncementsDownloaded;
     private SearchView svSearchTransaction;
     private HexagonSwipeRefreshLayout mHexagonSwipeRefreshLayout;
+    private boolean mShouldHandle = true;
+    private String mSearchPhrase = "";
 
     public static InfoHubAnnouncementsFragment newInstance() {
         return new InfoHubAnnouncementsFragment();
@@ -151,6 +151,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     @Override
     public boolean onQueryTextSubmit(String query) {
         mIsSearching = true;
+        mSearchPhrase = query;
         tvNoResult.setText(R.string.str_no_search_result);
         hideKeyboard(getView());
         mLayoutManager.scrollToPosition(0);
@@ -192,6 +193,11 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     }
 
     @Override
+    public void endLoading() {
+
+    }
+
+    @Override
     protected int getTitle() {
         return R.string.str_info_hub_announcements;
     }
@@ -204,7 +210,7 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.tvNoResult_FIHA){
-            onRefresh();
+            onRefresh(mSearchPhrase);
         }
     }
 
@@ -212,6 +218,11 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
     public void onRefresh() {
         mHexagonSwipeRefreshLayout.onLoadingStart();
         loadAnnouncementsPage(mAnnouncementsPageNum = 1);
+    }
+
+    @Override
+    public void onRefresh(String _contrains) {
+        onQueryTextSubmit(_contrains);
     }
 
     public static class BooleanHolder {

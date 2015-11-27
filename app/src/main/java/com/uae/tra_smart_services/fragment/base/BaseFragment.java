@@ -28,6 +28,7 @@ import com.uae.tra_smart_services.customviews.LoaderView;
 import com.uae.tra_smart_services.dialog.AlertDialogFragment;
 import com.uae.tra_smart_services.dialog.ProgressDialog;
 import com.uae.tra_smart_services.entities.NetworkErrorHandler;
+import com.uae.tra_smart_services.fragment.CustomLoaderFragment;
 import com.uae.tra_smart_services.fragment.LoaderFragment;
 import com.uae.tra_smart_services.global.C;
 import com.uae.tra_smart_services.interfaces.Loader;
@@ -163,6 +164,14 @@ public abstract class BaseFragment extends Fragment implements Loader.Dismiss, L
                 .beginTransaction()
                 .addToBackStack(null)
                 .add(R.id.rlGlobalContainer_AH, (Fragment) (loader = LoaderFragment.newInstance(_title, _callBack, _showRating)), LoaderFragment.TAG)
+                .commit();
+    }
+
+    protected final void loaderOverlayCustomShow(String _title, LoaderMarker _callBack, boolean _showRating) {
+        getFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.rlGlobalContainer_AH, (Fragment) (loader = CustomLoaderFragment.newInstance(_title, _callBack, _showRating)), LoaderFragment.TAG)
                 .commit();
     }
 
