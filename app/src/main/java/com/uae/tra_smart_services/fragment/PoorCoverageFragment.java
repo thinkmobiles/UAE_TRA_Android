@@ -85,9 +85,9 @@ import retrofit.client.Response;
  * Created by ak-buffalo on 11.08.15.
  */
 public class PoorCoverageFragment extends BaseServiceFragment implements //region INTERFACES
-        OnOkListener, OnItemPickListener,
+        OnOkListener, /*OnItemPickListener,*/
         ConnectionCallbacks, OnConnectionFailedListener,
-        OnSeekBarChangeListener, OnClickListener, ResultCallback<LocationSettingsResult>,
+        OnSeekBarChangeListener, /*OnClickListener,*/ ResultCallback<LocationSettingsResult>,
         LocationListener, OnPermissionRequestSuccessListener, OnOpenPermissionExplanationDialogListener, OnFocusChangeListener,
         OnMapReadyCallback {
     //endregion
@@ -179,16 +179,15 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     protected void initListeners() {
         super.initListeners();
         mLocationPermissionManager.setRequestSuccessListener(this);
-        etLocation.setOnFocusChangeListener(this);
-        etLocation.setOnClickListener(this);
+//        etLocation.setOnFocusChangeListener(this);
+//        etLocation.setOnClickListener(this);
         sbPoorCoverage.setOnSeekBarChangeListener(this);
     }
 
     private void removeListeners() {
         mLocationPermissionManager.setRequestSuccessListener(null);
-        etLocation.setOnFocusChangeListener(null);
+//        etLocation.setOnFocusChangeListener(null);
         sbPoorCoverage.setOnSeekBarChangeListener(null);
-        etLocation.setOnFocusChangeListener(null);
     }
 
     @Override
@@ -218,6 +217,8 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
     @Override
     public void onActivityCreated(Bundle _savedInstanceState) {
         super.onActivityCreated(_savedInstanceState);
+        hideKeyboard(tvSignalLevel);
+        checkLocationSettingsIfPermissionGranted();
         mvMap.onCreate(_savedInstanceState);
         if (_savedInstanceState != null) {
             mLocationPermissionManager.onRestoreInstanceState(_savedInstanceState);
@@ -230,7 +231,6 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         if (mLocationPermissionManager.isAllPermissionsChecked()) {
             invalidateMapLocation();
         }
-
     }
 
     @Override
@@ -287,6 +287,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
                     case Activity.RESULT_CANCELED:
                         Log.i(TAG, "User chose not to make required location settings changes.");
                         sbProgressBar.setVisibility(View.INVISIBLE);
+                        etLocation.requestFocus();
                         break;
                 }
                 break;
@@ -489,7 +490,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         Log.i(TAG, "Connection failed: ErrorCode = " + result.getErrorCode());
     }
 
-    @Override
+    /*@Override
     public void onClick(View _view) {
         switch (_view.getId()) {
             case R.id.etLocation_FPC:
@@ -497,21 +498,21 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
                 locationTypeChooser.show(getFragmentManager());
                 break;
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onItemPicked(int _dialogItem) {
         switch (LocationType.values()[_dialogItem]) {
             case AUTO:
-                hideKeyboard(tvSignalLevel);
-                checkLocationSettingsIfPermissionGranted();
+//                hideKeyboard(tvSignalLevel);
+//                checkLocationSettingsIfPermissionGranted();
                 break;
             case MANUAL:
                 etLocation.requestFocus();
                 etLocation.setText(getString(R.string.str_empty));
                 break;
         }
-    }
+    }*/
 
     private void checkLocationSettingsIfPermissionGranted() {
         if (mLocationPermissionManager.isAllPermissionsChecked()) {
@@ -642,7 +643,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
                     .append(address.getCountryName()).append(", ")
                     .append(address.getCountryCode())
                     .toString();
-            etLocation.setOnClickListener(PoorCoverageFragment.this);
+//            etLocation.setOnClickListener(PoorCoverageFragment.this);
             etLocation.setText(userFriendlyAddress);
             sbProgressBar.setVisibility(View.INVISIBLE);
         }
