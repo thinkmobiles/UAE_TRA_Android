@@ -1,18 +1,16 @@
 package com.uae.tra_smart_services.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
-import android.text.SpannableStringBuilder;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ProgressBar;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -304,7 +302,7 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
             if (!isProgress && constraint != null) {
                 sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
                 Picasso.with(mActivity).load(_model.image).into(new HexagonViewTarget(hexagonView));
-                title.setText((constraint != null) ? SpannableWrapper.makeSelectedTextBold(constraint, _model.title) : _model.title);
+                title.setText((constraint != null) ? SpannableWrapper.makeSelectedTextBold(constraint, Html.fromHtml(_model.title).toString()) : Html.fromHtml(_model.title).toString());
                 description.setText((constraint != null) ? SpannableWrapper.makeSelectedTextBold(constraint, _model.description) :_model.description);
                 date.setText((constraint != null) ? SpannableWrapper.makeSelectedTextBold(constraint, _model.createdAt) : _model.createdAt);
                 container.setOnClickListener(new View.OnClickListener() {
