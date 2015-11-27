@@ -248,9 +248,11 @@ public final class InfoHubFragment extends BaseFragment
     }
 
     private void startFirstLoad() {
-        loaderOverlayCustomShow(getString(R.string.str_loading), null, false);
-        loadTransactionPage(mTransactionPageNum = 1);
-        loadAnnouncementsPage(1);
+        if(isAdded()){
+            loaderOverlayCustomShow(getString(R.string.str_loading), null, false);
+            loadTransactionPage(mTransactionPageNum = 1);
+            loadAnnouncementsPage(1);
+        }
     }
 
     private void loadAnnouncementsPage(final int _page) {
