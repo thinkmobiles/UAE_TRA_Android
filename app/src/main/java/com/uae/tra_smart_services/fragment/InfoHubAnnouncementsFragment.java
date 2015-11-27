@@ -153,7 +153,6 @@ public class InfoHubAnnouncementsFragment extends BaseFragment
         mIsSearching = true;
         tvNoResult.setText(R.string.str_no_search_result);
         hideKeyboard(getView());
-        showProgress();
         mLayoutManager.scrollToPosition(0);
         mListAdapter.getFilter().filter(query);
         return true;

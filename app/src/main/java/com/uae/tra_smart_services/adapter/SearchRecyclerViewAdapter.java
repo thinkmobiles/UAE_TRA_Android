@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.entities.SearchResult;
 import com.uae.tra_smart_services.global.ListItemFilter;
+import com.uae.tra_smart_services.global.SpannableWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
 
     @Override
     public ListItemFilter getFilter() {
-        return SearchResultFilter.getInstance(/*this, */mDataSet.getSearchResultItems());
+        return SearchResultFilter.getInstance(mDataSet.getSearchResultItems());
     }
 
     /** METHODS */
@@ -69,25 +70,19 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
         }
     }
 
-    public void addAllFiltered(ArrayList<SearchResult.SearchResultItem> filteredValues){
-        mDataSet.addAllItems(filteredValues);
+    public void addFiltered(SearchResult.SearchResultItem filteredValue){
+        mDataSet.addItem(filteredValue);
     }
 
     /** ENTITIES */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final LinearLayout container;
         private final TextView textView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.tvSearchResultItem_RSI);
             textView.setOnClickListener(this);
-            container = (LinearLayout) itemView.findViewById(R.id.llContainer_RSI);
-        }
-
-        public View getContainer() {
-            return container;
         }
 
         public void setData(final SearchResult.SearchResultItem searchResultItem) {
@@ -105,10 +100,11 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
 
     public static class SearchResultFilter extends ListItemFilter<SearchRecyclerViewAdapter, SearchResult.SearchResultItem> {
 
+        private static ListItemFilter mInstance;
+
         private SearchResultFilter(List<SearchResult.SearchResultItem> originalList) {
             super(originalList);
         }
-        private static ListItemFilter mInstance;
         public static ListItemFilter getInstance(List<SearchResult.SearchResultItem> originalList){
             if(mInstance == null){
                 mInstance = new SearchResultFilter(originalList);
@@ -120,24 +116,10 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
         protected void publishResults(CharSequence constraint, FilterResults results) {
             ArrayList<SearchResult.SearchResultItem> result = (ArrayList<SearchResult.SearchResultItem>) results.values;
             mAdapter.clear();
-            mAdapter.addAllFiltered(makeSelectedTextBold(constraint, result));
-            mAdapter.notifyDataSetChanged();
-        }
-
-        private ArrayList<SearchResult.SearchResultItem> makeSelectedTextBold(CharSequence constraint, ArrayList<SearchResult.SearchResultItem> result){
-            if(result != null){
-                for(SearchResult.SearchResultItem item : result){
-                    String originalText = item.getOriginalText();
-                    int startFrom = originalText.toString().toLowerCase().indexOf((String) constraint);
-                    if(startFrom >= 0 && originalText.length() > startFrom + constraint.length()){
-                        SpannableStringBuilder spannedText = new SpannableStringBuilder(originalText);
-                        final StyleSpan bss = new StyleSpan(android.graphics.Typeface.BOLD);
-                        spannedText.setSpan(bss, startFrom, startFrom + constraint.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-                        item.setSpannedText(spannedText);
-                    }
-                }
+            for(SearchResult.SearchResultItem item : result){
+                mAdapter.addFiltered(SpannableWrapper.makeSelectedTextBold(constraint, item));
             }
-            return result;
+            mAdapter.notifyDataSetChanged();
         }
     }
 

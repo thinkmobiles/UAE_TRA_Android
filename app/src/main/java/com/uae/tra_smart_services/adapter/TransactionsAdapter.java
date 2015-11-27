@@ -128,8 +128,7 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_LOADER:
-                LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                LoaderView loaderView = (LoaderView) layoutInflater.inflate(R.layout.loader_view, null, true);
+                LoaderView loaderView = (LoaderView) LayoutInflater.from(parent.getContext()).inflate(R.layout.loader_view, null, true);
                 return new ViewHolder(loaderView, true);
             case VIEW_TYPE_TRANSACTION:
             default:
@@ -263,9 +262,9 @@ public class TransactionsAdapter extends Adapter<ViewHolder> implements Filterab
             super(view);
             isProgress = _isProgress;
             loaderView = (LoaderView) view;
-            loaderView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            loaderView.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
-            loaderView.requestLayout();
         }
 
         public void setData(int _position, GetTransactionResponseModel _model) {
