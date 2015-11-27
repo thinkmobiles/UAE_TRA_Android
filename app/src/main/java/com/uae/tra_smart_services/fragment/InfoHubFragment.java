@@ -79,6 +79,7 @@ public final class InfoHubFragment extends BaseFragment
     private HexagonSwipeRefreshLayout mHexagonSwipeRefreshLayout;
     private GetTransactionsRequest transactionsRequest;
     private int loadedCount = 0;
+    private String mSearchPhrase;
 
     public static InfoHubFragment newInstance() {
         return new InfoHubFragment();
@@ -284,6 +285,7 @@ public final class InfoHubFragment extends BaseFragment
     @Override
     public boolean onQueryTextSubmit(String query) {
         mIsSearching = true;
+        mSearchPhrase = query;
         tvNoTransactions.setText(R.string.str_no_search_result);
         hideKeyboard(getView());
         mTransactionsLayoutManager.scrollToPosition(0);
@@ -318,8 +320,13 @@ public final class InfoHubFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
-        mHexagonSwipeRefreshLayout.onLoadingStart();
-        loadTransactionPage(mTransactionPageNum = 1);
+        if(mSearchPhrase == ""){
+            mHexagonSwipeRefreshLayout.onLoadingStart();
+            loadTransactionPage(mTransactionPageNum = 1);
+        } else {
+            mTransactionsOperationStateManager.showProgress();
+            onQueryTextSubmit(mSearchPhrase);
+        }
     }
 
     private final class TransactionsResponseListener implements RequestListener<GetTransactionResponseModel.List> {
