@@ -182,7 +182,6 @@ public final class FavoritesFragment extends BaseFragment
             return true;
         }
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override

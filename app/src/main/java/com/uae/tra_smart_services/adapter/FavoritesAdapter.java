@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.customviews.HexagonView;
 import com.uae.tra_smart_services.global.Service;
+import com.uae.tra_smart_services.global.SpannableWrapper;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -53,6 +54,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
     private boolean mIsAddBtnVisible;
     private boolean mIsDataFilterEnable;
     private boolean mIsOddOpaque;
+    private CharSequence mConstraint = "";
 
     public FavoritesAdapter(final Context _context) {
         this(_context, new ArrayList<Service>());
@@ -212,6 +214,7 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
         protected void publishResults(CharSequence constraint, FilterResults results) {
             List<Service> filteredData = (List<Service>) results.values;
             mIsDataFilterEnable = filteredData.size() != listData.size();
+            mConstraint = constraint;
             showData(filteredData);
         }
     }
@@ -247,7 +250,11 @@ public class FavoritesAdapter extends Adapter<ViewHolder> implements Filterable 
             } else {
                 rlItemContainer.setBackgroundColor(_position % 2 == 0 ? mBackgroundColor : Color.TRANSPARENT);
             }
-            tvTitle.setText(_item.getTitleRes());
+            tvTitle.setText(
+                (mConstraint.length() != 0)
+                    ? SpannableWrapper.makeSelectedTextBold(mConstraint, mContext.getString(_item.getTitleRes()))
+                        : mContext.getString(_item.getTitleRes())
+            );
             hvIcon.setHexagonSrcDrawable(_item.getDrawableRes());
         }
 
