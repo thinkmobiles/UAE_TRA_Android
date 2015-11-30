@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="viewfinder_border_width">6dp</dimen>
+    <dimen name="viewfinder_border_length">32dp</dimen>
+    <dimen name="viewfinder_text_size">20sp</dimen>
+    <dimen name="viewfinder_text_margin_bottom">8dp</dimen>
+</resources>

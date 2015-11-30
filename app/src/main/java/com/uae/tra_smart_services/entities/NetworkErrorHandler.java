@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.octo.android.robospice.exception.NoNetworkException;
 import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.uae.tra_smart_services.BuildConfig;
 import com.uae.tra_smart_services.R;
 import com.uae.tra_smart_services.TRAApplication;
 import com.uae.tra_smart_services.activity.HomeActivity;
@@ -49,9 +50,6 @@ public final class NetworkErrorHandler {
         switch (_error.getKind()) {
             case NETWORK:
                 return _activity.getString(R.string.error_no_network);
-            case CONVERSION:
-                //TODO: change this on production, added just to see when developing
-                return _activity.getString(R.string.error_conversion_error);
             case HTTP:
                 if (_error.getResponse().getStatus() == HttpURLConnection.HTTP_INTERNAL_ERROR) {
                     return _activity.getString(R.string.error_server);
@@ -70,8 +68,11 @@ public final class NetworkErrorHandler {
                     _exc.printStackTrace();
                     return _activity.getString(R.string.error_server);
                 }
-            default:
+            case CONVERSION:
+                if (BuildConfig.DEBUG)
+                    return _activity.getString(R.string.error_conversion_error);
             case UNEXPECTED:
+            default:
                 return _activity.getString(R.string.str_something_went_wrong);
         }
     }

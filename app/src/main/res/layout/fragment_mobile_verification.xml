@@ -128,10 +128,11 @@
                 <com.uae.tra_smart_services.customviews.HexagonView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
+                    app:hexagonBackground="@drawable/hexagon_selector"
                     app:hexagonBorderColor="?attr/sendImeiCodeColor"
                     app:hexagonBorderSize="1dp"
+                    app:hexagonSrc="@drawable/ic_check_ver_grn"
                     app:hexagonSideSize="35dp"
                     app:hexagonSrcTintColor="?attr/sendImeiCodeColor"
                     android:id="@+id/hvSendImeiCode_FMV"/>

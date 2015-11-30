@@ -461,7 +461,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
 
     private void invalidateMapLocation() {
         if (mGoogleMap != null && mCurrentLocation != null) {
-            mvMap.setVisibility(View.VISIBLE);//TODO
+            mvMap.setVisibility(View.VISIBLE);
             final LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 16);
             mGoogleMap.moveCamera(cameraUpdate);

@@ -11,6 +11,7 @@ import com.uae.tra_smart_services.global.C;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView.ResultHandler;
 
+
 /**
  * Created by mobimaks on 13.08.2015.
  */

@@ -5,6 +5,7 @@ import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -301,13 +302,15 @@ public class AnnouncementsAdapter extends Adapter<ViewHolder> implements Filtera
         public void setData(int _position, final GetAnnouncementsResponseModel.Announcement _model) {
             if (!isProgress) {
                 sStartOffset.setVisibility(_position % 2 == 0 ? View.GONE : View.VISIBLE);
+                hexagonView.postScaleType(HexagonView.ScaleType.INSIDE_CROP);
+                hexagonView.setHexagonSrcDrawable(R.drawable.ic_form);
                 Picasso.with(mActivity).load(_model.image).into(new HexagonViewTarget(hexagonView));
                 if(mConstraint.length() != 0){
-                    title.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, _model.title));
+                    title.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, Html.fromHtml(_model.title).toString()));
                     description.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, _model.description));
                     date.setText(SpannableWrapper.makeSelectedTextBold(mConstraint, _model.createdAt));
                 } else {
-                    title.setText(_model.title);
+                    title.setText(Html.fromHtml(_model.title).toString());
                     description.setText(_model.description);
                     date.setText(_model.createdAt);
                 }

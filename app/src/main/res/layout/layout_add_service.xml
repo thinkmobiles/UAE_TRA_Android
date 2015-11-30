@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/hvIcon_LAS"
-        app:hexagonBackgroundColor="@android:color/white"
+        app:hexagonBackground="@drawable/hexagon_white_selector"
         app:hexagonBorderColor="?attr/themeMainColor"
         app:hexagonBorderSize="1dp"
         app:hexagonSideSize="24dp"

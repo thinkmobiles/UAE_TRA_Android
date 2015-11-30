@@ -16,7 +16,7 @@
         android:src="@drawable/ic_white_close"
         tools:ignore="ContentDescription"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,6 +32,7 @@
 
             <com.uae.tra_smart_services.customviews.HexagonView
                 android:id="@+id/hvAboutService_FSI"
+                app:hexagonBackground="@drawable/hexagon_translucent_selector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -59,6 +60,7 @@
             <com.uae.tra_smart_services.customviews.HexagonView
                 android:id="@+id/hvRequiredDocuments_FSI"
                 android:layout_width="wrap_content"
+                app:hexagonBackground="@drawable/hexagon_translucent_selector"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 app:hexagonSrc="@drawable/ic_required_documents"
@@ -87,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_height="wrap_content"
+                app:hexagonBackground="@drawable/hexagon_translucent_selector"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/tvServiceInfoLabel_FSI"
                 app:hexagonSrc="@drawable/ic_terms_and_conditions"
@@ -113,6 +116,7 @@
                 android:id="@+id/hvServicePackage_FSI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:hexagonBackground="@drawable/hexagon_translucent_selector"
                 android:layout_marginTop="12dp"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/tvRequiredDocumentsLabel_FSI"
@@ -141,6 +145,7 @@
                 android:id="@+id/hvProcessingTime_FSI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:hexagonBackground="@drawable/hexagon_translucent_selector"
                 android:layout_marginTop="12dp"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/tvTermsAndConditionsLabel_FSI"
@@ -168,6 +173,7 @@
                 android:id="@+id/hvServiceFees_FSI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:hexagonBackground="@drawable/hexagon_translucent_selector"
                 android:layout_marginTop="12dp"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/tvServicePackageLabel_FSI"
@@ -197,6 +203,7 @@
                 android:layout_width="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_height="wrap_content"
+                app:hexagonBackground="@drawable/hexagon_translucent_selector"
                 android:layout_below="@id/tvProcessingTimeLabel_FSI"
                 android:layout_centerHorizontal="true"
                 app:hexagonSrc="@drawable/ic_contact_in_charge"
