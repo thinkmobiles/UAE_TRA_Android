@@ -456,7 +456,6 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         defineUserFriendlyAddress();
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
         stopLocationUpdates();
-
         invalidateMapLocation();
     }
 
@@ -472,6 +471,7 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
                     new MarkerOptions()
                             .position(latLng)
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+            defineUserFriendlyAddress();
         }
     }
 
@@ -631,6 +631,8 @@ public class PoorCoverageFragment extends BaseServiceFragment implements //regio
         public void onRequestFailure(SpiceException spiceException) {
             processError(spiceException);
             sbProgressBar.setVisibility(View.INVISIBLE);
+            mvMap.setVisibility(View.INVISIBLE);
+            Toast.makeText(getActivity(), getString(R.string.error_no_network), Toast.LENGTH_SHORT).show();
         }
 
         @Override
